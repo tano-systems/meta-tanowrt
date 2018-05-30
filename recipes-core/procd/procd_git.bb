@@ -28,7 +28,7 @@ inherit cmake openwrt openwrt-services pkgconfig openwrt-base-files
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-CFLAGS += "-Wno-error=format-truncation"
+#CFLAGS += "-Wno-error=format-truncation"
 
 do_install_append() {
     # Early init
