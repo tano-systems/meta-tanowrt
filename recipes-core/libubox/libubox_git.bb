@@ -1,7 +1,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -39,7 +41,8 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-SRCREV = "96305a3cafcc9c0df7f189567671bb26ce3eb129"
+# 07.01.2018 17:46:31 (branch lede-17.01)
+SRCREV = "1dafcd7813f147811a6bbdb00eec603fe732aac1"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
