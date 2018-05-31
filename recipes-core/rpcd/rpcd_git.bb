@@ -31,7 +31,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 do_install_append() {
     install -d ${D}${includedir}/rpcd
     install -m 0644 ${S}/include/rpcd/* ${D}${includedir}/rpcd/
-    install -Dm 0755 ${OR}/rpcd.config ${D}${sysconfdir}/config/rpcd
+    install -Dm 0644 ${OR}/rpcd.config ${D}${sysconfdir}/config/rpcd
     install -Dm 0755 ${OR}/rpcd.init ${D}${sysconfdir}/init.d/rpcd
 
     mkdir -p ${D}/sbin
