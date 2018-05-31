@@ -4,6 +4,8 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 LIC_FILES_CHKSUM_remove = " file://openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
@@ -28,8 +30,8 @@ do_install_append() {
     install -d ${D}${sysconfdir}/udev/rules.d
     install -d ${D}${sbindir}
 
-    install -m 0755 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dnsmasq.conf ${D}${sysconfdir}/
-    install -m 0755 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dhcp.conf ${D}${sysconfdir}/config/dhcp
+    install -m 0644 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dnsmasq.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dhcp.conf ${D}${sysconfdir}/config/dhcp
     install -m 0755 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dnsmasq.init ${D}${sysconfdir}/init.d/dnsmasq
     install -m 0644 ${WORKDIR}/99-dnsmasq.rules ${D}${sysconfdir}/udev/rules.d/99-dnsmasq.rules
 
