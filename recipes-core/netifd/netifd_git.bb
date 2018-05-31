@@ -38,6 +38,32 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 
+def kernel_get_config(config, d):
+    import re
+
+    staging = d.getVar('STAGING_KERNEL_BUILDDIR', True)
+    with open(staging + '/.config') as f:
+        lines = f.readlines()
+
+    for line in lines:
+        match = re.search(r'^' + config + '=(.)$', line)
+        if match:
+            return match.group(1)
+
+    return "n"
+
+python __anonymous () {
+    bridge = kernel_get_config('CONFIG_BRIDGE', d)
+    d.setVar("KERNEL_CONFIG_BRIDGE", bridge)
+
+    if bridge == "n":
+        bb.fatal("Kernel CONFIG_BRIDGE must be enabled")
+
+    if bridge == "m":
+        pn = d.getVar("PN", True)
+        d.prependVar('RDEPENDS_%s' % pn, "kernel-module-bridge ")
+}
+
 do_configure_prepend () {
     # replace hardcoded '/lib/' with '${base_libdir}/'
     grep -rnl "/lib/" ${S}/openwrt/package/network/config/netifd/ | xargs sed -i "s:/lib/:${base_libdir}/:g"
@@ -63,14 +89,16 @@ do_install_append() {
     install -dm 0755 ${D}/sbin
     ln -sf /usr/sbin/netifd ${D}/sbin/netifd
 
-    if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
-        # procd style module loading
-        install -dm 0755 ${D}/etc/modules.d
-        echo "bridge" >${D}/etc/modules.d/30-bridge
-    else
-        # systemd/sysvinit style module loading
-        install -dm 0755 ${D}/etc/modules-load.d
-        echo "bridge" >${D}/etc/modules-load.d/bridge.conf
+    if [ "${KERNEL_CONFIG_BRIDGE}" = "m" ]; then
+        if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
+            # procd style module loading
+            install -dm 0755 ${D}/etc/modules.d
+            echo "bridge" >${D}/etc/modules.d/30-bridge
+        else
+            # systemd/sysvinit style module loading
+            install -dm 0755 ${D}/etc/modules-load.d
+            echo "bridge" >${D}/etc/modules-load.d/bridge.conf
+        fi
     fi
 
     install -d ${D}${sysconfdir}/init.d
@@ -108,6 +136,5 @@ CONFFILES_${PN}_append = "\
 
 RDEPENDS_${PN} += "\
                   bridge-utils \
-                  kernel-module-bridge \
                   base-files-scripts-openwrt\
                   "
