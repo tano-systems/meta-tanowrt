@@ -30,18 +30,27 @@ OPENWRT_SERVICE_SCRIPTS_${PN} = "log"
 OPENWRT_SERVICE_STATE_${PN}-log = "enabled"
 
 do_install_append () {
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', 'install -Dm 0755 ${WORKDIR}/log.init ${D}/etc/init.d/log', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/usr/sbin/rmmod', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/usr/sbin/insmod', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/usr/sbin/lsmod', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/usr/sbin/modinfo', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/usr/sbin/modprobe', '', d)}
-        install -dm 0755 ${D}/sbin
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /usr/sbin/kmodloader ${D}/sbin/kmodloader', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', 'ln -s /sbin/kmodloader ${D}/sbin/modprobe', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', 'ln -s /usr/sbin/logd ${D}/sbin/logd', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', 'ln -s /usr/sbin/logread ${D}/sbin/logread', '', d)}
-        ${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', 'ln -s /usr/sbin/validate_data ${D}/sbin/validate_data', '', d)}
+	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then
+		install -Dm 0755 ${WORKDIR}/log.init ${D}${sysconfdir}/init.d/log
+
+		install -dm 0755 ${D}/sbin
+		ln -s /usr/sbin/logd ${D}/sbin/logd
+		ln -s /usr/sbin/logread ${D}/sbin/logread
+		ln -s /usr/sbin/validate_data ${D}/sbin/validate_data
+	fi
+
+	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', '1', '0', d)}" = "1" ]; then
+		install -dm 0755 ${D}/usr/sbin
+		ln -s /sbin/kmodloader ${D}/usr/sbin/rmmod
+		ln -s /sbin/kmodloader ${D}/usr/sbin/insmod
+		ln -s /sbin/kmodloader ${D}/usr/sbin/lsmod
+		ln -s /sbin/kmodloader ${D}/usr/sbin/modinfo
+		ln -s /sbin/kmodloader ${D}/usr/sbin/modprobe
+
+		install -dm 0755 ${D}/sbin
+		ln -s /usr/sbin/kmodloader ${D}/sbin/kmodloader
+		ln -s /sbin/kmodloader ${D}/sbin/modprobe
+	fi
 }
 
 RDEPENDS_${PN} += "\
