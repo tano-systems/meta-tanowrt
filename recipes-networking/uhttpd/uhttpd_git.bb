@@ -2,6 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -12,7 +13,8 @@ DEPENDS = "libubox ubus json-c ustream-ssl"
 SRC_URI = "\
           git://git.openwrt.org/project/uhttpd.git \
           file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
-	  "
+          file://uhttpd.config \
+"
 
 SRCREV = "a235636a2687fafb9c474e4b134a59ff66425c92"
 S = "${WORKDIR}/git"
@@ -36,6 +38,9 @@ do_install_append() {
     install -dm 0755 ${D}/usr/sbin
     ln -s /usr/bin/uhttpd ${D}/usr/sbin/uhttpd
     install -dm 0755 ${D}/www
+
+    install -d -m 0755 ${D}${sysconfdir}/config
+    install -m 0644 ${WORKDIR}/uhttpd.config ${D}${sysconfdir}/config/uhttpd
 }
 
 FILES_${PN}  += "${libdir}/* /www"
