@@ -3,6 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -19,7 +20,8 @@ SRC_URI = "git://git.openwrt.org/project/procd.git;branch=lede-17.01 \
 	file://10_sysinfo \
 "
 
-SRCREV_pn-procd = "188353099cf6fc88f145cfcb84a4db3f6523528a"
+# 22.01.2018 20:51:22
+SRCREV_pn-procd = "9a4036fb1b7412ab2ea4f360d2cc7e6a5e0fa6b5"
 
 S = "${WORKDIR}/git"
 PD = "${S}/openwrt/package/system/procd/files"
