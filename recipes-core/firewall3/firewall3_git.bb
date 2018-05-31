@@ -2,6 +2,8 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
 LICENSE = "BSD"
@@ -9,14 +11,20 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=2a8ffaa9ef41014f236
 SECTION = "base"
 DEPENDS = "libubox uci ubus iptables"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt:"
+
 SRC_URI = "git://git.openwrt.org/project/firewall3.git \
-          "
+           file://firewall.config \
+           file://firewall.init \
+           file://firewall.hotplug \
+           file://firewall.user \
+"
 
 SRCREV = "a4d98aea373e04f3fdc3c492c1688ba52ce490a9"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+inherit cmake pkgconfig openwrt-services openwrt-base-files
 
 OPENWRT_SERVICE_PACKAGES              = "${PN}"
 OPENWRT_SERVICE_SCRIPTS_${PN}        ?= "firewall"
@@ -32,11 +40,13 @@ do_install_append() {
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
     install -d ${D}${sysconfdir}/rc.d
+    install -d ${D}${sysconfdir}/hotplug.d/iface
     install -d ${D}${base_sbindir}
 
-    install -m 0755 ${WORKDIR}/git/openwrt/package/network/config/firewall/files/firewall.init ${D}${sysconfdir}/init.d/firewall
-    install -m 0644 ${WORKDIR}/git/openwrt/package/network/config/firewall/files/firewall.config ${D}${sysconfdir}/config/firewall
-    install -m 0644 ${WORKDIR}/git/openwrt/package/network/config/firewall/files/firewall.user ${D}${sysconfdir}/firewall.user
+    install -m 0755 ${WORKDIR}/firewall.init ${D}${sysconfdir}/init.d/firewall
+    install -m 0644 ${WORKDIR}/firewall.config ${D}${sysconfdir}/config/firewall
+    install -m 0644 ${WORKDIR}/firewall.user ${D}${sysconfdir}/firewall.user
+    install -m 0644 ${WORKDIR}/firewall.hotplug ${D}${sysconfdir}/hotplug.d/iface/20-firewall
 
     ln -s ${sbindir}/firewall3 ${D}${base_sbindir}/fw3
 
