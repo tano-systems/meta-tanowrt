@@ -66,3 +66,5 @@ CONFFILES_${PN}-sysupgrade += "\
                               "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+BBCLASSEXTEND = "native"
