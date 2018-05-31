@@ -1,0 +1,62 @@
+From 7157836fdceb02bc88eafba9cd3855f3d467f6fb Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 30 May 2018 03:04:16 +0300
+Subject: [PATCH] Fixed strtonum type conversion bug
+
+---
+ src/client/conf-lldp.c | 2 +-
+ src/client/show.c      | 2 +-
+ src/daemon/lldpd.c     | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/client/conf-lldp.c b/src/client/conf-lldp.c
+index 8523f3c..2285ea5 100644
+--- a/src/client/conf-lldp.c
++++ b/src/client/conf-lldp.c
+@@ -329,7 +329,7 @@ cmd_custom_tlv_set(struct lldpctl_conn_t *conn, struct writer *w,
+ 		return 0;
+ 	} else {
+ 		const char *errstr;
+-		subtype = strtonum(s, 0, 255, &errstr);
++		subtype = strtonum(s, 0LL, 255LL, &errstr);
+ 		if (errstr != NULL) {
+ 			log_warnx("lldpctl", "invalid subtype value `%s': %s",
+ 			    s, errstr);
+diff --git a/src/client/show.c b/src/client/show.c
+index 8ba8acb..464ca2f 100644
+--- a/src/client/show.c
++++ b/src/client/show.c
+@@ -226,7 +226,7 @@ cmd_watch_neighbors(struct lldpctl_conn_t *conn, struct writer *w,
+ 
+ 	if (limit_str) {
+ 		const char *errstr;
+-		limit = strtonum(limit_str, 1, LLONG_MAX, &errstr);
++		limit = strtonum(limit_str, 1LL, LLONG_MAX, &errstr);
+ 		if (errstr != NULL) {
+ 			log_warnx("lldpctl", "specified limit (%s) is %s and ignored",
+ 			    limit_str, errstr);
+diff --git a/src/daemon/lldpd.c b/src/daemon/lldpd.c
+index 1914569..ee2ddd7 100644
+--- a/src/daemon/lldpd.c
++++ b/src/daemon/lldpd.c
+@@ -1620,7 +1620,7 @@ lldpd_main(int argc, char *argv[], char *envp[])
+ 			break;
+ #ifdef ENABLE_LLDPMED
+ 		case 'M':
+-			lldpmed = strtonum(optarg, 1, 4, &errstr);
++			lldpmed = strtonum(optarg, 1LL, 4LL, &errstr);
+ 			if (errstr) {
+ 				fprintf(stderr, "-M requires an argument between 1 and 4\n");
+ 				usage();
+@@ -1670,7 +1670,7 @@ lldpd_main(int argc, char *argv[], char *envp[])
+ 			platform_override = strdup(optarg);
+ 			break;
+ 		case 'H':
+-			smart = strtonum(optarg, 0, sizeof(filters)/sizeof(filters[0]),
++			smart = strtonum(optarg, 0LL, (long long)(sizeof(filters)/sizeof(filters[0])),
+ 			    &errstr);
+ 			if (errstr) {
+ 				fprintf(stderr, "-H requires an int between 0 and %zu\n",
+-- 
+2.16.2.windows.1
+
