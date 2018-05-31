@@ -1,3 +1,5 @@
+INHERIT += " openwrt-kmods "
+
 PREFERRED_VERSION_iptables = "1.6.2"
 
 # Virtual runtimes
@@ -9,12 +11,11 @@ VIRTUAL-RUNTIME_syslog = "ubox"
 VIRTUAL-RUNTIME_base-utils = "busybox"
 VIRTUAL-RUNTIME_network_manager = "netifd"
 
-# Remove sysvinit and systemd from DISTRO_FEATURES
-DISTRO_FEATURES_remove = "sysvinit"
-DISTRO_FEATURES_remove = "systemd"
+# Set procd as init manager
+DISTRO_FEATURES_append = " procd"
 
-# Remove PAM
-DISTRO_FEATURES_remove = "pam"
+# Remove sysvinit and systemd from DISTRO_FEATURES
+DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
 
 # Clean DISTRO_FEATURES
 DISTRO_FEATURES_remove = "\
@@ -29,6 +30,9 @@ DISTRO_FEATURES_remove = "\
     pcmcia \
     bluez5 \
     largefile \
+    sysvinit \
+    systemd \
+    pam \
 "
 # Rootfs customization
 ROOTFS_RO_UNNEEDED = "update-rc.d ${ROOTFS_BOOTSTRAP_INSTALL}"

@@ -6,4 +6,3 @@
 FILES_SOLIBSDEV = ""
 
 inherit openwrt-lua
-inherit openwrt-virtual-runtimes
