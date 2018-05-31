@@ -11,23 +11,14 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "git://git.code.sf.net/p/xtables-addons/xtables-addons;branch=master"
 SRCREV = "0e9037b0007eaaf0ae612a1481bd03b15ecb8cb8"
 
-#SRC_URI = " \
-#          https://fossies.org/linux/privat/${BPN}-${PV}.tar.xz \
-##         file://100-add-rtsp-conntrack.patch \
-##         file://200-add-lua-packetscript.patch \
-##         file://201-fix-lua-packetscript.patch \
-##         file://202-add-lua-autoconf.patch \
-#          file://300-geoip-endian-detection.patch \
-#          file://400-fix-IFF_LOWER_UP-musl.patch \
-#          file://fix-to-build-linux-v4.15-and-later.patch \
-#          file://0001-Unset-LDFLAGS-for-kernel-modules.patch \
-#          "
-
-#SRC_URI[md5sum] = "b37ed4d9c28cdcd5558c55934be8d051"
-#SRC_URI[sha256sum] = "95580b851c79c0bbc484e0d0ea23f53e5c7f439ad73d509e426598565392690d"
-
+SRC_URI += " \
+	file://100-add-rtsp-conntrack.patch \
+	file://200-add-lua-packetscript.patch \
+	file://201-fix-lua-packetscript.patch \
+	file://202-add-lua-autoconf.patch \
+	file://0001-Unset-LDFLAGS-for-kernel-modules.patch \
+"
 S = "${WORKDIR}/git"
-
 
 MODULES_MODULE_SYMVERS_LOCATION = "../${BPN}-${PV}/extensions"
 
