@@ -1,4 +1,5 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "OpenWrt MDNS daemon"
@@ -14,6 +15,6 @@ SRCREV = "0e8b948ff8dd1cb1763180c99b522390529c7841"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt-services openwrt
+inherit cmake pkgconfig openwrt
 
 FILES_${PN}  += "${libdir}/*"

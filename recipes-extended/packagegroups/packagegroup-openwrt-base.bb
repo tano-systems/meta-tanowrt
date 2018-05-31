@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
@@ -9,7 +10,7 @@ LICENSE = "MIT"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup openwrt openwrt-services
+inherit packagegroup openwrt
 
 PACKAGES = "\
 	   packagegroup-openwrt-base \

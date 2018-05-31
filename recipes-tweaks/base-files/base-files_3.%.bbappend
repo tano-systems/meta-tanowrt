@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
@@ -20,7 +21,18 @@ S = "${WORKDIR}"
 SG = "${WORKDIR}/git/openwrt"
 STMP = "${WORKDIR}/stmp"
 
-inherit openwrt-virtual-runtimes openwrt-base-files
+inherit openwrt-base-files
+
+inherit openwrt-services
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+
+OPENWRT_SERVICE_SCRIPTS_${PN} = "gpio_switch led sysfixtime system urandom_seed"
+OPENWRT_SERVICE_STATE_${PN}-gpio_switch = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-led = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-sysfixtime = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-system = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-urandom_seed = "enabled"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

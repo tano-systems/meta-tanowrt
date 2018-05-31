@@ -1,4 +1,5 @@
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
@@ -21,6 +22,10 @@ S = "${WORKDIR}/git"
 OF = "${S}/openwrt/package/network/services/odhcpd/files"
 
 inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
+OPENWRT_SERVICE_STATE_${PN}-${PN} = "disabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

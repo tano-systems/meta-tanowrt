@@ -1,4 +1,5 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SUMMARY = "OpenWrt firewall configuration utility"
@@ -16,6 +17,10 @@ SRCREV = "a4d98aea373e04f3fdc3c492c1688ba52ce490a9"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES              = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN}        ?= "firewall"
+OPENWRT_SERVICE_STATE_${PN}-firewall ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

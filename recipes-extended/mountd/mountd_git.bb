@@ -1,4 +1,5 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "OpenWrt automount daemon"
@@ -17,6 +18,10 @@ SRC_URI = "\
 SRCREV_mountd = "7826ca5d6aca691dcb6f98ab203a090d42e79337"
 
 inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
+OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

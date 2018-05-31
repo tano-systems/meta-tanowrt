@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
@@ -22,6 +23,10 @@ SRCREV_netifd = "650758b16e5185505a3fbc1307949340af70b611"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services update-alternatives openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "network"
+OPENWRT_SERVICE_STATE_${PN}-network = "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

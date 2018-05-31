@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
@@ -25,6 +26,13 @@ PD = "${S}/openwrt/package/system/procd/files"
 BF = "${S}/openwrt/package/base-files/files"
 
 inherit cmake openwrt openwrt-services pkgconfig openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "boot done sysctl umount"
+OPENWRT_SERVICE_STATE_${PN}-boot = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-done = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-sysctl = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-umount = "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

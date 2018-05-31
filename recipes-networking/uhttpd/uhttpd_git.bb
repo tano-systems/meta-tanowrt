@@ -1,4 +1,5 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "Tiny HTTP server"
@@ -17,6 +18,10 @@ SRCREV = "a235636a2687fafb9c474e4b134a59ff66425c92"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
+OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

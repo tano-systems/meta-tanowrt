@@ -1,4 +1,5 @@
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SUMMARY = "OpenWrt DHCPv6 client"
@@ -18,7 +19,7 @@ SRC_URI = "\
 S = "${WORKDIR}/git"
 OF = "${S}/openwrt/package/network/ipv6/odhcp6c/files"
 
-inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+inherit cmake pkgconfig openwrt openwrt-base-files
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

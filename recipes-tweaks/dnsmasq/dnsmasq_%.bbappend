@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
@@ -13,6 +14,10 @@ SRC_URI += "file://99-dnsmasq.rules"
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 inherit openwrt openwrt-services useradd openwrt-base-files
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
+OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
 
 do_install_append() {
     install -d ${D}${sysconfdir}
