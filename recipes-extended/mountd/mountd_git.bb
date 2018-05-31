@@ -2,6 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 DESCRIPTION = "OpenWrt automount daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/mountd.git;a=summary"
 LICENSE = "GPL-2.0+"
@@ -32,7 +33,7 @@ do_configure_prepend () {
 }
 
 do_install_append() {
-    install -Dm 0755 ${S}/openwrt/package/system/mountd/files/mountd.config ${D}${sysconfdir}/config/mountd
+    install -Dm 0644 ${S}/openwrt/package/system/mountd/files/mountd.config ${D}${sysconfdir}/config/mountd
     install -Dm 0755 ${S}/openwrt/package/system/mountd/files/mountd.init ${D}${sysconfdir}/init.d/mountd
     install -dm 0755 ${D}/sbin
     ln -sf /usr/sbin/mountd ${D}/sbin/mountd
