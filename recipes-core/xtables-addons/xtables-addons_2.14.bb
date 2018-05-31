@@ -6,6 +6,8 @@ DEPENDS = "virtual/kernel iptables"
 
 inherit autotools kernel-module-split module-base pkgconfig
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRC_URI = "git://git.code.sf.net/p/xtables-addons/xtables-addons;branch=master"
 SRCREV = "0e9037b0007eaaf0ae612a1481bd03b15ecb8cb8"
 

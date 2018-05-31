@@ -11,7 +11,7 @@ SRCREV = "16f7e16181e2f3e9cf3e2ce56a7e291844900d09"
 
 DEPENDS = "ubus libubox uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-patches:${THISDIR}/${PN}-openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
           git://git.openwrt.org/project/ubox.git \

@@ -1,4 +1,5 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "libubox HTTP client library"
@@ -12,6 +13,8 @@ SRC_URI = "git://git.openwrt.org/project/uclient.git \
           "
 
 SRCREV = "4b87d83160fec70d50b7fcd736a8c538c28a016c"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/git"
 

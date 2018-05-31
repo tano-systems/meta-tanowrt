@@ -18,6 +18,8 @@ SRC_URI = "git://git.openwrt.org/project/iwinfo.git \
            file://0001-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \
           "
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 S = "${WORKDIR}/git"
 
 CFLAGS += "-fPIC"

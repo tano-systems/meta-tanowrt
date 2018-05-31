@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=13;md5=572cd47ba0e377b2633
 SECTION = "base"
 DEPENDS = "json-c libubox ubus libnl uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-patches:${THISDIR}/${PN}-openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
           git://git.openwrt.org/project/netifd.git;name=netifd \

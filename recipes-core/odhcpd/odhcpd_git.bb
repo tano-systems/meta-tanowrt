@@ -2,6 +2,8 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
 LICENSE = "GPL-2.0"
@@ -9,7 +11,7 @@ LIC_FILES_CHKSUM = "file://src/odhcpd.c;beginline=1;endline=13;md5=b5b1da01ca7e1
 SECTION = "base"
 DEPENDS = "libubox ubus libnl uci"
 
-FILESEXTRAPATHS_prepend = "${THIDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
     git://git.openwrt.org/project/odhcpd.git;name=odhcpd \

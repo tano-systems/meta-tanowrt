@@ -16,6 +16,8 @@ SRC_URI = "\
           file://0200-prevent-musl-endian-h-parenthese-warning.patch \
           "
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRCREV_mountd = "7826ca5d6aca691dcb6f98ab203a090d42e79337"
 
 inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files

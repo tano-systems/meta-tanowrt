@@ -2,7 +2,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 EXTRA_OECONF += "--enable-shared --disable-static --with-xtlibdir=/usr/lib/iptables"
 

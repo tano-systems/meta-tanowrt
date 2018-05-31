@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=2a8ffaa9ef41014f236
 SECTION = "base"
 DEPENDS = "libubox uci ubus iptables"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://git.openwrt.org/project/firewall3.git \
            file://firewall.config \

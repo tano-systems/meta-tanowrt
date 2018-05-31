@@ -13,7 +13,7 @@ RDEPENDS_${PN} += "tzdata"
 S = "${WORKDIR}"
 LIC_FILES_CHKSUM_append = " file://${S}/git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}-patches:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
         file://0001-use-sh-not-ash.patch \

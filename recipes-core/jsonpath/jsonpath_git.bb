@@ -16,6 +16,8 @@ SRC_URI = "git://git.openwrt.org/project/jsonpath.git;name=jsonpath; \
 
 SRCREV_jsonpath = "dea067ad67d977c247c300c06676a06adf21e0c7"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 inherit cmake pkgconfig
 
 S = "${WORKDIR}/git"

@@ -30,6 +30,8 @@ LIC_FILES_CHKSUM = "\
                    file://uloop.c;beginline=1;endline=17;md5=f151c0422668fa4c8f91d2caf5267b3e \
                    "
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SECTION = "libs"
 
 DEPENDS += "json-c"

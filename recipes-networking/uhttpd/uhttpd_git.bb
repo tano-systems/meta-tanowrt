@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=ba30601dd30339f7ff3
 SECTION = "base"
 DEPENDS = "libubox ubus json-c ustream-ssl"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
           git://git.openwrt.org/project/uhttpd.git \

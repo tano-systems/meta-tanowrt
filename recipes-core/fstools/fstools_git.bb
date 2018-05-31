@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://ubi.c;beginline=1;endline=17;md5=8ccc371d64f0b3a8d910
 SECTION = "base"
 DEPENDS += "util-linux"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-patches:${THISDIR}/${PN}-openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=lede-17.01 \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \

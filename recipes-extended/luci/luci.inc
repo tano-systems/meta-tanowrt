@@ -1,4 +1,5 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/patches:${THISDIR}/files:"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/luci/patches:${THISDIR}/luci/files:"
 
 SRC_URI += "\
 	git://github.com/openwrt/luci.git;branch=lede-17.01 \

@@ -9,6 +9,8 @@ LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a
 SECTION = "base"
 DEPENDS = "libubox"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRCREV_odhcp6c = "474b5a3a9a25f0aa12e69afd72d7661638ad879d"
 
 SRC_URI = "\

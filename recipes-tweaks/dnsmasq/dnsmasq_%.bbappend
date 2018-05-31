@@ -6,7 +6,7 @@
 
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 LIC_FILES_CHKSUM_remove = " file://openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 LIC_FILES_CHKSUM_append = " file://../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "

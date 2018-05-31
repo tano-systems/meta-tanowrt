@@ -6,6 +6,8 @@ DEPENDS = "virtual/kernel iptables"
 
 inherit autotools kernel-module-split module-base pkgconfig
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRC_URI = " \
           https://fossies.org/linux/privat/${BPN}-${PV}.tar.xz \
           file://100-add-rtsp-conntrack.patch \
