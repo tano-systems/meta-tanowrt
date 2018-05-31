@@ -3,6 +3,8 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
 LICENSE = "GPL-2.0"
@@ -10,12 +12,16 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=13;md5=572cd47ba0e377b2633
 SECTION = "base"
 DEPENDS = "json-c libubox ubus libnl uci"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-patches:${THISDIR}/${PN}-openwrt:"
+
 SRC_URI = "\
           git://git.openwrt.org/project/netifd.git;name=netifd \
           file://100-Fix-IFF_LOWER_UP-define.patch \
-          file://network.config \
           file://200-buffer-overflow-fix.patch \
           file://300-replace-is_error-helper-with-NULL-check.patch \
+          file://network.config \
+          file://network.init \
+          file://network.hotplug \
           "
 
 SRCREV_netifd = "650758b16e5185505a3fbc1307949340af70b611"
@@ -57,10 +63,21 @@ do_install_append() {
     install -dm 0755 ${D}/sbin
     ln -sf /usr/sbin/netifd ${D}/sbin/netifd
 
-    # Be prepared for both procd and systemd/sysvinit style module loading
-    install -dm 0755 ${D}/etc/modules.d ${D}/etc/modules-load.d
-    echo "bridge" >${D}/etc/modules.d/30-bridge
-    echo "bridge" >${D}/etc/modules-load.d/bridge.conf
+    if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
+        # procd style module loading
+        install -dm 0755 ${D}/etc/modules.d
+        echo "bridge" >${D}/etc/modules.d/30-bridge
+    else
+        # systemd/sysvinit style module loading
+        install -dm 0755 ${D}/etc/modules-load.d
+        echo "bridge" >${D}/etc/modules-load.d/bridge.conf
+    fi
+
+    install -d ${D}${sysconfdir}/init.d
+    install -m 755 ${WORKDIR}/network.init ${D}${sysconfdir}/init.d/network
+
+    install -d ${D}${sysconfdir}/hotplug.d/iface
+    install -m 755 ${WORKDIR}/network.hotplug ${D}${sysconfdir}/hotplug.d/00-netstate
 }
 
 ALTERNATIVE_${PN} = "ifup ifdown default.script"
