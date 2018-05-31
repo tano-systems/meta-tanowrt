@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -50,13 +50,23 @@ do_install_append() {
 
     ln -s ${sbindir}/firewall3 ${D}${base_sbindir}/fw3
 
+    if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
+        MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules.d"
+        IP6TABLES_CONF=40-ip6tables
+        IPTABLES_CONF=iptables-fw3
+    else
+        MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules-load.d"
+        IP6TABLES_CONF=ip6tables.conf
+        IPTABLES_CONF=iptables-fw3.conf
+    fi
+
     # Be prepared for both procd and sysvinit/systemd style module loading
-    install -dm 0755 ${D}${sysconfdir}/modules.d ${D}${sysconfdir}/modules-load.d
+    install -dm 0755 ${MODULES_AUTOLOAD_DIR}
     if [ "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'true', 'false', d)}" = "true" ]; then
 
         # Can't indent the here-document because leading spaces confuse
         # kmodloader
-        cat >${D}${sysconfdir}/modules.d/40-ip6tables <<EOF
+        cat >${MODULES_AUTOLOAD_DIR}/${IP6TABLES_CONF} <<EOF
 ip6_tables
 ip6table_filter
 ip6table_mangle
@@ -65,13 +75,11 @@ nf_nat_masquerade_ipv6
 nf_defrag_ipv6
 nf_conntrack_ipv6
 EOF
-
-       install -Dm 0644 ${D}${sysconfdir}/modules.d/40-ip6tables ${D}${sysconfdir}/modules-load.d/ip6tables.conf
     fi
 
     # Can't indent the here-document because leading spaces confuse
     # kmodloader
-    cat >${D}${sysconfdir}/modules.d/iptables-fw3 <<EOF
+    cat >${MODULES_AUTOLOAD_DIR}/${IPTABLES_CONF} <<EOF
 ip_tables
 xt_tcpudp
 iptable_filter
@@ -103,8 +111,6 @@ nf_conntrack_netlink
 nf_nat_masquerade_ipv4
 nf_conntrack
 EOF
-
-    install -Dm 0644 ${D}${sysconfdir}/modules.d/iptables-fw3 ${D}${sysconfdir}/modules-load.d/iptables-fw3.conf
 }
 
 FILES_${PN} += "${libdir}/*"
