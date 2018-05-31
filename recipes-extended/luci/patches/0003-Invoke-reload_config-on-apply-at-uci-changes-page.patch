@@ -1,0 +1,35 @@
+From 752476ea339622a492a234cd08ce8a6fabdf2760 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 20 May 2018 23:31:13 +0300
+Subject: [PATCH] Invoke 'reload_config' on apply at uci changes page
+
+---
+ modules/luci-mod-admin-full/luasrc/controller/admin/uci.lua | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/modules/luci-mod-admin-full/luasrc/controller/admin/uci.lua b/modules/luci-mod-admin-full/luasrc/controller/admin/uci.lua
+index 9c33d9c..8bbfccc 100644
+--- a/modules/luci-mod-admin-full/luasrc/controller/admin/uci.lua
++++ b/modules/luci-mod-admin-full/luasrc/controller/admin/uci.lua
+@@ -4,6 +4,8 @@
+ 
+ module("luci.controller.admin.uci", package.seeall)
+ 
++local util = require("luci.util")
++
+ function index()
+ 	local redir = luci.http.formvalue("redir", true) or
+ 	  luci.dispatcher.build_url(unpack(luci.dispatcher.context.request))
+@@ -44,6 +46,9 @@ function action_apply()
+ 		changes = next(changes) and changes,
+ 		configs = reload
+ 	})
++
++	-- reload configs
++	util.ubus("uci", "reload_config");
+ end
+ 
+ 
+-- 
+2.7.4
+

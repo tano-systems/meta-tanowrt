@@ -1,0 +1,48 @@
+
+config command
+	option name 'Interrupts'
+	option command 'cat /proc/interrupts'
+
+config command
+	option name 'Software interrupts'
+	option command 'cat /proc/softirqs'
+
+config command
+	option name 'CPU information'
+	option command 'cat /proc/cpuinfo'
+
+config command
+	option name 'Kernel configuration'
+	option command 'zcat /proc/config.gz'
+
+config command
+	option name 'Kernel modules'
+	option command 'lsmod'
+
+config command
+	option name 'Kernel version'
+	option command 'uname -a'
+
+config command
+	option name 'Kernel command line'
+	option command 'cat /proc/cmdline'
+
+config command
+	option name 'Network interfaces'
+	option command 'ifconfig -a'
+
+config command
+	option name 'Mounts information'
+	option command 'cat /proc/mounts'
+
+config command
+	option name 'MTD'
+	option command 'cat /proc/mtd'
+
+config command
+	option name 'Memory infromation'
+	option command 'cat /proc/meminfo'
+
+config command
+	option name 'IO memory ranges'
+	option command 'cat /proc/iomem'
