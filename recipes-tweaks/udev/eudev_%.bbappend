@@ -3,11 +3,27 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://udev.procd"
 
 inherit openwrt-services
+inherit useradd
+
+USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM_${PN} = "\
+    -f -r tty; \
+    -f -r dialout; \
+    -f -r kmem; \
+    -f -r input; \
+    -f -r video; \
+    -f -r lp; \
+    -f -r disk; \
+    -f -r cdrom; \
+    -f -r tape; \
+    -f -r floppy"
 
 OPENWRT_SERVICE_PACKAGES = "${PN}"
 OPENWRT_SERVICE_SCRIPTS_${PN} = "udev"
@@ -22,3 +38,4 @@ do_install_append() {
     ln -s ../init.d/udev ${D}${sysconfdir}/rc.d/S05udev
     ln -s ../init.d/udev ${D}${sysconfdir}/rc.d/K95udev
 }
+
