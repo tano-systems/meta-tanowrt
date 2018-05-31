@@ -4,25 +4,35 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
+RDEPENDS_${PN} += "tzdata"
 
-LIC_FILES_CHKSUM_remove = " file://openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
-LIC_FILES_CHKSUM_append = " file://git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
+S = "${WORKDIR}"
+LIC_FILES_CHKSUM_append = " file://${S}/git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}-patches:"
 
 SRC_URI += "\
         file://0001-use-sh-not-ash.patch \
 	"
 SRCREV = "${OPENWRT_SRCREV}"
 
-S = "${WORKDIR}"
+SRC_URI_append = "\
+    file://sysctl.conf \
+    file://issue \
+    file://hostname \
+    file://system.init \
+    file://system.config \
+"
+
 SG = "${WORKDIR}/git/openwrt"
 STMP = "${WORKDIR}/stmp"
 
 inherit openwrt-base-files
-
+inherit openwrt-version
 inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "${PN}"
@@ -153,6 +163,31 @@ do_install_append () {
         sed -i "s#%PATH%#/usr/sbin:/sbin:/usr/bin:/bin#g" \
               ${D}${sysconfdir}/profile
 
+        install -d -m 0755 ${D}${sysconfdir}/config
+        install -d -m 0755 ${D}${sysconfdir}/init.d
+
+        install -m 0644 ${S}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
+        install -m 0644 ${S}/issue ${D}${sysconfdir}/issue
+        install -m 0644 ${S}/hostname ${D}${sysconfdir}/hostname
+        install -m 0755 ${S}/system.init ${D}${sysconfdir}/init.d/system
+        install -m 0644 ${S}/system.config ${D}${sysconfdir}/config/system
+
+        install -m 0644 ${S}/profile ${D}${sysconfdir}/profile
+
+        rm ${D}${sysconfdir}/issue.net
+        rm ${D}${sysconfdir}/TZ
+
+        # Restore /etc/openwrt_release and /etc/openwrt_verison
+        install -m 0644 ${S}/git/openwrt/package/base-files/files/etc/openwrt_release ${D}${sysconfdir}/openwrt_release
+        install -m 0644 ${S}/git/openwrt/package/base-files/files/etc/openwrt_version ${D}${sysconfdir}/openwrt_version
+
+        # Run VERSION_SED script
+        ${OPENWRT_VERSION_SED} \
+            ${D}/usr/lib/os-release \
+            ${D}${sysconfdir}/device_info \
+            ${D}${sysconfdir}/openwrt_version \
+            ${D}${sysconfdir}/openwrt_release \
+            ${D}${sysconfdir}/issue
     fi
 }
 
