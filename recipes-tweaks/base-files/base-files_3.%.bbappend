@@ -11,7 +11,8 @@ HOMEPAGE = "http://wiki.openwrt.org/"
 RDEPENDS_${PN} += "tzdata"
 
 S = "${WORKDIR}"
-LIC_FILES_CHKSUM_append = " file://${S}/git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
+LIC_FILES_CHKSUM_remove = " file://${WORKDIR}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
+LIC_FILES_CHKSUM_append = " file://${WORKDIR}/git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
