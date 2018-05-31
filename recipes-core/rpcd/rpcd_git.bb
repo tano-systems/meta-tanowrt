@@ -2,6 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -13,7 +14,8 @@ SRC_URI = "\
 	git://git.openwrt.org/project/rpcd.git;name=rpcd; \
 	"
 
-SRCREV_rpcd = "cfe1e75c91bc1bac82e6caab3e652b0ebee59524"
+# 13.05.2018 22:13:05
+SRCREV_rpcd = "820621952d537c49deba470c6f61c40df93f4ba8"
 
 S = "${WORKDIR}/git"
 OR = "${S}/openwrt/package/system/rpcd/files"
