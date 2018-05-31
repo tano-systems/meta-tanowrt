@@ -52,7 +52,7 @@ def kernel_get_config(config, d):
 
     return "n"
 
-python __anonymous () {
+python do_kernel_config_check() {
     bridge = kernel_get_config('CONFIG_BRIDGE', d)
     d.setVar("KERNEL_CONFIG_BRIDGE", bridge)
 
@@ -63,6 +63,8 @@ python __anonymous () {
         pn = d.getVar("PN", True)
         d.prependVar('RDEPENDS_%s' % pn, "kernel-module-bridge ")
 }
+
+addtask kernel_config_check after do_compile before do_install
 
 do_configure_prepend () {
     # replace hardcoded '/lib/' with '${base_libdir}/'
