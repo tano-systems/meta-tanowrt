@@ -1,5 +1,8 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
-
+# Copyright (C) 2015, MentorGraphics
+# Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
+# Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
+# Copyright (C) 2018, Anton Kikin <a.kikin@tano-systems.com>
+PR = "tano0"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -13,7 +16,8 @@ SRC_URI = "\
           file://log.init \
           "
 
-SRCREV = "16f7e16181e2f3e9cf3e2ce56a7e291844900d09"
+# 14.02.2018 11:08:54
+SRCREV = "128bc35fa951ac3beff6e977bc3cced87c2e2600"
 
 S = "${WORKDIR}/git"
 
