@@ -51,13 +51,13 @@ do_install_append() {
     ln -s ${sbindir}/firewall3 ${D}${base_sbindir}/fw3
 
     if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
-        MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules.d"
-        IP6TABLES_CONF=40-ip6tables
-        IPTABLES_CONF=iptables-fw3
+        MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules-boot.d"
+        IP6TABLES_CONF=42-ip6tables
+        IPTABLES_CONF=40-iptables
     else
         MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules-load.d"
-        IP6TABLES_CONF=ip6tables.conf
-        IPTABLES_CONF=iptables-fw3.conf
+        IP6TABLES_CONF=42-ip6tables.conf
+        IPTABLES_CONF=40-iptables.conf
     fi
 
     # Be prepared for both procd and sysvinit/systemd style module loading
