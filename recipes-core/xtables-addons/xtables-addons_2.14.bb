@@ -22,7 +22,10 @@ S = "${WORKDIR}/git"
 
 MODULES_MODULE_SYMVERS_LOCATION = "../${BPN}-${PV}/extensions"
 
-EXTRA_OECONF = "--with-kbuild=${STAGING_KERNEL_DIR}"
+EXTRA_OECONF = "\
+	--with-kbuild=${STAGING_KERNEL_DIR} \
+	--with-xtlibdir=${libdir}/iptables \
+"
 
 EXTRA_OEMAKE = "M=${S}/extentions DESTDIR=${D} V=1"
 MODULES_INSTALL_TARGET = "install"
