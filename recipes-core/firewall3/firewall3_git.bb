@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -18,6 +18,18 @@ SRC_URI = "git://git.openwrt.org/project/firewall3.git \
            file://firewall.init \
            file://firewall.hotplug \
            file://firewall.user \
+"
+
+SRC_URI += "\
+	file://modules.d/42-ip6tables \
+	file://modules.d/ipt-conntrack \
+	file://modules.d/ipt-core \
+	file://modules.d/ipt-nat \
+	file://modules.d/nf-conntrack \
+	file://modules.d/nf-conntrack6 \
+	file://modules.d/nf-ipt \
+	file://modules.d/nf-ipt6 \
+	file://modules.d/nf-nat \
 "
 
 SRCREV = "a4d98aea373e04f3fdc3c492c1688ba52ce490a9"
@@ -52,65 +64,29 @@ do_install_append() {
 
     if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
         MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules-boot.d"
-        IP6TABLES_CONF=42-ip6tables
-        IPTABLES_CONF=40-iptables
+        CONF_EXT=""
     else
         MODULES_AUTOLOAD_DIR="${D}${sysconfdir}/modules-load.d"
-        IP6TABLES_CONF=42-ip6tables.conf
-        IPTABLES_CONF=40-iptables.conf
+        CONF_EXT=".conf"
     fi
 
     # Be prepared for both procd and sysvinit/systemd style module loading
     install -dm 0755 ${MODULES_AUTOLOAD_DIR}
+
+    install -m 0644 ${WORKDIR}/modules.d/ipt-conntrack ${MODULES_AUTOLOAD_DIR}/ipt-conntrack ${CONF_EXT}
+    install -m 0644 ${WORKDIR}/modules.d/ipt-core ${MODULES_AUTOLOAD_DIR}/ipt-core ${CONF_EXT}
+    install -m 0644 ${WORKDIR}/modules.d/ipt-nat ${MODULES_AUTOLOAD_DIR}/ipt-nat ${CONF_EXT}
+
+    install -m 0644 ${WORKDIR}/modules.d/nf-conntrack ${MODULES_AUTOLOAD_DIR}/nf-conntrack${CONF_EXT}
+    install -m 0644 ${WORKDIR}/modules.d/nf-ipt ${MODULES_AUTOLOAD_DIR}/nf-ipt${CONF_EXT}
+    install -m 0644 ${WORKDIR}/modules.d/nf-nat ${MODULES_AUTOLOAD_DIR}/nf-nat${CONF_EXT}
+
     if [ "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'true', 'false', d)}" = "true" ]; then
-
-        # Can't indent the here-document because leading spaces confuse
-        # kmodloader
-        cat >${MODULES_AUTOLOAD_DIR}/${IP6TABLES_CONF} <<EOF
-ip6_tables
-ip6table_filter
-ip6table_mangle
-ipt_REJECT
-nf_nat_masquerade_ipv6
-nf_defrag_ipv6
-nf_conntrack_ipv6
-EOF
+        # Install IPv6 modules
+        install -m 0644 ${WORKDIR}/modules.d/42-ip6tables ${MODULES_AUTOLOAD_DIR}/42-ip6tables${CONF_EXT}
+        install -m 0644 ${WORKDIR}/modules.d/nf-conntrack6 ${MODULES_AUTOLOAD_DIR}/nf-conntrack6${CONF_EXT}
+        install -m 0644 ${WORKDIR}/modules.d/nf-ipt6 ${MODULES_AUTOLOAD_DIR}/nf-ipt6${CONF_EXT}
     fi
-
-    # Can't indent the here-document because leading spaces confuse
-    # kmodloader
-    cat >${MODULES_AUTOLOAD_DIR}/${IPTABLES_CONF} <<EOF
-ip_tables
-xt_tcpudp
-iptable_filter
-iptable_mangle
-iptable_nat
-xt_limit
-xt_mac
-xt_multiport
-xt_comment
-xt_LOG
-nf_log_common
-nf_log_ipv4
-xt_tcpmss
-ipt_reject
-xt_time
-xt_mark
-xt_nat
-xt_NETMAP
-nf_nat_ipv4
-iptable_nat
-ipt_MASQUERADE
-xt_REDIRECT
-xt_state
-xt_CT
-xt_conntrack
-nf_defrag_ipv4
-nf_conntrack_ipv4
-nf_conntrack_netlink
-nf_nat_masquerade_ipv4
-nf_conntrack
-EOF
 }
 
 FILES_${PN} += "${libdir}/*"
