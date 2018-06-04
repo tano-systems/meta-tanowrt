@@ -107,7 +107,7 @@ do_install_append() {
     install -m 755 ${WORKDIR}/network.init ${D}${sysconfdir}/init.d/network
 
     install -d ${D}${sysconfdir}/hotplug.d/iface
-    install -m 755 ${WORKDIR}/network.hotplug ${D}${sysconfdir}/hotplug.d/00-netstate
+    install -m 755 ${WORKDIR}/network.hotplug ${D}${sysconfdir}/hotplug.d/iface/00-netstate
 }
 
 ALTERNATIVE_${PN} = "ifup ifdown default.script"
