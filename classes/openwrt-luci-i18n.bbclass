@@ -46,7 +46,7 @@ LUCI_LANG_vi="Tiếng Việt (Vietnamese)"
 LUCI_LANG_zh_cn="中文 (Chinese)"
 LUCI_LANG_zh_tw="臺灣華語 (Taiwanese)"
 
-LUCI_I18N_SRC = "${S}"
+LUCI_PKG_SRC ?= "${S}"
 
 def build_i18n_packages(d):
     import os
@@ -55,7 +55,7 @@ def build_i18n_packages(d):
 
     split_packages = set()
 
-    source_dir = d.expand("${LUCI_I18N_SRC}")
+    source_dir = d.expand("${LUCI_PKG_SRC}")
     pkg        = d.expand("${PN}")
 
     # Generate LMO files and uci-defaults to package dir (not install dir)
