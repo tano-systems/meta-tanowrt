@@ -2,6 +2,9 @@
 OpenWrt services
 ================
 
+Recipe luci-app-terminal:
+- ttyd
+
 Recipe ddns-scripts:
 - ddns
 
