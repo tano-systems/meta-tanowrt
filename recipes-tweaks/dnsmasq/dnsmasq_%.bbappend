@@ -4,18 +4,21 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-LIC_FILES_CHKSUM_remove = " file://openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
-LIC_FILES_CHKSUM_append = " file://../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
-
-SRC_URI += "file://99-dnsmasq.rules"
+SRC_URI += "\
+	file://99-dnsmasq.rules \
+	file://dhcp.conf \
+	file://dnsmasq.conf \
+	file://dnsmasqsec.hotplug \
+	file://dnsmasq.init \
+"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-inherit openwrt openwrt-services useradd openwrt-base-files
+inherit openwrt openwrt-services useradd
 
 OPENWRT_SERVICE_PACKAGES = "${PN}"
 OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
@@ -30,9 +33,9 @@ do_install_append() {
     install -d ${D}${sysconfdir}/udev/rules.d
     install -d ${D}${sbindir}
 
-    install -m 0644 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dnsmasq.conf ${D}${sysconfdir}/
-    install -m 0644 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dhcp.conf ${D}${sysconfdir}/config/dhcp
-    install -m 0755 ${WORKDIR}/git/openwrt/package/network/services/dnsmasq/files/dnsmasq.init ${D}${sysconfdir}/init.d/dnsmasq
+    install -m 0644 ${WORKDIR}/dnsmasq.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/dhcp.conf ${D}${sysconfdir}/config/dhcp
+    install -m 0755 ${WORKDIR}/dnsmasq.init ${D}${sysconfdir}/init.d/dnsmasq
     install -m 0644 ${WORKDIR}/99-dnsmasq.rules ${D}${sysconfdir}/udev/rules.d/99-dnsmasq.rules
 
     # dnsmasq installs in /usr/bin, openwrt looks for it in /usr/sbin
