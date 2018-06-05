@@ -2,6 +2,9 @@
 OpenWrt services
 ================
 
+Recipe ddns-scripts:
+- ddns
+
 Recipe fstools:
 - fstab
 

@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 #DEPENDS += "gzip-native"
 
@@ -38,6 +38,12 @@ SRC_URI = "\
 	file://public_suffix_list.dat \
 	file://update_no-ip_com.sh \
 "
+
+inherit openwrt-services
+
+OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "ddns"
+OPENWRT_SERVICE_STATE_${PN}-ddns = "disabled"
 
 inherit pkgconfig
 
