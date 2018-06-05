@@ -6,6 +6,10 @@
 
 PR = "tano0"
 
+# Initial timezone
+OPENWRT_ZONENAME ?= "Europe/Moscow"
+OPENWRT_TIMEZONE ?= "MSK-3"
+
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
 RDEPENDS_${PN} += "tzdata"
@@ -189,6 +193,13 @@ do_install_append () {
             ${D}${sysconfdir}/openwrt_version \
             ${D}${sysconfdir}/openwrt_release \
             ${D}${sysconfdir}/issue
+
+        OPENWRT_TIMEZONE_ESCAPED="${@d.getVar('OPENWRT_TIMEZONE', True).replace('/', '\/')}"
+        OPENWRT_ZONENAME_ESCAPED="${@d.getVar('OPENWRT_ZONENAME', True).replace('/', '\/')}"
+
+        # Setup timezone and zonename in /etc/config/system
+        sed -i -e "s/\(option\s*timezone\).*/\1 \'${OPENWRT_TIMEZONE_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+        sed -i -e "s/\(option\s*zonename\).*/\1 \'${OPENWRT_ZONENAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
     fi
 }
 
