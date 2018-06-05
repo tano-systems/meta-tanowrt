@@ -3,7 +3,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -31,11 +31,9 @@ OPENWRT_SERVICE_STATE_${PN}-udev = "enabled"
 
 do_install_append() {
     install -d ${D}${sysconfdir}/init.d
-
     install -m 0755 ${WORKDIR}/udev.procd ${D}${sysconfdir}/init.d/udev
 
-    mkdir -p ${D}${sysconfdir}/rc.d
-    ln -s ../init.d/udev ${D}${sysconfdir}/rc.d/S05udev
-    ln -s ../init.d/udev ${D}${sysconfdir}/rc.d/K95udev
+    # Remove sysvinit script
+    rm ${D}/${sysconfdir}/init.d/udev-cache
 }
 
