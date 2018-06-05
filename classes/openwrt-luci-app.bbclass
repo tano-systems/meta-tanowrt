@@ -16,19 +16,21 @@ FILES_${PN} += "${LUCI_INSTALL_LUASRC_PATH}"
 FILES_${PN} += "${LUCI_INSTALL_HTDOCS_PATH}"
 FILES_${PN} += "${LUCI_INSTALL_ROOT_PATH}"
 
+LUCI_APP_SRC ?= "${S}"
+
 do_install_append() {
 	# Install luasrc
-	if [ -d "${S}/luasrc" ]; then
-		( cd ${S}/luasrc; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_LUASRC_PATH}/{}" \; )
+	if [ -d "${LUCI_APP_SRC}/luasrc" ]; then
+		( cd ${LUCI_APP_SRC}/luasrc; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_LUASRC_PATH}/{}" \; )
 	fi
 
 	# Install htdocs
-	if [ -d "${S}/htdocs" ]; then
-		( cd ${S}/htdocs; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_HTDOCS_PATH}/{}" \; )
+	if [ -d "${LUCI_APP_SRC}/htdocs" ]; then
+		( cd ${LUCI_APP_SRC}/htdocs; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_HTDOCS_PATH}/{}" \; )
 	fi
 
 	# Install root files
-	if [ -d "${S}/root" ]; then
-		( cd ${S}/root; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_ROOT_PATH}/{}" \; )
+	if [ -d "${LUCI_APP_SRC}/root" ]; then
+		( cd ${LUCI_APP_SRC}/root; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_ROOT_PATH}/{}" \; )
 	fi
 }
