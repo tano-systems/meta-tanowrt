@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -12,10 +12,22 @@ SECTION = "base"
 DEPENDS = "json-c libubox libnl lua5.1 iwinfo openssl"
 RDEPENDS_${PN} = "lua5.1"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 inherit cmake openwrt pkgconfig
 inherit openwrt-luci-i18n
 
 require luci.inc
+
+SRC_URI = "\
+	${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL} \
+	file://cmake.patch \
+	file://0001-Fixed-luci.sys.user.setpasswd.patch \
+	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
+	file://0003-Invoke-reload_config-on-apply-at-uci-changes-page.patch \
+"
+
+SRCREV = "${LUCI_GIT_SRCREV}" 
 
 prefix=""
 includedir="/usr/include"
@@ -28,47 +40,7 @@ FILES_${PN} += "/www /usr/lib /usr/share/acl.d /${bindir} /lib/upgrade/luci-add-
 
 S = "${WORKDIR}/git/"
 
-PACKAGECONFIG ??= "\
-	luci-app-commands-predefined \
-"
-
-LUCI_APPLICATIONS ?= "\
-	luci-app-commands \
-	luci-app-firewall \
-	luci-app-uhttpd \
-	luci-app-openvpn"
-
-LUCI_THEMES ?= "\
-	luci-theme-bootstrap"
-
-PACKAGECONFIG[luci-app-commands-predefined] = ""
-
-SRC_URI += "${@bb.utils.contains('PACKAGECONFIG', 'luci-app-commands-predefined', 'file://luci-app-commands-predefined', '', d)}"
 SRC_URI += "file://CMakeLists.txt"
-
-apply_config() {
-	OBJ_TYPE=$1
-	OBJ_LIST=$2
-
-	OBJS=`ls ${S}/${OBJ_TYPE}/`
-
-	for obj in ${OBJS}; do
-		DEL=1
-		for iapp in ${OBJ_LIST}; do
-			if [ "$iapp" = "$obj" ]; then
-				DEL=0
-			fi
-		done
-		
-		if [ "$DEL" = "1" ]; then
-			rm -rf ${S}/${OBJ_TYPE}/${obj}
-			bbnote "Removed folder for ${obj} from sources"
-		else
-			luci_add_to_build "${OBJ_TYPE}" "${obj}"
-			bbnote "Added to build ${obj}"
-		fi
-	done
-}
 
 apply_luci_version() {
 	LUCI_VERSION_SRC="${S}/modules/luci-base/luasrc/version.lua"
@@ -92,59 +64,18 @@ do_preconfigure() {
 	       ${S}/modules/luci-mod-admin-mini \
 	       ${S}/modules/luci-mod-rpc
 
-	apply_config applications "${LUCI_APPLICATIONS}"
-	apply_config themes "${LUCI_THEMES}"
+	# Remove applications
+	rm -rf ${S}/applications
+
+	# Remove themes
+	rm -rf ${S}/themes
+
 	apply_luci_version
 }
 
 do_install_append() {
-	if [ "${@bb.utils.contains('LUCI_APPLICATIONS', 'luci-app-commands', '1', '0', d)}" = "1" ]; then
-		if [ "${@bb.utils.contains('PACKAGECONFIG', 'luci-app-commands-predefined', '1', '0', d)}" = "1" ]; then
-			# Add pre-defined commands to LuCI config
-			cat ${WORKDIR}/luci-app-commands-predefined >> ${D}${sysconfdir}/config/luci
-		fi
-	fi
-
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
-}
-
-luci_add_to_build() {
-	FOLDER=$1
-	NAME=$2
-
-	echo "ADD_SUBDIRECTORY(${FOLDER}/${NAME})" >> ${S}/CMakeLists-extra.txt
-
-	CMAKELISTS=${S}/${FOLDER}/${NAME}/CMakeLists.txt
-	rm -rf ${CMAKELISTS}
-
-	echo "cmake_minimum_required(VERSION 3.0)" > ${CMAKELISTS}
-	echo "" >> ${CMAKELISTS}
-	echo "PROJECT(${NAME} C)" >> ${CMAKELISTS}
-
-	if [ -d "${S}/${FOLDER}/${NAME}/luasrc" ]; then
-		echo "" >> ${CMAKELISTS}
-		echo "INSTALL(DIRECTORY luasrc/" >> ${CMAKELISTS}
-		echo "	DESTINATION \"\${LUAPATH}/luci\"" >> ${CMAKELISTS}
-		echo "	USE_SOURCE_PERMISSIONS" >> ${CMAKELISTS}
-		echo ")" >> ${CMAKELISTS}
-	fi
-
-	if [ -d "${S}/${FOLDER}/${NAME}/root" ]; then
-		echo "" >> ${CMAKELISTS}
-		echo "INSTALL(DIRECTORY root/" >> ${CMAKELISTS}
-		echo "	DESTINATION \"\${CMAKE_INSTALL_PREFIX}/\"" >> ${CMAKELISTS}
-		echo "	USE_SOURCE_PERMISSIONS" >> ${CMAKELISTS}
-		echo ")" >> ${CMAKELISTS}
-	fi
-
-	if [ -d "${S}/${FOLDER}/${NAME}/htdocs" ]; then
-		echo "" >> ${CMAKELISTS}
-		echo "INSTALL(DIRECTORY htdocs/" >> ${CMAKELISTS}
-		echo "	DESTINATION \"\${CMAKE_INSTALL_PREFIX}/www\"" >> ${CMAKELISTS}
-		echo "	USE_SOURCE_PERMISSIONS" >> ${CMAKELISTS}
-		echo ")" >> ${CMAKELISTS}
-	fi
 }
 
 addtask preconfigure before do_configure after do_patch

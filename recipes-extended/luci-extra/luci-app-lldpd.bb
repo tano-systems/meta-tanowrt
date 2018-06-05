@@ -8,9 +8,9 @@ PR = "tano8"
 
 LICENSE = "CLOSED"
 
-GIT_BRANCH = "develop"
-GIT_SRCREV = "${AUTOREV}"
-GIT_PROTOCOL="https"
+GIT_BRANCH   = "develop"
+GIT_SRCREV   = "${AUTOREV}"
+GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tano-systems/luci-app-lldpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 SRCREV = "${GIT_SRCREV}"

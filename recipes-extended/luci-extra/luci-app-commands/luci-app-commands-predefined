@@ -1,0 +1,51 @@
+#!/bin/sh
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Interrupts"
+uci set luci.$CMD.command="cat /proc/interrupts"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Software interrupts"
+uci set luci.$CMD.command="cat /proc/softirqs"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="CPU information"
+uci set luci.$CMD.command="cat /proc/cpuinfo"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Kernel configuration"
+uci set luci.$CMD.command="zcat /proc/config.gz"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Kernel modules"
+uci set luci.$CMD.command="lsmod"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Kernel version"
+uci set luci.$CMD.command="uname -a"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Kernel command line"
+uci set luci.$CMD.command="cat /proc/cmdline"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Network interfaces"
+uci set luci.$CMD.command="ifconfig -a"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Mounts information"
+uci set luci.$CMD.command="cat /proc/mounts"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="MTD"
+uci set luci.$CMD.command="cat /proc/mtd"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="Memory infromation"
+uci set luci.$CMD.command="cat /proc/meminfo"
+
+CMD=`uci add luci command`
+uci set luci.$CMD.name="IO memory ranges"
+uci set luci.$CMD.command="cat /proc/iomem"
+
+uci commit

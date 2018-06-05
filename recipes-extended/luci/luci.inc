@@ -1,16 +1,10 @@
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/luci/patches:${THISDIR}/luci/files:"
-
-SRC_URI += "\
-	git://github.com/openwrt/luci.git;branch=lede-17.01 \
-	file://cmake.patch \
-	file://0001-Fixed-luci.sys.user.setpasswd.patch \
-	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
-	file://0003-Invoke-reload_config-on-apply-at-uci-changes-page.patch \
-"
+LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
+LUCI_GIT_BRANCH   = "lede-17.01"
+LUCI_GIT_PROTOCOL = "git"
 
 # 28.04.2018 8:48:39 (branch lede-17.01)
-SRCREV = "cfba791c81b58212111de8df5f627b4ec8e1c636"
+LUCI_GIT_SRCREV = "cfba791c81b58212111de8df5f627b4ec8e1c636"
 
 libdir = "/usr/lib"
 

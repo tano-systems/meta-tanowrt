@@ -1,5 +1,5 @@
 #
-# LuCI application class
+# LuCI theme class
 #
 # Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
@@ -29,6 +29,6 @@ do_install_append() {
 
 	# Install root files
 	if [ -d "${S}/root" ]; then
-		( cd ${S}/root; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_ROOT_PATH}/{}" \; )
+		( cd ${S}; find * -type f -exec install -Dm 755 "{}" "${D}${LUCI_INSTALL_ROOT_PATH}/{}" \; )
 	fi
 }
