@@ -6,9 +6,12 @@ SUMMARY = "OpenWrt Base Image"
 
 LICENSE = "MIT"
 
-require recipes-core/images/openwrt-image-minimal.bb
+require recipes-image/images/openwrt-image-base.bb
 
 CORE_IMAGE_EXTRA_INSTALL += "\
-    packagegroup-openwrt-base \
-    make-ext4fs \
+    packagegroup-openwrt-full \
+    mountd \
+    ugps \
+    usbmode \
+    ipset \
 "
