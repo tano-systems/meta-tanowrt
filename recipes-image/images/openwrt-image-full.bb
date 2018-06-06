@@ -6,12 +6,15 @@ SUMMARY = "OpenWrt Base Image"
 
 LICENSE = "MIT"
 
+BAD_RECOMMENDATIONS += "busybox-syslog"
+BAD_RECOMMENDATIONS += "busybox-udhcpc"
+
 require recipes-image/images/openwrt-image-base.bb
 
 CORE_IMAGE_EXTRA_INSTALL += "\
-    packagegroup-openwrt-full \
-    mountd \
-    ugps \
-    usbmode \
-    ipset \
+	packagegroup-openwrt-full \
+	mountd \
+	ugps \
+	usbmode \
+	ipset \
 "

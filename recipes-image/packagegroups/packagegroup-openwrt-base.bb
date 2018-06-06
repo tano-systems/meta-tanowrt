@@ -13,27 +13,28 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup openwrt
 
 PACKAGES = "\
-	   packagegroup-openwrt-base \
-	   packagegroup-openwrt-base-network \
-	   packagegroup-openwrt-base-luci \
-	   "
+	packagegroup-openwrt-base \
+	packagegroup-openwrt-base-network \
+	packagegroup-openwrt-base-luci \
+"
 
 RDEPENDS_${PN} = "\
-                 packagegroup-openwrt-minimal \
-	         packagegroup-openwrt-base-network \
-	         packagegroup-openwrt-base-luci \
-	         "
+	packagegroup-openwrt-minimal \
+	packagegroup-openwrt-base-network \
+	packagegroup-openwrt-base-luci \
+"
 
 RDEPENDS_${PN}-network = "\
-                         dnsmasq \
-                         \
-                         ${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '',d)} \
-                         ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcpd', '', d)} \
-                         umdnsd \
-                         "
+	dnsmasq \
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '',d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcpd', '', d)} \
+	umdnsd \
+"
 
 RDEPENDS_${PN}-luci = "\
-                      lua5.1 \
-                      luci \
-                      uhttpd \
-                      "
+	lua5.1 \
+	luci \
+	luci-theme-bootstrap \
+	luci-app-firewall \
+	uhttpd \
+"

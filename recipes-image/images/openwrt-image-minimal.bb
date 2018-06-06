@@ -12,13 +12,11 @@ LICENSE = "MIT"
 inherit core-image openwrt openwrt-kmods
 
 CORE_IMAGE_BASE_INSTALL = '\
-    packagegroup-core-boot \
-    packagegroup-openwrt-minimal \
-    \
-    ${MACHINE_EXTRA_RDEPENDS} \
-    ${CORE_IMAGE_EXTRA_INSTALL} \
-     '
+	packagegroup-core-boot \
+	packagegroup-openwrt-minimal \
+	\
+	${MACHINE_EXTRA_RDEPENDS} \
+	${CORE_IMAGE_EXTRA_INSTALL} \
+'
 
 IMAGE_INSTALL ?= "${CORE_IMAGE_BASE_INSTALL}"
-
-IMAGE_FSTYPES += "ext4"

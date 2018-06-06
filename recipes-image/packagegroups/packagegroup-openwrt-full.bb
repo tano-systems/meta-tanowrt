@@ -10,20 +10,42 @@ LICENSE = "MIT"
 inherit packagegroup openwrt
 
 PACKAGES = "\
-           packagegroup-openwrt-full \
-           packagegroup-openwrt-full-base \
-           packagegroup-openwrt-full-network \
-           "
+	packagegroup-openwrt-full \
+	packagegroup-openwrt-full-base \
+	packagegroup-openwrt-full-network \
+"
 
+# usb-modeswitch
+# usb-modeswitch-data
 RDEPENDS_${PN} = "\
-                 packagegroup-openwrt-base \
-                 packagegroup-openwrt-full-network \
-                 "
+	packagegroup-openwrt-base \
+	packagegroup-openwrt-full-network \
+	fstools \
+	eudev \
+	libusb1 \
+	usbutils \
+"
 
 RDEPENDS_${PN}-network = "\
-                         relayd \
-                         tcpdump \
-                         umbim \
-                         umdnsd \
-                         uqmi \
-                         "
+	relayd \
+	tcpdump \
+	umbim \
+	umdnsd \
+	uqmi \
+	ethtool \
+	dropbear \
+	openssh-sftp-server \
+	net-snmp-client \
+	net-snmp-mibs \
+	net-snmp-server-snmpd \
+	net-snmp-server-snmptrapd \
+	openvpn \
+	openvpn-easy-rsa \
+	lldpd \
+	luci-app-lldpd \
+	luci-app-commands \
+	luci-app-uhttpd \
+	luci-app-openvpn \
+	luci-app-ddns \
+	luci-app-terminal \
+"

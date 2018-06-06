@@ -9,5 +9,6 @@
 inherit openwrt
 
 RDEPENDS_${PN}_append = "\
-    ${VIRTUAL-RUNTIME_kmod_manager} \
-    "
+	kernel-modules \
+	${VIRTUAL-RUNTIME_kmod_manager} \
+"

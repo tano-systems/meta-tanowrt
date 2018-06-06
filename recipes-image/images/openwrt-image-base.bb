@@ -9,6 +9,6 @@ LICENSE = "MIT"
 require recipes-image/images/openwrt-image-minimal.bb
 
 CORE_IMAGE_EXTRA_INSTALL += "\
-    packagegroup-openwrt-base \
-    make-ext4fs \
+	packagegroup-openwrt-base \
+	make-ext4fs \
 "
