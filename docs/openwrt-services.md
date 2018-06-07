@@ -2,6 +2,9 @@
 OpenWrt services
 ================
 
+Recipe apcupsd:
+- apcupsd
+
 Recipe luci-app-terminal:
 - ttyd
 

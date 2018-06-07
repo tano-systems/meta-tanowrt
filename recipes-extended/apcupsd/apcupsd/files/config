@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export APCUPSD_MAIL_FROM="root"
+export APCUPSD_MAIL_TO="apcupsd@example.com"
+export APCUPSD_MAIL="mail"
