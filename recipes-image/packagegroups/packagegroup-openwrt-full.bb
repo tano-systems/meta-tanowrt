@@ -19,6 +19,7 @@ RDEPENDS_${PN} = "\
 	packagegroup-openwrt-base \
 	packagegroup-openwrt-full-network \
 	fstools \
+	eudev \
 	libusb1 \
 	usbutils \
 "

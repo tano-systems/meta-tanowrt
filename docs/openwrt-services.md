@@ -34,6 +34,9 @@ Recipe net-snmp:
 - snmpd
 - snmptrapd
 
+Recipe eudev:
+- udev
+
 Recipe procd:
 - sysctl
 - boot
