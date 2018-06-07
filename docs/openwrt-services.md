@@ -2,6 +2,9 @@
 OpenWrt services
 ================
 
+Recipe usbmode:
+- usbmode
+
 Recipe apcupsd:
 - apcupsd
 
