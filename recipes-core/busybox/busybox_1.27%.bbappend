@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano0"
+PR_append = ".tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -45,7 +45,7 @@ OPENWRT_SERVICE_STATE_${PN}-sysntpd = "enabled"
 do_install_append() {
     rm -f ${D}/usr/share/udhcpc/default.script
     install -d -m 0755 ${D}${sysconfdir}/init.d
-    install -d -m 0755 ${D}${base_sbindir}/init.d
+    install -d -m 0755 ${D}${base_sbindir}
     install -m 0755 ${WORKDIR}/cron ${D}${sysconfdir}/init.d/cron
     install -m 0755 ${WORKDIR}/sysntpd ${D}${sysconfdir}/init.d/sysntpd
     install -m 0755 ${WORKDIR}/ntpd-hotplug ${D}${base_sbindir}/ntpd-hotplug
