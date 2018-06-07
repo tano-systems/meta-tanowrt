@@ -15,13 +15,10 @@ PACKAGES = "\
 	packagegroup-openwrt-full-network \
 "
 
-# usb-modeswitch
-# usb-modeswitch-data
 RDEPENDS_${PN} = "\
 	packagegroup-openwrt-base \
 	packagegroup-openwrt-full-network \
 	fstools \
-	eudev \
 	libusb1 \
 	usbutils \
 "
