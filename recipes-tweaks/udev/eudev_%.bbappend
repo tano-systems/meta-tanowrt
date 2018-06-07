@@ -3,7 +3,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -11,6 +11,8 @@ SRC_URI += "file://udev.procd"
 
 inherit openwrt-services
 inherit useradd
+
+RRECOMMENDS_${PN}_remove = "eudev-hwdb"
 
 USERADD_PACKAGES = "${PN}"
 GROUPADD_PARAM_${PN} = "\
