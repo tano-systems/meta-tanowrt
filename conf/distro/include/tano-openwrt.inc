@@ -1,6 +1,7 @@
 INHERIT += " openwrt-kmods "
 
 PREFERRED_VERSION_iptables = "1.6.2"
+PREFERRED_VERSION_usbutils = "007"
 
 # Virtual runtimes
 VIRTUAL-RUNTIME_dev_manager = "procd"
