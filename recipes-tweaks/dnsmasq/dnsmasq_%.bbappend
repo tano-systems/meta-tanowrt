@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -29,14 +29,14 @@ do_install_append() {
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
     install -d ${D}${sysconfdir}/rc.d
-    install -d ${D}${sysconfdir}/udev
-    install -d ${D}${sysconfdir}/udev/rules.d
     install -d ${D}${sbindir}
 
     install -m 0644 ${WORKDIR}/dnsmasq.conf ${D}${sysconfdir}/
     install -m 0644 ${WORKDIR}/dhcp.conf ${D}${sysconfdir}/config/dhcp
     install -m 0755 ${WORKDIR}/dnsmasq.init ${D}${sysconfdir}/init.d/dnsmasq
-    install -m 0644 ${WORKDIR}/99-dnsmasq.rules ${D}${sysconfdir}/udev/rules.d/99-dnsmasq.rules
+
+    install -d ${D}${sysconfdir}/hotplug.d/ntp
+    install -m 0644 ${WORKDIR}/dnsmasqsec.hotplug ${D}${sysconfdir}/hotplug.d/ntp/25-dnsmasqsec
 
     # dnsmasq installs in /usr/bin, openwrt looks for it in /usr/sbin
     ln -s ${bindir}/dnsmasq ${D}${sbindir}/dnsmasq
