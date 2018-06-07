@@ -28,4 +28,4 @@ PACKAGES += "${PN}-ids"
 FILES_${PN}-dev += "${datadir}/pkgconfig"
 FILES_${PN}-ids = "${datadir}/usb*"
 
-RDEPENDS_${PN} = "${PN}-ids"
+#RDEPENDS_${PN} = "${PN}-ids"
