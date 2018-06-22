@@ -47,4 +47,7 @@ LICENSE_FLAGS_WHITELIST = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav"
 # Image
 IMAGE_FSTYPES_remove = "tar.xz.md5"
 
+# Root home path
+ROOT_HOME ??= "/root"
+
 require conf/distro/include/tano-openwrt-repairs.inc

@@ -45,8 +45,5 @@ do_install_append() {
     install -Dm 0755 ${WORKDIR}/dropbear.init    ${D}${sysconfdir}/init.d/dropbear
     install -Dm 0644 ${WORKDIR}/dropbear.config  ${D}${sysconfdir}/config/dropbear
 
-    # /root is a default SSH location for root user
-    install -d -m 0700 ${D}/root
-
     touch ${D}${sysconfdir}/dropbear/dropbear_rsa_host_key
 }
