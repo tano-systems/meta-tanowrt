@@ -1,4 +1,5 @@
-INHERIT += " openwrt-kmods "
+
+IMAGE_CLASSES += "openwrt-image-types"
 
 PREFERRED_VERSION_iptables = "1.6.2"
 PREFERRED_VERSION_usbutils = "007"
@@ -35,6 +36,7 @@ DISTRO_FEATURES_remove = "\
     systemd \
     pam \
 "
+
 # Rootfs customization
 ROOTFS_RO_UNNEEDED = "update-rc.d ${ROOTFS_BOOTSTRAP_INSTALL}"
 FORCE_RO_REMOVE = "1"
