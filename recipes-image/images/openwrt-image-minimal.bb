@@ -6,10 +6,9 @@
 # for the terms.
 
 SUMMARY = "OpenWrt Minimal Complete Image"
-
 LICENSE = "MIT"
 
-inherit core-image openwrt openwrt-kmods
+inherit openwrt-image
 
 CORE_IMAGE_BASE_INSTALL = '\
 	packagegroup-core-boot \
