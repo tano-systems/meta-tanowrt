@@ -22,6 +22,8 @@ RDEPENDS_${PN} = "\
 	eudev \
 	libusb1 \
 	usbutils \
+	mtd-utils \
+	mtd-utils-ubifs \
 "
 
 RDEPENDS_${PN}-network = "\
