@@ -1,0 +1,171 @@
+From cadf59729a83e712de3b30696198484c46538b4f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 25 Jun 2018 21:43:28 +0300
+Subject: [PATCH 2/4] Add 'nocase' option to opkg
+
+---
+ libopkg/opkg_cmd.c  | 16 ++++++++--------
+ libopkg/opkg_conf.c |  1 +
+ libopkg/opkg_conf.h |  1 +
+ src/opkg.c          | 10 ++++++++++
+ 4 files changed, 20 insertions(+), 8 deletions(-)
+
+diff --git a/libopkg/opkg_cmd.c b/libopkg/opkg_cmd.c
+index e5637e0..12e33a0 100644
+--- a/libopkg/opkg_cmd.c
++++ b/libopkg/opkg_cmd.c
+@@ -364,7 +364,7 @@ static int opkg_configure_packages(char *pkg_name)
+     for (i = 0; i < ordered->len; i++) {
+         pkg = ordered->pkgs[i];
+ 
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0))
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase))
+             continue;
+ 
+         if (pkg->state_status == SS_UNPACKED) {
+@@ -495,7 +495,7 @@ static int opkg_list_cmd(int argc, char **argv)
+     for (i = 0; i < available->len; i++) {
+         pkg = available->pkgs[i];
+         /* if we have package name or pattern and pkg does not match, then skip it */
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0))
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase))
+             continue;
+         print_pkg(pkg);
+     }
+@@ -520,7 +520,7 @@ static int opkg_list_installed_cmd(int argc, char **argv)
+     for (i = 0; i < available->len; i++) {
+         pkg = available->pkgs[i];
+         /* if we have package name or pattern and pkg does not match, then skip it */
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0))
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase))
+             continue;
+         print_pkg(pkg);
+     }
+@@ -548,7 +548,7 @@ static int opkg_list_changed_conffiles_cmd(int argc, char **argv)
+     for (i = 0; i < available->len; i++) {
+         pkg = available->pkgs[i];
+         /* if we have package name or pattern and pkg does not match, then skip it */
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0))
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase))
+             continue;
+         if (nv_pair_list_empty(&pkg->conffiles))
+             continue;
+@@ -613,7 +613,7 @@ static int opkg_info_status_cmd(int argc, char **argv, int installed_only)
+ 
+     for (i = 0; i < available->len; i++) {
+         pkg = available->pkgs[i];
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0)) {
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase)) {
+             continue;
+         }
+ 
+@@ -791,7 +791,7 @@ static int opkg_depends_cmd(int argc, char **argv)
+         for (j = 0; j < available_pkgs->len; j++) {
+             pkg = available_pkgs->pkgs[j];
+ 
+-            if (fnmatch(argv[i], pkg->name, 0) != 0)
++            if (fnmatch(argv[i], pkg->name, opkg_config->nocase) != 0)
+                 continue;
+ 
+             depends_count = pkg->depends_count + pkg->pre_depends_count +
+@@ -990,7 +990,7 @@ static int opkg_whatprovides_cmd(int argc, char **argv)
+                 int count = pkg->provides_count;
+                 for (k = 0; k < count; k++) {
+                     abstract_pkg_t *apkg = pkg->provides[k];
+-                    if (fnmatch(target, apkg->name, 0) == 0) {
++                    if (fnmatch(target, apkg->name, opkg_config->nocase) == 0) {
+                         opkg_msg(NOTICE, "    %s", pkg->name);
+                         if (strcmp(target, apkg->name) != 0)
+                             opkg_msg(NOTICE, "\tprovides %s\n", apkg->name);
+@@ -1035,7 +1035,7 @@ static int opkg_search_cmd(int argc, char **argv)
+         for (iter = str_list_first(installed_files); iter;
+                 iter = str_list_next(installed_files, iter)) {
+             installed_file = (char *)iter->data;
+-            if (fnmatch(argv[0], installed_file, 0) == 0)
++            if (fnmatch(argv[0], installed_file, opkg_config->nocase) == 0)
+                 print_pkg(pkg);
+         }
+ 
+diff --git a/libopkg/opkg_conf.c b/libopkg/opkg_conf.c
+index 6b0758e..763228b 100644
+--- a/libopkg/opkg_conf.c
++++ b/libopkg/opkg_conf.c
+@@ -75,6 +75,7 @@ static opkg_option_t options[] = {
+     {"download_only", OPKG_OPT_TYPE_BOOL, &_conf.download_only},
+     {"download_first", OPKG_OPT_TYPE_BOOL, &_conf.download_first}, /* Not available on internal solver */
+     {"nodeps", OPKG_OPT_TYPE_BOOL, &_conf.nodeps},
++    {"nocase", OPKG_OPT_TYPE_BOOL, &_conf.nocase},
+     {"no_install_recommends", OPKG_OPT_TYPE_BOOL, &_conf.no_install_recommends},
+     {"offline_root", OPKG_OPT_TYPE_STRING, &_conf.offline_root},
+     {"overlay_root", OPKG_OPT_TYPE_STRING, &_conf.overlay_root},
+diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
+index a206f4e..4377c9c 100644
+--- a/libopkg/opkg_conf.h
++++ b/libopkg/opkg_conf.h
+@@ -97,6 +97,7 @@ typedef struct opkg_conf {
+     int check_pkg_signature;
+     char *signature_type;
+     int nodeps;             /* do not follow dependencies */
++    int nocase;             /* perform case insensitive matching */
+     int no_install_recommends;
+     char *offline_root;
+     char *overlay_root;
+diff --git a/src/opkg.c b/src/opkg.c
+index 1aa0fd9..2ead642 100644
+--- a/src/opkg.c
++++ b/src/opkg.c
+@@ -26,6 +26,7 @@
+ #include <getopt.h>
+ #include <malloc.h>
+ #include <stdlib.h>
++#include <fnmatch.h>
+ 
+ #include "opkg_conf.h"
+ #include "opkg_cmd.h"
+@@ -53,6 +54,7 @@ enum {
+     ARGS_OPT_NOACTION,
+     ARGS_OPT_DOWNLOAD_ONLY,
+     ARGS_OPT_NODEPS,
++    ARGS_OPT_NOCASE,
+     ARGS_OPT_AUTOREMOVE,
+     ARGS_OPT_VOLATILE_CACHE,
+     ARGS_OPT_COMBINE,
+@@ -100,6 +102,7 @@ static struct option long_options[] = {
+     {"noaction", 0, 0, ARGS_OPT_NOACTION},
+     {"download-only", 0, 0, ARGS_OPT_DOWNLOAD_ONLY},
+     {"nodeps", 0, 0, ARGS_OPT_NODEPS},
++    {"nocase", 0, 0, ARGS_OPT_NOCASE},
+     {"no-install-recommends", 0, 0, ARGS_OPT_NO_INSTALL_RECOMMENDS},
+     {"offline", 1, 0, 'o'},
+     {"offline-root", 1, 0, 'o'},
+@@ -140,6 +143,9 @@ static int args_parse(int argc, char *argv[])
+         case 'f':
+             opkg_config->conf_file = xstrdup(optarg);
+             break;
++        case 'i':
++            opkg_config->nocase = FNM_CASEFOLD;
++            break;
+         case 'o':
+             opkg_config->offline_root = xstrdup(optarg);
+             break;
+@@ -196,6 +202,9 @@ static int args_parse(int argc, char *argv[])
+         case ARGS_OPT_NODEPS:
+             opkg_config->nodeps = 1;
+             break;
++        case ARGS_OPT_NOCASE:
++            opkg_config->nocase = FNM_CASEFOLD;
++            break;
+         case ARGS_OPT_ADD_ARCH:
+         case ARGS_OPT_ADD_DEST:
+             tuple = xstrdup(optarg);
+@@ -326,6 +335,7 @@ static void usage()
+     printf("\t--noaction                      No action -- test only\n");
+     printf("\t--download-only                 No action -- download only\n");
+     printf("\t--nodeps                        Do not follow dependencies\n");
++    printf("\t--nocase                        Perform case insensitive pattern matching\n");
+     printf("\t--no-install-recommends         Do not install any recommended packages\n");
+     printf("\t--force-removal-of-dependent-packages\n");
+     printf("\t                                Remove package and all dependencies\n");
+-- 
+2.7.4
+

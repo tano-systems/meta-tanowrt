@@ -1,0 +1,33 @@
+From 0ef0a25441af4f9528a475e5b0c3d1b52f13ac97 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 25 Jun 2018 21:24:47 +0300
+Subject: [PATCH 1/4] Change configuration paths
+
+---
+ libopkg/opkg_conf.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
+index 182b3ad..a206f4e 100644
+--- a/libopkg/opkg_conf.h
++++ b/libopkg/opkg_conf.h
+@@ -35,12 +35,12 @@ extern "C" {
+ #define OPKG_CONF_TMP_DIR_SUFFIX "opkg-XXXXXX"
+ #define OPKG_BACKUP_SUFFIX "-opkg.backup"
+ 
+-#define OPKG_CONF_DEFAULT_LISTS_DIR     "/var/lib/opkg/lists"
+-#define OPKG_CONF_DEFAULT_INFO_DIR      "/var/lib/opkg/info"
+-#define OPKG_CONF_DEFAULT_STATUS_FILE   "/var/lib/opkg/status"
++#define OPKG_CONF_DEFAULT_LISTS_DIR     "/var/lib/opkg/lists"
++#define OPKG_CONF_DEFAULT_INFO_DIR      "/var/lib/opkg/info"
++#define OPKG_CONF_DEFAULT_STATUS_FILE   "/var/lib/opkg/status"
+ #define OPKG_CONF_DEFAULT_CACHE_DIR     "/var/cache/opkg"
+ #define OPKG_CONF_DEFAULT_CONF_FILE_DIR "/etc/opkg"
+-#define OPKG_CONF_DEFAULT_LOCK_FILE     "/run/opkg.lock"
++#define OPKG_CONF_DEFAULT_LOCK_FILE     "/tmp/lock/opkg.lock"
+ 
+ /* In case the config file defines no dest */
+ #define OPKG_CONF_DEFAULT_DEST_NAME "root"
+-- 
+2.7.4
+

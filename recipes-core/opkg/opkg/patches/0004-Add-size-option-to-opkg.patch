@@ -1,0 +1,99 @@
+From ee7843aaeee2e9e6ac930a1b40779edb93b11586 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 25 Jun 2018 21:56:36 +0300
+Subject: [PATCH 4/4] Add 'size' option to opkg
+
+---
+ libopkg/opkg_cmd.c  | 11 +++++++----
+ libopkg/opkg_conf.c |  1 +
+ libopkg/opkg_conf.h |  1 +
+ src/opkg.c          |  6 ++++++
+ 4 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/libopkg/opkg_cmd.c b/libopkg/opkg_cmd.c
+index 5fc9680..4bd099c 100644
+--- a/libopkg/opkg_cmd.c
++++ b/libopkg/opkg_cmd.c
+@@ -54,10 +54,13 @@
+ static void print_pkg(pkg_t * pkg)
+ {
+     char *version = pkg_version_str_alloc(pkg);
+-    if (pkg->description)
+-        printf("%s - %s - %s\n", pkg->name, version, pkg->description);
+-    else
+-        printf("%s - %s\n", pkg->name, version);
++    char *description = pkg->description;
++    printf("%s - %s", pkg->name, version);
++    if (opkg_config->size)
++        printf(" - %lu", (unsigned long) pkg->size);
++    if (description)
++        printf(" - %s", description);
++    printf("\n");
+     free(version);
+ }
+ 
+diff --git a/libopkg/opkg_conf.c b/libopkg/opkg_conf.c
+index 763228b..1d0adfb 100644
+--- a/libopkg/opkg_conf.c
++++ b/libopkg/opkg_conf.c
+@@ -82,6 +82,7 @@ static opkg_option_t options[] = {
+     {"proxy_passwd", OPKG_OPT_TYPE_STRING, &_conf.proxy_passwd},
+     {"proxy_user", OPKG_OPT_TYPE_STRING, &_conf.proxy_user},
+     {"query-all", OPKG_OPT_TYPE_BOOL, &_conf.query_all},
++    {"size", OPKG_OPT_TYPE_BOOL, &_conf.size},
+     {"tmp_dir", OPKG_OPT_TYPE_STRING, &_conf.tmp_dir},
+     {"volatile_cache", OPKG_OPT_TYPE_BOOL, &_conf.volatile_cache},
+     {"verbosity", OPKG_OPT_TYPE_INT, &_conf.verbosity},
+diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
+index 4377c9c..717d5ba 100644
+--- a/libopkg/opkg_conf.h
++++ b/libopkg/opkg_conf.h
+@@ -103,6 +103,7 @@ typedef struct opkg_conf {
+     char *overlay_root;
+     int query_all;
+     int verbosity;
++    int size;
+     int noaction;
+     int download_only;
+     int download_first;
+diff --git a/src/opkg.c b/src/opkg.c
+index 71a55e6..673140f 100644
+--- a/src/opkg.c
++++ b/src/opkg.c
+@@ -61,6 +61,7 @@ enum {
+     ARGS_OPT_NO_INSTALL_RECOMMENDS,
+     ARGS_OPT_CACHE_DIR,
+     ARGS_OPT_HOST_CACHE_DIR,
++    ARGS_OPT_SIZE,
+ };
+ 
+ static struct option long_options[] = {
+@@ -109,6 +110,7 @@ static struct option long_options[] = {
+     {"add-arch", 1, 0, ARGS_OPT_ADD_ARCH},
+     {"add-dest", 1, 0, ARGS_OPT_ADD_DEST},
+     {"add-exclude", 1, 0, ARGS_OPT_ADD_EXCLUDE},
++    {"size", 0, 0, ARGS_OPT_SIZE},
+     {"test", 0, 0, ARGS_OPT_NOACTION},
+     {"tmp-dir", 1, 0, 't'},
+     {"tmp_dir", 1, 0, 't'},
+@@ -220,6 +222,9 @@ static int args_parse(int argc, char *argv[])
+         case ARGS_OPT_ADD_EXCLUDE:
+             str_list_append(&opkg_config->exclude_list, optarg);
+             break;
++        case ARGS_OPT_SIZE:
++            opkg_config->size = 1;
++            break;
+         case ARGS_OPT_NOACTION:
+             opkg_config->noaction = 1;
+             break;
+@@ -337,6 +342,7 @@ static void usage()
+     printf("\t--download-only                 No action -- download only\n");
+     printf("\t--nodeps                        Do not follow dependencies\n");
+     printf("\t--nocase                        Perform case insensitive pattern matching\n");
++    printf("\t--size                          Print package size when listing available packages\n");
+     printf("\t--no-install-recommends         Do not install any recommended packages\n");
+     printf("\t--force-removal-of-dependent-packages\n");
+     printf("\t                                Remove package and all dependencies\n");
+-- 
+2.7.4
+
