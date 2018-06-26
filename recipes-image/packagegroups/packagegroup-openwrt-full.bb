@@ -22,6 +22,7 @@ RDEPENDS_${PN} = "\
 	eudev \
 	libusb1 \
 	usbutils \
+	usbreset \
 	mtd-utils \
 	mtd-utils-ubifs \
 "
