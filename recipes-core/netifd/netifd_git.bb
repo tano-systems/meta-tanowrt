@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -65,6 +65,7 @@ python do_kernel_config_check() {
 }
 
 addtask kernel_config_check after do_compile before do_install
+do_compile[depends] += "virtual/kernel:do_shared_workdir"
 
 do_configure_prepend () {
     # replace hardcoded '/lib/' with '${base_libdir}/'
