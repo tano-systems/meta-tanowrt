@@ -20,9 +20,9 @@ RDEPENDS_${PN} = "\
 	packagegroup-openwrt-full-network \
 	fstools \
 	eudev \
-	libusb1 \
-	usbutils \
-	usbreset \
+	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'libusb1', '',d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbutils', '',d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbreset', '',d)} \
 	mtd-utils \
 	mtd-utils-ubifs \
 "
