@@ -49,4 +49,5 @@ RDEPENDS_${PN}-network = "\
 	luci-app-openvpn \
 	luci-app-ddns \
 	luci-app-terminal \
+	vsftpd \
 "
