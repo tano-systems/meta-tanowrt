@@ -17,6 +17,8 @@ SRC_URI += "\
 	file://data/* \
 "
 
+inherit allarch
+
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 do_fetch[cleandirs] += "${WORKDIR}/data"
