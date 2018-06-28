@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -76,7 +76,7 @@ do_install_append () {
         rm -f ${STMP}/lib/functions/preinit.sh
         rm -rf ${STMP}/lib/preinit
         rm -f ${STMP}/rom/note
-        rm -f ${STMP}/etc/banner.failsafe
+#        rm -f ${STMP}/etc/banner.failsafe
         # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
         rmdir ${STMP}/rom
 
@@ -120,8 +120,6 @@ do_install_append () {
         rm -f ${STMP}/etc/uci-defaults/11_migrate-sysctl
 
         # These depend on mechanisms not in OE build process
-        rm -f ${STMP}/etc/openwrt_version
-        rm -f ${STMP}/etc/openwrt_release
         rm -f ${STMP}/etc/uci-defaults/13_fix_group_user
         # We want this to fail if Openwrt adds more to this dir, so no rm -rf
         rmdir ${STMP}/etc/uci-defaults
@@ -182,10 +180,6 @@ do_install_append () {
         rm ${D}${sysconfdir}/issue.net
         rm ${D}${sysconfdir}/TZ
 
-        # Restore /etc/openwrt_release and /etc/openwrt_verison
-        install -m 0644 ${S}/git/openwrt/package/base-files/files/etc/openwrt_release ${D}${sysconfdir}/openwrt_release
-        install -m 0644 ${S}/git/openwrt/package/base-files/files/etc/openwrt_version ${D}${sysconfdir}/openwrt_version
-
         # Run VERSION_SED script
         ${OPENWRT_VERSION_SED} \
             ${D}/usr/lib/os-release \
@@ -206,7 +200,7 @@ do_install_append () {
 FILES_${PN} = "/"
 
 RDEPENDS_${PN} += "\
-                  ${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', '${PN}-scripts-openwrt', '', d)} \
+                  ${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', '${PN}-scripts-openwrt ${PN}-scripts-sysupgrade', '', d)} \
                   "
 
 RSUGGESTS_${PN} += "\
