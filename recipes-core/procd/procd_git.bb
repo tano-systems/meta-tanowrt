@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -18,7 +18,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://git.openwrt.org/project/procd.git;branch=lede-17.01 \
 	file://00_preinit.conf \
-        file://banner.failsafe \
 	file://10_sysinfo \
 "
 
@@ -48,7 +47,6 @@ do_install_append() {
     install -Dm 0755 ${BF}/etc/diag.sh ${D}${sysconfdir}/diag.sh
     install -Dm 0644 ${BF}/lib/functions/preinit.sh ${D}${base_libdir}/functions/preinit.sh
     install -Dm 0644 ${BF}/rom/note ${D}/rom/note
-    install -Dm 0544 ${WORKDIR}/banner.failsafe ${D}${sysconfdir}/banner.failsafe
 
     install -d ${D}${base_libdir}
     cp --preserve=mode,timestamps -R ${BF}/lib/preinit ${D}${base_libdir}
