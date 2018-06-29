@@ -5,7 +5,7 @@ HOMEPAGE = "https://libwebsockets.org/"
 LICENSE = "LGPL-2.1"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b415f60bd65e057120037bb15cad7139"
 
-DEPENDS = "zlib"
+DEPENDS = "zlib libcap"
 
 S = "${WORKDIR}/git"
 SRCREV = "8964ce9db75a98e463dfafd2e89f2bc8a95ec6ed"
