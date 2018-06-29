@@ -1,5 +1,5 @@
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -33,3 +33,8 @@ do_install_append() {
 
 	rm -rf ${D}${sysconfdir}/default
 }
+
+do_compile() {
+	oe_runmake "LIBS=-L${STAGING_LIBDIR} -lcrypt -lcap ${PAMLIB} ${@bb.utils.contains('PACKAGECONFIG', 'tcp-wrappers', '-lwrap', '', d)}"
+}
+
