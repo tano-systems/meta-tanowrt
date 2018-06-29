@@ -9,6 +9,7 @@ SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
 
 inherit openwrt-image
+inherit rootfs-rm-boot-dir
 
 CORE_IMAGE_BASE_INSTALL = '\
 	packagegroup-core-boot \
