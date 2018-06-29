@@ -25,6 +25,7 @@ RDEPENDS_${PN} = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbreset', '',d)} \
 	mtd-utils \
 	mtd-utils-ubifs \
+	apcupsd \
 "
 
 RDEPENDS_${PN}-network = "\
