@@ -1,0 +1,24 @@
+diff --git a/include/linux/auto_fs.h b/include/linux/auto_fs.h
+index b4066bb..b8f814c 100644
+--- a/include/linux/auto_fs.h
++++ b/include/linux/auto_fs.h
+@@ -10,7 +10,6 @@ 
+ #define _LINUX_AUTO_FS_H
+ 
+ #include <linux/fs.h>
+-#include <linux/limits.h>
+ #include <linux/ioctl.h>
+ #include <uapi/linux/auto_fs.h>
+ #endif /* _LINUX_AUTO_FS_H */
+diff --git a/include/uapi/linux/auto_fs.h b/include/uapi/linux/auto_fs.h
+index 9175a1b..1bfc3ed 100644
+--- a/include/uapi/linux/auto_fs.h
++++ b/include/uapi/linux/auto_fs.h
+@@ -12,6 +12,7 @@ 
+ #define _UAPI_LINUX_AUTO_FS_H
+ 
+ #include <linux/types.h>
++#include <linux/limits.h>
+ #ifndef __KERNEL__
+ #include <sys/ioctl.h>
+ #endif /* __KERNEL__ */
