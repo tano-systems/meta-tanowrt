@@ -1,6 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
 LICENSE = "GPL-2.0"

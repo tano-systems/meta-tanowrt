@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR_append = ".tano1"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"

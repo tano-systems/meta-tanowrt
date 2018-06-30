@@ -1,3 +1,5 @@
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+
 PR = "tano0"
 
 SUMMARY = "non-mainline-kernel netfilter extensions"

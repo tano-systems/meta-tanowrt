@@ -1,9 +1,7 @@
-#
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
-# Anton Kikin <a.kikin@tano-systems.com>
-#
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = "tano0"
+PR_append = ".tano0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI_append = "\

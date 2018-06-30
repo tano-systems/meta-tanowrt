@@ -4,6 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 SUMMARY = "Normal Openwrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system"
 LICENSE = "MIT"

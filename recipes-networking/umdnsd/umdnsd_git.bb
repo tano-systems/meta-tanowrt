@@ -2,6 +2,8 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "OpenWrt MDNS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/mdnsd.git;a=summary"
 LICENSE = "GPL-2.0"

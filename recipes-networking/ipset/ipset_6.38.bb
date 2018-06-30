@@ -1,6 +1,8 @@
 # Copyright (C) 2017 Aaron Brice <aaron.brice@datasoft.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "Administration tool for IP sets"
 HOMEPAGE = "http://ipset.netfilter.org"
 LICENSE = "GPL-2.0"

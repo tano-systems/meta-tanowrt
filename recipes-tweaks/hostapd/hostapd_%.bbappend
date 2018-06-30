@@ -2,6 +2,8 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR_append = ".tano0"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://300-noscan.patch"

@@ -1,4 +1,5 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "Library for accessing wireless device drivers"
@@ -7,6 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "uci lua5.1"
+PR = "tano0"
 
 SRCREV = "fd9e17be0c43bd6b8df5371f0b353747bc563874"
 
@@ -29,8 +31,8 @@ PARALLEL_MAKE = ""
 
 do_install() {
 	install -D -m 0755 ${B}/libiwinfo.so ${D}${libdir}/libiwinfo.so
-        install -D -m 0755 ${B}/iwinfo.so ${D}${libdir}/lua/5.1/iwinfo.so
-        install -D -m 0755 ${B}/iwinfo ${D}${bindir}/iwinfo
+	install -D -m 0755 ${B}/iwinfo.so ${D}${libdir}/lua/5.1/iwinfo.so
+	install -D -m 0755 ${B}/iwinfo ${D}${bindir}/iwinfo
 	install -D -m 0644 ${S}/include/iwinfo.h ${D}${includedir}/iwinfo.h
 	install -D -m 0644 ${S}/include/iwinfo/utils.h ${D}${includedir}/iwinfo/utils.h
 }

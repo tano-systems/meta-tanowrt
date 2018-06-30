@@ -1,9 +1,14 @@
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Released under the MIT license (see COPYING.MIT for the terms)
+
 SUMMARY = "Inittab configuration for procd"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+PR = "tano0"
 
-SRC_URI = "file://inittab \
-	"
+SRC_URI = "\
+	file://inittab \
+"
 
 inherit update-alternatives
 
@@ -18,30 +23,30 @@ do_compile() {
 PROCD_ENABLED_TTYS ?= "${SYSVINIT_ENABLED_GETTYS}"
 
 do_install() {
-    install -d ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/inittab ${D}${sysconfdir}/inittab
+	install -d ${D}${sysconfdir}
+	install -m 0644 ${WORKDIR}/inittab ${D}${sysconfdir}/inittab
 
-    set -x
-    tmp="${SERIAL_CONSOLES}"
-    for i in $tmp
-    do
-	j=`echo ${i} | sed s/\;/\ /g`
-	l=`echo ${i} | sed -e 's/^.*;//' -e 's/;.*//'`
-	echo "$l::askfirst:/usr/libexec/login.sh" >> ${D}${sysconfdir}/inittab
-    done
+	set -x
+	tmp="${SERIAL_CONSOLES}"
+	for i in $tmp
+	do
+		j=`echo ${i} | sed s/\;/\ /g`
+		l=`echo ${i} | sed -e 's/^.*;//' -e 's/;.*//'`
+		echo "$l::askfirst:/usr/libexec/login.sh" >> ${D}${sysconfdir}/inittab
+	done
 
-    if [ "${USE_VT}" = "1" ]; then
-        for n in ${PROCD_ENABLED_TTYS}
-        do
-            echo "tty$n::askfirst:/usr/libexec/login.sh" >> ${D}${sysconfdir}/inittab
-        done
-        echo "" >> ${D}${sysconfdir}/inittab
-    fi
+	if [ "${USE_VT}" = "1" ]; then
+		for n in ${PROCD_ENABLED_TTYS}
+		do
+			echo "tty$n::askfirst:/usr/libexec/login.sh" >> ${D}${sysconfdir}/inittab
+		done
+		echo "" >> ${D}${sysconfdir}/inittab
+	fi
 
-    if [ -z "${SERIAL_CONSOLES}" ] && [ "${USE_VT}" != "1" ]; then
+	if [ -z "${SERIAL_CONSOLES}" ] && [ "${USE_VT}" != "1" ]; then
 	echo "::askconsole:/usr/libexec.sh/login.sh" >> ${D}${sysconfdir}/inittab
-        echo "" >${D}${sysconfdir}/inittab
-    fi
+		echo "" >${D}${sysconfdir}/inittab
+	fi
 }
 
 pkg_postinst_${PN} () {

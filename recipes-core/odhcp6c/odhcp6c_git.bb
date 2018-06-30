@@ -8,6 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
+PR = "tano0"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

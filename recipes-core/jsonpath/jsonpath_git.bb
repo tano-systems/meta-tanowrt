@@ -1,4 +1,5 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "OpenWrt JSON parsing utility"
@@ -7,6 +8,7 @@ LICENSE = "BSD-1-Clause"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=15;md5=e1b007aed2273fc3ec1d16560a17aadc"
 SECTION = "base"
 DEPENDS = "json-c libubox"
+PR = "tano0"
 
 SRC_URI = "git://git.openwrt.org/project/jsonpath.git;name=jsonpath; \
           file://0001-sync-lemon-parser.patch \

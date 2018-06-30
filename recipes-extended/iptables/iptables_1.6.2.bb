@@ -1,3 +1,5 @@
+PR = "tano0"
+
 SUMMARY = "Tools for managing kernel packet filtering capabilities"
 DESCRIPTION = "iptables is the userspace command line program used to configure and control network packet \
 filtering code in Linux."

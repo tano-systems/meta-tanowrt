@@ -1,6 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "OpenWrt IPv4 pseudo-bridge routing daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/relayd.git;a=summary"
 LICENSE = "GPL-2.0+"

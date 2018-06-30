@@ -2,6 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
 LICENSE = "BSD"

@@ -4,6 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 

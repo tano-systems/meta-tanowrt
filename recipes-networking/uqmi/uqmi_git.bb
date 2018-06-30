@@ -1,6 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
 LICENSE = "GPL-2.0"

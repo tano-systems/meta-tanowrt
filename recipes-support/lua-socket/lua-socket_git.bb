@@ -3,6 +3,8 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+PR = "tano0"
+
 DESCRIPTION = "Networking extension library for Lua"
 HOMEPAGE = "https://github.com/diegonehab/luasocket"
 LICENSE = "MIT"

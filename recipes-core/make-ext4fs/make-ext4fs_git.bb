@@ -1,4 +1,5 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "Standalone fork of Android's make_ext4fs utility"
@@ -7,6 +8,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://NOTICE;md5=bb2810bf31da2f6bb39e0bfa86091da3"
 SECTION = "tools"
 DEPENDS = "zlib"
+PR = "tano0"
 
 SRC_URI = "git://git.openwrt.org/project/make_ext4fs.git \
           "
