@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -19,6 +19,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=lede-17.01 \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
 	file://0002-block-Validate-libubi_open-return-value.patch \
+	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
 	file://fstab.init \
 	file://fstab.default \
 	file://snapshot \
