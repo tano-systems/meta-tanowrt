@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -24,7 +24,8 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=lede-17.01 \
 	file://mount.hotplug \
 "
 
-SRCREV = "37762ff488752c1686b359816aec75831b49c55f"
+# 16.04.2018
+SRCREV = "6609e98a7416e107d1718b6ec6cc7339ab6523b8"
 
 S = "${WORKDIR}/git"
 
