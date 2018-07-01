@@ -1,8 +1,79 @@
 # meta-tano-openwrt
 
-This layer provides OpenEmbedded metadata for [OpenWRT](http://www.openwrt.org/)
+This layer provides OpenEmbedded metadata for [OpenWrt/LEDE](http://www.openwrt.org/)
 based distribution by Tano Systems.
 
-Initially, this layer is based on a OE metadata layer for OpenWRT
-by [Khem Raj](https://github.com/kraj/meta-openwrt) (revision
+This layer is based on a OE metadata layer for OpenWrt by
+[Khem Raj](https://github.com/kraj/meta-openwrt) (revision
 [3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
+
+All OpenWrt/LEDE packages corresponds to LEDE 17.01.4 or higher.
+
+
+## Building
+
+Below we build for qemuarm machine as an example:
+```
+	MACHINE=qemuarm bitbake openwrt-image-full
+```
+
+
+## Running
+
+```
+	runqemu qemuarm
+```
+
+## Limitations
+
+Works with OE Release 2.2 (Morty)
+
+Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
+
+## Dependencies
+
+This layer depends on:
+
+### openembedded-core
+URI: git://git.openembedded.org/openembedded-core.git  
+Subdirectory: meta  
+Branch: morty  
+Revision: 4b32784b8c95047dafbc7048bfe03e9e5ceb3367
+
+### meta-openembedded
+URI: git://git.openembedded.org/meta-openembedded.git  
+Subdirectory: meta-oe  
+Branch: morty  
+Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+
+### meta-python
+URI: git://git.openembedded.org/meta-openembedded.git  
+Subdirectory: meta-python  
+Branch: morty  
+Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+
+### meta-networking
+URI: git://git.openembedded.org/meta-openembedded.git  
+Subdirectory: meta-networking  
+Branch: morty  
+Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+
+### bitbake
+Version 1.32
+
+
+## License
+
+All metadata is MIT licensed unless otherwise stated. Source code included
+in tree for individual recipes is under the LICENSE stated in each recipe
+(.bb file) unless otherwise stated.
+
+The descriptions in the recipes of OpenWrt/LEDE packages have been extracted from
+original OpenWrt/LEDE repositories:
+- https://github.com/openwrt/openwrt.git --- buildsystem for the LEDE Linux distribution;
+- https://github.com/openwrt/packages.git --- OpenWrt packages feed.
+
+
+## Maintainers
+
+Anton Kikin <a.kikin@tano-systems.com>
