@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -25,6 +25,7 @@ SRC_URI = "\
 	file://0001-Fixed-luci.sys.user.setpasswd.patch \
 	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
 	file://0003-Invoke-reload_config-on-apply-at-uci-changes-page.patch \
+	file://0900-luci_base-Fix-russian-translation.patch \
 "
 
 SRCREV = "${LUCI_GIT_SRCREV}" 

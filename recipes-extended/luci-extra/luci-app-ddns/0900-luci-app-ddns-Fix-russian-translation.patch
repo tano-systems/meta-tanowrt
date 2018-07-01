@@ -1,0 +1,53 @@
+diff --git a/po/ru/ddns.po b/po/ru/ddns.po
+index fae11275d..be8e33aa2 100644
+--- a/po/ru/ddns.po
++++ b/po/ru/ddns.po
+@@ -116,7 +116,7 @@ msgid ""
+ ">You can start/stop each configuration here. It will run until next reboot."
+ msgstr ""
+ "В настоящее время, обновления DDNS не запускаются при загрузке или при "
+-"событиях интерфейса.<br />.<br />Вы можете запустить/остановить каждый "
++"событиях интерфейса.<br />Вы можете запустить/остановить каждый "
+ "config здесь. Он будет работать до следующей перезагрузки."
+ 
+ msgid "Custom update script to be used for updating your DDNS Provider."
+@@ -241,15 +241,15 @@ msgid ""
+ "Follow this link<br />You will find more hints to optimize your system to "
+ "run DDNS scripts with all options"
+ msgstr ""
+-"Пройдите по этой ссылке<br />там вы найдете больше информации, как настроить "
++"Пройдите по этой ссылке.<br />Там вы найдете больше информации, как настроить "
+ "вашу систему с использованием DDNS скриптов с наиболее полным функционалом."
+ 
+ msgid "For detailed information about parameter settings look here."
+ msgstr ""
+-"Здесь вы сможете получить, более подробную информацию о параметрах настройки."
++"Здесь вы сможете получить более подробную информацию о параметрах настройки."
+ 
+ msgid "For supported codes look here"
+-msgstr "С поддерживаемыми кодами, вы сможете ознакомится здесь."
++msgstr "С поддерживаемыми кодами можно ознакомиться здесь."
+ 
+ msgid "Force IP Version"
+ msgstr "Назначенная версия<br />IP-адреса"
+@@ -270,7 +270,7 @@ msgid "Format"
+ msgstr "Формат"
+ 
+ msgid "Format: IP or FQDN"
+-msgstr "В виде: IP-адрес или полное доменное имя."
++msgstr "В виде: IP-адрес или полное доменное имя"
+ 
+ msgid ""
+ "GNU Wget will use the IP of given network, cURL will use the physical "
+@@ -499,7 +499,7 @@ msgstr ""
+ "Необязательно: заменяет [PARAMOPT] в Update-URL-адрес (не URL-encoded)."
+ 
+ msgid "Overview"
+-msgstr "Главное меню"
++msgstr "Обзор"
+ 
+ msgid "PROXY-Server"
+ msgstr "Прокси сервер"
+-- 
+2.16.2.windows.1
+
