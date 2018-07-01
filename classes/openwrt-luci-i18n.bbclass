@@ -185,6 +185,8 @@ def build_i18n_packages(d):
                     process_po_file(luci, lang, po_file)
 
     for root, dirs, files in os.walk(source_dir):
+        files = [f for f in files if not f[0] == '.']
+        dirs[:] = [d for d in dirs if not d[0] == '.']
         for basename in dirs:
             if fnmatch.fnmatch(basename, "po"):
                 if not os.path.isdir(os.path.join(root, basename)):
