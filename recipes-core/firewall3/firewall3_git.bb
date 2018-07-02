@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -32,7 +32,8 @@ SRC_URI += "\
 	file://modules.d/nf-nat \
 "
 
-SRCREV = "a4d98aea373e04f3fdc3c492c1688ba52ce490a9"
+# 19.05.2018 zones: add interface/subnet bound LOG rules
+SRCREV = "30463d08056db8f03d17c0569581aef96418c38d"
 
 S = "${WORKDIR}/git"
 
