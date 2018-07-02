@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -24,7 +24,8 @@ SRC_URI = "\
           file://network.hotplug \
           "
 
-SRCREV_netifd = "650758b16e5185505a3fbc1307949340af70b611"
+# 28.06.2018 system-linux: add autoneg and link-partner output
+SRCREV_netifd = "c1f6a82c21d6fdb30af178f3b5604a202ab1b26c"
 
 S = "${WORKDIR}/git"
 
