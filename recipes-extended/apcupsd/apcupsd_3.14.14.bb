@@ -1,7 +1,7 @@
 #
 SUMMARY = "Apcupsd a daemon for controlling APC UPSes"
 
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -47,6 +47,12 @@ PACKAGECONFIG[x] = "--with-x,--without-x,"
 
 # Build fix
 B = "${S}"
+
+do_fix_lineendings() {
+	dos2unix ${S}/include/libusb.h.in
+}
+
+addtask fix_lineendings after do_unpack before do_patch
 
 do_configure() {
     export topdir=${S}
