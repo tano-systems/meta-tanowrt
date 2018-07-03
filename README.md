@@ -10,18 +10,36 @@ This layer is based on a OE metadata layer for OpenWrt by
 All OpenWrt/LEDE packages corresponds to LEDE 17.01.4 or higher.
 
 
+## Getting Started
+
+Clone repositories:
+```
+$ git clone -b morty git://github.com/openembedded/openembedded-core.git
+
+$ cd openembedded-core
+
+$ git clone -b 1.32 git://github.com/openembedded/bitbake.git
+$ git clone -b morty git://github.com/openembedded/meta-openembedded.git
+$ git clone -b master git://github.com/tano-systems/meta-tano-openwrt.git
+```
+
+Initialize build environment and add layers:
+```
+$ TEMPLATECONF=meta-tano-openwrt/conf . ./oe-init-build-env
+```
+
 ## Building
 
 Below we build for qemuarm machine as an example:
 ```
-	MACHINE=qemuarm bitbake openwrt-image-full
+MACHINE=qemuarm bitbake openwrt-image-full
 ```
 
 
 ## Running
 
 ```
-	runqemu qemuarm
+runqemu qemuarm
 ```
 
 ## Limitations
