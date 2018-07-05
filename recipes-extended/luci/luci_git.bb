@@ -10,7 +10,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 SECTION = "base"
 DEPENDS = "json-c libubox libnl lua5.1 iwinfo openssl"
-RDEPENDS_${PN} = "lua5.1"
+RDEPENDS_${PN} = "lua5.1 lucihttp"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -22,9 +22,10 @@ require luci.inc
 SRC_URI = "\
 	${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL} \
 	file://cmake.patch \
-	file://0001-Fixed-luci.sys.user.setpasswd.patch \
+	file://0001-Fix-user.setpasswd-function.patch \
 	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
 	file://0003-Invoke-reload_config-on-apply-at-uci-changes-page.patch \
+	file://0004-fix-network-bridge-functions.patch \
 	file://0900-luci_base-Fix-russian-translation.patch \
 "
 
@@ -32,12 +33,12 @@ SRCREV = "${LUCI_GIT_SRCREV}"
 
 prefix=""
 includedir="/usr/include"
-bindir="usr/bin"
+bindir="/usr/bin"
 libdir="/usr/lib"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -DDESTDIR=${D}"
 
-FILES_${PN} += "/www /usr/lib /usr/share/acl.d /${bindir} /lib/upgrade/luci-add-conffiles.sh"
+FILES_${PN} += "/www /usr/lib /usr/share/acl.d /usr/share/rpcd/acl.d ${bindir} /lib/upgrade/luci-add-conffiles.sh"
 
 S = "${WORKDIR}/git/"
 
@@ -77,6 +78,10 @@ do_preconfigure() {
 do_install_append() {
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
+
+	# Install luci-bwc
+	install -d ${D}${bindir}
+	install -m 0755 ${B}/modules/luci-mod-admin-full/luci-bwc ${D}${bindir}/luci-bwc
 }
 
 addtask preconfigure before do_configure after do_patch

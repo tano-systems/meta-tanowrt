@@ -1,12 +1,12 @@
 
 LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
-LUCI_GIT_BRANCH   = "lede-17.01"
+LUCI_GIT_BRANCH   = "openwrt-18.06"
 LUCI_GIT_PROTOCOL = "git"
 
-# 29.06.2018 luci-app-transmission: fix typo
-LUCI_GIT_SRCREV = "b78664c2cd4046a1e77285834b71f9523c91afe7"
+# Latest
+LUCI_GIT_SRCREV = "4ba85e3d82b684262c570e38a72d2dc3bb712a13"
 
-PR_append = ".1"
+PR_append = ".2"
 
 libdir = "/usr/lib"
 
