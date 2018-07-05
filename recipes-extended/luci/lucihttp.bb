@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -13,6 +13,7 @@ inherit cmake openwrt pkgconfig
 
 SRC_URI = "\
 	git://github.com/jow-/lucihttp.git;protocol=https \
+	file://0001-test-utils-Use-portable-format-for-size_t-in-printf.patch \
 "
 
 SRCREV = "cb119deddee5f0f8f1da883b20c60aea7611b175" 
