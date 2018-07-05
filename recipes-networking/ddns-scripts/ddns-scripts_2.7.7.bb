@@ -6,8 +6,6 @@
 #
 PR = "tano1"
 
-#DEPENDS += "gzip-native"
-
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
 SECTION = "net/misc"
 LICENSE = "GPL-2.0 & MPL-2.0"
@@ -37,6 +35,7 @@ SRC_URI = "\
 	file://update_cloudflare_com_v1.sh \
 	file://public_suffix_list.dat \
 	file://update_no-ip_com.sh \
+	file://update_route53_v1.sh \
 "
 
 inherit openwrt-services
@@ -47,7 +46,7 @@ OPENWRT_SERVICE_STATE_${PN}-ddns = "disabled"
 
 inherit pkgconfig
 
-PACKAGECONFIG ??= "cloudflare_v4 godaddy_com_v1 no_ip_com"
+PACKAGECONFIG ??= "cloudflare_v4 godaddy_com_v1 no_ip_com route53_v1"
 
 # Dynamic DNS Client scripts extension for CloudFlare.com API-v1 (deprecated)
 PACKAGECONFIG[cloudflare_v1] = ",,"
@@ -63,6 +62,9 @@ PACKAGECONFIG[no_ip_com] = ",,"
 
 # Dynamic DNS Client scripts extension for direct updates using Bind nsupdate
 PACKAGECONFIG[nsupdate] = ",,bind-client"
+
+# Amazon AWS Route 53 API v1
+PACKAGECONFIG[route53_v1] = ",,curl openssl" 
 
 do_compile() {
 	cp ${S}/services* ${B}/
@@ -125,5 +127,10 @@ do_install() {
 	if [ "${@bb.utils.contains('PACKAGECONFIG', 'nsupdate', '1', '0', d)}" = "1" ]; then
 		install -d ${D}${libdir}/ddns
 		install -m 0755 ${B}/update_nsupdate.sh ${D}${libdir}/ddns/update_nsupdate.sh
+	fi
+
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'route53_v1', '1', '0', d)}" = "1" ]; then
+		install -d ${D}${libdir}/ddns
+		install -m 0755 ${B}/update_route53_v1.sh ${D}${libdir}/ddns/update_route53_v1.sh
 	fi
 }
