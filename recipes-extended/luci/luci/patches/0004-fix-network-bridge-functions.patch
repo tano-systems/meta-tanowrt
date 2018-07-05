@@ -1,5 +1,5 @@
 diff --git a/modules/luci-base/luasrc/model/network.lua b/modules/luci-base/luasrc/model/network.lua
-index d5029ec90..2723d8676 100644
+index d5029ec90..52f22967c 100644
 --- a/modules/luci-base/luasrc/model/network.lua
 +++ b/modules/luci-base/luasrc/model/network.lua
 @@ -355,6 +355,7 @@ function init(cursor)
@@ -10,7 +10,12 @@ index d5029ec90..2723d8676 100644
  			elseif b then
  				b.ifnames[#b.ifnames+1] = _interfaces[r[2]]
  				b.ifnames[#b.ifnames].bridge = b
-@@ -1319,16 +1320,16 @@ function interface.ports(self)
+@@ -1315,20 +1316,21 @@ function interface.ports(self)
+ 		for _, iface in ipairs(members) do
+ 			ifaces[#ifaces+1] = interface(iface)
+ 		end
++		return ifaces
+ 	end
  end
  
  function interface.bridge_id(self)
@@ -31,7 +36,7 @@ index d5029ec90..2723d8676 100644
  	else
  		return false
  	end
-@@ -1343,7 +1344,8 @@ function interface.is_bridge(self)
+@@ -1343,7 +1345,8 @@ function interface.is_bridge(self)
  end
  
  function interface.is_bridgeport(self)
@@ -41,6 +46,3 @@ index d5029ec90..2723d8676 100644
  end
  
  function interface.tx_bytes(self)
--- 
-2.7.4
-
