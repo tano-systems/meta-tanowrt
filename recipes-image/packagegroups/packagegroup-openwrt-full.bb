@@ -46,6 +46,7 @@ RDEPENDS_${PN}-network = "\
 	openvpn-easy-rsa \
 	lldpd \
 	luci-app-lldpd \
+	luci-app-mstpd \
 	luci-app-commands \
 	luci-app-uhttpd \
 	luci-app-openvpn \
