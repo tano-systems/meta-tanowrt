@@ -6,7 +6,7 @@ LUCI_GIT_PROTOCOL = "git"
 # Latest
 LUCI_GIT_SRCREV = "4ba85e3d82b684262c570e38a72d2dc3bb712a13"
 
-PR_append = ".2"
+PR_append = ".3"
 
 libdir = "/usr/lib"
 
@@ -22,3 +22,5 @@ LUCI_LANGUAGES ?= "en"
 # Initial startup language
 LUCI_INITIAL_LANG ?= "auto"
 
+# Initial mediaurlbase setting
+LUCI_INITIAL_MEDIAURLBASE ?= "/luci-static/bootstrap"

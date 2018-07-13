@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -78,6 +78,10 @@ do_preconfigure() {
 do_install_append() {
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
+
+	# Configure initial mediaurlbase
+	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
+	sed -i -e "s/\(option\s*mediaurlbase\).*/\1 \'${MEDIAURLBASE_ESCAPED}\'/" ${D}${sysconfdir}/config/luci
 
 	# Install luci-bwc
 	install -d ${D}${bindir}

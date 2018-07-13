@@ -17,8 +17,19 @@
 
 	For example:
 	```
-	LUCI_LANGUAGES="ru"
+	LUCI_INITIAL_LANG="ru"
 	```
+
+### `LUCI_INITIAL_MEDIAURLBASE`
+
+	Initial startup LuCI theme.
+
+	For example:
+	```
+	LUCI_INITIAL_MEDIAURLBASE="/luci-static/yourtheme"
+	```
+
+	By default this variable is set to `/luci-static/bootstrap`.
 
 ### `DISTRO_FEATURES`
 
