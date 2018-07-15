@@ -39,7 +39,7 @@ From the Oracle VM VirtualBox Manager, change VM settings:
 1. Under Storage > Add new storage controller > Add SATA Controller
 2. Under Storage > Controller: SATA > Add Hard Disk
 3. Select: Choose existing disk
-4. Virtual hard disk file: .../openwrt-image-full.vmdk.vmdk
+4. Virtual hard disk file: .../openwrt-image-full-qemux86-64.vmdk
 5. Click "OK"
 
 From the Oracle VM VirtualBox Manager, start the VM.
