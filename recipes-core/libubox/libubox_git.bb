@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -38,13 +38,14 @@ DEPENDS += "json-c"
 DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'lua', 'lua5.1', '', d)}"
 
 SRC_URI = "\
-          git://git.openwrt.org/project/libubox.git;branch=lede-17.01 \
+          git://git.openwrt.org/project/libubox.git;branch=master \
           file://0001-version-libraries.patch \
           file://fix-libdir.patch \
           "
 
-# 07.01.2018 17:46:31 (branch lede-17.01)
-SRCREV = "1dafcd7813f147811a6bbdb00eec603fe732aac1"
+# 07.06.2018
+# utils: add const_* byteswapping functions
+SRCREV = "3c1b33b7d57ad8b8aeeab8babd48625b86532e0b"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"

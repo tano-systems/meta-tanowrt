@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -19,13 +19,15 @@ SRC_URI = "\
           file://100-Fix-IFF_LOWER_UP-define.patch \
           file://200-buffer-overflow-fix.patch \
           file://300-replace-is_error-helper-with-NULL-check.patch \
+          file://400-fix-CMakeLists.txt.patch \
           file://network.config \
           file://network.init \
           file://network.hotplug \
           "
 
-# 28.06.2018 system-linux: add autoneg and link-partner output
-SRCREV_netifd = "c1f6a82c21d6fdb30af178f3b5604a202ab1b26c"
+# 17.07.2018
+# ubus: display correct prefix size for IPv6 prefix address
+SRCREV_netifd = "291ccbb8de51ced6d80a7417abf9d85fd8e16fbb"
 
 S = "${WORKDIR}/git"
 

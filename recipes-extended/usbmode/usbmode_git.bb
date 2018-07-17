@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DEPENDS += "perl-native"
 
@@ -16,7 +16,10 @@ DEPENDS = "libusb libubox"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://git.openwrt.org/project/usbmode.git"
-SRCREV = "993a9a542791953c4804f7ddbb3a07756738e37a"
+
+# 18.12.2017
+# support PantechMode
+SRCREV = "f40f84c27534159066c94dadc0c08e0b255c3e26"
 
 SRC_URI += "\
 	file://usbmode.init \

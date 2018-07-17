@@ -1,0 +1,25 @@
+From f88c913d8a671a04e19de41aee15d58c954a9bdb Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 17 Jul 2018 06:56:47 +0300
+Subject: [PATCH] CMakeLists.txt fix
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 50f62bd..696412b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ cmake_minimum_required(VERSION 2.6)
+ 
+ PROJECT(netifd C)
+-ADD_DEFINITIONS(-Os -Wall -Werror --std=gnu99 -Wmissing-declarations -Wno-unknown-warning-option -Wno-format-truncation -Wimplicit-fallthrough)
++ADD_DEFINITIONS(-Os -Wall -Werror --std=gnu99 -Wmissing-declarations -Wno-unknown-warning-option -Wno-format-truncation)
+ 
+ SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+ 
+-- 
+2.7.4
+

@@ -1,7 +1,7 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
@@ -12,7 +12,10 @@ DEPENDS = "libubox json-c"
 
 SRC_URI = "git://git.openwrt.org/project/uqmi.git \
           "
-SRCREV = "c61815319c1c0e76898048a19151f30844a6989c"
+
+# 22.06.2017
+# uqmi_add_command: fixed command argument assignment
+SRCREV = "01944dd7089b15f55b463072e1b46f1144e8aab4"
 
 S = "${WORKDIR}/git"
 

@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -12,11 +12,11 @@ HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
 LICENSE = "LGPL-2.1 & GPL-2.0 & PD"
 LIC_FILES_CHKSUM = "file://ubi.c;beginline=1;endline=17;md5=8ccc371d64f0b3a8d91065b678dc7095"
 SECTION = "base"
-DEPENDS += "util-linux"
+DEPENDS += "util-linux ubus"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=lede-17.01 \
+SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
@@ -24,10 +24,12 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=lede-17.01 \
 	file://fstab.default \
 	file://snapshot \
 	file://mount.hotplug \
+	file://blockd.init \
 "
 
 # 16.04.2018
-SRCREV = "6609e98a7416e107d1718b6ec6cc7339ab6523b8"
+# libfstools: move mount points when switching to JFFS2
+SRCREV = "e24368361db166cf369a19cea773bd54f9d854b1"
 
 S = "${WORKDIR}/git"
 
@@ -36,8 +38,9 @@ inherit cmake pkgconfig openwrt
 inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "fstab"
+OPENWRT_SERVICE_SCRIPTS_${PN} = "fstab blockd"
 OPENWRT_SERVICE_STATE_${PN}-fstab = "enabled"
+OPENWRT_SERVICE_STATE_${PN}-blockd = "enabled"
 
 EXTRA_OECMAKE += "${EXTRA_OECONF}"
 
@@ -66,6 +69,7 @@ do_install_append() {
 
 	install -m 0755 ${WORKDIR}/fstab.init ${D}${sysconfdir}/init.d/fstab
 	install -m 0755 ${WORKDIR}/fstab.default ${D}${sysconfdir}/uci-defaults/10-fstab
+	install -m 0755 ${WORKDIR}/blockd.init ${D}${sysconfdir}/init.d/blockd
 	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
 	install -m 0644 ${WORKDIR}/mount.hotplug ${D}${sysconfdir}/hotplug.d/block/10-mount
 }

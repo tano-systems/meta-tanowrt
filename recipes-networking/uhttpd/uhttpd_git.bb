@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -20,7 +20,9 @@ SRC_URI = "\
           file://ubus.default \
 "
 
-SRCREV = "a235636a2687fafb9c474e4b134a59ff66425c92"
+# 26.06.2018
+# client: flush buffered SSL output when tearing down client ustream
+SRCREV = "796d42bceed2015bb00309a3bf0f49279b070c19"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt openwrt-base-files
