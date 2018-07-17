@@ -16,6 +16,7 @@ Recipe ddns-scripts:
 
 Recipe fstools:
 - fstab
+- blockd
 
 Recipe busybox:
 - cron
@@ -26,9 +27,6 @@ Recipe lldpd:
 
 Recipe ubox:
 - log
-
-Recipe mountd:
-- mountd
 
 Recipe net-snmp:
 - snmpd
