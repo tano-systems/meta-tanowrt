@@ -5,13 +5,14 @@
 # It is released under the MIT license.  See COPYING.MIT
 # for the terms.
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
 
 inherit openwrt-image
 inherit rootfs-rm-boot-dir
+inherit rootfs-var-in-tmpfs
 
 CORE_IMAGE_BASE_INSTALL = '\
 	packagegroup-core-boot \
