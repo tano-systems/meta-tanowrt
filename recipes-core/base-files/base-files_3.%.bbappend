@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano1"
+PR_append = ".tano5"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -21,8 +21,8 @@ LIC_FILES_CHKSUM_append = " file://${WORKDIR}/git/openwrt/LICENSE;md5=94d55d512a
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
-        file://0001-use-sh-not-ash.patch \
-	"
+	file://0001-use-sh-not-ash.patch \
+"
 SRCREV = "${OPENWRT_SRCREV}"
 
 SRC_URI_append = "\
@@ -31,6 +31,17 @@ SRC_URI_append = "\
     file://hostname \
     file://system.init \
     file://system.config \
+"
+
+# Only for x86 and x86-64 architectures
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-x86:"
+MACHINES_X86 = "qemux86 qemux86-64"
+SRC_URI_append = "\
+	file://01_sysinfo \
+	file://02_load_x86_ucode \
+	file://15_essential_fs_x86 \
+	file://20_check_iso \
+	file://79_move_config \
 "
 
 SG = "${WORKDIR}/git/openwrt"
@@ -62,6 +73,9 @@ BASEFILESISSUEINSTALL ?= "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt',
 
 do_install_append () {
     if [ "${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', 'true', 'false', d)}" = "true" ]; then
+        rm -rf ${D}${localstatedir}/backups
+        rm -rf ${D}${localstatedir}/local
+
         # We need to munge openwrt base-files before copying
         # Some file come from regular OE base-files and others
         # belong in other recipes, or are not applicable
@@ -76,7 +90,6 @@ do_install_append () {
         rm -f ${STMP}/lib/functions/preinit.sh
         rm -rf ${STMP}/lib/preinit
         rm -f ${STMP}/rom/note
-#        rm -f ${STMP}/etc/banner.failsafe
         # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
         rmdir ${STMP}/rom
 
@@ -89,6 +102,7 @@ do_install_append () {
         rm -f ${STMP}/etc/init.d/sysctl
         rm -f ${STMP}/etc/init.d/umount
         rm -f ${STMP}/etc/init.d/boot
+
         # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
         rmdir ${STMP}/usr/libexec
 
@@ -194,7 +208,31 @@ do_install_append () {
         # Setup timezone and zonename in /etc/config/system
         sed -i -e "s/\(option\s*timezone\).*/\1 \'${OPENWRT_TIMEZONE_ESCAPED}\'/" ${D}${sysconfdir}/config/system
         sed -i -e "s/\(option\s*zonename\).*/\1 \'${OPENWRT_ZONENAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+
+        rm -rf ${D}/var/run
+        rm -rf ${D}/run
+        ln -s /var/run ${D}/run
+
+        rm -rf ${D}/proc/mounts
+
+        if [ "${@bb.utils.contains('MACHINES_X86', '${MACHINE}', 'true', 'false', d)}" = "true" ]; then
+            install -dm 0755 ${D}/lib/preinit
+            install -m 0644 ${WORKDIR}/01_sysinfo ${D}/lib/preinit/01_sysinfo
+            install -m 0644 ${WORKDIR}/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
+            install -m 0644 ${WORKDIR}/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
+            install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
+            install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
+        fi
     fi
+}
+
+pkg_preinst_${PN} () {
+    :
+}
+
+pkg_postinst_${PN}_append() {
+    rm -rf $D/var/lock
+    mkdir -p $D/var/lock
 }
 
 FILES_${PN} = "/"
