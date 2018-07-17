@@ -78,3 +78,7 @@ RPROVIDES_${PN}-server-snmptrapd += "snmptrapd"
 RPROVIDES_${PN}-client           += "snmp-utils"
 RPROVIDES_${PN}-mibs             += "snmp-mibs"
 RPROVIDES_${PN}-libs             += "libnetsnmp"
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/snmpd \
+"

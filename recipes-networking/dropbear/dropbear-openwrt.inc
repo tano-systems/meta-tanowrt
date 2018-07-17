@@ -47,3 +47,8 @@ do_install_append() {
 
     touch ${D}${sysconfdir}/dropbear/dropbear_rsa_host_key
 }
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/dropbear \
+	${sysconfdir}/dropbear/dropbear_rsa_host_key \
+"

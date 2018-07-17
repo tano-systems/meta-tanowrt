@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano2"
+PR_append = ".tano3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -49,3 +49,7 @@ USERADD_PARAM_${PN} = "--system -d /var/lib/dnsmasq --no-create-home \
 
 RDEPENDS_dnsmasq += "jsonpath"
 
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/dhcp \
+	${sysconfdir}/dnsmasq.conf \
+"

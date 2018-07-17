@@ -1,4 +1,5 @@
-PR = "tano0"
+#
+PR = "tano1"
 
 SUMMARY = "A 802.1ab implementation (LLDP) to help you locate neighbors of all your equipments"
 SECTION = "net/misc"
@@ -89,3 +90,6 @@ do_install_append() {
     fi
 }
 
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/lldpd \
+"

@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -55,3 +55,9 @@ RDEPENDS_${PN} += "\
                   openssl \
                   base-files-scripts-openwrt \
                   "
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/uhttpd \
+	${sysconfdir}/uhttpd.crt \
+	${sysconfdir}/uhttpd.key \
+"

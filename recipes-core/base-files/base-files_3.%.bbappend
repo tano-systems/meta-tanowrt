@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano5"
+PR_append = ".tano6"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -214,6 +214,9 @@ do_install_append () {
         ln -s /var/run ${D}/run
 
         rm -rf ${D}/proc/mounts
+        rm -rf ${D}${sysconfdir}/motd
+        rm -rf ${D}${sysconfdir}/skel
+        rm -rf ${D}${sysconfdir}/filesystems
 
         if [ "${@bb.utils.contains('MACHINES_X86', '${MACHINE}', 'true', 'false', d)}" = "true" ]; then
             install -dm 0755 ${D}/lib/preinit
@@ -253,3 +256,19 @@ CONFFILES_${PN} += "\
                    "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/resolv.conf \
+	${sysconfdir}/nsswitch.conf \
+	${sysconfdir}/host.conf \
+	${sysconfdir}/shells \
+	${sysconfdir}/config/system \
+	${sysconfdir}/fstab \
+	${sysconfdir}/sysctl.conf \
+	${sysconfdir}/shadow \
+	${sysconfdir}/hostname \
+	${sysconfdir}/group \
+	${sysconfdir}/profile \
+	${sysconfdir}/passwd \
+	${sysconfdir}/sysctl.d/10-default.conf \
+"

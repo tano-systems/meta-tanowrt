@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -41,3 +41,7 @@ do_install_append() {
 FILES_${PN}  += "${libdir}/*"
 
 RDEPENDS_${PN} += "iwinfo"
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/rpcd \
+"

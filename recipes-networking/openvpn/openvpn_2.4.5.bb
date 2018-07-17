@@ -1,4 +1,4 @@
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "A full-featured SSL VPN solution via tun device."
 HOMEPAGE = "http://openvpn.sourceforge.net"
@@ -18,3 +18,7 @@ inherit autotools
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 require ${PN}-openwrt.inc
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/openvpn \
+"

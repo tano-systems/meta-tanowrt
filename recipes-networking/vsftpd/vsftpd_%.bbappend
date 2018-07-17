@@ -1,5 +1,5 @@
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -38,3 +38,7 @@ do_compile() {
 	oe_runmake "LIBS=-L${STAGING_LIBDIR} -lcrypt -lcap ${PAMLIB} ${@bb.utils.contains('PACKAGECONFIG', 'tcp-wrappers', '-lwrap', '', d)}"
 }
 
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/vsftpd.conf\
+	${sysconfdir}/vsftpd \
+"

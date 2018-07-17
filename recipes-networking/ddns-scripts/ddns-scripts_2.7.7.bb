@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
 SECTION = "net/misc"
@@ -134,3 +134,7 @@ do_install() {
 		install -m 0755 ${B}/update_route53_v1.sh ${D}${libdir}/ddns/update_route53_v1.sh
 	fi
 }
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/ddns \
+"

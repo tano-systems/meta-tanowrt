@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -87,3 +87,8 @@ do_install_append() {
 }
 
 addtask preconfigure before do_configure after do_patch
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/luci \
+	${sysconfdir}/config/ucitrack \
+"

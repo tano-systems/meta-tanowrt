@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -141,3 +141,8 @@ RRECOMMENDS_${PN} += "\
                      kernel-module-nf-conntrack-ipv6 \
                      ', '' , d)} \
                      "
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/firewall \
+	${sysconfdir}/firewall.user \
+"
