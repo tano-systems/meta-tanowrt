@@ -1,0 +1,16 @@
+diff -urN comgt.0.32/Makefile comgt.0.32-fix/Makefile
+--- comgt.0.32/Makefile	2017-06-19 11:53:49.214444189 +0300
++++ comgt.0.32-fix/Makefile	2017-06-19 11:55:09.426003698 +0300
+@@ -32,10 +32,10 @@
+ SCRIPTSRC = ./scripts/
+ BIN     = $(CPROG) 
+ MANP	= comgt.1 sigmon.1
+-CC	= cc
++CC     ?= cc
+ 
+ CFLAGS  = -c -O2
+-LDFLAGS =
++LDFLAGS ?= 
+ 
+ all: $(BIN)
+ 
