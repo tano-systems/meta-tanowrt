@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano4"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -16,13 +16,12 @@ DEPENDS = "libubox ubus json-c"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://git.openwrt.org/project/procd.git;branch=lede-17.01 \
-	file://00_preinit.conf \
-	file://10_sysinfo \
+SRC_URI = "git://git.openwrt.org/project/procd.git;branch=master \
 "
 
-# 22.01.2018 20:51:22
-SRCREV_pn-procd = "9a4036fb1b7412ab2ea4f360d2cc7e6a5e0fa6b5"
+# 05.07.2018
+# procd: increase watchdog fd_buf storage size to fix gcc8 build error
+SRCREV_pn-procd = "a0372ac0713957365120cf42c5469c635c1e0232"
 
 S = "${WORKDIR}/git"
 PD = "${S}/openwrt/package/system/procd/files"
@@ -39,7 +38,19 @@ OPENWRT_SERVICE_STATE_${PN}-umount = "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-#CFLAGS += "-Wno-error=format-truncation"
+OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR ?= "y"
+OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT ?= "2"
+OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH ?= "/usr/sbin:/usr/bin:/sbin:/bin"
+OPENWRT_CONFIG_TARGET_INIT_ENV ?= ""
+OPENWRT_CONFIG_TARGET_INIT_CMD ?= "/sbin/init"
+OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR ?= "y"
+OPENWRT_CONFIG_TARGET_PREINIT_IFNAME ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_IP ?= "192.168.1.1"
+OPENWRT_CONFIG_TARGET_PREINIT_NETMASK ?= "255.255.255.0"
+OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST ?= "192.168.1.255"
+OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE ?= ""
 
 do_install_append() {
     # Early init
@@ -50,8 +61,6 @@ do_install_append() {
 
     install -d ${D}${base_libdir}
     cp --preserve=mode,timestamps -R ${BF}/lib/preinit ${D}${base_libdir}
-    install -Dm 0644 ${WORKDIR}/10_sysinfo ${D}${base_libdir}/preinit/10_sysinfo
-    install -Dm 0644 ${WORKDIR}/00_preinit.conf ${D}${base_libdir}/preinit/00_preinit.conf
 
     # Early init + dev manager / coldplug
     install -Dm 0644 ${PD}/hotplug-preinit.json ${D}${sysconfdir}/hotplug-preinit.json
@@ -81,9 +90,24 @@ do_install_append() {
     cp -dR --preserve=mode,links ${BF}/etc/hotplug.d ${D}${sysconfdir}
 
     # Common default PATH
+    install -dm 0755 ${D}/lib/preinit
+    PREINIT_CONF="${D}/lib/preinit/00_preinit.conf"
+    echo "pi_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR}\"" >${PREINIT_CONF}
+    echo "fs_failsafe_wait_timeout=${OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT}" >>${PREINIT_CONF}
+    echo "pi_init_path=\"${OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH}\"" >>${PREINIT_CONF}
+    echo "pi_init_env=\"${OPENWRT_CONFIG_TARGET_INIT_ENV}\"" >>${PREINIT_CONF}
+    echo "pi_init_cmd=\"${OPENWRT_CONFIG_TARGET_INIT_CMD}\"" >>${PREINIT_CONF}
+    echo "pi_init_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR}\"" >>${PREINIT_CONF}
+    echo "pi_ifname=\"${OPENWRT_CONFIG_TARGET_PREINIT_IFNAME}\"" >>${PREINIT_CONF}
+    echo "pi_ip=\"${OPENWRT_CONFIG_TARGET_PREINIT_IP}\"" >>${PREINIT_CONF}
+    echo "pi_netmask=\"${OPENWRT_CONFIG_TARGET_PREINIT_NETMASK}\"" >>${PREINIT_CONF}
+    echo "pi_broadcast=\"${OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST}\"" >>${PREINIT_CONF}
+    echo "pi_preinit_net_messages=\"${OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG}\"" >>${PREINIT_CONF}
+    echo "pi_preinit_no_failsafe_netmsg=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG}\"" >>${PREINIT_CONF}
+    echo "pi_preinit_no_failsafe=\"${OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE}\"" >>${PREINIT_CONF}
+
     sed -i "s#%PATH%#/usr/sbin:/usr/bin:/sbin:/bin#g" \
           ${D}${sysconfdir}/preinit \
-          ${D}${base_libdir}/preinit/00_preinit.conf \
           ${D}${base_sbindir}/hotplug-call
 
     # Make sure things are where they are expected to be
