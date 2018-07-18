@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -14,11 +14,13 @@ PACKAGES = "\
 	packagegroup-openwrt-full \
 	packagegroup-openwrt-full-base \
 	packagegroup-openwrt-full-network \
+	packagegroup-openwrt-full-luci \
 "
 
 RDEPENDS_${PN} = "\
 	packagegroup-openwrt-base \
 	packagegroup-openwrt-full-network \
+	packagegroup-openwrt-full-luci \
 	fstools \
 	eudev \
 	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'libusb1', '',d)} \
@@ -29,12 +31,25 @@ RDEPENDS_${PN} = "\
 	apcupsd \
 "
 
+RDEPENDS_${PN}-luci = "\
+	luci-app-lldpd \
+	luci-app-mstpd \
+	luci-app-commands \
+	luci-app-uhttpd \
+	luci-app-openvpn \
+	luci-app-ddns \
+	luci-app-terminal \
+	luci-proto-3g \
+	luci-proto-ncm \
+	luci-proto-ppp \
+	luci-proto-qmi \
+"
+
 RDEPENDS_${PN}-network = "\
 	relayd \
 	tcpdump \
 	umbim \
 	umdnsd \
-	uqmi \
 	ethtool \
 	dropbear \
 	openssh-sftp-server \
@@ -45,13 +60,6 @@ RDEPENDS_${PN}-network = "\
 	openvpn \
 	openvpn-easy-rsa \
 	lldpd \
-	luci-app-lldpd \
-	luci-app-mstpd \
-	luci-app-commands \
-	luci-app-uhttpd \
-	luci-app-openvpn \
-	luci-app-ddns \
-	luci-app-terminal \
 	vsftpd \
 	mstpd \
 "
