@@ -12,7 +12,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -162,3 +162,6 @@ CONFFILES_${PN} = "\
 	${sysconfdir}/ppp/filter \
 	${sysconfdir}/ppp/options \
 "
+
+RSUGGESTS_${PN} = "${PN}-tools ${PN}-oa ${PN}-oe ${PN}-radius ${PN}-winbind ${PN}-minconn ${PN}-password ${PN}-l2tp"
+RRECOMMENDS_${PN} = "${PN}-tools ${PN}-pptp ${PN}-oa ${PN}-oe"
