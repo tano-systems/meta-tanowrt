@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -18,7 +18,9 @@ SRC_URI = "\
     file://0100-OE-build-fails-due-to-libnl-tiny-dependency-in-CMakeLists.patch \
 "
 
-SRCREV_odhcpd = "750e457e3000187b85906814a2529ede24775325"
+# 09.07.2018
+# dhcpv4: improve error checking in handle_dhcpv4()
+SRCREV_odhcpd = "345bba0889ae9deeac4ca805ebc3f0661b4b3988"
 
 S = "${WORKDIR}/git"
 OF = "${S}/openwrt/package/network/services/odhcpd/files"
