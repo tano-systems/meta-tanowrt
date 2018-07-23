@@ -5,9 +5,11 @@
 # for the terms.
 
 # Use this git SRCREV for all recipes that pull files out of openwrt repository
-# Equivalent to tag v18.01.0-rc2
+# Equivalent to tag v18.06.0-rc2
 
-OPENWRT_SRCREV = "4de335bdbed6b6ef5b191ba31b71f007dc419172"
+# 21.07.2018
+# build: do not alter global default package selection from profiles
+OPENWRT_SRCREV = "b84a1c56f3a874c2c3d2b2d8282bc0ad0378d743"
 OPENWRT_BRANCH = "openwrt-18.06"
 
 LICENSE_append = "&GPL-2.0+"
