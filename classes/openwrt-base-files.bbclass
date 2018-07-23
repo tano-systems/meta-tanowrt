@@ -12,6 +12,8 @@
 OPENWRT_SRCREV = "b84a1c56f3a874c2c3d2b2d8282bc0ad0378d743"
 OPENWRT_BRANCH = "openwrt-18.06"
 
+PR_append = ".owrt0"
+
 LICENSE_append = "&GPL-2.0+"
 LIC_FILES_CHKSUM_append = " file://${S}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 
