@@ -8,16 +8,17 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRCREV_odhcp6c = "474b5a3a9a25f0aa12e69afd72d7661638ad879d"
+# 11.07.2018
+# odhcp6c: add option to ignore Server Unicast option
+SRCREV_odhcp6c = "67ae6a71b5762292e114b281d0e329cc24209ae6"
 
 SRC_URI = "\
-          git://git.openwrt.org/project/odhcp6c.git;name=odhcp6c \
-          file://0001-dhcpv6-Fix-strncpy-bounds-and-initialize-struct-to-0.patch \
-          "
+	git://git.openwrt.org/project/odhcp6c.git;name=odhcp6c \
+"
 
 S = "${WORKDIR}/git"
 OF = "${S}/openwrt/package/network/ipv6/odhcp6c/files"
