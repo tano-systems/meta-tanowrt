@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano5"
+PR = "tano6"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -10,12 +10,12 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://github.com/tano-systems/mstpd.git;protocol=https;branch=json-output-format-support \
+	git://github.com/tano-systems/mstpd.git;protocol=https;branch=master \
 	file://0001-Startup-delay-patch.patch \
 "
 
 PV = "0.0.6+git${SRCPV}"
-SRCREV = "13b286936a6c4e4522b1972e5675348614200657"
+SRCREV = "64521ef59a274ee1e012d7f5c4389244c408db65"
 
 SRC_URI += "\
 	file://openwrt-mstpd.config \
