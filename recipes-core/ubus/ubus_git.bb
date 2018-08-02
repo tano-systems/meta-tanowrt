@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -12,8 +12,9 @@ DEPENDS = "json-c libubox"
 
 SRC_URI = "git://git.openwrt.org/project/ubus.git"
 
-# 16.01.2018 20:13:39
-SRCREV = "5bae22eb5472c9c7cc30caa9a84004bba19940d3"
+# 26.07.2018
+# libubus: pass an empty UBUS_ATTR_DATA block if msg is NULL on invoke
+SRCREV = "40e0931e70bfe198690a7dac43b32fad06f46ef9"
 
 S = "${WORKDIR}/git"
 
