@@ -1,7 +1,7 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt tiny signify replacement"
 HOMEPAGE = "https://git.openwrt.org/?p=project/usign.git;a=summary"
@@ -11,7 +11,10 @@ SECTION = "base"
 
 SRC_URI = "git://git.openwrt.org/project/usign.git \
           "
-SRCREV = "ef6419142a3b0fbcddcccf536e3c1880302c6f89"
+
+# 23.10.2016
+# README: replace unicode character
+SRCREV = "3e6648b1356e54bcee351b8f5dbfacc6ee9dab53"
 
 S = "${WORKDIR}/git"
 
