@@ -7,10 +7,12 @@ HOMEPAGE = "http://git.openwrt.org/?p=project/iwinfo.git;a=summary"
 LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
-DEPENDS += "uci lua5.1"
-PR = "tano0"
+DEPENDS += "ubus uci lua5.1"
+PR = "tano1"
 
-SRCREV = "fd9e17be0c43bd6b8df5371f0b353747bc563874"
+# 31.07.2018
+# Revert "build: compile with -ffunction-sections, -fdata-sections and LTO"
+SRCREV = "65b8333f5b66f8812c1ed21a4d5b28a576e6ba63"
 
 inherit openwrt
 
