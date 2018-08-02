@@ -8,11 +8,14 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://NOTICE;md5=bb2810bf31da2f6bb39e0bfa86091da3"
 SECTION = "tools"
 DEPENDS = "zlib"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "git://git.openwrt.org/project/make_ext4fs.git \
           "
-SRCREV = "bd53eaafbc2a89a57b8adda38f53098a431fa8f4"
+
+# 29.05.2017
+# make_ext4: Add strict prototypes. 
+SRCREV = "eebda1d55d9701ace2700d7ae461697fadf52d1f"
 
 S = "${WORKDIR}/git"
 B = "${S}"
