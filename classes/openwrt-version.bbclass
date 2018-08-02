@@ -21,15 +21,7 @@ inherit openwrt-base-files
 #
 # This is the name of the release distribution.
 #
-OPENWRT_VERSION_DIST ?= "LEDE"
-
-#
-# Release version nickname
-#
-# This is the release codename embedded in the image.
-# If unspecified, it defaults to the name of source branch.
-#
-OPENWRT_VERSION_NICK ?= "Reboot"
+OPENWRT_VERSION_DIST ?= "OpenWrt"
 
 #
 # Release version number
@@ -38,7 +30,7 @@ OPENWRT_VERSION_NICK ?= "Reboot"
 # If unspecified, it defaults to SNAPSHOT for the master branch
 # or to ##.##-SNAPSHOT on release branches.
 #
-OPENWRT_VERSION_NUMBER ?= "17.01-SNAPSHOT"
+OPENWRT_VERSION_NUMBER ?= "18.06-SNAPSHOT"
 
 #
 # Release version code
@@ -56,7 +48,7 @@ OPENWRT_VERSION_CODE ?= "${OPENWRT_SRCREV}"
 # This is the repository address embedded in the image, it defaults
 # to the trunk snapshot repo; the url may contain the following placeholders:
 # 
-OPENWRT_VERSION_REPO ?= "http://downloads.lede-project.org/releases/17.01-SNAPSHOT"
+OPENWRT_VERSION_REPO ?= "http://downloads.openwrt.org/releases/18.06-SNAPSHOT"
 
 #
 # Manufacturer name
@@ -64,7 +56,7 @@ OPENWRT_VERSION_REPO ?= "http://downloads.lede-project.org/releases/17.01-SNAPSH
 # This is the manufacturer name embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER ?= "LEDE"
+OPENWRT_VERSION_MANUFACTURER ?= "OpenWrt"
 
 #
 # Manufacturer URL
@@ -72,21 +64,21 @@ OPENWRT_VERSION_MANUFACTURER ?= "LEDE"
 # This is an URL to the manufacturer's website embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER_URL ?= "http://lede-project.org/"
+OPENWRT_VERSION_MANUFACTURER_URL ?= "http://openwrt.org/"
 
 #
 # Bug reporting URL
 #
 # This is an URL to provide users for providing bug reports
 #
-OPENWRT_VERSION_BUG_URL ?= "http://bugs.lede-project.org/"
+OPENWRT_VERSION_BUG_URL ?= "http://bugs.openwrt.org/"
 
 #
 # Support URL
 #
 # This an URL to provide users seeking support
 #
-OPENWRT_VERSION_SUPPORT_URL ?= "http://forum.lede-project.org/"
+OPENWRT_VERSION_SUPPORT_URL ?= "http://forum.openwrt.org/"
 
 #
 # Product name
@@ -110,7 +102,6 @@ OPENWRT_VERSION_HWREV ?= "v0"
 #
 OPENWRT_VERSION_NUMBER_LU="${@d.getVar('OPENWRT_VERSION_NUMBER', True).replace(' ', '_').lower()}"
 OPENWRT_VERSION_CODE_LU="${@d.getVar('OPENWRT_VERSION_CODE', True).replace(' ', '_').lower()}"
-OPENWRT_VERSION_NICK_LU="${@d.getVar('OPENWRT_VERSION_NICK', True).replace(' ', '_').lower()}"
 OPENWRT_VERSION_DIST_LU="${@d.getVar('OPENWRT_VERSION_DIST', True).replace(' ', '_').lower()}"
 
 #
@@ -121,8 +112,6 @@ OPENWRT_VERSION_DIST_LU="${@d.getVar('OPENWRT_VERSION_DIST', True).replace(' ', 
 # %v .. Configured release version number or "snapshot", lowercase
 # %C .. Configured release revision code or value of %R, uppercase
 # %c .. Configured release revision code or value of %R, lowercase
-# %N .. Release name, uppercase
-# %n .. Release name, lowercase
 # %D .. Distribution name or "Lede", uppercase
 # %d .. Distribution name or "lede", lowercase
 # %T .. Target name
@@ -139,8 +128,6 @@ OPENWRT_VERSION_SED = "sed -i \
 	-e 's,%v,${OPENWRT_VERSION_NUMBER_LU},g' \
 	-e 's,%C,${OPENWRT_VERSION_CODE},g' \
 	-e 's,%c,${OPENWRT_VERSION_CODE_LU},g' \
-	-e 's,%N,${OPENWRT_VERSION_NICK},g' \
-	-e 's,%n,${OPENWRT_VERSION_NICK_LU},g' \
 	-e 's,%D,${OPENWRT_VERSION_DIST},g' \
 	-e 's,%d,${OPENWRT_VERSION_DIST_LU},g' \
 	-e 's,%R,${OPENWRT_SRCREV},g' \

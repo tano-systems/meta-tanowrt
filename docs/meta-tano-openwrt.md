@@ -27,18 +27,7 @@ This is the name of the release distribution.
 
 Example:
 ```
-OPENWRT_VERSION_DIST ?= "LEDE"
-```
-
-#### `OPENWRT_VERSION_NICK`
-
-Release version nickname.
-
-This is the release codename embedded in the image.
-
-Example:
-```
-OPENWRT_VERSION_NICK ?= "Reboot"
+OPENWRT_VERSION_DIST ?= "OpenWrt"
 ```
 
 #### `OPENWRT_VERSION_NUMBER`
@@ -49,7 +38,7 @@ This is the release version number embedded in the image.
 
 Example:
 ```
-OPENWRT_VERSION_NUMBER ?= "17.01-SNAPSHOT"
+OPENWRT_VERSION_NUMBER ?= "18.06-SNAPSHOT"
 ```
 
 #### `OPENWRT_VERSION_CODE`
@@ -71,7 +60,7 @@ This is the repository address embedded in the image.
 
 Example:
 ```
-OPENWRT_VERSION_REPO ?= "http://downloads.lede-project.org/releases/17.01-SNAPSHOT"
+OPENWRT_VERSION_REPO ?= "http://downloads.openwrt.org/releases/18.06-SNAPSHOT"
 ```
 
 #### `OPENWRT_VERSION_MANUFACTURER`
@@ -83,7 +72,7 @@ Useful for OEMs building OpenWrt based firmware.
 
 Example:
 ```
-OPENWRT_VERSION_MANUFACTURER ?= "LEDE"
+OPENWRT_VERSION_MANUFACTURER ?= "OpenWrt"
 ```
 
 #### `OPENWRT_VERSION_MANUFACTURER_URL`
@@ -95,7 +84,7 @@ Useful for OEM's building OpenWrt based firmware.
 
 Example:
 ```
-OPENWRT_VERSION_MANUFACTURER_URL ?= "http://lede-project.org/"
+OPENWRT_VERSION_MANUFACTURER_URL ?= "http://openwrt.org/"
 ```
 
 #### `OPENWRT_VERSION_BUG_URL`
@@ -106,7 +95,7 @@ This is an URL to provide users for providing bug reports
 
 Example:
 ```
-OPENWRT_VERSION_BUG_URL ?= "http://bugs.lede-project.org/"
+OPENWRT_VERSION_BUG_URL ?= "http://bugs.openwrt.org/"
 ```
 
 #### `OPENWRT_VERSION_SUPPORT_URL`
@@ -117,7 +106,7 @@ This an URL to provide users seeking support.
 
 Example:
 ```
-OPENWRT_VERSION_SUPPORT_URL ?= "http://forum.lede-project.org/"
+OPENWRT_VERSION_SUPPORT_URL ?= "http://forum.openwrt.org/"
 ```
 
 #### `OPENWRT_VERSION_PRODUCT`
