@@ -1,12 +1,12 @@
 
 LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
-LUCI_GIT_BRANCH   = "master"
+LUCI_GIT_BRANCH   = "openwrt-18.06"
 LUCI_GIT_PROTOCOL = "git"
 
 # Latest
-LUCI_GIT_SRCREV = "3b9fba0131c41fa75fb70a4f49170db777da99f7"
+LUCI_GIT_SRCREV = "7d69fa6a5005b66d04b913d66f82fb868f3a1f58"
 
-PR_append = ".5"
+PR_append = ".6"
 
 libdir = "/usr/lib"
 
