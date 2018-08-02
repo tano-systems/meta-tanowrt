@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -19,9 +19,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "git://git.openwrt.org/project/procd.git;branch=master \
 "
 
-# 05.07.2018
-# procd: increase watchdog fd_buf storage size to fix gcc8 build error
-SRCREV_pn-procd = "a0372ac0713957365120cf42c5469c635c1e0232"
+# 30.07.2018
+# Allow disabling seccomp or changing the whitelist
+SRCREV_pn-procd = "e29966f04cdf549a01f721f93634672055da8af4"
 
 S = "${WORKDIR}/git"
 PD = "${S}/openwrt/package/system/procd/files"
