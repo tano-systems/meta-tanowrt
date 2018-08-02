@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -27,9 +27,9 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 16.04.2018
-# libfstools: move mount points when switching to JFFS2
-SRCREV = "e24368361db166cf369a19cea773bd54f9d854b1"
+# 24.05.2018
+# fstools: allow the mounting with full access time accounting
+SRCREV = "dd02dad332958575cc52e60c78ef10ef2b5aaced"
 
 S = "${WORKDIR}/git"
 
