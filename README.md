@@ -1,13 +1,13 @@
 # meta-tano-openwrt
 
-This layer provides OpenEmbedded metadata for [OpenWrt/LEDE](http://www.openwrt.org/)
+This layer provides OpenEmbedded metadata for [OpenWrt](http://www.openwrt.org/)
 based distribution by Tano Systems.
 
 This layer is based on a OE metadata layer for OpenWrt by
 [Khem Raj](https://github.com/kraj/meta-openwrt) (revision
 [3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
 
-All OpenWrt/LEDE packages corresponds to LEDE 17.01.4 or higher.
+All OpenWrt packages corresponds to OpenWrt 18.06.0 or higher.
 
 
 ## Getting Started
@@ -86,9 +86,9 @@ All metadata is MIT licensed unless otherwise stated. Source code included
 in tree for individual recipes is under the LICENSE stated in each recipe
 (.bb file) unless otherwise stated.
 
-The descriptions in the recipes of OpenWrt/LEDE packages have been extracted from
-original OpenWrt/LEDE repositories:
-- https://github.com/openwrt/openwrt.git --- buildsystem for the LEDE Linux distribution;
+The descriptions in the recipes of OpenWrt packages have been extracted from
+original OpenWrt repositories:
+- https://github.com/openwrt/openwrt.git --- buildsystem for the OpenWrt Linux distribution;
 - https://github.com/openwrt/packages.git --- OpenWrt packages feed.
 
 
