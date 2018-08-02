@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
 LICENSE = "BSD"
@@ -13,7 +13,9 @@ DEPENDS = "libubox ustream-ssl"
 SRC_URI = "git://git.openwrt.org/project/uclient.git \
           "
 
-SRCREV = "4b87d83160fec70d50b7fcd736a8c538c28a016c"
+# 22.08.2018
+# uclient-utils: Handle memory allocation failure for url file name
+SRCREV = "eb850df45758be784b67b63dcbe31bd331c12483"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
