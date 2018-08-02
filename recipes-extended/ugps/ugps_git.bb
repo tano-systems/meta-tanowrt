@@ -1,7 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -10,15 +11,16 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=2bf63b09608cf97d9db
 SECTION = "base"
 DEPENDS = "libubox ubus"
 
-SRC_URI = "git://git.openwrt.org/project/ugps.git \
-          "
+SRC_URI = "\
+	git://git.openwrt.org/project/ugps.git \
+"
 
-SRCREV = "971e6703eb9bed936cc62cd335105bd2acca14ef"
+# 12.07.2018
+# check timegm return code
+SRCREV = "b88037b6bf6a6c812183566d96887cb0b201491b"
 
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt
-
-CFLAGS += "-D_DEFAULT_SOURCE"
 
 FILES_${PN}  += "${libdir}/*"
