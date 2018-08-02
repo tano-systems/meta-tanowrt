@@ -13,7 +13,7 @@ DEPENDS = "libubox json-c"
 SRC_URI = "git://git.openwrt.org/project/uqmi.git \
           "
 
-# 22.06.2017
+# 24.05.2017
 # uqmi_add_command: fixed command argument assignment
 SRCREV = "01944dd7089b15f55b463072e1b46f1144e8aab4"
 
