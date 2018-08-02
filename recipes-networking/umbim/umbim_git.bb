@@ -1,7 +1,7 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -14,7 +14,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://git.openwrt.org/project/umbim.git \
           "
-SRCREV = "af9c293c1f1d8a97fbd8adf9c6070ead4920ca84"
+
+# 11.05.2016
+# add radio_state set/query support
+SRCREV = "29aaf43b097ee57f7aa1bb24341db6cc4148cbf3"
 
 S = "${WORKDIR}/git"
 
