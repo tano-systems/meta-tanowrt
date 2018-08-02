@@ -1,0 +1,49 @@
+From baf171cf04bb4f36ea08b096359a4164a0aee1f6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 2 Aug 2018 06:04:38 +0300
+Subject: [PATCH] Fix compile warnings treated as errors
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ interface.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/interface.c b/interface.c
+index 9c5b048..091b38f 100644
+--- a/interface.c
++++ b/interface.c
+@@ -190,7 +190,6 @@ read_socket4(struct uloop_fd *u, unsigned int events)
+ 	socklen_t len;
+ 	struct sockaddr_in from;
+ 	int flags = 0, ifindex = -1;
+-	uint8_t ttl = 0;
+ 	struct in_pktinfo *inp = NULL;
+ 
+ 	if (u->eof) {
+@@ -224,7 +223,6 @@ read_socket4(struct uloop_fd *u, unsigned int events)
+ 			break;
+ 
+ 		case IP_TTL:
+-			ttl = (uint8_t) *((int *) c);
+ 			break;
+ 
+ 		default:
+@@ -264,7 +262,6 @@ read_socket6(struct uloop_fd *u, unsigned int events)
+ 	socklen_t len;
+ 	struct sockaddr_in6 from;
+ 	int flags = 0, ifindex = -1;
+-	int ttl = 0;
+ 	struct in6_pktinfo *inp = NULL;
+ 
+ 	if (u->eof) {
+@@ -298,7 +295,6 @@ read_socket6(struct uloop_fd *u, unsigned int events)
+ 			break;
+ 
+ 		case IPV6_HOPLIMIT:
+-			ttl = (uint8_t) *((int *) c);
+ 			break;
+ 
+ 		default:
+-- 
+2.7.4
+
