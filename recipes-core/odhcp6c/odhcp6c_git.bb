@@ -12,7 +12,7 @@ PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-# 11.07.2018
+# 13.07.2018
 # odhcp6c: add option to ignore Server Unicast option
 SRCREV_odhcp6c = "67ae6a71b5762292e114b281d0e329cc24209ae6"
 
