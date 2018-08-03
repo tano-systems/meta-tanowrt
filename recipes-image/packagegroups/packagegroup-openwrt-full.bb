@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -51,6 +51,8 @@ RDEPENDS_${PN}-network = "\
 	umbim \
 	umdnsd \
 	ethtool \
+	curl \
+	drill \
 	dropbear \
 	openssh-sftp-server \
 	net-snmp-client \
