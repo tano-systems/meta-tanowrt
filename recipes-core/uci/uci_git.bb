@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -17,9 +17,9 @@ SRC_URI = "\
 	file://uci.sh \
 "
 
-# 26.03.2018
-# uci: fix a potential use-after-free in uci_set()
-SRCREV = "5d2bf09ec594d97eb9284b8c721dbfe10b81a6f6"
+# 11.08.2018
+# delta: fix parsing malformed delta lines
+SRCREV = "4c8b4d6efc8302b508d261573351fffb75bd98c2"
 
 S = "${WORKDIR}/git"
 
