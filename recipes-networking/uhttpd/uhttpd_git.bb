@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -15,14 +15,15 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
           git://git.openwrt.org/project/uhttpd.git \
           file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
+          file://0101-build-avoid-redefining-_DEFAULT_SOURCE.patch \
           file://uhttpd.config \
           file://uhttpd.init \
           file://ubus.default \
 "
 
-# 26.06.2018
-# client: flush buffered SSL output when tearing down client ustream
-SRCREV = "796d42bceed2015bb00309a3bf0f49279b070c19"
+# 23.08.2018
+# lua: support multiple Lua prefixes
+SRCREV = "b741dec35698a80266fb8206970638e666774a33"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt openwrt-base-files

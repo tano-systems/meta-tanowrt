@@ -1,0 +1,44 @@
+From b49b6147df7eb2881ce57bffb659b7df59e2aaa9 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 31 Aug 2018 11:57:18 +0300
+Subject: [PATCH] build: avoid redefining _DEFAULT_SOURCE
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ file.c | 3 +++
+ main.c | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/file.c b/file.c
+index 2f829f1..b27de0b 100644
+--- a/file.c
++++ b/file.c
+@@ -17,7 +17,10 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ 
++#ifndef _DEFAULT_SOURCE
+ #define _DEFAULT_SOURCE
++#endif
++
+ #define _BSD_SOURCE
+ #define _DARWIN_C_SOURCE
+ #define _XOPEN_SOURCE 700
+diff --git a/main.c b/main.c
+index bdceb57..4e38c70 100644
+--- a/main.c
++++ b/main.c
+@@ -17,7 +17,10 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ 
++#ifndef _DEFAULT_SOURCE
+ #define _DEFAULT_SOURCE
++#endif
++
+ #define _BSD_SOURCE
+ #define _GNU_SOURCE
+ #define _XOPEN_SOURCE	700
+-- 
+2.7.4
+
