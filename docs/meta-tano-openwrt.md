@@ -4,6 +4,11 @@
 
 ### Global
 
+#### `IMAGE_FEATURES`
+
+Available image features:
+- `package-management` - package manager opkg
+
 #### `DISTRO_FEATURES`
 
 Available extra features provided by this layer:
