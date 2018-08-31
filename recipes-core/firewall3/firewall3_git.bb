@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -32,9 +32,9 @@ SRC_URI += "\
 	file://modules.d/nf-nat \
 "
 
-# 26.07.2018
-# ubus: avoid dumping interface state with NULL message
-SRCREV = "aa8846bb101054392b81f09bade120c021695892"
+# 13.08.2018
+# defaults: fix check_kmod() function
+SRCREV = "1c4d5bcd1137e61e91dca858fe33d76d7a1dc821"
 
 S = "${WORKDIR}/git"
 
