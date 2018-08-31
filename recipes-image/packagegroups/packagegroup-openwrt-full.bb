@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -31,14 +31,15 @@ RDEPENDS_${PN} = "\
 	apcupsd \
 "
 
+#luci-app-commands
+#luci-app-terminal
+
 RDEPENDS_${PN}-luci = "\
 	luci-app-lldpd \
 	luci-app-mstpd \
-	luci-app-commands \
 	luci-app-uhttpd \
 	luci-app-openvpn \
 	luci-app-ddns \
-	luci-app-terminal \
 	luci-proto-3g \
 	luci-proto-ncm \
 	luci-proto-ppp \
