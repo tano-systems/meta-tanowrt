@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -24,9 +24,9 @@ SRC_URI = "\
           file://network.hotplug \
           "
 
-# 31.07.2018
-# fix compile error
-SRCREV_netifd = "a0a1e52eb300b574098ae18fc7e6849ff50c2e5e"
+# 20.08.2018
+# interface: let interface_set_down() return void
+SRCREV_netifd = "7454d121090f60428777c01f431031059acc96eb"
 
 S = "${WORKDIR}/git"
 
