@@ -3,10 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "openwrt-18.06"
 LUCI_GIT_PROTOCOL = "git"
 
-# Latest
-LUCI_GIT_SRCREV = "7d69fa6a5005b66d04b913d66f82fb868f3a1f58"
+# 23.08.2018
+# luci-app-adblock: fix chinese translation
+LUCI_GIT_SRCREV = "650375611f5fa6e53327cdfdba8f087c6c601db0"
 
-PR_append = ".6"
+PR_append = ".7"
 
 libdir = "/usr/lib"
 
