@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -25,6 +25,7 @@ SRC_URI = "\
 	file://0001-Fix-user.setpasswd-function.patch \
 	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
 	file://0004-fix-network-bridge-functions.patch \
+	file://99_luci-theme-initial \
 "
 
 SRCREV = "${LUCI_GIT_SRCREV}" 
@@ -78,8 +79,11 @@ do_install_append() {
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
 
 	# Configure initial mediaurlbase
+	install -d ${D}${sysconfdir}/uci-defaults
+	install -m 0755 ${WORKDIR}/99_luci-theme-initial ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
+
 	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
-	sed -i -e "s/\(option\s*mediaurlbase\).*/\1 \'${MEDIAURLBASE_ESCAPED}\'/" ${D}${sysconfdir}/config/luci
+	sed -i -e "s/\(luci\.main\.mediaurlbase\)=.*/\1=${MEDIAURLBASE_ESCAPED}/" ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
 
 	# Install luci-bwc
 	install -d ${D}${bindir}

@@ -1,0 +1,6 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.main.mediaurlbase=LUCI_INITIAL_MEDIAURLBASE
+	commit luci
+EOF
+exit 0
