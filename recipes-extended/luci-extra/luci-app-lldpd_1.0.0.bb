@@ -5,8 +5,9 @@
 # Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano11"
+PR = "tano12"
 
+SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
