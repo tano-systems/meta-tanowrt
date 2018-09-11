@@ -1,0 +1,169 @@
+From 4cacefebff1ef072519b9f89935bd6adc5b85860 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 11 Sep 2018 17:16:50 +0300
+Subject: [PATCH 2/3] luci-app-statistics: allow to configure plot width and height
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ .../luasrc/model/cbi/luci_statistics/collectd.lua  | 24 ++++++++++++++++------
+ .../luci-app-statistics/po/en/statistics.po        | 15 ++++++++++++++
+ .../luci-app-statistics/po/ru/statistics.po        | 15 ++++++++++++++
+ .../po/templates/statistics.pot                    | 15 ++++++++++++++
+ 4 files changed, 63 insertions(+), 6 deletions(-)
+
+diff --git a/luasrc/model/cbi/luci_statistics/collectd.lua b/luasrc/model/cbi/luci_statistics/collectd.lua
+index 663a3f12d..7414bcbeb 100644
+--- a/luasrc/model/cbi/luci_statistics/collectd.lua
++++ b/luasrc/model/cbi/luci_statistics/collectd.lua
+@@ -4,16 +4,16 @@
+ require("luci.sys")
+ 
+ 
+-m = Map("luci_statistics",
+-	translate("Collectd Settings"),
++m = Map("luci_statistics", translate("Statistics Settings"))
++
++-- general config section
++s = m:section( NamedSection, "collectd", "luci_statistics", translate("Collectd Settings"),
+ 	translate(
+ 		"Collectd is a small daemon for collecting data from " ..
+ 		"various sources through different plugins. On this page " ..
+ 		"you can change general settings for the collectd daemon."
+-	))
+-
+--- general config section
+-s = m:section( NamedSection, "collectd", "luci_statistics" )
++	)
++)
+ 
+ -- general.hostname (Hostname)
+ hostname = s:option( Value, "Hostname", translate("Hostname") )
+@@ -58,5 +58,17 @@ fqdnlookup.default  = "false"
+ fqdnlookup.optional = true
+ fqdnlookup:depends( "Hostname", "" )
+ 
++-- general config section
++s = m:section( NamedSection, "rrdtool", "luci_statistics", translate("RRDtool Settings"))
++
++-- image width
++imagewidth = s:option( Value, "image_width", translate("Plots width"), translate("Pixels") )
++imagewidth.default = 700
++imagewidth.isnumber = true
++
++-- image width
++imageheight = s:option( Value, "image_height", translate("Plots height"), translate("Pixels") )
++imageheight.default = 200
++imageheight.isnumber = true
+ 
+ return m
+diff --git a/po/en/statistics.po b/po/en/statistics.po
+index f7ebfe0c2..f3016ecd7 100644
+--- a/po/en/statistics.po
++++ b/po/en/statistics.po
+@@ -79,9 +79,21 @@ msgstr ""
+ msgid "CollectTopology"
+ msgstr ""
+ 
++msgid "Statistics Settings"
++msgstr "Statistics Settings"
++
+ msgid "Collectd Settings"
+ msgstr "Collectd Settings"
+ 
++msgid "RRDtool Settings"
++msgstr "RRDtool Settings"
++
++msgid "Plots width"
++msgstr "Plots width"
++
++msgid "Plots height"
++msgstr "Plots height"
++
+ msgid ""
+ "Collectd is a small daemon for collecting data from various sources through "
+ "different plugins. On this page you can change general settings for the "
+@@ -430,6 +442,9 @@ msgstr ""
+ msgid "Seconds"
+ msgstr "Seconds"
+ 
++msgid "Pixels"
++msgstr "Pixels"
++
+ msgid "Sensor list"
+ msgstr ""
+ 
+diff --git a/po/ru/statistics.po b/po/ru/statistics.po
+index 300b1c07d..6f94afc9e 100644
+--- a/po/ru/statistics.po
++++ b/po/ru/statistics.po
+@@ -81,9 +81,21 @@ msgstr "Сбор информации о маршрутах (CollectRoutes)"
+ msgid "CollectTopology"
+ msgstr "Сбор информации о топологии (CollectTopology)"
+ 
++msgid "Statistics Settings"
++msgstr "Настройки статистики"
++
+ msgid "Collectd Settings"
+ msgstr "Настройки Collectd"
+ 
++msgid "RRDtool Settings"
++msgstr "Настройки RRDtool"
++
++msgid "Plots width"
++msgstr "Ширина графиков"
++
++msgid "Plots height"
++msgstr "Высота графиков"
++
+ msgid ""
+ "Collectd is a small daemon for collecting data from various sources through "
+ "different plugins. On this page you can change general settings for the "
+@@ -440,6 +452,9 @@ msgstr "Скрипт"
+ msgid "Seconds"
+ msgstr "Секунд(ы)"
+ 
++msgid "Pixels"
++msgstr "Пиксели"
++
+ msgid "Sensor list"
+ msgstr "Список сенсоров"
+ 
+diff --git a/po/templates/statistics.pot b/po/templates/statistics.pot
+index ec630b696..02adaed4f 100644
+--- a/po/templates/statistics.pot
++++ b/po/templates/statistics.pot
+@@ -67,9 +67,21 @@ msgstr ""
+ msgid "CollectTopology"
+ msgstr ""
+ 
++msgid "Statistics Settings"
++msgstr ""
++
+ msgid "Collectd Settings"
+ msgstr ""
+ 
++msgid "RRDtool Settings"
++msgstr ""
++
++msgid "Plots width"
++msgstr ""
++
++msgid "Plots height"
++msgstr ""
++
+ msgid ""
+ "Collectd is a small daemon for collecting data from various sources through "
+ "different plugins. On this page you can change general settings for the "
+@@ -408,6 +420,9 @@ msgstr ""
+ msgid "Seconds"
+ msgstr ""
+ 
++msgid "Pixels"
++msgstr ""
++
+ msgid "Sensor list"
+ msgstr ""
+ 
+-- 
+2.16.2.windows.1
+

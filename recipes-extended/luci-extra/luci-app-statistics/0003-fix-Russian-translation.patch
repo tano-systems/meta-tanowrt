@@ -1,0 +1,178 @@
+From ba41b64a5695395282c76b534397e965e0cf1a9a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 11 Sep 2018 17:19:06 +0300
+Subject: [PATCH] luci-app-statistics: fix Russian translation
+
+Removed redundant <br> tags.
+Update existing not quite correct translations.
+Replaced hyphens on em dashes where it is required by the Russian rules.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ .../luci-app-statistics/po/ru/statistics.po        | 42 +++++++++++-----------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/po/ru/statistics.po b/po/ru/statistics.po
+index 6f94afc9e..00739d051 100644
+--- a/po/ru/statistics.po
++++ b/po/ru/statistics.po
+@@ -46,7 +46,7 @@ msgid "Basic monitoring"
+ msgstr "Основная статистика"
+ 
+ msgid "CPU Context Switches Plugin Configuration"
+-msgstr "Настройка плагина контекстных переключателей CPU"
++msgstr "Настройка плагина переключений контекста CPU"
+ 
+ msgid "CPU Frequency"
+ msgstr "Частота CPU"
+@@ -85,10 +85,10 @@ msgid "Statistics Settings"
+ msgstr "Настройки статистики"
+ 
+ msgid "Collectd Settings"
+-msgstr "Настройки Collectd"
++msgstr "Настройки collectd"
+ 
+ msgid "RRDtool Settings"
+-msgstr "Настройки RRDtool"
++msgstr "Настройки RRDtool"
+ 
+ msgid "Plots width"
+ msgstr "Ширина графиков"
+@@ -101,17 +101,17 @@ msgid ""
+ "different plugins. On this page you can change general settings for the "
+ "collectd daemon."
+ msgstr ""
+-"Collectd - это сервис для сбора данных с разных плагинов. На этой странице "
+-"вы можете изменить настройки Сollectd."
++"Collectd — это сервис для сбора данных из разных источников при помощи "
++"плагинов. На этой странице вы можете изменить настройки collectd."
+ 
+ msgid "Conntrack"
+-msgstr "Отслеживание подключения (Conntrack)"
++msgstr "Отслеживание подключений (Conntrack)"
+ 
+ msgid "Conntrack Plugin Configuration"
+ msgstr "Настройка плагина Conntrack"
+ 
+ msgid "Context Switches"
+-msgstr "Переключатели контекста"
++msgstr "Переключения контекста"
+ 
+ msgid "DF Plugin Configuration"
+ msgstr "Настройка плагина DF"
+@@ -126,7 +126,7 @@ msgid "Data collection interval"
+ msgstr "Интервал сбора данных"
+ 
+ msgid "Datasets definition file"
+-msgstr "Файл с определением<br />набора данных"
++msgstr "Файл с определением набора данных"
+ 
+ msgid "Destination ip range"
+ msgstr "Диапазон IP-адресов назначения"
+@@ -207,7 +207,7 @@ msgid ""
+ "Here you can define external commands which will be started by collectd in "
+ "order to read certain values. The values will be read from stdout."
+ msgstr ""
+-"На странице вы можете определить внешние команды, которые будут выполнены "
++"Здесь вы можете определить внешние команды, которые будут выполнены "
+ "для чтения определенных значений. Значения будут считаны со стандартного "
+ "вывода."
+ 
+@@ -216,7 +216,7 @@ msgid ""
+ "certain threshold values have been reached. The values leading to invokation "
+ "will be feeded to the the called programs stdin."
+ msgstr ""
+-"На странице вы можете определить  внешние команды, которые будут выполнены, "
++"Здесь вы можете определить внешние команды, которые будут выполнены, "
+ "когда значения достигнут определенного порога. Значения будут переданы на "
+ "стандартный ввод вызванным программам."
+ 
+@@ -224,7 +224,7 @@ msgid ""
+ "Here you can define various criteria by which the monitored iptables rules "
+ "are selected."
+ msgstr ""
+-"На странице вы можете указать различные критерии, по которым будут выбраны "
++"Здесь вы можете указать различные критерии, по которым будут выбраны "
+ "правила для сбора статистики."
+ 
+ msgid "Hold Ctrl to select multiple items or to deselect entries."
+@@ -299,7 +299,7 @@ msgid "Memory Plugin Configuration"
+ msgstr "Настройка плагина 'Оперативная память (RAM)'"
+ 
+ msgid "Monitor all except specified"
+-msgstr "Собирать статистику<br />со всех кроме указанных"
++msgstr "Собирать статистику со всех кроме указанных"
+ 
+ msgid "Monitor all local listen ports"
+ msgstr "Собирать статистику со всех портов для входящих соединений"
+@@ -372,7 +372,7 @@ msgstr ""
+ "соответственно все файлы *.rrd и папки  будут доступны любому пользователю."
+ 
+ msgid "Number of threads for data collection"
+-msgstr "Количество потоков<br />сбора данных"
++msgstr "Количество потоков сбора данных"
+ 
+ msgid "OLSRd"
+ msgstr "OLSRd"
+@@ -381,7 +381,7 @@ msgid "OLSRd Plugin Configuration"
+ msgstr "Настройка плагина OLSRd"
+ 
+ msgid "Only create average RRAs"
+-msgstr "Создавать только<br />средние RRA"
++msgstr "Создавать только средние RRA"
+ 
+ msgid "OpenVPN"
+ msgstr "OpenVPN"
+@@ -519,7 +519,7 @@ msgid "Store data values as rates instead of absolute values"
+ msgstr "Хранить данные в виде коэффициентов вместо абсолютных значений"
+ 
+ msgid "Stored timespans"
+-msgstr "Сохранённые<br />промежутки времени"
++msgstr "Сохранённые промежутки времени"
+ 
+ msgid "System Load"
+ msgstr "Загрузка системы"
+@@ -661,8 +661,8 @@ msgid ""
+ "instance, in server mode the local instance receives data from other hosts."
+ msgstr ""
+ "Плагин 'Сеть' предоставляет возможность сетевого обмена данными между "
+-"разными сервисами collectd.<br />Collectd может работать в режиме сервера "
+-"или клиента.<br />В режиме клиента, локальная статистика передается collectd-"
++"разными сервисами collectd. Collectd может работать в режиме сервера "
++"или клиента. В режиме клиента, локальная статистика передается collectd-"
+ "серверу, в режиме сервера collectd собирает статистику с удаленных хостов."
+ 
+ msgid ""
+@@ -688,7 +688,7 @@ msgstr ""
+ "Плагин 'Rrdtool' сохраняет статистику в формате rrd для последующего "
+ "построения диаграмм.<br /><br /><strong>Внимание: установка неверных "
+ "параметров может привезти к высокому потреблению памяти при считывании "
+-"данных из temp.<br />Что в свою очередь, может привести к зависанию "
++"данных из temp. Что в свою очередь, может привести к зависанию "
+ "устройства!</strong>"
+ 
+ msgid ""
+@@ -708,9 +708,9 @@ msgid ""
+ "to gather data and <a href=\"http://oss.oetiker.ch/rrdtool/\">RRDtool</a> to "
+ "render diagram images."
+ msgstr ""
+-"Страница 'Статистика' использует <a href=\"https://collectd.org/\">Collectd</"
++"Приложение статистики использует <a href=\"https://collectd.org/\">collectd</"
+ "a> для сбора данных и <a href=\"http://oss.oetiker.ch/rrdtool/\">RRDtool</a> "
+-"и представления их в виде графиков."
++"для представления их в виде графиков."
+ 
+ msgid ""
+ "The tcpconns plugin collects informations about open tcp connections on "
+@@ -763,7 +763,7 @@ msgstr ""
+ "Строка задает сервера, на которые будет передаваться локальная статистика."
+ 
+ msgid "Try to lookup fully qualified hostname"
+-msgstr "Пытаться определять<br />имя хоста"
++msgstr "Пытаться определять полное имя хоста"
+ 
+ msgid "UPS"
+ msgstr "ИБП"
+-- 
+2.16.2.windows.1
+
