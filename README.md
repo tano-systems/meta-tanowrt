@@ -7,7 +7,7 @@ This layer is based on a OE metadata layer for OpenWrt by
 [Khem Raj](https://github.com/kraj/meta-openwrt) (revision
 [3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
 
-All OpenWrt packages corresponds to OpenWrt 18.06.0 or higher.
+All OpenWrt packages corresponds to OpenWrt 18.06.1 or higher.
 
 
 ## Getting Started
@@ -20,7 +20,7 @@ $ cd openembedded-core
 
 $ git clone -b 1.32 git://github.com/openembedded/bitbake.git
 $ git clone -b morty git://github.com/openembedded/meta-openembedded.git
-$ git clone -b master git://github.com/tano-systems/meta-tano-openwrt.git
+$ git clone -b morty git://github.com/tano-systems/meta-tano-openwrt.git
 ```
 
 Initialize build environment and add layers:
