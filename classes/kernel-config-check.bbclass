@@ -27,10 +27,12 @@ python do_kernel_config_check() {
     if kccopts:
         for option, values_list in sorted(kccopts.items()):
             values = values_list.split(",")
-            num = len(values)
             allowed = []
 
             bb.debug(1, '  Checking option CONFIG_%s...' % option);
+
+            if not len(values):
+                bb.fatal('KERNEL_CONFIG_CHECK[%s] is empty' % option)
 
             kvalue = kernel_get_config('CONFIG_%s' % option, d)
             d.setVar("KERNEL_CONFIG_%s" % option, kvalue)
