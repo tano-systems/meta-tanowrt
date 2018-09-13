@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -40,34 +40,8 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 
-def kernel_get_config(config, d):
-    import re
-
-    staging = d.getVar('STAGING_KERNEL_BUILDDIR', True)
-    with open(staging + '/.config') as f:
-        lines = f.readlines()
-
-    for line in lines:
-        match = re.search(r'^' + config + '=(.)$', line)
-        if match:
-            return match.group(1)
-
-    return "n"
-
-python do_kernel_config_check() {
-    bridge = kernel_get_config('CONFIG_BRIDGE', d)
-    d.setVar("KERNEL_CONFIG_BRIDGE", bridge)
-
-    if bridge == "n":
-        bb.fatal("Kernel CONFIG_BRIDGE must be enabled")
-
-    if bridge == "m":
-        pn = d.getVar("PN", True)
-        d.prependVar('RDEPENDS_%s' % pn, "kernel-module-bridge ")
-}
-
-addtask kernel_config_check after do_compile before do_install
-do_compile[depends] += "virtual/kernel:do_shared_workdir"
+inherit kernel-config-check
+KERNEL_CONFIG_CHECK[BRIDGE] = "y,m=kernel-module-bridge"
 
 do_configure_prepend () {
     # replace hardcoded '/lib/' with '${base_libdir}/'
