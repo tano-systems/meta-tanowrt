@@ -1,4 +1,6 @@
 #
+# This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+#
 # OE package         OpenWrt packages
 # --------------------------------------------------
 # ppp                ppp chat
@@ -12,7 +14,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -135,7 +137,6 @@ FILES_${PN} = "\
 
 FILES_${PN}-pptp = "${libdir}/pppd/${PV}/pptp.so ${sysconfdir}/ppp/options.pptp"
 SUMMARY_${PN}-pptp = "Plugin for PPP for PPtP support"
-RDEPENDS_${PN}-pptp += "resolveip"
 
 FILES_${PN}-radius += "\
 	${sysconfdir}/ppp/radius.conf \
@@ -147,8 +148,8 @@ CONFFILES_${PN}-radius = "\
 	${sysconfdir}/ppp/radius/* \
 "
 
-RDEPENDS_${PN}-pptp += "${PN}"
-RDEPENDS_${PN}-oa += "${PN}"
+RDEPENDS_${PN}-pptp += "${PN} resolveip"
+RDEPENDS_${PN}-oa += "${PN} linux-atm"
 RDEPENDS_${PN}-oe += "${PN}"
 RDEPENDS_${PN}-radius += "${PN}"
 RDEPENDS_${PN}-winbind += "${PN}"
@@ -164,4 +165,4 @@ CONFFILES_${PN} = "\
 "
 
 RSUGGESTS_${PN} = "${PN}-tools ${PN}-oa ${PN}-oe ${PN}-radius ${PN}-winbind ${PN}-minconn ${PN}-password ${PN}-l2tp"
-RRECOMMENDS_${PN} = "${PN}-tools ${PN}-pptp ${PN}-oa ${PN}-oe"
+RRECOMMENDS_${PN} = "${PN}-tools ${PN}-pptp ${PN}-oe"
