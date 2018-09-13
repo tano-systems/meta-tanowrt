@@ -12,7 +12,7 @@ rootfs_rm_boot_dir() {
 			rm -rf ${IMAGE_ROOTFS}/boot
 			bbnote "Removed /boot from root filesystem"
 		else
-			rm -f `ls -1 -d ${IMAGE_ROOTFS}/boot/* | grep -v ".*\.dtb$"`
+			rm -f `ls -1 -d ${IMAGE_ROOTFS}/boot/* | grep -v ".*\.dtb.*$"`
 			bbnote "Removed all data (except *.dtb) from /boot on root filesystem"
 		fi
 	fi
