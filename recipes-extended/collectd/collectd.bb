@@ -8,10 +8,10 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 PV = "5.8.0"
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
-DEPENDS = "rrdtool libgcrypt libtool"
+DEPENDS = "rrdtool libgcrypt libtool flex"
 RDEPENDS_${PN} += "iwinfo"
 
 SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
@@ -72,6 +72,7 @@ PACKAGECONFIG ??= "\
     rrdtool \
     tcpconns \
     uptime \
+    ping \
 "
 
 PACKAGECONFIG[aggregation] = "--enable-aggregation,--disable-aggregation,"
@@ -94,8 +95,6 @@ PACKAGECONFIG[exec] = "--enable-exec,--disable-exec,"
 PACKAGECONFIG[filecount] = "--enable-filecount,--disable-filecount,"
 PACKAGECONFIG[fscache] = "--enable-fscache,--disable-fscache,"
 PACKAGECONFIG[interface] = "--enable-interface,--disable-interface,"
-
-# TODO: + libiptc
 PACKAGECONFIG[iptables] = "--enable-iptables,--disable-iptables,iptables"
 PACKAGECONFIG[irq] = "--enable-irq,--disable-irq,"
 PACKAGECONFIG[iwinfo] = "--enable-iwinfo,--disable-iwinfo,iwinfo"
@@ -116,15 +115,11 @@ PACKAGECONFIG[nginx] = "--enable-nginx,--disable-nginx,libcurl"
 PACKAGECONFIG[ntpd] = "--enable-ntpd,--disable-ntpd,"
 PACKAGECONFIG[olsrd] = "--enable-olsrd,--disable-olsrd,"
 PACKAGECONFIG[openvpn] = "--enable-openvpn,--disable-openvpn,"
-
-# TODO: liboping
 PACKAGECONFIG[ping] = "--enable-ping,--disable-ping,liboping"
 PACKAGECONFIG[postgresql] = "--enable-postgresql --with-libpq=yes, --disable-postgresql --with-libpq=no,postgresql"
 PACKAGECONFIG[powerdns] = "--enable-powerdns,--disable-powerdns,"
 PACKAGECONFIG[processes] = "--enable-processes,--disable-processes,"
 PACKAGECONFIG[protocols] = "--enable-protocols,--disable-protocols,"
-
-# TODO:
 PACKAGECONFIG[rrdtool] = "--enable-rrdtool,--disable-rrdtool,rrdtool"
 PACKAGECONFIG[sensors] = "--enable-sensors --with-libsensors=yes, --disable-sensors --with-libsensors=no,lmsensors"
 PACKAGECONFIG[snmp] = "--enable-snmp,--disable-snmp --with-libnetsnmp=no,net-snmp"
