@@ -9,6 +9,8 @@ DEPENDS += "luci-po2lmo-native"
 
 inherit openwrt-luci
 
+do_package[vardeps] += "LUCI_LANGUAGES"
+
 LUCI_I18N_META_PACKAGE ?= "${PN}-i18n"
 FILES_${LUCI_I18N_META_PACKAGE} = ""
 ALLOW_EMPTY_${LUCI_I18N_META_PACKAGE} = "1"

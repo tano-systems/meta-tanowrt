@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -75,6 +75,8 @@ do_preconfigure() {
 	apply_luci_version
 }
 
+do_preconfigure[vardeps] += "LUCI_DISTNAME LUCI_DISTVERSION LUCI_NAME LUCI_VERSION"
+
 do_install_append() {
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
@@ -90,6 +92,8 @@ do_install_append() {
 	install -d ${D}${bindir}
 	install -m 0755 ${B}/modules/luci-mod-admin-full/luci-bwc ${D}${bindir}/luci-bwc
 }
+
+do_install[vardeps] += "LUCI_INITIAL_LANG LUCI_INITIAL_MEDIAURLBASE"
 
 addtask preconfigure before do_configure after do_patch
 

@@ -5,6 +5,24 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
+def get_vardeps(d):
+    vars = []
+
+    vars.extend(['OPENWRT_SERVICE_PACKAGES'])
+    owrt_packages = d.getVar('OPENWRT_SERVICE_PACKAGES', True)
+
+    if owrt_packages:
+        for pkg in owrt_packages.split():
+            owrt_scripts = d.getVar('OPENWRT_SERVICE_SCRIPTS_%s' % pkg, True) or ""
+            vars.extend(['OPENWRT_SERVICE_SCRIPTS_%s' % pkg])
+
+            for script in owrt_scripts.split():
+                vars.extend(['OPENWRT_SERVICE_STATE_%s-%s' % (pkg, script)])
+
+    return " ".join(vars)
+
+do_package[vardeps] += "${@get_vardeps(d)}"
+
 # Recipe parse-time sanity checks
 def update_owrt_after_parse(d):
     owrt_packages = d.getVar('OPENWRT_SERVICE_PACKAGES', True)

@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano7"
+PR_append = ".tano8"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -70,6 +70,8 @@ PACKAGECONFIG[preferopenwrt] = ""
 PACKAGECONFIG[oeoveropenwrt] = ""
 
 BASEFILESISSUEINSTALL ?= "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', '', 'do_install_basefilesissue', d)}"
+
+do_install[vardeps] += "OPENWRT_ZONENAME OPENWRT_TIMEZONE OPENWRT_VERSION_SED"
 
 do_install_append () {
     if [ "${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', 'true', 'false', d)}" = "true" ]; then
