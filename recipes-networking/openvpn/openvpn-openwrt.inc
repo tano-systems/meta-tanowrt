@@ -21,9 +21,9 @@ SRC_URI += " \
     file://220-disable_des.patch \
     file://210-build_always_use_internal_lz4.patch"
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "disabled"
+OPENWRT_SERVICE_PACKAGES = "openvpn"
+OPENWRT_SERVICE_SCRIPTS_openvpn += "openvpn"
+OPENWRT_SERVICE_STATE_openvpn-openvpn ?= "disabled"
 
 CFLAGS += "-ffunction-sections -fdata-sections"
 

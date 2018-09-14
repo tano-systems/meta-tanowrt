@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -27,9 +27,9 @@ OF = "${S}/openwrt/package/network/services/odhcpd/files"
 
 inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "disabled"
+OPENWRT_SERVICE_PACKAGES = "odhcpd"
+OPENWRT_SERVICE_SCRIPTS_odhcpd += "odhcpd"
+OPENWRT_SERVICE_STATE_odhcpd-odhcpd ?= "disabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

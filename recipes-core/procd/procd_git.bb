@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -29,12 +29,12 @@ BF = "${S}/openwrt/package/base-files/files"
 
 inherit cmake openwrt openwrt-services pkgconfig openwrt-base-files
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "boot done sysctl umount"
-OPENWRT_SERVICE_STATE_${PN}-boot = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-done = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-sysctl = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-umount = "enabled"
+OPENWRT_SERVICE_PACKAGES = "procd"
+OPENWRT_SERVICE_SCRIPTS_procd += "boot done sysctl umount"
+OPENWRT_SERVICE_STATE_procd-boot ?= "enabled"
+OPENWRT_SERVICE_STATE_procd-done ?= "enabled"
+OPENWRT_SERVICE_STATE_procd-sysctl ?= "enabled"
+OPENWRT_SERVICE_STATE_procd-umount ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

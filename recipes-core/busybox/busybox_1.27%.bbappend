@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano5"
+PR_append = ".tano6"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -38,11 +38,11 @@ SRC_URI_append = "\
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_PACKAGES = "busybox"
 
-OPENWRT_SERVICE_SCRIPTS_${PN} = "cron sysntpd"
-OPENWRT_SERVICE_STATE_${PN}-cron = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-sysntpd = "enabled"
+OPENWRT_SERVICE_SCRIPTS_busybox += "cron sysntpd"
+OPENWRT_SERVICE_STATE_busybox-cron ?= "enabled"
+OPENWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
 
 do_install_append() {
     rm -f ${D}/usr/share/udhcpc/default.script

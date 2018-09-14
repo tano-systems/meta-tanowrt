@@ -1,5 +1,5 @@
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "A 802.1ab implementation (LLDP) to help you locate neighbors of all your equipments"
 SECTION = "net/misc"
@@ -63,9 +63,9 @@ SRC_URI_append = "\
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
+OPENWRT_SERVICE_PACKAGES = "lldpd"
+OPENWRT_SERVICE_SCRIPTS_lldpd += "lldpd"
+OPENWRT_SERVICE_STATE_lldpd-lldpd ?= "enabled"
 
 do_install_append() {
     if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then

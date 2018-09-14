@@ -3,7 +3,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano0"
+PR_append = ".tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -13,9 +13,9 @@ SRC_URI += "\
 
 inherit openwrt openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "modutils"
-OPENWRT_SERVICE_STATE_${PN}-modutils = "enabled"
+OPENWRT_SERVICE_PACKAGES = "modutils-initscripts"
+OPENWRT_SERVICE_SCRIPTS_modutils-initscripts += "modutils"
+OPENWRT_SERVICE_STATE_modutils-initscripts-modutils ?= "enabled"
 
 do_install_append() {
 	install -dm 0755 ${D}/etc/init.d

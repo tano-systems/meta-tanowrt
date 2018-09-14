@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano3"
+PR = "tano4"
 PV = "2.7.8"
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
@@ -40,9 +40,9 @@ SRC_URI = "\
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "ddns"
-OPENWRT_SERVICE_STATE_${PN}-ddns = "disabled"
+OPENWRT_SERVICE_PACKAGES = "ddns-scripts"
+OPENWRT_SERVICE_SCRIPTS_ddns-scripts += "ddns"
+OPENWRT_SERVICE_STATE_ddns-scripts-ddns ?= "disabled"
 
 inherit pkgconfig
 

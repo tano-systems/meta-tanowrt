@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -23,9 +23,9 @@ OR = "${S}/openwrt/package/system/rpcd/files"
 
 inherit cmake pkgconfig openwrt-services openwrt openwrt-base-files
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
+OPENWRT_SERVICE_PACKAGES = "rpcd"
+OPENWRT_SERVICE_SCRIPTS_rpcd += "rpcd"
+OPENWRT_SERVICE_STATE_rpcd-rpcd ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

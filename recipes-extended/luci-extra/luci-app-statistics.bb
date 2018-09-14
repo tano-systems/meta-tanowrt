@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "LuCI Statistics Application"
 LICENSE = "Apache-2.0"
@@ -22,9 +22,9 @@ S = "${WORKDIR}/git"
 
 RDEPENDS_${PN} += "rrdtool collectd"
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "luci_statistics"
-OPENWRT_SERVICE_STATE_${PN}-luci_statistics ?= "enabled"
+OPENWRT_SERVICE_PACKAGES = "luci-app-statistics"
+OPENWRT_SERVICE_SCRIPTS_luci-app-statistics += "luci_statistics"
+OPENWRT_SERVICE_STATE_luci-app-statistics-luci_statistics ?= "enabled"
 
 CONFFILES_${PN} = "${sysconfdir}/config/luci_statistics"
 

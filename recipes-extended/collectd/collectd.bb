@@ -8,7 +8,7 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 PV = "5.8.0"
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
@@ -50,9 +50,9 @@ SRC_URI += "\
 # update-rc.d systemd pythonnative 
 inherit autotools pkgconfig openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "collectd"
-OPENWRT_SERVICE_STATE_${PN}-collectd ?= "enabled"
+OPENWRT_SERVICE_PACKAGES = "collectd"
+OPENWRT_SERVICE_SCRIPTS_collectd += "collectd"
+OPENWRT_SERVICE_STATE_collectd-collectd ?= "enabled"
 
 # Floatingpoint layout, architecture dependent
 # 'nothing', 'endianflip' or 'intswap'

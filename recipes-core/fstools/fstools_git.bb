@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -37,10 +37,10 @@ inherit cmake pkgconfig openwrt
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "fstab blockd"
-OPENWRT_SERVICE_STATE_${PN}-fstab = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-blockd = "enabled"
+OPENWRT_SERVICE_PACKAGES = "fstools"
+OPENWRT_SERVICE_SCRIPTS_fstools += "fstab blockd"
+OPENWRT_SERVICE_STATE_fstools-fstab ?= "enabled"
+OPENWRT_SERVICE_STATE_fstools-blockd ?= "enabled"
 
 EXTRA_OECMAKE += "${EXTRA_OECONF}"
 

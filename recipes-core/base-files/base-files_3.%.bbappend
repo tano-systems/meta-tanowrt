@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano6"
+PR_append = ".tano7"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -51,14 +51,14 @@ inherit openwrt-base-files
 inherit openwrt-version
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
+OPENWRT_SERVICE_PACKAGES = "base-files"
 
-OPENWRT_SERVICE_SCRIPTS_${PN} = "gpio_switch led sysfixtime system urandom_seed"
-OPENWRT_SERVICE_STATE_${PN}-gpio_switch = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-led = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-sysfixtime = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-system = "enabled"
-OPENWRT_SERVICE_STATE_${PN}-urandom_seed = "enabled"
+OPENWRT_SERVICE_SCRIPTS_base-files += "gpio_switch led sysfixtime system urandom_seed"
+OPENWRT_SERVICE_STATE_base-files-gpio_switch ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-led ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-sysfixtime ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-system ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-urandom_seed ?= "enabled"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

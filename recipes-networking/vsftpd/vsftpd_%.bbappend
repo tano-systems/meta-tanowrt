@@ -1,5 +1,5 @@
 #
-PR_append = ".tano2"
+PR_append = ".tano3"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -17,9 +17,9 @@ SRC_URI_append = "\
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "vsftpd"
-OPENWRT_SERVICE_STATE_${PN}-vsftpd = "enabled"
+OPENWRT_SERVICE_PACKAGES = "vsftpd"
+OPENWRT_SERVICE_SCRIPTS_vsftpd += "vsftpd"
+OPENWRT_SERVICE_STATE_vsftpd-vsftpd ?= "enabled"
 
 PACKAGECONFIG ??= ""
 

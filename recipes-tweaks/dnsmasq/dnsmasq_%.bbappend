@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano4"
+PR_append = ".tano5"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -22,9 +22,9 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 inherit openwrt openwrt-services useradd
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
+OPENWRT_SERVICE_PACKAGES = "dnsmasq"
+OPENWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
+OPENWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
 
 do_install_append() {
     install -d ${D}${sysconfdir}

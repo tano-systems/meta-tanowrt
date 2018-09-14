@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -40,9 +40,9 @@ S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt-base-files
 
-OPENWRT_SERVICE_PACKAGES              = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN}        ?= "firewall"
-OPENWRT_SERVICE_STATE_${PN}-firewall ?= "enabled"
+OPENWRT_SERVICE_PACKAGES                  = "firewall3"
+OPENWRT_SERVICE_SCRIPTS_firewall3        += "firewall"
+OPENWRT_SERVICE_STATE_firewall3-firewall ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

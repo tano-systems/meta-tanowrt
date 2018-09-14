@@ -2,7 +2,7 @@
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018, Anton Kikin <a.kikin@tano-systems.com>
-PR = "tano1"
+PR = "tano2"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -25,9 +25,9 @@ S = "${WORKDIR}/git"
 
 inherit cmake openwrt-services openwrt
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "log"
-OPENWRT_SERVICE_STATE_${PN}-log = "enabled"
+OPENWRT_SERVICE_PACKAGES = "ubox"
+OPENWRT_SERVICE_SCRIPTS_ubox += "log"
+OPENWRT_SERVICE_STATE_ubox-log ?= "enabled"
 
 do_install_append () {
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then

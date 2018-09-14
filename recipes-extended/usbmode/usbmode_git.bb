@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano3"
 
 DEPENDS += "perl-native"
 
@@ -44,9 +44,9 @@ do_fetch[cleandirs] += "${WORKDIR}/data"
 
 inherit cmake pkgconfig openwrt openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "usbmode"
-OPENWRT_SERVICE_STATE_${PN}-usbmode ?= "enabled"
+OPENWRT_SERVICE_PACKAGES = "usbmode"
+OPENWRT_SERVICE_SCRIPTS_usbmode += "usbmode"
+OPENWRT_SERVICE_STATE_usbmode-usbmode ?= "enabled"
 
 do_configure_append() {
 	if [ -d "${WORKDIR}/data" ]; then

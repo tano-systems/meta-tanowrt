@@ -22,9 +22,9 @@ EXTRA_OECONF_append += "\
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "${PN}"
-OPENWRT_SERVICE_STATE_${PN}-${PN} = "enabled"
+OPENWRT_SERVICE_PACKAGES = "dropbear"
+OPENWRT_SERVICE_SCRIPTS_dropbear += "dropbear"
+OPENWRT_SERVICE_STATE_dropbear-dropbear ?= "enabled"
 
 # OpenWrt patches
 SRC_URI_append = "\

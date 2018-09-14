@@ -1,7 +1,7 @@
 #
 SUMMARY = "Apcupsd a daemon for controlling APC UPSes"
 
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -28,9 +28,9 @@ SRC_URI += "\
 
 inherit autotools pkgconfig openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "apcupsd"
-OPENWRT_SERVICE_STATE_${PN}-apcupsd ?= "disabled"
+OPENWRT_SERVICE_PACKAGES = "apcupsd"
+OPENWRT_SERVICE_SCRIPTS_apcupsd += "apcupsd"
+OPENWRT_SERVICE_STATE_apcupsd-apcupsd ?= "disabled"
 
 LD = "${CXX}"
 

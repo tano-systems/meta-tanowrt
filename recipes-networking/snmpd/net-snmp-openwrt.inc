@@ -2,13 +2,13 @@
 
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}-server-snmpd ${PN}-server-snmptrapd"
+OPENWRT_SERVICE_PACKAGES = "net-snmp-server-snmpd net-snmp-server-snmptrapd"
 
-OPENWRT_SERVICE_SCRIPTS_${PN}-server-snmpd = "snmpd"
-OPENWRT_SERVICE_STATE_${PN}-server-snmpd-snmpd = "enabled"
+OPENWRT_SERVICE_SCRIPTS_net-snmp-server-snmpd += "snmpd"
+OPENWRT_SERVICE_STATE_net-snmp-server-snmpd-snmpd ?= "enabled"
 
-OPENWRT_SERVICE_SCRIPTS_${PN}-server-snmptrapd = "snmptrapd"
-OPENWRT_SERVICE_STATE_${PN}-server-snmptrapd-snmptrapd = "disabled"
+OPENWRT_SERVICE_SCRIPTS_net-snmp-server-snmptrapd += "snmptrapd"
+OPENWRT_SERVICE_STATE_net-snmp-server-snmptrapd-snmptrapd ?= "disabled"
 
 #	file://000-cross-compile.patch
 #	file://160-no_ldconfig.patch

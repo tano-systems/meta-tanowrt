@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "LuCI Support for ttyd"
 LICENSE = "MIT"
@@ -21,9 +21,9 @@ inherit openwrt-luci-app
 inherit openwrt-luci-i18n
 inherit openwrt-services
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "ttyd"
-OPENWRT_SERVICE_STATE_${PN}-ttyd = "enabled"
+OPENWRT_SERVICE_PACKAGES = "luci-app-terminal"
+OPENWRT_SERVICE_SCRIPTS_luci-app-terminal += "ttyd"
+OPENWRT_SERVICE_STATE_luci-app-terminal-ttyd ?= "enabled"
 
 S = "${WORKDIR}/git"
 

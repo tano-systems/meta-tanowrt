@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -32,9 +32,9 @@ S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services update-alternatives openwrt-base-files
 
-OPENWRT_SERVICE_PACKAGES = "${PN}"
-OPENWRT_SERVICE_SCRIPTS_${PN} = "network"
-OPENWRT_SERVICE_STATE_${PN}-network = "enabled"
+OPENWRT_SERVICE_PACKAGES = "netifd"
+OPENWRT_SERVICE_SCRIPTS_netifd += "network"
+OPENWRT_SERVICE_STATE_netifd-network ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
