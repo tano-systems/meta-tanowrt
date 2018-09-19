@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.1.1"
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
@@ -25,3 +25,4 @@ S = "${WORKDIR}/git"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
+inherit luasrcdiet

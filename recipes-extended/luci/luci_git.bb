@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -16,8 +16,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit cmake openwrt pkgconfig
 inherit openwrt-luci-i18n
-
 inherit openwrt-services
+inherit luasrcdiet
 
 OPENWRT_SERVICE_PACKAGES = "luci"
 OPENWRT_SERVICE_SCRIPTS_luci += "ucitrack"

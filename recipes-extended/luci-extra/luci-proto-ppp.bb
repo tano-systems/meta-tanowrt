@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "LuCI support for PPP/PPPoE/PPPoA/PPtP"
 LICENSE = "Apache-2.0"
@@ -16,6 +16,7 @@ RDEPENDS_${PN} += "ppp"
 require recipes-extended/luci/luci.inc
 
 inherit openwrt-luci-proto
+inherit luasrcdiet
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=protocols/luci-proto-ppp;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

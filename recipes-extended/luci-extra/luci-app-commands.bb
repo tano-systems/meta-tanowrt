@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "LuCI Shell Command Module"
 LICENSE = "Apache-2.0"
@@ -15,6 +15,7 @@ require recipes-extended/luci/luci.inc
 inherit pkgconfig
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
+inherit luasrcdiet
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-commands;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
