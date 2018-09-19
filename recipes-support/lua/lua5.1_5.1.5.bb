@@ -8,7 +8,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYRIGHT;md5=59bdd99bb82238f238cf5c65c21604fd"
 HOMEPAGE = "http://www.lua.org/"
 
-PR = "tano0"
+PR = "tano1"
 
 V = "5.1"
 
@@ -58,6 +58,11 @@ do_install () {
     rmdir ${D}${datadir}/lua/${V}
     rmdir ${D}${datadir}/lua
 
+}
+
+do_install_append_class-native() {
+    ln -s ${bindir}/lua${V} ${D}${bindir}/lua
+    ln -s ${bindir}/luac${V} ${D}${bindir}/luac
 }
 
 FILES_${PN} += "${libdir}/lua ${libdir}/lua/${V}"
