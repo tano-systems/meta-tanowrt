@@ -120,25 +120,13 @@ Index: git/modules/luci-mod-admin-full/CMakeLists.txt
 ===================================================================
 --- /dev/null
 +++ git/modules/luci-mod-admin-full/CMakeLists.txt
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,9 @@
 +cmake_minimum_required(VERSION 3.0)
 +
 +PROJECT(luci-mod-admin-full C)
 +
-+ADD_EXECUTABLE(luci-bwc src/luci-bwc.c)
-+TARGET_LINK_LIBRARIES(luci-bwc dl)
-+
 +INSTALL(DIRECTORY luasrc/
 +	DESTINATION "${LUAPATH}/luci"
-+	USE_SOURCE_PERMISSIONS
-+)
-+
-+INSTALL(TARGETS luci-bwc
-+	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-+)
-+
-+INSTALL(DIRECTORY htdocs/
-+	DESTINATION "${CMAKE_INSTALL_PREFIX}/www"
 +	USE_SOURCE_PERMISSIONS
 +)
 +
@@ -197,5 +185,64 @@ Index: git/libs/luci-lib-jsonc/CMakeLists.txt
 +
 +INSTALL(TARGETS jsonc
 +	LIBRARY DESTINATION "${LUAPATH}/luci"
++)
++
+Index: git/modules/luci-mod-network/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/modules/luci-mod-network/CMakeLists.txt
+@@ -0,0 +1,14 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-mod-network C)
++
++INSTALL(DIRECTORY luasrc/
++	DESTINATION "${LUAPATH}/luci"
++	USE_SOURCE_PERMISSIONS
++)
++
++INSTALL(DIRECTORY root/
++	DESTINATION "${CMAKE_INSTALL_PREFIX}/"
++	USE_SOURCE_PERMISSIONS
++)
++
+Index: git/modules/luci-mod-status/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/modules/luci-mod-status/CMakeLists.txt
+@@ -0,0 +1,21 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-mod-status C)
++
++ADD_EXECUTABLE(luci-bwc src/luci-bwc.c)
++TARGET_LINK_LIBRARIES(luci-bwc dl)
++
++INSTALL(DIRECTORY luasrc/
++	DESTINATION "${LUAPATH}/luci"
++	USE_SOURCE_PERMISSIONS
++)
++
++INSTALL(TARGETS luci-bwc
++	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++)
++
++INSTALL(DIRECTORY htdocs/
++	DESTINATION "${CMAKE_INSTALL_PREFIX}/www"
++	USE_SOURCE_PERMISSIONS
++)
++
+Index: git/modules/luci-mod-system/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/modules/luci-mod-system/CMakeLists.txt
+@@ -0,0 +1,9 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-mod-system C)
++
++INSTALL(DIRECTORY luasrc/
++	DESTINATION "${LUAPATH}/luci"
++	USE_SOURCE_PERMISSIONS
 +)
 +

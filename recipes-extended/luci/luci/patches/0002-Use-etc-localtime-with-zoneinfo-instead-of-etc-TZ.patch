@@ -3,14 +3,8 @@ From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 20 May 2018 06:21:52 +0300
 Subject: [PATCH] Use /etc/localtime with zoneinfo instead of /etc/TZ
 
----
- .../luasrc/model/cbi/admin_system/system.lua                 | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua b/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
-index c7fdfcd..a201c56 100644
---- a/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
-+++ b/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
+--- a/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua
++++ b/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua
 @@ -2,6 +2,8 @@
  -- Copyright 2011 Jo-Philipp Wich <jow@openwrt.org>
  -- Licensed to the public under the Apache License 2.0.
