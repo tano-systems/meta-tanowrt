@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+# Configuration is in /etc/config/mstpd
+#
+# `/sbin/bridge-stp <bridge> <start|stop>` is called by the kernel when STP is
+# enabled/disabled on a bridge (via `brctl stp <bridge> <on|off>`). The kernel
+# enables user_stp mode if that command returns 0, or enables kernel_stp mode if
+# that command returns any other value.
+#
+# This script is not intended to be called with the above arguments directly
+# (not via the kernel)
+#
+
+. $IPKG_INSTROOT/lib/functions/mstpd.sh
+
+local action bridge
+
+# Parse arguments.
+if [ $# -eq 2 ] && [ "$2" = 'start' ]; then
+	action='start'
+	bridge="$1"
+elif [ $# -eq 2 ] && [ "$2" = 'stop' ]; then
+	action='stop'
+	bridge="$1"
+else
+	echo "Usage: $0 <bridge> {start|stop}" >&2
+	exit 1
+fi
+
+# Ensure that we have a sane umask.
+umask 022
+
+# Ensure that we have a sane PATH.
+PATH='/sbin:/usr/sbin:/bin:/usr/bin'
+export PATH
+
+if ! mstpd_is_running; then
+	mstpd_log_error "bridge-stp: mstpd is not running"
+	exit 2
+fi
+
+if [ "$(uci_get mstpd.global.enabled)" = "0" ]; then
+	mstpd_log_error "bridge-stp: mstpd is disabled"
+	exit 3
+fi
+
+mstpd_sanity_checks
+
+case "$action" in
+	start)
+		mstpd_log_debug "bridge-stp: starting bridge '$bridge'..."
+
+		#
+		# Due to kernel locks, mstpd will not respond to mstpctl until after
+		# this script exits, so `mstpctl addbridge <bridge>` must be run as
+		# an asynchronous background process.
+		#
+
+		# Add bridge to mstpd.
+		(sleep 1; /etc/init.d/mstpd reload "$bridge" || brctl stp "$bridge" off) &
+
+		mstpd_log_debug "bridge-stp: spawned bridge '$bridge' reloading"
+		exit 0
+		;;
+
+	stop)
+		mstpd_log_debug "bridge-stp: stopping bridge '$bridge'..."
+
+		# Remove bridge from mstpd.
+		${MSTPCTL_BIN} delbridge "$bridge"
+		if [ "$?" != "0" ]; then
+			mstpd_log_error "bridge-stp: failed to stop bridge '$bridge'"
+			exit 4
+		fi
+
+		mstpd_log_debug "bridge-stp: stopped bridge '$bridge'"
+		;;
+esac
