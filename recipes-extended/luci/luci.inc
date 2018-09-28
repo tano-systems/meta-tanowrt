@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 20.09.2018
-# luci-app-snmpd: Basic net-snmpd config options
-LUCI_GIT_SRCREV = "f0512e5c38a83397dc7b14f007d1d379ba93266e"
+# 27.09.2018
+# Merge pull request #2184 from kyle30312/logout-cookie-fix
+LUCI_GIT_SRCREV = "a291a999a7d396adc1238bfbe4e0abbd870ba8f9"
 
-PR_append = ".8"
+PR_append = ".9"
 
 libdir = "/usr/lib"
 
