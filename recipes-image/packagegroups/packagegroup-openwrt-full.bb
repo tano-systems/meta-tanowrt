@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -15,12 +15,19 @@ PACKAGES = "\
 	packagegroup-openwrt-full-base \
 	packagegroup-openwrt-full-network \
 	packagegroup-openwrt-full-luci \
+	packagegroup-openwrt-full-console \
 "
 
 RDEPENDS_${PN} = "\
-	packagegroup-openwrt-base \
+	packagegroup-openwrt-full-base \
 	packagegroup-openwrt-full-network \
 	packagegroup-openwrt-full-luci \
+	packagegroup-openwrt-full-console \
+"
+
+RDEPENDS_${PN}-base = "\
+	packagegroup-openwrt-base \
+	libubox-lua \
 	fstools \
 	eudev \
 	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'libusb1', '',d)} \
@@ -33,17 +40,24 @@ RDEPENDS_${PN} = "\
 
 #luci-app-commands
 #luci-app-terminal
+#luci-app-ddns
 
 RDEPENDS_${PN}-luci = "\
 	luci-app-lldpd \
-	luci-app-mstpd \
 	luci-app-uhttpd \
 	luci-app-openvpn \
-	luci-app-ddns \
+	luci-app-statistics \
+	luci-app-snmpd \
+	luci-app-mstpd \
 	luci-proto-3g \
 	luci-proto-ncm \
 	luci-proto-ppp \
 	luci-proto-qmi \
+"
+
+RDEPENDS_${PN}-console = "\
+	ncurses \
+	ncurses-terminfo \
 "
 
 RDEPENDS_${PN}-network = "\
