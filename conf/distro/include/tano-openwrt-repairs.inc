@@ -6,3 +6,6 @@ BBMASK += "python3-native_3.5.2.bbappend"
 BBMASK += "weston_1..0.bbappend"
 #BBMASK += "linux-ti-staging_4.14.bbappend"
 BBMASK += "gnome-settings-daemon_2.32.1.bbappend"
+
+# Hide bootchart2 recipe from oe layer
+BBMASK += "bootchart2_0.14.8.bb"
