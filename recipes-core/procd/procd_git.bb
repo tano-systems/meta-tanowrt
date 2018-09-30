@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -27,14 +27,7 @@ S = "${WORKDIR}/git"
 PD = "${S}/openwrt/package/system/procd/files"
 BF = "${S}/openwrt/package/base-files/files"
 
-inherit cmake openwrt openwrt-services pkgconfig openwrt-base-files
-
-OPENWRT_SERVICE_PACKAGES = "procd"
-OPENWRT_SERVICE_SCRIPTS_procd += "boot done sysctl umount"
-OPENWRT_SERVICE_STATE_procd-boot ?= "enabled"
-OPENWRT_SERVICE_STATE_procd-done ?= "enabled"
-OPENWRT_SERVICE_STATE_procd-sysctl ?= "enabled"
-OPENWRT_SERVICE_STATE_procd-umount ?= "enabled"
+inherit cmake openwrt pkgconfig openwrt-base-files
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
@@ -71,16 +64,8 @@ do_install_append() {
     install -Dm 0644 ${BF}/lib/functions/service.sh ${D}${base_libdir}/functions/service.sh
     install -Dm 0755 ${BF}/etc/rc.common ${D}${sysconfdir}/rc.common
     install -Dm 0755 ${BF}/etc/rc.local ${D}${sysconfdir}/rc.local
-    install -Dm 0755 ${BF}/etc/init.d/done ${D}${sysconfdir}/init.d/done
-    install -Dm 0755 ${BF}/etc/init.d/sysctl ${D}${sysconfdir}/init.d/sysctl
-    install -Dm 0755 ${BF}/etc/init.d/umount ${D}${sysconfdir}/init.d/umount
     install -Dm 0755 ${BF}/usr/libexec/login.sh ${D}/usr/libexec/login.sh
     install -dm 0755 ${D}/etc/rc.d
-    # FIXME: Need to split openwrt base-files 'boot' script so that
-    # things that need to be done by procd even when not on a full
-    # openwrt image get done without errors
-    # and things which are openwrt-image specific stay in base-files
-    install -Dm 0755 ${BF}/etc/init.d/boot ${D}${sysconfdir}/init.d/boot
 
     # Dev manager / hotplug / coldplug
     install -Dm 0644 ${PD}/hotplug.json ${D}${sysconfdir}/hotplug.json

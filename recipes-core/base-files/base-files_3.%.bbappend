@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano8"
+PR_append = ".tano9"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -29,6 +29,7 @@ SRC_URI_append = "\
     file://sysctl.conf \
     file://issue \
     file://hostname \
+    file://boot.init \
     file://system.init \
     file://system.config \
 "
@@ -53,12 +54,16 @@ inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "base-files"
 
-OPENWRT_SERVICE_SCRIPTS_base-files += "gpio_switch led sysfixtime system urandom_seed"
+OPENWRT_SERVICE_SCRIPTS_base-files += "boot done sysctl umount gpio_switch led sysfixtime system urandom_seed"
 OPENWRT_SERVICE_STATE_base-files-gpio_switch ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-led ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-sysfixtime ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-system ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-urandom_seed ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-boot ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-done ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-sysctl ?= "enabled"
+OPENWRT_SERVICE_STATE_base-files-umount ?= "enabled"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -100,10 +105,6 @@ do_install_append () {
         rm -f ${STMP}/etc/rc.common
         rm -f ${STMP}/etc/rc.local
         rm -f ${STMP}/usr/libexec/login.sh
-        rm -f ${STMP}/etc/init.d/done
-        rm -f ${STMP}/etc/init.d/sysctl
-        rm -f ${STMP}/etc/init.d/umount
-        rm -f ${STMP}/etc/init.d/boot
 
         # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
         rmdir ${STMP}/usr/libexec
@@ -190,6 +191,7 @@ do_install_append () {
         install -m 0644 ${S}/hostname ${D}${sysconfdir}/hostname
         install -m 0755 ${S}/system.init ${D}${sysconfdir}/init.d/system
         install -m 0644 ${S}/system.config ${D}${sysconfdir}/config/system
+        install -m 0755 ${S}/boot.init ${D}${sysconfdir}/init.d/boot
 
         install -m 0644 ${S}/profile ${D}${sysconfdir}/profile
 
