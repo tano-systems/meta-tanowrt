@@ -154,7 +154,11 @@ start_instance()
 
 	[ -f /lib/libustream-ssl.so ] && [ -n "$https" ] && {
 		[ -s "$UHTTPD_CERT" -a -s "$UHTTPD_KEY" ] || {
-			config_foreach generate_keys cert
+			[ -f "$UHTTPD_CERT.new" -o -f "$UHTTPD_KEY.new" ] || {
+				config_foreach generate_keys cert
+				exec /etc/rc.common "$initscript" start
+			} &
+			exit 0
 		}
 
 		[ -f "$UHTTPD_CERT" -a -f "$UHTTPD_KEY" ] && {
