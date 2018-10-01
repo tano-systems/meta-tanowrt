@@ -39,6 +39,7 @@ BOOTLOG_DEST=/var/log/bootchart.tgz
 AUTO_RENDER="no"
 AUTO_RENDER_DIR="/var/log"
 AUTO_RENDER_FORMAT="png"
+AUTO_RENDER_EXTRAOPTS=""
 
 # The processes we have to wait for
 EXIT_PROC="compiz \
@@ -153,7 +154,7 @@ stop()
 	# Render the chart if configured (and the renderer is installed)
 	if [ "$AUTO_RENDER" = "yes" -a -x /usr/bin/pybootchartgui ]; then
 		cd $AUTO_RENDER_DIR
-		/usr/bin/pybootchartgui -o "$AUTO_RENDER_DIR"/bootchart.$AUTO_RENDER_FORMAT -f $AUTO_RENDER_FORMAT "$BOOTLOG_DEST"
+		/usr/bin/pybootchartgui -o "$AUTO_RENDER_DIR"/bootchart.$AUTO_RENDER_FORMAT -f $AUTO_RENDER_FORMAT $AUTO_RENDER_EXTRAOPTS "$BOOTLOG_DEST"
 	fi
 
 	# execute custom post-collect (and possibly post-render) command (which could get params from the conf file by itself if needed)

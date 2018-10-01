@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=44ac4678311254db62edf8fd39cb8124"
 
 RDEPENDS_${PN} = "python3 python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
 
-PR = "tano0"
+PR = "tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit autotools-brokensep
