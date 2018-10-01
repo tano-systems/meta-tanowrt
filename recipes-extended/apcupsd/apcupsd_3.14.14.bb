@@ -1,9 +1,11 @@
 #
 SUMMARY = "Apcupsd a daemon for controlling APC UPSes"
 
-PR = "tano2"
+PR = "tano3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
+DEPENDS += "dos2unix-native util-linux-native"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
@@ -52,6 +54,7 @@ do_fix_lineendings() {
 	dos2unix ${S}/include/libusb.h.in
 }
 
+do_fix_lineendings[depends] = "dos2unix-native:do_populate_sysroot"
 addtask fix_lineendings after do_unpack before do_patch
 
 do_configure() {
