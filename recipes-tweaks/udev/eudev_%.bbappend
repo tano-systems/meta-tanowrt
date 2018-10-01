@@ -36,6 +36,6 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/udev.procd ${D}${sysconfdir}/init.d/udev
 
     # Remove sysvinit script
-    rm ${D}/${sysconfdir}/init.d/udev-cache
+    rm -f ${D}/${sysconfdir}/init.d/udev-cache
 }
 
