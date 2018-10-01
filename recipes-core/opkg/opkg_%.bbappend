@@ -16,8 +16,6 @@ SRC_URI_append = "\
 SRC_URI += "\
 	file://0001-Change-configuration-paths.patch \
 	file://0002-Add-nocase-option-to-opkg.patch \
-	file://0003-Add-find-command-to-opkg.patch \
-	file://0004-Add-size-option-to-opkg.patch \
 "
 
 do_install_append () {

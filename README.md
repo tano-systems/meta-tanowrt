@@ -14,13 +14,13 @@ All OpenWrt packages corresponds to OpenWrt 18.06.1 or higher.
 
 Clone repositories:
 ```
-$ git clone -b morty git://github.com/openembedded/openembedded-core.git
+$ git clone -b rocko git://github.com/openembedded/openembedded-core.git
 
 $ cd openembedded-core
 
-$ git clone -b 1.32 git://github.com/openembedded/bitbake.git
-$ git clone -b morty git://github.com/openembedded/meta-openembedded.git
-$ git clone -b morty git://github.com/tano-systems/meta-tano-openwrt.git
+$ git clone -b 1.36 git://github.com/openembedded/bitbake.git
+$ git clone -b rocko git://github.com/openembedded/meta-openembedded.git
+$ git clone -b rocko git://github.com/tano-systems/meta-tano-openwrt.git
 ```
 
 Initialize build environment and add layers:
@@ -44,7 +44,7 @@ runqemu qemuarm
 
 ## Limitations
 
-Works with OE Release 2.2 (Morty)
+Works with OE Release 2.4 (Rocko)
 
 Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
 
@@ -55,29 +55,29 @@ This layer depends on:
 ### openembedded-core
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
-Branch: morty  
-Revision: 4b32784b8c95047dafbc7048bfe03e9e5ceb3367
+Branch: rocko  
+Revision: 931a52e8698f684ccbb26ddec18764ad9d9a3e8f
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-oe  
-Branch: morty  
-Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+Branch: rocko  
+Revision: 352531015014d1957d6444d114f4451e241c4d23
 
 ### meta-python
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-python  
-Branch: morty  
-Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+Branch: rocko  
+Revision: 352531015014d1957d6444d114f4451e241c4d23
 
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
-Branch: morty  
-Revision: b40116cf457b88a2db14b86fda9627fb34d56ae6
+Branch: rocko  
+Revision: 352531015014d1957d6444d114f4451e241c4d23
 
 ### bitbake
-Version 1.32
+Version 1.36
 
 
 ## License

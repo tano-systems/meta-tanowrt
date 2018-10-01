@@ -9,7 +9,7 @@ The Yocto project provides support for building VMDK (VMware Disk) images, which
 
 The important configuration to be added to conf/local.conf is the following line:
 ```
-IMAGE_FSTYPES += "vmdk"
+IMAGE_FSTYPES += "wic.vmdk"
 ```
 
 Build a `openwrt-image-full` image for `qemux86-64` machine:
