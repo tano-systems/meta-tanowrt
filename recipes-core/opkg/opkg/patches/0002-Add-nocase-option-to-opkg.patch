@@ -138,6 +138,15 @@ index 1aa0fd9..2ead642 100644
      {"no-install-recommends", 0, 0, ARGS_OPT_NO_INSTALL_RECOMMENDS},
      {"offline", 1, 0, 'o'},
      {"offline-root", 1, 0, 'o'},
+@@ -127,7 +130,7 @@ static int args_parse(int argc, char *argv[])
+     char *tuple, *targ;
+ 
+     while (1) {
+-        c = getopt_long_only(argc, argv, "Ad:f:no:p:t:vV::", long_options,
++        c = getopt_long_only(argc, argv, "Ad:f:ino:p:t:vV::", long_options,
+                              &option_index);
+         if (c == -1)
+             break;
 @@ -140,6 +143,9 @@ static int args_parse(int argc, char *argv[])
          case 'f':
              opkg_config->conf_file = xstrdup(optarg);
