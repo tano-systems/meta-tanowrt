@@ -1,24 +1,32 @@
-# Original file from meta-arago-distro
-
 # Select external binary prebuilt Linaro toolchain
 TCMODE = "external-linaro"
 TCLIBC = "external-linaro-toolchain"
 
-ELT_TARGET_SYS = "arm-linux-gnueabihf"
-ELT_TARGET_SYS_armv5 = "arm-linux-gnueabi"
-ELT_TARGET_SYS_aarch64 = "aarch64-linux-gnu"
+ELT_TARGET_SYS_ARMV5 ?= "arm-linux-gnueabi"
+ELT_TARGET_SYS_ARMV7 ?= "arm-linux-gnueabihf"
+ELT_TARGET_SYS_ARMV8 ?= "aarch64-linux-gnu"
+
+ELT_TARGET_SYS_arm = "${ELT_TARGET_SYS_ARMV5}"
+ELT_TARGET_SYS_armv7a = "${ELT_TARGET_SYS_ARMV7}"
+ELT_TARGET_SYS_aarch64 = "${ELT_TARGET_SYS_ARMV8}"
+
 TARGET_VENDOR = ""
 
-PREFERRED_PROVIDER_virtual/${TARGET_PREFIX}gcc-intermediate = "external-linaro-toolchain"
+TOOLCHAIN_BASE ?= "/opt"
+TOOLCHAIN_PATH_ARMV5 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-ti2018.00-armv5-x86_64_${ELT_TARGET_SYS_ARMV5}"
+TOOLCHAIN_PATH_ARMV7 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-2017.11-x86_64_${ELT_TARGET_SYS_ARMV7}"
+TOOLCHAIN_PATH_ARMV8 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-2017.11-x86_64_${ELT_TARGET_SYS_ARMV8}"
 
-# Set some vars to help locate the toolchain automatically from PATH
+DEF_TOOLCHAIN_PATH_arm = "${TOOLCHAIN_PATH_ARMV5}"
+DEF_TOOLCHAIN_PATH_armv7a = "${TOOLCHAIN_PATH_ARMV7}"
+DEF_TOOLCHAIN_PATH_aarch64 = "${TOOLCHAIN_PATH_ARMV8}"
+
+TOOLCHAIN_PATH ?= "${DEF_TOOLCHAIN_PATH}"
+
 TOOLCHAIN_SYS := "${ELT_TARGET_SYS}"
 TOOLCHAIN_PREFIX := "${TOOLCHAIN_SYS}-"
 
-# Use specific libc headers instead of ones provided by toolchain
-PREFERRED_PROVIDER_linux-libc-headers_forcevariable = "linux-libc-headers"
-PREFERRED_PROVIDER_linux-libc-headers-dev_forcevariable = "linux-libc-headers"
-PREFERRED_PROVIDER_virtual/linux-libc-headers_forcevariable = "linux-libc-headers"
+PREFERRED_PROVIDER_virtual/${TARGET_PREFIX}gcc-intermediate = "external-linaro-toolchain"
 
 PREFERRED_PROVIDER_gcc-cross-canadian-${TRANSLATED_TARGET_ARCH} ?= "external-linaro-sdk-toolchain"
 PREFERRED_PROVIDER_binutils-cross-canadian-${TRANSLATED_TARGET_ARCH} ?= "external-linaro-sdk-toolchain"
@@ -33,13 +41,16 @@ PREFERRED_PROVIDER_libgcc = "external-linaro-toolchain"
 PREFERRED_PROVIDER_gcc-runtime = "external-linaro-toolchain"
 
 # Set Cross and SDK toolchain preferences
-SDKGCCVERSION ?= "linaro-6.2%"
+SDKGCCVERSION ?= "linaro-7.2%"
+SDKGDBVERSION ?= "8.0"
 SDKBINUVERSION ?= "linaro-2.27%"
-SDKGLIBCVERSION ?= "2.24%"
-SDKLINUXLIBCVERSION ?= "4.9%"
+SDKGLIBCVERSION ?= "2.26%"
+SDKLINUXLIBCVERSION ?= "4.14%"
 
 PREFERRED_VERSION_gcc-crosssdk-${SDK_SYS} ?= "${SDKGCCVERSION}"
 PREFERRED_VERSION_gcc-crosssdk-initial-${SDK_SYS} ?= "${SDKGCCVERSION}"
+PREFERRED_VERSION_gdb-crosssdk-${SDK_SYS} ?= "${SDKGDBVERSION}"
+PREFERRED_VERSION_gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} ?= "${SDKGDBVERSION}"
 PREFERRED_VERSION_binutils-crosssdk-${SDK_SYS} ?= "${SDKBINUVERSION}"
 
 PREFERRED_VERSION_nativesdk-gcc-runtime ?= "${SDKGCCVERSION}"
@@ -47,22 +58,22 @@ PREFERRED_VERSION_nativesdk-libgcc ?= "${SDKGCCVERSION}"
 PREFERRED_VERSION_nativesdk-libgcc-initial ?= "${SDKGCCVERSION}"
 PREFERRED_VERSION_nativesdk-linux-libc-headers ?= "${SDKLINUXLIBCVERSION}"
 PREFERRED_VERSION_nativesdk-glibc ?= "${SDKGLIBCVERSION}"
+PREFERRED_VERSION_nativesdk-glibc-locale ?= "${SDKGLIBCVERSION}"
 PREFERRED_VERSION_nativesdk-glibc-initial ?= "${SDKGLIBCVERSION}"
 
 # Set target toolchain preferences to match Cross/SDK by default
 # Can be overwritten globally, if needed
-GCCVERSION ?= "linaro-6.2%"
+GCCVERSION ?= "linaro-7.2%"
+GDBVERSION ?= "8.0"
 BINUVERSION ?= "linaro-2.27%"
-GLIBCVERSION ?= "2.24%"
-GLIBCINITVERSION ?= "2.24%"
-LINUXLIBCVERSION ?= "4.9%"
+GLIBCVERSION ?= "2.26%"
 
 PREFERRED_VERSION_gcc ?= "${GCCVERSION}"
+PREFERRED_VERSION_gdb ?= "${GDBVERSION}"
 PREFERRED_VERSION_binutils ?= "${BINUVERSION}"
-PREFERRED_VERSION_linux-libc-headers ?= "${LINUXLIBCVERSION}"
 PREFERRED_VERSION_glibc ?= "${GLIBCVERSION}"
 PREFERRED_VERSION_glibc-locale ?= "${GLIBCVERSION}"
-PREFERRED_VERSION_glibc-initial ?= "${GLIBCINITVERSION}"
+PREFERRED_VERSION_glibc-initial ?= "${GLIBCVERSION}"
 
 # Licenses set for main components of the toolchain:
 # (g)libc is always LGPL version 2 (or later)
