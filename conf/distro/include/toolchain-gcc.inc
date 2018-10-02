@@ -15,10 +15,10 @@ PREFERRED_PROVIDER_binutils-cross-canadian-${TRANSLATED_TARGET_ARCH} ?= "binutil
 PREFERRED_PROVIDER_gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} = "gdb-cross-canadian-${TRANSLATED_TARGET_ARCH}"
 
 # Set Cross and SDK toolchain preferences
-SDKGCCVERSION ?= "6.2%"
+SDKGCCVERSION ?= "7.3%"
 SDKBINUVERSION ?= "2.29%"
 SDKGLIBCVERSION ?= "2.26%"
-SDKLINUXLIBCVERSION ?= "4.9%"
+SDKLINUXLIBCVERSION ?= "4.12%"
 
 PREFERRED_VERSION_gcc-crosssdk-${SDK_SYS} ?= "${SDKGCCVERSION}"
 PREFERRED_VERSION_gcc-crosssdk-initial-${SDK_SYS} ?= "${SDKGCCVERSION}"
@@ -33,11 +33,11 @@ PREFERRED_VERSION_nativesdk-glibc-initial ?= "${SDKGLIBCVERSION}"
 
 # Set target toolchain preferences to match Cross/SDK by default
 # Can be overwritten globally, if needed
-GCCVERSION ?= "6.2%"
+GCCVERSION ?= "7.3%"
 BINUVERSION ?= "2.29%"
 GLIBCVERSION ?= "2.26%"
 GLIBCINITVERSION ?= "2.26%"
-LINUXLIBCVERSION ?= "4.9%"
+LINUXLIBCVERSION ?= "4.12%"
 
 PREFERRED_VERSION_gcc ?= "${GCCVERSION}"
 PREFERRED_VERSION_binutils ?= "${BINUVERSION}"
