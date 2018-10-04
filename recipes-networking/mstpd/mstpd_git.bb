@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano8"
+PR = "tano9"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -26,9 +26,6 @@ SRC_URI += "\
 "
 
 S = "${WORKDIR}/git"
-
-DEPENDS = "python"
-RDEPENDS_${PN} = "python-core"
 
 inherit autotools
 
