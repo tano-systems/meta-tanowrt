@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=44ac4678311254db62edf8fd39cb8124"
 
 RDEPENDS_${PN} = "python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
 
-PR = "tano2"
+PR = "tano3"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit autotools-brokensep
@@ -18,6 +18,7 @@ inherit systemd
 
 SYSTEMD_SERVICE_${PN} = "bootchart2.service bootchart2-done.service bootchart2-done.timer"
 
+RDEPENDS_${PN} += "lsb-release"
 RCONFLICTS_${PN} = "bootchart"
 
 SRCREV = "42509aa0c9c20baa631062496b281f67b31abbd0"
