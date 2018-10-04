@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano13"
+PR = "tano14"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -36,10 +36,17 @@ SRC_URI = "\
 
 SRCREV = "${LUCI_GIT_SRCREV}" 
 
-prefix=""
-includedir="/usr/include"
-bindir="/usr/bin"
-libdir="/usr/lib"
+EXTRA_OECMAKE += "\
+  -DCMAKE_INSTALL_PREFIX:PATH= \
+  -DCMAKE_INSTALL_BINDIR:PATH=/usr/bin \
+  -DCMAKE_INSTALL_SBINDIR:PATH=sbin \
+  -DCMAKE_INSTALL_LIBEXECDIR:PATH=libexec \
+  -DCMAKE_INSTALL_SYSCONFDIR:PATH=/etc \
+  -DCMAKE_INSTALL_LOCALSTATEDIR:PATH=/var \
+  -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
+  -DCMAKE_INSTALL_INCLUDEDIR:PATH=/usr/include \
+  -DCMAKE_INSTALL_DATAROOTDIR:PATH=/usr/share \
+"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -DDESTDIR=${D}"
 
@@ -83,6 +90,7 @@ do_preconfigure() {
 do_preconfigure[vardeps] += "LUCI_DISTNAME LUCI_DISTVERSION LUCI_NAME LUCI_VERSION"
 
 do_install_append() {
+
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
 
@@ -92,10 +100,6 @@ do_install_append() {
 
 	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
 	sed -i -e "s/\(luci\.main\.mediaurlbase\)=.*/\1=${MEDIAURLBASE_ESCAPED}/" ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
-
-	# Install luci-bwc
-	install -d ${D}${bindir}
-	install -m 0755 ${B}/modules/luci-mod-status/luci-bwc ${D}${bindir}/luci-bwc
 }
 
 do_install[vardeps] += "LUCI_INITIAL_LANG LUCI_INITIAL_MEDIAURLBASE"

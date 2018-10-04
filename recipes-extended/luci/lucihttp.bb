@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -18,11 +18,6 @@ SRC_URI = "\
 
 SRCREV = "cb119deddee5f0f8f1da883b20c60aea7611b175" 
 
-prefix=""
-includedir="/usr/include"
-bindir="/usr/bin"
-libdir="/usr/lib"
-
 PACKAGECONFIG ??= "build-lua"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
 
@@ -33,9 +28,6 @@ S = "${WORKDIR}/git/"
 do_install_append() {
 	install -dm 0755 ${D}${libdir}
 	install -m 0755 ${B}/liblucihttp.so ${D}${libdir}/liblucihttp.so
-
 	install -dm 0755 ${D}/usr/include/lucihttp
-	mv ${D}/include/lucihttp/*.h ${D}/usr/include/lucihttp/
-	rm -rf ${D}/include
 }
 
