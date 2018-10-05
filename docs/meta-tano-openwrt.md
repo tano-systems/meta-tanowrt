@@ -41,6 +41,15 @@ OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
 OPENWRT_HWCLOCK_LOCALTIME = "1"
 ```
 
+#### `OPENWRT_HOSTNAME`
+
+System hostname.
+
+Example:
+```
+OPENWRT_HOSTNAME ?= "openwrt"
+```
+
 #### `OPENWRT_VERSION_DIST`
 
 Release distribution.
