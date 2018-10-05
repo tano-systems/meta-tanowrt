@@ -1,0 +1,55 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2013-2014 OpenWrt.org
+# Copyright (C) 2018 Tano Systems
+
+START=00
+STOP=90
+
+HWCLOCK=/sbin/hwclock
+
+boot() {
+	start && exit 0
+
+	local maxtime="$(maxtime)"
+	local curtime="$(date +%s)"
+	[ $curtime -lt $maxtime ] && date -s @$maxtime
+}
+
+hwclock_args() {
+	local args rtc_dev kept_in_localtime
+
+	config_load 'system'
+	config_get rtc_dev 'rtc' 'hwclock_dev' '/dev/rtc0'
+	config_get_bool kept_in_localtime 'rtc' 'hwclock_localtime' 1
+
+	args=""
+
+	if [ "$kept_in_localtime" = "0" ]; then
+		append args "--utc" " "
+	else
+		append args "--localtime" " "
+	fi
+
+	append args "--rtc $rtc_dev" " "
+
+	echo $args
+}
+
+start() {
+	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(hwclock_args) && \
+		logger -t sysfixtime "restored '$(date)' from $rtc_dev"
+}
+
+stop() {
+	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(hwclock_args) --systohc && \
+		logger -t sysfixtime "saved '$(date)' to $rtc_dev"
+}
+
+maxtime() {
+	local file newest
+
+	for file in $( find /etc -type f ) ; do
+		[ -z "$newest" -o "$newest" -ot "$file" ] && newest=$file
+	done
+	[ "$newest" ] && date -r "$newest" +%s
+}

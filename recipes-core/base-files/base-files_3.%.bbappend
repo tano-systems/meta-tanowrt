@@ -4,11 +4,15 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano9"
+PR_append = ".tano10"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
 OPENWRT_TIMEZONE ?= "MSK-3"
+
+# Initial hwclock parameters
+OPENWRT_HWCLOCK_DEV       ?= "/dev/rtc0"
+OPENWRT_HWCLOCK_LOCALTIME ?= "1"
 
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
@@ -32,6 +36,7 @@ SRC_URI_append = "\
     file://boot.init \
     file://system.init \
     file://system.config \
+    file://sysfixtime.init \
 "
 
 # Only for x86 and x86-64 architectures
@@ -192,6 +197,7 @@ do_install_append () {
         install -m 0755 ${S}/system.init ${D}${sysconfdir}/init.d/system
         install -m 0644 ${S}/system.config ${D}${sysconfdir}/config/system
         install -m 0755 ${S}/boot.init ${D}${sysconfdir}/init.d/boot
+        install -m 0755 ${S}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
 
         install -m 0644 ${S}/profile ${D}${sysconfdir}/profile
 
@@ -206,12 +212,19 @@ do_install_append () {
             ${D}${sysconfdir}/openwrt_release \
             ${D}${sysconfdir}/issue
 
+        # Setup timezone and zonename in /etc/config/system
         OPENWRT_TIMEZONE_ESCAPED="${@d.getVar('OPENWRT_TIMEZONE', True).replace('/', '\/')}"
         OPENWRT_ZONENAME_ESCAPED="${@d.getVar('OPENWRT_ZONENAME', True).replace('/', '\/')}"
 
-        # Setup timezone and zonename in /etc/config/system
         sed -i -e "s/\(option\s*timezone\).*/\1 \'${OPENWRT_TIMEZONE_ESCAPED}\'/" ${D}${sysconfdir}/config/system
         sed -i -e "s/\(option\s*zonename\).*/\1 \'${OPENWRT_ZONENAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+
+        # Setup default hwclock parameters
+        OPENWRT_HWCLOCK_DEV_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_DEV', True).replace('/', '\/')}"
+        OPENWRT_HWCLOCK_LOCALTIME_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_LOCALTIME', True).replace('/', '\/')}"
+
+        sed -i -e "s/\(option\s*hwclock_dev\).*/\1 \'${OPENWRT_HWCLOCK_DEV_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+        sed -i -e "s/\(option\s*hwclock_localtime\).*/\1 \'${OPENWRT_HWCLOCK_LOCALTIME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
 
         rm -rf ${D}/var/run
         rm -rf ${D}/run

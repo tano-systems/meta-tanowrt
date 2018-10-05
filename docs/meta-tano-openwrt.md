@@ -24,6 +24,23 @@ OPENWRT_ZONENAME ?= "Europe/Moscow"
 OPENWRT_TIMEZONE ?= "MSK-3"
 ```
 
+#### `OPENWRT_HWCLOCK_DEV` and `OPENWRT_HWCLOCK_LOCALTIME`
+
+Configuration for the hardware clock.
+
+Option `OPENWRT_HWCLOCK_DEV` used for hardware clock
+device name (default `/dev/rtc0`).
+
+Possible value for the hardware clock kept option `OPENWRT_HWCLOCK_LOCALTIME`:
+- 0: hardware clock kept in UTC
+- 1: hardware clock kept in localtime
+
+Example:
+```
+OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
+OPENWRT_HWCLOCK_LOCALTIME = "1"
+```
+
 #### `OPENWRT_VERSION_DIST`
 
 Release distribution.
