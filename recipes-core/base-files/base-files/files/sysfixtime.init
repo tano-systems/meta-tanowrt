@@ -15,7 +15,7 @@ boot() {
 	[ $curtime -lt $maxtime ] && date -s @$maxtime
 }
 
-hwclock_args() {
+hwclock_call() {
 	local args rtc_dev kept_in_localtime
 
 	config_load 'system'
@@ -32,17 +32,25 @@ hwclock_args() {
 
 	append args "--rtc $rtc_dev" " "
 
-	echo $args
+	if [ "$1" = "save" ]; then
+		append args "--systohc" " "
+	fi
+
+	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(args) || exit 0
+
+	if [ "$1" = "save" ]; then
+		logger -t sysfixtime "saved '$(date)' to $rtc_dev"
+	else
+		logger -t sysfixtime "restored '$(date)' from $rtc_dev"
+	fi
 }
 
 start() {
-	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(hwclock_args) && \
-		logger -t sysfixtime "restored '$(date)' from $rtc_dev"
+	hwclock_call restore
 }
 
 stop() {
-	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(hwclock_args) --systohc && \
-		logger -t sysfixtime "saved '$(date)' to $rtc_dev"
+	hwclock_call save
 }
 
 maxtime() {
