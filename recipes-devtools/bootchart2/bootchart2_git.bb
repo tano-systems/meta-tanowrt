@@ -8,17 +8,16 @@ HOMEPAGE = "https://github.com/xrmx/bootchart"
 LICENSE = "GPL-3.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=44ac4678311254db62edf8fd39cb8124"
 
-RDEPENDS_${PN} = "python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
-
-PR = "tano3"
+PR = "tano4"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit autotools-brokensep
 inherit systemd
+inherit python3native
 
 SYSTEMD_SERVICE_${PN} = "bootchart2.service bootchart2-done.service bootchart2-done.timer"
 
-RDEPENDS_${PN} += "lsb-release"
+RDEPENDS_${PN} += " lsb-release "
 RCONFLICTS_${PN} = "bootchart"
 
 SRCREV = "42509aa0c9c20baa631062496b281f67b31abbd0"
@@ -43,12 +42,13 @@ SRC_URI += "\
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += " \
-    ${base_libdir}/bootchart/bootchart-collector \
-    ${base_libdir}/bootchart/tmpfs \
-    ${libdir} \
+FILES_${PN} = " \
+	${sysconfdir} \
+	${base_libdir} \
+	${base_sbindir} \
 "
-FILES_${PN}-doc += "${datadir}/docs"
+
+FILES_${PN}-doc += "${datadir}"
 
 do_install () {
     export PYTHON_DIR=python3.5
@@ -67,3 +67,8 @@ do_install () {
     install -m 0755 ${WORKDIR}/bootchartd      ${D}${base_sbindir}/bootchartd
     install -m 0644 ${WORKDIR}/bootchartd.conf ${D}${sysconfdir}/bootchartd.conf
 }
+
+PACKAGES += "${PN}-pybootchartgui"
+
+RDEPENDS_${PN}-pybootchartgui = "python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
+FILES_${PN}-pybootchartgui += "${PYTHON_SITEPACKAGES_DIR}/pybootchartgui ${bindir}/pybootchartgui"
