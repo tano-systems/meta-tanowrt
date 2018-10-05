@@ -4,11 +4,14 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano10"
+PR_append = ".tano11"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
 OPENWRT_TIMEZONE ?= "MSK-3"
+
+# System hostname
+OPENWRT_HOSTNAME ?= "openwrt"
 
 # Initial hwclock parameters
 OPENWRT_HWCLOCK_DEV       ?= "/dev/rtc0"
@@ -225,6 +228,11 @@ do_install_append () {
 
         sed -i -e "s/\(option\s*hwclock_dev\).*/\1 \'${OPENWRT_HWCLOCK_DEV_ESCAPED}\'/" ${D}${sysconfdir}/config/system
         sed -i -e "s/\(option\s*hwclock_localtime\).*/\1 \'${OPENWRT_HWCLOCK_LOCALTIME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+
+        # Setup system hostname
+        OPENWRT_HOSTNAME_ESCAPED="${@d.getVar('OPENWRT_HOSTNAME', True).replace('/', '\/')}"
+        sed -i -e "s/\(option\s*hostname\).*/\1 \'${OPENWRT_HOSTNAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+        echo "${@d.getVar('OPENWRT_HOSTNAME', True)}" > ${D}${sysconfdir}/hostname
 
         rm -rf ${D}/var/run
         rm -rf ${D}/run
