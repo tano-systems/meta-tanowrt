@@ -3,7 +3,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano4"
+PR_append = ".tano5"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -27,9 +27,9 @@ GROUPADD_PARAM_${PN} = "\
     -f -r tape; \
     -f -r floppy"
 
-OPENWRT_SERVICE_PACKAGES = "udev"
-OPENWRT_SERVICE_SCRIPTS_udev += "udev"
-OPENWRT_SERVICE_STATE_udev-udev ?= "enabled"
+OPENWRT_SERVICE_PACKAGES = "eudev"
+OPENWRT_SERVICE_SCRIPTS_eudev += "udev"
+OPENWRT_SERVICE_STATE_eudev-udev ?= "enabled"
 
 do_install_append() {
     install -d ${D}${sysconfdir}/init.d
