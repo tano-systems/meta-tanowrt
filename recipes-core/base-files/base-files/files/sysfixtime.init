@@ -15,6 +15,19 @@ boot() {
 	[ $curtime -lt $maxtime ] && date -s @$maxtime
 }
 
+apply_timezone() {
+	local config="$1"
+	local zonename
+
+	config_get zonename "$config" 'zonename' ''
+
+	[ -n "$zonename" ] && [ -f "/usr/share/zoneinfo/$zonename" ] && \
+		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
+
+	# apply timezone to kernel
+	date -k
+}
+
 hwclock_call() {
 	local args rtc_dev kept_in_localtime
 
@@ -28,12 +41,18 @@ hwclock_call() {
 		append args "--utc" " "
 	else
 		append args "--localtime" " "
+
+		# Early apply timezone from system configuration
+		# if we keep time in hardware clock in localtime
+		config_foreach apply_timezone system
 	fi
 
 	append args "--rtc $rtc_dev" " "
 
 	if [ "$1" = "save" ]; then
 		append args "--systohc" " "
+	elif [ "$1" = "restore" ]; then
+		append args "--hctosys" " "
 	fi
 
 	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $args || exit 0
