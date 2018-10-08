@@ -36,7 +36,7 @@ hwclock_call() {
 		append args "--systohc" " "
 	fi
 
-	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $(args) || exit 0
+	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $args || exit 0
 
 	if [ "$1" = "save" ]; then
 		logger -t sysfixtime "saved '$(date)' to $rtc_dev"
