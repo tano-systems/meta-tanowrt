@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -62,6 +62,7 @@ do_install_append() {
 	install -dm 0755 ${D}${sysconfdir}/hotplug.d/block
 
 	ln -s /usr/sbin/block ${D}/sbin/block
+	ln -s /usr/sbin/blockd ${D}/sbin/blockd
 	ln -s /usr/sbin/snapshot_tool ${D}/sbin/snapshot_tool
 	ln -s /usr/sbin/ubi ${D}/sbin/ubi
 	ln -s /sbin/block ${D}/usr/sbin/swapon
