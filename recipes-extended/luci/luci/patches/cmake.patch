@@ -54,6 +54,22 @@ Index: git/libs/luci-lib-ip/CMakeLists.txt
 +	LIBRARY DESTINATION "${LUAPATH}/luci"
 +)
 +
+Index: git/libs/luci-lib-iptparser/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/libs/luci-lib-iptparser/CMakeLists.txt
+@@ -0,0 +1,11 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-lib-iptparser C)
++
++FIND_PACKAGE(PkgConfig)
++
++INSTALL(DIRECTORY sys/
++	DESTINATION "${LUAPATH}/luci/sys"
++	USE_SOURCE_PERMISSIONS
++)
++
 Index: git/libs/luci-lib-nixio/CMakeLists.txt
 ===================================================================
 --- /dev/null

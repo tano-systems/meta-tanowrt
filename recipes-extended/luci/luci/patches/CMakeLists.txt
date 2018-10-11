@@ -29,5 +29,6 @@ ADD_SUBDIRECTORY(modules/luci-mod-system)
 ADD_SUBDIRECTORY(libs/luci-lib-nixio)
 ADD_SUBDIRECTORY(libs/luci-lib-ip)
 ADD_SUBDIRECTORY(libs/luci-lib-jsonc)
+ADD_SUBDIRECTORY(libs/luci-lib-iptparser)
 
 INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-extra.txt)
