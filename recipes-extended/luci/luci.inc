@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 27.09.2018
-# Merge pull request #2184 from kyle30312/logout-cookie-fix
-LUCI_GIT_SRCREV = "a291a999a7d396adc1238bfbe4e0abbd870ba8f9"
+# 10.10.2018
+# Merge pull request #2197 from yangfl/master
+LUCI_GIT_SRCREV = "67fd6b6e5ea6b843a4427bed62a31e96f3ff0a1f"
 
-PR_append = ".9"
+PR_append = ".10"
 
 libdir = "/usr/lib"
 
