@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -20,6 +20,7 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
+	file://0004-Fix-UUID-reading-from-vfat.patch \
 	file://fstab.init \
 	file://fstab.default \
 	file://snapshot \
