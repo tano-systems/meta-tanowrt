@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -31,6 +31,7 @@ SRC_URI = "\
 	file://0001-Fix-user.setpasswd-function.patch \
 	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
 	file://0004-fix-network-bridge-functions.patch \
+	file://0010-fix-mounted-filesystems-info.patch \
 	file://99_luci-theme-initial \
 "
 
