@@ -1,7 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -19,8 +20,19 @@ SRC_URI = "git://git.openwrt.org/project/umbim.git \
 # add radio_state set/query support
 SRCREV = "29aaf43b097ee57f7aa1bb24341db6cc4148cbf3"
 
+SRC_URI += "\
+	file://mbim.sh \
+"
+
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt
 
-FILES_${PN}  += "${libdir}/*"
+FILES_${PN} += "\
+	${base_libdir}/netifd/proto/mbim.sh \
+"
+
+do_install_append() {
+	install -dm 0755 ${D}${base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/mbim.sh ${D}${base_libdir}/netifd/proto/mbim.sh
+}
