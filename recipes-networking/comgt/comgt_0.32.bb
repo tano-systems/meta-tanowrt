@@ -3,7 +3,7 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -81,7 +81,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/3g.usb ${D}${sysconfdir}/hotplug.d/tty/30-3g
 
     install -d ${D}/lib/netifd/proto
-    install -m 0644 ${WORKDIR}/3g.sh ${D}/lib/netifd/proto/3g.sh
+    install -m 0755 ${WORKDIR}/3g.sh ${D}/lib/netifd/proto/3g.sh
 
     ###### MANUAL
 
@@ -126,7 +126,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/directip.gcom ${D}${sysconfdir}/gcom/directip.gcom
     install -m 0644 ${WORKDIR}/directip-stop.gcom ${D}${sysconfdir}/gcom/directip-stop.gcom
     install -d ${D}/lib/netifd/proto
-    install -m 0644 ${WORKDIR}/directip.sh ${D}/lib/netifd/proto/directip.sh
+    install -m 0755 ${WORKDIR}/directip.sh ${D}/lib/netifd/proto/directip.sh
 }
 
 FILES_${PN}-directip = "\
@@ -146,7 +146,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/ncm.json ${D}${sysconfdir}/gcom/ncm.json
     install -m 0644 ${WORKDIR}/runcommand.gcom ${D}${sysconfdir}/gcom/runcommand.gcom
     install -d ${D}/lib/netifd/proto
-    install -m 0644 ${WORKDIR}/ncm.sh ${D}/lib/netifd/proto/ncm.sh
+    install -m 0755 ${WORKDIR}/ncm.sh ${D}/lib/netifd/proto/ncm.sh
 }
 
 FILES_${PN}-ncm = "\
