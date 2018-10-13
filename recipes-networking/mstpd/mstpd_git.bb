@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano9"
+PR = "tano10"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -60,3 +60,7 @@ inherit openwrt-services
 OPENWRT_SERVICE_PACKAGES = "mstpd"
 OPENWRT_SERVICE_SCRIPTS_mstpd += "mstpd"
 OPENWRT_SERVICE_STATE_mstpd-mstpd ?= "enabled"
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/mstpd \
+"
