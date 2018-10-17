@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -28,9 +28,9 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 24.05.2018
-# fstools: allow the mounting with full access time accounting
-SRCREV = "dd02dad332958575cc52e60c78ef10ef2b5aaced"
+# 11.10.2018
+# fstools: add ntfs support
+SRCREV = "29e53af0b91954ca6a13bdd1f0e67c939ccb8e6d"
 
 S = "${WORKDIR}/git"
 
