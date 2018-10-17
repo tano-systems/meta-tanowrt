@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -15,18 +15,18 @@ DEPENDS = "json-c libubox ubus libnl uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-          git://git.openwrt.org/project/netifd.git;name=netifd \
+          git://git.openwrt.org/project/netifd.git;name=netifd;branch=master \
           file://100-Fix-IFF_LOWER_UP-define.patch \
           file://300-replace-is_error-helper-with-NULL-check.patch \
-          file://400-fix-CMakeLists.txt.patch \
           file://network.config \
           file://network.init \
           file://network.hotplug \
           "
 
-# 20.08.2018
-# interface: let interface_set_down() return void
-SRCREV_netifd = "7454d121090f60428777c01f431031059acc96eb"
+# 01.10.2018
+# iprule: coding style fixes
+# iprule: fix segfault (FS#1875)
+SRCREV_netifd = "83428fac8fca8b72f1a9508e4928eb70d9332444"
 
 S = "${WORKDIR}/git"
 
