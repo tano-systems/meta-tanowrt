@@ -12,6 +12,8 @@ PACKAGECONFIG ??= "lua examples"
 PACKAGECONFIG[lua] = ""
 PACKAGECONFIG[examples] = ""
 
+RPROVIDES_${PN} += "libblobmsg-json jshn libjson-script"
+
 LICENSE = "BSD-1-Clause&BSD-3-Clause"
 LICENSE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', '&GPL-2.0', '', d)}"
 LICENSE_${PN} = "BSD-1-Clause&BSD-3-Clause"
