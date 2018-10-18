@@ -17,6 +17,8 @@ SRC_URI = "\
 	file://uci.sh \
 "
 
+RPROVIDES_${PN} += "libuci-lua libuci"
+
 # 11.08.2018
 # delta: fix parsing malformed delta lines
 SRCREV = "4c8b4d6efc8302b508d261573351fffb75bd98c2"
