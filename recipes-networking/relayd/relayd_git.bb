@@ -1,7 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt IPv4 pseudo-bridge routing daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/relayd.git;a=summary"
@@ -13,6 +14,8 @@ DEPENDS = "libubox"
 SRC_URI = "git://git.openwrt.org/project/relayd.git \
           "
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRCREV = "ad0b25ad74345d367c62311e14b279f5ccb8ef13"
 
 S = "${WORKDIR}/git"
@@ -20,3 +23,18 @@ S = "${WORKDIR}/git"
 inherit cmake pkgconfig openwrt
 
 FILES_${PN}  += "${libdir}/*"
+
+SRC_URI += "\
+	file://relayd.init \
+"
+
+inherit openwrt-services
+
+OPENWRT_SERVICE_PACKAGES = "relayd"
+OPENWRT_SERVICE_SCRIPTS_relayd += "relayd"
+OPENWRT_SERVICE_STATE_relayd-relayd ?= "enabled"
+
+do_install_append() {
+	install -dm 0755 ${D}${sysconfdir}/init.d
+	install -m 0755 ${WORKDIR}/relayd.init ${D}${sysconfdir}/init.d/relayd
+}
