@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -36,11 +36,16 @@ RDEPENDS_${PN}-base = "\
 	mtd-utils \
 	mtd-utils-ubifs \
 	apcupsd \
+	cpulimit \
 "
 
 #luci-app-commands
 #luci-app-terminal
-#luci-app-ddns
+#luci-app-qos
+#luci-app-mwan3
+#luci-app-qos
+#luci-app-mwan3
+#luci-app-nlbwmon
 
 RDEPENDS_${PN}-luci = "\
 	luci-app-lldpd \
@@ -49,9 +54,10 @@ RDEPENDS_${PN}-luci = "\
 	luci-app-statistics \
 	luci-app-snmpd \
 	luci-app-mstpd \
+	luci-app-ddns \
 	luci-proto-3g \
-	luci-proto-ncm \
 	luci-proto-ppp \
+	luci-proto-ncm \
 	luci-proto-qmi \
 "
 
@@ -61,7 +67,6 @@ RDEPENDS_${PN}-console = "\
 "
 
 RDEPENDS_${PN}-network = "\
-	relayd \
 	tcpdump \
 	umbim \
 	umdnsd \
