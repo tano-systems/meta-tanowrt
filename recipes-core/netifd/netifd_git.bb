@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -23,10 +23,9 @@ SRC_URI = "\
           file://network.hotplug \
           "
 
-# 01.10.2018
-# iprule: coding style fixes
-# iprule: fix segfault (FS#1875)
-SRCREV_netifd = "83428fac8fca8b72f1a9508e4928eb70d9332444"
+# 17.10.2018
+# system-linux: enable by default ignore encaplimit for grev6 tunnels
+SRCREV_netifd = "841b5d158708ee89d9fa870c40404469cb8e871e"
 
 S = "${WORKDIR}/git"
 
@@ -39,9 +38,6 @@ OPENWRT_SERVICE_STATE_netifd-network ?= "enabled"
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
-
-inherit kernel-config-check
-KERNEL_CONFIG_CHECK[BRIDGE] = "y,m=kernel-module-bridge"
 
 do_configure_prepend () {
     # replace hardcoded '/lib/' with '${base_libdir}/'
@@ -67,18 +63,6 @@ do_install_append() {
 
     install -dm 0755 ${D}/sbin
     ln -sf /usr/sbin/netifd ${D}/sbin/netifd
-
-    if [ "${KERNEL_CONFIG_BRIDGE}" = "m" ]; then
-        if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
-            # procd style module loading
-            install -dm 0755 ${D}/etc/modules.d
-            echo "bridge" >${D}/etc/modules.d/30-bridge
-        else
-            # systemd/sysvinit style module loading
-            install -dm 0755 ${D}/etc/modules-load.d
-            echo "bridge" >${D}/etc/modules-load.d/bridge.conf
-        fi
-    fi
 
     install -d ${D}${sysconfdir}/init.d
     install -m 755 ${WORKDIR}/network.init ${D}${sysconfdir}/init.d/network
@@ -115,5 +99,8 @@ CONFFILES_${PN}_append = "\
 
 RDEPENDS_${PN} += "\
                   bridge-utils \
-                  base-files-scripts-openwrt\
+                  base-files-scripts-openwrt \
+                  kmod-bridge \
                   "
+
+do_configure[depends] += "virtual/kernel:do_shared_workdir"

@@ -1,9 +1,13 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
 
-PR_append = ".tano2"
+PR_append = ".tano4"
 
 SRC_URI_append = "\
+    file://defconfig.cfg \
     file://ipset.cfg \
+    file://ppp.cfg \
+    file://usb-net.cfg \
+    file://netfilter.cfg \
     file://bootchart.cfg \
 "
 

@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -10,6 +10,9 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://mbim.h;beginline=1;endline=13;md5=8c7ce85ebfe23634010c75c30c3eb223"
 SECTION = "base"
 DEPENDS = "libubox"
+
+RDEPENDS_${PN} += "kmod-usb-net kmod-usb-net-cdc-mbim"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

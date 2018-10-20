@@ -3,7 +3,7 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano2"
+PR = "tano3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -136,6 +136,14 @@ FILES_${PN}-directip = "\
 "
 
 RDEPENDS_${PN}-directip += "${PN}"
+RDEPENDS_${PN}-directip += "\
+	kmod-usb-serial \
+	kmod-usb-serial-sierrawireless \
+	kmod-usb-net \
+	kmod-usb-net-sierrawireless \
+"
+
+do_compile[depends] += "virtual/kernel:do_shared_workdir"
 
 ##
 ## comgt-ncm

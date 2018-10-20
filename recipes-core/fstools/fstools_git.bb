@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -13,6 +13,9 @@ LICENSE = "LGPL-2.1 & GPL-2.0 & PD"
 LIC_FILES_CHKSUM = "file://ubi.c;beginline=1;endline=17;md5=8ccc371d64f0b3a8d91065b678dc7095"
 SECTION = "base"
 DEPENDS += "util-linux ubus"
+
+RDEPENDS_${PN} += "kmod-fs-autofs4"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

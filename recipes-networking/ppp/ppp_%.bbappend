@@ -14,7 +14,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano2"
+PR_append = ".tano3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -148,14 +148,17 @@ CONFFILES_${PN}-radius = "\
 	${sysconfdir}/ppp/radius/* \
 "
 
-RDEPENDS_${PN}-pptp += "${PN} resolveip"
-RDEPENDS_${PN}-oa += "${PN} linux-atm"
-RDEPENDS_${PN}-oe += "${PN}"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
+RDEPENDS_${PN} += "kmod-ppp"
+
+RDEPENDS_${PN}-pptp += "${PN} resolveip kmod-pptp kmod-mppe"
+RDEPENDS_${PN}-oa += "${PN} linux-atm kmod-pppoa"
+RDEPENDS_${PN}-oe += "${PN} kmod-pppoe"
 RDEPENDS_${PN}-radius += "${PN}"
 RDEPENDS_${PN}-winbind += "${PN}"
 RDEPENDS_${PN}-minconn += "${PN}"
 RDEPENDS_${PN}-password += "${PN}"
-RDEPENDS_${PN}-l2tp += "${PN}"
+RDEPENDS_${PN}-l2tp += "${PN} kmod-pppol2tp"
 RDEPENDS_${PN}-tools += "${PN}"
 
 CONFFILES_${PN} = "\

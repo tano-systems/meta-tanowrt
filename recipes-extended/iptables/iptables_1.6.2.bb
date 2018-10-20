@@ -1,4 +1,4 @@
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Tools for managing kernel packet filtering capabilities"
 DESCRIPTION = "iptables is the userspace command line program used to configure and control network packet \
@@ -9,15 +9,10 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263\
                     file://iptables/iptables.c;beginline=13;endline=25;md5=c5cffd09974558cf27d0f763df2a12dc"
 
-RRECOMMENDS_${PN} = "kernel-module-x-tables \
-                     kernel-module-ip-tables \
-                     kernel-module-iptable-filter \
-                     kernel-module-iptable-nat \
-                     kernel-module-nf-defrag-ipv4 \
-                     kernel-module-nf-conntrack \
-                     kernel-module-nf-conntrack-ipv4 \
-                     kernel-module-nf-nat \
-                     kernel-module-ipt-masquerade"
+RDEPENDS_${PN} += "kmod-ipt-core"
+RDEPENDS_${PN} += "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kmod-ip6tables', '', d)}"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
+
 FILES_${PN} =+ "${libdir}/xtables/ ${datadir}/xtables"
 
 SRC_URI = "http://netfilter.org/projects/iptables/files/iptables-${PV}.tar.bz2 \

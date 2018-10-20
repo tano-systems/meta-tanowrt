@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano5"
+PR_append = ".tano6"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -61,7 +61,9 @@ USERADD_PACKAGES = "${PN}"
 USERADD_PARAM_${PN} = "--system -d /var/lib/dnsmasq --no-create-home \
   --shell /bin/false --user-group dnsmasq"
 
-RDEPENDS_dnsmasq += "jsonpath"
+RDEPENDS_${PN} += "jsonpath"
+RDEPENDS_${PN} += "kmod-ipt-ipset"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILES_${PN}_append = "\
 	/usr/share \

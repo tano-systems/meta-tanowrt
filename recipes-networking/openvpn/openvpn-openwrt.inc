@@ -62,6 +62,9 @@ EXTRA_OE_CONF += "\
 	"${@bb.utils.contains('PACKAGECONFIG', 'ssl', '--with-crypto-library=openssl', '', d)}" \
 "
 
+RDEPENDS_${PN} += "kmod-tun"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
+
 FILES_${PN} += "/lib/upgrade/keep.d"
 
 do_install_append() {
