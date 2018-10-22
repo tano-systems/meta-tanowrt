@@ -4,8 +4,9 @@
 START=50
 
 start() {
-	mkdir -m 0755 -p /var/run/vsftpd/empty
-	service_start /usr/sbin/vsftpd
+	/usr/sbin/vsftpd_prepare
+	service_start /usr/sbin/vsftpd_wrapper ipv4
+	service_start /usr/sbin/vsftpd_wrapper ipv6
 }
 
 stop() {
