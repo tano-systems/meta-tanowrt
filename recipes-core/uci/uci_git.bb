@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -17,6 +17,7 @@ SRC_URI = "\
 	file://uci.sh \
 "
 
+PROVIDES += "libuci libuci-lua"
 RPROVIDES_${PN} += "libuci-lua libuci"
 
 # 11.08.2018
