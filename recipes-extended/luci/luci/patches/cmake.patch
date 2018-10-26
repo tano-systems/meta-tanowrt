@@ -65,7 +65,7 @@ Index: git/libs/luci-lib-iptparser/CMakeLists.txt
 +
 +FIND_PACKAGE(PkgConfig)
 +
-+INSTALL(DIRECTORY sys/
++INSTALL(DIRECTORY luasrc/sys/
 +	DESTINATION "${LUAPATH}/luci/sys"
 +	USE_SOURCE_PERMISSIONS
 +)

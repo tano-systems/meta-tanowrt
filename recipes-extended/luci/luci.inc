@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 10.10.2018
-# Merge pull request #2197 from yangfl/master
-LUCI_GIT_SRCREV = "67fd6b6e5ea6b843a4427bed62a31e96f3ff0a1f"
+# 25.10.2018
+# Merge pull request #2248 from tano-systems/fstab-translateble-swap
+LUCI_GIT_SRCREV = "35b543e270428357d22ede5ceff39653b3371a1b"
 
-PR_append = ".10"
+PR_append = ".11"
 
 libdir = "/usr/lib"
 
