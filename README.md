@@ -56,28 +56,31 @@ This layer depends on:
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
 Branch: rocko  
-Revision: 931a52e8698f684ccbb26ddec18764ad9d9a3e8f
+Revision: 7d518d342eb67d25aa071fb08d03f06d6da576c6
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-oe  
 Branch: rocko  
-Revision: 352531015014d1957d6444d114f4451e241c4d23
+Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### meta-python
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-python  
 Branch: rocko  
-Revision: 352531015014d1957d6444d114f4451e241c4d23
+Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
 Branch: rocko  
-Revision: 352531015014d1957d6444d114f4451e241c4d23
+Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### bitbake
-Version 1.36
+URI: git://git.openembedded.org/bitbake  
+Subdirectory: bitbake  
+Branch: 1.36  
+Revision: 8bd16328a9332c57b03198826e22b48fadcd21d9
 
 
 ## License
