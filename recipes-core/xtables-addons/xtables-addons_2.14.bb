@@ -1,12 +1,12 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "non-mainline-kernel netfilter extensions"
 DESCRIPTION = "Xtables-addons contains a set of possibly useful but not included in the mainline kernel nefilter extensions"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
-DEPENDS = "virtual/kernel iptables"
+DEPENDS = "virtual/kernel iptables bc-native"
 
 inherit autotools kernel-module-split module-base pkgconfig
 
@@ -38,7 +38,7 @@ MODULES_INSTALL_TARGET = "install"
 # kernel scripts
 addtask make_scripts after do_patch before do_compile
 do_make_scripts[lockfiles] = "${TMPDIR}/kernel-scripts.lock"
-do_make_scripts[depends] += "virtual/kernel:do_shared_workdir"
+do_make_scripts[depends] += "virtual/kernel:do_shared_workdir bc-native:do_populate_sysroot"
 
 FILES_${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
 
