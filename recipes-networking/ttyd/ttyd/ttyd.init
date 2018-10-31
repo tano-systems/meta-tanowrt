@@ -1,0 +1,157 @@
+#!/bin/sh /etc/rc.common
+
+START=30
+USE_PROCD=1
+
+OPENSSL_BIN="/usr/bin/openssl"
+
+EXTRA_COMMANDS="status"
+EXTRA_HELP="status	Print runtime information"
+
+TTYD_COMMAND="/bin/login"
+TTYD_INIT="/etc/init.d/ttyd"
+TTYD_PID="/var/run/ttyd.pid"
+TTYD_BIN="/usr/bin/ttyd"
+
+generate_keys() {
+	local crt="$1"
+	local key="$2"
+	local days bits country state location commonname
+
+	config_get days                "ssl" "days"
+	config_get bits                "ssl" "bits"
+	config_get country             "ssl" "country"
+	config_get state               "ssl" "state"
+	config_get locality            "ssl" "locality"
+	config_get commonname          "ssl" "commonname"
+	config_get organization        "ssl" "organization"
+	config_get organizational_unit "ssl" "organizational_unit"
+
+	mkdir -p $(dirname $crt)
+	mkdir -p $(dirname $key)
+
+	local SUBJ=""
+	local GENKEY_CMD=""
+
+	RET=-1
+
+	SUBJ="${SUBJ}/C=${country:-RU}"
+	SUBJ="${SUBJ}/O=${organization:-openwrt}"
+	SUBJ="${SUBJ}/CN=${commonname:-openwrt}"
+
+	[ -n "${state}" ] && SUBJ="${SUBJ}/ST=${state}"
+	[ -n "${locality}" ] && SUBJ="${SUBJ}/L=${locality}"
+	[ -n "${organizational_unit}" ] && SUBJ="${SUBJ}/OU=${organizational_unit}"
+
+	[ -x "$OPENSSL_BIN" ] && GENKEY_CMD="$OPENSSL_BIN req -x509 -nodes"
+	[ -n "$GENKEY_CMD" ] && {
+		$GENKEY_CMD \
+			-days ${days:-730} \
+			-newkey rsa:${bits:-2048} \
+			-keyout "${key}.new" \
+			-out "${crt}.new" \
+			-subj "${SUBJ}"
+		RET=$?
+		sync
+		mv "${key}.new" "${key}"
+		mv "${crt}.new" "${crt}"
+	}
+
+	return $RET
+}
+
+start_service()
+{
+	local ttyd_once
+	local ttyd_command
+	local ttyd_port
+	local ttyd_interface
+	local ttyd_debug
+	local ttyd_max_clients
+	local ttyd_reconnect
+	local ttyd_readonly
+	local ttyd_check_origin
+	local ttyd_credential
+	local ttyd_username
+	local ttyd_password
+	local ttyd_debug
+
+	local ttyd_ssl
+	local ttyd_ssl_cert
+	local ttyd_ssl_key
+
+	local cfg="server"
+
+	config_load 'ttyd'
+	config_get ttyd_port         "$cfg" "port" 7681
+	config_get ttyd_max_clients  "$cfg" "max_clients" 0
+	config_get ttyd_interface    "$cfg" "interface"
+	config_get ttyd_ssl          "$cfg" "ssl" 0
+	config_get ttyd_reconnect    "$cfg" "reconnect" 10
+	config_get ttyd_readonly     "$cfg" "readonly" 0
+	config_get ttyd_check_origin "$cfg" "check_origin" 0
+	config_get ttyd_credential   "$cfg" "credential" 0
+	config_get ttyd_ssl_key      "$cfg" "ssl_key" "/etc/ttyd/ttyd.key"
+	config_get ttyd_ssl_cert     "$cfg" "ssl_cert" "/etc/ttyd/ttyd.crt"
+	config_get ttyd_debug        "$cfg" "debug" "1 2"
+
+	procd_open_instance "ttyd"
+	procd_set_param command ${TTYD_BIN}
+
+	[ -n "${ttyd_interface}" ] && procd_append_param command -i ${ttyd_interface}
+
+	local debug=0
+	for opt in $ttyd_debug; do
+		debug=$(($debug + $opt))
+	done
+
+	procd_append_param command -d ${debug}
+	procd_append_param command -m ${ttyd_max_clients}
+	procd_append_param command -r ${ttyd_reconnect}
+
+	[ "${ttyd_ssl}" -ne 0 ] && {
+		[ -s "$ttyd_ssl_cert" -a -s "$ttyd_ssl_key" ] || {
+			[ -f "$ttyd_ssl_cert.new" -o -f "$ttyd_ssl_key.new" ] || {
+				generate_keys $ttyd_ssl_cert $ttyd_ssl_key
+				if [ $? ]; then
+					exec /etc/rc.common "$initscript" start
+				fi
+			} &
+			exit 0
+		}
+
+		[ -f "$ttyd_ssl_cert" -a -f "$ttyd_ssl_key" ] && {
+			procd_append_param command -S
+			procd_append_param command -C ${ttyd_ssl_cert}
+			procd_append_param command -K ${ttyd_ssl_key}
+		}
+	}
+
+	[ "${ttyd_readonly}" -ne 0 ] && procd_append_param command -R
+	[ "${ttyd_port}" -ne 0 ] && procd_append_param command -p ${ttyd_port}
+	[ "${ttyd_check_origin}" -ne 0 ] && procd_append_param command -O
+
+	if [ "${ttyd_credential}" -ne 0 ]; then
+		procd_append_param command -c ${ttyd_username}:${ttyd_password}
+	fi
+
+	procd_append_param command ${TTYD_COMMAND}
+
+	procd_set_param stderr 1
+	procd_set_param pidfile ${TTYD_PID}
+	procd_close_instance
+}
+
+service_triggers()
+{
+	procd_add_config_trigger "config.change" "ttyd" ${TTYD_INIT} reload
+}
+
+status()
+{
+	if [ `pgrep ttyd` ]; then
+		echo 1
+	else
+		echo 0
+	fi
+}
