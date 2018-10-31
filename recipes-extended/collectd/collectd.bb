@@ -8,7 +8,7 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 PV = "5.8.0"
-PR = "tano3"
+PR = "tano4"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
@@ -62,6 +62,9 @@ PACKAGECONFIG ??= "\
     conntrack \
     contextswitch \
     cpu \
+    exec \
+    network \
+    disk \
     interface \
     iptables \
     irq \
