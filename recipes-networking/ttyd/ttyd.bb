@@ -6,7 +6,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 PV = "1.4.2+git${SRCPV}"
 
 LICENSE = "MIT"
@@ -42,3 +42,9 @@ do_install_append() {
 }
 
 S = "${WORKDIR}/git"
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/ttyd \
+	${sysconfdir}/ttyd/ttyd.crt \
+	${sysconfdir}/ttyd/ttyd.key \
+"
