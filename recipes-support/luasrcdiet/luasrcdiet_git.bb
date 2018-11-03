@@ -13,7 +13,7 @@ DEPENDS = "lua5.1"
 RDEPENDS_${PN} = "lua5.1"
 
 PV = "1.0.0"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "git://github.com/jirutka/luasrcdiet.git"
 SRCREV = "f138fc9359821d9201cd6b57cfa2fcbed5b9af97"
@@ -46,3 +46,5 @@ do_install_append() {
 	install -m 0644 ${B}/luasrcdiet/plugin/html.lua ${D}${libdir}/lua/5.1/luasrcdiet/plugin/html.lua
 	install -m 0644 ${B}/luasrcdiet/plugin/sloc.lua ${D}${libdir}/lua/5.1/luasrcdiet/plugin/sloc.lua
 }
+
+BBCLASSEXTEND += "native nativesdk"

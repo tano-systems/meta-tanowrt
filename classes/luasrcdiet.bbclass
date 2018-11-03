@@ -7,7 +7,7 @@ LUASRCDIET_PATHS ?= "${D}/usr/lib/lua/5.1"
 do_install_append() {
 	for p in "${LUASRCDIET_PATHS}"; do
 		find "$p" -type f -name '*.lua' | while read src; do
-			if luasrcdiet --noopt-binequiv -o "$src.o" "$src"; then
+			if LUA_PATH=${STAGING_DIR_NATIVE}/usr/lib/lua/5.1/?.lua luasrcdiet --noopt-binequiv -o "$src.o" "$src"; then
 				mv "$src.o" "$src"
 			fi
 		done
