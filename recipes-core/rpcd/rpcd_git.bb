@@ -2,13 +2,13 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
-DEPENDS = "json-c libubox ubus uci iwinfo"
+DEPENDS = "json-c libuci"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -25,6 +25,21 @@ SRCREV_rpcd = "41333abee4c57e3de2bcfa08972954e2af20705a"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt
+
+PACKAGECONFIG ??= "file"
+
+# rpcd-mod-file
+PACKAGECONFIG[file] = "-DFILE_SUPPORT=ON,-DFILE_SUPPORT=OFF,libubox libubus"
+
+# rpcd-mod-iwinfo
+PACKAGECONFIG[iwinfo] = "-DIWINFO_SUPPORT=ON,-DIWINFO_SUPPORT=OFF,libubox libubus iwinfo"
+
+# rpcd-mod-rpcsys
+PACKAGECONFIG[rpcsys] = "-DRPCSYS_SUPPORT=ON,-DRPCSYS_SUPPORT=OFF,libubox libubus"
+
+EXTRA_OECMAKE += "\
+  -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib/rpcd \
+"
 
 OPENWRT_SERVICE_PACKAGES = "rpcd"
 OPENWRT_SERVICE_SCRIPTS_rpcd += "rpcd"
