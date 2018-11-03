@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -17,6 +17,15 @@ SRC_URI = "git://git.openwrt.org/project/ubus.git"
 SRCREV = "221ce7e7ff1bd1a0c9995fa9d32f58e865f7207f"
 
 S = "${WORKDIR}/git"
+
+#
+# ubus = /usr/bin/ubus
+# ubusd = /usr/sbin/ubusd
+# libubus = /usr/lib/*.so
+# libubus-lua = /usr/lib/lua/51./*.so
+#
+PROVIDES += "ubusd libubus libubus-lua"
+RPROVIDES_${PN} += "ubusd"
 
 inherit cmake pkgconfig openwrt
 
