@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -12,31 +12,13 @@ inherit packagegroup openwrt
 
 PACKAGES = "\
 	packagegroup-openwrt-full \
-	packagegroup-openwrt-full-base \
-	packagegroup-openwrt-full-network \
 	packagegroup-openwrt-full-luci \
-	packagegroup-openwrt-full-console \
 "
 
+# packagegroup-openwrt-full
 RDEPENDS_${PN} = "\
-	packagegroup-openwrt-full-base \
-	packagegroup-openwrt-full-network \
+	packagegroup-openwrt-noweb-full \
 	packagegroup-openwrt-full-luci \
-	packagegroup-openwrt-full-console \
-"
-
-RDEPENDS_${PN}-base = "\
-	packagegroup-openwrt-base \
-	libubox-lua \
-	fstools \
-	eudev \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'libusb1', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbutils', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbreset', '',d)} \
-	mtd-utils \
-	mtd-utils-ubifs \
-	apcupsd \
-	cpulimit \
 "
 
 #luci-app-commands
@@ -46,6 +28,7 @@ RDEPENDS_${PN}-base = "\
 #luci-app-mwan3
 #luci-app-nlbwmon
 
+# packagegroup-openwrt-full-luci
 RDEPENDS_${PN}-luci = "\
 	luci-app-lldpd \
 	luci-app-uhttpd \
@@ -60,29 +43,4 @@ RDEPENDS_${PN}-luci = "\
 	luci-proto-ppp \
 	luci-proto-ncm \
 	luci-proto-qmi \
-"
-
-RDEPENDS_${PN}-console = "\
-	ncurses \
-	ncurses-terminfo \
-"
-
-RDEPENDS_${PN}-network = "\
-	tcpdump \
-	umbim \
-	umdnsd \
-	ethtool \
-	curl \
-	drill \
-	dropbear \
-	openssh-sftp-server \
-	net-snmp-client \
-	net-snmp-mibs \
-	net-snmp-server-snmpd \
-	net-snmp-server-snmptrapd \
-	openvpn \
-	openvpn-easy-rsa \
-	lldpd \
-	vsftpd \
-	mstpd \
 "

@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Normal Openwrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system"
 LICENSE = "MIT"
@@ -15,24 +15,16 @@ inherit packagegroup openwrt
 
 PACKAGES = "\
 	packagegroup-openwrt-base \
-	packagegroup-openwrt-base-network \
 	packagegroup-openwrt-base-luci \
 "
 
+# packagegroup-openwrt-base
 RDEPENDS_${PN} = "\
-	packagegroup-openwrt-minimal \
-	packagegroup-openwrt-base-network \
+	packagegroup-openwrt-noweb-base \
 	packagegroup-openwrt-base-luci \
 "
 
-RDEPENDS_${PN}-network = "\
-	dnsmasq \
-	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcp6c', '', d)} \
-	odhcpd \
-	umdnsd \
-"
-
+# packagegroup-openwrt-base-luci
 RDEPENDS_${PN}-luci = "\
 	lua5.1 \
 	luci \

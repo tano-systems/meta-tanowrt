@@ -2,14 +2,11 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "OpenWrt Base Image"
 LICENSE = "MIT"
 
 require recipes-image/images/openwrt-image-minimal.bb
 
-CORE_IMAGE_EXTRA_INSTALL += "\
-	packagegroup-openwrt-base \
-	make-ext4fs \
-"
+CORE_IMAGE_EXTRA_INSTALL += "packagegroup-openwrt-base"
