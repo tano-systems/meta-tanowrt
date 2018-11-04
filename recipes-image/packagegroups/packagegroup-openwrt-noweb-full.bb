@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -22,7 +22,7 @@ RDEPENDS_${PN} = "\
 
 # packagegroup-openwrt-noweb-full-base
 RDEPENDS_${PN}-base = "\
-	packagegroup-openwrt-base \
+	packagegroup-openwrt-noweb-base \
 	libubox-lua \
 	fstools \
 	eudev \
