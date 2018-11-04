@@ -8,9 +8,10 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano2"
+PR = "tano3"
 
-PROVIDES += "libiwinfo"
+RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
+PROVIDES += "libiwinfo libiwinfo-lua"
 
 # 31.07.2018
 # Revert "build: compile with -ffunction-sections, -fdata-sections and LTO"
