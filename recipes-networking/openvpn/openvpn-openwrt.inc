@@ -71,6 +71,8 @@ do_install_append() {
 
 	# OpenWrt files
 
+	install -dm 0755 ${D}${sysconfdir}/openvpn
+
 	# Install procd init script
 	install -d ${D}${sysconfdir}/init.d
 	install -m 755 ${WORKDIR}/openvpn.init ${D}${sysconfdir}/init.d/openvpn
@@ -80,10 +82,10 @@ do_install_append() {
 	install -m 644 ${WORKDIR}/openvpn.config ${D}${sysconfdir}/config/openvpn
 
 	# Install upgrade
-	install -d ${D}/lib/upgrade/keep.d
-	install -m 644 ${WORKDIR}/openvpn.upgrade ${D}/lib/upgrade/keep.d/openvpn
+	install -d ${D}${base_libdir}/upgrade/keep.d
+	install -m 644 ${WORKDIR}/openvpn.upgrade ${D}${base_libdir}/upgrade/keep.d/openvpn
 
 	# Install OpenVPN options
-	install -d ${D}/usr/share/openvpn
-	install -m 644 ${WORKDIR}/openvpn.options ${D}/usr/share/openvpn/openvpn.options
+	install -d ${D}${datadir}/openvpn
+	install -m 644 ${WORKDIR}/openvpn.options ${D}${datadir}/openvpn/openvpn.options
 }
