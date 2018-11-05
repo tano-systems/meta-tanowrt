@@ -2,13 +2,13 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
-DEPENDS = "json-c libuci"
+DEPENDS = "json-c libuci libubox libubus libiwinfo"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -24,21 +24,15 @@ SRCREV_rpcd = "41333abee4c57e3de2bcfa08972954e2af20705a"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt-services openwrt
+inherit cmake openwrt-services openwrt
 
-PACKAGECONFIG ??= "file"
-
-# rpcd-mod-file
-PACKAGECONFIG[file] = "-DFILE_SUPPORT=ON,-DFILE_SUPPORT=OFF,libubox libubus"
-
-# rpcd-mod-iwinfo
-PACKAGECONFIG[iwinfo] = "-DIWINFO_SUPPORT=ON,-DIWINFO_SUPPORT=OFF,libubox libubus iwinfo"
-
-# rpcd-mod-rpcsys
-PACKAGECONFIG[rpcsys] = "-DRPCSYS_SUPPORT=ON,-DRPCSYS_SUPPORT=OFF,libubox libubus"
+PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
 
 EXTRA_OECMAKE += "\
   -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib/rpcd \
+  -DFILE_SUPPORT=ON \
+  -DIWINFO_SUPPORT=ON \
+  -DRPCSYS_SUPPORT=ON \
 "
 
 OPENWRT_SERVICE_PACKAGES = "rpcd"
@@ -59,13 +53,26 @@ do_install_append() {
     ln -s /usr/sbin/rpcd ${D}/sbin/rpcd
 }
 
-FILES_${PN} += "\
-	${libdir}/* \
-	${datadir}/* \
+FILES_${PN} = "\
+	${sysconfdir} \
+	${base_sbindir} \
+	${includedir} \
+	${sbindir} \
+	${datadir} \
 "
-
-RDEPENDS_${PN} += "iwinfo"
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/rpcd \
 "
+
+RDEPENDS_${PN} += "libubox libubus"
+
+DESCRIPTION_${PN}-mod-file = "Provides ubus calls for file and directory operations"
+FILES_${PN}-mod-file = "${libdir}/rpcd/file.so"
+
+DESCRIPTION_${PN}-mod-rpcsys = "Provides ubus calls for sysupgrade and password changing"
+FILES_${PN}-mod-rpcsys = "${libdir}/rpcd/rpcsys.so"
+
+DESCRIPTION_${PN}-mod-iwinfo = "Provides ubus calls for accessing iwinfo data"
+FILES_${PN}-mod-iwinfo = "${libdir}/rpcd/iwinfo.so"
+RDEPENDS_${PN}-mod-iwinfo += "iwinfo"
