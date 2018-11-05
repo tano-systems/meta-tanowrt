@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -20,6 +20,9 @@ SRC_URI = "\
           file://uhttpd.init \
           file://ubus.default \
 "
+
+PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
+RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
 # 23.08.2018
 # lua: support multiple Lua prefixes
