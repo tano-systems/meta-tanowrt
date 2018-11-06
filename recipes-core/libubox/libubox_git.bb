@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -12,8 +12,8 @@ PACKAGECONFIG ??= "lua examples"
 PACKAGECONFIG[lua] = ""
 PACKAGECONFIG[examples] = ""
 
-PROVIDES += "libubox-lua"
-RPROVIDES_${PN} += "libblobmsg-json jshn libjson-script"
+PROVIDES += "libblobmsg-json jshn libjson-script libubox-lua "
+RPROVIDES_${PN} += "libblobmsg-json jshn libjson-script libubox-lua "
 
 LICENSE = "BSD-1-Clause&BSD-3-Clause"
 LICENSE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', '&GPL-2.0', '', d)}"
