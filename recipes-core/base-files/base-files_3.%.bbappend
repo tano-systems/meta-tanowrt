@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano11"
+PR_append = ".tano12"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -297,3 +297,8 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/passwd \
 	${sysconfdir}/sysctl.d/10-default.conf \
 "
+
+PROVIDES += "os-release"
+RPROVIDES_${PN} += "os-release"
+RREPLACES_${PN} += "os-release"
+RCONFLICTS_${PN} += "os-release"

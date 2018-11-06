@@ -6,6 +6,8 @@ include conf/distro/include/qt5-versions.inc
 PREFERRED_VERSION_iptables = "1.6.2"
 PREFERRED_VERSION_usbutils = "007"
 
+PREFERRED_PROVIDER_os-release = "base-files"
+
 # Use the latest version of ltp-ddt for kernel versions 3.8+
 PREFERRED_PROVIDER_ltp-ddt = "ltp-ddt"
 
