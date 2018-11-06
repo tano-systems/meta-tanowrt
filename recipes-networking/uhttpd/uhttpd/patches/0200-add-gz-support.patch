@@ -1,0 +1,162 @@
+diff --git a/file.c b/file.c
+index da680a0..18c7efa 100644
+--- a/file.c
++++ b/file.c
+@@ -137,6 +137,7 @@ uh_path_lookup(struct client *cl, const char *url)
+ 	static char path_phys[PATH_MAX];
+ 	static char path_info[PATH_MAX];
+ 	static char path_query[PATH_MAX];
++	static char path_gz[PATH_MAX];
+ 	static struct path_info p;
+ 
+ 	const char *docroot = conf.docroot;
+@@ -201,12 +202,17 @@ uh_path_lookup(struct client *cl, const char *url)
+ 		if (!exists)
+ 			continue;
+ 
+-		/* test current path */
+-		if (stat(path_phys, &p.stat))
+-			continue;
+-
+-		snprintf(path_info, sizeof(path_info), "%s", uh_buf + i);
+-		break;
++		snprintf(path_gz, sizeof(path_gz), "%s.gz", path_phys);
++		
++		/* test both ordinary path and gz path */
++		if (stat(path_phys, &p.stat) == 0){
++			snprintf(path_info, sizeof(path_info), "%s", uh_buf + i);
++			break;
++		} else if(stat(path_gz, &p.stat) == 0) {
++			strcpy(path_phys, path_gz);
++			snprintf(path_info, sizeof(path_info), "%s", path_gz);
++			break;
++		}
+ 	}
+ 
+ 	/* check whether found path is within docroot */
+@@ -281,12 +287,16 @@ static const char * uh_file_mime_lookup(const char *path)
+ {
+ 	const struct mimetype *m = &uh_mime_types[0];
+ 	const char *e;
++	size_t pathlen = strlen(path);
++
++	if (!path || !pathlen)
++		return 0;
+ 
+ 	while (m->extn) {
+-		e = &path[strlen(path)-1];
++		e = &path[pathlen - 1];
+ 
+ 		while (e >= path) {
+-			if ((*e == '.' || *e == '/') && !strcasecmp(&e[1], m->extn))
++			if ((*e == '.' || *e == '/') && (strncmp(e, ".gz", 3) != 0) && !strncasecmp(&e[1], m->extn, strlen(m->extn)))
+ 				return m->mime;
+ 
+ 			e--;
+@@ -295,7 +305,7 @@ static const char * uh_file_mime_lookup(const char *path)
+ 		m++;
+ 	}
+ 
+-	return "application/octet-stream";
++	return 0;
+ }
+ 
+ static const char * uh_file_mktag(struct stat *s, char *buf, int len)
+@@ -506,6 +516,8 @@ static void list_entries(struct client *cl, struct dirent **files, int count,
+ 			suffix = "";
+ 			mode = S_IROTH;
+ 			type = uh_file_mime_lookup(local_path);
++			if (!type)
++				type = "application/octet-stream";
+ 		}
+ 
+ 		if (!(s.st_mode & mode))
+@@ -593,6 +605,9 @@ static void uh_file_free(struct client *cl)
+ 
+ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+ {
++	const char *mime_type = 0;
++	size_t extlen;
++
+ 	/* test preconditions */
+ 	if (!cl->dispatch.no_cache &&
+ 	    (!uh_file_if_modified_since(cl, &pi->stat) ||
+@@ -609,13 +624,21 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+ 	/* write status */
+ 	uh_file_response_200(cl, &pi->stat);
+ 
+-	ustream_printf(cl->us, "Content-Type: %s\r\n",
+-			   uh_file_mime_lookup(pi->name));
++	extlen = strlen(pi->name);
++
++	if (extlen > 3 && strncmp(pi->name + extlen - 3, ".gz", 3) == 0)
++		ustream_printf(cl->us, "Content-Encoding: gzip\r\n");
++
++	mime_type = uh_file_mime_lookup(pi->name);
++
++	if (mime_type) {
++		ustream_printf(cl->us, "Content-Type: %s\r\n",
++				uh_file_mime_lookup(pi->name));
++	}
+ 
+ 	ustream_printf(cl->us, "Content-Length: %" PRIu64 "\r\n\r\n",
+ 			   pi->stat.st_size);
+ 
+-
+ 	/* send body */
+ 	if (cl->request.method == UH_HTTP_MSG_HEAD) {
+ 		uh_request_done(cl);
+diff --git a/main.c b/main.c
+index 822c748..655d03f 100644
+--- a/main.c
++++ b/main.c
+@@ -191,6 +191,7 @@ static void init_defaults_pre(void)
+ static void init_defaults_post(void)
+ {
+ 	uh_index_add("index.html");
++	uh_index_add("index.html.gz");
+ 	uh_index_add("index.htm");
+ 	uh_index_add("default.html");
+ 	uh_index_add("default.htm");
+diff --git a/mimetypes.h b/mimetypes.h
+index 1f5b92f..af3a8b1 100644
+--- a/mimetypes.h
++++ b/mimetypes.h
+@@ -28,16 +28,11 @@ static const struct mimetype uh_mime_types[] = {
+ 
+ 	{ "txt",     "text/plain" },
+ 	{ "log",     "text/plain" },
+-	{ "js",      "text/javascript" },
+ 	{ "css",     "text/css" },
+-	{ "htm",     "text/html" },
+ 	{ "html",    "text/html" },
++	{ "htm",     "text/html" },
+ 	{ "diff",    "text/x-patch" },
+ 	{ "patch",   "text/x-patch" },
+-	{ "c",       "text/x-csrc" },
+-	{ "h",       "text/x-chdr" },
+-	{ "o",       "text/x-object" },
+-	{ "ko",      "text/x-object" },
+ 
+ 	{ "bmp",     "image/bmp" },
+ 	{ "gif",     "image/gif" },
+@@ -48,6 +43,7 @@ static const struct mimetype uh_mime_types[] = {
+ 
+ 	{ "json",    "application/json" },
+ 	{ "jsonp",   "application/javascript" },
++	{ "js",      "text/javascript" },
+ 	{ "zip",     "application/zip" },
+ 	{ "pdf",     "application/pdf" },
+ 	{ "xml",     "application/xml" },
+@@ -89,6 +85,11 @@ static const struct mimetype uh_mime_types[] = {
+ 	{ "appcache", "text/cache-manifest" },
+ 	{ "manifest", "text/cache-manifest" },
+ 
++	{ "c",       "text/x-csrc" },
++	{ "h",       "text/x-chdr" },
++	{ "o",       "text/x-object" },
++	{ "ko",      "text/x-object" },
++
+ 	{ NULL, NULL }
+ };
+ 

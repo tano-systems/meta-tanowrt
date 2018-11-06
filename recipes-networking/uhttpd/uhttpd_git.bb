@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -16,6 +16,7 @@ SRC_URI = "\
           git://git.openwrt.org/project/uhttpd.git \
           file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
           file://0101-build-avoid-redefining-_DEFAULT_SOURCE.patch \
+          file://0200-add-gz-support.patch \
           file://uhttpd.config \
           file://uhttpd.init \
           file://ubus.default \
