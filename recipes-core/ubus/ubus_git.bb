@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -10,7 +10,11 @@ LIC_FILES_CHKSUM = "file://ubusd.c;beginline=1;endline=12;md5=1b6a7aecd35bdd25de
 SECTION = "base"
 DEPENDS = "json-c libubox"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
 SRC_URI = "git://git.openwrt.org/project/ubus.git"
+
+SRC_URI += "file://0001-Make-libubus-thread-safe.patch"
 
 # 06.10.2018
 # ubusd_acl: event send access list support
