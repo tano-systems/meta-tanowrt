@@ -1,5 +1,5 @@
 #
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "A 802.1ab implementation (LLDP) to help you locate neighbors of all your equipments"
 SECTION = "net/misc"
@@ -50,7 +50,7 @@ PACKAGECONFIG[custom] = "--enable-custom,--disable-custom"
 PACKAGES =+ "${PN}-zsh-completion"
 
 FILES_${PN} += "${libdir}/sysusers.d"
-#RDEPENDS_${PN} += "os-release"
+RDEPENDS_${PN} += "os-release"
 
 FILES_${PN}-zsh-completion += "${datadir}/zsh/"
 # FIXME: zsh is broken in meta-oe so this cannot be enabled for now
