@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -16,16 +16,18 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
     git://git.openwrt.org/project/odhcpd.git;name=odhcpd \
     file://0100-OE-build-fails-due-to-libnl-tiny-dependency-in-CMakeLists.patch \
+    file://odhcpd.defaults \
+    file://odhcpd.init \
+    file://odhcpd-update \
 "
 
 # 26.07.2018
 # ubus: avoid dumping interface state with NULL message
-SRCREV_odhcpd = "44cce3169a961727b1f046b786e7995ffb26a957"
+SRCREV = "44cce3169a961727b1f046b786e7995ffb26a957"
 
 S = "${WORKDIR}/git"
-OF = "${S}/openwrt/package/network/services/odhcpd/files"
 
-inherit cmake pkgconfig openwrt openwrt-services openwrt-base-files
+inherit cmake pkgconfig openwrt openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "odhcpd"
 OPENWRT_SERVICE_SCRIPTS_odhcpd += "odhcpd"
@@ -36,9 +38,9 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 EXTRA_OECMAKE_append = " -DUBUS=1"
 
 do_install_append() {
-    install -Dm 0644 ${OF}/odhcpd.defaults ${D}${sysconfdir}/uci-defaults/odhcpd
-    install -Dm 0755 ${OF}/odhcpd.init ${D}${sysconfdir}/init.d/odhcpd
-    install -Dm 0755 ${OF}/odhcpd-update ${D}${sbindir}/odhcpd-update
+    install -Dm 0644 ${WORKDIR}/odhcpd.defaults ${D}${sysconfdir}/uci-defaults/odhcpd
+    install -Dm 0755 ${WORKDIR}/odhcpd.init ${D}${sysconfdir}/init.d/odhcpd
+    install -Dm 0755 ${WORKDIR}/odhcpd-update ${D}${sbindir}/odhcpd-update
 }
 
 FILES_${PN} += "\
