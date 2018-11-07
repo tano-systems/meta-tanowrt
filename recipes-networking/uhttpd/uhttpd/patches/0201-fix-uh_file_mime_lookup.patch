@@ -1,0 +1,98 @@
+From 6cb7543b6a9f142f9afcd4a36e304cc900cb4405 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 7 Nov 2018 22:07:37 +0300
+Subject: [PATCH] fix uh_file_mime_lookup()
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ file.c      | 35 ++++++++++++++++++++++++-----------
+ mimetypes.h |  4 ++--
+ 2 files changed, 26 insertions(+), 13 deletions(-)
+
+diff --git a/file.c b/file.c
+index 9ad7516..852e9e3 100644
+--- a/file.c
++++ b/file.c
+@@ -18,7 +18,7 @@
+  */
+ 
+ #ifndef _DEFAULT_SOURCE
+-#define _DEFAULT_SOURCE
++# define _DEFAULT_SOURCE
+ #endif
+ 
+ #define _BSD_SOURCE
+@@ -286,20 +286,33 @@ uh_path_lookup(struct client *cl, const char *url)
+ static const char * uh_file_mime_lookup(const char *path)
+ {
+ 	const struct mimetype *m = &uh_mime_types[0];
+-	const char *e;
+-	size_t pathlen = strlen(path);
+ 
+-	if (!path || !pathlen)
++	const char *ext;
++	size_t extlen = 0;
++	int gz = 0;
++	
++	if (!(ext = strrchr(path, '/')))
+ 		return 0;
+ 
+-	while (m->extn) {
+-		e = &path[pathlen - 1];
++	if (!(ext = strchr(ext, '.')))
++		return 0;
+ 
+-		while (e >= path) {
+-			if ((*e == '.' || *e == '/') && (strncmp(e, ".gz", 3) != 0) && !strncasecmp(&e[1], m->extn, strlen(m->extn)))
+-				return m->mime;
++	if (strcasecmp(strrchr(ext, '.'), ".gz") == 0)
++		gz = 1;
++
++	/* Skip dot in extension */
++	ext++;
++
++	extlen = strlen(ext);
+ 
+-			e--;
++	while (m->extn) {
++		if (strcasecmp(ext, m->extn) == 0) {
++			return m->mime;
++		}
++		else if (gz) {
++			if ((extlen >= 3) && (strncasecmp(ext, m->extn, extlen - 3) == 0)) {
++				return m->mime;
++			}
+ 		}
+ 
+ 		m++;
+@@ -633,7 +646,7 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+ 
+ 	if (mime_type) {
+ 		ustream_printf(cl->us, "Content-Type: %s\r\n",
+-				uh_file_mime_lookup(pi->name));
++				mime_type);
+ 	}
+ 
+ 	ustream_printf(cl->us, "Content-Length: %" PRIu64 "\r\n\r\n",
+diff --git a/mimetypes.h b/mimetypes.h
+index af3a8b1..e411325 100644
+--- a/mimetypes.h
++++ b/mimetypes.h
+@@ -59,12 +59,12 @@ static const struct mimetype uh_mime_types[] = {
+ 	{ "deb",     "application/x-deb" },
+ 	{ "iso",     "application/x-cd-image" },
+ 	{ "tar.gz",  "application/x-compressed-tar" },
++	{ "tar.bz2", "application/x-bzip-compressed-tar" },
++	{ "tar",     "application/x-tar" },
+ 	{ "tgz",     "application/x-compressed-tar" },
+ 	{ "gz",      "application/x-gzip" },
+-	{ "tar.bz2", "application/x-bzip-compressed-tar" },
+ 	{ "tbz",     "application/x-bzip-compressed-tar" },
+ 	{ "bz2",     "application/x-bzip" },
+-	{ "tar",     "application/x-tar" },
+ 	{ "rar",     "application/x-rar-compressed" },
+ 
+ 	{ "mp3",     "audio/mpeg" },
+-- 
+2.16.2.windows.1
+
