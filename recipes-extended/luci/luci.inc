@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 25.10.2018
-# Merge pull request #2248 from tano-systems/fstab-translateble-swap
-LUCI_GIT_SRCREV = "35b543e270428357d22ede5ceff39653b3371a1b"
+# 07.11.2018
+# i18n: sync translations, add location annotatations
+LUCI_GIT_SRCREV = "40de466475a617f42d1f5cfa03d0342676e84c9b"
 
-PR_append = ".11"
+PR_append = ".12"
 
 libdir = "/usr/lib"
 

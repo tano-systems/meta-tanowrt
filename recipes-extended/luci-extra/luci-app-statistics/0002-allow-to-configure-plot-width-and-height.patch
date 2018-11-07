@@ -60,16 +60,13 @@ diff --git a/po/en/statistics.po b/po/en/statistics.po
 index f7ebfe0c2..f3016ecd7 100644
 --- a/po/en/statistics.po
 +++ b/po/en/statistics.po
-@@ -79,9 +79,21 @@ msgstr ""
+@@ -102,6 +102,21 @@ msgstr ""
  msgid "CollectTopology"
  msgstr ""
  
 +msgid "Statistics Settings"
 +msgstr "Statistics Settings"
 +
- msgid "Collectd Settings"
- msgstr "Collectd Settings"
- 
 +msgid "RRDtool Settings"
 +msgstr "RRDtool Settings"
 +
@@ -79,33 +76,23 @@ index f7ebfe0c2..f3016ecd7 100644
 +msgid "Plots height"
 +msgstr "Plots height"
 +
- msgid ""
- "Collectd is a small daemon for collecting data from various sources through "
- "different plugins. On this page you can change general settings for the "
-@@ -430,6 +442,9 @@ msgstr ""
- msgid "Seconds"
- msgstr "Seconds"
- 
 +msgid "Pixels"
 +msgstr "Pixels"
 +
- msgid "Sensor list"
- msgstr ""
- 
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:8
+ msgid "Collectd Settings"
+ msgstr "Collectd Settings"
 diff --git a/po/ru/statistics.po b/po/ru/statistics.po
 index 300b1c07d..6f94afc9e 100644
 --- a/po/ru/statistics.po
 +++ b/po/ru/statistics.po
-@@ -81,9 +81,21 @@ msgstr "Сбор информации о маршрутах (CollectRoutes)"
+@@ -104,6 +104,21 @@ msgstr "Сбор информации о маршрутах (CollectRoutes)"
  msgid "CollectTopology"
  msgstr "Сбор информации о топологии (CollectTopology)"
  
 +msgid "Statistics Settings"
 +msgstr "Настройки статистики"
 +
- msgid "Collectd Settings"
- msgstr "Настройки Collectd"
- 
 +msgid "RRDtool Settings"
 +msgstr "Настройки RRDtool"
 +
@@ -115,33 +102,23 @@ index 300b1c07d..6f94afc9e 100644
 +msgid "Plots height"
 +msgstr "Высота графиков"
 +
- msgid ""
- "Collectd is a small daemon for collecting data from various sources through "
- "different plugins. On this page you can change general settings for the "
-@@ -440,6 +452,9 @@ msgstr "Скрипт"
- msgid "Seconds"
- msgstr "Секунд(ы)"
- 
 +msgid "Pixels"
 +msgstr "Пиксели"
 +
- msgid "Sensor list"
- msgstr "Список сенсоров"
- 
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:8
+ msgid "Collectd Settings"
+ msgstr "Настройки Collectd"
 diff --git a/po/templates/statistics.pot b/po/templates/statistics.pot
 index ec630b696..02adaed4f 100644
 --- a/po/templates/statistics.pot
 +++ b/po/templates/statistics.pot
-@@ -67,9 +67,21 @@ msgstr ""
+@@ -90,6 +90,21 @@ msgstr ""
  msgid "CollectTopology"
  msgstr ""
  
 +msgid "Statistics Settings"
 +msgstr ""
 +
- msgid "Collectd Settings"
- msgstr ""
- 
 +msgid "RRDtool Settings"
 +msgstr ""
 +
@@ -151,19 +128,12 @@ index ec630b696..02adaed4f 100644
 +msgid "Plots height"
 +msgstr ""
 +
- msgid ""
- "Collectd is a small daemon for collecting data from various sources through "
- "different plugins. On this page you can change general settings for the "
-@@ -408,6 +420,9 @@ msgstr ""
- msgid "Seconds"
- msgstr ""
- 
 +msgid "Pixels"
 +msgstr ""
 +
- msgid "Sensor list"
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:8
+ msgid "Collectd Settings"
  msgstr ""
- 
 -- 
 2.16.2.windows.1
 

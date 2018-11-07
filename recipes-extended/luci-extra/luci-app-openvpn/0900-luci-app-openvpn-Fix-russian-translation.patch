@@ -2,15 +2,15 @@ diff --git a/po/ru/openvpn.po b/po/ru/openvpn.po
 index 7f2ce5f16..1874e94b8 100644
 --- a/po/ru/openvpn.po
 +++ b/po/ru/openvpn.po
-@@ -355,7 +355,7 @@ msgid "Output to syslog and do not daemonize"
- msgstr "Записывать события в системный журнал и не переходить в режим демона."
+@@ -453,7 +453,7 @@ msgstr "Записывать события в системный журнал 
  
+ #: applications/luci-app-openvpn/luasrc/view/openvpn/pageswitch.htm:11
  msgid "Overview"
 -msgstr "Главное меню"
 +msgstr "Обзор"
  
- msgid "PKCS#12 file containing keys"
- msgstr ""
+ #: applications/luci-app-openvpn/luasrc/model/cbi/openvpn-advanced.lua:611
+ #: applications/luci-app-openvpn/luasrc/model/cbi/openvpn-basic.lua:32
 -- 
 2.16.2.windows.1
 

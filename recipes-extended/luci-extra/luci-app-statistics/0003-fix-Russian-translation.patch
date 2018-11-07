@@ -13,32 +13,28 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/po/ru/statistics.po b/po/ru/statistics.po
-index 6f94afc9e..00739d051 100644
+index 22e6e2f..21e4900 100644
 --- a/po/ru/statistics.po
 +++ b/po/ru/statistics.po
-@@ -46,7 +46,7 @@ msgid "Basic monitoring"
- msgstr "Основная статистика"
+@@ -58,7 +58,7 @@ msgstr "Основная статистика"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/contextswitch.lua:4
  msgid "CPU Context Switches Plugin Configuration"
 -msgstr "Настройка плагина контекстных переключателей CPU"
 +msgstr "Настройка плагина переключений контекста CPU"
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:30
  msgid "CPU Frequency"
- msgstr "Частота CPU"
-@@ -85,10 +85,10 @@ msgid "Statistics Settings"
- msgstr "Настройки статистики"
+@@ -121,7 +121,7 @@ msgstr "Пиксели"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:8
  msgid "Collectd Settings"
 -msgstr "Настройки Collectd"
 +msgstr "Настройки collectd"
  
- msgid "RRDtool Settings"
--msgstr "Настройки RRDtool"
-+msgstr "Настройки RRDtool"
- 
- msgid "Plots width"
- msgstr "Ширина графиков"
-@@ -101,17 +101,17 @@ msgid ""
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:9
+ msgid ""
+@@ -129,12 +129,12 @@ msgid ""
  "different plugins. On this page you can change general settings for the "
  "collectd daemon."
  msgstr ""
@@ -47,29 +43,32 @@ index 6f94afc9e..00739d051 100644
 +"Collectd — это сервис для сбора данных из разных источников при помощи "
 +"плагинов. На этой странице вы можете изменить настройки collectd."
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:27
  msgid "Conntrack"
 -msgstr "Отслеживание подключения (Conntrack)"
 +msgstr "Отслеживание подключений (Conntrack)"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/conntrack.lua:13
  msgid "Conntrack Plugin Configuration"
- msgstr "Настройка плагина Conntrack"
+@@ -142,7 +142,7 @@ msgstr "Настройка плагина Conntrack"
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:28
  msgid "Context Switches"
 -msgstr "Переключатели контекста"
 +msgstr "Переключения контекста"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/df.lua:5
  msgid "DF Plugin Configuration"
- msgstr "Настройка плагина DF"
-@@ -126,7 +126,7 @@ msgid "Data collection interval"
- msgstr "Интервал сбора данных"
+@@ -162,7 +162,7 @@ msgstr "Интервал сбора данных"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:40
  msgid "Datasets definition file"
 -msgstr "Файл с определением<br />набора данных"
 +msgstr "Файл с определением набора данных"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/iptables.lua:97
  msgid "Destination ip range"
- msgstr "Диапазон IP-адресов назначения"
-@@ -207,7 +207,7 @@ msgid ""
+@@ -306,7 +306,7 @@ msgid ""
  "Here you can define external commands which will be started by collectd in "
  "order to read certain values. The values will be read from stdout."
  msgstr ""
@@ -78,16 +77,16 @@ index 6f94afc9e..00739d051 100644
  "для чтения определенных значений. Значения будут считаны со стандартного "
  "вывода."
  
-@@ -216,7 +216,7 @@ msgid ""
- "certain threshold values have been reached. The values leading to invokation "
- "will be feeded to the the called programs stdin."
+@@ -316,7 +316,7 @@ msgid ""
+ "certain threshold values have been reached. The values leading to invocation "
+ "will be fed to the the called programs stdin."
  msgstr ""
 -"На странице вы можете определить  внешние команды, которые будут выполнены, "
 +"Здесь вы можете определить внешние команды, которые будут выполнены, "
  "когда значения достигнут определенного порога. Значения будут переданы на "
  "стандартный ввод вызванным программам."
  
-@@ -224,7 +224,7 @@ msgid ""
+@@ -325,7 +325,7 @@ msgid ""
  "Here you can define various criteria by which the monitored iptables rules "
  "are selected."
  msgstr ""
@@ -95,44 +94,44 @@ index 6f94afc9e..00739d051 100644
 +"Здесь вы можете указать различные критерии, по которым будут выбраны "
  "правила для сбора статистики."
  
- msgid "Hold Ctrl to select multiple items or to deselect entries."
-@@ -299,7 +299,7 @@ msgid "Memory Plugin Configuration"
- msgstr "Настройка плагина 'Оперативная память (RAM)'"
- 
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/sensors.lua:88
+@@ -429,7 +429,7 @@ msgstr "Настройка плагина 'Оперативная память (
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/sensors.lua:120
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/thermal.lua:24
  msgid "Monitor all except specified"
 -msgstr "Собирать статистику<br />со всех кроме указанных"
 +msgstr "Собирать статистику со всех кроме указанных"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/tcpconns.lua:19
  msgid "Monitor all local listen ports"
- msgstr "Собирать статистику со всех портов для входящих соединений"
-@@ -372,7 +372,7 @@ msgstr ""
- "соответственно все файлы *.rrd и папки  будут доступны любому пользователю."
+@@ -531,7 +531,7 @@ msgstr ""
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:49
  msgid "Number of threads for data collection"
 -msgstr "Количество потоков<br />сбора данных"
 +msgstr "Количество потоков сбора данных"
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:48
  msgid "OLSRd"
- msgstr "OLSRd"
-@@ -381,7 +381,7 @@ msgid "OLSRd Plugin Configuration"
- msgstr "Настройка плагина OLSRd"
+@@ -543,7 +543,7 @@ msgstr "Настройка плагина OLSRd"
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/rrdtool.lua:53
  msgid "Only create average RRAs"
 -msgstr "Создавать только<br />средние RRA"
 +msgstr "Создавать только средние RRA"
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:49
  msgid "OpenVPN"
- msgstr "OpenVPN"
-@@ -519,7 +519,7 @@ msgid "Store data values as rates instead of absolute values"
- msgstr "Хранить данные в виде коэффициентов вместо абсолютных значений"
+@@ -732,7 +732,7 @@ msgstr "Хранить данные в виде коэффициентов вм
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/rrdtool.lua:67
  msgid "Stored timespans"
 -msgstr "Сохранённые<br />промежутки времени"
 +msgstr "Сохранённые промежутки времени"
  
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:43
  msgid "System Load"
- msgstr "Загрузка системы"
-@@ -661,8 +661,8 @@ msgid ""
+@@ -901,8 +901,8 @@ msgid ""
  "instance, in server mode the local instance receives data from other hosts."
  msgstr ""
  "Плагин 'Сеть' предоставляет возможность сетевого обмена данными между "
@@ -142,8 +141,8 @@ index 6f94afc9e..00739d051 100644
 +"или клиента. В режиме клиента, локальная статистика передается collectd-"
  "серверу, в режиме сервера collectd собирает статистику с удаленных хостов."
  
- msgid ""
-@@ -688,7 +688,7 @@ msgstr ""
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/ping.lua:6
+@@ -931,7 +931,7 @@ msgstr ""
  "Плагин 'Rrdtool' сохраняет статистику в формате rrd для последующего "
  "построения диаграмм.<br /><br /><strong>Внимание: установка неверных "
  "параметров может привезти к высокому потреблению памяти при считывании "
@@ -151,8 +150,8 @@ index 6f94afc9e..00739d051 100644
 +"данных из temp. Что в свою очередь, может привести к зависанию "
  "устройства!</strong>"
  
- msgid ""
-@@ -708,9 +708,9 @@ msgid ""
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/sensors.lua:67
+@@ -954,9 +954,9 @@ msgid ""
  "to gather data and <a href=\"http://oss.oetiker.ch/rrdtool/\">RRDtool</a> to "
  "render diagram images."
  msgstr ""
@@ -162,17 +161,17 @@ index 6f94afc9e..00739d051 100644
 -"и представления их в виде графиков."
 +"для представления их в виде графиков."
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/tcpconns.lua:6
  msgid ""
- "The tcpconns plugin collects informations about open tcp connections on "
-@@ -763,7 +763,7 @@ msgstr ""
- "Строка задает сервера, на которые будет передаваться локальная статистика."
+@@ -1020,7 +1020,7 @@ msgstr ""
  
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/collectd.lua:54
  msgid "Try to lookup fully qualified hostname"
 -msgstr "Пытаться определять<br />имя хоста"
 +msgstr "Пытаться определять полное имя хоста"
  
- msgid "UPS"
- msgstr "ИБП"
+ #: applications/luci-app-statistics/luasrc/controller/luci_statistics/luci_statistics.lua:47
+ #: applications/luci-app-statistics/luasrc/model/cbi/luci_statistics/nut.lua:12
 -- 
 2.16.2.windows.1
 
