@@ -5,14 +5,13 @@
 # for the terms.
 
 # Use this git SRCREV for all recipes that pull files out of openwrt repository
-# Equivalent to tag v18.06.0-rc2
 
-# 23.08.2018
-# grub2: rebase patches
-OPENWRT_SRCREV = "a662d6f6bcdcfd42713d4f4dc2d30698e451d280"
-OPENWRT_BRANCH = "openwrt-18.06"
+# 07.11.2018
+# mt76: update to the latest version
+OPENWRT_SRCREV = "4fd9a5667eab6a75d8c3b7a1510dfb354ecca969"
+OPENWRT_BRANCH = "master"
 
-PR_append = ".owrt2"
+PR_append = ".o4"
 
 LICENSE_append = "&GPL-2.0+"
 LIC_FILES_CHKSUM_append = " file://${S}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
