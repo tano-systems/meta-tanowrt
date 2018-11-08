@@ -7,16 +7,15 @@ DESCRIPTION = "collectd is a daemon which collects system performance statistics
 LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
-PV = "5.8.0"
-PR = "tano4"
+PV = "5.8.1"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
 RDEPENDS_${PN} += "iwinfo"
 
 SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
-SRC_URI[md5sum] = "a841159323624f18bf03198e9f5aa364"
-SRC_URI[sha256sum] = "b06ff476bbf05533cb97ae6749262cc3c76c9969f032bd8496690084ddeb15c9"
+SRC_URI[sha256sum] = "e796fda27ce06377f491ad91aa286962a68c2b54076aa77a29673d53204453da"
 
 # Files (OpenWrt)
 SRC_URI += "\
@@ -62,7 +61,9 @@ PACKAGECONFIG ??= "\
     conntrack \
     contextswitch \
     cpu \
+    entropy \
     exec \
+    filecount \
     network \
     disk \
     interface \
@@ -71,13 +72,11 @@ PACKAGECONFIG ??= "\
     iwinfo \
     load \
     memory \
+    ping \
     processes \
     rrdtool \
     tcpconns \
     uptime \
-    ping \
-    entropy \
-    filecount \
 "
 
 PACKAGECONFIG[aggregation] = "--enable-aggregation,--disable-aggregation,"
