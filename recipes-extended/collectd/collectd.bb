@@ -25,25 +25,25 @@ SRC_URI += "\
 
 # Patches (from meta-openembedded)
 SRC_URI += "\
-    file://no-gcrypt-badpath.patch \
-    file://0001-conditionally-check-libvirt.patch \
-    file://0001-fix-to-build-with-glibc-2.25.patch \
-    file://0001-configure-Check-for-Wno-error-format-truncation-comp.patch \
+    file://0001-no-gcrypt-badpath.patch \
+    file://0002-conditionally-check-libvirt.patch \
+    file://0003-fix-to-build-with-glibc-2.25.patch \
+    file://0004-configure-Check-for-Wno-error-format-truncation-comp.patch \
     file://0005-Disable-new-gcc8-warnings.patch \
 "
 
 # Patches (from OpenWrt)
 SRC_URI += "\
-    file://001-undefined-AM_PATH_LIBGCRYPT.patch \
-    file://050-backport-modbus-little-endian.patch \
-    file://100-rrdtool-add-rrasingle-option.patch \
-    file://140-fix-fqdnlookup.patch \
-    file://300-delay-first-read-cycle.patch \
-    file://400-fix-olsrd-get-all.patch \
-    file://600-fix-libmodbus-detection.patch \
-    file://700-disable-sys-capability-check.patch \
-    file://900-add-iwinfo-plugin.patch \
-    file://920-fix-ping-droprate.patch \
+    file://1001-undefined-AM_PATH_LIBGCRYPT.patch \
+    file://1050-backport-modbus-little-endian.patch \
+    file://1100-rrdtool-add-rrasingle-option.patch \
+    file://1140-fix-fqdnlookup.patch \
+    file://1300-delay-first-read-cycle.patch \
+    file://1400-fix-olsrd-get-all.patch \
+    file://1600-fix-libmodbus-detection.patch \
+    file://1700-disable-sys-capability-check.patch \
+    file://1900-add-iwinfo-plugin.patch \
+    file://1920-fix-ping-droprate.patch \
 "
 
 # update-rc.d systemd pythonnative 
