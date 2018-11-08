@@ -29,6 +29,8 @@ boot() {
 	mkdir -p /var/tmp
 	mkdir -p /tmp/.uci
 	chmod 0700 /tmp/.uci
+	touch /var/run/utmp
+	chmod 0644 /var/run/utmp
 	touch /var/log/wtmp
 	touch /var/log/lastlog
 	touch /tmp/resolv.conf.auto
