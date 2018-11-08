@@ -1,0 +1,38 @@
+From 931170d8c9b1b513ad9500f451441a40008c44ad Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 8 Nov 2018 06:06:02 +0300
+Subject: [PATCH] irq plugin: Fix config reading
+
+Fixed reading the values of the configuration parameters 'Irq' when their
+values are defined as numbers (without using quotes).
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/irq.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/src/irq.c b/src/irq.c
+index d5404159..740fa4d3 100644
+--- a/src/irq.c
++++ b/src/irq.c
+@@ -47,7 +47,16 @@ static int irq_config(const char *key, const char *value) {
+     ignorelist = ignorelist_create(/* invert = */ 1);
+ 
+   if (strcasecmp(key, "Irq") == 0) {
+-    ignorelist_add(ignorelist, value);
++    int irq = atoi(value);
++    if (!irq) {
++      ignorelist_add(ignorelist, value);
++    } else {
++      /* If Irq option specified without quotes, when, for example,
++       * Irq 48 will be presented in value as 48.00000. */
++      char irq_str[12];
++      sprintf(irq_str, "%d", irq);
++      ignorelist_add(ignorelist, irq_str);
++    }
+   } else if (strcasecmp(key, "IgnoreSelected") == 0) {
+     int invert = 1;
+     if (IS_TRUE(value))
+-- 
+2.16.2.windows.1
+

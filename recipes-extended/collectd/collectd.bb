@@ -8,7 +8,7 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 PV = "5.8.1"
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
@@ -30,6 +30,7 @@ SRC_URI += "\
     file://0003-fix-to-build-with-glibc-2.25.patch \
     file://0004-configure-Check-for-Wno-error-format-truncation-comp.patch \
     file://0005-Disable-new-gcc8-warnings.patch \
+    file://0006-irq-plugin-Fix-config-reading.patch \
 "
 
 # Patches (from OpenWrt)
