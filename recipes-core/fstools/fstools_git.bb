@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -28,6 +28,7 @@ SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
 	file://0004-Fix-UUID-reading-from-vfat.patch \
+	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
 	file://snapshot \
@@ -66,6 +67,7 @@ do_install_append() {
 
 	install -dm 0755 ${D}/usr/sbin
 	install -dm 0755 ${D}${sysconfdir}/init.d
+	install -dm 0755 ${D}${sysconfdir}/config
 	install -dm 0755 ${D}${sysconfdir}/uci-defaults
 	install -dm 0755 ${D}${sysconfdir}/hotplug.d/block
 
@@ -77,6 +79,7 @@ do_install_append() {
 	ln -s /sbin/block ${D}/usr/sbin/swapoff
 
 	install -m 0755 ${WORKDIR}/fstab.init ${D}${sysconfdir}/init.d/fstab
+	install -m 0755 ${WORKDIR}/fstab.config ${D}${sysconfdir}/config/fstab
 	install -m 0755 ${WORKDIR}/fstab.default ${D}${sysconfdir}/uci-defaults/10-fstab
 	install -m 0755 ${WORKDIR}/blockd.init ${D}${sysconfdir}/init.d/blockd
 	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
