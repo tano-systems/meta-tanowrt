@@ -205,8 +205,10 @@ if [ x$anon_enable = x1 ]; then
 	output_bool anonymous upload "anon_upload_enable" 0
 	output_bool anonymous others "anon_other_write_enable" 0
 
-	mkdir -p $anon_root
-	chown -R $ftp_username:$ftp_username $anon_root
+	if ! [ -d "$anon_root" ]; then
+		mkdir -p $anon_root
+		chown -R $ftp_username:$ftp_username $anon_root
+	fi
 else
 	output_const "anonymous_enable" NO
 fi
