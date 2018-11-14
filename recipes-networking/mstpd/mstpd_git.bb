@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano10"
+PR = "tano11"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -10,13 +10,13 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://github.com/tano-systems/mstpd.git;protocol=https;branch=batch-command \
+	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
 "
 
-PV = "0.0.6+git${SRCPV}"
+PV = "0.0.7+git${SRCPV}"
 
-# 27.09.2018 ctl_main: Add batch command execution support
-SRCREV = "55f80e4c72595511c472a02803d75c48eb13cf2d"
+# 24.08.2018 main.c: free file pointer when exiting
+SRCREV = "e4f0ba5a48649a3253f8b353c87c965e12aafc50"
 
 SRC_URI += "\
 	file://bridge-stp \
