@@ -1,0 +1,35 @@
+From 9ce5120c428f07de23a2ab91c8f255bfcfe80b41 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 15 Nov 2018 16:24:21 +0300
+Subject: [PATCH] blockd: Fix simultaneous multiple device mounts
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ blockd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/blockd.c b/blockd.c
+index 3af5390..e5558e7 100644
+--- a/blockd.c
++++ b/blockd.c
+@@ -254,7 +254,7 @@ block_hotplug(struct ubus_context *ctx, struct ubus_object *obj,
+ 	if (!device)
+ 		return UBUS_STATUS_UNKNOWN_ERROR;
+ 
+-	vlist_update(&devices);
++	/* vlist_update(&devices); */
+ 	if (data[MOUNT_REMOVE]) {
+ 		vlist_delete(&devices, &device->node);
+ 	} else {
+@@ -272,7 +272,7 @@ block_hotplug(struct ubus_context *ctx, struct ubus_object *obj,
+ 		strcpy(_name, devname);
+ 		device->target = __target;
+ 		strcpy(__target, target);
+-		vlist_add(&devices, &device->node, blobmsg_get_string(data[MOUNT_DEVICE]));
++		vlist_add(&devices, &device->node, device->name);
+ 	}
+ 	vlist_flush(&devices);
+ 
+-- 
+2.16.2.windows.1
+
