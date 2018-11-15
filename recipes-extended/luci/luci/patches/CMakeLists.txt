@@ -30,5 +30,6 @@ ADD_SUBDIRECTORY(libs/luci-lib-nixio)
 ADD_SUBDIRECTORY(libs/luci-lib-ip)
 ADD_SUBDIRECTORY(libs/luci-lib-jsonc)
 ADD_SUBDIRECTORY(libs/luci-lib-iptparser)
+ADD_SUBDIRECTORY(libs/luci-lib-ipkg)
 
 INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-extra.txt)
