@@ -54,6 +54,8 @@ PREFERRED_PROVIDER_wpa-supplicant_ti33x = "wpa-supplicant-wl18xx"
 PREFERRED_PROVIDER_wpa-supplicant_ti43x = "wpa-supplicant-wl18xx"
 PREFERRED_PROVIDER_wpa-supplicant_omap-a15 = "wpa-supplicant-wl18xx"
 
+PREFERRED_VERSION_libwebsockets = "2.4.2%"
+
 PREFERRED_VERSION_gstreamer1.0 = "1.8.3"
 PREFERRED_VERSION_gstreamer1.0-plugins-ugly = "1.8.3"
 PREFERRED_VERSION_gstreamer1.0-libav = "1.8.3"

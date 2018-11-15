@@ -1,4 +1,12 @@
 
+PACKAGECONFIG_pn-libwebsockets = "\
+	client \
+	server \
+	ssl \
+	libuv \
+	${@oe_filter('ipv6', '${DISTRO_FEATURES}', d)} \
+"
+
 # Distro-specific package configuration
 PACKAGECONFIG_pn-weston = "egl kms launch clients"
 PACKAGECONFIG_append_pn-systemd = " coredump"
