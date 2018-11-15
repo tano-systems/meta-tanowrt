@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano13"
+PR_append = ".tano14"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -251,6 +251,8 @@ do_install_append () {
             install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
             install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
         fi
+
+        install -dm 0755 ${D}${libdir}/locale
     fi
 }
 
