@@ -18,6 +18,8 @@ uci_apply_defaults() {
 }
 
 boot() {
+	local hostname
+
 	[ -f /proc/mounts ] || /sbin/mount_root
 	[ -f /proc/jffs2_bbc ] && echo "S" > /proc/jffs2_bbc
 	[ -f /proc/net/vlan/config ] && vconfig set_name_type DEV_PLUS_VID_NO_PAD
@@ -37,6 +39,10 @@ boot() {
 	ln -sf /tmp/resolv.conf.auto /tmp/resolv.conf
 	grep -q debugfs /proc/filesystems && /bin/mount -o noatime -t debugfs debugfs /sys/kernel/debug
 	[ "$FAILSAFE" = "true" ] && touch /tmp/.failsafe
+
+	# Early hostname setup
+	hostname=$(uci -q get "system.@system[-1].hostname")
+	[ -n "${hostname}" ] && sysctl -w kernel.hostname="${hostname}"
 
 	/sbin/kmodloader
 
