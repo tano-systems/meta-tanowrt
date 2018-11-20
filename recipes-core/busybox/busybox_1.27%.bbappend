@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano8"
+PR_append = ".tano9"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -34,6 +34,7 @@ SRC_URI_append = "\
 	file://cron \
 	file://sysntpd \
 	file://ntpd-hotplug \
+	file://systohc.hotplug \
 "
 
 inherit openwrt-services
@@ -47,8 +48,10 @@ OPENWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
 do_install_append() {
     rm -f ${D}/usr/share/udhcpc/default.script
     install -d -m 0755 ${D}${sysconfdir}/init.d
+    install -d -m 0755 ${D}${sysconfdir}/hotplug.d/ntp
     install -d -m 0755 ${D}${sbindir}
     install -m 0755 ${WORKDIR}/cron ${D}${sysconfdir}/init.d/cron
     install -m 0755 ${WORKDIR}/sysntpd ${D}${sysconfdir}/init.d/sysntpd
     install -m 0755 ${WORKDIR}/ntpd-hotplug ${D}${sbindir}/ntpd-hotplug
+    install -m 0755 ${WORKDIR}/systohc.hotplug ${D}${sysconfdir}/hotplug.d/ntp/00-systohc
 }
