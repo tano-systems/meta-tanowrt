@@ -32,6 +32,9 @@ system_config() {
 
 	# apply timezone to kernel
 	date -k
+
+	# sync localtime to hardware RTC
+	[ -x /etc/init.d/sysfixtime ] && /etc/init.d/sysfixtime systohc
 }
 
 reload_service() {
