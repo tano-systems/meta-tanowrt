@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 15.11.2018
-# luci-mod-network: function name mismatch fixed
-LUCI_GIT_SRCREV = "7bffa401ff2e956ff768edb05c15f7a3d2873160"
+# 21.11.2018
+# luci-app-statistics: update and fix Russian translation
+LUCI_GIT_SRCREV = "562ae5f0e5cfea0b5abf326fbd9471067dc31d1f"
 
-PR_append = ".13"
+PR_append = ".14"
 
 libdir = "/usr/lib"
 

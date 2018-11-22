@@ -1,0 +1,22 @@
+diff --git a/modules/luci-mod-system/luasrc/view/admin_system/password.htm b/modules/luci-mod-system/luasrc/view/admin_system/password.htm
+index db35fb01e..624afc4c7 100644
+--- a/modules/luci-mod-system/luasrc/view/admin_system/password.htm
++++ b/modules/luci-mod-system/luasrc/view/admin_system/password.htm
+@@ -18,7 +18,7 @@
+ 					showModal('<%:Change login password%>', [
+ 						E('div', _('The system password has been successfully changed.')),
+ 						E('div', { 'class': 'right' },
+-							E('div', { class: 'btn', click: hideModal }, '<%:Dismiss%>'))
++							E('div', { class: 'btn', click: hideModal }, '<%:Close%>'))
+ 					]);
+ 
+ 					pw1.value = pw2.value = '';
+@@ -29,7 +29,7 @@
+ 				E('div', { class: 'alert-message warning' },
+ 					_('Given password confirmation did not match, password not changed!')),
+ 				E('div', { 'class': 'right' },
+-					E('div', { class: 'btn', click: hideModal }, '<%:Dismiss%>'))
++					E('div', { class: 'btn', click: hideModal }, '<%:Close%>'))
+ 			]);
+ 		}
+ 	}
