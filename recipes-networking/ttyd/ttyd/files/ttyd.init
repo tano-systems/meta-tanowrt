@@ -94,6 +94,8 @@ start_service()
 	config_get ttyd_ssl_key      "$cfg" "ssl_key" "/etc/ttyd/ttyd.key"
 	config_get ttyd_ssl_cert     "$cfg" "ssl_cert" "/etc/ttyd/ttyd.crt"
 	config_get ttyd_debug        "$cfg" "debug" "1 2"
+	config_get ttyd_username     "$cfg" "username"
+	config_get ttyd_password     "$cfg" "password"
 
 	procd_open_instance "ttyd"
 	procd_set_param command ${TTYD_BIN}
