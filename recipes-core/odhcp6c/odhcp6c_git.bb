@@ -8,33 +8,34 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano1"
+PR = "tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # 13.07.2018
 # odhcp6c: add option to ignore Server Unicast option
-SRCREV_odhcp6c = "67ae6a71b5762292e114b281d0e329cc24209ae6"
+SRCREV = "67ae6a71b5762292e114b281d0e329cc24209ae6"
 
 SRC_URI = "\
 	git://git.openwrt.org/project/odhcp6c.git;name=odhcp6c \
+	file://dhcpv6.script \
+	file://dhcpv6.sh \
 "
 
 S = "${WORKDIR}/git"
-OF = "${S}/openwrt/package/network/ipv6/odhcp6c/files"
 
-inherit cmake pkgconfig openwrt openwrt-base-files
+inherit cmake pkgconfig openwrt
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 do_install_append() {
-    install -Dm 0755 ${OF}/dhcpv6.sh ${D}${base_libdir}/netifd/proto/dhcpv6.sh
-    install -Dm 0755 ${OF}/dhcpv6.script ${D}${base_libdir}/netifd/dhcpv6.script
+	install -Dm 0755 ${WORKDIR}/dhcpv6.sh ${D}${base_libdir}/netifd/proto/dhcpv6.sh
+	install -Dm 0755 ${WORKDIR}/dhcpv6.script ${D}${base_libdir}/netifd/dhcpv6.script
 }
 
 FILES_${PN} += "\
-               ${base_libdir}/netifd/proto/dhcpv6.sh \
-               ${base_libdir}/netifd/dhcpv6.script \
-               "
+	${base_libdir}/netifd/proto/dhcpv6.sh \
+	${base_libdir}/netifd/dhcpv6.script \
+"
 
 RRECOMMENDS_${PN} += "netifd"
