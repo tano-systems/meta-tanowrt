@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano17"
+PR_append = ".tano18"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -86,6 +86,20 @@ BASEFILESISSUEINSTALL ?= "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt',
 
 do_install[vardeps] += "OPENWRT_ZONENAME OPENWRT_TIMEZONE OPENWRT_VERSION_SED"
 
+OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR ?= "y"
+OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT ?= "2"
+OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH ?= "/usr/sbin:/usr/bin:/sbin:/bin"
+OPENWRT_CONFIG_TARGET_INIT_ENV ?= ""
+OPENWRT_CONFIG_TARGET_INIT_CMD ?= "/sbin/init"
+OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR ?= "y"
+OPENWRT_CONFIG_TARGET_PREINIT_IFNAME ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_IP ?= "192.168.1.1"
+OPENWRT_CONFIG_TARGET_PREINIT_NETMASK ?= "255.255.255.0"
+OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST ?= "192.168.1.255"
+OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG ?= ""
+OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE ?= ""
+
 do_install_append () {
     if [ "${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', 'true', 'false', d)}" = "true" ]; then
         rm -rf ${D}${localstatedir}/backups
@@ -100,27 +114,6 @@ do_install_append () {
 
         # procd - earlyinit
         rm -f ${STMP}/etc/inittab
-        rm -f ${STMP}/etc/preinit
-        rm -f ${STMP}/etc/diag.sh
-        rm -f ${STMP}/lib/functions/preinit.sh
-        rm -rf ${STMP}/lib/preinit
-        rm -f ${STMP}/rom/note
-        # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
-        rmdir ${STMP}/rom
-
-        # procd - init
-        rm -f ${STMP}/lib/functions/service.sh
-        rm -f ${STMP}/etc/rc.common
-        rm -f ${STMP}/etc/rc.local
-        rm -f ${STMP}/usr/libexec/login.sh
-
-        # We want these to fail if Openwrt adds more to these dirs, so no rm -rf
-        rmdir ${STMP}/usr/libexec
-
-        # procd - devmanager
-        rm -rf ${STMP}/etc/rc.button
-        rm -rf ${STMP}/etc/hotplug.d
-        rm -f ${STMP}/sbin/hotplug-call
 
         # From OE base-files or netbase
         rm -f ${STMP}/etc/hosts
@@ -167,6 +160,8 @@ do_install_append () {
         # Copy what is applicable to rootfs
         cp -dR --preserve=mode,links ${STMP}/* ${D}
         rm -rf ${STMP}
+
+        mkdir -p ${D}${sysconfdir}/rc.d
 
         # FIXME: Should be OE's busybox crontabs dir
         mkdir -p ${D}${sysconfdir}/crontabs
@@ -249,6 +244,27 @@ do_install_append () {
         fi
 
         install -dm 0755 ${D}${libdir}/locale
+
+        # Common default PATH
+        install -dm 0755 ${D}/lib/preinit
+        PREINIT_CONF="${D}/lib/preinit/00_preinit.conf"
+        echo "pi_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR}\"" >${PREINIT_CONF}
+        echo "fs_failsafe_wait_timeout=${OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT}" >>${PREINIT_CONF}
+        echo "pi_init_path=\"${OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH}\"" >>${PREINIT_CONF}
+        echo "pi_init_env=\"${OPENWRT_CONFIG_TARGET_INIT_ENV}\"" >>${PREINIT_CONF}
+        echo "pi_init_cmd=\"${OPENWRT_CONFIG_TARGET_INIT_CMD}\"" >>${PREINIT_CONF}
+        echo "pi_init_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR}\"" >>${PREINIT_CONF}
+        echo "pi_ifname=\"${OPENWRT_CONFIG_TARGET_PREINIT_IFNAME}\"" >>${PREINIT_CONF}
+        echo "pi_ip=\"${OPENWRT_CONFIG_TARGET_PREINIT_IP}\"" >>${PREINIT_CONF}
+        echo "pi_netmask=\"${OPENWRT_CONFIG_TARGET_PREINIT_NETMASK}\"" >>${PREINIT_CONF}
+        echo "pi_broadcast=\"${OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST}\"" >>${PREINIT_CONF}
+        echo "pi_preinit_net_messages=\"${OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG}\"" >>${PREINIT_CONF}
+        echo "pi_preinit_no_failsafe_netmsg=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG}\"" >>${PREINIT_CONF}
+        echo "pi_preinit_no_failsafe=\"${OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE}\"" >>${PREINIT_CONF}
+
+        sed -i "s#%PATH%#/usr/sbin:/usr/bin:/sbin:/bin#g" \
+              ${D}${sysconfdir}/preinit \
+              ${D}${base_sbindir}/hotplug-call
     fi
 }
 
@@ -294,6 +310,7 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/profile \
 	${sysconfdir}/passwd \
 	${sysconfdir}/sysctl.d/10-default.conf \
+	${sysconfdir}/rc.local \
 "
 
 PROVIDES += "os-release"
