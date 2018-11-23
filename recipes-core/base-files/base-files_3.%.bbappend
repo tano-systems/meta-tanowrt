@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano16"
+PR_append = ".tano17"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -136,9 +136,7 @@ do_install_append () {
         fi
 
         # For netifd package
-        rm -f ${STMP}/lib/functions/network.sh
-        rm -f ${STMP}/sbin/wifi
-        rm -f ${STMP}/etc/uci-defaults/12_network-generate-ula
+        ${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '', 'rm -f ${STMP}/sbin/wifi', d)}
 
         # Not applicable to OE flavour
         rm -f ${STMP}/etc/uci-defaults/10_migrate-shadow
@@ -146,8 +144,6 @@ do_install_append () {
 
         # These depend on mechanisms not in OE build process
         rm -f ${STMP}/etc/uci-defaults/13_fix_group_user
-        # We want this to fail if Openwrt adds more to this dir, so no rm -rf
-        rmdir ${STMP}/etc/uci-defaults
 
         # In base-files-scripts-openwrt
         rm -f ${STMP}/lib/functions.sh
