@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 17.10.2018
-# system-linux: enable by default ignore encaplimit for grev6 tunnels
-SRCREV_netifd = "841b5d158708ee89d9fa870c40404469cb8e871e"
+# 19.11.2018
+# treewide: switch to C-code style comments
+SRCREV_netifd = "4b83102da60bf26b455ac8425a1f5e338ea01f8a"
 
 S = "${WORKDIR}/git"
 
@@ -51,8 +51,8 @@ OPENWRT_SERVICE_STATE_netifd-network ?= "enabled"
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 
 do_configure_prepend () {
-    # replace hardcoded '/lib/' with '${base_libdir}/'
-    #grep -rnl "/lib/" ${S}/openwrt/package/network/config/netifd/ | xargs sed -i "s:/lib/:${base_libdir}/:g"
+	# replace hardcoded '/lib/' with '${base_libdir}/'
+	grep -rnl "/lib/" ${WORKDIR}/rootfs/ | xargs sed -i "s:/lib/:${base_libdir}/:g"
 }
 
 do_install_append() {
