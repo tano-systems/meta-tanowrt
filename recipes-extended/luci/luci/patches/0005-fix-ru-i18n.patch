@@ -1,0 +1,94 @@
+diff --git a/modules/luci-base/htdocs/luci-static/resources/cbi.js b/modules/luci-base/htdocs/luci-static/resources/cbi.js
+index edf634ee7..7a9c79bc0 100644
+--- a/modules/luci-base/htdocs/luci-static/resources/cbi.js
++++ b/modules/luci-base/htdocs/luci-static/resources/cbi.js
+@@ -1396,8 +1396,8 @@ String.prototype.format = function()
+ 						}
+ 
+ 						subst = (td > 0)
+-							? String.format('%dd %dh %dm %ds', td, th, tm, ts)
+-							: String.format('%dh %dm %ds', th, tm, ts);
++							? String.format(_('%dd %dh %dm %ds'), td, th, tm, ts)
++							: String.format(_('%dh %dm %ds'), th, tm, ts);
+ 
+ 						break;
+ 
+@@ -1407,7 +1407,7 @@ String.prototype.format = function()
+ 
+ 						var i = 0;
+ 						var val = (+param || 0);
+-						var units = [ ' ', ' K', ' M', ' G', ' T', ' P', ' E' ];
++						var units = [ ' ', _(' K'), _(' M'), _(' G'), _(' T'), _(' P'), _(' E') ];
+ 
+ 						for (i = 0; (i < units.length) && (val > mf); i++)
+ 							val /= mf;
+diff --git a/modules/luci-base/po/ru/base.po b/modules/luci-base/po/ru/base.po
+index 62d625c03..45ab57d0f 100644
+--- a/modules/luci-base/po/ru/base.po
++++ b/modules/luci-base/po/ru/base.po
+@@ -3862,7 +3862,7 @@ msgstr "Пинг-запрос"
+ #: modules/luci-mod-status/luasrc/view/admin_status/connections.htm:170
+ #: modules/luci-mod-status/luasrc/view/admin_status/iptables.htm:96
+ msgid "Pkts."
+-msgstr "Пакетов"
++msgstr "пакетов"
+ 
+ #: modules/luci-base/luasrc/view/sysauth.htm:19
+ msgid "Please enter your username and password."
+@@ -6509,3 +6509,30 @@ msgstr "« Назад"
+ 
+ #~ msgid "Protocol family"
+ #~ msgstr "Семейство протоколов"
++
++msgid "%dd %dh %dm %ds"
++msgstr "%dд %dч %dм %dс"
++
++msgid "%dh %dm %ds"
++msgstr "%dч %dм %dс"
++
++msgid " K"
++msgstr " К"
++
++msgid " M"
++msgstr " М"
++
++msgid " G"
++msgstr " Г"
++
++msgid " T"
++msgstr " Т"
++
++msgid " P"
++msgstr " П"
++
++msgid " E"
++msgstr " Э"
++
++msgid "%.2mB (%d %s)"
++msgstr "%.2mБ (%d %s)"
+diff --git a/modules/luci-mod-network/htdocs/luci-static/resources/view/network/network.js b/modules/luci-mod-network/htdocs/luci-static/resources/view/network/network.js
+index acca7cf8a..22c47a70d 100644
+--- a/modules/luci-mod-network/htdocs/luci-static/resources/view/network/network.js
++++ b/modules/luci-mod-network/htdocs/luci-static/resources/view/network/network.js
+@@ -33,8 +33,8 @@ function render_iface(ifc) {
+ 				_('Device'),    ifc.ifname,
+ 				_('Connected'), ifc.is_up ? _('yes') : _('no'),
+ 				_('MAC'),       ifc.macaddr,
+-				_('RX'),        '%.2mB (%d %s)'.format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')),
+-				_('TX'),        '%.2mB (%d %s)'.format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.'))
++				_('RX'),        _('%.2mB (%d %s)').format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')),
++				_('TX'),        _('%.2mB (%d %s)').format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.'))
+ 			])
+ 		])
+ 	]);
+@@ -84,8 +84,8 @@ L.poll(5, L.url('admin/network/iface_status', networks.join(',')), null,
+ 						_('Protocol'), '%h'.format(desc || '?'),
+ 						_('Uptime'),   ifc.is_up ? '%t'.format(ifc.uptime) : null,
+ 						_('MAC'),      (!ifc.is_dynamic && !ifc.is_alias && ifc.macaddr) ? ifc.macaddr : null,
+-						_('RX'),       (!ifc.is_dynamic && !ifc.is_alias) ? '%.2mB (%d %s)'.format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')) : null,
+-						_('TX'),       (!ifc.is_dynamic && !ifc.is_alias) ? '%.2mB (%d %s)'.format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.')) : null,
++						_('RX'),       (!ifc.is_dynamic && !ifc.is_alias) ? _('%.2mB (%d %s)').format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')) : null,
++						_('TX'),       (!ifc.is_dynamic && !ifc.is_alias) ? _('%.2mB (%d %s)').format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.')) : null,
+ 						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[0] : null,
+ 						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[1] : null,
+ 						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[2] : null,
