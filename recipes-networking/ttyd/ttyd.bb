@@ -6,21 +6,24 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano3"
+PR = "tano4"
 PV = "1.4.2+git${SRCPV}"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4a9b415801f3f426a95d1da1f527882d"
 
 inherit cmake
 
-DEPENDS += "openssl json-c libwebsockets vim-xxd-native libcap"
+DEPENDS += "openssl json-c libwebsockets vim-xxd-native libcap libuv"
 
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tsl0922/ttyd.git;protocol=${GIT_PROTOCOL}"
 SRCREV = "53624a44fa92a4fc216eef9ed34b1c2073f537e2"
 
+# Files
 SRC_URI += "\
 	file://ttyd.init \
 	file://ttyd.config \

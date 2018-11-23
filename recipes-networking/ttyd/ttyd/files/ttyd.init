@@ -6,7 +6,7 @@ USE_PROCD=1
 OPENSSL_BIN="/usr/bin/openssl"
 
 EXTRA_COMMANDS="status"
-EXTRA_HELP="status	Print runtime information"
+EXTRA_HELP="	status	Print runtime information"
 
 TTYD_COMMAND="/bin/login"
 TTYD_INIT="/etc/init.d/ttyd"
