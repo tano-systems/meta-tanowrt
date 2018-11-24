@@ -1,7 +1,7 @@
 # This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "Generic OpenWrt 3G/4G proto handler"
 LICENSE = "GPLv2"
