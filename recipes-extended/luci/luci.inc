@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 23.11.2018
-# luci-mod-network: fix invalid translate() argument pass
-LUCI_GIT_SRCREV = "42310095df04ba4e799222c6fa66908d7c183c5a"
+# 25.11.2018
+# luci-mod-network: adapt to current 802.11r defaults
+LUCI_GIT_SRCREV = "26e903c7407e5ce4fd0428884a997386134f46f0"
 
-PR_append = ".15"
+PR_append = ".16"
 
 libdir = "/usr/lib"
 
