@@ -4,13 +4,20 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano6"
+PR_append = ".tano7"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
+# Patches
+SRC_URI += "\
+	file://210-dnssec-improve-timestamp-heuristic.patch \
+"
+
+# Files
 SRC_URI += "\
 	file://dhcp.conf \
 	file://dnsmasq.conf \
+	file://dhcpbogushostname.conf \
 	file://dnsmasqsec.hotplug \
 	file://dnsmasq.init \
 	file://dnsmasq_acl.json \
@@ -27,6 +34,8 @@ OPENWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
 OPENWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
 
 do_install_append() {
+    rm -rf ${D}${bindir}/dhcp_release
+
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
@@ -44,10 +53,11 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/dnsmasqsec.hotplug ${D}${sysconfdir}/hotplug.d/ntp/25-dnsmasqsec
 
     install -d ${D}/usr/lib/dnsmasq
-    install -m 0755 ${WORKDIR}/dhcp-script.sh ${D}/usr/lib/dhcp-script.sh
+    install -m 0755 ${WORKDIR}/dhcp-script.sh ${D}/usr/lib/dnsmasq/dhcp-script.sh
 
     install -d ${D}/usr/share/dnsmasq
     install -m 0644 ${WORKDIR}/rfc6761.conf ${D}/usr/share/dnsmasq/rfc6761.conf
+    install -m 0644 ${WORKDIR}/dhcpbogushostname.conf ${D}/usr/share/dnsmasq/dhcpbogushostname.conf
 
     install -d ${D}/usr/share/acl.d
     install -m 0644 ${WORKDIR}/dnsmasq_acl.json ${D}/usr/share/acl.d/dnsmasq_acl.json
