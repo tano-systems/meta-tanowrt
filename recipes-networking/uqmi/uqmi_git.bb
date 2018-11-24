@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
