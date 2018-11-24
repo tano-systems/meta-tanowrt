@@ -147,6 +147,13 @@ if ! [ -z $ftpd_banner ]; then
 	output_const "ftpd_banner" $ftpd_banner
 fi
 
+chroot_local_user=`get_value global chroot_local_user`
+if [ -z $chroot_local_user ] || [ $chroot_local_user -gt 0 ]; then
+	output_const "chroot_local_user" YES
+else
+	output_const "chroot_local_user" NO
+fi
+
 output_bool global dirmessage "dirmessage_enable"
 output_field global dirmsgfile "message_file" ".message"
 
