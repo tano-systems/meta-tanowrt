@@ -92,3 +92,31 @@ index acca7cf8a..22c47a70d 100644
  						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[0] : null,
  						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[1] : null,
  						_('IPv4'),     ifc.ipaddrs ? ifc.ipaddrs[2] : null,
+diff --git a/modules/luci-mod-network/htdocs/luci-static/resources/view/network/iface_status.js b/modules/luci-mod-network/htdocs/luci-static/resources/view/network/iface_status.js
+index 1852f179f..8aef03709 100644
+--- a/modules/luci-mod-network/htdocs/luci-static/resources/view/network/iface_status.js
++++ b/modules/luci-mod-network/htdocs/luci-static/resources/view/network/iface_status.js
+@@ -15,8 +15,8 @@ requestAnimationFrame(function() {
+ 				_('Device'),  ifc.ifname,
+ 				_('Uptime'),  ifc.is_up ? '%t'.format(ifc.uptime) : null,
+ 				_('MAC'),     ifc.ifname ? ifc.macaddr : null,
+-				_('RX'),      ifc.ifname ? '%.2mB (%d %s)'.format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')) : null,
+-				_('TX'),      ifc.ifname ? '%.2mB (%d %s)'.format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.')) : null,
++				_('RX'),      ifc.ifname ? _('%.2mB (%d %s)').format(ifc.rx_bytes, ifc.rx_packets, _('Pkts.')) : null,
++				_('TX'),      ifc.ifname ? _('%.2mB (%d %s)').format(ifc.tx_bytes, ifc.tx_packets, _('Pkts.')) : null,
+ 				_('IPv4'),    ifc.ipaddrs ? ifc.ipaddrs[0] : null,
+ 				_('IPv4'),    ifc.ipaddrs ? ifc.ipaddrs[1] : null,
+ 				_('IPv4'),    ifc.ipaddrs ? ifc.ipaddrs[2] : null,
+diff --git a/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua b/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua
+index c26fd475a..fe0f2e5a1 100644
+--- a/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua
++++ b/modules/luci-mod-system/luasrc/model/cbi/admin_system/system.lua
+@@ -66,7 +66,7 @@ end
+ -- Logging
+ --
+ 
+-o = s:taboption("logging", Value, "log_size", translate("System log buffer size"), "kiB")
++o = s:taboption("logging", Value, "log_size", translate("System log buffer size"), translate("kB"))
+ o.optional    = true
+ o.placeholder = 16
+ o.datatype    = "uinteger"
