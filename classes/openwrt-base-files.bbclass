@@ -6,9 +6,9 @@
 
 # Use this git SRCREV for all recipes that pull files out of openwrt repository
 
-# 07.11.2018
-# mt76: update to the latest version
-OPENWRT_SRCREV = "4fd9a5667eab6a75d8c3b7a1510dfb354ecca969"
+# 23.11.2018
+# kernel: b53: register switch on probe
+OPENWRT_SRCREV = "6680fab9474a8a2d66d5ef86e2c392abe0d2c62d"
 OPENWRT_BRANCH = "master"
 
 PR_append = ".o4"
