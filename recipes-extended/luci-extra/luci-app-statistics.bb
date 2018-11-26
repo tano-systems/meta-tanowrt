@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "LuCI Statistics Application"
 LICENSE = "Apache-2.0"
@@ -23,6 +23,11 @@ S = "${WORKDIR}/git"
 
 RDEPENDS_${PN} += "rrdtool collectd"
 
+# Files
+SRC_URI += "\
+	file://luci_statistics.init \
+"
+
 OPENWRT_SERVICE_PACKAGES = "luci-app-statistics"
 OPENWRT_SERVICE_SCRIPTS_luci-app-statistics += "luci_statistics"
 OPENWRT_SERVICE_STATE_luci-app-statistics-luci_statistics ?= "enabled"
@@ -31,8 +36,12 @@ CONFFILES_${PN} = "${sysconfdir}/config/luci_statistics"
 
 do_install_append() {
 	chmod +x ${D}/usr/bin/stat-genconfig
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${WORKDIR}/luci_statistics.init ${D}${sysconfdir}/init.d/luci_statistics
 }
 
+# Patches
 SRC_URI += "\
 	file://0001-add-image_height-option-to-config-file.patch \
 	file://0002-allow-to-configure-plot-width-and-height.patch \
