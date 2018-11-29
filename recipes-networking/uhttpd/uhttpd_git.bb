@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -15,7 +15,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
           git://git.openwrt.org/project/uhttpd.git \
           file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
-          file://0101-build-avoid-redefining-_DEFAULT_SOURCE.patch \
           file://0200-add-gz-support.patch \
           file://0201-fix-uh_file_mime_lookup.patch \
           file://uhttpd.config \
@@ -26,9 +25,9 @@ SRC_URI = "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 23.08.2018
-# lua: support multiple Lua prefixes
-SRCREV = "b741dec35698a80266fb8206970638e666774a33"
+# 29.11.2018
+# cgi: escape url in 403 error output
+SRCREV = "cdfc902a4cb77bc538a729f9e1c8a8578454a0e5"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt

@@ -4,24 +4,11 @@ Date: Wed, 7 Nov 2018 22:07:37 +0300
 Subject: [PATCH] fix uh_file_mime_lookup()
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
----
- file.c      | 35 ++++++++++++++++++++++++-----------
- mimetypes.h |  4 ++--
- 2 files changed, 26 insertions(+), 13 deletions(-)
 
 diff --git a/file.c b/file.c
 index 9ad7516..852e9e3 100644
 --- a/file.c
 +++ b/file.c
-@@ -18,7 +18,7 @@
-  */
- 
- #ifndef _DEFAULT_SOURCE
--#define _DEFAULT_SOURCE
-+# define _DEFAULT_SOURCE
- #endif
- 
- #define _BSD_SOURCE
 @@ -286,20 +286,33 @@ uh_path_lookup(struct client *cl, const char *url)
  static const char * uh_file_mime_lookup(const char *path)
  {
