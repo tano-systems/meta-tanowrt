@@ -3,7 +3,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 19.11.2018
-# treewide: switch to C-code style comments
-SRCREV_netifd = "4b83102da60bf26b455ac8425a1f5e338ea01f8a"
+# 26.11.2018
+# interface: fix return code of __interface_add()
+SRCREV_netifd = "dfa4ede4e3b2fd0f50b14fcb2dd141cd73a5c74f"
 
 S = "${WORKDIR}/git"
 
