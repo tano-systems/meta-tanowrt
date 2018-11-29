@@ -35,7 +35,7 @@ index 62d625c03..45ab57d0f 100644
  
  #: modules/luci-base/luasrc/view/sysauth.htm:19
  msgid "Please enter your username and password."
-@@ -6509,3 +6509,30 @@ msgstr "« Назад"
+@@ -6509,3 +6509,45 @@ msgstr "« Назад"
  
  #~ msgid "Protocol family"
  #~ msgstr "Семейство протоколов"
@@ -63,6 +63,21 @@ index 62d625c03..45ab57d0f 100644
 +
 +msgid " E"
 +msgstr " Э"
++
++msgid "B"
++msgstr "Б"
++
++msgid "KB"
++msgstr "кБ"
++
++msgid "MB"
++msgstr "МБ"
++
++msgid "GB"
++msgstr "ГБ"
++
++msgid "TB"
++msgstr "ТБ"
 +
 +msgid "%.2mB (%d %s)"
 +msgstr "%.2mБ (%d %s)"
@@ -120,3 +135,25 @@ index c26fd475a..fe0f2e5a1 100644
  o.optional    = true
  o.placeholder = 16
  o.datatype    = "uinteger"
+diff --git a/modules/luci-base/luasrc/tools/webadmin.lua b/modules/luci-base/luasrc/tools/webadmin.lua
+index 106810aa0..415f28c18 100644
+--- a/modules/luci-base/luasrc/tools/webadmin.lua
++++ b/modules/luci-base/luasrc/tools/webadmin.lua
+@@ -7,9 +7,16 @@ module("luci.tools.webadmin", package.seeall)
+ local util = require "luci.util"
+ local uci  = require "luci.model.uci"
+ local ip   = require "luci.ip"
++local i18n = require "luci.i18n"
+ 
+ function byte_format(byte)
+-	local suff = {"B", "KB", "MB", "GB", "TB"}
++	local suff = {
++		i18n.translate("B"),
++		i18n.translate("KB"),
++		i18n.translate("MB"),
++		i18n.translate("GB"),
++		i18n.translate("TB")
++	}
+ 	for i=1, 5 do
+ 		if byte > 1024 and i < 5 then
+ 			byte = byte / 1024

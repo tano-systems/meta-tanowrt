@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -32,6 +32,7 @@ SRC_URI = "\
 	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
 	file://0004-fix-network-bridge-functions.patch \
 	file://0005-fix-ru-i18n.patch \
+	file://0006-fix-markup.patch \
 	file://0009-fix-syslog-and-dmesg-textarea-height.patch \
 	file://0010-fix-mounted-filesystems-info.patch \
 	file://0015-luci-mod-system-output-only-existing-timezones.patch \

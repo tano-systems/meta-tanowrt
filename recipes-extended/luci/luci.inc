@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 25.11.2018
-# luci-mod-network: adapt to current 802.11r defaults
-LUCI_GIT_SRCREV = "26e903c7407e5ce4fd0428884a997386134f46f0"
+# 29.11.2018
+# Merge pull request #2344 from shunjou/theme-material
+LUCI_GIT_SRCREV = "4f2b80e109031e4e538f09a8beca52cf8e0fd6b5"
 
-PR_append = ".16"
+PR_append = ".17"
 
 libdir = "/usr/lib"
 
