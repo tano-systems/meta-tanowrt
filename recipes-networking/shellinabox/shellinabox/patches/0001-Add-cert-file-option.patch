@@ -1,0 +1,77 @@
+From 3f8981be80753bb28948068ca91f5aa8dcd192d7 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 29 Nov 2018 16:38:24 +0300
+Subject: [PATCH] Add "--cert-file" option
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ shellinabox/shellinaboxd.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/shellinabox/shellinaboxd.c b/shellinabox/shellinaboxd.c
+index e3583e8..65ea78d 100644
+--- a/shellinabox/shellinaboxd.c
++++ b/shellinabox/shellinaboxd.c
+@@ -118,6 +118,7 @@ int                   enableUtmpLogging = 1;
+ static char           *messagesOrigin   = NULL;
+ static int            linkifyURLs       = 1;
+ static char           *certificateDir;
++static char           *certificateFile;
+ static int            certificateFd     = -1;
+ static HashMap        *externalFiles;
+ static Server         *cgiServer;
+@@ -869,7 +870,8 @@ static void usage(void) {
+           !serverSupportsSSL() ? "" :
+           "  -c, --cert=CERTDIR          set certificate dir "
+           "(default: $PWD)\n"
+-          "      --cert-fd=FD            set certificate file from fd\n",
++          "      --cert-fd=FD            set certificate file from fd\n"
++          "      --cert-file=CERTFILE    set certificate file from path\n",
+           group, PORTNUM,
+           !serverSupportsSSL() ? "" :
+           "  -t, --disable-ssl           disable transparent SSL support\n"
+@@ -914,6 +916,7 @@ static void parseArgs(int argc, char * const argv[]) {
+       { "background",           2, 0, 'b' },
+       { "cert",                 1, 0, 'c' },
+       { "cert-fd",              1, 0,  0  },
++      { "cert-file",            1, 0,  0  },
+       { "css",                  1, 0,  0  },
+       { "cgi",                  2, 0,  0  },
+       { "debug",                0, 0, 'd' },
+@@ -1006,6 +1009,21 @@ static void parseArgs(int argc, char * const argv[]) {
+         fatal("[config] Invalid certificate file handle!");
+       }
+       check(!NOINTR(close(tmpFd)));
++    } else if (!idx--) {
++      // Certificate file path
++      if (!hasSSL) {
++        warn("[config] Ignoring certificate directory, as SSL support is unavailable.");
++      }
++      if (certificateDir) {
++        fatal("[config] Cannot set both a certificate directory and file path!");
++      }
++      if (certificateFile) {
++        fatal("[config] Only one certificate file can be provided!");
++      }
++      if (!optarg || !*optarg) {
++        fatal("[config] Option --cert-file expects a valid file path.");
++      }
++      check(certificateFile = strdup(optarg));
+     } else if (!idx--) {
+       // CSS
+       struct stat st;
+@@ -1345,6 +1363,11 @@ static void setUpSSL(Server *server) {
+     check(serverSupportsSSL());
+     if (certificateFd >= 0) {
+       serverSetCertificateFd(server, certificateFd);
++    } else if (certificateFile) {
++      if (strchr(certificateFile, '%')) {
++        fatal("[ssl] Invalid certificate file name \"%s\".", certificateFile);
++      }
++      serverSetCertificate(server, certificateFile, 1);
+     } else if (certificateDir) {
+       char *tmp;
+       if (strchr(certificateDir, '%')) {
+-- 
+2.16.2.windows.1
+

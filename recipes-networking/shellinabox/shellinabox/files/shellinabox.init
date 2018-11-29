@@ -1,0 +1,64 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2015 snqu.com
+# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+
+USE_PROCD=1
+START=99
+
+SHELLINABOX_INIT=/etc/init.d/shellinabox
+SHELLINABOX_BIN=/usr/bin/shellinaboxd
+SHELLINABOX_PID=/var/run/shellinabox.pid
+
+EXTRA_COMMANDS="status"
+EXTRA_HELP="	status	Print runtime information"
+
+start_service() {
+
+	local opt_ssl
+	local opt_ssl_cert_dir
+	local opt_port
+	local opt_no_beep
+
+	local cfg="server"
+
+	config_load 'shellinabox'
+	config_get opt_ssl       "$cfg" "ssl" 1
+	config_get opt_ssl_cert  "$cfg" "ssl_cert" "/etc/shellinabox/ssl/certificate.pem"
+	config_get opt_port      "$cfg" "port" 4200
+	config_get opt_no_beep   "$cfg" "no_beep" 1
+
+	procd_open_instance
+
+	procd_set_param command ${SHELLINABOX_BIN}
+	procd_append_param command --port=${opt_port}
+	procd_append_param command --user=root
+	procd_append_param command --css=/etc/shellinabox/shellinabox.css
+
+	[ "${opt_no_beep}" -ne 0 ] && procd_append_param command --no-beep
+
+	if [ "${opt_ssl}" -eq "1" ]; then
+		mkdir -p $(dirname $opt_ssl_cert)
+		procd_append_param command --cert-file=${opt_ssl_cert}
+		procd_append_param command --disable-ssl-menu
+	else
+		procd_append_param command --disable-ssl
+	fi
+
+	procd_set_param stderr 1
+	procd_set_param pidfile ${SHELLINABOX_PID}
+	procd_close_instance
+}
+
+service_triggers()
+{
+	procd_add_config_trigger "config.change" "shellinabox" ${SHELLINABOX_INIT} reload
+}
+
+status()
+{
+	if [ `pgrep -n $(basename $SHELLINABOX_BIN)` ]; then
+		echo 1
+	else
+		echo 0
+	fi
+}
