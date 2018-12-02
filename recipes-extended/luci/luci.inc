@@ -3,11 +3,11 @@ LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
 LUCI_GIT_BRANCH   = "master"
 LUCI_GIT_PROTOCOL = "git"
 
-# 29.11.2018
-# Merge pull request #2344 from shunjou/theme-material
-LUCI_GIT_SRCREV = "4f2b80e109031e4e538f09a8beca52cf8e0fd6b5"
+# 02.12.2018
+# luci-mod-system: fix IE10/Edge rendering quirk on SSH keys page
+LUCI_GIT_SRCREV = "a92c94df32eaf9d0693eb799bfcf5bd7e92151b8"
 
-PR_append = ".17"
+PR_append = ".18"
 
 libdir = "/usr/lib"
 
