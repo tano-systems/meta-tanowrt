@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano11"
+PR = "tano12"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -11,12 +11,13 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
+	file://0001-ctl_main.c-Display-information-only-for-added-bridge.patch \
 "
 
 PV = "0.0.7+git${SRCPV}"
 
-# 24.08.2018 main.c: free file pointer when exiting
-SRCREV = "e4f0ba5a48649a3253f8b353c87c965e12aafc50"
+# 14.11.2018 Disable STP processing on a specific port
+SRCREV = "1107ce8df252aab73d10abfed39ffe9ccbc0bd1c"
 
 SRC_URI += "\
 	file://bridge-stp \

@@ -1,0 +1,250 @@
+From 1b669f92d619f192d2fd723ad72459928b3d8576 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 6 Dec 2018 03:09:45 +0300
+Subject: [PATCH] ctl_main.c: Display information only for added bridges
+
+For "showbridge" command display information only for bridges that
+have been added with "addbridge" command.
+
+Added command "showbridgelist" for displaying list of the added bridges.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ bridge_track.c      | 16 ++++++++++
+ ctl_functions.h     | 36 ++++++++++++++++++++++
+ ctl_main.c          | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ ctl_socket_server.c |  2 ++
+ 4 files changed, 138 insertions(+), 5 deletions(-)
+
+diff --git a/bridge_track.c b/bridge_track.c
+index 968e15b..26c3210 100644
+--- a/bridge_track.c
++++ b/bridge_track.c
+@@ -918,6 +918,22 @@ int CTL_del_bridges(int *br_array)
+     return 0;
+ }
+ 
++int CTL_bridge_is_added(int br_index, int *is_added)
++{
++    *is_added = (find_br(br_index) != NULL);
++    return 0;
++}
++
++int CTL_bridge_port_is_added(int br_index, int port_index, int *is_added)
++{
++    bridge_t *br = find_br(br_index);
++    if (br && find_if(br, port_index))
++        *is_added = 1;
++    else
++        *is_added = 0;
++    return 0;
++}
++
+ int bridge_track_fini(void)
+ {
+     INFO("Stopping all bridges");
+diff --git a/ctl_functions.h b/ctl_functions.h
+index 9ed4e98..f6f24c6 100644
+--- a/ctl_functions.h
++++ b/ctl_functions.h
+@@ -461,6 +461,42 @@ CTL_DECLARE(add_bridges);
+ #define del_bridges_ARGS (int *br_array)
+ CTL_DECLARE(del_bridges);
+ 
++/* check that bridge is already added */
++#define CMD_CODE_bridge_is_added    (124)
++#define bridge_is_added_ARGS (int br_index, int *is_added)
++struct bridge_is_added_IN
++{
++    int br_index;
++};
++struct bridge_is_added_OUT
++{
++    int is_added;
++};
++#define bridge_is_added_COPY_IN  ({ in->br_index = br_index; })
++#define bridge_is_added_COPY_OUT ({ *is_added = out->is_added; })
++#define bridge_is_added_CALL (in->br_index, &out->is_added)
++CTL_DECLARE(bridge_is_added);
++
++/* check that bridge port is already added */
++#define CMD_CODE_bridge_port_is_added    (125)
++#define bridge_port_is_added_ARGS (int br_index, int port_index, \
++    int *is_added)
++struct bridge_port_is_added_IN
++{
++    int br_index;
++    int port_index;
++};
++struct bridge_port_is_added_OUT
++{
++    int is_added;
++};
++#define bridge_port_is_added_COPY_IN  ({ in->br_index = br_index; \
++    in->port_index = port_index; })
++#define bridge_port_is_added_COPY_OUT ({ *is_added = out->is_added; })
++#define bridge_port_is_added_CALL (in->br_index, in->port_index, \
++    &out->is_added)
++CTL_DECLARE(bridge_port_is_added);
++
+ /* General case part in ctl command server switch */
+ #define SERVER_MESSAGE_CASE(name)                            \
+     case CMD_CODE_ ## name : do                              \
+diff --git a/ctl_main.c b/ctl_main.c
+index 88924f7..d63fc42 100644
+--- a/ctl_main.c
++++ b/ctl_main.c
+@@ -454,6 +454,7 @@ static inline int get_bridge_list(struct dirent ***namelist)
+ static int cmd_showbridge(int argc, char *const *argv)
+ {
+     int i, count = 0;
++    int out_count = 0;
+     int r = 0;
+     struct dirent **namelist;
+     param_id_t param_id = PARAM_NULL;
+@@ -488,18 +489,26 @@ static int cmd_showbridge(int argc, char *const *argv)
+ 
+     for(i = 0; i < count; ++i)
+     {
++        int err;
++        int is_added;
+         const char *name;
+         if(1 < argc)
+             name = argv[i + 1];
+         else
+             name = namelist[i]->d_name;
+ 
+-        if(i)
+-            do_arraynext_fmt();
++        err = CTL_bridge_is_added(if_nametoindex(name), &is_added);
++        if (!err && is_added)
++        {
++            if(out_count)
++                do_arraynext_fmt();
+ 
+-        int err = do_showbridge(name, param_id);
+-        if(err)
+-            r = err;
++            err = do_showbridge(name, param_id);
++            if(err)
++                r = err;
++
++            out_count++;
++        }
+     }
+ 
+     do_arrayend_fmt();
+@@ -514,6 +523,68 @@ static int cmd_showbridge(int argc, char *const *argv)
+     return r;
+ }
+ 
++static int do_showbridgelist_item(const char *br_name)
++{
++    switch(format)
++    {
++        case FORMAT_PLAIN:
++            printf("%s\n", br_name);
++            return 0;
++        case FORMAT_JSON:
++            printf("\"%s\"", br_name);
++            return 0;
++        default:
++            return -3; /* -3 = unsupported or unknown format */
++    }
++}
++
++static int cmd_showbridgelist(int argc, char *const *argv)
++{
++    int i, count = 0;
++    int out_count = 0;
++    int r = 0;
++    struct dirent **namelist;
++
++    count = get_bridge_list(&namelist);
++    if(0 > count)
++    {
++        fprintf(stderr, "Error getting list of all bridges\n");
++        return -1;
++    }
++
++    do_arraystart_fmt();
++
++    for(i = 0; i < count; ++i)
++    {
++        int err;
++        int is_added;
++        const char *name;
++
++        name = namelist[i]->d_name;
++
++        err = CTL_bridge_is_added(if_nametoindex(name), &is_added);
++        if (!err && is_added)
++        {
++            if(out_count)
++                do_arraynext_fmt();
++
++            err = do_showbridgelist_item(name);
++            if(err)
++                r = err;
++
++            out_count++;
++        }
++    }
++
++    do_arrayend_fmt();
++
++    for(i = 0; i < count; ++i)
++        free(namelist[i]);
++    free(namelist);
++
++    return r;
++}
++
+ static int do_showtree_fmt_plain(const MSTI_BridgeStatus *s,
+                                  const char *br_name,
+                                  int mstid,
+@@ -1006,6 +1077,8 @@ static int do_showport_fmt_json(const CIST_PortStatus *s,
+                        BOOL_STR(s->bpdu_guard_port));
+                 printf("\"bpdu-guard-error\":\"%s\",",
+                        BOOL_STR(s->bpdu_guard_error));
++                printf("\"bpdu-filter-port\":\"%s\",",
++                       BOOL_STR(s->bpdu_filter_port));
+                 printf("\"network-port\":\"%s\",",
+                        BOOL_STR(s->network_port));
+                 printf("\"ba-inconsistent\":\"%s\",",
+@@ -2177,6 +2250,10 @@ static const struct command commands[] =
+     {1, 32, "delbridge", cmd_delbridge,
+      "<bridge> [<bridge> ...]", "Remove bridges from the mstpd's list"},
+ 
++    /* Show added bridges list */
++    {0, 0, "showbridgelist", cmd_showbridgelist,
++     "", "Show added bridges list"},
++
+     /* Show global bridge */
+     {0, 32, "showbridge", cmd_showbridge,
+      "[<bridge> ... [param]]", "Show bridge state for the CIST"},
+@@ -2396,6 +2473,8 @@ CLIENT_SIDE_FUNCTION(set_vid2fid)
+ CLIENT_SIDE_FUNCTION(set_fid2mstid)
+ CLIENT_SIDE_FUNCTION(set_vids2fids)
+ CLIENT_SIDE_FUNCTION(set_fids2mstids)
++CLIENT_SIDE_FUNCTION(bridge_is_added)
++CLIENT_SIDE_FUNCTION(bridge_port_is_added)
+ 
+ CTL_DECLARE(add_bridges)
+ {
+diff --git a/ctl_socket_server.c b/ctl_socket_server.c
+index be23d9e..0b035cc 100644
+--- a/ctl_socket_server.c
++++ b/ctl_socket_server.c
+@@ -82,6 +82,8 @@ static int handle_message(int cmd, void *inbuf, int lin,
+         SERVER_MESSAGE_CASE(set_fid2mstid);
+         SERVER_MESSAGE_CASE(set_vids2fids);
+         SERVER_MESSAGE_CASE(set_fids2mstids);
++        SERVER_MESSAGE_CASE(bridge_is_added);
++        SERVER_MESSAGE_CASE(bridge_port_is_added);
+ 
+         case CMD_CODE_add_bridges:
+         {
+-- 
+2.16.2.windows.1
+
