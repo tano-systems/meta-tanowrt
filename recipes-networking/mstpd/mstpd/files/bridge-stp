@@ -50,6 +50,15 @@ case "$action" in
 	start)
 		mstpd_log_debug "bridge-stp: starting bridge '$bridge'..."
 
+		mstpd_bridge_check "$bridge"
+
+		if [ "$?" != "0" ]; then
+			# Bridge is not under MSTPd control
+			mstpd_log_debug "bridge-stp: bridge '$bridge' is not under MSTPd control"
+			mstpd_log_debug "bridge-stp: use kernel STP for bridge '$bridge'"
+			exit 1
+		fi
+
 		#
 		# Due to kernel locks, mstpd will not respond to mstpctl until after
 		# this script exits, so `mstpctl addbridge <bridge>` must be run as
@@ -69,10 +78,10 @@ case "$action" in
 		# Remove bridge from mstpd.
 		${MSTPCTL_BIN} delbridge "$bridge"
 		if [ "$?" != "0" ]; then
-			mstpd_log_error "bridge-stp: failed to stop bridge '$bridge'"
+			mstpd_log_error "bridge-stp: failed to stop and delete bridge '$bridge'"
 			exit 4
 		fi
 
-		mstpd_log_debug "bridge-stp: stopped bridge '$bridge'"
+		mstpd_log_debug "bridge-stp: stopped and deleted bridge '$bridge'"
 		;;
 esac

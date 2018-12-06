@@ -9,6 +9,9 @@
 . "$IPKG_INSTROOT/lib/functions/network.sh"
 . "$IPKG_INSTROOT/usr/share/libubox/jshn.sh"
 
+# The brctl executable
+BRCTL_BIN='/usr/sbin/brctl'
+
 # The mstpctl executable
 MSTPCTL_BIN='/sbin/mstpctl'
 
@@ -25,7 +28,8 @@ function mstpd_log_error()
 
 function mstpd_log_debug()
 {
-	logger -p debug -t "$MSTPD_LOG_TAG" $*
+	:
+	#logger -p debug -t "$MSTPD_LOG_TAG" $*
 }
 
 function mstpd_log_info()
@@ -45,11 +49,52 @@ mstpd_sanity_checks()
 		exit 1
 	fi
 
+	if [ ! -x "$BRCTL_BIN" ]; then
+		mstpd_log_error "lib: 'brctl' binary does not exist or is not executable"
+		exit 1
+	fi
+
 	# Make sure this script is being run as root.
 	if [ "$(id -u)" != '0' ]; then
 		mstpd_log_error 'lib: script must be run as root'
 		exit 1
 	fi
+}
+
+mstpd_bridge_check()
+{
+	local bridges
+	local br="$1"
+
+	# Read the mstpd config
+	config_load 'mstpd'
+	config_get bridges 'global' 'bridge'
+
+	if list_contains bridges "$br"; then
+		# bridge is under MSTPd control
+		return 0
+	else
+		# bridge is not under MSTPd control
+		return 1
+	fi
+}
+
+#
+# Read current STP state for specified bridge:
+#   0 - no STP or specified interface is not bridge
+#   1 - kernel STP
+#   2 - user STP
+#
+mstpd_bridge_stp_state()
+{
+	local br="$1"
+	local state="0"
+
+	if [ -e "/sys/class/net/${br}/bridge/stp_state" ]; then
+		state=`cat /sys/class/net/${br}/bridge/stp_state`
+	fi
+
+	return $state
 }
 
 ##########################################################################
@@ -155,7 +200,7 @@ mstpd_configure_bridge()
 	local br_sysname="$1"
 	local br_ifname=${br_sysname/br-/}
 
-	# Check that interfaces is really bridge
+	# Check that interface is really bridge
 	if [ ! -d "/sys/class/net/$br_sysname/bridge" ]; then
 		${MSTPCTL_BIN} delbridge "$br_sysname"
 		mstpd_log_info "lib: bridge '$br_sysname' deleted (not a bridge)"
@@ -174,6 +219,13 @@ mstpd_configure_bridge()
 	if [ "$if_stp" != "1" ] && [ "$if_stp" != "on" ]; then
 		${MSTPCTL_BIN} delbridge "$br_sysname"
 		mstpd_log_info "lib: bridge '$br_sysname' deleted (has no enabled STP)"
+		mstpd_bridge_stp_state $br_sysname
+		if [ "$?" != "0" ]; then
+			# Disable STP on bridge
+			mstpd_log_info "lib: brctl: disable STP on bridge '$br_sysname'..."
+			${BRCTL_BIN} stp ${bridge_current} off
+		fi
+
 		return 1
 	fi
 
@@ -187,6 +239,15 @@ mstpd_configure_bridge()
 	config_get mstpctl_maxhops     "$br_ifname" 'maxhops'
 	config_get mstpctl_txholdcount "$br_ifname" 'txholdcount'
 	config_get mstpctl_hello       "$br_ifname" 'hello'
+
+	mstpd_bridge_stp_state ${br_sysname}
+	if [ "$?" != "2" ]; then
+		# STP state is kernel STP or disabled
+		mstpd_log_info "lib: brctl: switch STP on bridge '$br_sysname' to user mode..."
+		${BRCTL_BIN} stp ${br_sysname} off
+		${BRCTL_BIN} stp ${br_sysname} on
+		return 0
+	fi
 
 	${MSTPCTL_BIN} addbridge "$br_sysname"
 	mstpd_log_debug "lib: bridge '$br_sysname' added"
@@ -326,11 +387,29 @@ mstpd_configure()
 
 		# Delete bridges that is not exists in mstpd config
 		for bridge_current in $bridges_current; do
-			# if bridge is not in mstpd config then
+			# If bridge is not in mstpd config then
 			# delete bridge from mstpd
 			if ! list_contains bridges "$bridge_current"; then
 				${MSTPCTL_BIN} delbridge "$bridge_current"
 				mstpd_log_info "lib: bridge '$bridge_current' deleted (not controlled)"
+
+				# Check bridge STP state
+				mstpd_bridge_stp_state $bridge_current
+				if [ "$?" = "2" ]; then
+					local br_ifname=${bridge_current/br-/}
+					local if_stp="$(uci_get network.${br_ifname}.stp)"
+
+					if [ "$if_stp" != "1" ] && [ "$if_stp" != "on" ]; then
+						# Disable STP on bridge
+						mstpd_log_info "lib: brctl: disable STP on bridge '$bridge_current'..."
+						${BRCTL_BIN} stp ${bridge_current} off
+					else
+						# Current STP state is user STP, switch to kernel STP
+						mstpd_log_info "lib: brctl: switch STP on bridge '$bridge_current' from user to kernel mode..."
+						${BRCTL_BIN} stp ${bridge_current} off
+						${BRCTL_BIN} stp ${bridge_current} on
+					fi
+				fi
 			fi
 		done
 	fi

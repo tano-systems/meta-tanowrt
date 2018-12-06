@@ -1,13 +1,15 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano12"
+PR = "tano13"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
                     file://debian/copyright;md5=332234a99007d25da40f41ee96aa388f"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
+RDEPENDS_${PN} += "bridge-utils"
 
 SRC_URI = "\
 	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
