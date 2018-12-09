@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -35,6 +35,7 @@ SRC_URI = "\
 	file://0006-fix-markup.patch \
 	file://0009-fix-syslog-and-dmesg-textarea-height.patch \
 	file://0010-fix-mounted-filesystems-info.patch \
+	file://0014-luci-mod-status-split-status-page-into-a-series-of-p.patch \
 	file://0015-luci-mod-system-output-only-existing-timezones.patch \
 	file://0016-luci-mod-system-change-button-text-from-Dismiss-to-Close.patch \
 	file://99_luci-theme-initial \
