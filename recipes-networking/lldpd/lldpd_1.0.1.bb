@@ -1,5 +1,5 @@
 #
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "A 802.1ab implementation (LLDP) to help you locate neighbors of all your equipments"
 SECTION = "net/misc"

@@ -6,11 +6,18 @@ START=90
 STOP=01
 
 USE_PROCD=1
+LLDPDBIN=/usr/sbin/lldpd
 LLDPCLI=/usr/sbin/lldpcli
 LLDPSOCKET=/var/run/lldpd.socket
 LLDPD_CONF=/tmp/lldpd.conf
 LLDPD_CONFS_DIR=/tmp/lldpd.d
-LLDPD_RUNNING_FILTER=/var/run/lldpd.filter
+
+LLDPD_RUN=/var/run/lldpd
+LLDPD_RUNNING_FILTER=${LLDPD_RUN}/lldpd.filter
+LLDPD_RUNNING_CDP=${LLDPD_RUN}/lldpd.cdp
+LLDPD_RUNNING_FDP=${LLDPD_RUN}/lldpd.fdp
+LLDPD_RUNNING_SONMP=${LLDPD_RUN}/lldpd.sonmp
+LLDPD_RUNNING_EDP=${LLDPD_RUN}/lldpd.edp
 
 . "$IPKG_INSTROOT/lib/functions/network.sh"
 . "$IPKG_INSTROOT/usr/share/libubox/jshn.sh"
@@ -108,15 +115,20 @@ start_service() {
 	local readonly_mode
 	config_get_bool readonly_mode 'config' 'readonly_mode' 0
 
-	mkdir -p /var/run/lldpd
-	chown lldpd:lldpd /var/run/lldpd
+	mkdir -p ${LLDPD_RUN}
+	chown lldpd:lldpd ${LLDPD_RUN}
 
 	# When lldpd starts, it also loads up what we write in this config file
 	write_lldpd_conf
 
 	procd_open_instance
-	procd_set_param command /usr/sbin/lldpd
+	procd_set_param command ${LLDPDBIN}
 	procd_append_param command -d # don't daemonize, procd will handle that for us
+
+	echo -n "$enable_cdp" > $LLDPD_RUNNING_CDP
+	echo -n "$enable_fdp" > $LLDPD_RUNNING_FDP
+	echo -n "$enable_sonmp" > $LLDPD_RUNNING_SONMP
+	echo -n "$enable_edp" > $LLDPD_RUNNING_EDP
 
 	[ $enable_cdp -gt 0 ] && procd_append_param command '-c'
 	[ $enable_fdp -gt 0 ] && procd_append_param command '-f'
@@ -170,17 +182,23 @@ lldpcli_running_config_get_value() {
 reload_service() {
 	running || return 1
 
-	local running_cid_pattern=""
+	local running_cid_pattern
+	local running_rx_only
+	local running_no_inventory
+	local running_filter
+	local running_cdp
+	local running_edp
+	local running_fdp
+	local running_sonmp
+
 	local config_cid_pattern=""
-
-	local running_rx_only=0
 	local config_rx_only=0
-
 	local config_no_inventory=0
-	local running_no_inventory=0
-
 	local config_filter=0
-	local running_filter=""
+	local config_cdp=0
+	local config_edp=0
+	local config_fdp=0
+	local config_sonmp=0
 
 	config_load 'lldpd'
 	lldpcli_running_config_read
@@ -197,6 +215,16 @@ reload_service() {
 	if [ -f "$LLDPD_RUNNING_FILTER" ]; then running_filter=`cat $LLDPD_RUNNING_FILTER`; fi
 	config_get config_filter 'config' 'filter' 15
 
+	if [ -f "$LLDPD_RUNNING_CDP" ]; then running_cdp=`cat $LLDPD_RUNNING_CDP`; fi
+	if [ -f "$LLDPD_RUNNING_EDP" ]; then running_edp=`cat $LLDPD_RUNNING_EDP`; fi
+	if [ -f "$LLDPD_RUNNING_FDP" ]; then running_fdp=`cat $LLDPD_RUNNING_FDP`; fi
+	if [ -f "$LLDPD_RUNNING_SONMP" ]; then running_sonmp=`cat $LLDPD_RUNNING_SONMP`; fi
+
+	config_get config_cdp 'config' 'enable_cdp' 0
+	config_get config_edp 'config' 'enable_edp' 0
+	config_get config_fdp 'config' 'enable_fdp' 0
+	config_get config_sonmp 'config' 'enable_sonmp' 0
+
 	if [ "x$running_cid_pattern" == "x(none)" ]; then running_cid_pattern=""; fi
 	if [ "x$running_rx_only" == "xyes" ]; then running_rx_only=1; else running_rx_only=0; fi
 	if [ "x$running_no_inventory" == "xyes" ]; then running_no_inventory=1; else running_no_inventory=0; fi
@@ -204,7 +232,11 @@ reload_service() {
 	if [ "x$running_cid_pattern"  != "x$config_cid_pattern" ] || \
 	   [ "x$running_filter"       != "x$config_filter" ] || \
 	   [ "x$running_no_inventory" != "x$config_no_inventory" ] || \
-	   [ "x$running_rx_only"      != "x$config_rx_only" ];
+	   [ "x$running_rx_only"      != "x$config_rx_only" ] || \
+	   [ "x$running_cdp"          != "x$config_cdp" ] || \
+	   [ "x$running_edp"          != "x$config_edp" ] || \
+	   [ "x$running_fdp"          != "x$config_fdp" ] || \
+	   [ "x$running_sonmp"        != "x$config_sonmp" ];
 	then
 		# Restart LLDPd
 		# Some parameters can't be configured at runtime
@@ -234,5 +266,5 @@ reload_service() {
 }
 
 stop_service() {
-	rm -rf /var/run/lldpd $LLDPSOCKET $LLDPD_RUNNING_FILTER
+	rm -rf ${LLDPD_RUN} $LLDPSOCKET
 }
