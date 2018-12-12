@@ -10,6 +10,10 @@ LLDPCLI=/usr/sbin/lldpcli
 LLDPSOCKET=/var/run/lldpd.socket
 LLDPD_CONF=/tmp/lldpd.conf
 LLDPD_CONFS_DIR=/tmp/lldpd.d
+LLDPD_RUNNING_FILTER=/var/run/lldpd.filter
+
+. "$IPKG_INSTROOT/lib/functions/network.sh"
+. "$IPKG_INSTROOT/usr/share/libubox/jshn.sh"
 
 find_release_info()
 {
@@ -22,16 +26,20 @@ find_release_info()
 
 write_lldpd_conf()
 {
-	. /lib/functions/network.sh
-
 	local lldp_description
 	local lldp_hostname
+	local lldp_platform
 	local lldp_tx_interval
+	local lldp_tx_hold
+	local lldp_sys_mgmt_ip
 
 	config_load 'lldpd'
 	config_get lldp_description 'config' 'lldp_description' "$(find_release_info)"
 	config_get lldp_hostname 'config' 'lldp_hostname' ''
+	config_get lldp_platform 'config' 'lldp_platform' ''
 	config_get lldp_tx_interval 'config' 'lldp_tx_interval' 0
+	config_get lldp_tx_hold 'config' 'lldp_tx_hold' 0
+	config_get lldp_sys_mgmt_ip 'config' 'lldp_sys_mgmt_ip' ''
 
 	local ifaces
 	config_get ifaces 'config' 'interface'
@@ -48,23 +56,42 @@ write_lldpd_conf()
 	echo -n > "$LLDPD_CONF"
 	[ -n "$ifnames" ] && echo "configure system interface pattern" "$ifnames" >> "$LLDPD_CONF"
 	[ $lldp_tx_interval -gt 0 ] && echo "configure lldp tx-interval" "$lldp_tx_interval" >> "$LLDPD_CONF"
+	[ $lldp_tx_hold -gt 0 ] && echo "configure lldp tx-hold" "$lldp_tx_hold" >> "$LLDPD_CONF"
 	[ -n "$lldp_description" ] && echo "configure system description" "\"$lldp_description\"" >> "$LLDPD_CONF"
 	[ -n "$lldp_hostname" ] && echo "configure system hostname" "\"$lldp_hostname\"" >> "$LLDPD_CONF"
+	[ -n "$lldp_platform " ] && echo "configure system platform" "\"$lldp_platform\"" >> "$LLDPD_CONF"
+	[ -n "$lldp_sys_mgmt_ip" ] && echo "configure system ip management pattern" "\"$lldp_sys_mgmt_ip\"" >> "$LLDPD_CONF"
 
 	# Since lldpd's sysconfdir is /tmp, we'll symlink /etc/lldpd.d to /tmp/$LLDPD_CONFS_DIR
 	[ -e $LLDPD_CONFS_DIR ] || ln -s /etc/lldpd.d $LLDPD_CONFS_DIR
 }
 
-start_service() {
+read_cid_ifaces() {
+	local ifaces
+	config_get ifaces 'config' 'cid_interface'
 
+	local iface ifnames=""
+	for iface in $ifaces; do
+		local ifname=""
+		if network_get_device ifname "$iface" || [ -e "/sys/class/net/$iface" ]; then
+			append ifnames "${ifname:-$iface}" ","
+		fi
+	done
+
+	echo $ifnames
+}
+
+start_service() {
 	local enable_cdp
 	local enable_fdp
 	local enable_sonmp
 	local enable_edp
 	local lldp_class
 	local lldp_location
+	local lldpmed_no_inventory
 	local readonly_mode
 	local agentxsocket
+	local filter
 
 	config_load 'lldpd'
 	config_get_bool enable_cdp 'config' 'enable_cdp' 0
@@ -73,8 +100,13 @@ start_service() {
 	config_get_bool enable_edp 'config' 'enable_edp' 0
 	config_get lldp_class 'config' 'lldp_class'
 	config_get lldp_location 'config' 'lldp_location'
+	config_get_bool lldpmed_no_inventory 'config' 'lldpmed_no_inventory' 0
 	config_get_bool readonly_mode 'config' 'readonly_mode' 0
 	config_get agentxsocket 'config' 'agentxsocket'
+	config_get filter 'config' 'filter' 15
+
+	local readonly_mode
+	config_get_bool readonly_mode 'config' 'readonly_mode' 0
 
 	mkdir -p /var/run/lldpd
 	chown lldpd:lldpd /var/run/lldpd
@@ -91,8 +123,17 @@ start_service() {
 	[ $enable_sonmp -gt 0 ] && procd_append_param command '-s'
 	[ $enable_edp -gt 0 ] && procd_append_param command '-e'
 	[ $readonly_mode -gt 0 ] && procd_append_param command '-r'
+	[ $lldpmed_no_inventory -gt 0 ] && procd_append_param command '-i'
 	[ -n "$lldp_class" ] && procd_append_param command -M "$lldp_class"
 	[ -n "$agentxsocket" ] && procd_append_param command -x -X "$agentxsocket"
+	if [ -n "$filter" ]; then
+		procd_append_param command -H "$filter"
+		echo -n "$filter" > $LLDPD_RUNNING_FILTER
+	fi
+
+	# ChassisID interfaces
+	local ifnames=`read_cid_ifaces`
+	[ -n "$ifnames" ] && procd_append_param command -C "$ifnames"
 
 	# Overwrite default configuration locations processed by lldpcli at start
 	procd_append_param command -O "$LLDPD_CONF"
@@ -110,15 +151,75 @@ service_running() {
 	pgrep "lldpd: monitor." &> /dev/null
 }
 
+lldpcli_running_config_read() {
+	json_init
+	json_load "`$LLDPCLI -f json show configuration`"
+}
+
+lldpcli_running_config_get_value() {
+	local param=$1
+	local value=""
+	json_select "configuration"
+		json_select "config"
+			json_get_var value "$param"
+		json_select ..
+	json_select ..
+	echo $value
+}
+
 reload_service() {
 	running || return 1
+
+	local running_cid_pattern=""
+	local config_cid_pattern=""
+
+	local running_rx_only=0
+	local config_rx_only=0
+
+	local config_no_inventory=0
+	local running_no_inventory=0
+
+	local config_filter=0
+	local running_filter=""
+
+	config_load 'lldpd'
+	lldpcli_running_config_read
+
+	running_cid_pattern="`lldpcli_running_config_get_value cid-pattern`"
+	config_cid_pattern="`read_cid_ifaces`"
+
+	running_rx_only="`lldpcli_running_config_get_value rx-only`"
+	config_get_bool config_rx_only 'config' 'readonly_mode' 0
+
+	running_no_inventory="`lldpcli_running_config_get_value lldpmed-no-inventory`"
+	config_get_bool config_no_inventory 'config' 'lldpmed_no_inventory' 0
+
+	if [ -f "$LLDPD_RUNNING_FILTER" ]; then running_filter=`cat $LLDPD_RUNNING_FILTER`; fi
+	config_get config_filter 'config' 'filter' 15
+
+	if [ "x$running_cid_pattern" == "x(none)" ]; then running_cid_pattern=""; fi
+	if [ "x$running_rx_only" == "xyes" ]; then running_rx_only=1; else running_rx_only=0; fi
+	if [ "x$running_no_inventory" == "xyes" ]; then running_no_inventory=1; else running_no_inventory=0; fi
+
+	if [ "x$running_cid_pattern"  != "x$config_cid_pattern" ] || \
+	   [ "x$running_filter"       != "x$config_filter" ] || \
+	   [ "x$running_no_inventory" != "x$config_no_inventory" ] || \
+	   [ "x$running_rx_only"      != "x$config_rx_only" ];
+	then
+		# Restart LLDPd
+		# Some parameters can't be configured at runtime
+		restart
+		return 0
+	fi
+
 	$LLDPCLI -u $LLDPSOCKET &> /dev/null <<-EOF
 		pause
 		unconfigure lldp custom-tlv
 		unconfigure system interface pattern
 		unconfigure system description
 		unconfigure system hostname
-		unconfigure lldp tx-interval
+		unconfigure system platform
+		unconfigure system ip management pattern
 	EOF
 	# Rewrite lldpd.conf
 	# If something changed it should be included by the lldpcli call
@@ -133,5 +234,5 @@ reload_service() {
 }
 
 stop_service() {
-	rm -rf /var/run/lldp $LLDPSOCKET
+	rm -rf /var/run/lldpd $LLDPSOCKET $LLDPD_RUNNING_FILTER
 }
