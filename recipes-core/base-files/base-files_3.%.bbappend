@@ -4,7 +4,10 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano18"
+PR_append = ".tano19"
+
+DEPENDS += "os-release"
+RDEPENDS_${PN} += "os-release"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -150,6 +153,10 @@ do_install_append () {
         rm -rf ${STMP}/lib/upgrade
         rm -f ${STMP}/sbin/firstboot
 
+        # Moved to tano-version.bb
+        rm -f ${STMP}/etc/os-release
+        rm -f ${STMP}/usr/lib/os-release
+
         # Some files in standard base-files don't apply to openwrt flavour
         # These two are about avoiding flash writes
         if [ "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', 'true', 'false', d)}" = "true" ]; then
@@ -200,7 +207,6 @@ do_install_append () {
 
         # Run VERSION_SED script
         ${OPENWRT_VERSION_SED} \
-            ${D}/usr/lib/os-release \
             ${D}${sysconfdir}/device_info \
             ${D}${sysconfdir}/openwrt_version \
             ${D}${sysconfdir}/openwrt_release \
@@ -312,8 +318,3 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/sysctl.d/10-default.conf \
 	${sysconfdir}/rc.local \
 "
-
-PROVIDES += "os-release"
-RPROVIDES_${PN} += "os-release"
-RREPLACES_${PN} += "os-release"
-RCONFLICTS_${PN} += "os-release"
