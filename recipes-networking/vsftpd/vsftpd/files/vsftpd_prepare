@@ -106,6 +106,7 @@ vusers_iterate()
 	echo "anon_other_write_enable=$others_enable" >> $VUSER_CONF_DIR/$name
 	echo "anon_umask=$_umask" >> $VUSER_CONF_DIR/$name
 	echo "anon_max_rate=$maxrate" >> $VUSER_CONF_DIR/$name
+	echo "local_max_rate=$maxrate" >> $VUSER_CONF_DIR/$name
 
 	if ! [ -d "$home" ]; then
 		mkdir -p $home
