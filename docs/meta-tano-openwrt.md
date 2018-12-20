@@ -13,6 +13,7 @@ Available image features:
 
 Available extra features provided by this layer:
 - `procd` - use procd init manager
+- `cgroups` - enable cgroups support
 
 #### `OPENWRT_ZONENAME` and `OPENWRT_TIMEZONE`
 

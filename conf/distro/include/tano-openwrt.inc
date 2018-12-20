@@ -16,7 +16,10 @@ VIRTUAL-RUNTIME_network_manager = "netifd"
 DISTRO_FEATURES = "${DISTRO_FEATURES_DEFAULT} ${DISTRO_FEATURES_LIBC}"
 
 # Set procd as init manager
-DISTRO_FEATURES_append = " procd"
+DISTRO_FEATURES_append = " procd "
+
+# Enable cgroups support
+DISTRO_FEATURES_append = " cgroups "
 
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
