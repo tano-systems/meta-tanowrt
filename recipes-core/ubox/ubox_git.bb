@@ -2,7 +2,7 @@
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018, Anton Kikin <a.kikin@tano-systems.com>
-PR = "tano3"
+PR = "tano4"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -18,8 +18,9 @@ SRC_URI = "\
           file://log.init \
           "
 
-# 14.02.2018 11:08:54
-SRCREV = "128bc35fa951ac3beff6e977bc3cced87c2e2600"
+# 18.12.2018
+# kmodloader: load_modprobe: abort after 2 attempts
+SRCREV = "876c7f5bfb9b13d48e6d7960dd114082a0a95a6d"
 
 S = "${WORKDIR}/git"
 
