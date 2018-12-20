@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Normal Openwrt system requirements without web-interface"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system without web-interface"
 LICENSE = "MIT"
@@ -29,4 +29,5 @@ RDEPENDS_${PN}-network = "\
 	odhcpd \
 	umdnsd \
 	${@bb.utils.contains('DISTRO_FEATURES', 'cgroups', 'libcgroup', '', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'cgroups', 'kmod-cgroups', '', d)} \
 "
