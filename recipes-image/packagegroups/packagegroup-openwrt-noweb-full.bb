@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -42,6 +42,7 @@ RDEPENDS_${PN}-base = "\
 RDEPENDS_${PN}-console = "\
 	ncurses \
 	ncurses-terminfo \
+	htop \
 "
 
 # packagegroup-openwrt-noweb-full-network
