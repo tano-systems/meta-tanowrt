@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "LuCI Statistics Application"
 LICENSE = "Apache-2.0"
@@ -38,10 +38,3 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/luci_statistics.init ${D}${sysconfdir}/init.d/luci_statistics
 }
-
-# Patches
-SRC_URI += "\
-	file://0001-add-image_height-option-to-config-file.patch \
-	file://0002-allow-to-configure-plot-width-and-height.patch \
-	file://0003-trim-string-in-_expand.patch \
-"

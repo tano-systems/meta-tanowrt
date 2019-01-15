@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "LuCI Support for OpenVPN"
 LICENSE = "Apache-2.0"
@@ -17,7 +17,3 @@ inherit luasrcdiet
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-openvpn;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
-
-SRC_URI += "\
-	file://0900-luci-app-openvpn-Fix-russian-translation.patch \
-"

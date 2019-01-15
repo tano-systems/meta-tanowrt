@@ -2,10 +2,10 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano22"
+PR = "tano23"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
-HOMEPAGE = "https://github.com/openwrt/luci"
+HOMEPAGE = "https://github.com/tano-systems/luci"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 SECTION = "base"
@@ -28,15 +28,6 @@ require luci.inc
 SRC_URI = "\
 	${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL} \
 	file://cmake.patch \
-	file://0001-Fix-user.setpasswd-function.patch \
-	file://0002-Use-etc-localtime-with-zoneinfo-instead-of-etc-TZ.patch \
-	file://0004-fix-network-bridge-functions.patch \
-	file://0005-fix-ru-i18n.patch \
-	file://0006-fix-markup.patch \
-	file://0009-fix-syslog-and-dmesg-textarea-height.patch \
-	file://0010-fix-mounted-filesystems-info.patch \
-	file://0015-luci-mod-system-output-only-existing-timezones.patch \
-	file://0016-luci-mod-system-change-button-text-from-Dismiss-to-Close.patch \
 	file://99_luci-theme-initial \
 "
 

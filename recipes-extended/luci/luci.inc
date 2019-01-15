@@ -1,13 +1,12 @@
 
-LUCI_GIT_URI      = "git://github.com/openwrt/luci.git"
-LUCI_GIT_BRANCH   = "master"
-LUCI_GIT_PROTOCOL = "git"
+LUCI_GIT_URI      ?= "git://github.com/tano-systems/luci.git"
+LUCI_GIT_BRANCH   ?= "tano/master"
+LUCI_GIT_PROTOCOL ?= "git"
 
-# 14.12.2018
-# Merge pull request #2375 from sotux/master-luci-app-aria2
-LUCI_GIT_SRCREV = "b5fb2a841f476cfc35bde65a52484be38e5ce5c4"
+# 18.01.2018
+LUCI_GIT_SRCREV ?= "67b5ba71c3ff22e4e59709edbd13ea615cf50412"
 
-PR_append = ".19"
+PR_append = ".20"
 
 libdir = "/usr/lib"
 
