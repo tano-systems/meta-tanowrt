@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Normal Openwrt system requirements without web-interface"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system without web-interface"
 LICENSE = "MIT"
@@ -19,6 +19,8 @@ RDEPENDS_${PN} = "\
 	packagegroup-openwrt-minimal \
 	packagegroup-openwrt-noweb-base-network \
 	make-ext4fs \
+	tzdata-europe \
+	tzdata-asia \
 "
 
 # packagegroup-openwrt-noweb-base-network
