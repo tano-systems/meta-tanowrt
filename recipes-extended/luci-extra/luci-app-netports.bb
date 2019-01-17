@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0-git${SRCPV}"
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "Network ports status LuCI application"
 LICENSE = "MIT"
@@ -17,6 +17,8 @@ GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-netports.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
 SRCREV = "${GIT_SRCREV}"
+
+CONFFILES_${PN} = "${sysconfdir}/config/luci_netports"
 
 S = "${WORKDIR}/git"
 
