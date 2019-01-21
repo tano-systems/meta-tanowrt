@@ -1,4 +1,4 @@
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "A full-featured SSL VPN solution via tun device."
 HOMEPAGE = "http://openvpn.sourceforge.net"
