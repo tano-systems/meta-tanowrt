@@ -2,8 +2,9 @@
 #
 # Copyright (C) 2008 OpenWrt.org
 #
-# Copyright (C) 2018 Tano Systems, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Tano Systems, Anton Kikin <a.kikin@tano-systems.com>
 #   - added dlmod functionality
+#   - added simple SNMPv3 support
 #
 START=50
 
@@ -242,6 +243,50 @@ snmpd_sink_add() {
 	echo "$section $host$port $community" >> $CONFIGFILE
 }
 
+snmpd_snmpv3_add() {
+	local cfg="$1"
+	local version
+	local username
+	local auth_type
+	local auth_pass
+	local privacy_type
+	local privacy_pass
+	local allow_write
+
+	config_get version "$cfg" snmp_version
+	[ -n "$version" -a "$version" != "v1/v2c" ] || return 0
+	if [ "$version" != "v1/v2c/v3" -a "$version" != "v3" ]; then
+		return 0
+	fi
+
+	config_get username "$cfg" snmp_v3_username
+	[ -n "$username" ] || return 0
+
+	config_get auth_type "$cfg" snmp_v3_auth_type
+	[ -n "$auth_type" ] || return 0
+
+	config_get auth_pass "$cfg" snmp_v3_auth_pass
+	config_get privacy_type "$cfg" snmp_v3_privacy_type
+	config_get privacy_pass "$cfg" snmp_v3_privacy_pass
+
+	config_get_bool allow_write "$cfg" snmp_v3_allow_write
+	local useraccess="Rouser"
+	[ $allow_write -ne 0 ] && useraccess="Rwuser"
+
+	if [ -n "$privacy_type" -a "$privacy_type" != "none" ]; then
+		echo "CreateUser $username $auth_type \"$auth_pass\" $privacy_type \"$privacy_pass\"" >> $CONFIGFILE
+		echo "$useraccess $username priv" >> $CONFIGFILE
+	else
+		if [ -n "$auth_type" -a "$auth_type" != "none" ]; then
+			echo "CreateUser $username $auth_type \"$auth_pass\"" >> $CONFIGFILE
+			echo "$useraccess $username auth" >> $CONFIGFILE
+		else
+			echo "CreateUser $username" >> $CONFIGFILE
+			echo "$useraccess $username noauth" >> $CONFIGFILE
+		fi
+	fi
+}
+
 append_parm() {
 	local section="$1"
 	local option="$2"
@@ -319,6 +364,7 @@ start_service() {
 	append_authtrapenable authtrapenable enable authtrapenable
 	append_parm v1trapaddress host v1trapaddress
 	append_parm trapsess trapsess trapsess
+	config_foreach snmpd_snmpv3_add snmpd
 
 	procd_set_param command $PROG -Lf /var/log/snmpd.log -f
 	procd_set_param file $CONFIGFILE
