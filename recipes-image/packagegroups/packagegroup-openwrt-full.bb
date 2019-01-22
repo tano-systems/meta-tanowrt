@@ -1,10 +1,10 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano12"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -24,8 +24,6 @@ RDEPENDS_${PN} = "\
 #luci-app-commands
 #luci-app-qos
 #luci-app-mwan3
-#luci-app-qos
-#luci-app-mwan3
 #luci-app-nlbwmon
 #luci-app-ttyd
 
@@ -35,7 +33,7 @@ RDEPENDS_${PN}-luci = "\
 	luci-app-uhttpd \
 	luci-app-openvpn \
 	luci-app-statistics \
-	luci-app-snmpd \
+	luci-app-snmpd-tn \
 	luci-app-mstpd \
 	luci-app-ddns \
 	luci-app-vsftpd \
