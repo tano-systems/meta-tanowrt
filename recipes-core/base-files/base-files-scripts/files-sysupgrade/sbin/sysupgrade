@@ -125,7 +125,7 @@ list_changed_conffiles() {
 	list_conffiles | while read file csum; do
 		[ -r "$file" ] || continue
 
-		echo "${csum}  ${file}" | sha256sum -sc - || echo "$file"
+		echo "${csum}  ${file}" | md5sum -sc - || echo "$file"
 	done
 }
 

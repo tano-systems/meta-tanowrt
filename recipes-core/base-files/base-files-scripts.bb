@@ -4,7 +4,7 @@
 
 inherit openwrt openwrt-base-files
 
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
