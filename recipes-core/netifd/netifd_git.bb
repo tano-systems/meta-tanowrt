@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 26.11.2018
-# interface: fix return code of __interface_add()
-SRCREV_netifd = "dfa4ede4e3b2fd0f50b14fcb2dd141cd73a5c74f"
+# 17.12.2018
+# proto: fix logic inversion in previous commit
+SRCREV_netifd = "2750ce2e0a9177e024823332853c76dbd0937c98"
 
 S = "${WORKDIR}/git"
 
