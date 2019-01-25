@@ -26,11 +26,14 @@ start_service() {
 }
 
 reload_service() {
+	local rv=0
+
 	init_switch
-	ubus call network reload
+	ubus call network reload || rv=1
 	if [ -x /sbin/wifi ]; then
 		/sbin/wifi reload_legacy
 	fi
+	return $rv
 }
 
 stop_service() {
@@ -136,9 +139,9 @@ service_triggers()
 	procd_open_validate
 	validate_atm_bridge_section
 	validate_route_section
-	validate_route6_section
+	[ -e /proc/sys/net/ipv6 ] && validate_route6_section
 	validate_rule_section
-	validate_rule6_section
+	[ -e /proc/sys/net/ipv6 ] && validate_rule6_section
 	validate_switch_section
 	validate_switch_vlan
 	procd_close_validate
