@@ -1,10 +1,10 @@
 #
 # Dynamic DNS Client scripts (with IPv6 support)
 #
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano5"
+PR = "tano6"
 PV = "2.7.8"
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
@@ -140,7 +140,6 @@ pkg_postinst_${PN}() {
 		/etc/init.d/ddns enabled && \
 			/etc/init.d/ddns start >/dev/null 2>&1
 	}
-	exit 0	# suppress errors
 }
 
 pkg_prerm_${PN}() {
@@ -153,7 +152,6 @@ pkg_prerm_${PN}() {
 	/etc/init.d/ddns disable
 	# clear LuCI indexcache
 	rm -f /tmp/luci-indexcache >/dev/null 2>&1
-	exit 0	# suppress errors
 }
 
 ####
