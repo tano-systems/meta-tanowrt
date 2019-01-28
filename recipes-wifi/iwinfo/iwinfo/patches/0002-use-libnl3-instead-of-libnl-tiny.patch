@@ -1,0 +1,15 @@
+diff --git a/Makefile b/Makefile
+index 715c03e..3ae9a13 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,8 +27,8 @@ endif
+ 
+ ifneq ($(filter nl80211,$(IWINFO_BACKENDS)),)
+ 	IWINFO_CFLAGS      += -DUSE_NL80211
+-	IWINFO_CLI_LDFLAGS += -lnl-tiny
+-	IWINFO_LIB_LDFLAGS += -lnl-tiny
++	IWINFO_CLI_LDFLAGS += -lnl-3 -lnl-genl-3
++	IWINFO_LIB_LDFLAGS += -lnl-3 -lnl-genl-3
+ 	IWINFO_LIB_OBJ     += iwinfo_nl80211.o
+ endif
+ 
