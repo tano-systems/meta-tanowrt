@@ -8,14 +8,14 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano4"
+PR = "tano5"
 
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 31.07.2018
-# Revert "build: compile with -ffunction-sections, -fdata-sections and LTO"
-SRCREV = "65b8333f5b66f8812c1ed21a4d5b28a576e6ba63"
+# 25.12.2018
+# iwinfo: fix QCA9984 vendor id
+SRCREV = "dd508af481406bbbe42eaa20a54226645f0301cc"
 
 inherit openwrt
 
