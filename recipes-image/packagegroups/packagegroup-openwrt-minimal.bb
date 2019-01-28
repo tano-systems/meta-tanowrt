@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Minimal complete OpenWRT system requirements"
 DESCRIPTION = "The set of packages required for core Openwrt system with network but no gui"
 LICENSE = "MIT"
@@ -37,7 +37,6 @@ RDEPENDS_${PN}-network = "\
 	${VIRTUAL-RUNTIME_network_manager} \
 	uclient \
 	ustream-ssl \
-	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iw', '',d)} \
-	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'hostapd', '',d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'cfg80211 iw hostapd', '',d)} \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcp6c', '', d)} \
 "
