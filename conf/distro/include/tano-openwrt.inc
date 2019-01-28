@@ -27,7 +27,6 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
 # Clean DISTRO_FEATURES
 DISTRO_FEATURES_remove = "\
     wayland \
-    wifi \
     pci \
     3g \
     nfc \
