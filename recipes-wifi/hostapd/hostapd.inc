@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=495cbce6008253de4b4d8f4cdfae9f4f"
 
-INC_PR = "tano0"
+INC_PR = "tano1"
 
 inherit pkgconfig
 
