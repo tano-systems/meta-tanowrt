@@ -8,16 +8,8 @@ TOOLCHAIN_BRAND_qemuall ?= "gcc"
 SDKGCCVERSION_qemuall   ?= "7.3%"
 GCCVERSION_qemuall      ?= "7.3%"
 
-TC_SANE_DEFAULT ?= "linaro"
-TOOLCHAIN_TYPE  ?= "external"
-TOOLCHAIN_BRAND ?= "${@[d.getVar('TC_SANE_DEFAULT', True),'gcc'][d.getVar('TOOLCHAIN_TYPE', True) == 'internal']}"
+TOOLCHAIN_TYPE  ?= "internal"
+TOOLCHAIN_BRAND ?= "linaro"
 
-require conf/distro/include/toolchain-${TOOLCHAIN_BRAND}.inc
+require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}-${TOOLCHAIN_BRAND}.inc
 require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}.inc
-
-# This dependencies fixes QA Issue warnings for Linaro Toolchain
-RDEPENDS_ldd    += "bash"
-RDEPENDS_tzcode += "bash"
-
-RDEPENDS_ldd_remove_qemuall = "bash"
-RDEPENDS_tzcode_remove_qemuall = "bash"

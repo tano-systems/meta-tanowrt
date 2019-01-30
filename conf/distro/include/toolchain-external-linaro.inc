@@ -111,3 +111,7 @@ python external_linaro_toolchain_license_handler () {
 	d.setVar('ELT_LICENSE', "%s&%s&%s&%s" % (lc_libc, lc_gcc, lc_rle, lc_gdb))
 }
 addhandler external_linaro_toolchain_license_handler
+
+# This dependencies fixes QA Issue warnings for Linaro Toolchain
+RDEPENDS_ldd += "bash"
+RDEPENDS_tzcode += "bash"
