@@ -1,0 +1,188 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# Authors: Anton Kikin <a.kikin@tano-systems.com>
+# Some modifications and improvements
+#
+# Copyright (c) 2016, Inteno Broadband Technology AB. All rights reserved.
+#
+
+START=01
+USE_PROCD=1
+#PROCD_DEBUG=1
+NAME=cgrulesengd
+
+CGBASEDIR=/sys/fs/cgroup
+CGCONFIG="cgroups"
+#CGCONFIGDIR="/etc/config/cgroups.d"
+
+CGRULESCONF=/tmp/cgrules.conf
+CGCONFIGCONF=/tmp/cgconfig.conf
+CGPIDFILE=/var/run/cgroups.pid
+
+log_warning_msg() {
+	logger -p warning -s -t "cgroups" $*
+}
+
+log_failure_msg() {
+	logger -p error -s -t "cgroups" $*
+}
+
+cgroupinit_add_knob_val_to_list() {
+CG_KNOB_VAL_LIST="$CG_KNOB_VAL_LIST
+`echo $1 |tr -d ' '`"
+}
+
+cgroupinit_create_group() {
+	local cgroup=$1
+	local cgroup_path
+	local curr
+
+	if [ "$cgroup" == "_root_" ]; then
+		cgroup_path=.
+	else
+		cgroup_path=$(echo $cgroup | tr '_' '/')
+	fi
+
+	echo -e "group $cgroup_path {" >> $CGCONFIGCONF
+
+	CG_KNOB_VAL_LIST=
+	config_list_foreach $cgroup option cgroupinit_add_knob_val_to_list
+	CG_KNOB_VAL_LIST=$(echo "$CG_KNOB_VAL_LIST" | sort)
+	curr="_none_"
+
+	for knob_val in $CG_KNOB_VAL_LIST; do
+		local ctrlr knob val
+
+		knob=$(echo $knob_val | awk -F= '{print $1}')
+		ctrlr=$(echo $knob | awk -F. '{print $1}')
+		val=$(echo $knob_val | awk -F= '{print $2}')
+
+		if [ "$curr" != "$ctrlr" ]; then
+			[ "$curr" == "_none_" ] || echo -e "\t}" >> $CGCONFIGCONF
+			curr=$ctrlr
+			echo -e "\t$curr {" >> $CGCONFIGCONF
+		fi
+
+		echo -e "\t\t$knob = \"$val\";" >> $CGCONFIGCONF
+	done
+
+	[ "$curr" == "_none_" ] || echo -e "\t}" >> $CGCONFIGCONF
+	echo -e "}\n" >> $CGCONFIGCONF
+}
+
+cgroupinit_add_to_rules() {
+	local rule=$1
+	local procname
+	local procgroup
+
+	procname=$(echo $rule | awk -F= '{print $1}')
+	procgroup=$(echo $rule | awk -F= '{print $2}')
+
+	echo -e "*:$procname\t*\t$procgroup" >> $CGRULESCONF
+}
+
+cgroupinit_create_procmap() {
+	local procmap=$1
+	config_list_foreach $procmap procmap cgroupinit_add_to_rules
+}
+
+cgroupinit_generate_config() {
+	local enab defgrp
+
+	UCI_CONFIG_DIR=
+	config_load $CGCONFIG
+
+	config_get enab cgroups enabled "1"
+	[ $enab -eq 0 ] && return 1
+
+	config_get defgrp cgroups defgroup "_undef_"
+	if [ "$defgrp" == "_undef_" ]; then
+		log_failure_msg "Default cgroup is not defined in '/etc/config/$CGCONFIG'"
+		return 1
+	fi
+
+	#
+	# mount here instead of in cgconfigparser to get all options right.
+	# mounting without any controllers listed means mount all available.
+	#
+	if ! grep -q " $CGBASEDIR cgroup " /proc/mounts; then
+		mount -t cgroup -o nodev,noexec,nosuid cgroup $CGBASEDIR
+		if [ $? -ne 0 ]; then
+			log_failure_msg "Failed to mount cgroup filesystem to '$CGBASEDIR'"
+			return 1
+		fi
+	fi
+
+	echo -n '' > $CGCONFIGCONF
+	config_foreach cgroupinit_create_group cgroup
+
+	echo -n '' > $CGRULESCONF
+	config_foreach cgroupinit_create_procmap procmap
+
+#	if [ -d "${CGCONFIGDIR}" ]; then
+#		local files
+#		files=`ls -1 "${CGCONFIGDIR}"`
+#		UCI_CONFIG_DIR="${CGCONFIGDIR}"
+#		for file in $files; do
+#			config_load $file
+#			config_foreach cgroupinit_create_group cgroup
+#			config_foreach cgroupinit_create_procmap procmap
+#		done
+#	fi
+
+	return 0
+}
+
+cgroupinit_default() {
+	local defgrp
+
+	UCI_CONFIG_DIR=
+	config_load $CGCONFIG
+	config_get defgrp cgroups defgroup
+
+	#
+	# Classify everything to default cgroup. Ignore errors, some processes
+	# may exit after ps is run and before cgclassify moves them.
+	#
+	cgclassify -g *:$defgrp `ps | awk '{ print $1 }'` \
+		2>/dev/null || :
+}
+
+#
+# cgrulesengd has hardcoded paths for configuration files
+# use symlinks to point to generated config files
+#
+cgroupinit_cgrulesengd_fixup() {
+	[ -r /etc/cgrules.conf ] || ln -s $CGRULESCONF /etc/cgrules.conf
+	[ -r /etc/cgconfig.conf ] || ln -s $CGCONFIGCONF /etc/cgconfig.conf
+}
+
+start_service() {
+	cgroupinit_generate_config
+	[ $? -eq 0 ] || return
+
+	cgroupinit_cgrulesengd_fixup
+	/usr/sbin/cgconfigparser -l $CGCONFIGCONF
+	if [ $? -ne 0 ]; then
+		log_failure_msg "Failed to parse configuration file"
+		return 1
+	fi
+
+	cgroupinit_default
+
+	procd_open_instance
+	procd_set_param command /usr/sbin/cgrulesengd --nodaemon --syslog
+	procd_set_param respawn
+	procd_set_param stderr 1
+	procd_set_param pidfile $CGPIDFILE
+	procd_close_instance
+}
+
+stop_service() {
+	/usr/sbin/cgclear
+}
+
+service_triggers() {
+	procd_add_reload_trigger $CGCONFIG
+}
