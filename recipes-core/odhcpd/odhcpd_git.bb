@@ -1,8 +1,8 @@
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -14,7 +14,7 @@ DEPENDS = "libubox ubus libnl uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-    git://git.openwrt.org/project/odhcpd.git;name=odhcpd \
+    ${GIT_OPENWRT_ORG_URL}/project/odhcpd.git;name=odhcpd \
     file://0100-OE-build-fails-due-to-libnl-tiny-dependency-in-CMakeLists.patch \
     file://odhcpd.defaults \
     file://odhcpd.init \

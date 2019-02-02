@@ -1,7 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt tiny signify replacement"
 HOMEPAGE = "https://git.openwrt.org/?p=project/usign.git;a=summary"
@@ -9,7 +10,7 @@ LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=a51760fc5328fc7e0e27a5af562c6cfa"
 SECTION = "base"
 
-SRC_URI = "git://git.openwrt.org/project/usign.git \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/usign.git \
           "
 
 # 23.10.2016

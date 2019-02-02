@@ -1,8 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -13,7 +13,7 @@ DEPENDS = "libubox uci ubus iptables"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://git.openwrt.org/project/firewall3.git \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/firewall3.git \
            file://firewall.config \
            file://firewall.init \
            file://firewall.hotplug \

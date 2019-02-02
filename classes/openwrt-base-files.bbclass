@@ -11,12 +11,11 @@
 OPENWRT_SRCREV = "6680fab9474a8a2d66d5ef86e2c392abe0d2c62d"
 OPENWRT_BRANCH = "master"
 
-PR_append = ".o4"
+PR_append = ".o5"
 
 LICENSE_append = "&GPL-2.0+"
 LIC_FILES_CHKSUM_append = " file://${S}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
 
 SRC_URI_append = "\
-	git://github.com/openwrt/openwrt.git;name=openwrt;destsuffix=git/openwrt;branch=${OPENWRT_BRANCH} \
+	${GIT_OPENWRT_ORG_URL}/openwrt/openwrt.git;name=openwrt;destsuffix=git/openwrt;branch=${OPENWRT_BRANCH} \
 "
-

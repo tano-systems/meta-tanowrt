@@ -1,8 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -12,7 +12,7 @@ SECTION = "base"
 DEPENDS = "libubox ubus"
 
 SRC_URI = "\
-	git://git.openwrt.org/project/ugps.git \
+	${GIT_OPENWRT_ORG_URL}/project/ugps.git \
 "
 
 # 12.07.2018

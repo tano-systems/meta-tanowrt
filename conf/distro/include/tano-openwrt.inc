@@ -73,3 +73,4 @@ require conf/distro/include/tano-openwrt-prefs.inc
 require conf/distro/include/tano-openwrt-srcipk.inc
 require conf/distro/include/tano-openwrt-repairs.inc
 require conf/distro/include/tano-openwrt-arago.inc
+require conf/distro/include/tano-openwrt-mirrors.inc

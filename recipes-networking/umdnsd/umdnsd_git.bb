@@ -1,8 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "OpenWrt MDNS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/mdnsd.git;a=summary"
@@ -14,7 +14,7 @@ DEPENDS = "json-c libubox ubus"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://git.openwrt.org/project/mdnsd.git \
+	${GIT_OPENWRT_ORG_URL}/project/mdnsd.git \
 	file://0001-Fix-compile-warnings-treated-as-errors.patch \
 	file://umdns.init \
 	file://umdns.config \

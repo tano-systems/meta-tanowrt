@@ -1,8 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Small stream SSL library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ustream-ssl.git;a=summary"
 LICENSE = "BSD"
@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://ustream-ssl.h;beginline=1;endline=17;md5=f63310467742
 SECTION = "base"
 DEPENDS = "libubox openssl"
 
-SRC_URI = "git://git.openwrt.org/project/ustream-ssl.git \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/ustream-ssl.git \
           "
 
 # 30.07.2018

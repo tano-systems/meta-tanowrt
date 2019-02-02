@@ -1,9 +1,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -41,7 +41,7 @@ DEPENDS += "json-c"
 DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'lua', 'lua5.1', '', d)}"
 
 SRC_URI = "\
-          git://git.openwrt.org/project/libubox.git;branch=master \
+          ${GIT_OPENWRT_ORG_URL}/project/libubox.git;branch=master \
           file://0001-version-libraries.patch \
           file://fix-libdir.patch \
           "

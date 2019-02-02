@@ -1,8 +1,8 @@
 # Copyright (C) 2015, MentorGraphics
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
-# Copyright (C) 2018, Anton Kikin <a.kikin@tano-systems.com>
-PR = "tano4"
+# Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
+PR = "tano5"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -14,7 +14,7 @@ DEPENDS = "ubus libubox uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-          git://git.openwrt.org/project/ubox.git \
+          ${GIT_OPENWRT_ORG_URL}/project/ubox.git \
           file://log.init \
           "
 

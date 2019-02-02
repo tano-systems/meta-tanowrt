@@ -1,5 +1,5 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "Library for accessing wireless device drivers"
@@ -8,7 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano3"
+PR = "tano4"
 
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
@@ -19,7 +19,7 @@ SRCREV = "65b8333f5b66f8812c1ed21a4d5b28a576e6ba63"
 
 inherit openwrt
 
-SRC_URI = "git://git.openwrt.org/project/iwinfo.git \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/iwinfo.git \
            file://0001-fix-typo-in-spcifying-typename-luaL_Reg.patch \
            file://0001-fix-order-of-linker-cmdline-to-help-linking-when-usi.patch \
            file://0001-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \

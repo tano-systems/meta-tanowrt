@@ -1,8 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
 LICENSE = "BSD"
@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://uclient-backend.h;beginline=1;endline=17;md5=b96bb2c7
 SECTION = "base"
 DEPENDS = "libubox ustream-ssl"
 
-SRC_URI = "git://git.openwrt.org/project/uclient.git \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/uclient.git \
           "
 
 # 04.08.2018

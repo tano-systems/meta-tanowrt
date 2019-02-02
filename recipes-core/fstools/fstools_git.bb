@@ -1,8 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano13"
+PR = "tano14"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -23,7 +23,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://git.openwrt.org/project/fstools.git;branch=master \
+SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/fstools.git;branch=master \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
