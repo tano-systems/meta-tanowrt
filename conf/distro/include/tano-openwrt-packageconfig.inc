@@ -4,7 +4,7 @@ PACKAGECONFIG_pn-libwebsockets = "\
 	server \
 	ssl \
 	libuv \
-	${@oe_filter('ipv6', '${DISTRO_FEATURES}', d)} \
+	${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)} \
 "
 
 # Distro-specific package configuration

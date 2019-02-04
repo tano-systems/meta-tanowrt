@@ -1,5 +1,5 @@
 #
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "Various tools relating to the Simple Network Management Protocol"
 HOMEPAGE = "http://www.net-snmp.org/"
@@ -47,7 +47,7 @@ CCACHE = ""
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 #bb.utils.filter
-PACKAGECONFIG ?= "${@oe_filter('ipv6', '${DISTRO_FEATURES}', d)}"
+PACKAGECONFIG ?= "${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)}"
 PACKAGECONFIG[elfutils] = "--with-elf, --without-elf, elfutils"
 PACKAGECONFIG[libnl] = "--with-nl, --without-nl, libnl"
 
@@ -71,7 +71,7 @@ EXTRA_OECONF = "--enable-shared \
                 --with-logfile=/var/log/snmpd.log \
                 --with-install-prefix=${D} \
                 --with-persistent-directory=${localstatedir}/lib/net-snmp \
-                ${@base_conditional('SITEINFO_ENDIANNESS', 'le', '--with-endianness=little', '--with-endianness=big', d)} \
+                ${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', '--with-endianness=little', '--with-endianness=big', d)} \
 "
 
 # net-snmp needs to have mib-modules=smux enabled to enable quagga to support snmp

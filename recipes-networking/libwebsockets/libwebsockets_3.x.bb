@@ -1,5 +1,5 @@
 #
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Canonical libwebsockets.org websocket library"
 HOMEPAGE = "https://libwebsockets.org/"
 LICENSE = "LGPL-2.1"
@@ -21,7 +21,7 @@ PACKAGECONFIG ?= "\
 	client \
 	server \
 	ssl \
-	${@oe_filter('ipv6', '${DISTRO_FEATURES}', d)} \
+	${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)} \
 "
 
 PACKAGECONFIG[client]   = "-DLWS_WITHOUT_CLIENT=OFF,-DLWS_WITHOUT_CLIENT=ON,"

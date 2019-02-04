@@ -1,4 +1,4 @@
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "Tools for managing kernel packet filtering capabilities"
 DESCRIPTION = "iptables is the userspace command line program used to configure and control network packet \
@@ -27,7 +27,7 @@ inherit autotools pkgconfig
 
 EXTRA_OECONF = "--with-kernel=${STAGING_INCDIR} \
                "
-PACKAGECONFIG ?= "${@oe_filter('ipv6', '${DISTRO_FEATURES}', d)}"
+PACKAGECONFIG ?= "${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)}"
 
 PACKAGECONFIG[ipv6] = "--enable-ipv6,--disable-ipv6,"
 
