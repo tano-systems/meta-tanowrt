@@ -14,7 +14,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano3"
+PR_append = ".tano4"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -64,10 +64,10 @@ SRC_URI_append = "\
 	file://500-add-pptp-plugin.patch \
 	file://510-pptp_compile_fix.patch \
 	file://520-uniq.patch \
-	file://531-pppoe_no_disconnect_warning.patch \
 	file://530-pppoe_send_padt.patch \
-	file://550-fix-printer-args.patch \
+	file://531-pppoe_no_disconnect_warning.patch \
 	file://540-save-pppol2tp_fd_str.patch \
+	file://550-fix-printer-args.patch \
 "
 
 SRC_URI_append = "\
