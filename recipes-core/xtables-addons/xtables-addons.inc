@@ -20,12 +20,6 @@ EXTRA_OECONF = "\
 EXTRA_OEMAKE = "M=${S}/extentions DESTDIR=${D} V=1"
 MODULES_INSTALL_TARGET = "install"
 
-# make_scripts requires kernel source directory to create
-# kernel scripts
-addtask make_scripts after do_patch before do_compile
-do_make_scripts[lockfiles] = "${TMPDIR}/kernel-scripts.lock"
-do_make_scripts[depends] += "virtual/kernel:do_shared_workdir bc-native:do_populate_sysroot"
-
 FILES_${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
 
 RDEPENDS_${PN} += "perl"

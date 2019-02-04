@@ -14,13 +14,13 @@ Most OpenWrt packages corresponds to OpenWrt 18.06.2 or higher.
 
 Clone repositories:
 ```
-$ git clone -b rocko git://github.com/openembedded/openembedded-core.git
+$ git clone -b sumo git://github.com/openembedded/openembedded-core.git
 
 $ cd openembedded-core
 
-$ git clone -b 1.36 git://github.com/openembedded/bitbake.git
-$ git clone -b rocko git://github.com/openembedded/meta-openembedded.git
-$ git clone -b rocko git://github.com/tano-systems/meta-tano-openwrt.git
+$ git clone -b 1.38 git://github.com/openembedded/bitbake.git
+$ git clone -b sumo git://github.com/openembedded/meta-openembedded.git
+$ git clone -b sumo git://github.com/tano-systems/meta-tano-openwrt.git
 ```
 
 Initialize build environment and add layers:
@@ -44,7 +44,7 @@ runqemu qemuarm
 
 ## Limitations
 
-Works with OE Release 2.4 (Rocko)
+Works with OE Release 2.5 (Sumo)
 
 Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
 
@@ -55,31 +55,31 @@ This layer depends on:
 ### openembedded-core
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
-Branch: rocko  
-Revision: 3638cb32ba9ba32b4d498fc31ab7fdf82f0d2495
+Branch: sumo  
+Revision: 84f19e78d9b1f3d634cf1d46ce48f24670199d0b
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-oe  
-Branch: rocko  
-Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
+Branch: sumo  
+Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
 
 ### meta-python
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-python  
-Branch: rocko  
-Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
+Branch: sumo  
+Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
 
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
-Branch: rocko  
-Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
+Branch: sumo  
+Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
 
 ### bitbake
 URI: git://git.openembedded.org/bitbake  
-Branch: 1.36  
-Revision: 8bd16328a9332c57b03198826e22b48fadcd21d9
+Branch: 1.38  
+Revision: c0af6c81f8d5487ea2cef54a78fd1cb1d0dc6520
 
 
 ## License
