@@ -78,7 +78,6 @@ Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### bitbake
 URI: git://git.openembedded.org/bitbake  
-Subdirectory: bitbake  
 Branch: 1.36  
 Revision: 8bd16328a9332c57b03198826e22b48fadcd21d9
 
