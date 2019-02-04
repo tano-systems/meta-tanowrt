@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano15"
+PR = "tano16"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -17,7 +17,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	${GIT_OPENWRT_ORG_URL}/project/netifd.git;name=netifd;branch=master \
 	file://100-Fix-IFF_LOWER_UP-define.patch \
-	file://300-replace-is_error-helper-with-NULL-check.patch \
 "
 
 # rootfs files
