@@ -1,5 +1,5 @@
 #
-PR = "tano5"
+PR = "tano6"
 
 SUMMARY = "Various tools relating to the Simple Network Management Protocol"
 HOMEPAGE = "http://www.net-snmp.org/"

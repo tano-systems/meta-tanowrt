@@ -16,8 +16,8 @@ index 55e3610..aca69ae 100644
 --- a/snmplib/transports/snmpUDPIPv6Domain.c
 +++ b/snmplib/transports/snmpUDPIPv6Domain.c
 @@ -256,6 +256,27 @@ netsnmp_udp6_transport(struct sockaddr_in6 *addr, int local)
-         t->data = NULL;
-         t->data_length = 0;
+         return NULL;
+ #endif /* NETSNMP_NO_LISTEN_SUPPORT */
      } else {
 +        char           *client_socket = NULL;
 +        /*
