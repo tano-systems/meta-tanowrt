@@ -1,6 +1,6 @@
-From 7674ee13cfaf3a0509d83310fd3902cc3ef10a28 Mon Sep 17 00:00:00 2001
+From ab3623ce373af509a9061c5b237cad4091fa2971 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Tue, 2 Oct 2018 01:40:30 +0300
+Date: Mon, 4 Feb 2019 19:25:17 +0300
 Subject: [PATCH 2/2] Add 'nocase' option to opkg
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -8,14 +8,14 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  libopkg/opkg_cmd.c  | 18 +++++++++---------
  libopkg/opkg_conf.c |  1 +
  libopkg/opkg_conf.h |  1 +
- src/opkg.c          | 12 +++++++++++-
- 4 files changed, 22 insertions(+), 10 deletions(-)
+ src/opkg.c          | 14 ++++++++++++--
+ 4 files changed, 23 insertions(+), 11 deletions(-)
 
 diff --git a/libopkg/opkg_cmd.c b/libopkg/opkg_cmd.c
-index d493cf3..a66f856 100644
+index 774e4d9..43d84ea 100644
 --- a/libopkg/opkg_cmd.c
 +++ b/libopkg/opkg_cmd.c
-@@ -373,7 +373,7 @@ static int opkg_configure_packages(char *pkg_name)
+@@ -367,7 +367,7 @@ static int opkg_configure_packages(char *pkg_name)
      for (i = 0; i < ordered->len; i++) {
          pkg = ordered->pkgs[i];
  
@@ -24,7 +24,7 @@ index d493cf3..a66f856 100644
              continue;
  
          if (pkg->state_status == SS_UNPACKED) {
-@@ -534,8 +534,8 @@ static int opkg_list_find_cmd(int argc, char **argv, int use_desc)
+@@ -528,8 +528,8 @@ static int opkg_list_find_cmd(int argc, char **argv, int use_desc)
      for (i = 0; i < available->len; i++) {
          pkg = available->pkgs[i];
          /* if we have package name or pattern and pkg does not match, then skip it */
@@ -35,7 +35,7 @@ index d493cf3..a66f856 100644
              continue;
          print_pkg(pkg);
      }
-@@ -570,7 +570,7 @@ static int opkg_list_installed_cmd(int argc, char **argv)
+@@ -564,7 +564,7 @@ static int opkg_list_installed_cmd(int argc, char **argv)
      for (i = 0; i < available->len; i++) {
          pkg = available->pkgs[i];
          /* if we have package name or pattern and pkg does not match, then skip it */
@@ -44,7 +44,7 @@ index d493cf3..a66f856 100644
              continue;
          print_pkg(pkg);
      }
-@@ -598,7 +598,7 @@ static int opkg_list_changed_conffiles_cmd(int argc, char **argv)
+@@ -592,7 +592,7 @@ static int opkg_list_changed_conffiles_cmd(int argc, char **argv)
      for (i = 0; i < available->len; i++) {
          pkg = available->pkgs[i];
          /* if we have package name or pattern and pkg does not match, then skip it */
@@ -53,7 +53,7 @@ index d493cf3..a66f856 100644
              continue;
          if (nv_pair_list_empty(&pkg->conffiles))
              continue;
-@@ -663,7 +663,7 @@ static int opkg_info_status_cmd(int argc, char **argv, int installed_only)
+@@ -634,7 +634,7 @@ static int opkg_info_status_cmd(int argc, char **argv, int installed_only)
  
      for (i = 0; i < available->len; i++) {
          pkg = available->pkgs[i];
@@ -62,7 +62,7 @@ index d493cf3..a66f856 100644
              continue;
          }
  
-@@ -876,7 +876,7 @@ static int opkg_depends_cmd(int argc, char **argv)
+@@ -847,7 +847,7 @@ static int opkg_depends_cmd(int argc, char **argv)
          for (j = 0; j < available_pkgs->len; j++) {
              pkg = available_pkgs->pkgs[j];
  
@@ -71,7 +71,7 @@ index d493cf3..a66f856 100644
                  continue;
  
              depends_count = pkg->depends_count + pkg->pre_depends_count +
-@@ -1075,7 +1075,7 @@ static int opkg_whatprovides_cmd(int argc, char **argv)
+@@ -1046,7 +1046,7 @@ static int opkg_whatprovides_cmd(int argc, char **argv)
                  int count = pkg->provides_count;
                  for (k = 0; k < count; k++) {
                      abstract_pkg_t *apkg = pkg->provides[k];
@@ -80,7 +80,7 @@ index d493cf3..a66f856 100644
                          opkg_msg(NOTICE, "    %s", pkg->name);
                          if (strcmp(target, apkg->name) != 0)
                              opkg_msg(NOTICE, "\tprovides %s\n", apkg->name);
-@@ -1120,7 +1120,7 @@ static int opkg_search_cmd(int argc, char **argv)
+@@ -1091,7 +1091,7 @@ static int opkg_search_cmd(int argc, char **argv)
          for (iter = file_list_first(installed_files); iter;
                  iter = file_list_next(installed_files, iter)) {
              installed_file = (file_info_t *)iter->data;
@@ -90,10 +90,10 @@ index d493cf3..a66f856 100644
          }
  
 diff --git a/libopkg/opkg_conf.c b/libopkg/opkg_conf.c
-index b9cc303..940648d 100644
+index 06880a1..4a2d914 100644
 --- a/libopkg/opkg_conf.c
 +++ b/libopkg/opkg_conf.c
-@@ -76,6 +76,7 @@ static opkg_option_t options[] = {
+@@ -75,6 +75,7 @@ static opkg_option_t options[] = {
      {"download_only", OPKG_OPT_TYPE_BOOL, &_conf.download_only},
      {"download_first", OPKG_OPT_TYPE_BOOL, &_conf.download_first}, /* Not available on internal solver */
      {"nodeps", OPKG_OPT_TYPE_BOOL, &_conf.nodeps},
@@ -102,7 +102,7 @@ index b9cc303..940648d 100644
      {"offline_root", OPKG_OPT_TYPE_STRING, &_conf.offline_root},
      {"overlay_root", OPKG_OPT_TYPE_STRING, &_conf.overlay_root},
 diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
-index 4496f2e..fcfdc4d 100644
+index ae48870..0fb1cc4 100644
 --- a/libopkg/opkg_conf.h
 +++ b/libopkg/opkg_conf.h
 @@ -104,6 +104,7 @@ typedef struct opkg_conf {
@@ -114,18 +114,18 @@ index 4496f2e..fcfdc4d 100644
      char *offline_root;
      char *overlay_root;
 diff --git a/src/opkg.c b/src/opkg.c
-index 6739832..d221076 100644
+index f23467d..e3c117a 100644
 --- a/src/opkg.c
 +++ b/src/opkg.c
-@@ -26,6 +26,7 @@
+@@ -25,6 +25,7 @@
+ #include <stdio.h>
  #include <getopt.h>
- #include <malloc.h>
  #include <stdlib.h>
 +#include <fnmatch.h>
  
  #include "opkg_conf.h"
  #include "opkg_cmd.h"
-@@ -55,6 +56,7 @@ enum {
+@@ -54,6 +55,7 @@ enum {
      ARGS_OPT_NOACTION,
      ARGS_OPT_DOWNLOAD_ONLY,
      ARGS_OPT_NODEPS,
@@ -133,7 +133,7 @@ index 6739832..d221076 100644
      ARGS_OPT_AUTOREMOVE,
      ARGS_OPT_VOLATILE_CACHE,
      ARGS_OPT_COMBINE,
-@@ -104,6 +106,7 @@ static struct option long_options[] = {
+@@ -103,6 +105,7 @@ static struct option long_options[] = {
      {"noaction", 0, 0, ARGS_OPT_NOACTION},
      {"download-only", 0, 0, ARGS_OPT_DOWNLOAD_ONLY},
      {"nodeps", 0, 0, ARGS_OPT_NODEPS},
@@ -141,16 +141,20 @@ index 6739832..d221076 100644
      {"no-install-recommends", 0, 0, ARGS_OPT_NO_INSTALL_RECOMMENDS},
      {"offline", 1, 0, 'o'},
      {"offline-root", 1, 0, 'o'},
-@@ -133,7 +136,7 @@ static int args_parse(int argc, char *argv[])
-     char *solver_version = NULL;
+@@ -133,10 +136,10 @@ static int args_parse(int argc, char *argv[])
  
      while (1) {
+ #if HAVE_GETOPT_LONG_ONLY
 -        c = getopt_long_only(argc, argv, "Ad:f:no:p:l:t:vV::", long_options,
 +        c = getopt_long_only(argc, argv, "Ad:f:ino:p:l:t:vV::", long_options,
                               &option_index);
+ #else
+-        c = getopt_long(argc, argv, "Ad:f:no:p:l:t:vV::", long_options,
++        c = getopt_long(argc, argv, "Ad:f:ino:p:l:t:vV::", long_options,
+                              &option_index);
+ #endif
          if (c == -1)
-             break;
-@@ -148,6 +151,9 @@ static int args_parse(int argc, char *argv[])
+@@ -152,6 +155,9 @@ static int args_parse(int argc, char *argv[])
          case 'f':
              opkg_config->conf_file = xstrdup(optarg);
              break;
@@ -160,17 +164,17 @@ index 6739832..d221076 100644
          case 'o':
              opkg_config->offline_root = xstrdup(optarg);
              break;
-@@ -216,6 +222,9 @@ static int args_parse(int argc, char *argv[])
+@@ -220,6 +226,9 @@ static int args_parse(int argc, char *argv[])
          case ARGS_OPT_NODEPS:
              opkg_config->nodeps = 1;
              break;
 +        case ARGS_OPT_NOCASE:
-+            opkg_config->nocase = FNM_CASEFOLD;
++            opkg_config->nocase = 1;
 +            break;
          case ARGS_OPT_ADD_ARCH:
          case ARGS_OPT_ADD_DEST:
              tuple = xstrdup(optarg);
-@@ -352,6 +361,7 @@ static void usage()
+@@ -356,6 +365,7 @@ static void usage()
      printf("\t--size                          Print package size when listing available packages\n");
      printf("\t--download-only                 No action -- download only\n");
      printf("\t--nodeps                        Do not follow dependencies\n");
@@ -179,5 +183,5 @@ index 6739832..d221076 100644
      printf("\t--force-removal-of-dependent-packages\n");
      printf("\t                                Remove package and all dependencies\n");
 -- 
-2.7.4
+2.16.2.windows.1
 
