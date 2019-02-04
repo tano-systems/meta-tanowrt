@@ -10,12 +10,13 @@ Index: git/main.c
 ===================================================================
 --- git.orig/main.c
 +++ git/main.c
-@@ -177,7 +177,7 @@ static void init_defaults_pre(void)
+@@ -183,8 +183,8 @@ static void init_defaults_pre(void)
  	conf.max_connections = 100;
  	conf.realm = "Protected Area";
  	conf.cgi_prefix = "/cgi-bin";
 -	conf.cgi_path = "/sbin:/usr/sbin:/bin:/usr/bin";
 +	conf.cgi_path = "/usr/sbin:/usr/bin:/sbin:/bin";
  	INIT_LIST_HEAD(&conf.cgi_alias);
+ 	INIT_LIST_HEAD(&conf.lua_prefix);
  }
  
