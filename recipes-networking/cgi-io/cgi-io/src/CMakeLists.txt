@@ -2,12 +2,23 @@ cmake_minimum_required(VERSION 2.6)
 
 PROJECT(cgi-io C)
 
+OPTION(ENABLE_UPLOAD_CHKSUM_OPTIONS "Enable uploaded file checksum calculation options" OFF)
+OPTION(ENABLE_DIRECT_WRITE_MODE "Enable direct write mode (without temporary file)" OFF)
+
 INCLUDE(CheckFunctionExists)
 
 FIND_PATH(ubus_include_dir libubus.h)
 INCLUDE_DIRECTORIES(${ubus_include_dir})
 
 ADD_DEFINITIONS(-Os -Wall -Werror --std=gnu99 -g3 -Wmissing-declarations)
+
+IF(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+  ADD_DEFINITIONS(-DENABLE_UPLOAD_CHKSUM_OPTIONS)
+ENDIF()
+
+IF(ENABLE_DIRECT_WRITE_MODE)
+  ADD_DEFINITIONS(-DENABLE_DIRECT_WRITE_MODE)
+ENDIF()
 
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 

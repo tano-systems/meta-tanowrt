@@ -38,7 +38,14 @@ enum part {
 	PART_SESSIONID,
 	PART_FILENAME,
 	PART_FILEMODE,
-	PART_FILEDATA
+	PART_FILEDATA,
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+	PART_DO_MD5SUM,
+	PART_DO_SHA256SUM,
+#endif
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	PART_DIRECT_WRITE,
+#endif
 };
 
 const char *parts[] = {
@@ -47,6 +54,13 @@ const char *parts[] = {
 	"filename",
 	"filemode",
 	"filedata",
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+	"do_md5sum",
+	"do_sha256sum",
+#endif
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	"direct_write",
+#endif
 };
 
 struct state
@@ -59,6 +73,13 @@ struct state
 	int filemode;
 	int filefd;
 	int tempfd;
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+	int do_md5sum;
+	int do_sha256sum;
+#endif
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	int direct_write;
+#endif
 };
 
 enum {
@@ -279,13 +300,33 @@ response(bool success, const char *message)
 		else
 			printf("\t\"size\": null,\n");
 
-		chksum = checksum("md5sum", 32, st.filename);
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+		if (st.do_md5sum)
+		{
+#endif
+			chksum = checksum("md5sum", 32, st.filename);
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+		}
+		else
+			chksum = 0;
+#endif
+			
 		printf("\t\"checksum\": %s%s%s,\n",
 			chksum ? "\"" : "",
 			chksum ? chksum : "null",
 			chksum ? "\"" : "");
 
-		chksum = checksum("sha256sum", 64, st.filename);
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+		if (st.do_sha256sum)
+		{
+#endif
+			chksum = checksum("sha256sum", 64, st.filename);
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+		}
+		else
+			chksum = 0;
+#endif
+
 		printf("\t\"sha256sum\": %s%s%s\n",
 			chksum ? "\"" : "",
 			chksum ? chksum : "null",
@@ -323,9 +364,6 @@ failure(int e, const char *message)
 static int
 filecopy(void)
 {
-	int len;
-	char buf[4096];
-
 	if (!st.filedata)
 	{
 		close(st.tempfd);
@@ -333,32 +371,43 @@ filecopy(void)
 		return response(false, "No file data received");
 	}
 
-	if (lseek(st.tempfd, 0, SEEK_SET) < 0)
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	if (!st.direct_write)
+#else
+	if (1)
+#endif
 	{
-		close(st.tempfd);
-		return response(false, "Failed to rewind temp file");
-	}
+		int len;
+		char buf[4096];
 
-	st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-
-	if (st.filefd < 0)
-	{
-		close(st.tempfd);
-		return response(false, "Failed to open target file");
-	}
-
-	while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
-	{
-		if (write(st.filefd, buf, len) != len)
+		if (lseek(st.tempfd, 0, SEEK_SET) < 0)
 		{
 			close(st.tempfd);
-			close(st.filefd);
-			return response(false, "I/O failure while writing target file");
+			return response(false, "Failed to rewind temp file");
 		}
+
+		st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+
+		if (st.filefd < 0)
+		{
+			close(st.tempfd);
+			return response(false, "Failed to open target file");
+		}
+
+		while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
+		{
+			if (write(st.filefd, buf, len) != len)
+			{
+				close(st.tempfd);
+				close(st.filefd);
+				return response(false, "I/O failure while writing target file");
+			}
+		}
+
+		close(st.filefd);
 	}
 
 	close(st.tempfd);
-	close(st.filefd);
 
 	if (chmod(st.filename, st.filemode))
 		return response(false, "Failed to chmod target file");
@@ -417,12 +466,24 @@ data_begin_cb(multipart_parser *p)
 		if (!st.filename)
 			return response(false, "File data without name");
 
-		st.tempfd = mkstemp(tmpname);
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+		if (st.direct_write)
+		{
+			st.tempfd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
 
-		if (st.tempfd < 0)
-			return response(false, "Failed to create temporary file");
+			if (st.tempfd < 0)
+				return response(false, "Failed to open target file");
+		}
+		else
+#endif
+		{
+			st.tempfd = mkstemp(tmpname);
 
-		unlink(tmpname);
+			if (st.tempfd < 0)
+				return response(false, "Failed to create temporary file");
+
+			unlink(tmpname);
+		}
 	}
 
 	return 0;
@@ -457,6 +518,22 @@ data_cb(multipart_parser *p, const char *data, size_t len)
 
 		break;
 
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+	case PART_DO_MD5SUM:
+		st.do_md5sum = !!strtoul(data, NULL, 10);
+		break;
+
+	case PART_DO_SHA256SUM:
+		st.do_sha256sum = !!strtoul(data, NULL, 10);
+		break;
+#endif
+
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	case PART_DIRECT_WRITE:
+		st.direct_write = !!strtoul(data, NULL, 10);
+		break;
+#endif
+
 	default:
 		break;
 	}
@@ -477,8 +554,15 @@ data_end_cb(multipart_parser *p)
 	}
 	else if (st.parttype == PART_FILEDATA)
 	{
-		if (st.tempfd < 0)
-			return response(false, "Internal program failure");
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+		if (!st.direct_write)
+#else
+		if (1)
+#endif
+		{
+			if (st.tempfd < 0)
+				return response(false, "Internal program failure");
+		}
 
 #if 0
 		/* prepare directory */
@@ -545,6 +629,13 @@ init_parser(void)
 	st.tempfd = -1;
 	st.filefd = -1;
 	st.filemode = 0600;
+#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
+	st.do_md5sum = 1;
+	st.do_sha256sum = 1;
+#endif
+#if defined(ENABLE_DIRECT_WRITE_MODE)
+	st.direct_write = 0;
+#endif
 
 	p = multipart_parser_init(boundary, &s);
 
