@@ -9,8 +9,8 @@ diff --git a/kex.h b/kex.h
 index 72430e9..375c677 100644
 --- a/kex.h
 +++ b/kex.h
-@@ -67,6 +67,6 @@ struct KEXState {
- };
+@@ -105,6 +105,6 @@ int curve25519_donna(unsigned char *out, const unsigned char *secret, const unsigned char *other);
+ #endif
  
  
 -#define MAX_KEXHASHBUF 2000
