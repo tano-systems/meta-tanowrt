@@ -6,12 +6,12 @@
 
 # Use this git SRCREV for all recipes that pull files out of openwrt repository
 
-# 23.11.2018
-# kernel: b53: register switch on probe
-OPENWRT_SRCREV = "6680fab9474a8a2d66d5ef86e2c392abe0d2c62d"
+# 05.02.2019
+# ath79: add support for TP-LINK Archer C7 v4 
+OPENWRT_SRCREV = "12310f05b7b080b016ec515796be437f4cd30b62"
 OPENWRT_BRANCH = "master"
 
-PR_append = ".o5"
+PR_append = ".o6"
 
 LICENSE_append = "&GPL-2.0+"
 LIC_FILES_CHKSUM_append = " file://${S}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
