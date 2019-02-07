@@ -19,7 +19,7 @@ DISTRO_FEATURES = "${DISTRO_FEATURES_DEFAULT} ${DISTRO_FEATURES_LIBC}"
 DISTRO_FEATURES_append = " procd "
 
 # Enable cgroups support
-DISTRO_FEATURES_append = " cgroups "
+DISTRO_FEATURES_append = " cgroup "
 
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"

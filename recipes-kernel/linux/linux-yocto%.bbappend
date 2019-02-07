@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
 
-PR_append = ".tano6"
+PR_append = ".tano7"
 
 SRC_URI_append = "\
     file://defconfig.cfg \
@@ -14,7 +14,7 @@ SRC_URI_append = "\
 KERNEL_MODULE_AUTOLOAD_qemux86 += "floppy parport_pc"
 KERNEL_MODULE_AUTOLOAD_qemux86-64 += "floppy parport_pc"
 
-KERNEL_FEATURES_append = " ${@bb.utils.contains("DISTRO_FEATURES", "cgroups", " features/cgroups/cgroups.scc", "" ,d)} "
+KERNEL_FEATURES_append = " ${@bb.utils.contains("DISTRO_FEATURES", "cgroup", " features/cgroups/cgroups.scc", "" ,d)} "
 
 python __anonymous () {
     combined_features = set(d.getVar("COMBINED_FEATURES").split())

@@ -9,11 +9,11 @@
 Available image features:
 - `package-management` - package manager opkg
 
-#### `DISTRO_FEATURES`
+#### `MACHINE_FEATURES`
 
 Available extra features provided by this layer:
 - `procd` - use procd init manager
-- `cgroups` - enable cgroups support
+- `cgroup` - enable cgroups support
 
 #### `OPENWRT_ZONENAME` and `OPENWRT_TIMEZONE`
 
