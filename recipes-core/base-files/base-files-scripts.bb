@@ -2,24 +2,16 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license.  See COPYING.MIT for terms
 
-inherit openwrt openwrt-base-files
+require base-files.inc
 
-PR = "tano1"
+PR = "tano2.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
-LICENSE = "GPL-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI += "git://github.com/openwrt/openwrt.git;protocol=git;branch=${OPENWRT_BRANCH} \
-           "
-
-SRCREV = "${OPENWRT_SRCREV}"
-
-S = "${WORKDIR}/git"
-SC = "${WORKDIR}/git/package/base-files/files"
+SC = "${WORKDIR}/openwrt/package/base-files/files"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

@@ -1,10 +1,10 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano20"
+PR_append = ".tano21.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -24,16 +24,13 @@ SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
 RDEPENDS_${PN} += "tzdata"
 
-S = "${WORKDIR}"
-LIC_FILES_CHKSUM_remove = " file://${WORKDIR}/../git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
-LIC_FILES_CHKSUM_append = " file://${WORKDIR}/git/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
+require base-files.inc
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://0001-use-sh-not-ash.patch \
 "
-SRCREV = "${OPENWRT_SRCREV}"
 
 SRC_URI_append = "\
     file://sysctl.conf \
@@ -56,10 +53,9 @@ SRC_URI_append = "\
 	file://79_move_config \
 "
 
-SG = "${WORKDIR}/git/openwrt"
+SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
 
-inherit openwrt-base-files
 inherit openwrt-version
 inherit openwrt-services
 
@@ -192,15 +188,15 @@ do_install_append () {
         install -d -m 0755 ${D}${sysconfdir}/config
         install -d -m 0755 ${D}${sysconfdir}/init.d
 
-        install -m 0644 ${S}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
-        install -m 0644 ${S}/issue ${D}${sysconfdir}/issue
-        install -m 0644 ${S}/hostname ${D}${sysconfdir}/hostname
-        install -m 0755 ${S}/system.init ${D}${sysconfdir}/init.d/system
-        install -m 0644 ${S}/system.config ${D}${sysconfdir}/config/system
-        install -m 0755 ${S}/boot.init ${D}${sysconfdir}/init.d/boot
-        install -m 0755 ${S}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
+        install -m 0644 ${WORKDIR}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
+        install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
+        install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
+        install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
+        install -m 0644 ${WORKDIR}/system.config ${D}${sysconfdir}/config/system
+        install -m 0755 ${WORKDIR}/boot.init ${D}${sysconfdir}/init.d/boot
+        install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
 
-        install -m 0644 ${S}/profile ${D}${sysconfdir}/profile
+        install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
 
         rm ${D}${sysconfdir}/issue.net
         rm ${D}${sysconfdir}/TZ
