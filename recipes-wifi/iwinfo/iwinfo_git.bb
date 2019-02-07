@@ -10,6 +10,7 @@ SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
 PR = "tano6"
 
+RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
