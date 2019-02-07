@@ -14,6 +14,7 @@ Available image features:
 Available extra features provided by this layer:
 - `procd` - use procd init manager
 - `cgroup` - enable cgroups support
+- `wifi` - enable WiFi support
 
 #### `OPENWRT_ZONENAME` and `OPENWRT_TIMEZONE`
 
