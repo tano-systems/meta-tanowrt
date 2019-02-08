@@ -235,7 +235,7 @@ _procd_set_param() {
 		env|data|limits)
 			_procd_add_table "$type" "$@"
 		;;
-		command|netdev|file|respawn|watch)
+		command|netdev|file|respawn|watch|cg_group)
 			_procd_add_array "$type" "$@"
 		;;
 		error)
@@ -252,7 +252,7 @@ _procd_set_param() {
 		pidfile|user|seccomp|capabilities|chdir)
 			json_add_string "$type" "$1"
 		;;
-		stdout|stderr|no_new_privs)
+		stdout|stderr|no_new_privs|cg_sticky)
 			json_add_boolean "$type" "$1"
 		;;
 	esac
@@ -365,7 +365,7 @@ _procd_append_param() {
 		env|data|limits)
 			_procd_add_table_data "$@"
 		;;
-		command|netdev|file|respawn|watch)
+		command|netdev|file|respawn|watch|cg_group)
 			_procd_add_array_data "$@"
 		;;
 		error)
