@@ -1,0 +1,97 @@
+From da30b19ab6b2afc5f56f077404a84fbcebfd2786 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 8 Feb 2019 22:38:50 +0300
+Subject: [PATCH] service: allow to change service's current directory
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ service/instance.c | 19 +++++++++++++++++++
+ service/instance.h |  1 +
+ 2 files changed, 20 insertions(+)
+
+diff --git a/service/instance.c b/service/instance.c
+index a5742b7..220f07f 100644
+--- a/service/instance.c
++++ b/service/instance.c
+@@ -57,6 +57,7 @@ enum {
+ 	INSTANCE_ATTR_PIDFILE,
+ 	INSTANCE_ATTR_RELOADSIG,
+ 	INSTANCE_ATTR_TERMTIMEOUT,
++	INSTANCE_ATTR_CHDIR,
+ 	__INSTANCE_ATTR_MAX
+ };
+ 
+@@ -82,6 +83,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
+ 	[INSTANCE_ATTR_PIDFILE] = { "pidfile", BLOBMSG_TYPE_STRING },
+ 	[INSTANCE_ATTR_RELOADSIG] = { "reload_signal", BLOBMSG_TYPE_INT32 },
+ 	[INSTANCE_ATTR_TERMTIMEOUT] = { "term_timeout", BLOBMSG_TYPE_INT32 },
++	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
+ };
+ 
+ enum {
+@@ -360,6 +362,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+ 		ERROR("failed to set user id %d: %m\n", in->uid);
+ 		exit(127);
+ 	}
++	if (in->chdir && chdir(in->chdir)) {
++		ERROR("failed to change directory to %s: %m\n", in->chdir);
++		exit(127);
++	}
+ 
+ 	execvp(argv[0], argv);
+ 	exit(127);
+@@ -653,6 +659,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+ 	if (!blobmsg_list_equal(&in->errors, &in_new->errors))
+ 		return true;
+ 
++	if (string_changed(in->chdir, in_new->chdir))
++		return true;
++
+ 	return false;
+ }
+ 
+@@ -913,6 +922,12 @@ instance_config_parse(struct service_instance *in)
+ 	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
+ 		in->_stderr.fd.fd = -1;
+ 
++	if (tb[INSTANCE_ATTR_CHDIR]) {
++		char *chdir = blobmsg_get_string(tb[INSTANCE_ATTR_CHDIR]);
++		if (chdir)
++			in->chdir = chdir;
++	}
++
+ 	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
+ 
+ 	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
+@@ -966,6 +981,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+ 	in->trace = in_src->trace;
+ 	in->seccomp = in_src->seccomp;
+ 	in->node.avl.key = in_src->node.avl.key;
++	in->chdir = in_src->chdir;
+ 
+ 	free(in->config);
+ 	in->config = in_src->config;
+@@ -1127,5 +1143,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+ 	if (verbose && in->trigger)
+ 		blobmsg_add_blob(b, in->trigger);
+ 
++	if (in->chdir)
++		blobmsg_add_string(b, "chdir", in->chdir);
++
+ 	blobmsg_close_table(b, i);
+ }
+diff --git a/service/instance.h b/service/instance.h
+index 771406c..7a6261a 100644
+--- a/service/instance.h
++++ b/service/instance.h
+@@ -59,6 +59,7 @@ struct service_instance {
+ 	struct jail jail;
+ 	char *seccomp;
+ 	char *pidfile;
++	char *chdir;
+ 
+ 	uint32_t term_timeout;
+ 	uint32_t respawn_timeout;
+-- 
+2.16.2.windows.1
+

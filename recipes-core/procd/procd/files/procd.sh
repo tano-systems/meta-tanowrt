@@ -249,7 +249,7 @@ _procd_set_param() {
 		reload_signal)
 			json_add_int "$type" $(kill -l "$1")
 		;;
-		pidfile|user|seccomp|capabilities)
+		pidfile|user|seccomp|capabilities|chdir)
 			json_add_string "$type" "$1"
 		;;
 		stdout|stderr|no_new_privs)

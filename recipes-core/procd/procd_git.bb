@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano12"
+PR = "tano13"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both both VIRTUAL-RUNTIME-init_manager and \
               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev) \
@@ -22,6 +22,11 @@ SRC_URI = "\
 	file://hotplug.json \
 	file://hotplug-preinit.json \
 	file://procd.sh \
+"
+
+# Patches
+SRC_URI += "\
+	file://0001-service-allow-to-change-service-s-current-directory.patch \
 "
 
 # 23.11.2018
