@@ -21,7 +21,7 @@ PACKAGECONFIG ?= "\
 	client \
 	server \
 	ssl \
-	${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)} \
+	${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)} \
 "
 
 PACKAGECONFIG[client]   = "-DLWS_WITHOUT_CLIENT=OFF,-DLWS_WITHOUT_CLIENT=ON,"

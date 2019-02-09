@@ -4,7 +4,7 @@ PACKAGECONFIG_pn-libwebsockets = "\
 	server \
 	ssl \
 	libuv \
-	${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)} \
+	${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)} \
 "
 
 # Distro-specific package configuration
@@ -20,7 +20,7 @@ PACKAGECONFIG_FONTS_pn-qtbase = "fontconfig"
 PACKAGECONFIG_append_pn-qtmultimedia  = " gstreamer"
 
 # Prefer OpenSSL over GnuTLS for curl due to TSU exemptions
-PACKAGECONFIG_pn-curl = "${@bb.utils.contains("DISTRO_FEATURES", "ipv6", "ipv6", "", d)} ssl zlib"
+PACKAGECONFIG_pn-curl = "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'ipv6', '', d)} ssl zlib"
 
 # No GFX on Keystone
 PACKAGECONFIG_remove_pn-gstreamer1.0-plugins-bad_keystone = "wayland egl gles2"

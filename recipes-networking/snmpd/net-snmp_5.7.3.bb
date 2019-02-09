@@ -1,5 +1,5 @@
 #
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "Various tools relating to the Simple Network Management Protocol"
 HOMEPAGE = "http://www.net-snmp.org/"
@@ -46,8 +46,7 @@ CCACHE = ""
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
-#bb.utils.filter
-PACKAGECONFIG ?= "${@bb.utils.filter('ipv6', '${DISTRO_FEATURES}', d)}"
+PACKAGECONFIG ?= "${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)}"
 PACKAGECONFIG[elfutils] = "--with-elf, --without-elf, elfutils"
 PACKAGECONFIG[libnl] = "--with-nl, --without-nl, libnl"
 

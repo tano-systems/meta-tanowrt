@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano21.${INC_PR}"
+PR_append = ".tano22.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -40,6 +40,7 @@ SRC_URI_append = "\
     file://system.init \
     file://system.config \
     file://sysfixtime.init \
+    file://preinit/80_mount_root \
 "
 
 # Only for x86 and x86-64 architectures
@@ -197,6 +198,9 @@ do_install_append () {
         install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
 
         install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
+
+        install -dm 0755 ${D}/lib/preinit
+        install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
 
         rm ${D}${sysconfdir}/issue.net
         rm ${D}${sysconfdir}/TZ
