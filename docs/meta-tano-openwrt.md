@@ -8,13 +8,15 @@
 
 Available image features:
 - `package-management` - package manager opkg
+- `cgroup` - cgroups related packages
+- `wifi` - wifi related packages
 
-#### `MACHINE_FEATURES`
+#### `DISTRO_FEATURES`
 
 Available extra features provided by this layer:
 - `procd` - use procd init manager
-- `cgroup` - enable cgroups support
-- `wifi` - enable WiFi support
+- `cgroup` - cgroup support
+- `wifi` - wifi support
 
 #### `OPENWRT_ZONENAME` and `OPENWRT_TIMEZONE`
 

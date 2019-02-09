@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano22.${INC_PR}"
+PR_append = ".tano23.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -76,13 +76,7 @@ OPENWRT_SERVICE_STATE_base-files-umount ?= "enabled"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-PACKAGECONFIG ??= "includeopenwrt"
-
-PACKAGECONFIG[includeopenwrt] = ""
-PACKAGECONFIG[preferopenwrt] = ""
-PACKAGECONFIG[oeoveropenwrt] = ""
-
-BASEFILESISSUEINSTALL ?= "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', '', 'do_install_basefilesissue', d)}"
+BASEFILESISSUEINSTALL ?= "do_install_basefilesissue"
 
 do_install[vardeps] += "OPENWRT_ZONENAME OPENWRT_TIMEZONE OPENWRT_VERSION_SED"
 
@@ -101,177 +95,161 @@ OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG ?= ""
 OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE ?= ""
 
 do_install_append () {
-    if [ "${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', 'true', 'false', d)}" = "true" ]; then
-        rm -rf ${D}${localstatedir}/backups
-        rm -rf ${D}${localstatedir}/local
+	rm -rf ${D}${localstatedir}/backups
+	rm -rf ${D}${localstatedir}/local
 
-        # We need to munge openwrt base-files before copying
-        # Some file come from regular OE base-files and others
-        # belong in other recipes, or are not applicable
-        rm -rf ${STMP}
-        mkdir -p ${STMP}
-        cp -dR --preserve=mode,links ${SG}/package/base-files/files/* ${STMP}/
+	# We need to munge openwrt base-files before copying
+	# Some file come from regular OE base-files and others
+	# belong in other recipes, or are not applicable
+	rm -rf ${STMP}
+	mkdir -p ${STMP}
+	cp -dR --preserve=mode,links ${SG}/package/base-files/files/* ${STMP}/
 
-        # procd - earlyinit
-        rm -f ${STMP}/etc/inittab
+	# procd - earlyinit
+	rm -f ${STMP}/etc/inittab
 
-        # From OE base-files or netbase
-        rm -f ${STMP}/etc/hosts
-        rm -f ${STMP}/etc/rpc
-        rm -f ${STMP}/etc/services
-        rm -f ${STMP}/etc/protocols
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', 'true', 'false', d)}" != "true" ]; then
-           rm -f ${STMP}/etc/banner
-           ln -sf /etc/issue ${STMP}/etc/banner
-        else
-           rm -f ${D}/etc/issue
-           ln -sf /etc/banner ${D}/etc/issue
-        fi
+	# From OE base-files or netbase
+	rm -f ${STMP}/etc/hosts
+	rm -f ${STMP}/etc/rpc
+	rm -f ${STMP}/etc/services
+	rm -f ${STMP}/etc/protocols
+	rm -f ${STMP}/etc/banner
+	ln -sf /etc/issue ${STMP}/etc/banner
 
-        # For netifd package
-        ${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '', 'rm -f ${STMP}/sbin/wifi', d)}
+	# For netifd package
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '', 'rm -f ${STMP}/sbin/wifi', d)}
 
-        # Not applicable to OE flavour
-        rm -f ${STMP}/etc/uci-defaults/10_migrate-shadow
-        rm -f ${STMP}/etc/uci-defaults/11_migrate-sysctl
+	# Not applicable to OE flavour
+	rm -f ${STMP}/etc/uci-defaults/10_migrate-shadow
+	rm -f ${STMP}/etc/uci-defaults/11_migrate-sysctl
 
-        # These depend on mechanisms not in OE build process
-        rm -f ${STMP}/etc/uci-defaults/13_fix_group_user
+	# These depend on mechanisms not in OE build process
+	rm -f ${STMP}/etc/uci-defaults/13_fix_group_user
 
-        # In base-files-scripts-openwrt
-        rm -f ${STMP}/lib/functions.sh
-        rm -f ${STMP}/lib/functions/uci-defaults.sh
-        rm -f ${STMP}/lib/functions/system.sh
-        rm -f ${STMP}/bin/ipcalc.sh
+	# In base-files-scripts-openwrt
+	rm -f ${STMP}/lib/functions.sh
+	rm -f ${STMP}/lib/functions/uci-defaults.sh
+	rm -f ${STMP}/lib/functions/system.sh
+	rm -f ${STMP}/bin/ipcalc.sh
 
-        # In base-files-scripts-sysupgrade
-        rm -f ${STMP}/etc/sysupgrade.conf
-        rm -f ${STMP}/sbin/sysupgrade
-        rm -rf ${STMP}/lib/upgrade
-        rm -f ${STMP}/sbin/firstboot
+	# In base-files-scripts-sysupgrade
+	rm -f ${STMP}/etc/sysupgrade.conf
+	rm -f ${STMP}/sbin/sysupgrade
+	rm -rf ${STMP}/lib/upgrade
+	rm -f ${STMP}/sbin/firstboot
 
-        # Moved to tano-version.bb
-        rm -f ${STMP}/etc/os-release
-        rm -f ${STMP}/usr/lib/os-release
+	# Moved to tano-version.bb
+	rm -f ${STMP}/etc/os-release
+	rm -f ${STMP}/usr/lib/os-release
 
-        # Some files in standard base-files don't apply to openwrt flavour
-        # These two are about avoiding flash writes
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', 'true', 'false', d)}" = "true" ]; then
-          rm -f ${D}${sysconfdir}/fstab
-          rm -f ${D}${sysconfdir}/mtab
-        fi
+	# Copy what is applicable to rootfs
+	cp -dR --preserve=mode,links ${STMP}/* ${D}
+	rm -rf ${STMP}
 
-        # Copy what is applicable to rootfs
-        cp -dR --preserve=mode,links ${STMP}/* ${D}
-        rm -rf ${STMP}
+	mkdir -p ${D}${sysconfdir}/rc.d
 
-        mkdir -p ${D}${sysconfdir}/rc.d
+	# FIXME: Should be OE's busybox crontabs dir
+	mkdir -p ${D}${sysconfdir}/crontabs
 
-        # FIXME: Should be OE's busybox crontabs dir
-        mkdir -p ${D}${sysconfdir}/crontabs
+	# FIXME: Should this change for OE?
+	mkdir -p ${D}/overlay
 
-        # FIXME: Should this change for OE?
-        mkdir -p ${D}/overlay
+	# Avoid flash writes
+	ln -sf /tmp/resolv.conf /tmp/TZ ${D}${sysconfdir}/
+	ln -sf /tmp/fstab ${D}${sysconfdir}/fstab
+	ln -sf /proc/mounts ${D}${sysconfdir}/mtab
 
-        # Avoid flash writes
-        ln -sf /tmp/resolv.conf /tmp/TZ ${D}${sysconfdir}/
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'oeoveropenwrt', 'true', 'false', d)}" != "true" ]; then
-            ln -sf /tmp/fstab ${D}${sysconfdir}/fstab
-            ln -sf /proc/mounts ${D}${sysconfdir}/mtab
-        fi
+	chmod 0600 ${D}${sysconfdir}/shadow
+	chmod 1777 ${D}/tmp
 
-        chmod 0600 ${D}${sysconfdir}/shadow
-        chmod 1777 ${D}/tmp
+	sed -i "s#%PATH%#/usr/sbin:/sbin:/usr/bin:/bin#g" \
+		${D}${sysconfdir}/profile
 
-        sed -i "s#%PATH%#/usr/sbin:/sbin:/usr/bin:/bin#g" \
-              ${D}${sysconfdir}/profile
+	install -d -m 0755 ${D}${sysconfdir}/config
+	install -d -m 0755 ${D}${sysconfdir}/init.d
 
-        install -d -m 0755 ${D}${sysconfdir}/config
-        install -d -m 0755 ${D}${sysconfdir}/init.d
+	install -m 0644 ${WORKDIR}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
+	install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
+	install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
+	install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
+	install -m 0644 ${WORKDIR}/system.config ${D}${sysconfdir}/config/system
+	install -m 0755 ${WORKDIR}/boot.init ${D}${sysconfdir}/init.d/boot
+	install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
 
-        install -m 0644 ${WORKDIR}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
-        install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
-        install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
-        install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
-        install -m 0644 ${WORKDIR}/system.config ${D}${sysconfdir}/config/system
-        install -m 0755 ${WORKDIR}/boot.init ${D}${sysconfdir}/init.d/boot
-        install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
+	install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
 
-        install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
+	install -dm 0755 ${D}/lib/preinit
+	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
 
-        install -dm 0755 ${D}/lib/preinit
-        install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
+	rm ${D}${sysconfdir}/issue.net
+	rm ${D}${sysconfdir}/TZ
 
-        rm ${D}${sysconfdir}/issue.net
-        rm ${D}${sysconfdir}/TZ
+	# Run VERSION_SED script
+	${OPENWRT_VERSION_SED} \
+		${D}${sysconfdir}/device_info \
+		${D}${sysconfdir}/openwrt_version \
+		${D}${sysconfdir}/openwrt_release \
+		${D}${sysconfdir}/issue
 
-        # Run VERSION_SED script
-        ${OPENWRT_VERSION_SED} \
-            ${D}${sysconfdir}/device_info \
-            ${D}${sysconfdir}/openwrt_version \
-            ${D}${sysconfdir}/openwrt_release \
-            ${D}${sysconfdir}/issue
+	# Setup timezone and zonename in /etc/config/system
+	OPENWRT_TIMEZONE_ESCAPED="${@d.getVar('OPENWRT_TIMEZONE', True).replace('/', '\/')}"
+	OPENWRT_ZONENAME_ESCAPED="${@d.getVar('OPENWRT_ZONENAME', True).replace('/', '\/')}"
 
-        # Setup timezone and zonename in /etc/config/system
-        OPENWRT_TIMEZONE_ESCAPED="${@d.getVar('OPENWRT_TIMEZONE', True).replace('/', '\/')}"
-        OPENWRT_ZONENAME_ESCAPED="${@d.getVar('OPENWRT_ZONENAME', True).replace('/', '\/')}"
+	sed -i -e "s/\(option\s*timezone\).*/\1 \'${OPENWRT_TIMEZONE_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+	sed -i -e "s/\(option\s*zonename\).*/\1 \'${OPENWRT_ZONENAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
 
-        sed -i -e "s/\(option\s*timezone\).*/\1 \'${OPENWRT_TIMEZONE_ESCAPED}\'/" ${D}${sysconfdir}/config/system
-        sed -i -e "s/\(option\s*zonename\).*/\1 \'${OPENWRT_ZONENAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+	# Setup default hwclock parameters
+	OPENWRT_HWCLOCK_DEV_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_DEV', True).replace('/', '\/')}"
+	OPENWRT_HWCLOCK_LOCALTIME_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_LOCALTIME', True).replace('/', '\/')}"
 
-        # Setup default hwclock parameters
-        OPENWRT_HWCLOCK_DEV_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_DEV', True).replace('/', '\/')}"
-        OPENWRT_HWCLOCK_LOCALTIME_ESCAPED="${@d.getVar('OPENWRT_HWCLOCK_LOCALTIME', True).replace('/', '\/')}"
+	sed -i -e "s/\(option\s*hwclock_dev\).*/\1 \'${OPENWRT_HWCLOCK_DEV_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+	sed -i -e "s/\(option\s*hwclock_localtime\).*/\1 \'${OPENWRT_HWCLOCK_LOCALTIME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
 
-        sed -i -e "s/\(option\s*hwclock_dev\).*/\1 \'${OPENWRT_HWCLOCK_DEV_ESCAPED}\'/" ${D}${sysconfdir}/config/system
-        sed -i -e "s/\(option\s*hwclock_localtime\).*/\1 \'${OPENWRT_HWCLOCK_LOCALTIME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+	# Setup system hostname
+	OPENWRT_HOSTNAME_ESCAPED="${@d.getVar('OPENWRT_HOSTNAME', True).replace('/', '\/')}"
+	sed -i -e "s/\(option\s*hostname\).*/\1 \'${OPENWRT_HOSTNAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
+	echo "${@d.getVar('OPENWRT_HOSTNAME', True)}" > ${D}${sysconfdir}/hostname
 
-        # Setup system hostname
-        OPENWRT_HOSTNAME_ESCAPED="${@d.getVar('OPENWRT_HOSTNAME', True).replace('/', '\/')}"
-        sed -i -e "s/\(option\s*hostname\).*/\1 \'${OPENWRT_HOSTNAME_ESCAPED}\'/" ${D}${sysconfdir}/config/system
-        echo "${@d.getVar('OPENWRT_HOSTNAME', True)}" > ${D}${sysconfdir}/hostname
+	rm -rf ${D}/var/run
+	rm -rf ${D}/run
+	ln -s /var/run ${D}/run
 
-        rm -rf ${D}/var/run
-        rm -rf ${D}/run
-        ln -s /var/run ${D}/run
+	rm -rf ${D}/proc/mounts
+	rm -rf ${D}${sysconfdir}/motd
+	rm -rf ${D}${sysconfdir}/skel
+	rm -rf ${D}${sysconfdir}/filesystems
 
-        rm -rf ${D}/proc/mounts
-        rm -rf ${D}${sysconfdir}/motd
-        rm -rf ${D}${sysconfdir}/skel
-        rm -rf ${D}${sysconfdir}/filesystems
+	if [ "${@bb.utils.contains('MACHINES_X86', '${MACHINE}', 'true', 'false', d)}" = "true" ]; then
+		install -dm 0755 ${D}/lib/preinit
+		install -m 0644 ${WORKDIR}/01_sysinfo ${D}/lib/preinit/01_sysinfo
+		install -m 0644 ${WORKDIR}/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
+		install -m 0644 ${WORKDIR}/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
+		install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
+		install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
+	fi
 
-        if [ "${@bb.utils.contains('MACHINES_X86', '${MACHINE}', 'true', 'false', d)}" = "true" ]; then
-            install -dm 0755 ${D}/lib/preinit
-            install -m 0644 ${WORKDIR}/01_sysinfo ${D}/lib/preinit/01_sysinfo
-            install -m 0644 ${WORKDIR}/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
-            install -m 0644 ${WORKDIR}/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
-            install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
-            install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
-        fi
+	install -dm 0755 ${D}${libdir}/locale
 
-        install -dm 0755 ${D}${libdir}/locale
+	# Common default PATH
+	install -dm 0755 ${D}/lib/preinit
+	PREINIT_CONF="${D}/lib/preinit/00_preinit.conf"
+	echo "pi_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR}\"" >${PREINIT_CONF}
+	echo "fs_failsafe_wait_timeout=${OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT}" >>${PREINIT_CONF}
+	echo "pi_init_path=\"${OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH}\"" >>${PREINIT_CONF}
+	echo "pi_init_env=\"${OPENWRT_CONFIG_TARGET_INIT_ENV}\"" >>${PREINIT_CONF}
+	echo "pi_init_cmd=\"${OPENWRT_CONFIG_TARGET_INIT_CMD}\"" >>${PREINIT_CONF}
+	echo "pi_init_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR}\"" >>${PREINIT_CONF}
+	echo "pi_ifname=\"${OPENWRT_CONFIG_TARGET_PREINIT_IFNAME}\"" >>${PREINIT_CONF}
+	echo "pi_ip=\"${OPENWRT_CONFIG_TARGET_PREINIT_IP}\"" >>${PREINIT_CONF}
+	echo "pi_netmask=\"${OPENWRT_CONFIG_TARGET_PREINIT_NETMASK}\"" >>${PREINIT_CONF}
+	echo "pi_broadcast=\"${OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST}\"" >>${PREINIT_CONF}
+	echo "pi_preinit_net_messages=\"${OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG}\"" >>${PREINIT_CONF}
+	echo "pi_preinit_no_failsafe_netmsg=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG}\"" >>${PREINIT_CONF}
+	echo "pi_preinit_no_failsafe=\"${OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE}\"" >>${PREINIT_CONF}
 
-        # Common default PATH
-        install -dm 0755 ${D}/lib/preinit
-        PREINIT_CONF="${D}/lib/preinit/00_preinit.conf"
-        echo "pi_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR}\"" >${PREINIT_CONF}
-        echo "fs_failsafe_wait_timeout=${OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT}" >>${PREINIT_CONF}
-        echo "pi_init_path=\"${OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH}\"" >>${PREINIT_CONF}
-        echo "pi_init_env=\"${OPENWRT_CONFIG_TARGET_INIT_ENV}\"" >>${PREINIT_CONF}
-        echo "pi_init_cmd=\"${OPENWRT_CONFIG_TARGET_INIT_CMD}\"" >>${PREINIT_CONF}
-        echo "pi_init_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_INIT_SUPPRESS_STDERR}\"" >>${PREINIT_CONF}
-        echo "pi_ifname=\"${OPENWRT_CONFIG_TARGET_PREINIT_IFNAME}\"" >>${PREINIT_CONF}
-        echo "pi_ip=\"${OPENWRT_CONFIG_TARGET_PREINIT_IP}\"" >>${PREINIT_CONF}
-        echo "pi_netmask=\"${OPENWRT_CONFIG_TARGET_PREINIT_NETMASK}\"" >>${PREINIT_CONF}
-        echo "pi_broadcast=\"${OPENWRT_CONFIG_TARGET_PREINIT_BROADCAST}\"" >>${PREINIT_CONF}
-        echo "pi_preinit_net_messages=\"${OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG}\"" >>${PREINIT_CONF}
-        echo "pi_preinit_no_failsafe_netmsg=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG}\"" >>${PREINIT_CONF}
-        echo "pi_preinit_no_failsafe=\"${OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE}\"" >>${PREINIT_CONF}
-
-        sed -i "s#%PATH%#/usr/sbin:/usr/bin:/sbin:/bin#g" \
-              ${D}${sysconfdir}/preinit \
-              ${D}${base_sbindir}/hotplug-call
-    fi
+	sed -i "s#%PATH%#/usr/sbin:/usr/bin:/sbin:/bin#g" \
+		${D}${sysconfdir}/preinit \
+		${D}${base_sbindir}/hotplug-call
 }
 
 pkg_preinst_${PN} () {
@@ -279,26 +257,27 @@ pkg_preinst_${PN} () {
 }
 
 pkg_postinst_${PN}_append() {
-    rm -rf $D/var/lock
-    mkdir -p $D/var/lock
+	rm -rf $D/var/lock
+	mkdir -p $D/var/lock
 }
 
 FILES_${PN} = "/"
 
 RDEPENDS_${PN} += "\
-                  ${@bb.utils.contains('PACKAGECONFIG', 'includeopenwrt', '${PN}-scripts-openwrt ${PN}-scripts-sysupgrade', '', d)} \
-                  "
+	${PN}-scripts-openwrt \
+	${PN}-scripts-sysupgrade \
+"
 
 RSUGGESTS_${PN} += "\
-                   ${@bb.utils.contains('PACKAGECONFIG', 'preferopenwrt', '${PN}-scripts-sysupgrade', '', d)} \
-                   ${@bb.utils.contains('PACKAGECONFIG', 'oeoveropenwrt', '', 'procd ubox', d)} \
-                   "
+	prcod \
+	ubux \
+"
 
 CONFFILES_${PN} += "\
-                   ${sysconfdir}/fstab \
-                   ${@['', '${sysconfdir}/hostname'][(d.getVar('hostname', True) != '')]} \
-                   ${sysconfdir}/shells \
-                   "
+	${sysconfdir}/fstab \
+	${@['', '${sysconfdir}/hostname'][(d.getVar('hostname', True) != '')]} \
+	${sysconfdir}/shells \
+"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano3"
+PR = "tano4"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -26,10 +26,10 @@ RDEPENDS_${PN}-base = "\
 	libubox-lua \
 	fstools \
 	eudev \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'libusb1', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbutils', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbreset', '',d)} \
-	${@bb.utils.contains('DISTRO_FEATURES', 'usbhost', 'usbmode', '',d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'libusb1', '',d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'usbutils', '',d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'usbreset', '',d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'usbmode', '',d)} \
 	mtd-utils \
 	mtd-utils-ubifs \
 	apcupsd \

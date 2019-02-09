@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is both VIRTUAL-RUNTIME-init_manager and\
                VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev)\
@@ -38,6 +38,10 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 SRCREV = "94944ab099a071a82eb830a6ded4426319dc2c78"
 
 S = "${WORKDIR}/git"
+
+REQUIRED_DISTRO_FEATURES = "procd"
+CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
+inherit distro_features_check
 
 inherit cmake openwrt pkgconfig
 
@@ -81,11 +85,6 @@ ALTERNATIVE_${PN} = "init"
 
 ALTERNATIVE_PRIORITY = "40"
 ALTERNATIVE_TARGET[init] = "${base_sbindir}/init"
-
-python () {
-    if not bb.utils.contains('DISTRO_FEATURES', 'procd', True, False, d):
-        raise bb.parse.SkipPackage("'procd' not in DISTRO_FEATURES")
-}
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/hotplug.json \

@@ -6,6 +6,15 @@ inherit openwrt-kmods
 IMAGE_OVERLAY_NAME_SUFFIX = ".overlay"
 
 #
+# Available IMAGE_FEATURES:
+#
+# - wifi
+# - cgroup
+#
+FEATURE_PACKAGES_cgroup = "packagegroup-openwrt-cgroup"
+FEATURE_PACKAGES_wifi = "packagegroup-openwrt-wifi"
+
+#
 # Create empty overlay image
 #
 IMAGE_CMD_ubifs_append() {

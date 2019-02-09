@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano13"
+PR = "tano14"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -35,25 +35,22 @@ inherit autotools
 EXTRA_OECONF = "--sbindir=/sbin"
 
 do_install_append() {
-	if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
+	# Remove unused in OpenWrt files
+	rm -rf ${D}${sysconfdir}/network
+	rm -rf ${D}${sysconfdir}/bridge-stp.conf
+	rm -rf ${D}/usr/libexec/mstpctl-utils/*
 
-		# Remove unused in OpenWrt files
-		rm -rf ${D}${sysconfdir}/network
-		rm -rf ${D}${sysconfdir}/bridge-stp.conf
-		rm -rf ${D}/usr/libexec/mstpctl-utils/*
+	# Install directories
+	install -dm 0755 ${D}${sysconfdir}/config
+	install -dm 0755 ${D}${sysconfdir}/init.d
+	install -dm 0755 ${D}/lib/functions
+	install -dm 0755 ${D}/sbin
 
-		# Install directories
-		install -dm 0755 ${D}${sysconfdir}/config
-		install -dm 0755 ${D}${sysconfdir}/init.d
-		install -dm 0755 ${D}/lib/functions
-		install -dm 0755 ${D}/sbin
-
-		# Install files
-		install -m 0755 ${WORKDIR}/bridge-stp ${D}/sbin/bridge-stp
-		install -m 0644 ${WORKDIR}/mstpd.config ${D}${sysconfdir}/config/mstpd
-		install -m 0755 ${WORKDIR}/mstpd.init ${D}${sysconfdir}/init.d/mstpd
-		install -m 0755 ${WORKDIR}/mstpd.sh ${D}/lib/functions/mstpd.sh
-	fi
+	# Install files
+	install -m 0755 ${WORKDIR}/bridge-stp ${D}/sbin/bridge-stp
+	install -m 0644 ${WORKDIR}/mstpd.config ${D}${sysconfdir}/config/mstpd
+	install -m 0755 ${WORKDIR}/mstpd.init ${D}${sysconfdir}/init.d/mstpd
+	install -m 0755 ${WORKDIR}/mstpd.sh ${D}/lib/functions/mstpd.sh
 }
 
 FILES_${PN} += "/lib/functions/"

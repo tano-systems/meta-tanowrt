@@ -4,12 +4,16 @@
 
 require base-files.inc
 
-PR = "tano2.${INC_PR}"
+PR = "tano3.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
+REQUIRED_DISTRO_FEATURES = "procd"
+CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
+inherit distro_features_check
 
 SC = "${WORKDIR}/openwrt/package/base-files/files"
 

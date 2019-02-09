@@ -5,6 +5,10 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
+REQUIRED_DISTRO_FEATURES = "procd"
+CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
+inherit distro_features_check
+
 def get_vardeps(d):
     vars = []
 

@@ -56,26 +56,24 @@ OPENWRT_SERVICE_SCRIPTS_lldpd += "lldpd"
 OPENWRT_SERVICE_STATE_lldpd-lldpd ?= "enabled"
 
 do_install_append() {
-    if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "true" ]; then
-        install -Dm 0755 ${WORKDIR}/lldpd.init    ${D}${sysconfdir}/init.d/lldpd
-        install -Dm 0644 ${WORKDIR}/lldpd.config  ${D}${sysconfdir}/config/lldpd
-        #
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'cdp', 'true', 'false', d)}" = "false" ]; then
-            sed -i -e '/cdp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
-        fi
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'fdp', 'true', 'false', d)}" = "false" ]; then
-            sed -i -e '/fdp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
-        fi
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'edp', 'true', 'false', d)}" = "false" ]; then
-            sed -i -e '/edp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
-        fi
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'sonmp', 'true', 'false', d)}" = "false" ]; then
-            sed -i -e '/sonmp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
-        fi
-        if [ "${@bb.utils.contains('PACKAGECONFIG', 'snmp', 'true', 'false', d)}" = "false" ]; then
-            sed -i -e '/agentxsocket/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
-        fi
-    fi
+	install -Dm 0755 ${WORKDIR}/lldpd.init    ${D}${sysconfdir}/init.d/lldpd
+	install -Dm 0644 ${WORKDIR}/lldpd.config  ${D}${sysconfdir}/config/lldpd
+	#
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'cdp', 'true', 'false', d)}" = "false" ]; then
+	    sed -i -e '/cdp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
+	fi
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'fdp', 'true', 'false', d)}" = "false" ]; then
+	    sed -i -e '/fdp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
+	fi
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'edp', 'true', 'false', d)}" = "false" ]; then
+	    sed -i -e '/edp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
+	fi
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'sonmp', 'true', 'false', d)}" = "false" ]; then
+	    sed -i -e '/sonmp/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
+	fi
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'snmp', 'true', 'false', d)}" = "false" ]; then
+	    sed -i -e '/agentxsocket/d' ${D}${sysconfdir}/init.d/lldpd ${D}${sysconfdir}/config/lldpd
+	fi
 }
 
 CONFFILES_${PN}_append = "\

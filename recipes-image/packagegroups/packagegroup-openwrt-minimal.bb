@@ -37,6 +37,5 @@ RDEPENDS_${PN}-network = "\
 	${VIRTUAL-RUNTIME_network_manager} \
 	uclient \
 	ustream-ssl \
-	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'cfg80211 iw hostapd', '',d)} \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcp6c', '', d)} \
 "
