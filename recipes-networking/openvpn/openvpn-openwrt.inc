@@ -1,5 +1,5 @@
 #
-# Open source VPN solution using SLL
+# Open source VPN solution using SSL
 # OpenWrt recipe
 #
 # Copyright (c) 2018, Tano Systems. All Rights Reserved.
