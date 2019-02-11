@@ -11,9 +11,6 @@ SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${TANO_OPENWRT_BASE}/LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
-WKS_FILE = "openwrt-image.wks"
-WKS_FILE_DEPENDS = "syslinux syslinux-native dosfstools-native mtools-native"
-
 inherit openwrt-image
 inherit rootfs-rm-boot-dir
 inherit rootfs-var-in-tmpfs
