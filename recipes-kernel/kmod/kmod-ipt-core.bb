@@ -1,6 +1,6 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Iptables core"
 LICENSE = "MIT"
 
@@ -83,11 +83,23 @@ KERNEL_CONFIG_DEPENDS += "{\
 	option            = CONFIG_NETFILTER_XT_TARGET_LOG, \
 	required          = y|m, \
 	m_rdepends        = kernel-module-xt-log, \
-	m_rdepends        = kernel-module-nf-log-common, \
-	m_rdepends        = kernel-module-nf-log-ipv4, \
 	m_autoload        = xt_LOG, \
-	m_autoload        = nf_log_common, \
+	m_autoload_script = ipt-core \
+}"
+
+KERNEL_CONFIG_DEPENDS += "{\
+	option            = CONFIG_NF_LOG_IPV4, \
+	required          = y|m, \
+	m_rdepends        = kernel-module-nf-log-ipv4, \
 	m_autoload        = nf_log_ipv4, \
+	m_autoload_script = ipt-core \
+}"
+
+KERNEL_CONFIG_DEPENDS += "{\
+	option            = CONFIG_NF_LOG_COMMON, \
+	required          = y|m, \
+	m_rdepends        = kernel-module-nf-log-common, \
+	m_autoload        = nf_log_common, \
 	m_autoload_script = ipt-core \
 }"
 
