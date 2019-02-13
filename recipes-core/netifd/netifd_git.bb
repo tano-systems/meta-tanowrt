@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano16"
+PR = "tano17"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -22,6 +22,7 @@ SRC_URI = "\
 # rootfs files
 SRC_URI += "\
 	file://rootfs/etc/config/network \
+	file://rootfs/etc/config/wireless \
 	file://rootfs/etc/hotplug.d/iface/00-netstate \
 	file://rootfs/etc/hotplug.d/net/20-smp-tune \
 	file://rootfs/etc/init.d/network \
@@ -57,6 +58,10 @@ do_configure_prepend () {
 do_install_append() {
 	install -d ${D}${sysconfdir}/config
 	install -m 0644 ${WORKDIR}/rootfs/etc/config/network ${D}${sysconfdir}/config/
+
+	if [ "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '1', '0', d)}" == "1" ]; then
+		install -m 0644 ${WORKDIR}/rootfs/etc/config/wireless ${D}${sysconfdir}/config/
+	fi
 
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/rootfs/etc/init.d/network ${D}${sysconfdir}/init.d/
@@ -102,11 +107,12 @@ FILES_${PN} += "\
 	${base_libdir}/netifd/proto/dhcp.sh \
 	${base_libdir}/network/config.sh \
 	${sysconfdir}/config/network \
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/network \
-	$(sysconfdir)/config/wireless \
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "
 
 RDEPENDS_${PN} += "\
