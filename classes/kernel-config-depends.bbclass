@@ -1,12 +1,14 @@
 #
 # Kernel configuration dependencies
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Example:
 #
 #   KERNEL_CONFIG_DEPENDS += "{\
 #       option              = CONFIG_BRIDGE, \
 #       required            = y|m, \
+#       version             = '> 4.14, < 4.16', \
+#       version             = '> 4.17', \
 #       m_rdepends          = kernel-module-bridge, \
 #       m_autoload_script   = bridge, \
 #       m_autoload_priority = 30, \
@@ -23,10 +25,28 @@ ALLOW_EMPTY_${PN} = "1"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
+def get_op_ver(s, d):
+    i = s.replace(" ", "")
+    op  = ""
+    ver = ""
+
+    if i.startswith(('<=', '=<', '<<', '==', '!=', '>=', '=>', '>>')):
+        op  = i[0:2]
+        ver = i[2:]
+    elif i.startswith(('<', '>')):
+        op  = i[0:1]
+        ver = i[1:]
+    else:
+        raise Exception('Invalid version specification "%s"' % i)
+
+    return (op, ver)
+
 def kernel_config_depends(d):
     import re
 
     bb.debug(1, 'Check kernel configuration dependencies...');
+
+    kversion = kernel_get_version(d)
 
     kdep_var  = d.getVar('KERNEL_CONFIG_DEPENDS', True) or ""
     kdep_opts = re.findall("\{(.*?)\}", kdep_var)
@@ -37,10 +57,14 @@ def kernel_config_depends(d):
 
     for kdep in kdep_opts:
 
+        ver_passed  = False
+        ver_checked = False
+
         if not kdep:
             continue
 
-        values = kdep.split(",")
+        pattern = re.compile(r"((?:[^,\"']|\"[^\"]*\"|'[^']*')+)")
+        values  = pattern.split(kdep)[1::2]
 
         if not len(values):
             continue
@@ -49,22 +73,25 @@ def kernel_config_depends(d):
 
         koption = ""
         required = []
+        version = ""
         m_rdepends = []
         m_autoload_priority = -1
         m_autoload_script = pkg
         m_autoload_early = False
         m_autoload = []
 
+        pattern = re.compile(r"((?:[^=\"']|\"[^\"]*\"|'[^']*')+)")
+
         # Read parameters
         for value in values:
-            v = value.split("=")
+            v = pattern.split(value)[1::2]
 
             if len(v) < 2:
                 bb.warn('Invalid parameter "%s" in KERNEL_CONFIG_DEPENDS' % value)
                 continue
 
-            v[0] = v[0].strip()
-            v[1] = v[1].strip()
+            v[0] = re.sub("[\"']", "", v[0]).strip()
+            v[1] = re.sub("[\"']", "", v[1]).strip()
 
             if v[0] == 'option':
                 koption = v[1]
@@ -72,6 +99,19 @@ def kernel_config_depends(d):
                 req = v[1].split("|")
                 for r in req:
                     required.append(r.strip())
+            elif v[0] == 'version':
+                comparsions = v[1].split(",")
+                if len(comparsions):
+                    passed = True
+                    for c in comparsions:
+                        (op, ver) = get_op_ver(c, d)
+                        result = bb.utils.vercmp_string_op(kversion, ver, op)
+                        ver_checked = True
+                        bb.debug(1, '  Kernel version check: %s %s %s: %s' % (kversion, op, ver, str(result)));
+                        if not result:
+                            passed = False
+                    if passed:
+                        ver_passed = True
             elif v[0] == 'm_rdepends':
                 m_rdepends.append(v[1])
             elif v[0] == 'm_autoload_script':
@@ -89,6 +129,10 @@ def kernel_config_depends(d):
                 bb.warn('KERNEL_CONFIG_DEPENDS has unknown parameter "%s"' % (v[0]))
 
         if not koption:
+            continue
+
+        if ver_checked and not ver_passed:
+            bb.debug(1, '  Kernel option %s skipped due kernel version check' % (koption));
             continue
 
         kvalue = kernel_get_config('%s' % koption, d)
