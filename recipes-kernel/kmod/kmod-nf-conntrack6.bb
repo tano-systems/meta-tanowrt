@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Netfilter IPv6 connection tracking"
 LICENSE = "MIT"
 
@@ -25,6 +25,7 @@ KERNEL_CONFIG_DEPENDS += "{\
 KERNEL_CONFIG_DEPENDS += "{\
 	option            = CONFIG_NF_CONNTRACK_IPV6, \
 	required          = y|m, \
+	version           = '< 4.18.0', \
 	m_rdepends        = kernel-module-nf-conntrack-ipv6, \
 	m_autoload        = nf_conntrack_ipv6, \
 	m_autoload_script = nf-conntrack6 \
