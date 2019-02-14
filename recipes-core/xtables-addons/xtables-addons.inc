@@ -6,13 +6,16 @@ DEPENDS = "virtual/kernel iptables bc-native"
 
 inherit autotools kernel-module-split module-base pkgconfig
 
-S = "${WORKDIR}/xtables-addons-${PV}"
+INC_PR = "0"
 
 do_compile[depends] += "virtual/kernel:do_deploy"
 
 MODULES_MODULE_SYMVERS_LOCATION = "../${BPN}-${PV}/extensions"
 
-EXTRA_OECONF = "--with-kbuild=${STAGING_KERNEL_DIR}"
+EXTRA_OECONF = "\
+	--with-kbuild=${STAGING_KERNEL_BUILDDIR} \
+	--with-xtlibdir=${libdir}/iptables \
+"
 
 EXTRA_OEMAKE = "M=${S}/extentions DESTDIR=${D} V=1"
 MODULES_INSTALL_TARGET = "install"

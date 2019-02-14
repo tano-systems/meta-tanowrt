@@ -1,5 +1,5 @@
 PV = "3.0"
-PR = "tano1"
+PR = "tano2.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
@@ -16,5 +16,7 @@ SRC_URI = "\
 
 SRC_URI[md5sum] = "b37ed4d9c28cdcd5558c55934be8d051"
 SRC_URI[sha256sum] = "95580b851c79c0bbc484e0d0ea23f53e5c7f439ad73d509e426598565392690d"
+
+S = "${WORKDIR}/xtables-addons-${PV}"
 
 require xtables-addons.inc

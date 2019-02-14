@@ -889,7 +889,7 @@
 +#endif /* _IP_CONNTRACK_RTSP_H */
 --- /dev/null
 +++ b/extensions/rtsp/nf_nat_rtsp.c
-@@ -0,0 +1,617 @@
+@@ -0,0 +1,621 @@
 +/*
 + * RTSP extension for TCP NAT alteration
 + * (C) 2003 by Tom Marshall <tmarshall at real.com>
@@ -1426,10 +1426,14 @@
 +
 +static void nf_nat_rtsp_expected(struct nf_conn* ct, struct nf_conntrack_expect *exp)
 +{
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 18, 0)
++	struct nf_nat_range2 range;
++#else
 +#if LINUX_VERSION_CODE < KERNEL_VERSION(3,3,0) || LINUX_VERSION_CODE >= KERNEL_VERSION(3,7,0)
 +	struct nf_nat_range range;
 +#else
 +	struct nf_nat_ipv4_range range;
++#endif
 +#endif
 +
 +	/* This must be a fresh one. */
