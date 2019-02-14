@@ -1,6 +1,13 @@
 #
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 #
+
+def kernel_get_version(d):
+    staging = d.getVar('STAGING_KERNEL_BUILDDIR', True)
+    with open(staging + '/kernel-abiversion') as f:
+        version = f.readline()
+
+    return version.rstrip()
 
 def kernel_get_config(config, d):
     import re
