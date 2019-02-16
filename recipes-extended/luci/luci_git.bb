@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano23"
+PR = "tano24"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/tano-systems/luci"
@@ -10,7 +10,9 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 SECTION = "base"
 DEPENDS = "json-c libubox libnl lua5.1 iwinfo openssl"
-RDEPENDS_${PN} = "lua5.1 lucihttp"
+RDEPENDS_${PN} = "lua5.1 lucihttp luci-bwc"
+
+PACKAGES += "luci-bwc"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -25,10 +27,16 @@ OPENWRT_SERVICE_STATE_luci-ucitrack ?= "enabled"
 
 require luci.inc
 
+# Files
 SRC_URI = "\
 	${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL} \
-	file://cmake.patch \
 	file://99_luci-theme-initial \
+	file://CMakeLists.txt \
+"
+
+# Patches
+SRC_URI += "\
+	file://cmake.patch \
 "
 
 SRCREV = "${LUCI_GIT_SRCREV}" 
@@ -47,11 +55,17 @@ EXTRA_OECMAKE += "\
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -DDESTDIR=${D}"
 
-FILES_${PN} += "/www /usr/lib /usr/share/acl.d /usr/share/rpcd/acl.d ${bindir} /lib/upgrade/luci-add-conffiles.sh"
+FILES_${PN} = "\
+	${sysconfdir} \
+	${base_libdir} \
+	${base_sbindir} \
+	${libdir} \
+	${datadir}/acl.d \
+	${datadir}/rpcd/acl.d \
+	/www \
+"
 
 S = "${WORKDIR}/git/"
-
-SRC_URI += "file://CMakeLists.txt"
 
 apply_luci_version() {
 	LUCI_VERSION_SRC="${S}/modules/luci-base/luasrc/version.lua"
@@ -107,3 +121,9 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/luci \
 	${sysconfdir}/config/ucitrack \
 "
+
+#
+# luci-bwc package
+#
+DESCRIPTION_luci-bwc = "Very simple bandwidth collector cache for LuCI realtime graphs"
+FILES_luci-bwc = "${bindir}/luci-bwc"
