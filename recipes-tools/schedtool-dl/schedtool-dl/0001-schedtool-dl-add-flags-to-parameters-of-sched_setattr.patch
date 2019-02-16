@@ -1,0 +1,56 @@
+From c75ae0f6ac2bb9eb893cce82e93144e1b3c36389 Mon Sep 17 00:00:00 2001
+From: Qi Hou <qi.hou@windriver.com>
+Date: Wed, 16 Mar 2016 05:44:40 +0000
+Subject: [PATCH] schedtool-dl: add flags to parameters of sched_setattr
+
+git://github.com/jlelli/schedtool-dl.git;protocol=git
+commit 3ffb479929c31cbae09de08f94f58b8f0f061d91
+
+The commit numbered as 3ffb479 has adapted to the very last changes to the ABI,except for the
+syscall of sched_setattr.
+
+While executing schedtool,there was an error,like below:
+
+root@128:/opt/wr-test/testcases/kts/edf# schedtool -E -t 8000:10000 -e yes
+ERROR: could not set PID 1731 to E: SCHED_DEADLINE - value out of range / policy not implemented
+
+The cause of this case is that the syscall of sched_setattr is declared with 3 parameters,but in
+the use of it in schedtool,there was only two parameters.So to adapt this declaration,we should
+add one more parameter,flags,when calling sched_setattr.
+
+In kernel source file kernel/sched/core.c,the declaration of the syscall of sched_setattr like below:
+/**
+ * sys_sched_setattr - same as above, but with extended sched_attr
+ * @pid: the pid in question.
+ * @uattr: structure containing the extended parameters.
+ * @flags: for future extension.
+ */
+ SYSCALL_DEFINE3(sched_setattr, pid_t, pid, struct sched_attr __user *, uattr,
+                                unsigned int, flags)
+ {
+	...
+ }
+
+In schedtool-dl source file syscall_magic.h,the use of sched_setattr like below:
+        syscall(__NR_sched_setattr, pid, attr)
+
+Upstream-Status: Backport
+
+Signed-off-by: Qi Hou <qi.hou@windriver.com>
+---
+ syscall_magic.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/syscall_magic.h b/syscall_magic.h
+index 7dcb967..2735dfb 100644
+--- a/syscall_magic.h
++++ b/syscall_magic.h
+@@ -76,4 +76,4 @@ struct sched_attr {
+ 	syscall(__NR_sched_getattr, pid, attr, size, flags)
+ 
+ #define sched_setattr(pid, attr, flags) \
+-	syscall(__NR_sched_setattr, pid, attr)
++	syscall(__NR_sched_setattr, pid, attr,flags)
+-- 
+1.9.1
+
