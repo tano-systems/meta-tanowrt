@@ -243,13 +243,13 @@ _procd_set_param() {
 			json_add_string "" "$@"
 			json_close_array
 		;;
-		nice|term_timeout)
+		nice|term_timeout|priority|runtime|deadline|period)
 			json_add_int "$type" "$1"
 		;;
 		reload_signal)
 			json_add_int "$type" $(kill -l "$1")
 		;;
-		pidfile|user|seccomp|capabilities|chdir)
+		pidfile|user|seccomp|capabilities|chdir|policy)
 			json_add_string "$type" "$1"
 		;;
 		stdout|stderr|no_new_privs|cg_sticky)

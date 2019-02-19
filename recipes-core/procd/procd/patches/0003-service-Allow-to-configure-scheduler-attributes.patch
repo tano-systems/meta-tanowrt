@@ -1,0 +1,405 @@
+From 8d2dc2bea5b0c06474a1505e8301df2d33b9adf7 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 19 Feb 2019 02:41:23 +0300
+Subject: [PATCH] service: Allow to configure scheduler attributes
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ service/instance.c       | 177 +++++++++++++++++++++++++++++++++++++++++++++--
+ service/instance.h       |   5 ++
+ service/instance_sched.h |  92 ++++++++++++++++++++++++
+ 3 files changed, 270 insertions(+), 4 deletions(-)
+ create mode 100644 service/instance_sched.h
+
+diff --git a/service/instance.c b/service/instance.c
+index 9f18410..cbdfc44 100644
+--- a/service/instance.c
++++ b/service/instance.c
+@@ -27,6 +27,7 @@
+ #include <pwd.h>
+ #include <libgen.h>
+ #include <unistd.h>
++#include <sched.h>
+ 
+ #ifdef CGROUP_SUPPORT
+ 
+@@ -49,7 +50,7 @@
+ 
+ #include "service.h"
+ #include "instance.h"
+-
++#include "instance_sched.h"
+ 
+ enum {
+ 	INSTANCE_ATTR_COMMAND,
+@@ -59,7 +60,12 @@ enum {
+ 	INSTANCE_ATTR_FILE,
+ 	INSTANCE_ATTR_TRIGGER,
+ 	INSTANCE_ATTR_RESPAWN,
+-	INSTANCE_ATTR_NICE,
++	INSTANCE_ATTR_POLICY,
++	INSTANCE_ATTR_NICE,     /* for SCHED_OTHER, SCHED_BATCH */
++	INSTANCE_ATTR_PRIORITY, /* for SCHED_RR, SCHED_FIFO */
++	INSTANCE_ATTR_RUNTIME,  /* for SCHED_DEADLINE */
++	INSTANCE_ATTR_DEADLINE, /* for SCHED_DEADLINE */
++	INSTANCE_ATTR_PERIOD,   /* for SCHED_DEADLINE */
+ 	INSTANCE_ATTR_LIMITS,
+ 	INSTANCE_ATTR_WATCH,
+ 	INSTANCE_ATTR_ERROR,
+@@ -89,7 +95,12 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
+ 	[INSTANCE_ATTR_FILE] = { "file", BLOBMSG_TYPE_ARRAY },
+ 	[INSTANCE_ATTR_TRIGGER] = { "triggers", BLOBMSG_TYPE_ARRAY },
+ 	[INSTANCE_ATTR_RESPAWN] = { "respawn", BLOBMSG_TYPE_ARRAY },
++	[INSTANCE_ATTR_POLICY] = { "policy", BLOBMSG_TYPE_STRING },
+ 	[INSTANCE_ATTR_NICE] = { "nice", BLOBMSG_TYPE_INT32 },
++	[INSTANCE_ATTR_PRIORITY] = { "priority", BLOBMSG_TYPE_INT32 },
++	[INSTANCE_ATTR_RUNTIME] = { "runtime", BLOBMSG_TYPE_INT64 },
++	[INSTANCE_ATTR_DEADLINE] = { "deadline", BLOBMSG_TYPE_INT64 },
++	[INSTANCE_ATTR_PERIOD] = { "period", BLOBMSG_TYPE_INT64 },
+ 	[INSTANCE_ATTR_LIMITS] = { "limits", BLOBMSG_TYPE_TABLE },
+ 	[INSTANCE_ATTR_WATCH] = { "watch", BLOBMSG_TYPE_ARRAY },
+ 	[INSTANCE_ATTR_ERROR] = { "error", BLOBMSG_TYPE_ARRAY },
+@@ -168,6 +179,44 @@ static const struct rlimit_name rlimit_names[] = {
+ 	{ NULL, 0 }
+ };
+ 
++struct policy_info {
++	const char *name;
++	int id;
++};
++
++static const struct policy_info policies[] = {
++	{ "SCHED_OTHER", SCHED_OTHER },
++	{ "SCHED_FIFO", SCHED_FIFO },
++	{ "SCHED_RR", SCHED_RR },
++	{ "SCHED_BATCH", SCHED_BATCH },
++	{ "SCHED_DEADLINE", SCHED_DEADLINE },
++	{ NULL, 0 }
++};
++
++static int policy_id(const char *name)
++{
++	int i;
++
++	for (i = 0; policies[i].name != NULL; i++) {
++		if (!strcmp(policies[i].name, name))
++			return policies[i].id;
++	}
++
++	return -1;
++}
++
++static const char *policy_name(int id)
++{
++	int i;
++
++	for (i = 0; policies[i].name != NULL; i++) {
++		if (policies[i].id == id)
++			return policies[i].name;
++	}
++
++	return NULL;
++}
++
+ static void closefd(int fd)
+ {
+ 	if (fd > STDERR_FILENO)
+@@ -505,14 +554,60 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+ {
+ 	struct blobmsg_list_node *var;
+ 	struct blob_attr *cur;
++	struct sched_attr attr;
+ 	char **argv;
+ 	int argc = 1; /* NULL terminated */
+ 	int rem, _stdin;
++	int ret;
+ 	bool seccomp = !in->trace && !in->has_jail && in->seccomp;
+ 	bool setlbf = _stdout >= 0;
+ 
+-	if (in->nice)
+-		setpriority(PRIO_PROCESS, 0, in->nice);
++	memset(&attr, 0, sizeof(struct sched_attr));
++
++	DEBUG(2, "Instance %s::%s: scheduling policy is %s\n",
++		in->srv->name, in->name, policy_name(in->policy));
++
++	attr.size = sizeof(struct sched_attr);
++	attr.sched_policy = in->policy;
++	attr.sched_flags = 0;
++
++	switch(in->policy)
++	{
++		case SCHED_OTHER:
++		case SCHED_BATCH:
++			attr.sched_nice = in->nice;
++			DEBUG(2, "Instance %s::%s: nice is %d\n",
++				in->srv->name, in->name, in->nice);
++			break;
++
++		case SCHED_FIFO:
++		case SCHED_RR:
++			attr.sched_priority = in->priority;
++			DEBUG(2, "Instance %s::%s: priority is %d\n",
++				in->srv->name, in->name, in->priority);
++			break;
++
++		case SCHED_DEADLINE:
++			attr.sched_runtime = in->runtime;
++			attr.sched_deadline = in->deadline;
++			attr.sched_period = in->period;
++			DEBUG(2, "Instance %s::%s: runtime is %llu\n",
++				in->srv->name, in->name, in->runtime);
++			DEBUG(2, "Instance %s::%s: deadline is %llu\n",
++				in->srv->name, in->name, in->deadline);
++			DEBUG(2, "Instance %s::%s: period is %llu\n",
++				in->srv->name, in->name, in->period);
++			break;
++
++		default:
++			break;
++	}
++
++	ret = sched_setattr(getpid(), &attr, 0);
++	if (ret) {
++		ERROR("Instance %s::%s: failed to setup scheduler attributes (err = %d): %m\n",
++			in->srv->name, in->name, ret);
++	}
+ 
+ 	blobmsg_for_each_attr(cur, in->command, rem)
+ 		argc++;
+@@ -851,9 +946,24 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+ 	if (!blobmsg_list_equal(&in->file, &in_new->file))
+ 		return true;
+ 
++	if (in->policy != in_new->policy)
++		return true;
++
+ 	if (in->nice != in_new->nice)
+ 		return true;
+ 
++	if (in->priority != in_new->priority)
++		return true;
++
++	if (in->runtime != in_new->runtime)
++		return true;
++
++	if (in->deadline != in_new->deadline)
++		return true;
++
++	if (in->period != in_new->period)
++		return true;
++
+ 	if (string_changed(in->user, in_new->user))
+ 		return true;
+ 
+@@ -1115,12 +1225,34 @@ instance_config_parse(struct service_instance *in)
+ 		}
+ 	}
+ 
++	if ((cur = tb[INSTANCE_ATTR_POLICY])) {
++		in->policy = policy_id(blobmsg_get_string(cur));
++		if (in->policy < 0)
++			return false;
++	}
++
+ 	if ((cur = tb[INSTANCE_ATTR_NICE])) {
+ 		in->nice = (int8_t) blobmsg_get_u32(cur);
+ 		if (in->nice < -20 || in->nice > 20)
+ 			return false;
+ 	}
+ 
++	if ((cur = tb[INSTANCE_ATTR_PRIORITY])) {
++		in->priority = (uint8_t) blobmsg_get_u32(cur);
++	}
++
++	if ((cur = tb[INSTANCE_ATTR_RUNTIME])) {
++		in->runtime = blobmsg_get_u64(cur);
++	}
++
++	if ((cur = tb[INSTANCE_ATTR_DEADLINE])) {
++		in->deadline = blobmsg_get_u64(cur);
++	}
++
++	if ((cur = tb[INSTANCE_ATTR_PERIOD])) {
++		in->period = blobmsg_get_u64(cur);
++	}
++
+ 	if (tb[INSTANCE_ATTR_USER]) {
+ 		const char *user = blobmsg_get_string(tb[INSTANCE_ATTR_USER]);
+ 		struct passwd *p = getpwnam(user);
+@@ -1216,6 +1348,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+ 	blobmsg_list_move(&in->errors, &in_src->errors);
+ 	blobmsg_list_move(&in->jail.mount, &in_src->jail.mount);
+ 	in->trigger = in_src->trigger;
++	in->policy = in_src->policy;
++	in->nice = in_src->nice;
++	in->priority = in_src->priority;
++	in->runtime = in_src->runtime;
++	in->deadline = in_src->deadline;
++	in->period = in_src->period;
+ 	in->command = in_src->command;
+ 	in->pidfile = in_src->pidfile;
+ 	in->respawn_retry = in_src->respawn_retry;
+@@ -1278,6 +1416,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+ 	in->timeout.cb = instance_timeout;
+ 	in->proc.cb = instance_exit;
+ 	in->term_timeout = 5;
++	in->policy = SCHED_OTHER;
++	in->priority = 0;
++	in->nice = 0;
++	in->runtime = 0;
++	in->deadline = 0;
++	in->period = 0;
+ 
+ #ifdef CGROUP_SUPPORT
+ 	in->cg_sticky = 0;
+@@ -1395,6 +1539,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+ 	if (verbose && in->trigger)
+ 		blobmsg_add_blob(b, in->trigger);
+ 
++	blobmsg_add_string(b, "policy", policy_name(in->policy));
++
++	switch(in->policy)
++	{
++		case SCHED_OTHER:
++		case SCHED_BATCH:
++			blobmsg_add_u32(b, "nice", (int32_t) in->nice);
++			break;
++
++		case SCHED_FIFO:
++		case SCHED_RR:
++			blobmsg_add_u32(b, "nice", (int32_t) in->nice);
++			blobmsg_add_u32(b, "priority", (uint32_t) in->priority);
++			break;
++
++		case SCHED_DEADLINE:
++			blobmsg_add_u64(b, "runtime", in->runtime);
++			blobmsg_add_u64(b, "deadline", in->deadline);
++			blobmsg_add_u64(b, "period", in->period);
++			break;
++
++		default:
++			break;
++	}
++
+ 	if (in->chdir)
+ 		blobmsg_add_string(b, "chdir", in->chdir);
+ 
+diff --git a/service/instance.h b/service/instance.h
+index 93f956b..afbc3d0 100644
+--- a/service/instance.h
++++ b/service/instance.h
+@@ -39,7 +39,12 @@ struct service_instance {
+ 	struct service *srv;
+ 	const char *name;
+ 
++	int policy;
+ 	int8_t nice;
++	uint8_t priority;
++	uint64_t runtime;
++	uint64_t deadline;
++	uint64_t period;
+ 	bool valid;
+ 
+ 	char *user;
+diff --git a/service/instance_sched.h b/service/instance_sched.h
+new file mode 100644
+index 0000000..f9c865b
+--- /dev/null
++++ b/service/instance_sched.h
+@@ -0,0 +1,92 @@
++/*
++ This file has been taken from schedtool-dl project
++ (git://github.com/jlelli/schedtool-dl.git)
++*/
++/*
++ this sticks around for documentation issues only and will be removed in the next
++ release - it documents the direct syscalls for affinity, without going thru glibc
++ */
++
++#if 0
++
++/* 
++ I don't know where this was exactly taken from, but I think I found it
++ in glibc.
++ */
++#include <linux/unistd.h>
++#define __NR_sched_setaffinity	241
++#define __NR_sched_getaffinity	242
++
++/*
++ a nice macro to define the following:
++ it's a syscall with 3 args,
++ it returns int,
++ it's named sched_....,
++ the next arg is of type pid_t,
++ has the local name pid,
++ next is unsigned int,
++ with name len,
++ then an unsigned long *,
++ named user_mask_ptr
++ */
++_syscall3 (int, sched_setaffinity, pid_t, pid, unsigned int, len, unsigned long *, user_mask_ptr)
++_syscall3 (int, sched_getaffinity, pid_t, pid, unsigned int, len, unsigned long *, user_mask_ptr)
++
++#endif
++
++#include <linux/kernel.h>
++#include <linux/unistd.h>
++#include <linux/types.h>
++#include <time.h>
++
++/* XXX use the proper syscall numbers */
++#ifdef __x86_64__
++	#ifndef __NR_sched_setattr
++	#define __NR_sched_setattr		314
++	#endif
++	#ifndef __NR_sched_getattr
++	#define __NR_sched_getattr		315
++	#endif
++#endif
++
++#ifdef __i386__
++	#ifndef __NR_sched_setattr
++	#define __NR_sched_setattr		351
++	#endif
++	#ifndef __NR_sched_getattr
++	#define __NR_sched_getattr		352
++	#endif
++#endif
++
++#ifdef __arm__
++	#ifndef __NR_sched_setattr
++	#define __NR_sched_setattr		380
++	#endif
++	#ifndef __NR_sched_getattr
++	#define __NR_sched_getattr		381
++	#endif
++#endif
++
++struct sched_attr {
++	__u32 size;
++
++	__u32 sched_policy;
++	__u64 sched_flags;
++
++	/* SCHED_NORMAL, SCHED_BATCH */
++	__s32 sched_nice;
++
++	/* SCHED_FIFO, SCHED_RR */
++	__u32 sched_priority;
++
++	/* SCHED_DEADLINE */
++	__u64 sched_runtime;
++	__u64 sched_deadline;
++	__u64 sched_period;
++};
++
++#define sched_getattr(pid, attr, size, flags) \
++	syscall(__NR_sched_getattr, pid, attr, size, flags)
++
++#define sched_setattr(pid, attr, flags) \
++	syscall(__NR_sched_setattr, pid, attr,flags)
+-- 
+2.16.2.windows.1
+
