@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano12"
+PR = "tano13"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -38,6 +38,7 @@ RDEPENDS_${PN}-luci = "\
 	luci-app-ddns \
 	luci-app-vsftpd \
 	luci-app-shellinabox \
+	luci-app-watchdog \
 	luci-proto-3g \
 	luci-proto-ppp \
 	luci-proto-ncm \
