@@ -756,7 +756,7 @@ CONFIG_TIME=y
 # CONFIG_TIMEOUT is not set
 # CONFIG_TTYSIZE is not set
 # CONFIG_VOLNAME is not set
-# CONFIG_WATCHDOG is not set
+CONFIG_WATCHDOG=y
 
 #
 # Networking Utilities

@@ -1,10 +1,10 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano13"
+PR_append = ".tano14"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -35,23 +35,31 @@ SRC_URI_append = "\
 	file://sysntpd \
 	file://ntpd-hotplug \
 	file://systohc.hotplug \
+	file://watchdog.init \
+	file://watchdog.config \
 "
 
 inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "busybox"
 
-OPENWRT_SERVICE_SCRIPTS_busybox += "cron sysntpd"
+OPENWRT_SERVICE_SCRIPTS_busybox += "cron sysntpd watchdog"
 OPENWRT_SERVICE_STATE_busybox-cron ?= "enabled"
 OPENWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
+OPENWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
 
 do_install_append() {
     rm -f ${D}/usr/share/udhcpc/default.script
+    install -d -m 0755 ${D}${sysconfdir}/config
     install -d -m 0755 ${D}${sysconfdir}/init.d
     install -d -m 0755 ${D}${sysconfdir}/hotplug.d/ntp
     install -d -m 0755 ${D}${sbindir}
     install -m 0755 ${WORKDIR}/cron ${D}${sysconfdir}/init.d/cron
     install -m 0755 ${WORKDIR}/sysntpd ${D}${sysconfdir}/init.d/sysntpd
+    install -m 0755 ${WORKDIR}/watchdog.init ${D}${sysconfdir}/init.d/watchdog
+    install -m 0755 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
     install -m 0755 ${WORKDIR}/ntpd-hotplug ${D}${sbindir}/ntpd-hotplug
     install -m 0755 ${WORKDIR}/systohc.hotplug ${D}${sysconfdir}/hotplug.d/ntp/00-systohc
 }
+
+CONFFILES_${PN} += "${sysconfdir}/config/watchdog"
