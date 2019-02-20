@@ -1,0 +1,112 @@
+#!/bin/sh
+#
+# Hotplug script for the Network ports status LuCI application
+#
+# Place this script to '/etc/hotplug.d/net' folder
+#
+# Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# Authors: Anton Kikin <a.kikin@tano-systems.com>
+#
+
+# Ignore all actions except "add" and "remove"
+[ "${ACTION}" != "add" ] &&
+[ "${ACTION}" != "remove" ] && exit 0
+
+# INTERFACE must be set
+[ -z "${INTERFACE}" ] && exit 0
+
+# Ignore bridges
+[ "${DEVTYPE}" = "bridge" ] && exit 0
+
+PORT_DEVICE="${INTERFACE}"
+
+if [ "${ACTION}" = "add" ]; then
+
+	#
+	# Ignore interfaces that already exists in the config
+	# and which are not hotplug interfaces added by this script.
+	#
+	if [ `uci -q show luci_netports | \
+	      grep -v ".hotplug_" | \
+	      grep -c ".ifname='${PORT_DEVICE}'"` -gt 0 ]; then
+		exit 0
+	fi
+
+	#
+	# Try to make port name
+	#
+	PORT_NAME=""
+	[ -n "${ID_VENDOR}" ] && PORT_NAME="${ID_VENDOR}"
+
+	if [ -n "${ID_MODEL}" ]; then
+		if [ -n "${PORT_NAME}" ]; then
+			PORT_NAME="${PORT_NAME} ${ID_MODEL}"
+		else
+			PORT_NAME="${ID_MODEL}"
+		fi
+	fi
+
+	#
+	# Detect port type
+	#
+	case "${PORT_DEVICE}" in
+		lo|sit*[0-9])
+			# Ignore some interfaces
+			exit 0
+			;;
+
+		eth*[0-9])
+			PORT_TYPE="copper"
+			[ -z "${PORT_NAME}" ] && PORT_NAME="Ethernet"
+			;;
+
+		wlan*[0-9]|ath*[0-9])
+			PORT_TYPE="usb_wifi"
+			[ -z "${PORT_NAME}" ] && PORT_NAME="Wireless"
+			;;
+
+		usb*[0-9])
+			PORT_TYPE="usb_rndis"
+			[ -z "${PORT_NAME}" ] && PORT_NAME="USB"
+			;;
+
+		tun*[0-9]|tap*[0-9])
+			PORT_TYPE="vpn"
+			[ -z "${PORT_NAME}" ] && PORT_NAME="VPN"
+			;;
+
+		ppp*[0-9])
+			PORT_TYPE="ppp"
+			[ -z "${PORT_NAME}" ] && PORT_NAME="PPP"
+			;;
+
+		wwan*[0-9])
+			PORT_TYPE="usb_3g"
+			;;
+
+		*)
+			PORT_TYPE="auto"
+			;;
+	esac
+
+	[ -z "${PORT_NAME}" ] && PORT_NAME="${PORT_DEVICE}"
+
+	#
+	# Add or update port information in the configuration
+	#
+	uci -q set luci_netports.hotplug_${PORT_DEVICE}=port
+	uci -q set luci_netports.hotplug_${PORT_DEVICE}.name="${PORT_NAME}"
+	uci -q set luci_netports.hotplug_${PORT_DEVICE}.ifname="${PORT_DEVICE}"
+	uci -q set luci_netports.hotplug_${PORT_DEVICE}.type="${PORT_TYPE}"
+
+	#
+	# Commit
+	#
+	uci -q commit luci_netports
+
+elif [ "${ACTION}" = "remove" ]; then
+
+	uci -q delete luci_netports.hotplug_${PORT_DEVICE}
+	uci -q commit luci_netports
+
+fi

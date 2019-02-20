@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0-git${SRCPV}"
-PR = "tano9"
+PR = "tano10"
 
 RDEPENDS_${PN} += "luabitop"
 
@@ -21,6 +21,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-netports.git;branch=${GIT_BRAN
 SRCREV = "${GIT_SRCREV}"
 
 CONFFILES_${PN} = "${sysconfdir}/config/luci_netports"
+RRECOMMENDS_${PN} += "luci-app-netports-hotplug"
 
 S = "${WORKDIR}/git"
 
