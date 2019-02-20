@@ -4,7 +4,7 @@
 
 require base-files.inc
 
-PR = "tano3.${INC_PR}"
+PR = "tano4.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
@@ -72,7 +72,7 @@ CONFFILES_${PN}-openwrt += "\
                            "
 
 CONFFILES_${PN}-sysupgrade += "\
-                              ${sysconfdir]/sysupgrade.conf \
+                              ${sysconfdir}/sysupgrade.conf \
                               "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
