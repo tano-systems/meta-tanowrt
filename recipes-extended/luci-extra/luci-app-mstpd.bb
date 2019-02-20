@@ -5,14 +5,14 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.2.0+git${SRCPV}"
-PR = "tano14"
+PR = "tano15"
 
 SUMMARY = "LuCI support for MSTP daemon"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "ac9733714f5ac60fb14438dd763701d926217366"
+GIT_SRCREV   = "d39a46e145967c0fcd82382b852045df0d7262cf"
 GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-mstpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
