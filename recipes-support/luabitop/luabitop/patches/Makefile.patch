@@ -1,0 +1,22 @@
+diff --git "a/Makefile" "b/Makefile"
+index 71c11f1..3d47b9d 100644
+--- "a/Makefile"
++++ "b/Makefile"
+@@ -3,7 +3,7 @@
+ # To compile with MinGW please run: mingw32-make -f Makefile.mingw
+ 
+ # Include path where lua.h, luaconf.h and lauxlib.h reside:
+-INCLUDES= -I/usr/local/include
++INCLUDES=
+ 
+ DEFINES=
+ # Use this for the old ARM ABI with swapped FPA doubles.
+@@ -13,7 +13,7 @@ DEFINES=
+ # Lua executable name. Used to find the install path and for testing.
+ LUA= lua
+ 
+-CC= gcc
++CC ?= gcc
+ CCOPT= -O2 -fomit-frame-pointer
+ CCWARN= -Wall
+ SOCC= $(CC) -shared
