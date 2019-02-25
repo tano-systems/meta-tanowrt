@@ -9,7 +9,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 PV = "2.20+git${SRCPV}"
 
 DESCRIPTION = "Shell In A Box implements a web server that \
@@ -72,6 +72,8 @@ do_install_append() {
 	install -d -m 0755 ${D}${base_libdir}/upgrade/keep.d
 	install -m 0644 ${WORKDIR}/shellinabox.keep ${D}${base_libdir}/upgrade/keep.d/shellinabox
 }
+
+FILES_${PN} += "${base_libdir}/upgrade/keep.d"
 
 S = "${WORKDIR}/git"
 
