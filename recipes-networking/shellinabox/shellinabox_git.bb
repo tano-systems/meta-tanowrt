@@ -9,7 +9,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 PV = "2.20+git${SRCPV}"
 
 DESCRIPTION = "Shell In A Box implements a web server that \
@@ -37,6 +37,7 @@ SRC_URI += "\
 	file://shellinabox.init \
 	file://shellinabox.config \
 	file://shellinabox.css \
+	file://shellinabox.keep \
 "
 
 # Patches
@@ -67,6 +68,9 @@ do_install_append() {
 	install -m 0644 ${B}/shellinabox/black-on-white.css ${D}${sysconfdir}/shellinabox/
 	install -m 0644 ${B}/shellinabox/white-on-black.css ${D}${sysconfdir}/shellinabox/
 	install -m 0644 ${WORKDIR}/shellinabox.css ${D}${sysconfdir}/shellinabox/
+
+	install -d -m 0755 ${D}${base_libdir}/upgrade/keep.d
+	install -m 0644 ${WORKDIR}/shellinabox.keep ${D}${base_libdir}/upgrade/keep.d/shellinabox
 }
 
 S = "${WORKDIR}/git"
