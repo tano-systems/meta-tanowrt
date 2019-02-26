@@ -3,11 +3,11 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano8"
+PR_append = ".tano9"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI += "file://udev.init file://local.rules"
+SRC_URI += "file://udev.init file://local.rules file://openwrt-hotplug.rules"
 
 inherit openwrt-services
 inherit useradd
@@ -37,5 +37,6 @@ do_install_append() {
 
     install -d ${D}${sysconfdir}/udev/rules.d
     install -m 0644 ${WORKDIR}/local.rules ${D}${sysconfdir}/udev/rules.d
+    install -m 0644 ${WORKDIR}/openwrt-hotplug.rules ${D}${sysconfdir}/udev/rules.d
 }
 

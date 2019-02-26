@@ -1,0 +1,7 @@
+# Call OpenWrt scripts from /etc/hotplug.d folders
+SUBSYSTEM=="block", RUN+="/sbin/hotplug-call block"
+SUBSYSTEM=="ieee80211", RUN+="/sbin/hotplug-call ieee80211"
+SUBSYSTEM=="net", RUN+="/sbin/hotplug-call net"
+SUBSYSTEM=="tty", RUN+="/sbin/hotplug-call tty"
+SUBSYSTEM=="usb", RUN+="/sbin/hotplug-call usb"
+SUBSYSTEM=="usbmisc", RUN+="/sbin/hotplug-call usbmisc"
