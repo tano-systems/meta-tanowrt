@@ -4,7 +4,7 @@ require conf/distro/include/tano-openwrt-sdk.inc
 IMAGE_CLASSES += "openwrt-image-types"
 
 # Virtual runtimes
-VIRTUAL-RUNTIME_dev_manager = "procd"
+VIRTUAL-RUNTIME_dev_manager = "udev"
 VIRTUAL-RUNTIME_login_manager = "busybox"
 VIRTUAL-RUNTIME_init_manager = "procd"
 VIRTUAL-RUNTIME_kmod_manager = "ubox"

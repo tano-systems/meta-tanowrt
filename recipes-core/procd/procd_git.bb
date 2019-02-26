@@ -5,9 +5,7 @@
 
 PR = "tano20"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
-DESCRIPTION = "procd is both VIRTUAL-RUNTIME-init_manager and\
-               VIRTUAL_RUNTIME-dev_manager (like systemd/systemd-udev)\
-              "
+DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://procd.c;beginline=1;endline=13;md5=61e3657604f131a859b57a40f27a9d8e"
@@ -19,8 +17,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	${GIT_OPENWRT_ORG_URL}/project/procd.git;branch=master \
 	file://reload_config \
-	file://hotplug.json \
-	file://hotplug-preinit.json \
 	file://procd.sh \
 "
 
@@ -30,6 +26,7 @@ SRC_URI += "\
 	file://0002-service-Add-initial-cgroup-support.patch \
 	file://0003-service-Allow-to-configure-scheduler-attributes.patch \
 	file://0004-hotplug-Remove-dev-prefix-from-DEVNAME-variable.patch \
+	file://0010-hotplug-Completely-remove-hotplug-functionality.patch \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)}"
@@ -55,12 +52,6 @@ do_install_append() {
 
 	install -d ${D}${sysconfdir}
 
-	# Dev manager / hotplug / coldplug
-	install -m 0644 ${WORKDIR}/hotplug.json ${D}${sysconfdir}/
-	
-	# Early init + dev manager / coldplug
-	install -m 0644 ${WORKDIR}/hotplug-preinit.json ${D}${sysconfdir}/
-
 	install -d ${D}${base_libdir}/functions
 	install -m 0755 ${WORKDIR}/procd.sh ${D}${base_libdir}/functions/
 
@@ -76,6 +67,7 @@ do_install_append() {
 }
 
 RDEPENDS_${PN} += "\
+	udev \
 	fstools \
 	base-files-scripts-openwrt \
 	${PN}-inittab \
