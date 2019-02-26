@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 23.11.2018
-# config: correctly break string for prefix filter
-SRCREV = "ae6cf8008e50ba9838a056d78cb6aea405c55b7d"
+# 25.02.2019
+# dhcpv4: fix adding assignment in list (FS#2142)
+SRCREV = "9e9389c9c6ebd29d61fd35c563c365195d263848"
 
 S = "${WORKDIR}/git"
 
