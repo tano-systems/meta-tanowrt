@@ -8,8 +8,6 @@ GIT_OPENWRT_ORG_URL = "git://git.openwrt.org"
 #
 MIRRORS_prepend = "\
 	${GIT_OPENWRT_ORG_URL}/openwrt/openwrt.git  git://github.com/openwrt/openwrt.git \n\
-	${GIT_OPENWRT_ORG_URL}/project/odhcp6c.git  git://github.com/openwrt/odhcp6c.git \n\
-	${GIT_OPENWRT_ORG_URL}/project/odhcpd.git   git://github.com/openwrt/odhcpd.git \n\
 	${GIT_OPENWRT_ORG_URL}/project/luci.git     git://github.com/openwrt/luci.git \n\
 	${GIT_OPENWRT_ORG_URL}/(.*)/(.*)            git://github.com/git-openwrt-org-mirror/BASENAME \n\
 "
