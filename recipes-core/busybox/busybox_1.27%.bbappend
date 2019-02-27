@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano15"
+PR_append = ".tano16"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -43,7 +43,11 @@ inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "busybox"
 
-OPENWRT_SERVICE_SCRIPTS_busybox += "cron sysntpd watchdog"
+OPENWRT_SERVICE_SCRIPTS_busybox += "\
+	cron \
+	sysntpd \
+	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'watchdog', '', d)} \
+"
 OPENWRT_SERVICE_STATE_busybox-cron ?= "enabled"
 OPENWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
 OPENWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
@@ -56,10 +60,13 @@ do_install_append() {
     install -d -m 0755 ${D}${sbindir}
     install -m 0755 ${WORKDIR}/cron ${D}${sysconfdir}/init.d/cron
     install -m 0755 ${WORKDIR}/sysntpd ${D}${sysconfdir}/init.d/sysntpd
-    install -m 0755 ${WORKDIR}/watchdog.init ${D}${sysconfdir}/init.d/watchdog
-    install -m 0755 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
     install -m 0755 ${WORKDIR}/ntpd-hotplug ${D}${sbindir}/ntpd-hotplug
     install -m 0755 ${WORKDIR}/systohc.hotplug ${D}${sysconfdir}/hotplug.d/ntp/00-systohc
+
+    if [ "${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', '1', '0', d)}" == "1" ]; then
+        install -m 0755 ${WORKDIR}/watchdog.init ${D}${sysconfdir}/init.d/watchdog
+        install -m 0755 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
+    fi
 }
 
 CONFFILES_${PN} += "${sysconfdir}/config/watchdog"

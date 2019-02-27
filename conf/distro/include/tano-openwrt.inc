@@ -24,6 +24,9 @@ DISTRO_FEATURES_append = " cgroup "
 # Enable wifi support
 DISTRO_FEATURES_append = " wifi "
 
+# Enable watchdog support
+DISTRO_FEATURES_append = " watchdog "
+
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
 

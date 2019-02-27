@@ -11,12 +11,17 @@ Available image features:
 - `cgroup` - cgroups related packages
 - `wifi` - wifi related packages
 
-#### `DISTRO_FEATURES`
+#### `DISTRO_FEATURES` and `MACHINE_FEATURES`
 
-Available extra features provided by this layer:
+Features provided by this layer:
 - `procd` - use procd init manager
+
+Extra features provided by this layer:
 - `cgroup` - cgroup support
 - `wifi` - wifi support
+- `watchdog` - watchdog support
+
+To enable this features for machine you need to add it to the `MACHINE_FEATURES`.
 
 #### `OPENWRT_ZONENAME` and `OPENWRT_TIMEZONE`
 
