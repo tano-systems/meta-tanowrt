@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 25.02.2019
-# dhcpv4: fix adding assignment in list (FS#2142)
-SRCREV = "9e9389c9c6ebd29d61fd35c563c365195d263848"
+# 27.02.2019
+# ubus: always trigger an update if interface is not found
+SRCREV = "16c5b6c9bcb71bb67a6ab15bb458bf9ab5a8fe7e"
 
 S = "${WORKDIR}/git"
 
