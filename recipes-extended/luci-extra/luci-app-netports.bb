@@ -5,7 +5,11 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0-git${SRCPV}"
-PR = "tano11"
+PR = "tano12"
+
+inherit openwrt-luci-app
+inherit openwrt-luci-i18n
+inherit luasrcdiet
 
 RDEPENDS_${PN} += "luabitop"
 
@@ -34,7 +38,3 @@ CONFFILES_${PN} = "${sysconfdir}/config/luci_netports"
 RRECOMMENDS_${PN} += "luci-app-netports-hotplug"
 
 S = "${WORKDIR}/git"
-
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
-inherit luasrcdiet
