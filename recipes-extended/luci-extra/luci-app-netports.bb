@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0-git${SRCPV}"
-PR = "tano10"
+PR = "tano11"
 
 RDEPENDS_${PN} += "luabitop"
 
@@ -19,6 +19,16 @@ GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-netports.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
 SRCREV = "${GIT_SRCREV}"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+SRC_URI += "\
+	file://luci_netports.config \
+"
+
+do_install_append() {
+	install -dm 0755 ${D}${sysconfdir}/config
+	install -m 0644 ${WORKDIR}/luci_netports.config ${D}${sysconfdir}/config/luci_netports
+}
 
 CONFFILES_${PN} = "${sysconfdir}/config/luci_netports"
 RRECOMMENDS_${PN} += "luci-app-netports-hotplug"
