@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -46,9 +46,9 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 25.07.2018
-# fix segfault when passed blobmsg attr is NULL
-SRCREV = "c83a84afbef2b24f960ddeda0b5e2ab01fba6981"
+# 27.02.2019
+# blobmsg_json: blobmsg_format_string: do not escape '/'
+SRCREV = "eeef7b50a06bc3c3218d560b4b513b4e7b19127f"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
