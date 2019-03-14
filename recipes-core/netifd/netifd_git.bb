@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano17"
+PR = "tano18"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 31.01.2019
-# system-linux: handle hotplug event socket ENOBUFS errors
-SRCREV_netifd = "5cd7215a09ad440f0d1b1d05df8deb403f945898"
+# 13.03.2019
+# interface-ip: fix delegate config update on reload (FS#2087)
+SRCREV_netifd = "81ac3bce0157f96fbc31cf6e965eecb170e48c88"
 
 S = "${WORKDIR}/git"
 
