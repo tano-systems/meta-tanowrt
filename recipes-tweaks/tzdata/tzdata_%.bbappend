@@ -1,6 +1,6 @@
-PR_append = ".tano0"
+PR_append = ".tano1"
 
-pkg_postinst_${PN}_append_tano-openwrt() {
+pkg_postinst_${PN}_append() {
 	if [ -L ${etc_lt} ] ; then
 		rm -f "${etc_lt}"
 	fi
