@@ -4,7 +4,7 @@
 # Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "1.0.0-git${SRCPV}"
+PV = "1.0.0+git${SRCPV}"
 PR = "tano12"
 
 inherit openwrt-luci-app
