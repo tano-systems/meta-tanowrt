@@ -130,6 +130,11 @@ mkdir -p $CHROOT_DIR
 
 config_load vsftpd
 
+enabled=`get_value listen enabled`
+if [ x$enabled = x0 ]; then
+	exit 1
+fi
+
 # listen
 output_const "background" YES
 output_field listen port "listen_port" 21
