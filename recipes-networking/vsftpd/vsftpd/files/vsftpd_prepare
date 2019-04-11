@@ -166,6 +166,8 @@ output_field global dirmsgfile "message_file" ".message"
 # connection
 output_bool connection portmode "port_enable" 1
 output_bool connection pasvmode "pasv_enable" 1
+output_field connection pasvminport "pasv_min_port" 1024
+output_field connection pasvmaxport "pasv_max_port" 65535
 
 ascii_download_enable=NO
 ascii_upload_enable=NO

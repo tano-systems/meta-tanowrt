@@ -18,7 +18,7 @@ LIC_FILES_CHKSUM = " \
 "
 
 PV = "3.0.3"
-PR = "tano2"
+PR = "tano3"
 
 DEPENDS = "libcap openssl libuci"
 
