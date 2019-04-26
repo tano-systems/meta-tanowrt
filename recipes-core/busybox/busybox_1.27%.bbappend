@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano17"
+PR_append = ".tano18"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-openwrt/patches:${THISDIR}/${PN}-openwrt:"
@@ -26,6 +26,7 @@ SRC_URI_append = "\
 	file://210-add_netmsg_util.patch \
 	file://230-add_nslookup_lede.patch \
 	file://250-date-k-flag.patch \
+	file://270-libbb_make_unicode_printable.patch \
 	file://301-ip-link-fix-netlink-msg-size.patch \
 "
 
