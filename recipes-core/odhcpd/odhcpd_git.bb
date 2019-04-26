@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 05.04.2019
-# ndp: create ICMPv6 socket per interface
-SRCREV = "65a9519fb295d8f5748fc69962be1666985011fe"
+# 23.04.2019
+# ndp: fix syslog flooding (FS#2242)
+SRCREV = "3cd48765b74e498f06397f4b90b64cafe3a82dd1"
 
 S = "${WORKDIR}/git"
 
