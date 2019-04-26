@@ -1,4 +1,4 @@
-From 447014711aefc9ce5eb0f4910982cf880ce35a61 Mon Sep 17 00:00:00 2001
+From 676a314cce91b58a49eb3a41f9050b48ee37d84f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 9 Feb 2019 01:18:40 +0300
 Subject: [PATCH] service: Add initial cgroup support
@@ -27,7 +27,7 @@ index 4b3eebd..56a9d85 100644
    ADD_DEFINITIONS(-DUDEV_DEBUG -g3)
  ENDIF()
 diff --git a/service/instance.c b/service/instance.c
-index 220f07f..9f18410 100644
+index 8acbe7c..c90edff 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -1,6 +1,7 @@
@@ -300,7 +300,7 @@ index 220f07f..9f18410 100644
  	if (in->user && in->gid && initgroups(in->user, in->gid)) {
  		ERROR("failed to initgroups() for user %s: %m\n", in->user);
  		exit(127);
-@@ -662,6 +890,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -670,6 +898,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (string_changed(in->chdir, in_new->chdir))
  		return true;
  
@@ -315,7 +315,7 @@ index 220f07f..9f18410 100644
  	return false;
  }
  
-@@ -928,6 +1164,14 @@ instance_config_parse(struct service_instance *in)
+@@ -936,6 +1172,14 @@ instance_config_parse(struct service_instance *in)
  			in->chdir = chdir;
  	}
  
@@ -330,7 +330,7 @@ index 220f07f..9f18410 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -982,6 +1226,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -991,6 +1235,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->seccomp = in_src->seccomp;
  	in->node.avl.key = in_src->node.avl.key;
  	in->chdir = in_src->chdir;
@@ -341,7 +341,7 @@ index 220f07f..9f18410 100644
  
  	free(in->config);
  	in->config = in_src->config;
-@@ -1031,6 +1279,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+@@ -1040,6 +1288,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->proc.cb = instance_exit;
  	in->term_timeout = 5;
  
@@ -352,7 +352,7 @@ index 220f07f..9f18410 100644
  	in->_stdout.fd.fd = -2;
  	in->_stdout.stream.string_data = true;
  	in->_stdout.stream.notify_read = instance_stdout;
-@@ -1146,5 +1398,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1155,5 +1407,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (in->chdir)
  		blobmsg_add_string(b, "chdir", in->chdir);
  

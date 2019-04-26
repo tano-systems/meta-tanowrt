@@ -1,4 +1,4 @@
-From da30b19ab6b2afc5f56f077404a84fbcebfd2786 Mon Sep 17 00:00:00 2001
+From 8f0d1a023b1a6136434a405f1273fab8dc40e209 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
 Subject: [PATCH] service: allow to change service's current directory
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+)
 
 diff --git a/service/instance.c b/service/instance.c
-index a5742b7..220f07f 100644
+index ac96f7d..8acbe7c 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -57,6 +57,7 @@ enum {
@@ -40,7 +40,7 @@ index a5742b7..220f07f 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -653,6 +659,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -661,6 +667,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (!blobmsg_list_equal(&in->errors, &in_new->errors))
  		return true;
  
@@ -50,7 +50,7 @@ index a5742b7..220f07f 100644
  	return false;
  }
  
-@@ -913,6 +922,12 @@ instance_config_parse(struct service_instance *in)
+@@ -921,6 +930,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -63,7 +63,7 @@ index a5742b7..220f07f 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -966,6 +981,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -975,6 +990,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->trace = in_src->trace;
  	in->seccomp = in_src->seccomp;
  	in->node.avl.key = in_src->node.avl.key;
@@ -71,7 +71,7 @@ index a5742b7..220f07f 100644
  
  	free(in->config);
  	in->config = in_src->config;
-@@ -1127,5 +1143,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1136,5 +1152,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  

@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -26,15 +26,15 @@ SRC_URI += "\
 	file://0002-service-Add-initial-cgroup-support.patch \
 	file://0003-service-Allow-to-configure-scheduler-attributes.patch \
 	file://0004-hotplug-Remove-dev-prefix-from-DEVNAME-variable.patch \
-	file://0010-hotplug-Completely-remove-hotplug-functionality.patch \
+	file://0005-hotplug-Completely-remove-hotplug-functionality.patch \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)}"
 PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 
-# 19.12.2018
-# hotplug.c: Make sure hotplug buffer is NULL terminated
-SRCREV = "e2b055edf26419c183f4bdc3aa47da789081f72e"
+# 17.04.2019
+# procd: copy the respawn property of new instance
+SRCREV = "a30a8fdced45b79bae12662caf68ffb8597858b3"
 
 S = "${WORKDIR}/git"
 
