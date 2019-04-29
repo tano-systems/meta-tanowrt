@@ -13,6 +13,7 @@ export SAVE_OVERLAY_PATH=
 export SAVE_PARTITIONS=1
 export SAVE_INSTALLED_PKGS=0
 export SKIP_UNCHANGED=0
+export SAVE_EMPTY_DIRS=0
 export CONF_IMAGE=
 export CONF_BACKUP_LIST=0
 export CONF_BACKUP=
@@ -35,6 +36,7 @@ while [ -n "$1" ]; do
 		-p) export SAVE_PARTITIONS=0;;
 		-k) export SAVE_INSTALLED_PKGS=1;;
 		-u) export SKIP_UNCHANGED=1;;
+		-e|--empty-dirs) export SAVE_EMPTY_DIRS=1;;
 		-b|--create-backup) export CONF_BACKUP="$2" NEED_IMAGE=1; shift;;
 		-r|--restore-backup) export CONF_RESTORE="$2" NEED_IMAGE=1; shift;;
 		-l|--list-backup) export CONF_BACKUP_LIST=1;;
@@ -70,6 +72,9 @@ upgrade-option:
 	-o           attempt to preserve all changed files in /, except those
 	             from packages but including changed confs.
 	-u           skip from backup files that are equal to those in /rom
+	-e | --empty-dirs
+	             add to backup empty directories and subdirectories listed in
+	             /etc/sysupgrade.conf and /lib/upgrade/keep.d/* files
 	-n           do not save configuration over reflash
 	-p           do not attempt to restore the partition table after flash.
 	-k           include in backup a list of current installed packages at
@@ -129,11 +134,22 @@ list_changed_conffiles() {
 	done
 }
 
+list_emptydirs() {
+	local dirs="`find $(sed -ne '/^[[:space:]]*$/d; /^#/d; p' \
+		/etc/sysupgrade.conf /lib/upgrade/keep.d/* 2>/dev/null) \
+		\( -type d \) 2>/dev/null`"
+
+	for dir in ${dirs}; do
+		[ "$dir" == "`find \"$dir\" -type f -o -type d 2>/dev/null`" ] && echo "$dir"
+	done
+}
+
 add_conffiles() {
 	local file="$1"
 	( find $(sed -ne '/^[[:space:]]*$/d; /^#/d; p' \
 		/etc/sysupgrade.conf /lib/upgrade/keep.d/* 2>/dev/null) \
 		\( -type f -o -type l \) $find_filter 2>/dev/null;
+	  [ "$SAVE_EMPTY_DIRS" = "1" ] && list_emptydirs;
 	  list_changed_conffiles ) | sort -u > "$file"
 	return 0
 }
@@ -260,6 +276,7 @@ do_save_conffiles() {
 		umount "$ETCBACKUP_DIR"
 		rm -rf "$RAMFS"
 	}
+
 	rm -f "$CONFFILES"
 }
 
