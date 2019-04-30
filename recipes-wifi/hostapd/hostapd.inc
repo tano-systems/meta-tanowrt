@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=495cbce6008253de4b4d8f4cdfae9f4f"
 
-INC_PR = "tano1"
+INC_PR = "tano2"
 
 inherit pkgconfig
 
@@ -141,6 +141,9 @@ EXTRA_OEMAKE = "\
 PARALLEL_MAKE = ""
 
 do_configure() {
+	oe_runmake clean -C ${B}/hostapd
+	oe_runmake clean -C ${B}/wpa_supplicant
+
 	install -d ${S}/src/utils
 	install -d ${S}/src/ap
 	install -m 0644 ${WORKDIR}/src/utils/build_features.h ${S}/src/utils
@@ -153,3 +156,4 @@ do_configure() {
 	install -m 0644 ${WORKDIR}/wpa_supplicant-full.config ${B}/wpa_supplicant/.config
 }
 
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
