@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "AUTOFS4 filesystem support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-fs-autofs4

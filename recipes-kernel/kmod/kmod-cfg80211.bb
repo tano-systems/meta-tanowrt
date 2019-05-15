@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Linux wireless LAN (802.11) configuration API"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-mac80211 \

@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Modules for matching/changing IP packet options"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-ipt-core \

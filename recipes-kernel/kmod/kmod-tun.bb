@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Universal TUN/TAP driver"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-tun

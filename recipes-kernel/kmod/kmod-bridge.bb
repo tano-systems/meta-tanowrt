@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "802.1d Ethernet Bridging"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-bridge

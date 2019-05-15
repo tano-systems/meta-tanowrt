@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "CryptoAPI algorithm manager"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-crypto-aead \

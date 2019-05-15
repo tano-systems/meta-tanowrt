@@ -6,7 +6,7 @@ PR = "tano0"
 SUMMARY = "Connection tracking netlink interface"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-ipt-conntrack \

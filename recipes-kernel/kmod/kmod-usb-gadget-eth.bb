@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Kernel support for USB Ethernet Gadget"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-gadget \

@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "CRC-CCITT support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-lib-crc-ccitt

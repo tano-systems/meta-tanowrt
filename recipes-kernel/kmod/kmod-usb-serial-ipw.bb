@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Support for IPWireless 3G devices"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-serial \

@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "MII library"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-mii

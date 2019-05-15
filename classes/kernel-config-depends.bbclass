@@ -18,13 +18,6 @@
 #
 inherit kernel-config
 
-FILES_${PN}-dev = ""
-FILES_SOLIBSDEV = ""
-ALLOW_EMPTY_${PN} = "1"
-
-do_configure[noexec] = "1"
-do_compile[noexec] = "1"
-
 def get_op_ver(s, d):
     i = s.replace(" ", "")
     op  = ""

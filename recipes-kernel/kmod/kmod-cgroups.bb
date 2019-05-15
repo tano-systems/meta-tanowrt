@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Control Group support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-cgroups

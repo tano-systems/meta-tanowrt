@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Iptables core"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-nf-ipt

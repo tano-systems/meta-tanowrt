@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Ip6tables core"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-nf-ipt \

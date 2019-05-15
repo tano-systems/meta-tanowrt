@@ -4,7 +4,7 @@ PR = "tano1"
 SUMMARY = "Iptables core"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-nf-reject \

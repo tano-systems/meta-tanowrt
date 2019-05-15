@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Prolific PL-2301/2302/25A1 based cables"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-net \

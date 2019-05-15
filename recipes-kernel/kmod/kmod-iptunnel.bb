@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "IP tunnel support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-iptunnel

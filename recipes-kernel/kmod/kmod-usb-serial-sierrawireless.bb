@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Support for Sierra Wireless devices"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-serial \

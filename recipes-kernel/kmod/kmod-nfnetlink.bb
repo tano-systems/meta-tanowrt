@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Netlink-based userspace interface"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-nfnetlink

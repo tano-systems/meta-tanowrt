@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Layer Two Tunneling Protocol (L2TP)"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-udptunnel4 \

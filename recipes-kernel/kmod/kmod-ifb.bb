@@ -5,7 +5,7 @@ PR = "tano1"
 SUMMARY = "Intermediate Functional Block support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-ifb

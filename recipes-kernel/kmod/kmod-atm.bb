@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "ATM support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-atm

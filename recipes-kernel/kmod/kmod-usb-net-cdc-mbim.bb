@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Kernel module for MBIM Devices"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-net \

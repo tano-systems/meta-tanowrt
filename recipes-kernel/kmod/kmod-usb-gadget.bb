@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Kernel support for USB Gadget mode"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-usb-gadget

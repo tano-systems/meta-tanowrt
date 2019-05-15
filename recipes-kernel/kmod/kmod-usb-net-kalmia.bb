@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Samsung Kalmia based LTE USB modem"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-usb-net \

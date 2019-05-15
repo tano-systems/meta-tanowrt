@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Support for USB"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-usb-core

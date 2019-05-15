@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Traffic schedulers"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #	CONFIG_NET_SCHED=y \
 #	CONFIG_NET_SCH_HFSC \

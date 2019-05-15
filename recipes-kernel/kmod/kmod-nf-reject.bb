@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Netfilter IPv4 reject support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-nf-reject

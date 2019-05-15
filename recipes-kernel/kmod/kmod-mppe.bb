@@ -5,7 +5,7 @@ PR = "tano0"
 SUMMARY = "Microsoft PPP compression/encryption"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-ppp \

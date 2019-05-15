@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Kernel modules for USB-to-Ethernet convertors"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-mii \

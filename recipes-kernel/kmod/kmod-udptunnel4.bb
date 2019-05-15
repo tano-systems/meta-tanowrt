@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "IPv4 UDP tunneling support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-udptunnel4

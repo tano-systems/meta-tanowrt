@@ -5,7 +5,7 @@ PR = "tano2"
 SUMMARY = "GRE support"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-iptunnel \

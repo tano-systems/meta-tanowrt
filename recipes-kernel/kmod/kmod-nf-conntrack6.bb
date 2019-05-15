@@ -4,7 +4,7 @@ PR = "tano1"
 SUMMARY = "Netfilter IPv6 connection tracking"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-nf-conntrack \

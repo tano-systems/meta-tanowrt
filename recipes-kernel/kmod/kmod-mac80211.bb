@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Linux 802.11 Wireless Networking Stack"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 #
 # kmod-mac80211

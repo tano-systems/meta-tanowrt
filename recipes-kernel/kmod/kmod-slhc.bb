@@ -4,7 +4,7 @@ PR = "tano0"
 SUMMARY = "Serial Line Header Compression"
 LICENSE = "MIT"
 
-inherit kernel-config-depends
+inherit kernel-kmod
 
 RDEPENDS_${PN} += "\
 	kmod-lib-crc-ccitt \
