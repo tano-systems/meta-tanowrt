@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,10 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 26.04.2019
-# dhcpv4: fix DHCP packet size
-SRCREV = "09e5eca32c1872c1676c25dfd3f240b10bc85d55"
-
+# 15.05.2019
+# config: remove 'ignore' config option
+SRCREV = "41a74cba1bec349d1e1c5be4442e7fddb2d4adf7"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services
