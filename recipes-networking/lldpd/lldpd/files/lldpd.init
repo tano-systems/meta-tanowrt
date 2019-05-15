@@ -89,7 +89,7 @@ write_lldpd_conf()
 
 	config_load 'lldpd'
 	config_get lldp_description 'config' 'lldp_description' "$(find_release_info)"
-	config_get lldp_hostname 'config' 'lldp_hostname' ""
+	config_get lldp_hostname 'config' 'lldp_hostname' "$(cat /proc/sys/kernel/hostname)"
 	config_get lldp_platform 'config' 'lldp_platform' ""
 	config_get lldp_tx_interval 'config' 'lldp_tx_interval' 0
 	config_get lldp_tx_hold 'config' 'lldp_tx_hold' 0
