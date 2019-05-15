@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -70,3 +70,10 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/firewall \
 	${sysconfdir}/firewall.user \
 "
+
+inherit kernel-config-depends
+
+KERNEL_CONFIG_DEPENDS += "{\
+	option   = CONFIG_SYN_COOKIES, \
+	required = y \
+}"
