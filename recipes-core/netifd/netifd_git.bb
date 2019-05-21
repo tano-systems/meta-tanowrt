@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -30,7 +30,6 @@ SRC_URI += "\
 	file://rootfs/lib/netifd/dhcp.script \
 	file://rootfs/lib/network/config.sh \
 	file://rootfs/sbin/devstatus \
-	file://rootfs/sbin/ifdown \
 	file://rootfs/sbin/ifstatus \
 	file://rootfs/sbin/ifup \
 	file://rootfs/usr/share/udhcpc/default.script \
@@ -81,9 +80,10 @@ do_install_append() {
 
 	install -d ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/rootfs/sbin/devstatus ${D}${base_sbindir}/
-	install -m 0755 ${WORKDIR}/rootfs/sbin/ifdown ${D}${base_sbindir}/
 	install -m 0755 ${WORKDIR}/rootfs/sbin/ifstatus ${D}${base_sbindir}/
 	install -m 0755 ${WORKDIR}/rootfs/sbin/ifup ${D}${base_sbindir}/
+	
+	ln -sf ifup ${D}/sbin/ifdown
 	ln -sf /usr/sbin/netifd ${D}/sbin/netifd
 
 	install -d ${D}${datadir}/udhcpc
