@@ -22,7 +22,7 @@ OPENWRT_VERSION_SRCREV = "${TANO_OPENWRT_SCM_REVISION}"
 #
 # This is the name of the release distribution.
 #
-OPENWRT_VERSION_DIST ?= "OpenWrt"
+OPENWRT_VERSION_DIST ?= "TanoWrt"
 
 #
 # Release version number
@@ -31,7 +31,7 @@ OPENWRT_VERSION_DIST ?= "OpenWrt"
 # If unspecified, it defaults to SNAPSHOT for the master branch
 # or to ##.##-SNAPSHOT on release branches.
 #
-OPENWRT_VERSION_NUMBER ?= "18.06-SNAPSHOT"
+OPENWRT_VERSION_NUMBER ?= "${DISTRO_VERSION}"
 
 #
 # Release version code
@@ -64,7 +64,7 @@ OPENWRT_VERSION_HOME_URL ?= "https://github.com/tano-systems/meta-tano-openwrt"
 # This is the manufacturer name embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER ?= "OpenWrt"
+OPENWRT_VERSION_MANUFACTURER ?= "Tano Systems"
 
 #
 # Manufacturer URL
@@ -72,7 +72,7 @@ OPENWRT_VERSION_MANUFACTURER ?= "OpenWrt"
 # This is an URL to the manufacturer's website embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER_URL ?= "http://openwrt.org/"
+OPENWRT_VERSION_MANUFACTURER_URL ?= "https://tano-systems.com/"
 
 #
 # Bug reporting URL
