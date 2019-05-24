@@ -373,7 +373,7 @@ mstpd_configure()
 		bridges_current=""
 
 		json_init
-		json_load $bridges_json
+		json_load "$bridges_json"
 
 		json_select "bridges"
 			json_get_keys keys
