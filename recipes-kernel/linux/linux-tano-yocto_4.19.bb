@@ -9,7 +9,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
@@ -25,7 +25,7 @@ KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "eebb51300a07804a020ec468b5f8c5bf720198d
 KERNEL_SRC_SRCREV ?= "eebb51300a07804a020ec468b5f8c5bf720198d9"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.19"
-KERNEL_CACHE_SRC_SRCREV ?= "d5d3f4df52a69085eeddd26fec02cc2624dc7c76"
+KERNEL_CACHE_SRC_SRCREV ?= "33505a62d652a8b1c960dd7d4a11e8433437a4ba"
 
 LINUX_VERSION ?= "4.19.14"
 LINUX_KERNEL_TYPE ?= "standard"
