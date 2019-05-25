@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 PV = "2.14"
-PR = "tano2.${INC_PR}"
+PR = "tano3.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
@@ -10,6 +10,7 @@ SRC_URI = "\
 	file://201-fix-lua-packetscript.patch \
 	file://202-add-lua-autoconf.patch \
 	file://0001-Unset-LDFLAGS-for-kernel-modules.patch \
+	file://fix-to-build-linux-v4.12-and-earlier.patch \
 "
 
 SRCREV = "0e9037b0007eaaf0ae612a1481bd03b15ecb8cb8"
