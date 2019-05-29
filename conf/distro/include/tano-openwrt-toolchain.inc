@@ -11,5 +11,7 @@ GCCVERSION_qemuall      ?= "7.3%"
 TOOLCHAIN_TYPE  ?= "internal"
 TOOLCHAIN_BRAND ?= "linaro"
 
+include conf/distro/include/tano-openwrt-hw-toolchain.inc
+
 require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}-${TOOLCHAIN_BRAND}.inc
 require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}.inc
