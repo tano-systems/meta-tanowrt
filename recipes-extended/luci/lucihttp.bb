@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -16,7 +16,7 @@ SRC_URI = "\
 	file://0001-test-utils-Use-portable-format-for-size_t-in-printf.patch \
 "
 
-SRCREV = "cb119deddee5f0f8f1da883b20c60aea7611b175" 
+SRCREV = "f6e0564e41fadd2a9fdc3653f51e371e4c76785b"
 
 PACKAGECONFIG ??= "build-lua"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
