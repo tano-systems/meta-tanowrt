@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 PV = "0.9.0+git${SRCPV}"
 
 SUMMARY = "LuCI support for SNMP daemon"
@@ -19,7 +19,7 @@ inherit openwrt-luci-i18n
 inherit luasrcdiet
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "dfe813a43b467dadd1311d352b90ca1988fd1272"
+GIT_SRCREV   = "9b2b761e1d8e317f6fbf91d1c632acc6016fdae7"
 GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-snmpd-tn.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
