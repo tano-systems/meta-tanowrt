@@ -1,9 +1,9 @@
 #
-# This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 #
 # LEDE Traffic Usage Monitor
 #
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "LEDE Traffic Usage Monitor"
 LICENSE = "ISC"
@@ -23,7 +23,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	git://github.com/jow-/nlbwmon.git \
 "
-SRCREV = "ef3fa582b54a6899e7042726157909637974a278"
+SRCREV = "4574e6e80e3a5ab8de65886baa0d563dfee589ff"
 
 SRC_URI += "\
 	file://nlbwmon.init \
