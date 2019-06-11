@@ -1,7 +1,7 @@
 #
 # Octo's ping library
 #
-# This file Copyright (C) 2018 Tano Systems
+# This file Copyright (C) 2018-2019 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -12,8 +12,10 @@ LICENSE = "LGPL-2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS = "ncurses"
 
+PACKAGES += "oping noping"
+
 PV = "1.9.0"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "https://noping.cc/files/${PN}-${PV}.tar.gz"
 
@@ -30,13 +32,15 @@ EXTRA_OECONF = "\
 	--enable-static \
 "
 
-do_install_append() {
-	# Remove oping and noping utilities
-	rm -rf ${D}${bindir}
-	rm -rf ${D}${mandir}/man8
-}
-
 LEAD_SONAME = "liboping.so"
-
 FILES_${PN} = "${includedir} ${libdir}"
-FILES_${PN}-doc = "${mandir}/man3"
+FILES_${PN}-doc = "${mandir}"
+
+SUMMARY_oping = "oping - Send ICMP ECHO_REQUEST to network hosts"
+FILES_oping += "${bindir}/oping"
+RDEPENDS_oping += "liboping"
+
+SUMMARY_noping = "noping - Send ICMP ECHO_REQUEST to network hosts"
+FILES_noping += "${bindir}/noping"
+RDEPENDS_noping += "ncurses liboping"
+
