@@ -101,8 +101,10 @@ python populate_packages_prepend() {
             postinst  = d.getVar('pkg_postinst_%s' % pkg, True) or ""
 
             postinst += "#!/bin/sh\n"
-            postinst += "mkdir -p $D${sysconfdir}/rc.d\n"
-            postinst += "IPKG_INSTROOT=$D /bin/sh $D${sysconfdir}/rc.common $D${sysconfdir}/init.d/" + script + " " + state + "\n"
+            postinst += "if [ \"$PKG_UPGRADE\" != 1 ]; then\n"
+            postinst += "\tmkdir -p $D${sysconfdir}/rc.d\n"
+            postinst += "\tIPKG_INSTROOT=$D /bin/sh $D${sysconfdir}/rc.common $D${sysconfdir}/init.d/" + script + " " + state + "\n"
+            postinst += "fi\n"
 
             bb.debug(1, "OpenWrt: [%s] Service '%s' default state is '%s'" % (pkg, script, state))
 
