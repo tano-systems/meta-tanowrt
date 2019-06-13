@@ -2,21 +2,23 @@
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
-PR = "tano6"
+
+PR = "tano7"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://kmodloader.c;beginline=1;endline=13;md5=61e3657604f131a859b57a40f27a9d8e"
 SRCREV = "16f7e16181e2f3e9cf3e2ce56a7e291844900d09"
+SECTION = "base"
 
 DEPENDS = "ubus libubox uci"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-          ${GIT_OPENWRT_ORG_URL}/project/ubox.git \
-          file://log.init \
-          "
+	${GIT_OPENWRT_ORG_URL}/project/ubox.git \
+	file://log.init \
+"
 
 # 18.03.2019
 # kmodloader: fix and optimize loading of failed modules
@@ -55,11 +57,18 @@ do_install_append () {
 }
 
 RDEPENDS_${PN} += "\
-                  ubus \
-                  libubox \
-                  "
+	ubus \
+	libubox \
+"
 
-FILES_${PN} += "\
-               ${libdir} \
-               ${base_sbindir} \
-               "
+FILES_${PN} = "\
+	${libdir} \
+	${sbindir} \
+	${base_sbindir} \
+	${sysconfdir} \
+"
+
+PACKAGES += "getrandom"
+SUMMARY_getrandom = "OpenWrt getrandom system helper"
+SECTION_getrandom = "base"
+FILES_getrandom = "${bindir}/getrandom"

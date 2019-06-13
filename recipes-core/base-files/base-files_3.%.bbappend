@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano24.${INC_PR}"
+PR_append = ".tano25.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -22,7 +22,7 @@ OPENWRT_HWCLOCK_LOCALTIME ?= "1"
 
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
-RDEPENDS_${PN} += "tzdata"
+RDEPENDS_${PN} += "tzdata getrandom"
 
 require base-files.inc
 
