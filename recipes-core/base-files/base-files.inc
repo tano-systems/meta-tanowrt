@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-# 05.02.2019
-# base-files: add support for the new ar8xxx MIB counters settings
-OPENWRT_SRCREV = "aac8b52184e727d8ba7a13917a9a3c8b82ec4aa2"
+# 12.06.2019
+# f2fs-tools: fixup SPDX license
+OPENWRT_SRCREV = "35a70d626239424fb47e4cc50b565da7622eb2a6"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "7"
+INC_PR = "8"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "

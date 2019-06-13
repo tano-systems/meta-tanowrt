@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano25.${INC_PR}"
+PR_append = ".tano26.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -62,12 +62,11 @@ inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "base-files"
 
-OPENWRT_SERVICE_SCRIPTS_base-files += "boot done sysctl umount gpio_switch led sysfixtime system urandom_seed"
+OPENWRT_SERVICE_SCRIPTS_base-files += "boot done sysctl umount gpio_switch led sysfixtime system"
 OPENWRT_SERVICE_STATE_base-files-gpio_switch ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-led ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-sysfixtime ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-system ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-urandom_seed ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-boot ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-done ?= "enabled"
 OPENWRT_SERVICE_STATE_base-files-sysctl ?= "enabled"
