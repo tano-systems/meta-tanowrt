@@ -2,7 +2,7 @@
 
 ##########################################################################
 #
-# Copyright (C) 2018, Tano Systems,
+# Copyright (C) 2018-2019, Tano Systems,
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################
@@ -36,7 +36,12 @@ start_service() {
 
 	# Don't daemonize, procd will handle that for us
 	procd_append_param command -d
+
+	# Set log level
 	procd_append_param command -v ${mstpd_loglevel}
+
+	# Log to syslog
+	procd_append_param command -s
 
 	# Set auto respawn behavior
 	procd_set_param respawn
