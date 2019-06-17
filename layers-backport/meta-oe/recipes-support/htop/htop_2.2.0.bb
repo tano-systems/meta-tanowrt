@@ -14,11 +14,11 @@ SRC_URI[sha256sum] = "d9d6826f10ce3887950d709b53ee1d8c1849a70fa38e91d5896ad8cbc6
 inherit autotools pkgconfig
 
 PACKAGECONFIG ??= "proc \
-                   ${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)} \
+                   cgroup \
                    taskstats \
                    unicode \
-                   linux-affinity"
-
+                   linux-affinity \
+                   delayacct"
 PACKAGECONFIG[proc] = "--enable-proc,--disable-proc"
 PACKAGECONFIG[openvz] = "--enable-openvz,--disable-openvz"
 PACKAGECONFIG[cgroup] = "--enable-cgroup,--disable-cgroup"

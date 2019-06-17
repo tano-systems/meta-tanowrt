@@ -1,0 +1,2 @@
+﻿htop 2.20 backported from meta-oe layer
+(git://git.openembedded.org/meta-openembedded (meta-oe subfolder), branch thud, revision 4cd3a39f22a2712bfa8fc657d09fe2c7765a4005)
