@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 PV = "1.0.0+git${SRCPV}"
 
 SUMMARY = "OpenWrt non-physical true random number generator based on timing jitter"
@@ -32,7 +32,7 @@ SRC_URI = "\
 	file://urngd.init \
 "
 
-SRCREV = "41e4163b2e7f4c1c1f51cdfa487d6052ff859cf2"
+SRCREV = "c057e177ace7704a3d4e2e1272baaf2e2d21cbed"
 
 S = "${WORKDIR}/git"
 
