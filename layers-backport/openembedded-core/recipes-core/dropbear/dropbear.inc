@@ -14,14 +14,11 @@ DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', 'libpam', '', d)}"
 
 SRC_URI = "http://matt.ucc.asn.au/dropbear/releases/dropbear-${PV}.tar.bz2 \
            file://0001-urandom-xauth-changes-to-options.h.patch \
-           file://0003-configure.patch \
-           file://0004-fix-2kb-keys.patch \
-           file://0007-dropbear-fix-for-x32-abi.patch \
-           file://fix-libtomcrypt-libtommath-ordering.patch \
            file://init \
            file://dropbearkey.service \
            file://dropbear@.service \
            file://dropbear.socket \
+           file://dropbear.default \
            ${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} "
 
 PAM_SRC_URI = "file://0005-dropbear-enable-pam.patch \
@@ -36,6 +33,8 @@ PAM_PLUGINS = "libpam-runtime \
 RDEPENDS_${PN} += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_PLUGINS}', '', d)}"
 
 inherit autotools update-rc.d systemd
+
+CVE_PRODUCT = "dropbear_ssh"
 
 INITSCRIPT_NAME = "dropbear"
 INITSCRIPT_PARAMS = "defaults 10"
@@ -52,6 +51,10 @@ PACKAGECONFIG[system-libtom] = "--disable-bundled-libtom,--enable-bundled-libtom
 EXTRA_OECONF += "\
  ${@bb.utils.contains('DISTRO_FEATURES', 'pam', '--enable-pam', '--disable-pam', d)}"
 
+# This option appends to CFLAGS and LDFLAGS from OE
+# This is causing [textrel] QA warning
+EXTRA_OECONF += "--disable-harden"
+
 do_install() {
 	install -d ${D}${sysconfdir} \
 		${D}${sysconfdir}/init.d \
@@ -60,6 +63,8 @@ do_install() {
 		${D}${bindir} \
 		${D}${sbindir} \
 		${D}${localstatedir}
+
+	install -m 0644 ${WORKDIR}/dropbear.default ${D}${sysconfdir}/default/dropbear
 
 	install -m 0755 dropbearmulti ${D}${sbindir}/
 	ln -s ${sbindir}/dropbearmulti ${D}${bindir}/dbclient

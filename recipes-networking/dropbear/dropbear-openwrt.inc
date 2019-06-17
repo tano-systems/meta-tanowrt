@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "0"
+INC_PR = "1"
 
 # OpenWrt files
 SRC_URI_append = "\
@@ -31,15 +31,14 @@ OPENWRT_SERVICE_STATE_dropbear-dropbear ?= "enabled"
 
 # OpenWrt patches
 SRC_URI_append = "\
-	file://010-runtime-maxauthtries.patch \
 	file://100-pubkey_path.patch \
 	file://110-change_user.patch \
-	file://120-openwrt_options.patch \
 	file://130-ssh_ignore_x_args.patch \
 	file://140-disable_assert.patch \
-	file://150-dbconvert_standalone.patch \
-	file://610-skip-default-keys-in-custom-runs.patch \
+	file://160-lto-jobserver.patch \
 	file://600-allow-blank-root-password.patch \
+	file://900-configure-hardening.patch \
+	file://901-bundled-libs-cflags.patch \
 "
 
 FILES_${PN} += "/root"
@@ -49,6 +48,11 @@ do_install_append() {
     install -Dm 0644 ${WORKDIR}/dropbear.config  ${D}${sysconfdir}/config/dropbear
 
     touch ${D}${sysconfdir}/dropbear/dropbear_rsa_host_key
+
+    rm -rf ${D}${sysconfdir}/default
+
+    # Make link to dropbearkey in /usr/bin
+    ln -s ${sbindir}/dropbear ${D}${bindir}/dropbearkey
 }
 
 CONFFILES_${PN}_append = "\
