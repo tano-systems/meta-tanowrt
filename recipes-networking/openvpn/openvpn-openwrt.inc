@@ -6,6 +6,8 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
+INC_PR = "0"
+
 inherit openwrt-services
 
 SRC_URI += " \
@@ -52,6 +54,7 @@ PACKAGECONFIG[iproute2]              = "--enable-iproute2,--disable-iproute2,ipr
 PACKAGECONFIG[def-auth]              = "--enable-def-auth,--disable-def-auth,"
 PACKAGECONFIG[pf]                    = "--enable-pf,--disable-pf,"
 PACKAGECONFIG[x509-alt-username-ssl] = "--enable-x509-alt-username-ssl,,openssl"
+PACKAGECONFIG[sample]                = ",,"
 
 EXTRA_OE_CONF += "\
 	--disable-selinux \
@@ -68,10 +71,14 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 FILES_${PN} += "/lib/upgrade/keep.d"
 
 do_install_append() {
-
 	# OpenWrt files
 
 	install -dm 0755 ${D}${sysconfdir}/openvpn
+
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'sample', 'true', 'false', d)}" = "false" ]; then
+		# Remove samples
+		rm -rf ${D}${sysconfdir}/openvpn/sample
+	fi
 
 	# Install procd init script
 	install -d ${D}${sysconfdir}/init.d
@@ -89,3 +96,9 @@ do_install_append() {
 	install -d ${D}${datadir}/openvpn
 	install -m 644 ${WORKDIR}/openvpn.options ${D}${datadir}/openvpn/openvpn.options
 }
+
+CONFFILES_${PN}_append = "\
+	${sysconfdir}/config/openvpn \
+"
+
+PACKAGES_remove = "${PN}-sample"
