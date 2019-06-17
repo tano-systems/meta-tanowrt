@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2013-2014 OpenWrt.org
-# Copyright (C) 2018 Tano Systems
+# Copyright (C) 2018-2019 Tano Systems
 
 START=00
 STOP=90
@@ -45,21 +45,26 @@ hwclock_call() {
 	args=""
 
 	if [ "$kept_in_localtime" = "0" ]; then
-		append args "--utc" " "
+		# -u|--utc
+		append args "-u" " "
 	else
-		append args "--localtime" " "
+		# -l|--localtime
+		append args "-l" " "
 
 		# Early apply timezone from system configuration
 		# if we keep time in hardware clock in localtime
 		config_foreach apply_timezone system
 	fi
 
-	append args "--rtc $rtc_dev" " "
+	# -f|--rtc
+	append args "-f $rtc_dev" " "
 
 	if [ "$1" = "save" ]; then
-		append args "--systohc" " "
+		# -w|--systohc
+		append args "-w" " "
 	elif [ "$1" = "restore" ]; then
-		append args "--hctosys" " "
+		# -s|--hctosys
+		append args "-s" " "
 	fi
 
 	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $args || exit 0
