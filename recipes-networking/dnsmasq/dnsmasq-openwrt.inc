@@ -4,9 +4,14 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano8"
+INC_PR = "9"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PACKAGECONFIG[ubus] = ",,libubus"
+EXTRA_OEMAKE += "\
+    'COPTS+=${@bb.utils.contains('PACKAGECONFIG', 'ubus', '-DHAVE_UBUS', '', d)}' \
+"
+
+PACKAGECONFIG += " ubus "
 
 # Patches
 SRC_URI += "\
@@ -66,8 +71,6 @@ OPENWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
 OPENWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
 
 do_install_append() {
-    rm -rf ${D}${bindir}/dhcp_release
-
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
@@ -90,12 +93,20 @@ do_install_append() {
     install -d ${D}/usr/share/dnsmasq
     install -m 0644 ${WORKDIR}/rfc6761.conf ${D}/usr/share/dnsmasq/rfc6761.conf
     install -m 0644 ${WORKDIR}/dhcpbogushostname.conf ${D}/usr/share/dnsmasq/dhcpbogushostname.conf
+    install -m 0644 ${B}/trust-anchors.conf ${D}/usr/share/dnsmasq
 
     install -d ${D}/usr/share/acl.d
     install -m 0644 ${WORKDIR}/dnsmasq_acl.json ${D}/usr/share/acl.d/dnsmasq_acl.json
 
+
     # dnsmasq installs in /usr/bin, openwrt looks for it in /usr/sbin
     ln -s ${bindir}/dnsmasq ${D}${sbindir}/dnsmasq
+
+    # remove unused in OpenWrt files/folders
+    rm -rf ${D}${bindir}/dhcp_release
+    rm -rf ${D}${sysconfdir}/dnsmasq.d
+    rm -rf ${D}${sysconfdir}/systemd
+    rm -rf ${D}${sysconfdir}/rc.d
 }
 
 USERADD_PACKAGES = "${PN}"

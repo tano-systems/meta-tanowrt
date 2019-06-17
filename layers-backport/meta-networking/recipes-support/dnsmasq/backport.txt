@@ -1,0 +1,2 @@
+dnsmasq 2.80 backported from meta-networking layer
+(git://git.openembedded.org/meta-openembedded (meta-networking subfolder), branch master, revision 321a62261dee657b219d4396e9cbafb7b1425e39)
