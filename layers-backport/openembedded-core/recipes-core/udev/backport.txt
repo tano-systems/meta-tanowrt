@@ -1,0 +1,4 @@
+﻿Recipe for eudev 3.2.7 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: warrior
+  revision: a2915db76d6a2007b22b20f945498c84e7fa8132

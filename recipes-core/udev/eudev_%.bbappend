@@ -25,7 +25,8 @@ GROUPADD_PARAM_${PN} = "\
     -f -r disk; \
     -f -r cdrom; \
     -f -r tape; \
-    -f -r floppy"
+    -f -r floppy; \
+    -f -r kvm;"
 
 OPENWRT_SERVICE_PACKAGES = "eudev"
 OPENWRT_SERVICE_SCRIPTS_eudev += "udev"
