@@ -1,6 +1,6 @@
 ##########################################################################
 #
-# Copyright (C) 2018, Tano Systems,
+# Copyright (C) 2018-2019, Tano Systems,
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################
@@ -348,6 +348,7 @@ mstpd_configure()
 	local bridge
 	local bridges
 	local bridges_json
+	local loglevel
 
 	only_bridge="$1"
 
@@ -361,6 +362,10 @@ mstpd_configure()
 	# Read the mstpd config
 	config_load 'mstpd'
 	config_get bridges 'global' 'bridge'
+	config_get loglevel 'global' 'loglevel' 2
+
+	# Setup new log level
+	${MSTPCTL_BIN} debuglevel "$loglevel"
 
 	# Read currently added to mstpd bridges list
 	bridges_json="{\"bridges\":`${MSTPCTL_BIN} -f json showbridge`}"
