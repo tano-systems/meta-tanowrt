@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 PV = "1.0.0+git${SRCPV}"
 
 SUMMARY = "OpenWrt non-physical true random number generator based on timing jitter"
@@ -28,7 +28,7 @@ LIC_FILES_CHKSUM = "file://urngd.c;beginline=1;endline=38;md5=be8a7966f07b41d470
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	gitsm://github.com/ynezz/openwrt-urngd.git \
+	gitsm://${GIT_OPENWRT_ORG}/project/urngd.git \
 	file://urngd.init \
 "
 
