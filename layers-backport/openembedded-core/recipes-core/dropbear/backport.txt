@@ -1,0 +1,2 @@
+﻿dropbear 2017.75 backported from openembedded-core layer
+(git://git.openembedded.org/openembedded-core, branch sumo, revision dceca6d34071b4cbef9e28bbf19dc12f5d925525)

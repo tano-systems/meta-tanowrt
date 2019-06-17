@@ -1,3 +1,8 @@
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+
+INC_PR = "0"
+
+# OpenWrt files
 SRC_URI_append = "\
 	file://dropbear.config \
 	file://dropbear.init \
