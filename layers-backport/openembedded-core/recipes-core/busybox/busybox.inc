@@ -50,7 +50,7 @@ RRECOMMENDS_${PN} = "${PN}-syslog ${PN}-udhcpc"
 
 RDEPENDS_${PN} = "${@["", "busybox-inittab"][(d.getVar('VIRTUAL-RUNTIME_init_manager', True) == 'busybox')]}"
 
-inherit cml1 ptest
+inherit cml1 systemd update-rc.d ptest
 
 # internal helper
 def busybox_cfg(feature, tokens, cnf, rem):
@@ -270,16 +270,12 @@ do_install () {
 	fi
 
 	if grep -q "CONFIG_SYSLOGD=y" ${B}/.config; then
-		if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "false" ]; then
-			install -m 0755 ${WORKDIR}/syslog ${D}${sysconfdir}/init.d/syslog
-			install -m 644 ${WORKDIR}/syslog-startup.conf ${D}${sysconfdir}/syslog-startup.conf
-			install -m 644 ${WORKDIR}/syslog.conf ${D}${sysconfdir}/syslog.conf
-		fi
+		install -m 0755 ${WORKDIR}/syslog ${D}${sysconfdir}/init.d/syslog
+		install -m 644 ${WORKDIR}/syslog-startup.conf ${D}${sysconfdir}/syslog-startup.conf
+		install -m 644 ${WORKDIR}/syslog.conf ${D}${sysconfdir}/syslog.conf
 	fi
 	if grep "CONFIG_CROND=y" ${B}/.config; then
-		if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "false" ]; then
-			install -m 0755 ${WORKDIR}/busybox-cron ${D}${sysconfdir}/init.d/
-		fi
+		install -m 0755 ${WORKDIR}/busybox-cron ${D}${sysconfdir}/init.d/
 	fi
 	if grep "CONFIG_HTTPD=y" ${B}/.config; then
 		install -m 0755 ${WORKDIR}/busybox-httpd ${D}${sysconfdir}/init.d/
@@ -289,18 +285,14 @@ do_install () {
 		install -m 0755 ${WORKDIR}/busybox-udhcpd ${D}${sysconfdir}/init.d/
 	fi
 	if grep "CONFIG_HWCLOCK=y" ${B}/.config; then
-		if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "false" ]; then
-			install -m 0755 ${WORKDIR}/hwclock.sh ${D}${sysconfdir}/init.d/
-		fi
+		install -m 0755 ${WORKDIR}/hwclock.sh ${D}${sysconfdir}/init.d/
 	fi
 	if grep "CONFIG_UDHCPC=y" ${B}/.config; then
-		if [ "${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'true', 'false', d)}" = "false" ]; then
-			install -d ${D}${sysconfdir}/udhcpc.d
-			install -d ${D}${datadir}/udhcpc
-			install -m 0755 ${WORKDIR}/simple.script ${D}${sysconfdir}/udhcpc.d/50default
-			sed -i "s:/SBIN_DIR/:${base_sbindir}/:" ${D}${sysconfdir}/udhcpc.d/50default
-			install -m 0755 ${WORKDIR}/default.script ${D}${datadir}/udhcpc/default.script
-		fi
+		install -d ${D}${sysconfdir}/udhcpc.d
+		install -d ${D}${datadir}/udhcpc
+		install -m 0755 ${WORKDIR}/simple.script ${D}${sysconfdir}/udhcpc.d/50default
+		sed -i "s:/SBIN_DIR/:${base_sbindir}/:" ${D}${sysconfdir}/udhcpc.d/50default
+		install -m 0755 ${WORKDIR}/default.script ${D}${datadir}/udhcpc/default.script
 	fi
 	if grep "CONFIG_INETD=y" ${B}/.config; then
 		install -m 0755 ${WORKDIR}/inetd ${D}${sysconfdir}/init.d/inetd.${BPN}

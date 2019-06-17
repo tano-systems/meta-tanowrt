@@ -1,4 +1,3 @@
-
 require busybox.inc
 
 SRC_URI = "http://www.busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
@@ -11,17 +10,17 @@ SRC_URI = "http://www.busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
            file://simple.script \
            file://hwclock.sh \
            file://mount.busybox \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://syslog', d)} \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://syslog-startup.conf', d)} \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://syslog.conf', d)} \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://busybox-syslog.default', d)} \
+           file://syslog \
+           file://syslog-startup.conf \
+           file://syslog.conf \
+           file://busybox-syslog.default \
            file://mdev \
            file://mdev.conf \
            file://mdev-mount.sh \
            file://umount.busybox \
            file://defconfig \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://busybox-syslog.service.in', d)} \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://busybox-klogd.service.in', d)} \
+           file://busybox-syslog.service.in \
+           file://busybox-klogd.service.in \
            file://fail_on_no_media.patch \
            file://run-ptest \
            file://inetd.conf \
@@ -35,9 +34,9 @@ SRC_URI = "http://www.busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
            file://sha256sum.cfg \
            file://getopts.cfg \
            file://resize.cfg \
-           ${@["", "file://init.cfg"][(d.getVar('VIRTUAL-RUNTIME_init_manager', True) == 'busybox')]} \
-           ${@["", "file://mdev.cfg"][(d.getVar('VIRTUAL-RUNTIME_dev_manager', True) == 'busybox-mdev')]} \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'procd', '', 'file://syslog.cfg', d)} \
+           ${@["", "file://init.cfg"][(d.getVar('VIRTUAL-RUNTIME_init_manager') == 'busybox')]} \
+           ${@["", "file://mdev.cfg"][(d.getVar('VIRTUAL-RUNTIME_dev_manager') == 'busybox-mdev')]} \
+           file://syslog.cfg \
            file://inittab \
            file://rcS \
            file://rcK \
