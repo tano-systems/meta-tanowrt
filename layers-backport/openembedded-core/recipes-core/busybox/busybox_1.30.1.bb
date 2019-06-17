@@ -40,13 +40,13 @@ SRC_URI = "http://www.busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
            file://inittab \
            file://rcS \
            file://rcK \
-           file://runlevel \
            file://makefile-libbb-race.patch \
-           file://CVE-2011-5325.patch \
-           file://CVE-2017-15873.patch \
-           file://busybox-CVE-2017-16544.patch \
+           file://0001-testsuite-check-uudecode-before-using-it.patch \
+           file://0001-testsuite-use-www.example.org-for-wget-test-cases.patch \
+           file://0001-du-l-works-fix-to-use-145-instead-of-144.patch \
+           file://0001-dc.tests-fix-two-test-case-to-also-depend-on-DC_BIG.patch \
 "
 SRC_URI_append_libc-musl = " file://musl.cfg "
 
-SRC_URI[tarball.md5sum] = "476186f4bab81781dab2369bfd42734e"
-SRC_URI[tarball.sha256sum] = "9d4be516b61e6480f156b11eb42577a13529f75d3383850bb75c50c285de63df"
+SRC_URI[tarball.md5sum] = "4f72fc6abd736d5f4741fc4a2485547a"
+SRC_URI[tarball.sha256sum] = "3d1d04a4dbd34048f4794815a5c48ebb9eb53c5277e09ffffc060323b95dfbdc"
