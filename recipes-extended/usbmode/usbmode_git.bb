@@ -15,7 +15,7 @@ DEPENDS = "libusb libubox"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/usbmode.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/usbmode.git"
 
 # 18.12.2017
 # support PantechMode

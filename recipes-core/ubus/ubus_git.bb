@@ -12,7 +12,7 @@ DEPENDS = "json-c libubox"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/ubus.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git"
 
 SRC_URI += "file://0001-Make-libubus-thread-safe.patch"
 

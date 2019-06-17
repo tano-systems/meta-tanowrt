@@ -13,7 +13,7 @@ DEPENDS = "libubox lua5.1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG_URL}/project/uci.git;branch=master;name=uci \
+	git://${GIT_OPENWRT_ORG}/project/uci.git;branch=master;name=uci \
 	file://uci.sh \
 "
 

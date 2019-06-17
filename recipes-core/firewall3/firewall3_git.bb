@@ -13,7 +13,7 @@ DEPENDS = "libubox uci ubus iptables"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/firewall3.git \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git \
            file://firewall.config \
            file://firewall.init \
            file://firewall.hotplug \

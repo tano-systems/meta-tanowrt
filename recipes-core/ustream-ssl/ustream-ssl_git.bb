@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://ustream-ssl.h;beginline=1;endline=17;md5=f63310467742
 SECTION = "base"
 DEPENDS = "libubox openssl"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/ustream-ssl.git \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ustream-ssl.git \
           "
 
 # 30.07.2018

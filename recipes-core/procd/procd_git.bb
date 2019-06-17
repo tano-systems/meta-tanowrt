@@ -15,7 +15,7 @@ DEPENDS = "libubox ubus json-c"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG_URL}/project/procd.git;branch=master \
+	git://${GIT_OPENWRT_ORG}/project/procd.git;branch=master \
 	file://reload_config \
 	file://procd.sh \
 "
