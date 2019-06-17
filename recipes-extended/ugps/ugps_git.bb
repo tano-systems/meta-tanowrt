@@ -12,7 +12,7 @@ SECTION = "base"
 DEPENDS = "libubox ubus"
 
 SRC_URI = "\
-	${GIT_OPENWRT_ORG_URL}/project/ugps.git \
+	git://${GIT_OPENWRT_ORG_URL}/project/ugps.git \
 "
 
 # 12.07.2018

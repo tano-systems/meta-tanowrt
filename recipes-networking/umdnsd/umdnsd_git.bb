@@ -14,7 +14,7 @@ DEPENDS = "json-c libubox ubus"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	${GIT_OPENWRT_ORG_URL}/project/mdnsd.git \
+	git://${GIT_OPENWRT_ORG_URL}/project/mdnsd.git \
 	file://0001-Fix-compile-warnings-treated-as-errors.patch \
 	file://umdns.init \
 	file://umdns.config \

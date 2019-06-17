@@ -10,7 +10,7 @@ SECTION = "base"
 DEPENDS = "json-c libubox"
 PR = "tano2"
 
-SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/jsonpath.git;name=jsonpath; \
+SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/jsonpath.git;name=jsonpath; \
           file://0001-sync-lemon-parser.patch \
           file://0002-Declare-ParseTrace.patch \
           file://0100-break-lemon-dependency-cycle.patch \

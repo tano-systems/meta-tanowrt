@@ -23,7 +23,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "${GIT_OPENWRT_ORG_URL}/project/fstools.git;branch=master \
+SRC_URI = "git://${GIT_OPENWRT_ORG_URL}/project/fstools.git;branch=master \
 	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \

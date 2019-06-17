@@ -13,7 +13,7 @@ DEPENDS = "json-c libuci libubox libubus libiwinfo"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	${GIT_OPENWRT_ORG_URL}/project/rpcd.git;name=rpcd \
+	git://${GIT_OPENWRT_ORG_URL}/project/rpcd.git;name=rpcd \
 	file://rpcd.init \
 	file://rpcd.config \
 "

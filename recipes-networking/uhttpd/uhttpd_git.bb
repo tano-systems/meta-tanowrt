@@ -13,7 +13,7 @@ DEPENDS = "libubox ubus json-c ustream-ssl"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-          ${GIT_OPENWRT_ORG_URL}/project/uhttpd.git \
+          git://${GIT_OPENWRT_ORG_URL}/project/uhttpd.git \
           file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
           file://0200-add-gz-support.patch \
           file://0201-fix-uh_file_mime_lookup.patch \

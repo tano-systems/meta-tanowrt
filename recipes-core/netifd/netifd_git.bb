@@ -15,7 +15,7 @@ DEPENDS = "json-c libubox ubus libnl uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	${GIT_OPENWRT_ORG_URL}/project/netifd.git;name=netifd;branch=master \
+	git://${GIT_OPENWRT_ORG_URL}/project/netifd.git;name=netifd;branch=master \
 	file://100-Fix-IFF_LOWER_UP-define.patch \
 "
 

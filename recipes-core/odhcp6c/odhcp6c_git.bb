@@ -17,7 +17,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRCREV = "67ae6a71b5762292e114b281d0e329cc24209ae6"
 
 SRC_URI = "\
-	${GIT_OPENWRT_ORG_URL}/project/odhcp6c.git;name=odhcp6c \
+	git://${GIT_OPENWRT_ORG_URL}/project/odhcp6c.git;name=odhcp6c \
 	file://dhcpv6.script \
 	file://dhcpv6.sh \
 "

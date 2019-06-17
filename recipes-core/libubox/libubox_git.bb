@@ -41,7 +41,7 @@ DEPENDS += "json-c"
 DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'lua', 'lua5.1', '', d)}"
 
 SRC_URI = "\
-          ${GIT_OPENWRT_ORG_URL}/project/libubox.git;branch=master \
+          git://${GIT_OPENWRT_ORG_URL}/project/libubox.git;branch=master \
           file://0001-version-libraries.patch \
           file://fix-libdir.patch \
           "
