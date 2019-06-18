@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano27.${INC_PR}"
+PR_append = ".tano28.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -268,8 +268,8 @@ RDEPENDS_${PN} += "\
 "
 
 RSUGGESTS_${PN} += "\
-	prcod \
-	ubux \
+	procd \
+	ubox \
 "
 
 CONFFILES_${PN} += "\
