@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano29.${INC_PR}"
+PR_append = ".tano30.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -153,9 +153,7 @@ do_install_append () {
 	# FIXME: Should this change for OE?
 	mkdir -p ${D}/overlay
 
-	# Avoid flash writes
 	ln -sf /tmp/resolv.conf /tmp/TZ ${D}${sysconfdir}/
-	ln -sf /tmp/fstab ${D}${sysconfdir}/fstab
 	ln -sf /proc/mounts ${D}${sysconfdir}/mtab
 
 	chmod 0600 ${D}${sysconfdir}/shadow
