@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "1"
+INC_PR = "2"
 
 # OpenWrt files
 SRC_URI_append = "\
@@ -42,6 +42,27 @@ SRC_URI_append = "\
 "
 
 FILES_${PN} += "/root"
+
+do_configure_append() {
+	: > ${B}/localoptions.h
+	
+	echo '#define DROPBEAR_CURVE25519 1' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_ECDSA 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_ECDH 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_ECDSA 0' >> ${B}/localoptions.h
+
+	echo '#define INETD_MODE 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_CLI_NETCAT 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_3DES 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_DSS 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_ENABLE_CBC_MODE 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_SHA1_96_HMAC 0' >> ${B}/localoptions.h
+	echo '#define DROPBEAR_USE_PASSWORD_ENV 0' >> ${B}/localoptions.h
+
+	# Remove protocol idented software version number
+	sed -E -i -e 's,^(#define LOCAL_IDENT) .*,\1 "SSH-2.0-dropbear",g' \
+		${S}/sysoptions.h
+}
 
 do_install_append() {
     install -Dm 0755 ${WORKDIR}/dropbear.init    ${D}${sysconfdir}/init.d/dropbear
