@@ -5,7 +5,7 @@
 # It is released under the MIT license.  See COPYING.MIT
 # for the terms.
 
-PR = "tano3"
+PR = "tano4"
 
 SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
@@ -13,6 +13,7 @@ LIC_FILES_CHKSUM = "file://${TANO_OPENWRT_BASE}/LICENSE;md5=aed2cf5a7c273a7c2dcd
 
 inherit openwrt-image
 inherit rootfs-rm-boot-dir
+inherit rootfs-rm-opkg-lists
 inherit rootfs-var-in-tmpfs
 
 IMAGE_FEATURES += "\
