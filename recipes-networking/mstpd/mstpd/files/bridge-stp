@@ -13,7 +13,8 @@
 
 . $IPKG_INSTROOT/lib/functions/mstpd.sh
 
-local action bridge
+action=""
+bridge=""
 
 # Parse arguments.
 if [ $# -eq 2 ] && [ "$2" = 'start' ]; then
