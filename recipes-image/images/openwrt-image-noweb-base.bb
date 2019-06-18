@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR_append = ".0"
 
 SUMMARY = "OpenWrt Base Image Without Web-Interface"
 LICENSE = "MIT"

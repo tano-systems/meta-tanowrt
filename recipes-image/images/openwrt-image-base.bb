@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR_append = ".1"
 
 SUMMARY = "OpenWrt Base Image"
 LICENSE = "MIT"
