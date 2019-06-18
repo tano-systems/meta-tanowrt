@@ -11,4 +11,5 @@ MIRRORS_prepend = "\
 	git://${GIT_OPENWRT_ORG}/project/luci.git     git://github.com/openwrt/luci.git \n\
 	git://${GIT_OPENWRT_ORG}/(.*)/(.*)            git://github.com/git-openwrt-org-mirror/BASENAME \n\
 	gitsm://${GIT_OPENWRT_ORG}/(.*)/(.*)          gitsm://github.com/git-openwrt-org-mirror/BASENAME \n\
+	https://${GIT_OPENWRT_ORG}/(.*)/(.*)          https://github.com/git-openwrt-org-mirror/BASENAME \n\
 "
