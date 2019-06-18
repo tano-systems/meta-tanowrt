@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano28.${INC_PR}"
+PR_append = ".tano29.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -270,12 +270,6 @@ RDEPENDS_${PN} += "\
 RSUGGESTS_${PN} += "\
 	procd \
 	ubox \
-"
-
-CONFFILES_${PN} += "\
-	${sysconfdir}/fstab \
-	${@['', '${sysconfdir}/hostname'][(d.getVar('hostname', True) != '')]} \
-	${sysconfdir}/shells \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
