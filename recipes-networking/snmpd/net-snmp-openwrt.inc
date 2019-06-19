@@ -1,4 +1,8 @@
-#
+# This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+
+INC_PR = "0"
+
+EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
 inherit openwrt-services
 
@@ -10,11 +14,6 @@ OPENWRT_SERVICE_STATE_net-snmp-server-snmpd-snmpd ?= "enabled"
 OPENWRT_SERVICE_SCRIPTS_net-snmp-server-snmptrapd += "snmptrapd"
 OPENWRT_SERVICE_STATE_net-snmp-server-snmptrapd-snmptrapd ?= "disabled"
 
-#	file://000-cross-compile.patch
-#	file://160-no_ldconfig.patch
-#	file://170-ldflags.patch
-#	file://900-musl-compat.patch
-
 SRC_URI += "\
 	file://snmpd.config \
 	file://snmpd.init \
@@ -23,8 +22,11 @@ SRC_URI += "\
 	file://110-debian-makefiles.patch \
 	file://120-debian-searchdirs.patch \
 	file://130-debian-extramibs.patch \
+	file://160-no_ldconfig.patch \
 	file://170-ldflags.patch \
-	file://750-ieee802dot11.patch"
+	file://750-ieee802dot11.patch \
+	file://900-musl-compat.patch \
+"
 
 ##
 ## OpenWrt build options
@@ -49,6 +51,12 @@ SRC_URI += "\
 ##
 
 do_install_append() {
+	# Remove unneeded files installed by original OE recipe
+	rm -rf ${D}${sysconfdir}/snmp/*
+	rm -rf ${D}${systemd_unitdir}
+	rm -f ${D}${sysconfdir}/init.d/snmpd
+
+	# Install OpenWrt files
 	install -d ${D}${sysconfdir}/snmp
 	install -d ${D}${sysconfdir}/init.d
 	install -d ${D}${sysconfdir}/config
@@ -59,6 +67,9 @@ do_install_append() {
 
 	ln -s /var/run/snmpd.conf ${D}${sysconfdir}/snmp/snmpd.conf
 }
+
+FILES_${PN}-server-snmpd = "${sbindir}/snmpd"
+FILES_${PN}-server-snmptrapd = "${sbindir}/snmptrapd"
 
 FILES_${PN}-server-snmpd += "\
 	${sysconfdir}/config/snmpd \
