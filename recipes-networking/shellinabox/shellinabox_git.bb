@@ -9,8 +9,8 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano3"
-PV = "2.20+git${SRCPV}"
+PR = "tano0"
+PV = "2.21+git${SRCPV}"
 
 DESCRIPTION = "Shell In A Box implements a web server that \
 can export arbitrary command line tools to \
@@ -30,7 +30,7 @@ DEPENDS += "zlib"
 
 GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/shellinabox/shellinabox.git;protocol=${GIT_PROTOCOL}"
-SRCREV = "b7a8072bf54c7525f3b55a34209bdbc7ba91ab43"
+SRCREV = "4f0ecc31ac6f985e0dd3f5a52cbfc0e9251f6361"
 
 # Files
 SRC_URI += "\
