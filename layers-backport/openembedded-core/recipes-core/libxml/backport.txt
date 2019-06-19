@@ -1,0 +1,4 @@
+﻿Recipe for libxml2 2.9.9 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: 335f891c5517cbe16e9e15e40882301442b772a2
