@@ -1,5 +1,5 @@
 #
-PR = "tano3"
+PR = "tano4"
 SUMMARY = "Canonical libwebsockets.org websocket library"
 HOMEPAGE = "https://libwebsockets.org/"
 LICENSE = "LGPL-2.1"
@@ -11,8 +11,8 @@ PV = "2.4.2+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
-# 11.10.2018
-SRCREV = "b6d1375c2d02835ca16f7c81e7ce4b48e7b2e27f"
+# 03.04.2019
+SRCREV = "33a1e905113f05c3c1eec3b75e0727ca81a551b1"
 SRC_URI = "git://github.com/warmcat/libwebsockets.git;protocol=https;branch=v2.4-stable"
 
 inherit cmake pkgconfig
