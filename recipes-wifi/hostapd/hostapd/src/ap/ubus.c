@@ -268,7 +268,7 @@ hostapd_bss_del_client(struct ubus_context *ctx, struct ubus_object *obj,
 	struct hostapd_data *hapd = container_of(obj, struct hostapd_data, ubus.obj);
 	struct sta_info *sta;
 	bool deauth = false;
-	int reason = 0;
+	int reason;
 	u8 addr[ETH_ALEN];
 
 	blobmsg_parse(del_policy, __DEL_CLIENT_MAX, tb, blob_data(msg), blob_len(msg));
@@ -553,7 +553,7 @@ __hostapd_bss_mgmt_enable_f(struct hostapd_data *hapd, int flag)
 			WLAN_RRM_CAPS_BEACON_REPORT_ACTIVE |
 			WLAN_RRM_CAPS_BEACON_REPORT_TABLE;
 
-		if ((bss->radio_measurements[0] & flags) == flags)
+		if (bss->radio_measurements[0] & flags == flags)
 			return false;
 
 		bss->radio_measurements[0] |= (u8) flags;
@@ -567,8 +567,6 @@ __hostapd_bss_mgmt_enable_f(struct hostapd_data *hapd, int flag)
 		return true;
 #endif
 	}
-
-	return false;
 }
 
 static void
@@ -620,7 +618,6 @@ hostapd_bss_mgmt_enable(struct ubus_context *ctx, struct ubus_object *obj,
 	}
 
 	__hostapd_bss_mgmt_enable(hapd, flags);
-	return 0;
 }
 
 
@@ -767,7 +764,7 @@ invalid:
 		ret = UBUS_STATUS_INVALID_ARGUMENT;
 	}
 
-	return ret;
+	return 0;
 }
 
 enum {
@@ -802,7 +799,7 @@ hostapd_rrm_beacon_req(struct ubus_context *ctx, struct ubus_object *obj,
 	struct wpabuf *req;
 	u8 bssid[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 	u8 addr[ETH_ALEN];
-	int rem, ret;
+	int mode, rem, ret;
 	int buf_len = 13;
 
 	blobmsg_parse(beacon_req_policy, __BEACON_REQ_MAX, tb, blob_data(msg), blob_len(msg));
@@ -814,7 +811,7 @@ hostapd_rrm_beacon_req(struct ubus_context *ctx, struct ubus_object *obj,
 	if (tb[BEACON_REQ_SSID])
 		buf_len += blobmsg_data_len(tb[BEACON_REQ_SSID]) + 2 - 1;
 
-	blobmsg_get_u32(tb[BEACON_REQ_MODE]);
+	mode = blobmsg_get_u32(tb[BEACON_REQ_MODE]);
 	if (hwaddr_aton(blobmsg_data(tb[BEACON_REQ_ADDR]), addr))
 		return UBUS_STATUS_INVALID_ARGUMENT;
 
@@ -986,6 +983,7 @@ void hostapd_ubus_add_bss(struct hostapd_data *hapd)
 {
 	struct ubus_object *obj = &hapd->ubus.obj;
 	char *name;
+	int ret;
 
 #ifdef CONFIG_MESH
 	if (hapd->conf->mesh & MESH_ENABLED)
@@ -1003,7 +1001,7 @@ void hostapd_ubus_add_bss(struct hostapd_data *hapd)
 	obj->type = &bss_object_type;
 	obj->methods = bss_object_type.methods;
 	obj->n_methods = bss_object_type.n_methods;
-	ubus_add_object(ctx, obj);
+	ret = ubus_add_object(ctx, obj);
 	hostapd_ubus_ref_inc();
 }
 
