@@ -228,14 +228,14 @@ convert_uci() {
 start_service_real() {
 	local cfg="$1"
 	local use_uci write_pid
-	config_get use_uci "$cfg" use_uci
+	config_get use_uci "$cfg" use_uci 0
 	if [ "$use_uci" -eq 1 ]; then
 		CONF=$TCONF
 		convert_uci
 	else
 		CONF=/etc/mosquitto/mosquitto.conf
 		CONF_WATCH=$CONF
-        fi
+	fi
 	config_get write_pid "$cfg" write_pid 0
 
 	procd_open_instance

@@ -3,7 +3,7 @@ SUMMARY = "Open source MQTT v3.1/3.1.1 implemention"
 DESCRIPTION = "Mosquitto is an open source (Eclipse licensed) message broker that implements the MQ Telemetry Transport protocol version 3.1 and 3.1.1. MQTT provides a lightweight method of carrying out messaging using a publish/subscribe model. "
 HOMEPAGE = "http://mosquitto.org/"
 SECTION = "console/network"
-PR = "tano0"
+PR = "tano1"
 
 LICENSE = "EPL-1.0 | EDL-1.0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
