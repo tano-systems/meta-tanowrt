@@ -6,7 +6,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano5"
+PR = "tano6"
 PV = "1.4.4+git${SRCPV}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"

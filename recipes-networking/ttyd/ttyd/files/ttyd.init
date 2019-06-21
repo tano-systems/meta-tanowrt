@@ -151,7 +151,7 @@ service_triggers()
 
 status()
 {
-	if [ `pgrep ttyd` ]; then
+	if [ ! -z "`pgrep ttyd`" ]; then
 		echo 1
 	else
 		echo 0
