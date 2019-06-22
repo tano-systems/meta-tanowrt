@@ -16,7 +16,7 @@ RDEPENDS_${PN} = "bash zlib"
 SRC_URI = "git://github.com/netdata/netdata.git;protocol=https"
 SRCREV = "fc8e3bbd451cff1b9dbfee8f213c6e0a5813b5f4"
 PV = "1.15.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 S = "${WORKDIR}/git"
 
