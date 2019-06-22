@@ -48,7 +48,8 @@ With parameter `policy` you can select scheduling policy for procd service. Supp
   - `SCHED_BATCH` - for "batch" style execution of processes;
   - `SCHED_FIFO` - a first-in, first-out "real-time" policy;
   - `SCHED_RR` - a round-robin "real-time" policy;
-  - `SCHED_DEADLINE` - a deadline scheduling policy.
+  - `SCHED_DEADLINE` - a deadline scheduling policy;
+  - `SCHED_IDLE` - idle scheduling policy.
 
 For policies `SCHED_OTHER` and `SCHED_BATCH` you can setup additional `nice` parameter. This parameter specifies the nice value to be set. The nice value is a number in the range -20 (high priority) to +19 (low priority).
 

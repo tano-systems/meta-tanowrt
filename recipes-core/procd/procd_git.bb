@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano23"
+PR = "tano24"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -27,6 +27,7 @@ SRC_URI += "\
 	file://0003-service-Allow-to-configure-scheduler-attributes.patch \
 	file://0004-hotplug-Remove-dev-prefix-from-DEVNAME-variable.patch \
 	file://0005-hotplug-Completely-remove-hotplug-functionality.patch \
+	file://0006-service-Add-SCHED_IDLE-scheduler-policy-support.patch \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)}"
