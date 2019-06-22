@@ -16,7 +16,7 @@ RDEPENDS_${PN} = "bash zlib"
 SRC_URI = "git://github.com/netdata/netdata.git;protocol=https"
 SRCREV = "fc8e3bbd451cff1b9dbfee8f213c6e0a5813b5f4"
 PV = "1.15.0+git${SRCPV}"
-PR = "tano1"
+PR = "tano2"
 
 S = "${WORKDIR}/git"
 
@@ -72,6 +72,9 @@ do_install_append() {
 
 	# Remove demo pages
 	rm -f ${D}${datadir}/netdata/web/demo*html
+	rm -f ${D}${datadir}/netdata/web/dashboard.html
+	rm -f ${D}${datadir}/netdata/web/infographic.html
+	rm -f ${D}${datadir}/netdata/web/tv.html
 	rm -f ${D}${datadir}/netdata/web/fonts/*.svg
 	rm -f ${D}${datadir}/netdata/web/fonts/*.ttf
 	rm -f ${D}${datadir}/netdata/web/fonts/*.woff
