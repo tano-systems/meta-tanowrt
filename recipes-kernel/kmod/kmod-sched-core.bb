@@ -1,45 +1,33 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Traffic schedulers"
 LICENSE = "MIT"
 
 inherit kernel-kmod
 
-#	CONFIG_NET_SCHED=y \
-#	CONFIG_NET_SCH_HFSC \
-#	CONFIG_NET_SCH_HTB \
-#	CONFIG_NET_SCH_TBF \
-#	CONFIG_NET_SCH_INGRESS \
-#	CONFIG_NET_SCH_FQ_CODEL \
-#	CONFIG_NET_CLS=y \
-#	CONFIG_NET_CLS_ACT=y \
-#	CONFIG_NET_CLS_FLOW \
-#	CONFIG_NET_CLS_FW \
-#	CONFIG_NET_CLS_ROUTE4 \
-#	CONFIG_NET_CLS_TCINDEX \
-#	CONFIG_NET_CLS_U32 \
-#	CONFIG_NET_ACT_MIRRED \
-#	CONFIG_NET_ACT_SKBEDIT \
-#	CONFIG_NET_EMATCH=y \
-#	CONFIG_NET_EMATCH_U32
-
 #
 # kmod-sched-core
 # ###############
 #
-KERNEL_CONFIG_DEPENDS += "{\
-	option = CONFIG_NET_SCHED, required = y \
-}"
-
-KERNEL_CONFIG_DEPENDS += "{\
-	option = CONFIG_NET_CLS, required = y \
-}"
-
-KERNEL_CONFIG_DEPENDS += "{\
-	option = CONFIG_NET_CLS_ACT, required = y \
-}"
-
-KERNEL_CONFIG_DEPENDS += "{\
-	option = CONFIG_NET_EMATCH, required = y \
-}"
+KERNEL_CONFIG_DEPENDS += "\
+	{ option = CONFIG_NET_SCHED,        required = y   } \
+	{ option = CONFIG_NET_SCH_HFSC,     required = y|m } \
+	{ option = CONFIG_NET_SCH_HTB,      required = y|m } \
+	{ option = CONFIG_NET_SCH_TBF,      required = y|m } \
+	{ option = CONFIG_NET_SCH_INGRESS,  required = y|m } \
+	{ option = CONFIG_NET_SCH_FQ_CODEL, required = y|m } \
+	{ option = CONFIG_NET_CLS,          required = y   } \
+	{ option = CONFIG_NET_CLS_ACT,      required = y   } \
+	{ option = CONFIG_NET_CLS_BASIC,    required = y|m } \
+	{ option = CONFIG_NET_CLS_FLOW,     required = y|m } \
+	{ option = CONFIG_NET_CLS_FW,       required = y|m } \
+	{ option = CONFIG_NET_CLS_ROUTE4,   required = y|m } \
+	{ option = CONFIG_NET_CLS_TCINDEX,  required = y|m } \
+	{ option = CONFIG_NET_CLS_U32,      required = y|m } \
+	{ option = CONFIG_NET_ACT_MIRRED,   required = y|m } \
+	{ option = CONFIG_NET_ACT_SKBEDIT,  required = y|m } \
+	{ option = CONFIG_NET_CLS_MATCHALL, required = y|m } \
+	{ option = CONFIG_NET_EMATCH,       required = y   } \
+	{ option = CONFIG_NET_EMATCH_U32,   required = y|m } \
+"
