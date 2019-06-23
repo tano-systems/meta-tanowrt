@@ -1,14 +1,14 @@
 # meta-tano-openwrt
 
-This layer provides OpenEmbedded metadata for [OpenWrt](http://www.openwrt.org/)
-based distribution by Tano Systems.
+This layer provides OpenEmbedded metadata for TanoWrt Linux distribution by Tano Systems. TanoWrt distribution is based on packages and fixes (patches) from the official [OpenWrt](https://openwrt.org/) distribution.
 
-This layer is based on a OE metadata layer for OpenWrt by
-[Khem Raj](https://github.com/kraj/meta-openwrt) (revision
-[3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
+Some configuration files, scripts, patches and other files for OpenWrt packages, including descriptions in recipe files, are taken from the official OpenWrt repositories:
+- https://github.com/openwrt/openwrt.git --- buildsystem for the OpenWrt Linux distribution;
+- https://github.com/openwrt/packages.git --- OpenWrt packages feed.
 
-All OpenWrt packages corresponds to OpenWrt 18.06.1 or higher.
+This layer is initially based on a OE metadata layer for OpenWrt by [Khem Raj](https://github.com/kraj/meta-openwrt) (revision [3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
 
+Most OpenWrt packages corresponds to OpenWrt 18.06.2 or higher.
 
 ## Getting Started
 
@@ -87,12 +87,6 @@ Revision: 8bd16328a9332c57b03198826e22b48fadcd21d9
 All metadata is MIT licensed unless otherwise stated. Source code included
 in tree for individual recipes is under the LICENSE stated in each recipe
 (.bb file) unless otherwise stated.
-
-The descriptions in the recipes of OpenWrt packages have been extracted from
-original OpenWrt repositories:
-- https://github.com/openwrt/openwrt.git --- buildsystem for the OpenWrt Linux distribution;
-- https://github.com/openwrt/packages.git --- OpenWrt packages feed.
-
 
 ## Maintainers
 
