@@ -6,17 +6,14 @@
 # entries.
 #
 PV = "1.3.1"
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "QoS scripts"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-DEPENDS += "gawk"
-
 RDEPENDS_${PN} += "\
-	gawk \
 	iptables \
 	iproute2-tc \
 	kmod-sched-core \
