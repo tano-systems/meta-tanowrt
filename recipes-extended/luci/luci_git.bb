@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano24"
+PR = "tano25"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/tano-systems/luci"
@@ -10,7 +10,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 SECTION = "base"
 DEPENDS = "json-c libubox libnl lua5.1 iwinfo openssl"
-RDEPENDS_${PN} = "lua5.1 lucihttp luci-bwc"
+RDEPENDS_${PN} = "lua5.1 lucihttp luci-bwc rpcd-mod-rrdns"
 
 PACKAGES += "luci-bwc"
 
