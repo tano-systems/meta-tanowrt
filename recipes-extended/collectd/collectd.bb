@@ -8,11 +8,11 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 PV = "5.8.1"
-PR = "tano2"
+PR = "tano3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
-RDEPENDS_${PN} += "iwinfo"
+RDEPENDS_${PN} += "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '', d)}"
 
 SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
 SRC_URI[sha256sum] = "e796fda27ce06377f491ad91aa286962a68c2b54076aa77a29673d53204453da"
@@ -70,7 +70,7 @@ PACKAGECONFIG ??= "\
     interface \
     iptables \
     irq \
-    iwinfo \
+    ${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '', d)} \
     load \
     memory \
     ping \
