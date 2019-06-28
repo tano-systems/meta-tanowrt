@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano18"
+PR = "tano0"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -16,10 +16,10 @@ SRC_URI = "\
 	file://0001-ctl_main.c-Display-information-only-for-added-bridge.patch \
 "
 
-PV = "0.0.7+git${SRCPV}"
+PV = "0.0.8+git${SRCPV}"
 
-# 14.11.2018 Disable STP processing on a specific port
-SRCREV = "1107ce8df252aab73d10abfed39ffe9ccbc0bd1c"
+# 31.05.2019 ctl_main: allow batch commands from stdin as well 
+SRCREV = "03b5ebaa53fc5d2d47617de1e40d8180d18dd506"
 
 SRC_URI += "\
 	file://bridge-stp \

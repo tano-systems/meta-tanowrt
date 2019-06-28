@@ -1,4 +1,4 @@
-From 1b669f92d619f192d2fd723ad72459928b3d8576 Mon Sep 17 00:00:00 2001
+From 2ba7a9d36896b6d9a0688ee182a3168a7a27e63e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 6 Dec 2018 03:09:45 +0300
 Subject: [PATCH] ctl_main.c: Display information only for added bridges
@@ -91,7 +91,7 @@ index 9ed4e98..f6f24c6 100644
  #define SERVER_MESSAGE_CASE(name)                            \
      case CMD_CODE_ ## name : do                              \
 diff --git a/ctl_main.c b/ctl_main.c
-index 88924f7..d63fc42 100644
+index fe86a05..4582cc4 100644
 --- a/ctl_main.c
 +++ b/ctl_main.c
 @@ -454,6 +454,7 @@ static inline int get_bridge_list(struct dirent ***namelist)
@@ -223,7 +223,7 @@ index 88924f7..d63fc42 100644
      /* Show global bridge */
      {0, 32, "showbridge", cmd_showbridge,
       "[<bridge> ... [param]]", "Show bridge state for the CIST"},
-@@ -2396,6 +2473,8 @@ CLIENT_SIDE_FUNCTION(set_vid2fid)
+@@ -2554,6 +2631,8 @@ CLIENT_SIDE_FUNCTION(set_vid2fid)
  CLIENT_SIDE_FUNCTION(set_fid2mstid)
  CLIENT_SIDE_FUNCTION(set_vids2fids)
  CLIENT_SIDE_FUNCTION(set_fids2mstids)
