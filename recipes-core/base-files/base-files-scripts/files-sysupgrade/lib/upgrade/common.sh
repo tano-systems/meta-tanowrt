@@ -101,35 +101,41 @@ get_magic_long() {
 }
 
 export_bootdevice() {
-	local cmdline uuid disk uevent line
+	local cmdline bootdisk rootpart uuid blockdev uevent line
 	local MAJOR MINOR DEVNAME DEVTYPE
 
 	if read cmdline < /proc/cmdline; then
 		case "$cmdline" in
 			*block2mtd=*)
-				disk="${cmdline##*block2mtd=}"
-				disk="${disk%%,*}"
+				bootdisk="${cmdline##*block2mtd=}"
+				bootdisk="${bootdisk%%,*}"
 			;;
 			*root=*)
-				disk="${cmdline##*root=}"
-				disk="${disk%% *}"
+				rootpart="${cmdline##*root=}"
+				rootpart="${rootpart%% *}"
 			;;
 		esac
 
-		case "$disk" in
-			PARTUUID=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]-02)
-				uuid="${disk#PARTUUID=}"
-				uuid="${uuid%-02}"
-				for disk in $(find /dev -type b); do
-					set -- $(dd if=$disk bs=1 skip=440 count=4 2>/dev/null | hexdump -v -e '4/1 "%02x "')
+		case "$bootdisk" in
+			/dev/*)
+				uevent="/sys/class/block/${bootdisk##*/}/uevent"
+			;;
+		esac
+
+		case "$rootpart" in
+			PARTUUID=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]-[a-f0-9][a-f0-9])
+				uuid="${rootpart#PARTUUID=}"
+				uuid="${uuid%-[a-f0-9][a-f0-9]}"
+				for blockdev in $(find /dev -type b); do
+					set -- $(dd if=$blockdev bs=1 skip=440 count=4 2>/dev/null | hexdump -v -e '4/1 "%02x "')
 					if [ "$4$3$2$1" = "$uuid" ]; then
-						uevent="/sys/class/block/${disk##*/}/uevent"
+						uevent="/sys/class/block/${blockdev##*/}/uevent"
 						break
 					fi
 				done
 			;;
 			/dev/*)
-				uevent="/sys/class/block/${disk##*/}/uevent"
+				uevent="/sys/class/block/${rootpart##*/}/../uevent"
 			;;
 		esac
 
@@ -223,9 +229,9 @@ indicate_upgrade() {
 default_do_upgrade() {
 	sync
 	if [ "$SAVE_CONFIG" -eq 1 ]; then
-		get_image "$1" "$2" | mtd $MTD_CONFIG_ARGS -j "$CONF_TAR" write - "${PART_NAME:-image}"
+		get_image "$1" "$2" | mtd $MTD_ARGS $MTD_CONFIG_ARGS -j "$CONF_TAR" write - "${PART_NAME:-image}"
 	else
-		get_image "$1" "$2" | mtd write - "${PART_NAME:-image}"
+		get_image "$1" "$2" | mtd $MTD_ARGS write - "${PART_NAME:-image}"
 	fi
 	[ $? -ne 0 ] && exit 1
 }

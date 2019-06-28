@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-# 12.06.2019
-# f2fs-tools: fixup SPDX license
-OPENWRT_SRCREV = "35a70d626239424fb47e4cc50b565da7622eb2a6"
+# 03.07.2019
+# base-files: add network_get_uptime() to /lib/functions/network.sh
+OPENWRT_SRCREV = "1d4c4cbd20580dd211431ab58460a6eebd5e021e"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "8"
+INC_PR = "9"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
