@@ -1,6 +1,6 @@
 # Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "WiFi support packages"
 DESCRIPTION = "The set of packages required for a WiFi support"
 LICENSE = "MIT"
@@ -18,6 +18,7 @@ PACKAGES = "\
 RDEPENDS_${PN} = "\
 	${PN}-firmware \
 	iwinfo \
+	rpcd-mod-iwinfo \
 	cfg80211 \
 	iw \
 	hostapd \
