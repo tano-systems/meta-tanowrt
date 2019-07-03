@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
@@ -18,9 +18,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uqmi.git"
 
-# 24.05.2017
-# uqmi_add_command: fixed command argument assignment
-SRCREV = "01944dd7089b15f55b463072e1b46f1144e8aab4"
+# 20.06.2019
+# uqmi: add explicit check for message type when expecting a response
+SRCREV = "1965c713937495a5cb029165c16acdb6572c3f87"
 
 SRC_URI += "\
 	file://qmi.sh \
