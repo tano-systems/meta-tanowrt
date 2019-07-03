@@ -1,5 +1,0 @@
-Recipe for net-snmp 5.8 backported from meta-networking layer:
-  repository: git://git.openembedded.org/meta-openembedded
-  subdirectory: meta-networking
-  branch: master
-  revision: 3b245e4fe85be62c309650e84d1aaacbcb0d5505
