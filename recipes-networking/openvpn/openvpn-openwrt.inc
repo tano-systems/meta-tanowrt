@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "0"
+INC_PR = "1"
 
 inherit openwrt-services
 
