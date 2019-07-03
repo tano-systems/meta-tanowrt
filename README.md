@@ -56,7 +56,7 @@ This layer depends on:
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
 Branch: rocko  
-Revision: 7d518d342eb67d25aa071fb08d03f06d6da576c6
+Revision: 3638cb32ba9ba32b4d498fc31ab7fdf82f0d2495
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
