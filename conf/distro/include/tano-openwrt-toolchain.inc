@@ -5,8 +5,8 @@
 # Use internal GCC toolchain for qemuall
 TOOLCHAIN_TYPE_qemuall  ?= "internal"
 TOOLCHAIN_BRAND_qemuall ?= "gcc"
-SDKGCCVERSION_qemuall   ?= "7.3%"
-GCCVERSION_qemuall      ?= "7.3%"
+SDKGCCVERSION_qemuall   ?= "8.2%"
+GCCVERSION_qemuall      ?= "8.2%"
 
 TOOLCHAIN_TYPE  ?= "internal"
 TOOLCHAIN_BRAND ?= "linaro"

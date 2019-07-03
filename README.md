@@ -14,13 +14,13 @@ Most OpenWrt packages corresponds to OpenWrt 18.06.2 or higher.
 
 Clone repositories:
 ```
-$ git clone -b sumo git://github.com/openembedded/openembedded-core.git
+$ git clone -b thud git://github.com/openembedded/openembedded-core.git
 
 $ cd openembedded-core
 
-$ git clone -b 1.38 git://github.com/openembedded/bitbake.git
-$ git clone -b sumo git://github.com/openembedded/meta-openembedded.git
-$ git clone -b sumo git://github.com/tano-systems/meta-tano-openwrt.git
+$ git clone -b 1.40 git://github.com/openembedded/bitbake.git
+$ git clone -b thud git://github.com/openembedded/meta-openembedded.git
+$ git clone -b thud git://github.com/tano-systems/meta-tano-openwrt.git
 ```
 
 Initialize build environment and add layers:
@@ -44,7 +44,7 @@ runqemu qemuarm
 
 ## Limitations
 
-Works with OE Release 2.5 (Sumo)
+Works with OE Release 2.6 (Thud)
 
 Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
 
@@ -55,31 +55,31 @@ This layer depends on:
 ### openembedded-core
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
-Branch: sumo  
-Revision: 84f19e78d9b1f3d634cf1d46ce48f24670199d0b
+Branch: thud  
+Revision: f162d5bfe6eaeca24f441c83c87252c8d05744fc
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-oe  
-Branch: sumo  
-Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
+Branch: thud  
+Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
 
 ### meta-python
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-python  
-Branch: sumo  
-Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
+Branch: thud  
+Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
 
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
-Branch: sumo  
-Revision: 8760facba1bceb299b3613b8955621ddaa3d4c3f
+Branch: thud  
+Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
 
 ### bitbake
 URI: git://git.openembedded.org/bitbake  
-Branch: 1.38  
-Revision: c0af6c81f8d5487ea2cef54a78fd1cb1d0dc6520
+Branch: 1.40  
+Revision: 4ce92f43eeac6a4bfd06e8567fa6891614b5b3b0
 
 
 ## License
