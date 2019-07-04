@@ -1,0 +1,4 @@
+﻿Recipe for strace 2.26 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: ce69c21707aa19ab8a3f6c07dc5a560671ab53a4
