@@ -1,10 +1,13 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-EXTRA_OECONF += "--enable-static --with-xtlibdir=/usr/lib/iptables"
+PR_append = ".tano0"
+
+EXTRA_OECONF += "--enable-static"
 
 SRC_URI += "file://600-shared-libext.patch"
 
