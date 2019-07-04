@@ -17,6 +17,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=4a9b415801f3f426a95d1da1f527882d"
 inherit cmake
 
 DEPENDS += "openssl json-c libwebsockets vim-xxd-native libcap libuv"
+RDEPENDS_${PN} += "openssl-bin"
 
 GIT_PROTOCOL = "https"
 

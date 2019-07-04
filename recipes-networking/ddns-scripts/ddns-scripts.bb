@@ -45,6 +45,7 @@ OPENWRT_SERVICE_SCRIPTS_ddns-scripts += "ddns"
 OPENWRT_SERVICE_STATE_ddns-scripts-ddns ?= "disabled"
 
 DEPENDS += "curl openssl"
+RDEPENDS_${PN} += "openssl-bin"
 # bind-client
 
 PACKAGES += "\
@@ -335,7 +336,7 @@ pkg_prerm_${PN}-nsupdate() {
 ####
 
 SUMMARY_${PN}-route53-v1 = "Amazon AWS Route 53 API v1"
-RDEPENDS_${PN}-route53-v1 = "${PN} curl openssl"
+RDEPENDS_${PN}-route53-v1 = "${PN} curl openssl openssl-bin"
 FILES_${PN}-route53-v1 = "${libdir}/ddns/update_route53_v1.sh ${sysconfdir}/uci-defaults/ddns_route53_v1"
 
 pkg_preinst_${PN}-route53-v1() {

@@ -48,6 +48,10 @@ SRC_URI += "\
 PACKAGECONFIG ??= "ssl"
 PACKAGECONFIG[ssl] = "--enable-ssl,--disable-ssl,openssl"
 
+RDEPENDS_${PN} += "\
+	${@bb.utils.contains('PACKAGECONFIG', 'ssl', 'openssl-bin', '', d)} \
+"
+
 EXTRA_OECONF += " --disable-runtime-loading"
 
 inherit openwrt-services

@@ -59,6 +59,7 @@ FILES_${PN}  += "${libdir}/* /www"
 
 RDEPENDS_${PN} += "\
                   openssl \
+                  openssl-bin \
                   base-files-scripts-openwrt \
                   "
 
