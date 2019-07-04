@@ -1,5 +1,5 @@
 #
-PV = "1.6.17"
+PV = "1.7.0"
 PR = "tano0"
 
 SUMMARY = "A library to simplify DNS programming"
@@ -16,10 +16,14 @@ DEPENDS = "libtool openssl"
 
 SRC_URI = "\
 	http://www.nlnetlabs.nl/downloads/ldns/ldns-${PV}.tar.gz \
-	file://001-perl5-defined-array.patch \
+	file://001-fix-cross-compile-on-darwin.patch \
+	file://100-CVE-2017-1000231.patch \
+	file://101-CVE-2017-1000232.patch \
+	file://200-deprecated-openssl.patch \
+	file://300-openssl-engine.patch \
 "
 
-SRC_URI[sha256sum] = "8b88e059452118e8949a2752a55ce59bc71fa5bc414103e17f5b6b06f9bcc8cd"
+SRC_URI[sha256sum] = "c19f5b1b4fb374cfe34f4845ea11b1e0551ddc67803bd6ddd5d2a20f0997a6cc"
 S = "${WORKDIR}/ldns-${PV}"
 
 LICENSE = "BSD-3-Clause"
@@ -28,6 +32,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=34330f15b2b4abbbaaa7623f79a6a019"
 inherit autotools
 
 EXTRA_OECONF += "\
+	--disable-dane-ta-usage \
 	--disable-ecdsa \
 	--disable-gost \
 	--with-drill \
