@@ -20,7 +20,7 @@ LIC_FILES_CHKSUM = " \
 PV = "3.0.3"
 PR = "tano3"
 
-DEPENDS = "libcap openssl libuci"
+DEPENDS = "libcap openssl libuci virtual/crypt"
 
 SRC_URI = "\
 	https://security.appspot.com/downloads/vsftpd-${PV}.tar.gz \

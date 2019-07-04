@@ -8,7 +8,7 @@ HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
-DEPENDS = "json-c libuci libubox libubus libiwinfo"
+DEPENDS = "json-c libuci libubox libubus libiwinfo virtual/crypt"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
