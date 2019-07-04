@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano0"
+PR = "tano1"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -14,6 +14,7 @@ RDEPENDS_${PN} += "bridge-utils"
 SRC_URI = "\
 	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
 	file://0001-ctl_main.c-Display-information-only-for-added-bridge.patch \
+	file://0002-Fix-building-for-GCC-8.2.patch \
 "
 
 PV = "0.0.8+git${SRCPV}"

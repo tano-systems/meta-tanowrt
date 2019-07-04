@@ -1,0 +1,64 @@
+From 39f98394c2b43bc1d199810d434a72d7cfc852c8 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 4 Jul 2019 04:48:53 +0300
+Subject: [PATCH] Fix building for GCC 8.2
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ mstp.c        | 2 +-
+ netif_utils.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/mstp.c b/mstp.c
+index c81642a..d4f44e1 100644
+--- a/mstp.c
++++ b/mstp.c
+@@ -1615,7 +1615,7 @@ void MSTP_IN_set_mst_config_id(bridge_t *br, __u16 revision, __u8 *name)
+         memset(br->MstConfigId.s.configuration_name, 0,
+                sizeof(br->MstConfigId.s.configuration_name));
+         strncpy((char *)br->MstConfigId.s.configuration_name, (char *)name,
+-                sizeof(br->MstConfigId.s.configuration_name));
++                sizeof(br->MstConfigId.s.configuration_name) - 1);
+         br_state_machines_begin(br);
+     }
+ }
+diff --git a/netif_utils.c b/netif_utils.c
+index e540900..244997a 100644
+--- a/netif_utils.c
++++ b/netif_utils.c
+@@ -60,7 +60,7 @@ int get_hwaddr(char *ifname, __u8 *hwaddr)
+ {
+     struct ifreq ifr;
+     memset(&ifr, 0, sizeof(ifr));
+-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
++    strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+     if(0 > ioctl(netsock, SIOCGIFHWADDR, &ifr))
+     {
+         ERROR("%s: get hw address failed: %m", ifname);
+@@ -74,7 +74,7 @@ int get_flags(char *ifname)
+ {
+     struct ifreq ifr;
+     memset(&ifr, 0, sizeof(ifr));
+-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
++    strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+     if(0 > ioctl(netsock, SIOCGIFFLAGS, &ifr))
+     {
+         ERROR("%s: get interface flags failed: %m", ifname);
+@@ -94,7 +94,7 @@ int if_shutdown(char *ifname)
+         return -1;
+     }
+     ifr.ifr_flags &= ~IFF_UP;
+-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
++    strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+     if(0 > ioctl(netsock, SIOCSIFFLAGS, &ifr))
+     {
+         ERROR("%s: set if_down flag failed: %m", ifname);
+@@ -107,7 +107,7 @@ int ethtool_get_speed_duplex(char *ifname, int *speed, int *duplex)
+ {
+     struct ifreq ifr;
+     memset(&ifr, 0, sizeof(ifr));
+-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
++    strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+     struct ethtool_cmd ecmd;
+ 
+     ecmd.cmd = ETHTOOL_GSET;
