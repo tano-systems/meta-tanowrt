@@ -49,6 +49,8 @@ SRCREV_FORMAT = "machine_metatano"
 
 require recipes-kernel/linux/linux-yocto.inc
 
+inherit kernel-tano
+
 LINUX_VERSION_EXTENSION ??= "-tano-${LINUX_KERNEL_TYPE}"
 
 KERNEL_FEATURES_append = " \
