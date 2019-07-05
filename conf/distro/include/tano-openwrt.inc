@@ -27,6 +27,9 @@ DISTRO_FEATURES_append = " wifi "
 # Enable watchdog support
 DISTRO_FEATURES_append = " watchdog "
 
+# Graphics
+DISTRO_FEATURES += " graphics screen splash directfb "
+
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
 
