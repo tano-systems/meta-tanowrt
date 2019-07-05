@@ -6,6 +6,8 @@ include conf/distro/include/qt5-versions.inc
 PREFERRED_VERSION_iptables = "1.6.2"
 PREFERRED_VERSION_usbutils = "007"
 
+PREFERRED_PROVIDER_psplash = "psplash-tn"
+
 PREFERRED_PROVIDER_os-release = "tano-version"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-yocto-rt"
