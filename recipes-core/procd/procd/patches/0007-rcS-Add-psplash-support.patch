@@ -1,0 +1,150 @@
+From f6137cd20d85215523a489a4c2ba585fd295f816 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 5 Jul 2019 04:19:07 +0300
+Subject: [PATCH] rcS: Add psplash support
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ CMakeLists.txt |  7 ++++++
+ rcS.c          | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 84 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f2f9792..3bc810a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,6 +27,13 @@ ENDIF()
+ 
+ SET(LIBS ubox ubus json-c blobmsg_json json_script)
+ 
++IF(PSPLASH_SUPPORT)
++	ADD_DEFINITIONS(-DPSPLASH_SUPPORT)
++	IF(PSPLASH_SCRIPT_MSG)
++		ADD_DEFINITIONS(-DPSPLASH_SCRIPT_MSG)
++	ENDIF()
++ENDIF()
++
+ IF(CGROUP_SUPPORT)
+ 	ADD_DEFINITIONS(-DCGROUP_SUPPORT)
+ 	SET(LIBS ${LIBS} cgroup)
+diff --git a/rcS.c b/rcS.c
+index c2e1abb..6ce023b 100644
+--- a/rcS.c
++++ b/rcS.c
+@@ -40,8 +40,60 @@ struct initd {
+ 	struct timespec ts_start;
+ 	char *file;
+ 	char *param;
++#if defined(PSPLASH_SUPPORT)
++	int is_boot;
++#endif
+ };
+ 
++#if defined(PSPLASH_SUPPORT)
++
++#ifndef PSPLASH_FIFO_PATH
++#define PSPLASH_FIFO_PATH "/tmp/psplash/psplash_fifo"
++#endif
++
++static int initd_scripts = 0;
++static int initd_completed = 0;
++
++static void psplash_write(const char *command)
++{
++	int pipe_fd;
++
++	if ((pipe_fd = open(PSPLASH_FIFO_PATH, O_WRONLY | O_NONBLOCK)) == -1)
++		return;
++
++	write(pipe_fd, command, strlen(command) + 1);
++}
++
++#if defined(PSPLASH_SCRIPT_MSG)
++
++static void psplash_update_initd_script(const char *message)
++{
++	char command[64];
++	snprintf(command, sizeof(command), "MSG Starting %s...", message);
++	command[sizeof(command) - 1] = 0;
++	psplash_write(command);
++}
++
++#endif
++
++static void psplash_update_progress(void)
++{
++	if (!initd_scripts)
++		return;
++
++	if (initd_completed < initd_scripts) {
++		char command[16];
++		int progress = (initd_completed * 100) / initd_scripts;
++		snprintf(command, sizeof(command), "PROGRESS %d", progress);
++		command[sizeof(command) - 1] = 0;
++		psplash_write(command);
++	}
++	else {
++		psplash_write("QUIT");
++	}
++}
++#endif
++
+ static void pipe_cb(struct ustream *s, int bytes)
+ {
+ 	struct initd *initd = container_of(s, struct initd, fd.stream);
+@@ -71,6 +123,12 @@ static void q_initd_run(struct runqueue *q, struct runqueue_task *t)
+ 	int pipefd[2];
+ 	pid_t pid;
+ 
++#if defined(PSPLASH_SUPPORT) && defined(PSPLASH_SCRIPT_MSG)
++
++	if (s->is_boot)
++		psplash_update_initd_script(s->file);
++#endif
++
+ 	clock_gettime(CLOCK_MONOTONIC_RAW, &s->ts_start);
+ 	DEBUG(2, "start %s %s \n", s->file, s->param);
+ 	if (pipe(pipefd) == -1) {
+@@ -118,6 +176,13 @@ static void q_initd_complete(struct runqueue *q, struct runqueue_task *p)
+ 		ts_res.tv_nsec += 1000000000;
+ 	}
+ 
++#if defined(PSPLASH_SUPPORT)
++	if (s->is_boot && (initd_scripts > 0)) {
++		++initd_completed;
++		psplash_update_progress();
++	}
++#endif
++
+ 	DEBUG(2, "stop %s %s - took %lu.%09lus\n", s->file, s->param, ts_res.tv_sec, ts_res.tv_nsec);
+ 	ustream_free(&s->fd.stream);
+ 	close(s->fd.fd.fd);
+@@ -147,6 +212,11 @@ static void add_initd(struct runqueue *q, char *file, char *param)
+ 	}
+ 	s->param = p;
+ 	s->file = f;
++
++#if defined(PSPLASH_SUPPORT)
++	s->is_boot = !strcmp(param, "boot");
++#endif
++
+ 	strcpy(s->param, param);
+ 	strcpy(s->file, file);
+ 	runqueue_task_add(q, &s->proc.task, false);
+@@ -170,6 +240,13 @@ static int _rc(struct runqueue *q, char *path, const char *file, char *pattern,
+ 		return -1;
+ 	}
+ 
++#if defined(PSPLASH_SUPPORT)
++	if (initd_scripts == 0) {
++		if (strcmp(param, "boot") == 0)
++			initd_scripts = gl.gl_pathc;
++	}
++#endif
++
+ 	for (j = 0; j < gl.gl_pathc; j++)
+ 		add_initd(q, gl.gl_pathv[j], param);
+ 
+-- 
+2.16.2.windows.1
+

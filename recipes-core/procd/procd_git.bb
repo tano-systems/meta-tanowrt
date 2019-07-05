@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano24"
+PR = "tano25"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -11,6 +11,8 @@ LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://procd.c;beginline=1;endline=13;md5=61e3657604f131a859b57a40f27a9d8e"
 SECTION = "base"
 DEPENDS = "libubox ubus json-c"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -28,10 +30,17 @@ SRC_URI += "\
 	file://0004-hotplug-Remove-dev-prefix-from-DEVNAME-variable.patch \
 	file://0005-hotplug-Completely-remove-hotplug-functionality.patch \
 	file://0006-service-Add-SCHED_IDLE-scheduler-policy-support.patch \
+	file://0007-rcS-Add-psplash-support.patch \
 "
 
-PACKAGECONFIG ??= "${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)}"
+PACKAGECONFIG ??= "\
+	${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'screen', 'psplash psplash-script-msg', '', d)} \
+"
+
 PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
+PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
+PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
 # 17.04.2019
 # procd: copy the respawn property of new instance
