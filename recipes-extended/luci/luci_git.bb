@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano25"
+PR = "tano26"
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/tano-systems/luci"
@@ -111,6 +111,11 @@ do_install_append() {
 
 	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
 	sed -i -e "s/\(luci\.main\.mediaurlbase\)=.*/\1=${MEDIAURLBASE_ESCAPED}/" ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
+
+	if [ "${LUCI_INSTALL_LUASRC_PATH}" != "${libdir}/lua/luci" ]; then
+		# Make symlink for compatibility with upstream paths
+		ln -s ${LUCI_INSTALL_LUASRC_PATH} ${D}${libdir}/lua/luci
+	fi
 }
 
 do_install[vardeps] += "LUCI_INITIAL_LANG LUCI_INITIAL_MEDIAURLBASE"
