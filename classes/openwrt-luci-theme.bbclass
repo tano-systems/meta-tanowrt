@@ -5,6 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 inherit openwrt-luci-pkg
+inherit allarch
 
 DEPENDS += "coreutils-native gawk-native"
 
