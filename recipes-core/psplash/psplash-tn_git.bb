@@ -23,7 +23,7 @@ RCONFLICTS_${PN} = "psplash"
 
 SRCREV = "67a9d16ae34e8a196efa84f030cd592854d02a60"
 PV = "0.1+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -38,9 +38,6 @@ SPLASH_IMAGES = "\
 	file://psplash-tano-black-h.png;name=tano-h;outsuffix=tano-h;alt_priority=101 \
 	file://psplash-tano-black-v.png;name=tano-v;outsuffix=tano-v;alt_priority=102 \
 "
-
-SRC_URI[md5sum.tano-h] = "e2f38104aaea04f98cccc7d58fb07975"
-SRC_URI[md5sum.tano-v] = "66b4f005eea83bfe03e8f50512e4b946"
 
 inherit openwrt-services
 
