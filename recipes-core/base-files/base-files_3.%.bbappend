@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano30.${INC_PR}"
+PR_append = ".tano31.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -45,7 +45,7 @@ SRC_URI_append = "\
 
 # Only for x86 and x86-64 architectures
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-x86:"
-MACHINES_X86 = "qemux86 qemux86-64"
+ARCH_X86 = "i586 x86_64"
 SRC_URI_append = "\
 	file://01_sysinfo \
 	file://02_load_x86_ucode \
@@ -216,7 +216,7 @@ do_install_append () {
 	rm -rf ${D}${sysconfdir}/skel
 	rm -rf ${D}${sysconfdir}/filesystems
 
-	if [ "${@bb.utils.contains('MACHINES_X86', '${MACHINE}', 'true', 'false', d)}" = "true" ]; then
+	if [ "${@bb.utils.contains('ARCH_X86', '${TARGET_ARCH}', 'true', 'false', d)}" = "true" ]; then
 		install -dm 0755 ${D}/lib/preinit
 		install -m 0644 ${WORKDIR}/01_sysinfo ${D}/lib/preinit/01_sysinfo
 		install -m 0644 ${WORKDIR}/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
