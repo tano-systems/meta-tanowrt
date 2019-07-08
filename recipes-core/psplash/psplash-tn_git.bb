@@ -23,7 +23,7 @@ RCONFLICTS_${PN} = "psplash"
 
 SRCREV = "243dba3c734811e803657e4d7dc8efb81f1a5fa2"
 PV = "0.1+git${SRCPV}"
-PR = "tano2"
+PR = "tano3"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -35,8 +35,7 @@ SRC_URI = "git://github.com/tano-systems/psplash-tn;branch=tano/master \
 UPSTREAM_CHECK_COMMITS = "1"
 
 SPLASH_IMAGES = "\
-	file://psplash-tano-black-h.png;name=tano-h;outsuffix=tano-h;alt_priority=101 \
-	file://psplash-tano-black-v.png;name=tano-v;outsuffix=tano-v;alt_priority=102 \
+	file://psplash-tano.png;name=tano;outsuffix=tano;alt_priority=101 \
 "
 
 inherit openwrt-services

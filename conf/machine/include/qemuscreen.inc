@@ -6,7 +6,7 @@ IMAGE_FEATURES += "splash"
 #
 # Psplash
 #
-SPLASH = "psplash-tano-h psplash-tano-v"
+SPLASH = "psplash-tano"
 
 #
 # XServer
