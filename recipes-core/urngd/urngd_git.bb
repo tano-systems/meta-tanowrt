@@ -17,8 +17,6 @@ entropy. Especially during boot time, when the entropy of Linux is low, the \
 Jitter RNGd provides a source of sufficient entropy."
 
 HOMEPAGE = "https://github.com/ynezz/openwrt-urngd"
-LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
 DEPENDS = "libubox"
 
