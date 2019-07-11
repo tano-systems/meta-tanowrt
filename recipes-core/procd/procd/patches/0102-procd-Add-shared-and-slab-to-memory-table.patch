@@ -1,0 +1,54 @@
+From de8a3a7f97a9c9e363b7ef484c74852e6d71b50f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 11 Jul 2019 04:50:21 +0300
+Subject: [PATCH] procd: Add shared and slab to memory table
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ system.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/system.c b/system.c
+index 79f0ca8..efea15a 100644
+--- a/system.c
++++ b/system.c
+@@ -231,6 +231,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	char line[256];
+ 	char *key, *val;
+ 	unsigned long long available, cached;
++	unsigned long long shmem, slab;
+ 	FILE *f;
+ 
+ 	if (sysinfo(&info))
+@@ -242,6 +243,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	/* if linux < 3.14 MemAvailable is not in meminfo */
+ 	available = 0;
+ 	cached = 0;
++	shmem = 0;
++	slab = 0;
+ 
+ 	while(fgets(line, sizeof(line), f))
+ 	{
+@@ -255,6 +258,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 			available = 1024 * atoll(val);
+ 		else if (!strcasecmp(key, "Cached"))
+ 			cached =    1024 * atoll(val);
++		else if (!strcasecmp(key, "Shmem"))
++			shmem =     1024 * atoll(val);
++		else if (!strcasecmp(key, "Slab"))
++			slab =      1024 * atoll(val);
+ 	}
+ 
+ 	fclose(f);
+@@ -285,6 +292,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	blobmsg_add_u64(&b, "buffered", info.mem_unit * info.bufferram);
+ 	blobmsg_add_u64(&b, "available",available);
+ 	blobmsg_add_u64(&b, "cached",   cached);
++	blobmsg_add_u64(&b, "shmem",    shmem);
++	blobmsg_add_u64(&b, "slab",     slab);
+ 	blobmsg_close_table(&b, c);
+ 
+ 	c = blobmsg_open_table(&b, "swap");
+-- 
+2.16.2.windows.1
+
