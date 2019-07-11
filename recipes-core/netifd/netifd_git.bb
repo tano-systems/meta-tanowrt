@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano21"
+PR = "tano22"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -35,9 +35,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 27.05.2019
-# iprule: fix missing ip rules after a reload (FS#2296)
-SRCREV_netifd = "beb810dbccee098add0347d551eb5362e404fbdc"
+# 14.06.2019
+# netifd: fix xfrm interface deletion and standardize netlink call
+SRCREV_netifd = "9932ed0220e7634d085a32cfd72fd3e25e1a1745"
 
 S = "${WORKDIR}/git"
 
