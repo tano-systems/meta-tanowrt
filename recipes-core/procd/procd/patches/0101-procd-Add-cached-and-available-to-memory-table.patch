@@ -1,0 +1,73 @@
+From: Zachary Cook <zachcook1991@gmail.com>
+Date: Mon Feb 11 12:24:59 PST 2019
+Subject: [PATCH v2] procd: Add cached and available to memory table
+
+This should allow Luci to show a better measure of system memory usage
+Cached memory will be used to add a new progress bar
+MemAvailable is the kernel's estimate of memory that is useable
+by userspace without swapping, and is more accurate than the current
+memory.free + memory.buffered calculation for total memory available
+
+Changes in v2:
+reorganized code to not leak a file descriptor if early return
+stay consistent with current comment style
+use atoll instead of atol to better match the data size
+
+Signed-off-by: Zachary Cook <zachcook1991 at gmail.com>
+---
+ system.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/system.c b/system.c
+index 8ed3f93..79f0ca8 100644
+--- a/system.c
++++ b/system.c
+@@ -228,9 +228,36 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ #ifdef linux
+ 	struct sysinfo info;
+ 	void *c;
++	char line[256];
++	char *key, *val;
++	unsigned long long available, cached;
++	FILE *f;
+ 
+ 	if (sysinfo(&info))
+ 		return UBUS_STATUS_UNKNOWN_ERROR;
++
++	if ((f = fopen("/proc/meminfo", "r")) == NULL)
++		return UBUS_STATUS_UNKNOWN_ERROR;
++	
++	/* if linux < 3.14 MemAvailable is not in meminfo */
++	available = 0;
++	cached = 0;
++
++	while(fgets(line, sizeof(line), f))
++	{
++		key = strtok(line, " :");
++		val = strtok(NULL, " ");
++
++		if (!key || !val)
++			continue;
++
++		if (!strcasecmp(key, "MemAvailable"))
++			available = 1024 * atoll(val);
++		else if (!strcasecmp(key, "Cached"))
++			cached =    1024 * atoll(val);
++	}
++
++	fclose(f);
+ #endif
+ 
+ 	now = time(NULL);
+@@ -256,6 +283,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	blobmsg_add_u64(&b, "free",     info.mem_unit * info.freeram);
+ 	blobmsg_add_u64(&b, "shared",   info.mem_unit * info.sharedram);
+ 	blobmsg_add_u64(&b, "buffered", info.mem_unit * info.bufferram);
++	blobmsg_add_u64(&b, "available",available);
++	blobmsg_add_u64(&b, "cached",   cached);
+ 	blobmsg_close_table(&b, c);
+ 
+ 	c = blobmsg_open_table(&b, "swap");
+-- 
+2.20.1
+
