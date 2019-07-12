@@ -1,4 +1,4 @@
-From f6137cd20d85215523a489a4c2ba585fd295f816 Mon Sep 17 00:00:00 2001
+From 1a9f03b5339c08fd57dbfd8cfc701a0ddba77749 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
 Subject: [PATCH] rcS: Add psplash support
@@ -6,8 +6,8 @@ Subject: [PATCH] rcS: Add psplash support
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt |  7 ++++++
- rcS.c          | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 84 insertions(+)
+ rcS.c          | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f2f9792..3bc810a 100644
@@ -28,10 +28,10 @@ index f2f9792..3bc810a 100644
  	ADD_DEFINITIONS(-DCGROUP_SUPPORT)
  	SET(LIBS ${LIBS} cgroup)
 diff --git a/rcS.c b/rcS.c
-index c2e1abb..6ce023b 100644
+index c2e1abb..f4d61d4 100644
 --- a/rcS.c
 +++ b/rcS.c
-@@ -40,8 +40,60 @@ struct initd {
+@@ -40,8 +40,62 @@ struct initd {
  	struct timespec ts_start;
  	char *file;
  	char *param;
@@ -73,17 +73,19 @@ index c2e1abb..6ce023b 100644
 +
 +static void psplash_update_progress(void)
 +{
++	char command[16];
++	int progress;
++
 +	if (!initd_scripts)
 +		return;
 +
-+	if (initd_completed < initd_scripts) {
-+		char command[16];
-+		int progress = (initd_completed * 100) / initd_scripts;
-+		snprintf(command, sizeof(command), "PROGRESS %d", progress);
-+		command[sizeof(command) - 1] = 0;
-+		psplash_write(command);
-+	}
-+	else {
++	progress = (initd_completed * 100) / initd_scripts;
++	snprintf(command, sizeof(command), "PROGRESS %d", progress);
++	command[sizeof(command) - 1] = 0;
++	psplash_write(command);
++
++	if (initd_completed >= initd_scripts) {
++		psplash_write("MSG"); /* Clear message */
 +		psplash_write("QUIT");
 +	}
 +}
@@ -92,12 +94,11 @@ index c2e1abb..6ce023b 100644
  static void pipe_cb(struct ustream *s, int bytes)
  {
  	struct initd *initd = container_of(s, struct initd, fd.stream);
-@@ -71,6 +123,12 @@ static void q_initd_run(struct runqueue *q, struct runqueue_task *t)
+@@ -71,6 +125,11 @@ static void q_initd_run(struct runqueue *q, struct runqueue_task *t)
  	int pipefd[2];
  	pid_t pid;
  
 +#if defined(PSPLASH_SUPPORT) && defined(PSPLASH_SCRIPT_MSG)
-+
 +	if (s->is_boot)
 +		psplash_update_initd_script(s->file);
 +#endif
@@ -105,7 +106,7 @@ index c2e1abb..6ce023b 100644
  	clock_gettime(CLOCK_MONOTONIC_RAW, &s->ts_start);
  	DEBUG(2, "start %s %s \n", s->file, s->param);
  	if (pipe(pipefd) == -1) {
-@@ -118,6 +176,13 @@ static void q_initd_complete(struct runqueue *q, struct runqueue_task *p)
+@@ -118,6 +177,13 @@ static void q_initd_complete(struct runqueue *q, struct runqueue_task *p)
  		ts_res.tv_nsec += 1000000000;
  	}
  
@@ -119,7 +120,7 @@ index c2e1abb..6ce023b 100644
  	DEBUG(2, "stop %s %s - took %lu.%09lus\n", s->file, s->param, ts_res.tv_sec, ts_res.tv_nsec);
  	ustream_free(&s->fd.stream);
  	close(s->fd.fd.fd);
-@@ -147,6 +212,11 @@ static void add_initd(struct runqueue *q, char *file, char *param)
+@@ -147,6 +213,11 @@ static void add_initd(struct runqueue *q, char *file, char *param)
  	}
  	s->param = p;
  	s->file = f;
@@ -131,7 +132,7 @@ index c2e1abb..6ce023b 100644
  	strcpy(s->param, param);
  	strcpy(s->file, file);
  	runqueue_task_add(q, &s->proc.task, false);
-@@ -170,6 +240,13 @@ static int _rc(struct runqueue *q, char *path, const char *file, char *pattern,
+@@ -170,6 +241,13 @@ static int _rc(struct runqueue *q, char *path, const char *file, char *pattern,
  		return -1;
  	}
  
