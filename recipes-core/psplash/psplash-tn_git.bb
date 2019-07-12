@@ -21,9 +21,9 @@ RPROVIDES_${PN} = "psplash"
 RREPLACES_${PN} = "psplash"
 RCONFLICTS_${PN} = "psplash"
 
-SRCREV = "243dba3c734811e803657e4d7dc8efb81f1a5fa2"
+SRCREV = "fe24a3bcc722c99341862ccbdb415d097431a10a"
 PV = "0.1+git${SRCPV}"
-PR = "tano3"
+PR = "tano4"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
