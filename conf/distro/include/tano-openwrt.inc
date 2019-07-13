@@ -52,20 +52,8 @@ DISTRO_FEATURES_remove = "\
     opengl \
 "
 
-# Rootfs customization
-ROOTFS_RO_UNNEEDED = "update-rc.d ${ROOTFS_BOOTSTRAP_INSTALL}"
-FORCE_RO_REMOVE = "1"
-
 # Licenses
 LICENSE_FLAGS_WHITELIST = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav"
-
-# Disable polkit's systemd configuration from meta-oe
-POLKITAUTH = ""
-
-# Set ENTERPRISE_DISTRO flag to ensure that recipes that have been flagged
-# do not attempt to enable features that have potential commercial
-# licensing issues.
-ENTERPRISE_DISTRO = "1"
 
 # Image
 IMAGE_FSTYPES_remove = "tar.xz.md5"

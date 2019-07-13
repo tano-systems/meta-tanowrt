@@ -1,11 +1,6 @@
 #
 # Repairs for "No recipes available for" warnings
 #
-BBMASK += "gstreamer1.0-plugins-base_1.8.3.bbappend"
-BBMASK += "python3-native_3.5.2.bbappend"
-BBMASK += "weston_1.11.0.bbappend"
-BBMASK += "gnome-settings-daemon_2.32.1.bbappend"
-BBMASK += "common-csp-ip_git.bbappend"
 
 # Hide bootchart2 recipe from oe layer
 BBMASK += "bootchart2_0.14.8.bb"
