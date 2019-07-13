@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2018, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (c) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
 #
 # Originally based on the code from Angstrom Distribution
 # (https://github.com/Angstrom-distribution/meta-angstrom.git)
@@ -8,7 +8,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 PV = "${DISTRO_VERSION}"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "file://os-release"
 
