@@ -1,19 +1,18 @@
-From 5a93d7d29daabac58d7c1ee57f43a535d74e4f14 Mon Sep 17 00:00:00 2001
+From 23e25444c3ff8b168bda5f73700dd94feb2c1d71 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
-Subject: [PATCH] hotplug: Completely remove hotplug functionality
+Subject: [PATCH 5/8] hotplug: Completely remove hotplug functionality
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt  |   2 +-
- initd/early.c   |   2 +-
  initd/preinit.c |  24 ---
- plug/coldplug.c |  69 -------
- plug/hotplug.c  | 628 --------------------------------------------------------
+ plug/coldplug.c |  73 -------
+ plug/hotplug.c  | 643 --------------------------------------------------------
  plug/hotplug.h  |  49 -----
  procd.c         |   6 +-
  state.c         |  10 -
- 8 files changed, 3 insertions(+), 787 deletions(-)
+ 7 files changed, 2 insertions(+), 805 deletions(-)
  delete mode 100644 plug/coldplug.c
  delete mode 100644 plug/hotplug.c
  delete mode 100644 plug/hotplug.h
@@ -31,19 +30,6 @@ index 56a9d85..f2f9792 100644
  ENDIF()
  
  SET(LIBS ubox ubus json-c blobmsg_json json_script)
-diff --git a/initd/early.c b/initd/early.c
-index 2e15112..a8d0fc0 100644
---- a/initd/early.c
-+++ b/initd/early.c
-@@ -59,7 +59,7 @@ early_mounts(void)
- 	mount("proc", "/proc", "proc", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
- 	mount("sysfs", "/sys", "sysfs", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
- 	mount("cgroup", "/sys/fs/cgroup", "cgroup",  MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
--	mount("tmpfs", "/dev", "tmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
-+	mount("udev", "/dev", "devtmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
- 	ignore(symlink("/tmp/shm", "/dev/shm"));
- 	mkdir("/dev/pts", 0755);
- 	mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=600");
 diff --git a/initd/preinit.c b/initd/preinit.c
 index fbb36df..2cfc4e7 100644
 --- a/initd/preinit.c
@@ -103,10 +89,10 @@ index fbb36df..2cfc4e7 100644
  	fd = creat("/tmp/.preinit", 0600);
 diff --git a/plug/coldplug.c b/plug/coldplug.c
 deleted file mode 100644
-index c6a89c3..0000000
+index 12df421..0000000
 --- a/plug/coldplug.c
 +++ /dev/null
-@@ -1,69 +0,0 @@
+@@ -1,73 +0,0 @@
 -/*
 - * Copyright (C) 2013 Felix Fietkau <nbd@openwrt.org>
 - * Copyright (C) 2013 John Crispin <blogic@openwrt.org>
@@ -131,6 +117,7 @@ index c6a89c3..0000000
 -#include "../libc-compat.h"
 -
 -#include "hotplug.h"
+-#include "../container.h"
 -
 -static struct uloop_process udevtrigger;
 -
@@ -152,13 +139,16 @@ index c6a89c3..0000000
 -	char *argv[] = { "udevtrigger", NULL };
 -	unsigned int oldumask = umask(0);
 -
--	umount2("/dev/pts", MNT_DETACH);
--	umount2("/dev/", MNT_DETACH);
--	mount("tmpfs", "/dev", "tmpfs", MS_NOSUID, "mode=0755,size=512K");
+-	if (!is_container()) {
+-		umount2("/dev/pts", MNT_DETACH);
+-		umount2("/dev/", MNT_DETACH);
+-		mount("tmpfs", "/dev", "tmpfs", MS_NOSUID, "mode=0755,size=512K");
+-		mkdir("/dev/pts", 0755);
+-		mount("devpts", "/dev/pts", "devpts", MS_NOEXEC | MS_NOSUID, 0);
+-	}
+-
 -	ignore(symlink("/tmp/shm", "/dev/shm"));
--	mkdir("/dev/pts", 0755);
 -	umask(oldumask);
--	mount("devpts", "/dev/pts", "devpts", MS_NOEXEC | MS_NOSUID, 0);
 -	udevtrigger.cb = udevtrigger_complete;
 -	udevtrigger.pid = fork();
 -	if (!udevtrigger.pid) {
@@ -178,10 +168,10 @@ index c6a89c3..0000000
 -}
 diff --git a/plug/hotplug.c b/plug/hotplug.c
 deleted file mode 100644
-index 9b38ac6..0000000
+index f9559c7..0000000
 --- a/plug/hotplug.c
 +++ /dev/null
-@@ -1,628 +0,0 @@
+@@ -1,643 +0,0 @@
 -/*
 - * Copyright (C) 2013 Felix Fietkau <nbd@openwrt.org>
 - * Copyright (C) 2013 John Crispin <blogic@openwrt.org>
@@ -209,6 +199,7 @@ index 9b38ac6..0000000
 -#include <libubox/uloop.h>
 -#include <json-c/json.h>
 -
+-#include <errno.h>
 -#include <fcntl.h>
 -#include <unistd.h>
 -#include <stdlib.h>
@@ -303,6 +294,30 @@ index 9b38ac6..0000000
 -	}
 -}
 -
+-static void chgrp_error(const char *group, const char *target, const char *failed)
+-{
+-	ERROR("cannot set group %s for %s (%s: %d)\n",
+-	       group, target, failed, errno);
+-}
+-
+-static void chgrp_target(struct blob_attr *bgroup, struct blob_attr *btarget)
+-{
+-	int ret = 0;
+-	struct group *g = NULL;
+-	const char *group = blobmsg_get_string(bgroup);
+-	const char *target = blobmsg_get_string(btarget);
+-
+-	errno = 0;
+-
+-	g = getgrnam(group);
+-	if (!g)
+-		return chgrp_error(group, target, "getgrnam");
+-
+-	ret = chown(target, 0, g->gr_gid);
+-	if (ret < 0)
+-		return chgrp_error(group, target, "chown");
+-}
+-
 -static void handle_makedev(struct blob_attr *msg, struct blob_attr *data)
 -{
 -	unsigned int oldumask = umask(0);
@@ -315,7 +330,6 @@ index 9b38ac6..0000000
 -	char *minor = hotplug_msg_find_var(msg, "MINOR");
 -	char *major = hotplug_msg_find_var(msg, "MAJOR");
 -	char *subsystem = hotplug_msg_find_var(msg, "SUBSYSTEM");
--	int ret = 0;
 -
 -	blobmsg_parse_array(mkdev_policy, 3, tb, blobmsg_data(data), blobmsg_data_len(data));
 -	if (tb[0] && tb[1] && minor && major && subsystem) {
@@ -331,17 +345,8 @@ index 9b38ac6..0000000
 -		mknod(blobmsg_get_string(tb[0]),
 -				m | strtoul(blobmsg_data(tb[1]), NULL, 8),
 -				makedev(atoi(major), atoi(minor)));
--		if (tb[2]) {
--			struct group *g = getgrnam(blobmsg_get_string(tb[2]));
--
--			if (g)
--				ret = chown(blobmsg_get_string(tb[0]), 0, g->gr_gid);
--
--			if (!g || ret < 0)
--				ERROR("cannot set group %s for %s\n",
--					blobmsg_get_string(tb[2]),
--					blobmsg_get_string(tb[0]));
--		}
+-		if (tb[2])
+-			chgrp_target(tb[2], tb[0]);
 -	}
 -	umask(oldumask);
 -}

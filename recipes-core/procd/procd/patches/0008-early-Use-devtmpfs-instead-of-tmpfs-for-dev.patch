@@ -1,0 +1,26 @@
+From b5ed7e42a46bb5cadd0fa17198262eefe90eb497 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 15 Jul 2019 05:40:01 +0300
+Subject: [PATCH 8/8] early: Use devtmpfs instead of tmpfs for /dev
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ initd/early.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/initd/early.c b/initd/early.c
+index 7b281b2..d0ebce4 100644
+--- a/initd/early.c
++++ b/initd/early.c
+@@ -61,7 +61,7 @@ early_mounts(void)
+ 		mount("proc", "/proc", "proc", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
+ 		mount("sysfs", "/sys", "sysfs", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
+ 		mount("cgroup", "/sys/fs/cgroup", "cgroup",  MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
+-		mount("tmpfs", "/dev", "tmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
++		mount("tmpfs", "/dev", "devtmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
+ 		ignore(symlink("/tmp/shm", "/dev/shm"));
+ 		mkdir("/dev/pts", 0755);
+ 		mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=600");
+-- 
+2.16.2.windows.1
+

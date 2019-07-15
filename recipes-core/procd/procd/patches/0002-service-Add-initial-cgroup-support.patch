@@ -1,7 +1,7 @@
-From 676a314cce91b58a49eb3a41f9050b48ee37d84f Mon Sep 17 00:00:00 2001
+From a1e613a8d754c7d048dcbe37b1d024cdd771a0aa Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 9 Feb 2019 01:18:40 +0300
-Subject: [PATCH] service: Add initial cgroup support
+Subject: [PATCH 2/8] service: Add initial cgroup support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -27,7 +27,7 @@ index 4b3eebd..56a9d85 100644
    ADD_DEFINITIONS(-DUDEV_DEBUG -g3)
  ENDIF()
 diff --git a/service/instance.c b/service/instance.c
-index 8acbe7c..c90edff 100644
+index 21a5962..4bc62f3 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -1,6 +1,7 @@
@@ -38,9 +38,9 @@ index 8acbe7c..c90edff 100644
   *
   * This program is free software; you can redistribute it and/or modify
   * it under the terms of the GNU Lesser General Public License version 2.1
-@@ -27,6 +28,21 @@
- #include <libgen.h>
- #include <unistd.h>
+@@ -29,6 +30,21 @@
+ #define SYSLOG_NAMES
+ #include <syslog.h>
  
 +#ifdef CGROUP_SUPPORT
 +
@@ -60,9 +60,9 @@ index 8acbe7c..c90edff 100644
  #include <libubox/md5.h>
  
  #include "../procd.h"
-@@ -58,6 +74,10 @@ enum {
- 	INSTANCE_ATTR_RELOADSIG,
+@@ -62,6 +78,10 @@ enum {
  	INSTANCE_ATTR_TERMTIMEOUT,
+ 	INSTANCE_ATTR_FACILITY,
  	INSTANCE_ATTR_CHDIR,
 +#ifdef CGROUP_SUPPORT
 +	INSTANCE_ATTR_CG_GROUP,
@@ -71,9 +71,9 @@ index 8acbe7c..c90edff 100644
  	__INSTANCE_ATTR_MAX
  };
  
-@@ -84,6 +104,10 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
- 	[INSTANCE_ATTR_RELOADSIG] = { "reload_signal", BLOBMSG_TYPE_INT32 },
+@@ -90,6 +110,10 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_TERMTIMEOUT] = { "term_timeout", BLOBMSG_TYPE_INT32 },
+ 	[INSTANCE_ATTR_FACILITY] = { "facility", BLOBMSG_TYPE_STRING },
  	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
 +#ifdef CGROUP_SUPPORT
 +	[INSTANCE_ATTR_CG_STICKY] = { "cg_sticky", BLOBMSG_TYPE_BOOL },
@@ -82,7 +82,7 @@ index 8acbe7c..c90edff 100644
  };
  
  enum {
-@@ -276,6 +300,206 @@ instance_writepid(struct service_instance *in)
+@@ -294,6 +318,206 @@ instance_writepid(struct service_instance *in)
  	return 0;
  }
  
@@ -289,7 +289,7 @@ index 8acbe7c..c90edff 100644
  static void
  instance_run(struct service_instance *in, int _stdout, int _stderr)
  {
-@@ -350,6 +574,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -368,6 +592,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		closefd(_stderr);
  	}
  
@@ -297,10 +297,10 @@ index 8acbe7c..c90edff 100644
 +	instance_run_cgroup_init(in, argv);
 +#endif
 +
- 	if (in->user && in->gid && initgroups(in->user, in->gid)) {
+ 	if (in->user && in->pw_gid && initgroups(in->user, in->pw_gid)) {
  		ERROR("failed to initgroups() for user %s: %m\n", in->user);
  		exit(127);
-@@ -670,6 +898,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -694,6 +922,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (string_changed(in->chdir, in_new->chdir))
  		return true;
  
@@ -315,7 +315,7 @@ index 8acbe7c..c90edff 100644
  	return false;
  }
  
-@@ -936,6 +1172,14 @@ instance_config_parse(struct service_instance *in)
+@@ -969,6 +1205,14 @@ instance_config_parse(struct service_instance *in)
  			in->chdir = chdir;
  	}
  
@@ -330,9 +330,9 @@ index 8acbe7c..c90edff 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -991,6 +1235,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
- 	in->seccomp = in_src->seccomp;
+@@ -1034,6 +1278,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->node.avl.key = in_src->node.avl.key;
+ 	in->syslog_facility = in_src->syslog_facility;
  	in->chdir = in_src->chdir;
 +#ifdef CGROUP_SUPPORT
 +	in->cg_sticky = in_src->cg_sticky;
@@ -341,9 +341,9 @@ index 8acbe7c..c90edff 100644
  
  	free(in->config);
  	in->config = in_src->config;
-@@ -1040,6 +1288,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
- 	in->proc.cb = instance_exit;
+@@ -1085,6 +1333,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->term_timeout = 5;
+ 	in->syslog_facility = LOG_DAEMON;
  
 +#ifdef CGROUP_SUPPORT
 +	in->cg_sticky = 0;
@@ -352,7 +352,7 @@ index 8acbe7c..c90edff 100644
  	in->_stdout.fd.fd = -2;
  	in->_stdout.stream.string_data = true;
  	in->_stdout.stream.notify_read = instance_stdout;
-@@ -1155,5 +1407,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1206,5 +1458,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (in->chdir)
  		blobmsg_add_string(b, "chdir", in->chdir);
  
@@ -366,11 +366,11 @@ index 8acbe7c..c90edff 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index 7a6261a..93f956b 100644
+index ff7cda2..503f892 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -61,6 +61,11 @@ struct service_instance {
- 	char *pidfile;
+@@ -64,6 +64,11 @@ struct service_instance {
+ 	int syslog_facility;
  	char *chdir;
  
 +#ifdef CGROUP_SUPPORT

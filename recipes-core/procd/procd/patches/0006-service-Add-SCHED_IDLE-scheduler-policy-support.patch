@@ -1,7 +1,7 @@
-From 298a3dbf217e1b7acef59eef9521009722c3d2de Mon Sep 17 00:00:00 2001
+From 74ffb38a51635630a74b4906aaa41670d62a4034 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 22 Jun 2019 06:02:50 +0300
-Subject: [PATCH] service: Add SCHED_IDLE scheduler policy support
+Subject: [PATCH 6/8] service: Add SCHED_IDLE scheduler policy support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/service/instance.c b/service/instance.c
-index 20f00cf..29fc972 100644
+index b0d5fff..a5d80b3 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -190,6 +190,7 @@ static const struct policy_info policies[] = {
+@@ -197,6 +197,7 @@ static const struct policy_info policies[] = {
  	{ "SCHED_RR", SCHED_RR },
  	{ "SCHED_BATCH", SCHED_BATCH },
  	{ "SCHED_DEADLINE", SCHED_DEADLINE },
@@ -20,7 +20,7 @@ index 20f00cf..29fc972 100644
  	{ NULL, 0 }
  };
  
-@@ -599,6 +600,9 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -618,6 +619,9 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  				in->srv->name, in->name, in->period);
  			break;
  
@@ -30,7 +30,7 @@ index 20f00cf..29fc972 100644
  		default:
  			break;
  	}
-@@ -1569,6 +1573,9 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1621,6 +1625,9 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  			blobmsg_add_u64(b, "period", in->period);
  			break;
  

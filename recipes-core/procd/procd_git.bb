@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano27"
+PR = "tano28"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -31,6 +31,7 @@ SRC_URI += "\
 	file://0005-hotplug-Completely-remove-hotplug-functionality.patch \
 	file://0006-service-Add-SCHED_IDLE-scheduler-policy-support.patch \
 	file://0007-rcS-Add-psplash-support.patch \
+	file://0008-early-Use-devtmpfs-instead-of-tmpfs-for-dev.patch \
 	file://0101-procd-Add-cached-and-available-to-memory-table.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
@@ -44,9 +45,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 17.04.2019
-# procd: copy the respawn property of new instance
-SRCREV = "a30a8fdced45b79bae12662caf68ffb8597858b3"
+# 08.07.2019
+# procd: check strchr() result before using it
+SRCREV = "31f0765afd61f55b1dd2cdb62ec1968efca19690"
 
 S = "${WORKDIR}/git"
 

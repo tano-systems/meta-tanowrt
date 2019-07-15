@@ -1,7 +1,7 @@
-From 1a9f03b5339c08fd57dbfd8cfc701a0ddba77749 Mon Sep 17 00:00:00 2001
+From 336d1654bca1972560173ae75f0d8c7e74e727d4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
-Subject: [PATCH] rcS: Add psplash support
+Subject: [PATCH 7/8] rcS: Add psplash support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

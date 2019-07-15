@@ -1,7 +1,7 @@
-From 8f0d1a023b1a6136434a405f1273fab8dc40e209 Mon Sep 17 00:00:00 2001
+From d085bbc6b8870c9748f834b87bed6a34e027d457 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
-Subject: [PATCH] service: allow to change service's current directory
+Subject: [PATCH 1/8] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,26 +10,26 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+)
 
 diff --git a/service/instance.c b/service/instance.c
-index ac96f7d..8acbe7c 100644
+index b4284e7..21a5962 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -57,6 +57,7 @@ enum {
- 	INSTANCE_ATTR_PIDFILE,
+@@ -61,6 +61,7 @@ enum {
  	INSTANCE_ATTR_RELOADSIG,
  	INSTANCE_ATTR_TERMTIMEOUT,
+ 	INSTANCE_ATTR_FACILITY,
 +	INSTANCE_ATTR_CHDIR,
  	__INSTANCE_ATTR_MAX
  };
  
-@@ -82,6 +83,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
- 	[INSTANCE_ATTR_PIDFILE] = { "pidfile", BLOBMSG_TYPE_STRING },
+@@ -88,6 +89,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_RELOADSIG] = { "reload_signal", BLOBMSG_TYPE_INT32 },
  	[INSTANCE_ATTR_TERMTIMEOUT] = { "term_timeout", BLOBMSG_TYPE_INT32 },
+ 	[INSTANCE_ATTR_FACILITY] = { "facility", BLOBMSG_TYPE_STRING },
 +	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
  };
  
  enum {
-@@ -360,6 +362,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -378,6 +380,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		ERROR("failed to set user id %d: %m\n", in->uid);
  		exit(127);
  	}
@@ -40,7 +40,7 @@ index ac96f7d..8acbe7c 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -661,6 +667,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -685,6 +691,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (!blobmsg_list_equal(&in->errors, &in_new->errors))
  		return true;
  
@@ -50,7 +50,7 @@ index ac96f7d..8acbe7c 100644
  	return false;
  }
  
-@@ -921,6 +930,12 @@ instance_config_parse(struct service_instance *in)
+@@ -954,6 +963,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -63,15 +63,15 @@ index ac96f7d..8acbe7c 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -975,6 +990,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
- 	in->trace = in_src->trace;
+@@ -1018,6 +1033,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->seccomp = in_src->seccomp;
  	in->node.avl.key = in_src->node.avl.key;
+ 	in->syslog_facility = in_src->syslog_facility;
 +	in->chdir = in_src->chdir;
  
  	free(in->config);
  	in->config = in_src->config;
-@@ -1136,5 +1152,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1187,5 +1203,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  
@@ -81,13 +81,13 @@ index ac96f7d..8acbe7c 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index 771406c..7a6261a 100644
+index 42cc4be..ff7cda2 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -59,6 +59,7 @@ struct service_instance {
- 	struct jail jail;
+@@ -62,6 +62,7 @@ struct service_instance {
  	char *seccomp;
  	char *pidfile;
+ 	int syslog_facility;
 +	char *chdir;
  
  	uint32_t term_timeout;
