@@ -6,6 +6,7 @@ PREFERRED_VERSION_iptables = "1.6.2"
 PREFERRED_VERSION_usbutils = "007"
 PREFERRED_VERSION_libwebsockets = "2.4.2%"
 PREFERRED_VERSION_wireguard = "0.0.20190702"
+PREFERRED_VERSION_qrencode = "4.0.2"
 
 # Providers
 PREFERRED_PROVIDER_psplash = "psplash-tn"
