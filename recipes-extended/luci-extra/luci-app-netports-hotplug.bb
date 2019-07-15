@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0"
-PR = "tano0"
+PR = "tano1"
 
 RDEPENDS_${PN} += "luci-app-netports"
 

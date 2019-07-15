@@ -21,7 +21,6 @@
 PORT_DEVICE="${INTERFACE}"
 
 if [ "${ACTION}" = "add" ]; then
-
 	#
 	# Ignore interfaces that already exists in the config
 	# and which are not hotplug interfaces added by this script.
@@ -47,47 +46,62 @@ if [ "${ACTION}" = "add" ]; then
 	fi
 
 	#
-	# Detect port type
+	# Detect type automatically by default
 	#
-	case "${PORT_DEVICE}" in
-		lo|sit*[0-9])
-			# Ignore some interfaces
-			exit 0
-			;;
+	PORT_TYPE="auto"
 
-		eth*[0-9])
-			PORT_TYPE="copper"
-			[ -z "${PORT_NAME}" ] && PORT_NAME="Ethernet"
-			;;
+	if [ "${PORT_TYPE}" = "auto" ]; then
+		#
+		# Detect port type by device type
+		#
+		case "${DEVTYPE}" in
+			wireguard)
+				PORT_TYPE="vpn"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="WireGuard VPN"
+				;;
+		esac
+	fi
 
-		wlan*[0-9]|ath*[0-9])
-			PORT_TYPE="usb_wifi"
-			[ -z "${PORT_NAME}" ] && PORT_NAME="Wireless"
-			;;
+	if [ "${PORT_TYPE}" = "auto" ]; then
+		#
+		# Detect port type by device name
+		#
+		case "${PORT_DEVICE}" in
+			lo|sit*[0-9])
+				# Ignore some interfaces
+				exit 0
+				;;
 
-		usb*[0-9])
-			PORT_TYPE="usb_rndis"
-			[ -z "${PORT_NAME}" ] && PORT_NAME="USB"
-			;;
+			eth*[0-9])
+				PORT_TYPE="copper"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="Ethernet"
+				;;
 
-		tun*[0-9]|tap*[0-9])
-			PORT_TYPE="vpn"
-			[ -z "${PORT_NAME}" ] && PORT_NAME="VPN"
-			;;
+			wlan*[0-9]|ath*[0-9])
+				PORT_TYPE="usb_wifi"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="Wireless"
+				;;
 
-		ppp*[0-9])
-			PORT_TYPE="ppp"
-			[ -z "${PORT_NAME}" ] && PORT_NAME="PPP"
-			;;
+			usb*[0-9])
+				PORT_TYPE="usb_rndis"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="USB"
+				;;
 
-		wwan*[0-9])
-			PORT_TYPE="usb_3g"
-			;;
+			tun*[0-9]|tap*[0-9])
+				PORT_TYPE="vpn"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="VPN"
+				;;
 
-		*)
-			PORT_TYPE="auto"
-			;;
-	esac
+			ppp*[0-9])
+				PORT_TYPE="ppp"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="PPP"
+				;;
+
+			wwan*[0-9])
+				PORT_TYPE="usb_3g"
+				;;
+		esac
+	fi
 
 	[ -z "${PORT_NAME}" ] && PORT_NAME="${PORT_DEVICE}"
 
