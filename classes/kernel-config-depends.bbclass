@@ -77,6 +77,11 @@ def kernel_config_depends(d):
 
         # Read parameters
         for value in values:
+            value = value.strip()
+
+            if not value:
+                continue
+
             v = pattern.split(value)[1::2]
 
             if len(v) < 2:
