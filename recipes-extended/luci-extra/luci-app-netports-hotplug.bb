@@ -5,7 +5,9 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0"
-PR = "tano1"
+PR = "tano2"
+
+inherit allarch
 
 RDEPENDS_${PN} += "luci-app-netports"
 
