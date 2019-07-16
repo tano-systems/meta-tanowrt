@@ -1,6 +1,6 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "IPset netfilter modules"
 LICENSE = "MIT"
 
@@ -47,9 +47,4 @@ KERNEL_CONFIG_DEPENDS += "{\
 KERNEL_CONFIG_DEPENDS += "{\
 	option   = CONFIG_IP_SET_MAX, \
 	required = 256 \
-}"
-
-KERNEL_CONFIG_DEPENDS += "{\
-	option   = CONFIG_NET_EMATCH_IPSET, \
-	required = n \
 }"
