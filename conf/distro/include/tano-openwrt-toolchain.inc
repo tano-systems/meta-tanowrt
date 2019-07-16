@@ -2,12 +2,9 @@
 # Toolchain should be selected by setting TOOLCHAIN_BRAND in local.conf
 # Set some sane defaults, in case someone forgets to set them in local.conf
 
-# Use internal GCC toolchain for qemuall
-TOOLCHAIN_TYPE_qemuall  ?= "internal"
-TOOLCHAIN_BRAND_qemuall ?= "gcc"
-
+# Use internal GCC toolchain by default
 TOOLCHAIN_TYPE  ?= "internal"
-TOOLCHAIN_BRAND ?= "linaro"
+TOOLCHAIN_BRAND ?= "gcc"
 
 include conf/distro/include/tano-openwrt-hw-toolchain.inc
 

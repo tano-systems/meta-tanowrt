@@ -11,5 +11,4 @@ PREFERRED_VERSION_qrencode = "4.0.2"
 # Providers
 PREFERRED_PROVIDER_psplash = "psplash-tn"
 PREFERRED_PROVIDER_os-release = "tano-version"
-PREFERRED_PROVIDER_virtual/kernel = "linux-yocto-rt"
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
