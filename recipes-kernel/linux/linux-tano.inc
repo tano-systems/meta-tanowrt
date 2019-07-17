@@ -59,6 +59,7 @@ KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/cgroups/cgroups.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "wifi usbhost", " features/wifi/wifi-usb.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "wifi pci", " features/wifi/wifi-pci.scc", "" ,d)} \
+	features/general/ikconfig.scc \
 	features/net_sched/net_sched.scc \
 	features/netfilter/netfilter.scc \
 	features/nf_tables/nf_tables.scc \
