@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano13"
+PR = "tano14"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -59,10 +59,13 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/firewall.user ${D}${sysconfdir}/firewall.user
     install -m 0644 ${WORKDIR}/firewall.hotplug ${D}${sysconfdir}/hotplug.d/iface/20-firewall
 
+    install -d ${D}/usr/share/fw3
+    install -m 0644 ${S}/helpers.conf ${D}/usr/share/fw3
+
     ln -s ${sbindir}/firewall3 ${D}${base_sbindir}/fw3
 }
 
-FILES_${PN} += "${libdir}/*"
+FILES_${PN} += "${libdir}/* /usr/share/fw3/"
 
 RDEPENDS_${PN} += "ipset xtables-addons"
 
