@@ -1,0 +1,3 @@
+config irqbalance 'irqbalance'
+	option enabled '@@IRQBALANCE_CONFIG_ENABLED@@'
+
