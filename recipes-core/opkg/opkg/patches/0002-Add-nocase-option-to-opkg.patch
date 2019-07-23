@@ -1,18 +1,18 @@
-From ab3623ce373af509a9061c5b237cad4091fa2971 Mon Sep 17 00:00:00 2001
+From 1f1d3306154e4d112d19b621cc7104179a1cd1e7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Mon, 4 Feb 2019 19:25:17 +0300
-Subject: [PATCH 2/2] Add 'nocase' option to opkg
+Date: Fri, 12 Jul 2019 03:47:30 +0300
+Subject: [PATCH /2] Add 'nocase' option to opkg
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  libopkg/opkg_cmd.c  | 18 +++++++++---------
  libopkg/opkg_conf.c |  1 +
  libopkg/opkg_conf.h |  1 +
- src/opkg.c          | 14 ++++++++++++--
- 4 files changed, 23 insertions(+), 11 deletions(-)
+ src/opkg.c          | 12 +++++++++++-
+ 4 files changed, 22 insertions(+), 10 deletions(-)
 
 diff --git a/libopkg/opkg_cmd.c b/libopkg/opkg_cmd.c
-index 774e4d9..43d84ea 100644
+index fd27062..3658071 100644
 --- a/libopkg/opkg_cmd.c
 +++ b/libopkg/opkg_cmd.c
 @@ -367,7 +367,7 @@ static int opkg_configure_packages(char *pkg_name)
@@ -90,7 +90,7 @@ index 774e4d9..43d84ea 100644
          }
  
 diff --git a/libopkg/opkg_conf.c b/libopkg/opkg_conf.c
-index 06880a1..4a2d914 100644
+index f2330cd..040827d 100644
 --- a/libopkg/opkg_conf.c
 +++ b/libopkg/opkg_conf.c
 @@ -75,6 +75,7 @@ static opkg_option_t options[] = {
@@ -102,10 +102,10 @@ index 06880a1..4a2d914 100644
      {"offline_root", OPKG_OPT_TYPE_STRING, &_conf.offline_root},
      {"overlay_root", OPKG_OPT_TYPE_STRING, &_conf.overlay_root},
 diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
-index ae48870..0fb1cc4 100644
+index 0556151..a5d74ef 100644
 --- a/libopkg/opkg_conf.h
 +++ b/libopkg/opkg_conf.h
-@@ -104,6 +104,7 @@ typedef struct opkg_conf {
+@@ -106,6 +106,7 @@ typedef struct opkg_conf {
      char *gpg_trust_level;
      char *signature_type;
      int nodeps;             /* do not follow dependencies */
@@ -114,7 +114,7 @@ index ae48870..0fb1cc4 100644
      char *offline_root;
      char *overlay_root;
 diff --git a/src/opkg.c b/src/opkg.c
-index f23467d..e3c117a 100644
+index 3c93a3b..6569a23 100644
 --- a/src/opkg.c
 +++ b/src/opkg.c
 @@ -25,6 +25,7 @@
@@ -125,7 +125,7 @@ index f23467d..e3c117a 100644
  
  #include "opkg_conf.h"
  #include "opkg_cmd.h"
-@@ -54,6 +55,7 @@ enum {
+@@ -55,6 +56,7 @@ enum {
      ARGS_OPT_NOACTION,
      ARGS_OPT_DOWNLOAD_ONLY,
      ARGS_OPT_NODEPS,
@@ -133,7 +133,7 @@ index f23467d..e3c117a 100644
      ARGS_OPT_AUTOREMOVE,
      ARGS_OPT_VOLATILE_CACHE,
      ARGS_OPT_COMBINE,
-@@ -103,6 +105,7 @@ static struct option long_options[] = {
+@@ -106,6 +108,7 @@ static struct option long_options[] = {
      {"noaction", 0, 0, ARGS_OPT_NOACTION},
      {"download-only", 0, 0, ARGS_OPT_DOWNLOAD_ONLY},
      {"nodeps", 0, 0, ARGS_OPT_NODEPS},
@@ -141,20 +141,16 @@ index f23467d..e3c117a 100644
      {"no-install-recommends", 0, 0, ARGS_OPT_NO_INSTALL_RECOMMENDS},
      {"offline", 1, 0, 'o'},
      {"offline-root", 1, 0, 'o'},
-@@ -133,10 +136,10 @@ static int args_parse(int argc, char *argv[])
+@@ -138,7 +141,7 @@ static int args_parse(int argc, char *argv[])
+     char *solver_version = NULL;
  
      while (1) {
- #if HAVE_GETOPT_LONG_ONLY
--        c = getopt_long_only(argc, argv, "Ad:f:no:p:l:t:vV::", long_options,
-+        c = getopt_long_only(argc, argv, "Ad:f:ino:p:l:t:vV::", long_options,
-                              &option_index);
- #else
 -        c = getopt_long(argc, argv, "Ad:f:no:p:l:t:vV::", long_options,
 +        c = getopt_long(argc, argv, "Ad:f:ino:p:l:t:vV::", long_options,
                               &option_index);
- #endif
          if (c == -1)
-@@ -152,6 +155,9 @@ static int args_parse(int argc, char *argv[])
+             break;
+@@ -153,6 +156,9 @@ static int args_parse(int argc, char *argv[])
          case 'f':
              opkg_config->conf_file = xstrdup(optarg);
              break;
@@ -164,7 +160,7 @@ index f23467d..e3c117a 100644
          case 'o':
              opkg_config->offline_root = xstrdup(optarg);
              break;
-@@ -220,6 +226,9 @@ static int args_parse(int argc, char *argv[])
+@@ -221,6 +227,9 @@ static int args_parse(int argc, char *argv[])
          case ARGS_OPT_NODEPS:
              opkg_config->nodeps = 1;
              break;
@@ -174,8 +170,8 @@ index f23467d..e3c117a 100644
          case ARGS_OPT_ADD_ARCH:
          case ARGS_OPT_ADD_DEST:
              tuple = xstrdup(optarg);
-@@ -356,6 +365,7 @@ static void usage()
-     printf("\t--size                          Print package size when listing available packages\n");
+@@ -373,6 +382,7 @@ static void usage()
+     printf("\t--noaction                      No action -- test only\n");
      printf("\t--download-only                 No action -- download only\n");
      printf("\t--nodeps                        Do not follow dependencies\n");
 +    printf("\t--nocase                        Perform case insensitive pattern matching\n");
