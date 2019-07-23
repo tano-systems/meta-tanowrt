@@ -28,7 +28,7 @@ DISTRO_FEATURES_append = " wifi "
 DISTRO_FEATURES_append = " watchdog "
 
 # Graphics
-DISTRO_FEATURES += " graphics screen splash directfb "
+DISTRO_FEATURES += " graphics screen splash opengl "
 
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
@@ -49,7 +49,6 @@ DISTRO_FEATURES_remove = "\
     systemd \
     pam \
     x11 \
-    opengl \
 "
 
 # Licenses
