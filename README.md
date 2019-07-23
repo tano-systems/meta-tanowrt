@@ -14,13 +14,13 @@ Most OpenWrt packages corresponds to OpenWrt 18.06.2 or higher.
 
 Clone repositories:
 ```
-$ git clone -b thud git://github.com/openembedded/openembedded-core.git
+$ git clone -b warrior git://github.com/openembedded/openembedded-core.git
 
 $ cd openembedded-core
 
-$ git clone -b 1.40 git://github.com/openembedded/bitbake.git
-$ git clone -b thud git://github.com/openembedded/meta-openembedded.git
-$ git clone -b thud git://github.com/tano-systems/meta-tano-openwrt.git
+$ git clone -b 1.42 git://github.com/openembedded/bitbake.git
+$ git clone -b warrior git://github.com/openembedded/meta-openembedded.git
+$ git clone -b warrior git://github.com/tano-systems/meta-tano-openwrt.git
 ```
 
 Initialize build environment and add layers:
@@ -44,7 +44,7 @@ runqemu qemuarm
 
 ## Limitations
 
-Works with OE Release 2.6 (Thud)
+Works with OE Release 2.7 (Warrior)
 
 Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
 
@@ -55,31 +55,31 @@ This layer depends on:
 ### openembedded-core
 URI: git://git.openembedded.org/openembedded-core.git  
 Subdirectory: meta  
-Branch: thud  
-Revision: f162d5bfe6eaeca24f441c83c87252c8d05744fc
+Branch: warrior  
+Revision: 886deb4d0919c7a81036ea14fb8fd0f1619dd3a3
 
 ### meta-openembedded
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-oe  
-Branch: thud  
-Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
+Branch: warrior  
+Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 
 ### meta-python
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-python  
-Branch: thud  
-Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
+Branch: warrior  
+Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
-Branch: thud  
-Revision: 9b3b907f30b0d5b92d58c7e68289184fda733d3e
+Branch: warrior  
+Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 
 ### bitbake
 URI: git://git.openembedded.org/bitbake  
-Branch: 1.40  
-Revision: 4ce92f43eeac6a4bfd06e8567fa6891614b5b3b0
+Branch: 1.42  
+Revision: 34ed28a412af642a993642c14bd8b95d5ef22cd8
 
 
 ## License

@@ -42,6 +42,5 @@ QB_OPT_APPEND  = "-show-cursor -usb -device usb-tablet -device virtio-rng-pci -s
 QB_OPT_APPEND += "-vga vmware -serial mon:stdio -serial null"
 
 # Enable SDL display in QEMU
-PACKAGECONFIG_append_pn-qemu-native = " sdl"
+PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
 PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
-
