@@ -1,0 +1,16 @@
+Index: git/libs/luci-lib-iptparser/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/libs/luci-lib-iptparser/CMakeLists.txt
+@@ -0,0 +1,11 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-lib-iptparser C)
++
++FIND_PACKAGE(PkgConfig)
++
++INSTALL(DIRECTORY luasrc/sys/
++	DESTINATION "${LUAPATH}/luci/sys"
++	USE_SOURCE_PERMISSIONS
++)
++

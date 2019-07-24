@@ -1,0 +1,31 @@
+Index: git/modules/luci-base/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/modules/luci-base/CMakeLists.txt
+@@ -0,0 +1,26 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-base C)
++
++ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c)
++SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
++
++INSTALL(DIRECTORY luasrc/
++	DESTINATION "${LUAPATH}/luci"
++	USE_SOURCE_PERMISSIONS
++)
++
++INSTALL(TARGETS parser
++	LIBRARY DESTINATION "${LUAPATH}/luci/template"
++)
++
++INSTALL(DIRECTORY root/
++	DESTINATION "${CMAKE_INSTALL_PREFIX}/"
++	USE_SOURCE_PERMISSIONS
++)
++
++INSTALL(DIRECTORY htdocs/
++	DESTINATION "${CMAKE_INSTALL_PREFIX}/www"
++	USE_SOURCE_PERMISSIONS
++)
++
