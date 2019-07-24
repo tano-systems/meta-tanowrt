@@ -7,8 +7,6 @@
 
 inherit openwrt-luci
 
-require recipes-extended/luci/luci.inc
-
 do_configure[noexec] = "1"
 do_compile[noexec]   = "1"
 
