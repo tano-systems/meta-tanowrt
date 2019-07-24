@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-DEPENDS += "luci-po2lmo-native"
+DEPENDS += "po2lmo-native"
 
 inherit openwrt-luci
 
@@ -16,7 +16,7 @@ FILES_${LUCI_I18N_META_PACKAGE} = ""
 ALLOW_EMPTY_${LUCI_I18N_META_PACKAGE} = "1"
 
 PACKAGES =+ "${LUCI_I18N_META_PACKAGE}"
-RDEPENDS_${PN} += "${LUCI_I18N_META_PACKAGE}"
+RRECOMMENDS_${PN} += "${LUCI_I18N_META_PACKAGE}"
 
 PACKAGESPLITFUNCS_prepend = "split_i18n_packages "
 
@@ -202,5 +202,5 @@ python split_i18n_packages() {
     packages = build_i18n_packages(d)
     if packages:
         pkg = d.getVar('LUCI_I18N_META_PACKAGE', True)
-        d.appendVar('RDEPENDS_' + pkg, ' '+' '.join(packages))
+        d.appendVar('RRECOMMENDS_' + pkg, ' '+' '.join(packages))
 }
