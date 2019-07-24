@@ -2,7 +2,7 @@ Index: git/CMakeLists.txt
 ===================================================================
 --- /dev/null
 +++ git/CMakeLists.txt
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,29 @@
 +cmake_minimum_required(VERSION 3.0)
 +
 +PROJECT(luci)
@@ -31,8 +31,6 @@ Index: git/CMakeLists.txt
 +ADD_SUBDIRECTORY(libs/luci-lib-nixio)
 +ADD_SUBDIRECTORY(libs/luci-lib-ip)
 +ADD_SUBDIRECTORY(libs/luci-lib-jsonc)
-+ADD_SUBDIRECTORY(themes/luci-theme-bootstrap)
-+ADD_SUBDIRECTORY(applications/luci-app-firewall)
 +
 Index: git/libs/luci-lib-ip/CMakeLists.txt
 ===================================================================
@@ -162,43 +160,6 @@ Index: git/modules/luci-mod-admin-full/CMakeLists.txt
 +	USE_SOURCE_PERMISSIONS
 +)
 +
-Index: git/themes/luci-theme-bootstrap/CMakeLists.txt
-===================================================================
---- /dev/null
-+++ git/themes/luci-theme-bootstrap/CMakeLists.txt
-@@ -0,0 +1,19 @@
-+cmake_minimum_required(VERSION 3.0)
-+
-+PROJECT(luci-theme-bootstrap C)
-+
-+INSTALL(DIRECTORY luasrc/
-+	DESTINATION "${LUAPATH}/luci"
-+	USE_SOURCE_PERMISSIONS
-+)
-+
-+INSTALL(DIRECTORY root/
-+	DESTINATION "${CMAKE_INSTALL_PREFIX}/"
-+	USE_SOURCE_PERMISSIONS
-+)
-+
-+INSTALL(DIRECTORY htdocs/
-+	DESTINATION "${CMAKE_INSTALL_PREFIX}/www"
-+	USE_SOURCE_PERMISSIONS
-+)
-+
-Index: git/applications/luci-app-firewall/CMakeLists.txt
-===================================================================
---- /dev/null
-+++ git/applications/luci-app-firewall/CMakeLists.txt
-@@ -0,0 +1,8 @@
-+cmake_minimum_required(VERSION 3.0)
-+
-+PROJECT(luci-app-firewall C)
-+
-+INSTALL(DIRECTORY luasrc/
-+	DESTINATION "${LUAPATH}/luci"
-+	USE_SOURCE_PERMISSIONS
-+)
 Index: git/libs/luci-lib-jsonc/CMakeLists.txt
 ===================================================================
 --- /dev/null
