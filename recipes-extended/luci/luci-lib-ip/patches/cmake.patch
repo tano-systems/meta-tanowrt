@@ -1,0 +1,20 @@
+Index: git/libs/luci-lib-ip/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/libs/luci-lib-ip/CMakeLists.txt
+@@ -0,0 +1,15 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-lib-ip C)
++
++FIND_PACKAGE(PkgConfig)
++
++ADD_LIBRARY(ip SHARED src/ip.c)
++SET_TARGET_PROPERTIES(ip PROPERTIES PREFIX "")
++
++TARGET_LINK_LIBRARIES(ip nl-3)
++
++INSTALL(TARGETS ip
++	LIBRARY DESTINATION "${LUAPATH}/luci"
++)
++

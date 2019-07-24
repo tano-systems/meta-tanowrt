@@ -1,0 +1,20 @@
+Index: git/libs/luci-lib-jsonc/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/libs/luci-lib-jsonc/CMakeLists.txt
+@@ -0,0 +1,15 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-lib-jsonc C)
++
++FIND_PACKAGE(PkgConfig)
++
++ADD_LIBRARY(jsonc SHARED src/jsonc.c)
++SET_TARGET_PROPERTIES(jsonc PROPERTIES PREFIX "")
++
++TARGET_LINK_LIBRARIES(jsonc json-c)
++
++INSTALL(TARGETS jsonc
++	LIBRARY DESTINATION "${LUAPATH}/luci"
++)
++

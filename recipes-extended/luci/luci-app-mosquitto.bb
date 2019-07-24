@@ -4,9 +4,9 @@
 # This file Copyright (c) 2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
-RDEPENDS_${PN} += "mosquitto"
+RDEPENDS_${PN} += "mosquitto luci-mod-admin-full"
 
 SUMMARY = "LuCI Support for Mosquitto"
 LICENSE = "Apache-2.0"

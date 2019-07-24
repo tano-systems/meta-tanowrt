@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "LuCI Support for Dynamic DNS Client (ddns-scripts)"
 LICENSE = "Apache-2.0"
@@ -15,7 +15,7 @@ inherit openwrt-luci-i18n
 inherit luasrcdiet
 
 # +luci-mod-admin-full
-RDEPENDS_${PN} += "ddns-scripts"
+RDEPENDS_${PN} += "ddns-scripts luci-lib-ipkg luci-mod-admin-full"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-ddns;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

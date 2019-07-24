@@ -1,0 +1,31 @@
+Index: git/libs/luci-lib-nixio/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ git/libs/luci-lib-nixio/CMakeLists.txt
+@@ -0,0 +1,26 @@
++cmake_minimum_required(VERSION 3.0)
++
++PROJECT(luci-lib-nixio C)
++
++ADD_DEFINITIONS(-DNO_TLS)
++
++ADD_LIBRARY(nixio SHARED src/nixio.c src/socket.c src/sockopt.c src/bind.c src/address.c
++	src/protoent.c src/poll.c src/io.c src/file.c src/splice.c src/process.c
++	src/syslog.c src/bit.c src/binary.c src/fs.c src/user.c)
++SET_TARGET_PROPERTIES(nixio PROPERTIES PREFIX "")
++TARGET_LINK_LIBRARIES(nixio crypt ssl)
++
++INSTALL(DIRECTORY root/usr/lib/lua/
++	DESTINATION ${LUAPATH}
++	USE_SOURCE_PERMISSIONS
++)
++
++INSTALL(TARGETS nixio
++	LIBRARY DESTINATION ${LUAPATH}
++)
++
++INSTALL(DIRECTORY root/lib
++	DESTINATION "${CMAKE_INSTALL_PREFIX}/"
++	USE_SOURCE_PERMISSIONS
++)
++

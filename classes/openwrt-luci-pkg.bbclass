@@ -10,7 +10,7 @@ inherit openwrt-luci
 do_configure[noexec] = "1"
 do_compile[noexec]   = "1"
 
-RDEPENDS_${PN} += "luci"
+RDEPENDS_${PN} += "luci-base"
 
 FILES_${PN} += "${LUCI_INSTALL_LUASRC_PATH}"
 FILES_${PN} += "${LUCI_INSTALL_HTDOCS_PATH}"
