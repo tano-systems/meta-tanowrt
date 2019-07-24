@@ -15,7 +15,8 @@ RDEPENDS_${PN} += "rpcd"
 
 inherit cmake
 inherit openwrt-luci
-require recipes-extended/luci/luci.inc
+
+LUCI_DO_POST_INSTALL_ACTIONS = "0"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=libs/rpcd-mod-rrdns/src;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
