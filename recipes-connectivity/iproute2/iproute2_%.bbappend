@@ -1,5 +1,5 @@
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -22,7 +22,6 @@ SRC_URI += "\
 	file://145-keep_libelf_optional.patch \
 	file://160-libnetlink-pic.patch \
 	file://170-ip_tiny.patch \
-	file://175-reduce-dynamic-syms.patch \
 	file://180-drop_FAILED_POLICY.patch \
 	file://200-drop_libbsd_dependency.patch \
 "
