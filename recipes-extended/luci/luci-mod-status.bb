@@ -5,13 +5,13 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "LuCI Status Pages"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-RDEPENDS_${PN} += "luci-base libiwinfo-lua rpcd-mod-rrdns luci-bwc"
+RDEPENDS_${PN} += "luci-base libiwinfo-lua rpcd-mod-rrdns luci-bwc syslog-fc"
 
 inherit openwrt-luci-mod
 
