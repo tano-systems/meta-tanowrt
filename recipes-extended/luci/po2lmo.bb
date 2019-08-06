@@ -4,7 +4,7 @@
 # This file Copyright (C) 2018-2019 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "OpenWrt LuCI po2lmo utility"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -19,13 +19,15 @@ SRCREV  = "${LUCI_GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
-do_configure[noexec] = "1"
-
 FILES_${PN} = "\
 	${base_bindir}/po2lmo"
 
+do_configure() {
+	oe_runmake -C ${S}/ clean
+}
+
 do_compile() {
-	oe_runmake -C ${S}/ clean po2lmo
+	oe_runmake -C ${S}/ po2lmo
 }
 
 do_install() {
