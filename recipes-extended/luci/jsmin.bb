@@ -4,7 +4,7 @@
 # This file Copyright (C) 2019 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "The JavaScript Minifier"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -21,13 +21,15 @@ SRCREV  = "${LUCI_GIT_SRCREV}"
 
 S = "${WORKDIR}/git/"
 
-do_configure[noexec] = "1"
-
 FILES_${PN} = "\
 	${base_bindir}/jsmin"
 
+do_configure() {
+	oe_runmake -C ${S}/ clean
+}
+
 do_compile() {
-	oe_runmake -C ${S}/ clean jsmin
+	oe_runmake -C ${S}/ jsmin
 }
 
 do_install() {
