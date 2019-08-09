@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -90,3 +90,5 @@ FILES_${PN}-examples += "${bindir}/*-example \
                         ${bindir}/uloop-example.lua \
                         ${bindir}/uloop_pid_test.sh \
                         "
+
+BBCLASSEXTEND = "native"
