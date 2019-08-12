@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Normal Openwrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system"
 LICENSE = "MIT"
@@ -35,7 +35,7 @@ RRECOMMENDS_packagegroup-openwrt-base-machine = "${MACHINE_EXTRA_RRECOMMENDS}"
 RDEPENDS_${PN}-luci = "\
 	lua5.1 \
 	luci \
-	luci-theme-bootstrap \
+	luci-theme-tano \
 	luci-app-firewall \
 	uhttpd \
 "

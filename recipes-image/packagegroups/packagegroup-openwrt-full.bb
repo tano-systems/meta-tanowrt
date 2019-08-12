@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano15"
+PR = "tano16"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -45,4 +45,5 @@ RDEPENDS_${PN}-luci = "\
 	luci-proto-ppp \
 	luci-proto-ncm \
 	luci-proto-qmi \
+	luci-theme-bootstrap \
 "
