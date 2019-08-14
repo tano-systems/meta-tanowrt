@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -28,8 +28,8 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0002-block-Validate-libubi_open-return-value.patch \
 	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
 	file://0004-Fix-UUID-reading-from-vfat.patch \
-	file://0005-block-Fix-some-memory-leaks-and-unnecessary-mounts.patch \
-	file://0006-blockd-Fix-simultaneous-multiple-device-mounts.patch \
+	file://0005-block-Fix-some-memory-leaks-and-unnecessary-duplicat.patch \
+	file://0006-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
@@ -38,9 +38,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 11.10.2018
-# fstools: add ntfs support
-SRCREV = "29e53af0b91954ca6a13bdd1f0e67c939ccb8e6d"
+# 16.07.2019
+# libblkid-tiny: increment label size to 256
+SRCREV = "1539b535ac327a3bc599d1ca871e14fd0dc3bba1"
 
 S = "${WORKDIR}/git"
 
