@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano13"
+PR = "tano14"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 04.06.2019
-# router: support ra_lifetime being 0
-SRCREV = "f6c2242c7af2de8f40f5b6b8e50c350a138bc183"
+# 08.08.2019
+# router: fix lingering uloop socket descriptor
+SRCREV = "000182fe4f94a5a6ec139456a2b74f0cdea13b9c"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services
