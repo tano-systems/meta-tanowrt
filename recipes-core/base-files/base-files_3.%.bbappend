@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano32.${INC_PR}"
+PR_append = ".tano33.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -41,6 +41,7 @@ SRC_URI_append = "\
     file://system.config \
     file://sysfixtime.init \
     file://preinit/80_mount_root \
+    file://hotplug-call \
 "
 
 # Only for x86 and x86-64 architectures
@@ -172,6 +173,7 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/system.config ${D}${sysconfdir}/config/system
 	install -m 0755 ${WORKDIR}/boot.init ${D}${sysconfdir}/init.d/boot
 	install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
+	install -m 0755 ${WORKDIR}/hotplug-call ${D}${base_sbindir}/hotplug-call
 
 	install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
 
