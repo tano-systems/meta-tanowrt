@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano15"
+PR = "tano16"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -30,6 +30,8 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0004-Fix-UUID-reading-from-vfat.patch \
 	file://0005-block-Fix-some-memory-leaks-and-unnecessary-duplicat.patch \
 	file://0006-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
+	file://0007-block-Add-log-message-for-unmounted-device.patch \
+	file://0008-block-Fix-device-path-creation.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \

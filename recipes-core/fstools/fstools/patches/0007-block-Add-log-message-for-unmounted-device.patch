@@ -1,0 +1,45 @@
+From eb7ef8d264faccd43a80e86a5630cc19809ee374 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 14 Aug 2019 23:03:57 +0300
+Subject: [PATCH 7/8] block: Add log message for unmounted device
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ block.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/block.c b/block.c
+index 94483e4..4b42708 100644
+--- a/block.c
++++ b/block.c
+@@ -1048,7 +1048,7 @@ static int mount_device(struct probe_info *pr, int type)
+ 
+ 	mp = find_mount_point(pr->dev);
+ 	if (mp && (type != TYPE_HOTPLUG)) {
+-		ULOG_ERR("%s is already mounted on %s\n", pr->dev, mp);
++		ULOG_INFO("%s is already mounted on %s\n", pr->dev, mp);
+ 		free(mp);
+ 		return -1;
+ 	}
+@@ -1123,6 +1123,9 @@ static int mount_device(struct probe_info *pr, int type)
+ 		ULOG_ERR("mounting %s (%s) as %s failed (%d) - %m\n",
+ 				pr->dev, pr->type, target, errno);
+ 		return err;
++	} else {
++		ULOG_INFO("mounted %s (%s) as %s\n", pr->dev, pr->type, target);
++		rmdir(mp);
+ 	}
+ 
+ 	handle_swapfiles(true);
+@@ -1150,7 +1153,7 @@ static int umount_device(char *path, int type)
+ 		ULOG_ERR("unmounting %s (%s) failed (%d) - %m\n", path, mp,
+ 			 errno);
+ 	} else {
+-		ULOG_INFO("unmounted %s (%s)\n", path, mp);
++		ULOG_INFO("unmounted %s from %s\n", path, mp);
+ 		rmdir(mp);
+ 	}
+ 
+-- 
+2.16.2.windows.1
+
