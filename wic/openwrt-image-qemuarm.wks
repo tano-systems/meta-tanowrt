@@ -1,0 +1,2 @@
+part / --source rootfs --ondisk=mmcblk0 --fstype=squashfs --align=1024
+part /overlay --size=16M --ondisk=mmcblk0 --fstype=ext4 --label=rootfs_data --align=1024
