@@ -8,39 +8,52 @@ IMAGE_FEATURES += "splash"
 #
 SPLASH = "psplash-tano"
 
-#
-# XServer
-#
-PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
-PREFERRED_PROVIDER_virtual/libgl ?= "mesa"
-PREFERRED_PROVIDER_virtual/libgles1 ?= "mesa"
-PREFERRED_PROVIDER_virtual/libgles2 ?= "mesa"
+XSERVER_QEMU_ALLX86 = "\
+	xf86-video-cirrus \
+	xf86-video-vmware \
+	xf86-video-modesetting \
+	xserver-xorg-module-libint10 \
+"
 
-XSERVER = "xserver-xorg \
-           ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'mesa-driver-swrast xserver-xorg-extension-glx', '', d)} \
-           xf86-video-cirrus \
-           xf86-video-fbdev \
-           xf86-video-vmware \
-           xf86-video-modesetting \
-           xserver-xorg-module-libint10 \
-           "
+XSERVER_append_qemux86 = " ${XSERVER_QEMU_ALLX86}"
+XSERVER_append_qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
 
 #
 # Kernel modules
 #
-UVESA_MODE = "1280x720-32"
+UVESA_MODE_ALLX86 = "1280x720-32"
+UVESA_MODE_qemux86 = "${UVESA_MODE_ALLX86}"
+UVESA_MODE_qemux86-64 = "${UVESA_MODE_ALLX86}"
 
-KERNEL_MODULE_AUTOLOAD += "uvesafb"
-KERNEL_MODULE_AUTOLOAD_EARLY += "uvesafb"
-KERNEL_MODULE_PROBECONF += "uvesafb"
+KERNEL_MODULE_AUTOLOAD_append_qemux86          = " uvesafb"
+KERNEL_MODULE_AUTOLOAD_append_qemux86-64       = " uvesafb"
+KERNEL_MODULE_AUTOLOAD_EARLY_append_qemux86    = " uvesafb"
+KERNEL_MODULE_AUTOLOAD_EARLY_append_qemux86-64 = " uvesafb"
+KERNEL_MODULE_PROBECONF_append_qemux86         = " uvesafb"
+KERNEL_MODULE_PROBECONF_append_qemux86-64      = " uvesafb"
+
 module_conf_uvesafb = "options uvesafb mode_option=${UVESA_MODE}"
 
 #
 # QEMU options (runqemu)
 #
-QB_OPT_APPEND  = "-show-cursor -usb -device usb-tablet -device virtio-rng-pci -smp 2"
-QB_OPT_APPEND += "-vga vmware -serial mon:stdio -serial null"
+QB_OPT_APPEND_remove = "-nographic"
+QB_OPT_APPEND_append = "\
+	-show-cursor \
+	-device usb-tablet \
+	-serial mon:stdio \
+	-serial null \
+"
 
+QB_OPT_APPEND_ALLX86 = "\
+	-vga vmware \
+"
+
+QB_OPT_APPEND_append_qemux86 = " ${QB_OPT_APPEND_ALLX86}"
+QB_OPT_APPEND_append_qemux86-64 = " ${QB_OPT_APPEND_ALLX86}"
+
+#
 # Enable SDL display in QEMU
+#
 PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
 PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
