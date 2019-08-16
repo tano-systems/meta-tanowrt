@@ -3,96 +3,126 @@
 This layer provides OpenEmbedded metadata for TanoWrt Linux distribution by Tano Systems. TanoWrt distribution is based on packages and fixes (patches) from the official [OpenWrt](https://openwrt.org/) distribution.
 
 Some configuration files, scripts, patches and other files for OpenWrt packages, including descriptions in recipe files, are taken from the official OpenWrt repositories:
-- https://github.com/openwrt/openwrt.git --- buildsystem for the OpenWrt Linux distribution;
-- https://github.com/openwrt/packages.git --- OpenWrt packages feed.
+- https://github.com/openwrt/openwrt.git — buildsystem for the OpenWrt Linux distribution;
+- https://github.com/openwrt/packages.git — OpenWrt packages feed.
 
 This layer is initially based on a OE metadata layer for OpenWrt by [Khem Raj](https://github.com/kraj/meta-openwrt) (revision [3f94c4f5aa965aa5d65419d6691b40a3870e84a8](https://github.com/kraj/meta-openwrt/commit/3f94c4f5aa965aa5d65419d6691b40a3870e84a8))
 
 Most OpenWrt packages corresponds to OpenWrt 18.06.2 or higher.
 
+## Supported QEMU Machines
+
+This layer supports the following machines designed to run in QEMU:
+
+| `MACHINE`           | Description                                      | Rootfs   | Overlayfs      |
+| ------------------- | ------------------------------------------------ | -------- | -------------- |
+| `qemux86`           | Common x86 (32-bit) machine                      | squashfs | ext4 (16 MiB)  |
+| `qemux86-screen`    | Common x86 (32-bit) machine with screen support  | squashfs | ext4 (16 MiB)  |
+| `qemux86-64`        | Common x86 (64-bit) machine                      | squashfs | ext4 (16 MiB)  |
+| `qemux86-64-screen` | Common x86 (64-bit) machine with screen support  | squashfs | ext4 (16 MiB)  |
+| `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (16 MiB)  |
+| `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (16 MiB)  |
+
 ## Getting Started
 
-Clone repositories:
-```
-$ git clone -b rocko git://github.com/openembedded/openembedded-core.git
-
-$ cd openembedded-core
-
-$ git clone -b 1.36 git://github.com/openembedded/bitbake.git
-$ git clone -b rocko git://github.com/openembedded/meta-openembedded.git
-$ git clone -b rocko git://github.com/tano-systems/meta-tano-openwrt.git
+Clone openembedded-core repository:
+```shell
+git clone -b rocko git://github.com/openembedded/openembedded-core.git
 ```
 
-Initialize build environment and add layers:
+Go to the openembedded-core repository directory and clone repositories for bitbake and other dependent layers:
+```shell
+cd openembedded-core
+git clone -b 1.36 git://github.com/openembedded/bitbake.git
+git clone -b rocko git://github.com/openembedded/meta-openembedded.git
+git clone -b rocko git://github.com/tano-systems/meta-tano-openwrt.git
 ```
-$ TEMPLATECONF=meta-tano-openwrt/conf . ./oe-init-build-env
+
+## Initialize Build Environment
+
+The first time you need to add layers and create local.conf from the template. To do this, run the command:
+```shell
+TEMPLATECONF=meta-tano-openwrt/conf . ./oe-init-build-env
 ```
+
+This command automatically creates a `build` subfolder with the required configuration (`local.conf` and `bblayers.conf`) based on the specified template.
+
+If the `build` subfolder with configuration has already been created, this command can be used to initialize build environment:
+```shell
+. ./oe-init-build-env
+```
+
+After executing any of the specified commands, the current directory will be automatically changed to `build` subfolder. Any build commands must be run from the `build` subfolder.
 
 ## Building
 
-Below we build for qemuarm machine as an example:
-```
+Below we build for `qemux86-64` machine as an example:
+```shell
 MACHINE=qemux86-64 bitbake openwrt-image-full
 ```
 
-
 ## Running
 
+### QEMU
+
+Run command:
+```shell
+runqemu qemux86-64
 ```
-runqemu qemuarm wic
-```
+
+### Oracle VirtualBox
+
+You can run builded images for x86 machines (32 or 64-bit) in Oracle VirtualBox following this [instruction](docs/virtualbox.md).
 
 ## Limitations
 
 Works with OE Release 2.4 (Rocko)
 
-Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable.
+Images are buildable/bootable for arm, x86 and x86_64 based qemu machines MACHINE variable. Support for real hardware is provided by additional layers (see [this](#Supported-Hardware) section).
 
 ## Dependencies
 
 This layer depends on:
 
 ### openembedded-core
-URI: git://git.openembedded.org/openembedded-core.git  
+URI: <git://git.openembedded.org/openembedded-core.git>  
 Subdirectory: meta  
 Branch: rocko  
 Revision: 3638cb32ba9ba32b4d498fc31ab7fdf82f0d2495
 
 ### meta-openembedded
-URI: git://git.openembedded.org/meta-openembedded.git  
+URI: <git://git.openembedded.org/meta-openembedded.git>  
 Subdirectory: meta-oe  
 Branch: rocko  
 Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### meta-python
-URI: git://git.openembedded.org/meta-openembedded.git  
+URI: <git://git.openembedded.org/meta-openembedded.git>  
 Subdirectory: meta-python  
 Branch: rocko  
 Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### meta-networking
-URI: git://git.openembedded.org/meta-openembedded.git  
+URI: <git://git.openembedded.org/meta-openembedded.git>  
 Subdirectory: meta-networking  
 Branch: rocko  
 Revision: eae996301d9c097bcbeb8046f08041dc82bb62f8
 
 ### meta-filesystems
-URI: git://git.openembedded.org/meta-openembedded.git  
+URI: <git://git.openembedded.org/meta-openembedded.git>  
 Subdirectory: meta-filesystems  
 Branch: warrior  
 Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 
 ### bitbake
-URI: git://git.openembedded.org/bitbake  
+URI: <git://git.openembedded.org/bitbake>  
 Branch: 1.36  
 Revision: 8bd16328a9332c57b03198826e22b48fadcd21d9
 
 
 ## License
 
-All metadata is MIT licensed unless otherwise stated. Source code included
-in tree for individual recipes is under the LICENSE stated in each recipe
-(.bb file) unless otherwise stated.
+All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
 ## Maintainers
 
