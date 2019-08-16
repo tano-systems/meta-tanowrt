@@ -32,14 +32,14 @@ $ TEMPLATECONF=meta-tano-openwrt/conf . ./oe-init-build-env
 
 Below we build for qemuarm machine as an example:
 ```
-MACHINE=qemuarm bitbake openwrt-image-full
+MACHINE=qemux86-64 bitbake openwrt-image-full
 ```
 
 
 ## Running
 
 ```
-runqemu qemuarm
+runqemu qemuarm wic
 ```
 
 ## Limitations
@@ -73,6 +73,12 @@ Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 ### meta-networking
 URI: git://git.openembedded.org/meta-openembedded.git  
 Subdirectory: meta-networking  
+Branch: warrior  
+Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
+
+### meta-filesystems
+URI: git://git.openembedded.org/meta-openembedded.git  
+Subdirectory: meta-filesystems  
 Branch: warrior  
 Revision: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
 
