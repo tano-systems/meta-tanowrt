@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano16"
+PR = "tano17"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -12,12 +12,17 @@ HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
 LICENSE = "LGPL-2.1 & GPL-2.0 & PD"
 LIC_FILES_CHKSUM = "file://ubi.c;beginline=1;endline=17;md5=8ccc371d64f0b3a8d91065b678dc7095"
 SECTION = "base"
-DEPENDS += "util-linux ubus"
+DEPENDS += "util-linux ubus uci"
 
 RDEPENDS_${PN} += "kmod-fs-autofs4"
 
 # fsck.ext and fsck.vfat support
-RDEPENDS_${PN} += "util-linux-fsck e2fsprogs-e2fsck dosfstools"
+RDEPENDS_${PN} += "\
+	util-linux-fsck \
+	e2fsprogs-mke2fs \
+	e2fsprogs-e2fsck \
+	dosfstools \
+"
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
@@ -32,6 +37,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0006-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
 	file://0007-block-Add-log-message-for-unmounted-device.patch \
 	file://0008-block-Fix-device-path-creation.patch \
+	file://0009-libfstools-Support-for-f2fs-ext4-overlay-on-a-separa.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
@@ -62,7 +68,9 @@ DISABLE_STATIC = ""
 
 PACKAGECONFIG ??= "extroot"
 
-PACKAGECONFIG[extroot] = "-DCMAKE_UBIFS_EXTROOT=ON,,libubox uci,"
+PACKAGECONFIG[extroot] = "-DCMAKE_UBIFS_EXTROOT=ON,,libubox,"
+PACKAGECONFIG[ovl-rootdisk-part] = "-DCMAKE_OVL_ROOTDISK_PART=ON,,,"
+PACKAGECONFIG[ovl-f2fs] = "-DCMAKE_OVL_F2FS=ON,,,f2fs-tools"
 
 do_install_append() {
 	install -dm 0755 ${D}/sbin
