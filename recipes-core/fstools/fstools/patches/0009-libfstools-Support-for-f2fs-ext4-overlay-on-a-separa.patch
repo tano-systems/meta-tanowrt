@@ -1,0 +1,624 @@
+From 1121e77291edee547df78cde5172efa05f6c404f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 16 Aug 2019 19:50:29 +0300
+Subject: [PATCH 9/9] libfstools: Support for f2fs/ext4 overlay on a separate
+ disk partition
+
+Added support for f2fs and ext4 overlay on a separate partition on the
+same disk that is used for the root filesystem.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ CMakeLists.txt        |   8 +
+ libfstools/rootdisk.c | 437 +++++++++++++++++++++++++++++++++++++++++++++++---
+ mount_root.c          |   4 +
+ 3 files changed, 430 insertions(+), 19 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f86a4d5..8db0e85 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -52,6 +52,14 @@ INSTALL(FILES libubi/libubi-tiny.h libubi/libubi.h libubi/ubi-media.h
+ 	DESTINATION include
+ )
+ 
++IF(DEFINED CMAKE_OVL_F2FS)
++	ADD_DEFINITIONS(-DOVL_F2FS_ENABLE)
++ENDIF(DEFINED CMAKE_OVL_F2FS)
++
++IF(DEFINED CMAKE_OVL_ROOTDISK_PART)
++	ADD_DEFINITIONS(-DOVL_ROOTDISK_PART_ENABLE)
++ENDIF(DEFINED CMAKE_OVL_ROOTDISK_PART)
++
+ IF(DEFINED CMAKE_OVL_MOUNT_COMPRESS_ZLIB)
+ 	ADD_DEFINITIONS(-DOVL_MOUNT_COMPRESS_ZLIB)
+ ENDIF(DEFINED CMAKE_OVL_MOUNT_COMPRESS_ZLIB)
+diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
+index 5a6dcb9..274d6de 100644
+--- a/libfstools/rootdisk.c
++++ b/libfstools/rootdisk.c
+@@ -23,6 +23,7 @@
+ #include <dirent.h>
+ #include <fcntl.h>
+ #include <unistd.h>
++#include <fnmatch.h>
+ 
+ #include "libfstools.h"
+ #include "volume.h"
+@@ -30,7 +31,12 @@
+ #include <linux/loop.h>
+ 
+ #define ROOTDEV_OVERLAY_ALIGN	(64ULL * 1024ULL)
++
++#ifdef OVL_F2FS_ENABLE
+ #define F2FS_MINSIZE		(100ULL * 1024ULL * 1024ULL)
++#endif
++
++static int rootdisk_volume_identify_p(const char *dev, uint64_t offset);
+ 
+ struct squashfs_super_block {
+ 	uint32_t s_magic;
+@@ -39,12 +45,42 @@ struct squashfs_super_block {
+ };
+ 
+ struct rootdev_volume {
++	int no_overlay_create;
+ 	struct volume v;
+ 	uint64_t offset;
+-	char loop_name[32];
++	char dev_name[32];
+ };
+ 
+ static const char *rootdev;
++
++#ifdef OVL_ROOTDISK_PART_ENABLE
++
++/* Minimum overlay size (1 MiB) */
++#define OVL_MINSIZE (1ULL * 1024ULL * 1024ULL)
++
++struct blkdev_diskpart_info {
++	uint64_t start;
++	uint64_t size;
++	int partition;
++	int type;
++};
++
++struct blkdev_disk_info {
++	struct blkdev_diskpart_info partition[4];
++	const char *dev;
++	const char *devname;
++	uint64_t hw_sector_size;
++	uint64_t size;
++	int partitioned;
++	int rootpart;
++	int rootpartro;
++	int ro;
++};
++
++static struct blkdev_disk_info rootdisk_info;
++
++#endif
++
+ static struct driver rootdisk_driver;
+ 
+ static char *get_blockdev(dev_t dev)
+@@ -107,19 +143,290 @@ static int get_squashfs(struct squashfs_super_block *sb)
+ 	return 0;
+ }
+ 
++#ifdef OVL_F2FS_ENABLE
+ static bool rootdisk_use_f2fs(struct rootdev_volume *p)
+ {
+ 	uint64_t size = 0;
+ 	bool ret = false;
+ 	int fd;
+ 
+-	fd = open(rootdev, O_RDONLY);
++	fd = open((p->offset == 0) ? p->dev_name : rootdev, O_RDONLY);
+ 	if (ioctl(fd, BLKGETSIZE64, &size) == 0)
+ 		ret = size - p->offset > F2FS_MINSIZE;
+ 	close(fd);
+ 
+ 	return ret;
+ }
++#endif
++
++#ifdef OVL_ROOTDISK_PART_ENABLE
++static size_t file_read(const char *path, void *buf, size_t size)
++{
++	size_t n;
++
++	FILE *f;
++	f = fopen(path, "r");
++	if (!f)
++		return 0;
++
++	n = fread(buf, 1, size, f);
++	if (ferror(f)) {
++		fclose(f);
++		return 0;
++	}
++
++	fclose(f);
++	return n;
++}
++
++static int file_read_u64(const char *path, uint64_t *value)
++{
++	size_t n;
++	char buf[32] = { 0 };
++
++	n = file_read(path, buf, sizeof(buf) - 1);
++	if (n == 0)
++		return -1;
++
++	buf[n] = 0;
++	*value = strtoull(buf, NULL, 0);
++
++	return 0;
++}
++
++static const char *blkdev_get_devname(const char *dev)
++{
++	const char *devname;
++
++	if (!dev)
++		return NULL;
++
++	/* Get root device name without "/dev/" */
++	devname = strrchr(dev, '/');
++	if (devname)
++		devname++;
++	else
++		devname = dev;
++
++	return devname;
++}
++
++#define BLKDEV_PARENT_PREFIX      "/block/"
++#define BLKDEV_PARENT_PREFIX_LEN  7
++
++static char *blkdev_get_partition_disk_dev(const char *devname)
++{
++	static char buf[256];
++	static char link[256];
++	char *p1, *p2;
++
++	snprintf(buf, sizeof(buf), "/sys/class/block/%s", devname);
++	if (readlink(buf, link, sizeof(link)) == -1)
++		return NULL;
++
++	p1 = strstr(link, BLKDEV_PARENT_PREFIX);
++	p2 = strstr(link, devname);
++
++	if (!p1 || !p2)
++		return NULL;
++
++	if (p2 == p1 + BLKDEV_PARENT_PREFIX_LEN)
++		return NULL;
++
++	p2[-1] = 0;
++
++	/* Add /dev/ prefix */
++	p1 += (BLKDEV_PARENT_PREFIX_LEN - 5); /* 5 = length of "/dev/" */
++	memcpy(p1, "/dev/", 5);
++
++	return p1;
++}
++
++static int blkdev_get_disk_info(
++	const char *rootdev,
++	struct blkdev_disk_info *info)
++{
++	const char *rootdevname;
++	static char buf[512];
++	uint64_t u64;
++
++	if (!rootdev)
++		return -1;
++
++	rootdevname = blkdev_get_devname(rootdev);
++	if (!rootdevname)
++		return -1;
++
++	memset(info, 0, sizeof(struct blkdev_disk_info));
++
++	info->dev = blkdev_get_partition_disk_dev(rootdevname);
++	if (info->dev) {
++		/* rootfs is on partition */
++		info->devname = blkdev_get_devname(info->dev);
++		if (!info->devname)
++			return -1;
++
++		snprintf(buf, sizeof(buf), "/sys/class/block/%s/partition", info->devname);
++		if (file_read_u64(buf, &u64) == 0)
++			return -1; /* rootdisk device is partition */
++
++		snprintf(buf, sizeof(buf), "/sys/class/block/%s/partition", rootdevname);
++		if (file_read_u64(buf, &u64) != 0)
++			return -1; /* rootdev device is not partition */
++
++		if (u64 < 1 || u64 > 4)
++			return -1;
++
++		info->rootpart = u64;
++
++		snprintf(buf, sizeof(buf), "/sys/class/block/%s/ro", rootdevname);
++		if (file_read_u64(buf, &u64) == 0)
++			info->rootpartro = (int)u64;
++	} else {
++		/* rootfs is on entrire device */
++		info->dev        = rootdev;
++		info->devname    = rootdevname;
++		info->rootpart   = 0;
++		info->rootpartro = 0;
++
++		snprintf(buf, sizeof(buf), "/sys/class/block/%s/partition", info->devname);
++		if (file_read_u64(buf, &u64) == 0)
++			return -1; /* rootdisk device is partition */
++	}
++
++	snprintf(buf, sizeof(buf), "/sys/class/block/%s/queue/hw_sector_size", info->devname);
++	if (file_read_u64(buf, &info->hw_sector_size))
++		return -1;
++
++	snprintf(buf, sizeof(buf), "/sys/class/block/%s/size", info->devname);
++	if (file_read_u64(buf, &info->size))
++		return -1;
++
++	info->size = info->size * info->hw_sector_size;
++
++	snprintf(buf, sizeof(buf), "/sys/class/block/%s/ro", info->devname);
++	if (file_read_u64(buf, &u64) == 0)
++		info->ro = (int)u64;
++
++	/* Read partition table from MBR */
++	if (info->rootpart > 0 && (file_read(info->dev, buf, 512) == 512)) {
++		if ((buf[510] == 0x55) || (buf[511] == 0xAA)) {
++			int part;
++
++			for (part = 0; part < 4; part++) {
++				__u32 type = *((__u32 *)&buf[0x1c2 + part * 16]);
++				__u32 lba  = *((__u32 *)&buf[0x1c6 + part * 16]);
++				__u32 size = *((__u32 *)&buf[0x1ca + part * 16]);
++
++				type = le32_to_cpu(type) & 0xff;
++				lba  = le32_to_cpu(lba);
++				size = le32_to_cpu(size);
++
++				if (type == 0)
++					continue;
++
++				info->partition[part].partition = part + 1;
++				info->partition[part].type  = type;
++				info->partition[part].start = lba * info->hw_sector_size;
++				info->partition[part].size  = size * info->hw_sector_size;
++				info->partitioned = 1;
++
++				ULOG_INFO("%s: [%d]: %02x, start %llu, size %llu%s\n",
++					info->dev,
++					part + 1,
++					info->partition[part].type,
++					info->partition[part].start,
++					info->partition[part].size,
++					(part == (info->rootpart - 1)) ? " [rootfs]" : ""
++				);
++			}
++		}
++	}
++
++	return 0;
++}
++
++static int rootdisk_volume_cmp_partition_label(
++	const char *dev, uint64_t offset, const char *name)
++{
++	int id;
++
++	char volume_name[128] = { 0 };
++	size_t n;
++	FILE *f;
++
++	id = rootdisk_volume_identify_p(dev, offset);
++
++	f = fopen(dev, "r");
++	if (!f)
++		return -1;
++
++	/* read volume name */
++	if (id == FS_EXT4) {
++		fseeko(f, offset + 0x478, SEEK_SET);
++		n = fread(volume_name, 16, 1, f);
++		if (n != 1) {
++			fclose(f);
++			return -1;
++		}
++		volume_name[16] = 0;
++	}
++#ifdef OVL_F2FS_ENABLE
++	else if (id == FS_F2FS) {
++		fseeko(f, offset + 0x47c, SEEK_SET);
++		n = fread(volume_name, 127, 1, f);
++		if (n != 1) {
++			fclose(f);
++			return -1;
++		}
++		volume_name[127] = 0;
++	}
++#endif
++
++	fclose(f);
++	return strcmp(volume_name, name);
++}
++
++static int rootdisk_volume_find_partition(
++	const char *diskdevname,
++	const char *name,
++	struct rootdev_volume *p
++)
++{
++	DIR *dir;
++	struct dirent *d;
++
++	static char pattern[64];
++	static char devpath[256];
++	const char *dirname = "/dev";
++
++	if (!diskdevname)
++		return -1;
++
++	dir = opendir(dirname);
++	if (!dir)
++		return -1;
++
++	snprintf(pattern, sizeof(pattern), "%s*", diskdevname);
++
++	while ((d = readdir(dir)) != NULL) {
++		if (fnmatch(pattern, d->d_name, 0) == 0) {
++			snprintf(devpath, sizeof(devpath), "%s/%s", dirname, d->d_name);
++			if (rootdisk_volume_cmp_partition_label(devpath, 0ULL, name) == 0) {
++				ULOG_INFO("founded suitable overlay partition %s\n", devpath);
++				strcpy(p->dev_name, devpath);
++				p->offset = 0ULL;
++				closedir(dir);
++				return 0;
++			}
++		}
++	}
++
++	closedir(dir);
++	return -1;
++}
++
++#endif /* #ifdef OVL_ROOTDISK_PART_ENABLE */
+ 
+ static struct volume *rootdisk_volume_find(char *name)
+ {
+@@ -150,46 +457,124 @@ static struct volume *rootdisk_volume_find(char *name)
+ 	p->v.drv = &rootdisk_driver;
+ 	p->v.name = "rootfs_data";
+ 
+-	p->offset = le64_to_cpu(sb.bytes_used);
+-	p->offset = ((p->offset + (ROOTDEV_OVERLAY_ALIGN - 1)) &
+-		     ~(ROOTDEV_OVERLAY_ALIGN - 1));
++#ifdef OVL_ROOTDISK_PART_ENABLE
++	if (blkdev_get_disk_info(rootdev, &rootdisk_info) != 0)
++		return NULL;
++
++	if (rootdisk_info.partitioned)
++	{
++		ULOG_INFO("root filesystem on the %s partition of %s (%s) device\n",
++			rootdev, rootdisk_info.dev, rootdisk_info.ro ? "ro" : "rw");
++
++		if (rootdisk_info.ro == 0) {
++			/* try to find ext4/f2fs partition with label "rootfs_data" on rootdev */
++			if (rootdisk_volume_find_partition(rootdisk_info.devname, name, p) != 0) {
++				int part;
++
++				struct blkdev_diskpart_info *rootfs_part =
++					&rootdisk_info.partition[rootdisk_info.rootpart - 1];
++
++				if (rootdisk_info.rootpartro == 0) {
++					/* root filesystem partition is rw */
++					p->offset = le64_to_cpu(sb.bytes_used);
++					p->offset = ((p->offset + (ROOTDEV_OVERLAY_ALIGN - 1)) &
++						~(ROOTDEV_OVERLAY_ALIGN - 1));
++
++					if ((p->offset + OVL_MINSIZE) <= rootfs_part->size) {
++						/* rootfs partition has free space for overlay filesystem */
++						/* try to create/find overlay fs after the rootfs partition */
++						strcpy(p->dev_name, rootdev);
++						return &p->v;
++					}
++				}
++
++				/* try to put overlayfs at end of the partitions on disk */
++				for (part = rootdisk_info.rootpart; part <= 4; part++)
++				{
++					if (rootdisk_info.partition[part - 1].type == 0)
++						continue;
++
++					p->offset = rootdisk_info.partition[part - 1].start +
++					            rootdisk_info.partition[part - 1].size;
++				}
++
++				p->offset = ((p->offset + (ROOTDEV_OVERLAY_ALIGN - 1)) &
++					~(ROOTDEV_OVERLAY_ALIGN - 1));
++
++				if ((p->offset + OVL_MINSIZE) <= rootdisk_info.size) {
++					/* for properly loop device creation set rootdev to rootdiskdev */
++					rootdev = rootdisk_info.dev;
++				}
++			}
++		}
++	}
++	else
++	{
++#endif
++		ULOG_INFO("root filesystem on the %s device\n", rootdev);
++
++		p->offset = le64_to_cpu(sb.bytes_used);
++		p->offset = ((p->offset + (ROOTDEV_OVERLAY_ALIGN - 1)) &
++			~(ROOTDEV_OVERLAY_ALIGN - 1));
++#ifdef OVL_ROOTDISK_PART_ENABLE
++	}
++
++	if ((p->offset + OVL_MINSIZE) > rootdisk_info.size) {
++		ULOG_WARN("no space on %s device for overlay filesystem\n",
++			rootdisk_info.dev);
++		strcpy(p->dev_name, rootdisk_info.dev);
++		p->no_overlay_create = 1;
++	}
++#endif
+ 
+ 	return &p->v;
+ }
+ 
+-static int rootdisk_volume_identify(struct volume *v)
++static int rootdisk_volume_identify_p(const char *dev, uint64_t offset)
+ {
+-	struct rootdev_volume *p = container_of(v, struct rootdev_volume, v);
+ 	int ret = FS_NONE;
+ 	uint32_t magic = 0;
+ 	size_t n;
+ 	FILE *f;
+ 
+-	f = fopen(rootdev, "r");
++	f = fopen(dev, "r");
+ 	if (!f)
+ 		return ret;
+ 
+-	fseeko(f, p->offset + 0x400, SEEK_SET);
++#ifdef OVL_F2FS_ENABLE
++	fseeko(f, offset + 0x400, SEEK_SET);
+ 	n = fread(&magic, sizeof(magic), 1, f);
+-	if (n != 1)
++	if (n != 1) {
++		fclose(f);
+ 		return -1;
++	}
+ 
+ 	if (magic == cpu_to_le32(0xF2F52010))
+ 		ret = FS_F2FS;
++#endif
+ 
+ 	magic = 0;
+-	fseeko(f, p->offset + 0x438, SEEK_SET);
++	fseeko(f, offset + 0x438, SEEK_SET);
+ 	n = fread(&magic, sizeof(magic), 1, f);
+-	if (n != 1)
++	if (n != 1) {
++		fclose(f);
+ 		return -1;
++	}
+ 	if ((le32_to_cpu(magic) & 0xffff) == 0xef53)
+ 		ret = FS_EXT4;
+ 
+ 	fclose(f);
+-
+ 	return ret;
+ }
+ 
++static int rootdisk_volume_identify(struct volume *v)
++{
++	struct rootdev_volume *p = container_of(v, struct rootdev_volume, v);
++	if (!v)
++		return FS_NONE;
++	return rootdisk_volume_identify_p((p->offset == 0) ? p->dev_name : rootdev, p->offset);
++}
++
+ static int rootdisk_create_loop(struct rootdev_volume *p)
+ {
+ 	struct loop_info64 info;
+@@ -202,13 +587,13 @@ static int rootdisk_create_loop(struct rootdev_volume *p)
+ 		return -1;
+ 
+ 	for (i = 0; i < 8; i++) {
+-		snprintf(p->loop_name, sizeof(p->loop_name), "/dev/loop%d",
++		snprintf(p->dev_name, sizeof(p->dev_name), "/dev/loop%d",
+ 			 i);
+ 
+ 		if (fd >= 0)
+ 			close(fd);
+ 
+-		fd = open(p->loop_name, O_RDWR);
++		fd = open(p->dev_name, O_RDWR);
+ 		if (fd < 0)
+ 			continue;
+ 
+@@ -247,7 +632,7 @@ static int rootdisk_create_loop(struct rootdev_volume *p)
+ 	close(ffd);
+ 
+ 	if (ret)
+-		p->loop_name[0] = 0;
++		p->dev_name[0] = 0;
+ 
+ 	return ret;
+ }
+@@ -258,22 +643,36 @@ static int rootdisk_volume_init(struct volume *v)
+ 	char str[128];
+ 	int ret = 0;
+ 
+-	if (!p->loop_name[0] && rootdisk_create_loop(p) != 0) {
++	if (!p->dev_name[0] && rootdisk_create_loop(p) != 0) {
+ 		ULOG_ERR("unable to create loop device\n");
+ 		return -1;
+ 	}
+ 
+ 	v->type = BLOCKDEV;
+-	v->blk = p->loop_name;
++	v->blk = p->dev_name;
++
++	if (p->no_overlay_create)
++		return -1;
+ 
+ 	switch (rootdisk_volume_identify(v)) {
+ 	case FS_NONE:
+ 		ULOG_INFO("rootdisk overlay filesystem has not been formatted yet\n");
+-		if (rootdisk_use_f2fs(p))
++#ifdef OVL_F2FS_ENABLE
++		if (rootdisk_use_f2fs(p)) {
++			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %llu)...\n",
++				v->blk, p->offset);
+ 			snprintf(str, sizeof(str), "mkfs.f2fs -q -l rootfs_data %s", v->blk);
++		}
+ 		else
++#endif
++		{
++			ULOG_INFO("creating ext4 overlay filesystem (%s, offset %llu)...\n",
++				v->blk, p->offset);
+ 			snprintf(str, sizeof(str), "mkfs.ext4 -q -L rootfs_data %s", v->blk);
++		}
+ 		ret = system(str);
++		if (ret)
++			ULOG_ERR("overlay filesystem creation failed with error %d\n", ret);
+ 		break;
+ 	default:
+ 		break;
+diff --git a/mount_root.c b/mount_root.c
+index dffb0a6..f8aa5e1 100644
+--- a/mount_root.c
++++ b/mount_root.c
+@@ -72,7 +72,9 @@ start(int argc, char *argv[1])
+ 		return ramoverlay();
+ 
+ 	case FS_EXT4:
++#ifdef OVL_F2FS_ENABLE
+ 	case FS_F2FS:
++#endif
+ 	case FS_JFFS2:
+ 	case FS_UBIFS:
+ 		mount_overlay(data);
+@@ -112,7 +114,9 @@ done(int argc, char *argv[1])
+ 		return jffs2_switch(v);
+ 
+ 	case FS_EXT4:
++#ifdef OVL_F2FS_ENABLE
+ 	case FS_F2FS:
++#endif
+ 	case FS_JFFS2:
+ 	case FS_UBIFS:
+ 		fs_state_set("/overlay", FS_STATE_READY);
+-- 
+2.16.2.windows.1
+
