@@ -3,6 +3,8 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
+PR_append = ".t0"
+
 python __anonymous() {
     if not d.getVar("KERNEL_SRC_URI") or not d.getVar("KERNEL_SRC_BRANCH") or not d.getVar("KERNEL_SRC_SRCREV"):
         bb.error("You need to set properly values for KERNEL_SRC_URI, KERNEL_SRC_BRANCH and KERNEL_SRC_SRCREV")
@@ -52,27 +54,6 @@ require recipes-kernel/linux/linux-yocto.inc
 inherit kernel-tano
 
 LINUX_VERSION_EXTENSION ??= "-tano-${LINUX_KERNEL_TYPE}"
-
-KERNEL_FEATURES_append = " \
-	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-net/usb-net.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-serial/usb-serial.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/cgroups/cgroups.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "wifi usbhost", " features/wifi/wifi-usb.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "wifi pci", " features/wifi/wifi-pci.scc", "" ,d)} \
-	features/general/ikconfig.scc \
-	features/net_sched/net_sched.scc \
-	features/netfilter/netfilter.scc \
-	features/nf_tables/nf_tables.scc \
-	features/ebtables/ebtables.scc \
-	features/net/routing.scc \
-	features/net/l2tp.scc \
-	features/net/ipset.scc \
-	features/net/atm.scc \
-	features/net/ifb.scc \
-	features/net/ppp.scc \
-	features/net/tun.scc \
-	features/gre/gre-enable.scc \
-"
 
 do_kernel_configme[depends] += "virtual/${TARGET_PREFIX}binutils:do_populate_sysroot"
 do_kernel_configme[depends] += "virtual/${TARGET_PREFIX}gcc:do_populate_sysroot"

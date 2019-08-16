@@ -3,6 +3,8 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
+PR_append = ".i0"
+
 DEPENDS += "${@bb.utils.contains('ARCH', 'x86', 'elfutils-native', '', d)}"
 DEPENDS += "openssl-native util-linux-native"
 
