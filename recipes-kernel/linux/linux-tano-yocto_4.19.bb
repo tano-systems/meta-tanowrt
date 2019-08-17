@@ -9,7 +9,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano4"
+MACHINE_KERNEL_PR_append = "tano5"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
@@ -19,20 +19,20 @@ KERNEL_SRC_BRANCH_qemux86 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH_qemux86-64 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH ?= "v4.19/standard/base"
 
-KERNEL_SRC_SRCREV_machine_qemuarm ?= "b960e1b087a8b0f192e5a9a3441dd47aecfa7d48"
-KERNEL_SRC_SRCREV_machine_qemux86 ?= "eebb51300a07804a020ec468b5f8c5bf720198d9"
-KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "eebb51300a07804a020ec468b5f8c5bf720198d9"
-KERNEL_SRC_SRCREV ?= "eebb51300a07804a020ec468b5f8c5bf720198d9"
+KERNEL_SRC_SRCREV_machine_qemuarm ?= "c12bc1a098be009c44582e75af630ff573155473"
+KERNEL_SRC_SRCREV_machine_qemux86 ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
+KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
+KERNEL_SRC_SRCREV ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.19"
 KERNEL_CACHE_SRC_SRCREV ?= "5005e4d3c8be586c82b881974090578b18896ae8"
 
-LINUX_VERSION ?= "4.19.14"
+LINUX_VERSION ?= "4.19.44"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-4.19"
-YOCTO_KERNEL_CACHE_SRCREV = "70d33ded25747f73381baff8d8758e86967e4ee2"
+YOCTO_KERNEL_CACHE_SRCREV = "ad235db461bf4595c668700ca8a909c322009cc1"
 
 require recipes-kernel/linux/linux-tano-yocto.inc
 require recipes-kernel/linux/linux-tano.inc
