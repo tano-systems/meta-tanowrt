@@ -23,6 +23,18 @@ This layer supports the following machines designed to run in QEMU:
 | `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (16 MiB)  |
 | `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (16 MiB)  |
 
+## Supported Hardware
+
+Support for real hardware is provided by additional layers.
+
+Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers.
+
+| Layer                      | Hardware                               |
+| -------------------------- | -------------------------------------- |
+| [meta-tano-openwrt-rpi]    | Raspberry Pi boards                    |
+
+[meta-tano-openwrt-rpi]: https://github.com/tano-systems/meta-tano-openwrt-rpi
+
 ## Getting Started
 
 Clone openembedded-core repository:
