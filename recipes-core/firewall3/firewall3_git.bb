@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -30,9 +30,9 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 12.06.2019
-# utils: coverity resource leak warning
-SRCREV = "de9409762de14b5d909925c5db2e704ec13c754b"
+# 22.08.2019
+# iptables.c: lock the xtables.lock
+SRCREV = "8c404ef02f0122ec90b48e122777ff6bfa715d7f"
 
 S = "${WORKDIR}/git"
 
