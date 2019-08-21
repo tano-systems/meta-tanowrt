@@ -2,4 +2,4 @@ part /boot --source bootimg-pcbios --ondisk=sda --label=boot --active --align=10
 part / --source rootfs --use-uuid --fstype=squashfs --align=1024
 part /overlay --size=16M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
 
-bootloader --timeout=0 --append="rootwait rootfstype=squashfs console=tty0 console=ttyS0,115200n8"
+bootloader --timeout=0 --append="rootwait rootfstype=squashfs console=tty1 console=ttyS0,115200n8"
