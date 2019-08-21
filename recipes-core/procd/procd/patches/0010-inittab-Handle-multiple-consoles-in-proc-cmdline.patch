@@ -1,0 +1,217 @@
+From 4b40b5ae7568ab4b642e749a2134be8b0270eb7d Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 21 Aug 2019 17:31:40 +0300
+Subject: [PATCH 10/10] inittab: Handle multiple consoles in /proc/cmdline
+
+If askconsole (or askconsolelate) specified without id, then process
+will be executed for all tty's defined in the kernel command line
+using "console=" parameters.
+
+If askconsole (or askconsolelate) has specified id, then process will
+be executed only for tty specified in the id, if this tty is also
+defined in the command line using "console=" parameter.
+
+The sequence of starting inittab actions:
+  1. respawn
+  2. askconsole
+  3. askfirst
+  4. sysinit
+  5. respawnlate
+  6. askconsolelate
+  7. shutdown
+
+If a process has already been started for tty through the askconsole
+action, then the askfirst entries for the same tty will be ignored.
+
+If a process has already been started for tty through the askfirst
+action, then no process will be started for this tty through the
+askconsolelate action.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ inittab.c | 116 +++++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 99 insertions(+), 17 deletions(-)
+
+diff --git a/inittab.c b/inittab.c
+index 55554b9..9296b5f 100644
+--- a/inittab.c
++++ b/inittab.c
+@@ -43,7 +43,6 @@
+ #define MAX_ARGS	8
+ 
+ struct init_action;
+-char *console = NULL;
+ 
+ struct init_handler {
+ 	const char *name;
+@@ -65,10 +64,18 @@ struct init_action {
+ 	struct uloop_timeout tout;
+ };
+ 
++struct console {
++	struct list_head list;
++	char *id;
++	int running;
++};
++
++static int askconsole_run = 0;
+ static const char *tab = "/etc/inittab";
+ static char *ask = "/sbin/askfirst";
+ 
+ static LIST_HEAD(actions);
++static LIST_HEAD(consoles);
+ 
+ static int dev_exist(const char *dev)
+ {
+@@ -89,6 +96,62 @@ static int dev_exist(const char *dev)
+ 	return 1;
+ }
+ 
++static void parse_cmdline(void)
++{
++	char cmdline[CMDLINE_SIZE + 1];
++	char buf[256];
++	char *p, *sptr, *split;
++	int fd;
++	ssize_t r;
++	struct console *c;
++
++	fd = open("/proc/cmdline", O_RDONLY);
++	if (fd < 0)
++		return;
++
++	r = read(fd, cmdline, sizeof(cmdline) - 1);
++	if (r <= 0)
++		return;
++
++	cmdline[r] = 0;
++	close(fd);
++
++	for (p = strtok_r(cmdline, " \t\n", &sptr); p;
++	     p = strtok_r(NULL, " \t\n", &sptr)) {
++		char *sep = strchr(p, '=');
++		if (sep == NULL)
++			continue;
++
++		ssize_t klen = sep - p;
++		if (strncmp("console", p, klen))
++			continue;
++
++		strncpy(buf, &sep[1], sizeof(buf));
++		buf[sizeof(buf) - 1] = 0;
++
++		split = strchr(buf, ',');
++		if (split != NULL)
++			*split = '\0';
++
++		c = calloc(1, sizeof(struct console));
++		c->id = strdup(buf);
++		c->running = 0;
++		list_add_tail(&c->list, &consoles);
++	}
++}
++
++static struct console *find_tty_in_cmdline(const char *tty)
++{
++	struct console *c;
++
++	list_for_each_entry(c, &consoles, list) {
++		if (!strcmp(c->id, tty))
++			return c;
++	}
++
++	return NULL;
++}
++
+ static void fork_worker(struct init_action *a)
+ {
+ 	pid_t p;
+@@ -150,12 +213,18 @@ static void runrc(struct init_action *a)
+ static void askfirst(struct init_action *a)
+ {
+ 	int i;
++	struct console *tty;
+ 
+-	if (!dev_exist(a->id) || (console && !strcmp(console, a->id))) {
++	tty = find_tty_in_cmdline(a->id);
++
++	if (!dev_exist(a->id) || (askconsole_run && tty)) {
+ 		DEBUG(4, "Skipping %s\n", a->id);
+ 		return;
+ 	}
+ 
++	if (tty)
++		tty->running = true;
++
+ 	a->tout.cb = respawn;
+ 	for (i = MAX_ARGS - 1; i >= 1; i--)
+ 		a->argv[i] = a->argv[i - 1];
+@@ -166,30 +235,41 @@ static void askfirst(struct init_action *a)
+ 	fork_worker(a);
+ }
+ 
++static int add_action(struct init_action *a, const char *name);
++
+ static void askconsole(struct init_action *a)
+ {
+-	char line[256], *tty, *split;
+ 	int i;
++	struct console *tty;
+ 
+-	tty = get_cmdline_val("console", line, sizeof(line));
+-	if (tty != NULL) {
+-		split = strchr(tty, ',');
+-		if (split != NULL)
+-			*split = '\0';
++	if (a->id[0] == 0) {
++		list_for_each_entry(tty, &consoles, list) {
++			struct init_action *newa;
+ 
+-		if (!dev_exist(tty)) {
+-			DEBUG(4, "skipping %s\n", tty);
+-			return;
+-		}
++			newa = calloc(1, sizeof(struct init_action));
++
++			for (i = 0; i < MAX_ARGS; i++)
++				newa->argv[i] = a->argv[i];
++
++			newa->id = tty->id;
++			newa->line = a->line;
+ 
+-		console = strdup(tty);
+-		a->id = strdup(tty);
++			add_action(newa, a->handler->name);
++		}
++		
++		return;
+ 	}
+-	else {
+-		console = NULL;
+-		a->id = NULL;
++
++	tty = find_tty_in_cmdline(a->id);
++
++	if (!dev_exist(a->id) || !tty || tty->running) {
++		DEBUG(4, "Skipping %s\n", a->id);
++		return;
+ 	}
+ 
++	tty->running = 1;
++	askconsole_run = 1;
++
+ 	a->tout.cb = respawn;
+ 	for (i = MAX_ARGS - 1; i >= 1; i--)
+ 		a->argv[i] = a->argv[i - 1];
+@@ -282,6 +362,8 @@ void procd_inittab(void)
+ 		return;
+ 	}
+ 
++	parse_cmdline();
++
+ 	regcomp(&pat_inittab, "([a-zA-Z0-9]*):([a-zA-Z0-9]*):([a-zA-Z0-9]*):(.*)", REG_EXTENDED);
+ 	line = malloc(LINE_LEN);
+ 	a = calloc(1, sizeof(struct init_action));
+-- 
+2.16.2.windows.1
+
