@@ -1,8 +1,10 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano3"
+PR_append = ".tano4"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+
+OPKGLIBDIR = "${libdir}"
 
 SRC_URI_append = "\
 	file://opkg-key \
@@ -33,8 +35,6 @@ do_install_append () {
 	install -m 0755 ${WORKDIR}/20_migrate-feeds ${D}${sysconfdir}/uci-defaults/20_migrate-feeds
 	install -m 0755 ${WORKDIR}/opkg-key ${D}/usr/sbin/opkg-key
 	ln -s /usr/bin/opkg ${D}/bin/opkg
-
-	ln -s ../../../usr/lib/opkg/status ${D}/var/lib/opkg/status
 }
 
-FILES_${PN} += "/bin /usr/lib /var/lib"
+FILES_${PN} += "/bin /usr/lib"
