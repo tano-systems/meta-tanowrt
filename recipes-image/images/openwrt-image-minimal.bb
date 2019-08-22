@@ -5,7 +5,7 @@
 # It is released under the MIT license.  See COPYING.MIT
 # for the terms.
 
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
@@ -17,6 +17,7 @@ inherit rootfs-rm-opkg-lists
 inherit rootfs-var-in-tmpfs
 
 IMAGE_FEATURES += "\
+	package-management \
 	empty-root-password \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'wifi', '', d)} \
 	${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)} \
