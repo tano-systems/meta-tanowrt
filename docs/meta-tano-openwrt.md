@@ -1,4 +1,4 @@
-# meta-tano-openwrt
+# meta-tanowrt
 
 ## Layer configuration options
 

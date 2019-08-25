@@ -1,4 +1,4 @@
-# meta-tano-openwrt
+# meta-tanowrt
 
 This layer provides OpenEmbedded metadata for TanoWrt Linux distribution by Tano Systems. TanoWrt distribution is based on packages and fixes (patches) from the official [OpenWrt](https://openwrt.org/) distribution.
 
@@ -74,12 +74,12 @@ Go to the openembedded-core repository directory and clone repositories for bitb
 cd openembedded-core
 git clone -b 1.36 git://github.com/openembedded/bitbake.git
 git clone -b rocko git://github.com/openembedded/meta-openembedded.git
-git clone -b rocko git://github.com/tano-systems/meta-tano-openwrt.git
+git clone -b rocko git://github.com/tano-systems/meta-tanowrt.git
 ```
 
 The first time you need to add layers and create local.conf from the template. To do this, run the command:
 ```shell
-TEMPLATECONF=meta-tano-openwrt/conf . ./oe-init-build-env
+TEMPLATECONF=meta-tanowrt/conf . ./oe-init-build-env
 ```
 
 This command automatically creates a `build` subfolder with the required configuration (`local.conf` and `bblayers.conf`) based on the specified template.

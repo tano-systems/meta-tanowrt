@@ -27,7 +27,7 @@ When the build is complete, the VMDK image file will be located in folder
 From the Oracle VM VirtualBox Manager, create a new Virtual Machine
 
 Name and operating system:
-1. Name: tano-openwrt-qemux86-64
+1. Name: tanowrt-qemux86-64
 2. Type: Linux
 3. Version: Other Linux (64-bit)
 4. Click "Next"
