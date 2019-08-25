@@ -104,4 +104,4 @@ PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
 #ASSUME_PROVIDED += "libsdl-native"
 
 # Distributive selection
-DISTRO ?= "tano-openwrt"
+DISTRO ?= "tanowrt"

@@ -1,7 +1,7 @@
 #
-# OpenWrt version variables
+# TanoWrt version variables
 #
-# Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -49,14 +49,14 @@ OPENWRT_VERSION_CODE ?= "${OPENWRT_VERSION_SRCREV}"
 # This is the repository address embedded in the image, it defaults
 # to the trunk snapshot repo; the url may contain the following placeholders:
 #
-OPENWRT_VERSION_REPO ?= "https://github.com/tano-systems/meta-tano-openwrt"
+OPENWRT_VERSION_REPO ?= "https://github.com/tano-systems/meta-tanowrt"
 
 #
 # Release Homepage"
 #
 # This is the release version homepage
 #
-OPENWRT_VERSION_HOME_URL ?= "https://github.com/tano-systems/meta-tano-openwrt"
+OPENWRT_VERSION_HOME_URL ?= "https://github.com/tano-systems/meta-tanowrt"
 
 #
 # Manufacturer name
@@ -79,7 +79,7 @@ OPENWRT_VERSION_MANUFACTURER_URL ?= "https://tano-systems.com/"
 #
 # This is an URL to provide users for providing bug reports
 #
-OPENWRT_VERSION_BUG_URL ?= "https://github.com/tano-systems/meta-tano-openwrt/issues"
+OPENWRT_VERSION_BUG_URL ?= "https://github.com/tano-systems/meta-tanowrt/issues"
 
 #
 # Support URL

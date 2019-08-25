@@ -1,5 +1,5 @@
-require conf/distro/include/tano-openwrt-toolchain.inc
-require conf/distro/include/tano-openwrt-sdk.inc
+require conf/distro/include/tanowrt-toolchain.inc
+require conf/distro/include/tanowrt-sdk.inc
 
 IMAGE_CLASSES += "openwrt-image-types"
 
@@ -63,12 +63,12 @@ ROOT_HOME ??= "/root"
 # Set preferred Qt version
 QT_PROVIDER ?= "qt5"
 
-require conf/distro/include/tano-openwrt-packageconfig.inc
-require conf/distro/include/tano-openwrt-prefs.inc
-require conf/distro/include/tano-openwrt-repairs.inc
-require conf/distro/include/tano-openwrt-mirrors.inc
+require conf/distro/include/tanowrt-packageconfig.inc
+require conf/distro/include/tanowrt-prefs.inc
+require conf/distro/include/tanowrt-repairs.inc
+require conf/distro/include/tanowrt-mirrors.inc
 
 #
 # Dynamic includes
 #
-include conf/distro/include/tano-openwrt-hw.inc
+include conf/distro/include/tanowrt-hw.inc

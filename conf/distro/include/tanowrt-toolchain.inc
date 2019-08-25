@@ -6,7 +6,7 @@
 TOOLCHAIN_TYPE  ?= "internal"
 TOOLCHAIN_BRAND ?= "gcc"
 
-include conf/distro/include/tano-openwrt-hw-toolchain.inc
+include conf/distro/include/tanowrt-hw-toolchain.inc
 
 require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}-${TOOLCHAIN_BRAND}.inc
 require conf/distro/include/toolchain-${TOOLCHAIN_TYPE}.inc
