@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano34.${INC_PR}"
+PR_append = ".tano35.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -42,6 +42,7 @@ SRC_URI_append = "\
     file://sysfixtime.init \
     file://preinit/80_mount_root \
     file://hotplug-call \
+    file://sysctl.d/10-default.conf \
 "
 
 # Only for x86 and x86-64 architectures
@@ -165,8 +166,11 @@ do_install_append () {
 
 	install -d -m 0755 ${D}${sysconfdir}/config
 	install -d -m 0755 ${D}${sysconfdir}/init.d
+	install -d -m 0755 ${D}${sysconfdir}/sysctl.d
 
 	install -m 0644 ${WORKDIR}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
+	install -m 0644 ${WORKDIR}/sysctl.d/10-default.conf ${D}${sysconfdir}/sysctl.d/10-default.conf
+
 	install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
 	install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
 	install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
