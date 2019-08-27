@@ -10,9 +10,11 @@ IMAGE_OVERLAY_NAME_SUFFIX = ".overlay"
 #
 # - wifi
 # - cgroup
+# - perftools
 #
 FEATURE_PACKAGES_cgroup = "packagegroup-openwrt-cgroup"
 FEATURE_PACKAGES_wifi = "packagegroup-openwrt-wifi"
+FEATURE_PACKAGES_perftools = "packagegroup-openwrt-perftools"
 
 #
 # Create empty overlay image
