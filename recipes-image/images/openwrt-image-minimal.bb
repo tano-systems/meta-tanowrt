@@ -5,7 +5,7 @@
 # It is released under the MIT license.  See COPYING.MIT
 # for the terms.
 
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
@@ -22,6 +22,7 @@ IMAGE_FEATURES += "\
 	empty-root-password \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'wifi', '', d)} \
 	${@bb.utils.contains('COMBINED_FEATURES', 'cgroup', 'cgroup', '', d)} \
+	perftools \
 "
 
 CORE_IMAGE_BASE_INSTALL = '\

@@ -10,6 +10,7 @@ Available image features:
 - `package-management` - package manager opkg
 - `cgroup` - cgroups related packages
 - `wifi` - wifi related packages
+- `perftools` - performance utilities
 
 #### `DISTRO_FEATURES` and `MACHINE_FEATURES`
 
