@@ -68,6 +68,9 @@ require conf/distro/include/tanowrt-prefs.inc
 require conf/distro/include/tanowrt-repairs.inc
 require conf/distro/include/tanowrt-mirrors.inc
 
+# Unbreak multimachine builds
+LICENSE_DIRECTORY = "${DEPLOY_DIR}/licenses/${MACHINE_ARCH}"
+
 #
 # Dynamic includes
 #
