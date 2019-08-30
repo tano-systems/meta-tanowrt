@@ -1,9 +1,9 @@
 PV = "3.0"
-PR = "tano3.${INC_PR}"
+PR = "tano4.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	https://fossies.org/linux/privat/${BPN}-${PV}.tar.xz \
+	${SOURCEFORGE_MIRROR}/projects/xtables-addons/files/Xtables-addons/${BPN}-${PV}.tar.xz \
 	file://001-fix-kernel-version-detection.patch \
 	file://100-add-rtsp-conntrack.patch \
 	file://200-add-lua-packetscript.patch \
