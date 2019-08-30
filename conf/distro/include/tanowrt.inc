@@ -28,7 +28,10 @@ DISTRO_FEATURES_append = " wifi "
 DISTRO_FEATURES_append = " watchdog "
 
 # Graphics
-DISTRO_FEATURES += " graphics screen splash opengl "
+DISTRO_FEATURES_append = " graphics screen splash opengl "
+
+# IPv6
+DISTRO_FEATURES_append = " ipv6"
 
 # Remove sysvinit and systemd from DISTRO_FEATURES
 DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
