@@ -1,7 +1,7 @@
-PR_append = ".c3"
+PR_append = ".c4"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.19"
-KERNEL_CACHE_SRC_SRCREV ?= "02f19db61166864af245b1e58eab06a2b437fd2b"
+KERNEL_CACHE_SRC_SRCREV ?= "ce9f9e2f4015d5a26fef47351051062c5f950545"
 
 KERNEL_FEATURES_append = "\
 	patches/openwrt/generic/550.scc \
