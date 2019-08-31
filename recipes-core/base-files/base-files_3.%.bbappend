@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano36.${INC_PR}"
+PR_append = ".tano37.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -14,7 +14,7 @@ OPENWRT_ZONENAME ?= "Europe/Moscow"
 OPENWRT_TIMEZONE ?= "MSK-3"
 
 # System hostname
-OPENWRT_HOSTNAME ?= "openwrt"
+OPENWRT_HOSTNAME ?= "tanowrt"
 
 # Initial hwclock parameters
 OPENWRT_HWCLOCK_DEV       ?= "/dev/rtc0"
