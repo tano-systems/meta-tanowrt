@@ -5,7 +5,7 @@
 # It is released under the MIT license.  See COPYING.MIT
 # for the terms.
 
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "OpenWrt Minimal Complete Image"
 LICENSE = "MIT"
@@ -15,6 +15,7 @@ inherit openwrt-image
 inherit rootfs-rm-boot-dir
 inherit rootfs-rm-opkg-lists
 inherit rootfs-var-in-tmpfs
+inherit set-root-password
 
 IMAGE_FEATURES += "\
 	package-management \
