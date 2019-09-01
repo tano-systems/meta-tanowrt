@@ -2,7 +2,7 @@
 # Tano Systems LuCI Theme bitbake recipe
 # Copyright (c) 2019, Tano Systems. All Rights Reserved.
 #
-PR = "tano0"
+PR = "tano1"
 PV = "0.0.9+git${SRCPV}"
 
 SUMMARY = "LuCI Theme by Tano Systems"
@@ -17,7 +17,7 @@ inherit openwrt-luci-theme
 LUCI_THEME_NAME = "tano"
 
 SRC_URI = "git://github.com/tano-systems/luci-theme-tano.git;name=theme"
-SRCREV_theme = "09db76f165e482969f6e5ab309dc9eb5f6773406"
+SRCREV_theme = "adc99701130a0bf32ace3ed9cd527f256e5599a3"
 SRCREV_FORMAT = "theme"
 
 S = "${WORKDIR}/git"
