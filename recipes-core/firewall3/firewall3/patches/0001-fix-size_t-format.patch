@@ -1,0 +1,13 @@
+diff --git a/utils.c b/utils.c
+index 5aa7d55..d9b1f7d 100644
+--- a/utils.c
++++ b/utils.c
+@@ -145,7 +145,7 @@ fw3_alloc(size_t size)
+ 	mem = calloc(1, size);
+ 
+ 	if (!mem)
+-		error("Out of memory while allocating %d bytes", size);
++		error("Out of memory while allocating %zd bytes", size);
+ 
+ 	return mem;
+ }
