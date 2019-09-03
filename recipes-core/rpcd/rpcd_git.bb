@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -16,11 +16,12 @@ SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
 	file://rpcd.init \
 	file://rpcd.config \
+	file://0001-build-fix.patch \
 "
 
-# 22.05.2019
-# session: handle NULL return values of crypt()
-SRCREV_rpcd = "569284a119f958154fe076f5bc06b031d59a71cc"
+# 03.09.2019
+# rpcd: sys: actually move timespec declaration
+SRCREV_rpcd = "27c24c7c186ad6522995872a9fe380dd1545af9a"
 
 S = "${WORKDIR}/git"
 
