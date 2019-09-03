@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano7"
+PR = "tano8"
 
 RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 16.03.2019
-# iwinfo: Complete device IDs for Ubiquiti airOS XM/XW devices
-SRCREV = "073a838891e58fdf6b893032113ead1d003dc7e4"
+# 01.09.2019
+# iwinfo: Fix rate buffer size
+SRCREV = "f599a8dc01e01231fd116c9d1745f364c409c57f"
 
 inherit openwrt pkgconfig
 
