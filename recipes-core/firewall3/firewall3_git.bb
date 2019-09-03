@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano15"
+PR = "tano16"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -20,6 +20,11 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git \
            file://firewall.user \
 "
 
+# Patches
+SRC_URI += "\
+	file://0001-fix-size_t-format.patch \
+"
+
 # Kernel dependencies and module autoloading
 RDEPENDS_${PN} += "\
 	kmod-ipt-core \
@@ -30,9 +35,9 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 22.08.2019
-# iptables.c: lock the xtables.lock
-SRCREV = "8c404ef02f0122ec90b48e122777ff6bfa715d7f"
+# 02.09.2019
+# firewall3: Fix some format string problems
+SRCREV = "4d0c703e750cdbaa7d8afc56de05bd1238e3c981"
 
 S = "${WORKDIR}/git"
 
