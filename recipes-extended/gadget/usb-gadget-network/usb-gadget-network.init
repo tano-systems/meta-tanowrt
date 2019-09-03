@@ -1,0 +1,17 @@
+#!/bin/sh /etc/rc.common
+#
+# Simple USB Network Gadget init script
+#
+# Copyright (c) 2019 Tano Systems. All Rights Reserved.
+# Author: Anton Kikin <a.kikin@tano-systems.com>
+#
+START=98
+STOP=20
+
+start() {
+	modprobe g_ether
+}
+
+stop() {
+	rmmod g_ether
+}
