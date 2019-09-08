@@ -1,0 +1,103 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (c) 2019 Tano Systems. All Rights Reserved.
+# Author: Anton Kikin <a.kikin@tano-systems.com>
+#
+# Starts and stops mbusd
+#
+START=80
+
+USE_PROCD=1
+NAME=mbusd
+MBUSD_BIN=/usr/bin/mbusd
+
+BAUDRATES="110, 150, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600"
+
+validate_mbusd_section()
+{
+	uci_load_validate mbusd mbusd "$1" "$2" \
+		'enable:bool:0' \
+		'log_file:string:/var/log/mbusd.log' \
+		'log_verbosity:range(0, 9):0' \
+		'device:string' \
+		"speed:or(${BAUDRATES}):115200" \
+		'parity:or("none", "even", "odd"):even' \
+		'stopbits:or("1", "2"):1' \
+		'bind:string:0.0.0.0' \
+		'port:port:502' \
+		'maxconn:range(1, 128):4' \
+		'timeout:uinteger:60' \
+		'retries:uinteger:3' \
+		'pause:uinteger:100' \
+		'wait:uinteger:500'
+}
+
+mbusd_instance()
+{
+	[ "$2" = 0 ] || {
+		echo "Validation failed for config section ${cfg}"
+		return 1
+	}
+
+	local cfg="${1}"
+	local mode
+
+	[ -x "${MBUSD_BIN}" ] || return
+	[ "${enable}" = "0" ] && return 1
+
+	[ -c "${device}" ] || {
+		echo "Invalid device ${device}"
+		return 1
+	}
+
+	mode="8"
+
+	if [ "${parity}" = "none" ]; then
+		mode="${mode}N"
+	elif [ "${parity}" = "even" ]; then
+		mode="${mode}E"
+	elif [ "${parity}" = "odd" ]; then
+		mode="${mode}O"
+	fi
+
+	mode="${mode}${stopbits}"
+
+	mkdir -p "$(dirname "${log_file}")"
+
+	procd_open_instance
+	procd_set_param command ${MBUSD_BIN} -d
+	procd_append_param command -L "${log_file}"
+	procd_append_param command -v ${log_verbosity}
+	procd_append_param command -p ${device}
+	procd_append_param command -s ${speed}
+	procd_append_param command -m ${mode}
+	procd_append_param command -A ${bind}
+	procd_append_param command -P ${port}
+	procd_append_param command -C ${maxconn}
+	procd_append_param command -N ${retries}
+	procd_append_param command -R ${pause}
+	procd_append_param command -W ${wait}
+	procd_append_param command -T ${timeout}
+	procd_set_param pidfile /var/run/mbusd-${cfg}.pid
+	procd_set_param respawn
+	procd_set_param stderr 1
+	procd_set_param stdout 1
+	procd_close_instance
+}
+
+service_triggers()
+{
+	procd_add_reload_trigger "mbusd"
+	procd_add_validation validate_mbusd_section
+}
+
+start_service()
+{
+	config_load "${NAME}"
+	config_foreach validate_mbusd_section mbusd mbusd_instance
+}
+
+shutdown()
+{
+	killall mbusd
+}
