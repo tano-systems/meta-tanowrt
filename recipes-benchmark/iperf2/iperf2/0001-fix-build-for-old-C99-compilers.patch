@@ -1,0 +1,12 @@
+diff --git a/include/headers.h b/include/headers.h
+index 7e43b44..36e59d7 100644
+--- a/include/headers.h
++++ b/include/headers.h
+@@ -86,6 +86,7 @@
+ #include <sys/types.h>
+ #include <fcntl.h>
+ #include <inttypes.h>
++#include <stdbool.h>
+ 
+ #ifdef WIN32
+ 
