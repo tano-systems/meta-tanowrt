@@ -3,14 +3,14 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano5"
+PR = "tano6"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 RDEPEDS_${PN} += "ppp"
 
 SRC_URI = "\
-	https://vorboss.dl.sourceforge.net/project/comgt/comgt/${PV}/comgt.${PV}.tgz \
+	https://sourceforge.net/projects/comgt/files/comgt/${PV}/comgt.${PV}.tgz \
 	file://3g.chat \
 	file://3g.sh \
 	file://3g.usb \
