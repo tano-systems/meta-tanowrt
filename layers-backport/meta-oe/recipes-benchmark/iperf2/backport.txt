@@ -1,0 +1,2 @@
+﻿iperf 2.0.10 backported from meta-oe layer
+(git://git.openembedded.org/meta-openembedded (meta-oe subfolder), branch warrior, revision 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0)
