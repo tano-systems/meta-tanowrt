@@ -3,11 +3,11 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano6"
+PR = "tano7"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RDEPEDS_${PN} += "ppp"
+RDEPENDS_${PN} += "ppp"
 
 SRC_URI = "\
 	https://sourceforge.net/projects/comgt/files/comgt/${PV}/comgt.${PV}.tgz \
