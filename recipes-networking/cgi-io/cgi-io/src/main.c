@@ -110,7 +110,7 @@ session_access_cb(struct ubus_request *req, int type, struct blob_attr *msg)
 }
 
 static bool
-session_access(const char *sid, const char *obj, const char *func)
+session_access(const char *sid, const char *scope, const char *obj, const char *func)
 {
 	uint32_t id;
 	bool allow = false;
@@ -124,7 +124,7 @@ session_access(const char *sid, const char *obj, const char *func)
 
 	blob_buf_init(&req, 0);
 	blobmsg_add_string(&req, "ubus_rpc_session", sid);
-	blobmsg_add_string(&req, "scope", "cgi-io");
+	blobmsg_add_string(&req, "scope", scope);
 	blobmsg_add_string(&req, "object", obj);
 	blobmsg_add_string(&req, "function", func);
 
@@ -524,7 +524,7 @@ data_begin_cb(multipart_parser *p)
 		if (!st.filename)
 			return response(false, "File data without name");
 
-		if (!session_access(st.sessionid, st.filename, "write"))
+		if (!session_access(st.sessionid, "file", st.filename, "write"))
 			return response(false, "Access to path denied by ACL");
 
 #if defined(ENABLE_DIRECT_WRITE_MODE)
@@ -607,7 +607,7 @@ data_end_cb(multipart_parser *p)
 {
 	if (st.parttype == PART_SESSIONID)
 	{
-		if (!session_access(st.sessionid, "upload", "write"))
+		if (!session_access(st.sessionid, "cgi-io", "upload", "write"))
 		{
 			errno = EPERM;
 			return response(false, "Upload permission denied");
@@ -749,7 +749,7 @@ main_backup(int argc, char **argv)
 	char hostname[64] = { 0 };
 	char *fields[] = { "sessionid", NULL };
 
-	if (!postdecode(fields, 1) || !session_access(fields[1], "backup", "read"))
+	if (!postdecode(fields, 1) || !session_access(fields[1], "cgi-io", "backup", "read"))
 		return failure(0, "Backup permission denied");
 
 	if (pipe(fds))
