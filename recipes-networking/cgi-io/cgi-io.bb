@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "This package contains an cgi utility that is useful for up/downloading files"
 SUMMARY = "CGI utility for handling up/downloading of files"
@@ -46,4 +46,5 @@ do_install() {
 
 	ln -s ../../usr/libexec/cgi-io ${D}/www/cgi-bin/cgi-upload
 	ln -s ../../usr/libexec/cgi-io ${D}/www/cgi-bin/cgi-download
+	ln -s ../../usr/libexec/cgi-io ${D}/www/cgi-bin/cgi-backup
 }
