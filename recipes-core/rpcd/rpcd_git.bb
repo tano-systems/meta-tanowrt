@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano11"
+PR = "tano12"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -16,12 +16,11 @@ SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
 	file://rpcd.init \
 	file://rpcd.config \
-	file://0001-build-fix.patch \
 "
 
-# 03.09.2019
-# rpcd: sys: actually move timespec declaration
-SRCREV_rpcd = "27c24c7c186ad6522995872a9fe380dd1545af9a"
+# 09.09.2019
+# iwinfo: add WPA3 support
+SRCREV_rpcd = "e2a7bc4c2f6d1bb346a60c6f92ffd7b139e1ddb4"
 
 S = "${WORKDIR}/git"
 
