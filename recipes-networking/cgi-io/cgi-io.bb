@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "This package contains an cgi utility that is useful for up/downloading files"
 SUMMARY = "CGI utility for handling up/downloading of files"
