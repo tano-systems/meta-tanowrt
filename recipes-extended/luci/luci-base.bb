@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -24,6 +24,7 @@ RDEPENDS_${PN} += "\
 	rpcd \
 	rpcd-mod-rrdns \
 	lucihttp \
+	cgi-io \
 "
 
 inherit cmake
