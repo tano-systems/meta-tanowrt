@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "Minimal complete OpenWRT system requirements"
 DESCRIPTION = "The set of packages required for core Openwrt system with network but no gui"
 LICENSE = "MIT"
@@ -25,7 +25,7 @@ RDEPENDS_${PN} = "\
 RDEPENDS_${PN}-base = "\
 	packagegroup-core-boot \
 	urandom-seed \
-	urngd \
+	rng-tools \
 	rpcd \
 	ubox \
 	ubus \
