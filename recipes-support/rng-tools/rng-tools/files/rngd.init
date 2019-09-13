@@ -1,0 +1,120 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2011-2014 OpenWrt.org
+# Copyright (C) 2019 Tano Systems
+
+USE_PROCD=1
+START=00
+
+NAME=rngd
+RNGD_BIN=/usr/sbin/rngd
+
+validate_rngd_section()
+{
+	uci_load_validate rngd rngd "$1" "$2" \
+		'enabled:or("0", "1", "auto"):0' \
+		'in_device:string:/dev/hwrng' \
+		'out_device:string:/dev/random' \
+		'precmd:string' \
+		'watermark:uinteger' \
+		'random_step:uinteger' \
+		'timeout:uinteger'
+}
+
+rngd_instance()
+{
+	local cfg="${1}"
+
+	[ "$enabled" = "1" -o "$enabled" = "auto" ] || return
+
+	[ -z "${out_device}" ] && (
+		logger -t ${NAME} -p daemon.err \
+			"${cfg}: Output random device is not specified"
+		return 1
+	)
+
+	[ -c "${out_device}" ] || (
+		logger -t ${NAME} -p daemon.err \
+			"${cfg}: Invalid output random device ${out_device}"
+		return 1
+	)
+
+	[ -z "${in_device}" ] && (
+		logger -t ${NAME} -p daemon.err \
+			"${cfg}: Input random device is not specified"
+		return 1
+	)
+
+	[ -c "${in_device}" ] || (
+		logger -t ${NAME} -p daemon.err \
+			"${cfg}: Invalid input random device ${in_device}"
+		return 1
+	)
+
+	local write_wakeup_threshold_new=0
+	local entropy_avail=0
+	local write_wakeup_threshold=0
+	local poolsize=0
+
+	[ -z "$precmd" ] || (
+		${precmd} "${in_device}" "${out_device}"
+		[ "$?" != "0" ] && return
+	)
+
+	entropy_avail=$(cat /proc/sys/kernel/random/entropy_avail)
+	write_wakeup_threshold=$(cat /proc/sys/kernel/random/write_wakeup_threshold)
+
+	if [ "$enabled" = "1" -o ${entropy_avail} -lt ${write_wakeup_threshold} ]; then
+		if [ "$enabled" = "1" ]; then
+			logger -t ${NAME} -p daemon.info \
+				"${cfg}: Starting rngd for ${in_device} => ${out_device}"
+		else
+			logger -t ${NAME} -p daemon.info \
+				"${cfg}: Available entropy is small (${entropy_avail})" \
+				"and it needs rngd boost"
+		fi
+
+		procd_open_instance
+		procd_set_param command ${RNGD_BIN} -f
+
+		procd_append_param command -o ${out_device}
+		procd_append_param command -r ${in_device}
+
+		[ -z "${watermark}" ] || procd_append_param command -W ${watermark}
+		[ -z "${random_step}" ] || procd_append_param command -s ${random_step}
+		[ -z "${timeout}" ] || procd_append_param command -t ${timeout}
+
+		procd_set_param pidfile /var/run/rngd-${cfg}.pid
+		procd_set_param respawn
+		procd_set_param stdout 0
+		procd_set_param stderr 0
+		procd_close_instance
+	else
+		# Increase wakeup threshold to known level
+		# Make it at least 75% of the pool size
+		poolsize=$(cat /proc/sys/kernel/random/poolsize)
+		write_wakeup_threshold_new=$((${poolsize}*75/100))
+
+		logger -t ${NAME} -p daemon.info \
+			"${cfg}: Kernel internal entropy pool filler is available," \
+			"increasing write_wakeup_threshold to ${write_wakeup_threshold_new}"
+
+		echo ${write_wakeup_threshold_new} > /proc/sys/kernel/random/write_wakeup_threshold
+	fi
+}
+
+start_service()
+{
+	config_load "${NAME}"
+	config_foreach validate_rngd_section rngd rngd_instance
+}
+
+service_triggers()
+{
+	procd_add_reload_trigger "rngd"
+	procd_add_validation validate_rngd_section
+}
+
+shutdown()
+{
+	killall rngd
+}
