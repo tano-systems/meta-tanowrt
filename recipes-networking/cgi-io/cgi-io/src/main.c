@@ -414,7 +414,7 @@ response(bool success, const char *message)
 static int
 failure(int code, int e, const char *message)
 {
-	printf("Status: %s %s\r\n", code, message);
+	printf("Status: %d %s\r\n", code, message);
 	printf("Content-Type: text/plain\r\n\r\n");
 	printf("%s", message);
 
