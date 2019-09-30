@@ -1,4 +1,4 @@
-From 6b33a98fd2ad03f8d20f700d3c180d524e2efd34 Mon Sep 17 00:00:00 2001
+From 6d37fa1b5216cf23154a4a0491066421bf9343c8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
 Subject: [PATCH 8/9] block: Fix device path creation

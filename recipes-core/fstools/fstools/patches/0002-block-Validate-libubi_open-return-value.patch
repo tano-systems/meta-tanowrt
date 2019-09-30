@@ -1,4 +1,4 @@
-From 76123335dd2de2bca8cc2eceabb6591325993af4 Mon Sep 17 00:00:00 2001
+From 2a75437455e2ad6c9f115840ef8e605139207a41 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:17:30 +0300
 Subject: [PATCH 2/9] block: Validate libubi_open() return value
