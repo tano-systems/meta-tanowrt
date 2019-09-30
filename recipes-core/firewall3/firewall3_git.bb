@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano17"
+PR = "tano18"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -30,9 +30,9 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 08.09.2019
-# utils: Fix string format message
-SRCREV = "487bd0d96c8fb9a53871134ebba7c0a66e286334"
+# 23.09.2019
+# utils: fix resource leak
+SRCREV = "daed0cf9831c07863e5a2a572c2dd242fe757a31"
 
 S = "${WORKDIR}/git"
 
