@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano12"
+PR = "tano13"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 09.09.2019
-# iwinfo: add WPA3 support
-SRCREV_rpcd = "e2a7bc4c2f6d1bb346a60c6f92ffd7b139e1ddb4"
+# 21.09.2019
+# file: increase minimum read buffer size to 4096 bytes
+SRCREV_rpcd = "95f0973c340853007d7f2875ecc3541dc2459ae0"
 
 S = "${WORKDIR}/git"
 
