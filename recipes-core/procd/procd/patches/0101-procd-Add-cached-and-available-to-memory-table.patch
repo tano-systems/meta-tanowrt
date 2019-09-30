@@ -19,10 +19,10 @@ Signed-off-by: Zachary Cook <zachcook1991 at gmail.com>
  1 file changed, 29 insertions(+)
 
 diff --git a/system.c b/system.c
-index 8ed3f93..79f0ca8 100644
+index 751a016..b713645 100644
 --- a/system.c
 +++ b/system.c
-@@ -228,9 +228,36 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -230,9 +230,36 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  #ifdef linux
  	struct sysinfo info;
  	void *c;
@@ -36,7 +36,7 @@ index 8ed3f93..79f0ca8 100644
 +
 +	if ((f = fopen("/proc/meminfo", "r")) == NULL)
 +		return UBUS_STATUS_UNKNOWN_ERROR;
-+	
++
 +	/* if linux < 3.14 MemAvailable is not in meminfo */
 +	available = 0;
 +	cached = 0;
@@ -59,12 +59,12 @@ index 8ed3f93..79f0ca8 100644
  #endif
  
  	now = time(NULL);
-@@ -256,6 +283,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
- 	blobmsg_add_u64(&b, "free",     info.mem_unit * info.freeram);
- 	blobmsg_add_u64(&b, "shared",   info.mem_unit * info.sharedram);
- 	blobmsg_add_u64(&b, "buffered", info.mem_unit * info.bufferram);
-+	blobmsg_add_u64(&b, "available",available);
-+	blobmsg_add_u64(&b, "cached",   cached);
+@@ -262,6 +289,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 			(uint64_t)info.mem_unit * (uint64_t)info.sharedram);
+ 	blobmsg_add_u64(&b, "buffered",
+ 			(uint64_t)info.mem_unit * (uint64_t)info.bufferram);
++	blobmsg_add_u64(&b, "available", available);
++	blobmsg_add_u64(&b, "cached",    cached);
  	blobmsg_close_table(&b, c);
  
  	c = blobmsg_open_table(&b, "swap");

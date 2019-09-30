@@ -1,7 +1,7 @@
-From 26a8e192d9d0fda1efcf25ebdbc0749160adec5b Mon Sep 17 00:00:00 2001
+From be617c18d5e727b22d7c5f57917cd375eec9f5f2 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 26 Feb 2019 19:57:49 +0300
-Subject: [PATCH 4/8] hotplug: Remove '/dev/' prefix from DEVNAME variable
+Subject: [PATCH 04/10] hotplug: Remove '/dev/' prefix from DEVNAME variable
 
 This can be happened when hotplug works together with udev (eudev).
 In this case, nested folder 'dev' is created in the root folder '/dev'.

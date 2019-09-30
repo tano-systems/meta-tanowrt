@@ -12,7 +12,7 @@ diff --git a/system.c b/system.c
 index 79f0ca8..efea15a 100644
 --- a/system.c
 +++ b/system.c
-@@ -231,6 +231,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -233,6 +233,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	char line[256];
  	char *key, *val;
  	unsigned long long available, cached;
@@ -20,7 +20,7 @@ index 79f0ca8..efea15a 100644
  	FILE *f;
  
  	if (sysinfo(&info))
-@@ -242,6 +243,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -244,6 +245,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	/* if linux < 3.14 MemAvailable is not in meminfo */
  	available = 0;
  	cached = 0;
@@ -29,7 +29,7 @@ index 79f0ca8..efea15a 100644
  
  	while(fgets(line, sizeof(line), f))
  	{
-@@ -255,6 +258,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -257,6 +260,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			available = 1024 * atoll(val);
  		else if (!strcasecmp(key, "Cached"))
  			cached =    1024 * atoll(val);
@@ -40,12 +40,12 @@ index 79f0ca8..efea15a 100644
  	}
  
  	fclose(f);
-@@ -285,6 +292,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
- 	blobmsg_add_u64(&b, "buffered", info.mem_unit * info.bufferram);
- 	blobmsg_add_u64(&b, "available",available);
- 	blobmsg_add_u64(&b, "cached",   cached);
-+	blobmsg_add_u64(&b, "shmem",    shmem);
-+	blobmsg_add_u64(&b, "slab",     slab);
+@@ -291,6 +298,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 			(uint64_t)info.mem_unit * (uint64_t)info.bufferram);
+ 	blobmsg_add_u64(&b, "available", available);
+ 	blobmsg_add_u64(&b, "cached",    cached);
++	blobmsg_add_u64(&b, "shmem",     shmem);
++	blobmsg_add_u64(&b, "slab",      slab);
  	blobmsg_close_table(&b, c);
  
  	c = blobmsg_open_table(&b, "swap");

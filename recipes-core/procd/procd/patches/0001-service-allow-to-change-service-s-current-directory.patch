@@ -1,7 +1,7 @@
-From d085bbc6b8870c9748f834b87bed6a34e027d457 Mon Sep 17 00:00:00 2001
+From c5b4ba7491c21295335179b69bc6bfcbbc9a41ea Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
-Subject: [PATCH 1/8] service: allow to change service's current directory
+Subject: [PATCH 01/10] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
