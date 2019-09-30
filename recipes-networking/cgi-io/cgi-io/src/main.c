@@ -855,7 +855,7 @@ main_backup(int argc, char **argv)
 		chdir("/");
 
 		execl("/sbin/sysupgrade", "/sbin/sysupgrade",
-		      "--create-backup", "-", NULL);
+		      "--empty-dirs", "--create-backup", "-", NULL);
 
 		return -1;
 
