@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano8"
+PR = "tano9"
 
 RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 01.09.2019
-# iwinfo: Fix rate buffer size
-SRCREV = "f599a8dc01e01231fd116c9d1745f364c409c57f"
+# 30.09.2019
+# nl80211: recognize SAE encrypted mesh
+SRCREV = "2a95086db2b730346d87c320e2c753126c4ff795"
 
 inherit openwrt pkgconfig
 
