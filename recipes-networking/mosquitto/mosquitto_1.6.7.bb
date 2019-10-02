@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=62ddc846179e908dc0c8efec4a42ef20 \
 "
 
 SRC_URI = "http://mosquitto.org/files/source/mosquitto-${PV}.tar.gz"
-SRC_URI[md5sum] = "bd19cf124459ee26040912786ef177f7"
-SRC_URI[sha256sum] = "9ef5cc75f4fe31d7bf50654ddf4728ad9e1ae2e5609a4b42ecbbcb4a209ed17e"
+SRC_URI[md5sum] = "ec9074c4f337f64eaa9a4320c6dab020"
+SRC_URI[sha256sum] = "bcd31a8fbbd053fee328986fadd8666d3058357ded56b9782f7d4f19931d178e"
 
 require mosquitto.inc
