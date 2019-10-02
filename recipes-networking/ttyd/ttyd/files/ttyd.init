@@ -68,7 +68,6 @@ start_service()
 	local ttyd_interface
 	local ttyd_debug
 	local ttyd_max_clients
-	local ttyd_reconnect
 	local ttyd_readonly
 	local ttyd_check_origin
 	local ttyd_credential
@@ -87,7 +86,6 @@ start_service()
 	config_get ttyd_max_clients  "$cfg" "max_clients" 0
 	config_get ttyd_interface    "$cfg" "interface"
 	config_get ttyd_ssl          "$cfg" "ssl" 0
-	config_get ttyd_reconnect    "$cfg" "reconnect" 10
 	config_get ttyd_readonly     "$cfg" "readonly" 0
 	config_get ttyd_check_origin "$cfg" "check_origin" 0
 	config_get ttyd_credential   "$cfg" "credential" 0
@@ -109,7 +107,6 @@ start_service()
 
 	procd_append_param command -d ${debug}
 	procd_append_param command -m ${ttyd_max_clients}
-	procd_append_param command -r ${ttyd_reconnect}
 
 	[ "${ttyd_ssl}" -ne 0 ] && {
 		[ -s "$ttyd_ssl_cert" -a -s "$ttyd_ssl_key" ] || {

@@ -6,8 +6,8 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano6"
-PV = "1.4.4+git${SRCPV}"
+PR = "tano0"
+PV = "1.5.2+git${SRCPV}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -22,7 +22,7 @@ RDEPENDS_${PN} += "openssl-bin"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tsl0922/ttyd.git;protocol=${GIT_PROTOCOL}"
-SRCREV = "11c1e1bc79f8405f91009e7ab6968bbcd8bef578"
+SRCREV = "e979d82f2dd86dc3c46f53bc714ed793d7ee2b37"
 
 # Files
 SRC_URI += "\
