@@ -1,6 +1,9 @@
 #!/bin/sh
 #
 # Hotplug script for the Network ports status LuCI application
+# (luci-app-netports)
+#
+# This script version 1.0.1
 #
 # Place this script to '/etc/hotplug.d/net' folder
 #
@@ -90,6 +93,11 @@ if [ "${ACTION}" = "add" ]; then
 			tun*[0-9]|tap*[0-9])
 				PORT_TYPE="vpn"
 				[ -z "${PORT_NAME}" ] && PORT_NAME="VPN"
+				;;
+
+			wg*[0-9])
+				PORT_TYPE="vpn"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="WireGuard"
 				;;
 
 			ppp*[0-9])
