@@ -21,6 +21,8 @@ LUCI_PKG_SRC ?= "${S}"
 LUCI_PKG_EXECUTABLE ?= "\
 	${D}${LUCI_INSTALL_ROOT_PATH}${sysconfdir}/uci-defaults/* \
 	${D}${LUCI_INSTALL_ROOT_PATH}${sysconfdir}/init.d/* \
+	${D}/usr/libexec/rpcd/* \
+	${D}/usr/bin/* \
 "
 
 do_install_append() {
