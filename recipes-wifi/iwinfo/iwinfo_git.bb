@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano9"
+PR = "tano10"
 
 RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 30.09.2019
-# nl80211: recognize SAE encrypted mesh
-SRCREV = "2a95086db2b730346d87c320e2c753126c4ff795"
+# 16.10.2019
+# nl80211: handle hidden SSIDs in wpa_supplicant scan results
+SRCREV = "07315b6fdb2566a8626d8a1e4de76eb30456fe17"
 
 inherit openwrt pkgconfig
 
