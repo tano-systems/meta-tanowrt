@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano16"
+PR = "tano17"
 SUMMARY = "Extras Openwrt system requirements"
 LICENSE = "MIT"
 
@@ -25,22 +25,22 @@ RDEPENDS_${PN} = "\
 #luci-app-qos
 #luci-app-mwan3
 #luci-app-nlbwmon
-#luci-app-ttyd
+#luci-app-tn-ttyd
 
 # packagegroup-openwrt-full-luci
 RDEPENDS_${PN}-luci = "\
-	luci-app-lldpd \
+	luci-app-tn-lldpd \
 	luci-app-uhttpd \
 	luci-app-openvpn \
 	luci-app-statistics \
-	luci-app-snmpd-tn \
-	luci-app-mstpd \
-	luci-app-netports \
-	luci-app-netports-hotplug \
+	luci-app-tn-snmpd \
+	luci-app-tn-mstpd \
+	luci-app-tn-netports \
+	luci-app-tn-netports-hotplug \
 	luci-app-ddns \
-	luci-app-vsftpd \
-	luci-app-shellinabox \
-	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'luci-app-watchdog', '', d)} \
+	luci-app-tn-vsftpd \
+	luci-app-tn-shellinabox \
+	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'luci-app-tn-watchdog', '', d)} \
 	luci-proto-3g \
 	luci-proto-ppp \
 	luci-proto-ncm \

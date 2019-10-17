@@ -1,20 +1,22 @@
 #
-# LuCI Support for shellinabox
+# LuCI Support for ttyd
 #
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano11"
 
-SUMMARY = "LuCI Support for shellinabox"
-LICENSE = "Apache-2.0"
+SUMMARY = "LuCI Support for ttyd"
+LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=77aab877b104825ae877cbff4e362c04"
 
-SRC_URI = "git://github.com/tano-systems/luci-app-shellinabox.git;protocol=https"
-SRCREV = "f60508d10a864fa149795cac85d00b037defce96"
+RCONFLICTS_${PN} = "luci-app-ttyd"
+
+SRC_URI = "git://github.com/tano-systems/luci-app-tn-ttyd.git;protocol=https"
+SRCREV = "fa8dbcaa5c55a630af02449a746b46483d595f08"
 PV = "git${SRCPV}"
 
-RDEPENDS_${PN} += "shellinabox"
+RDEPENDS_${PN} += "ttyd (>= 1.5.2)"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n

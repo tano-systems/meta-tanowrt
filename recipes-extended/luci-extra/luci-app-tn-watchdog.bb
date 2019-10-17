@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1fd756df4d1f5f2e8c17e9d2d4eaa503"
 GIT_BRANCH   = "master"
 GIT_SRCREV   = "6d604af595340665ef5da1f512c55835ed7e9179"
 GIT_PROTOCOL = "https"
-SRC_URI      = "git://github.com/tano-systems/luci-app-watchdog.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
+SRC_URI      = "git://github.com/tano-systems/luci-app-tn-watchdog.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
 SRCREV = "${GIT_SRCREV}"
 
