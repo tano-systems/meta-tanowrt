@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Hotplug script for the Network ports status LuCI application
-# (luci-app-netports)
+# (luci-app-tn-netports)
 #
 # This script version 1.0.1
 #

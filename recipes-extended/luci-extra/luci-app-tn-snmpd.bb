@@ -21,7 +21,7 @@ inherit luasrcdiet
 GIT_BRANCH   = "master"
 GIT_SRCREV   = "9b2b761e1d8e317f6fbf91d1c632acc6016fdae7"
 GIT_PROTOCOL = "https"
-SRC_URI = "git://github.com/tano-systems/luci-app-snmpd-tn.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
+SRC_URI = "git://github.com/tano-systems/luci-app-tn-snmpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
 SRCREV = "${GIT_SRCREV}"
 
