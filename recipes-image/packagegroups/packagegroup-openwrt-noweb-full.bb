@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano5"
+PR = "tano6"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -66,4 +66,6 @@ RDEPENDS_${PN}-network = "\
 	vsftpd \
 	mstpd \
 	ipset \
+	wireguard-module \
+	wireguard-tools \
 "
