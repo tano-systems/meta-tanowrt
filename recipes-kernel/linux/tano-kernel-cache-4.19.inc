@@ -1,4 +1,4 @@
-PR_append = ".c4"
+PR_append = ".4"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.19"
 KERNEL_CACHE_SRC_SRCREV ?= "ce9f9e2f4015d5a26fef47351051062c5f950545"
