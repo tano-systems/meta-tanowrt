@@ -27,25 +27,25 @@ index 79f0ca8..efea15a 100644
 +	shmem = 0;
 +	slab = 0;
  
- 	while(fgets(line, sizeof(line), f))
+ 	while (fgets(line, sizeof(line), f))
  	{
 @@ -257,6 +260,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			available = 1024 * atoll(val);
  		else if (!strcasecmp(key, "Cached"))
- 			cached =    1024 * atoll(val);
+ 			cached = 1024 * atoll(val);
 +		else if (!strcasecmp(key, "Shmem"))
-+			shmem =     1024 * atoll(val);
++			shmem = 1024 * atoll(val);
 +		else if (!strcasecmp(key, "Slab"))
-+			slab =      1024 * atoll(val);
++			slab = 1024 * atoll(val);
  	}
  
  	fclose(f);
 @@ -291,6 +298,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			(uint64_t)info.mem_unit * (uint64_t)info.bufferram);
  	blobmsg_add_u64(&b, "available", available);
- 	blobmsg_add_u64(&b, "cached",    cached);
-+	blobmsg_add_u64(&b, "shmem",     shmem);
-+	blobmsg_add_u64(&b, "slab",      slab);
+ 	blobmsg_add_u64(&b, "cached", cached);
++	blobmsg_add_u64(&b, "shmem", shmem);
++	blobmsg_add_u64(&b, "slab", slab);
  	blobmsg_close_table(&b, c);
  
  	c = blobmsg_open_table(&b, "swap");
