@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano31"
+PR = "tano32"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -34,7 +34,6 @@ SRC_URI += "\
 	file://0008-early-Use-devtmpfs-instead-of-tmpfs-for-dev.patch \
 	file://0009-instance-Improve-error-messages.patch \
 	file://0010-inittab-Handle-multiple-consoles-in-proc-cmdline.patch \
-	file://0101-procd-Add-cached-and-available-to-memory-table.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 
@@ -47,9 +46,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 01.09.2019
-# procd: Switch to nanosleep
-SRCREV = "8e9fb51fa66e614620a97d371176610e7e1d0010"
+# 08.10.2019
+# procd: Add cached and available to memory table
+SRCREV = "258aa04328a20213b12228d01d494c1e22f8d510"
 
 S = "${WORKDIR}/git"
 
