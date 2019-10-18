@@ -3,7 +3,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".t0"
+PR_append = ".0"
 
 python __anonymous() {
     if not d.getVar("KERNEL_SRC_URI") or not d.getVar("KERNEL_SRC_BRANCH") or not d.getVar("KERNEL_SRC_SRCREV"):
