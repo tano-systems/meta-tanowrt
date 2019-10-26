@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano6"
+PR = "tano7"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -37,6 +37,7 @@ RDEPENDS_${PN}-base = "\
 	ugps \
 	rpcd-mod-file \
 	schedtool-dl \
+	nano \
 "
 
 # packagegroup-openwrt-noweb-full-console
