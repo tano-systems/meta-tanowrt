@@ -1,4 +1,4 @@
-From 8fb97048394add17b769d152a083049ac0296155 Mon Sep 17 00:00:00 2001
+From 46fc2a54f391fdd05a2aea0c5f6bea2d9e3ecd90 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
 Subject: [PATCH 10/10] inittab: Handle multiple consoles in /proc/cmdline
@@ -33,7 +33,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 99 insertions(+), 17 deletions(-)
 
 diff --git a/inittab.c b/inittab.c
-index 55554b9..9296b5f 100644
+index 45118f4..559d6f5 100644
 --- a/inittab.c
 +++ b/inittab.c
 @@ -43,7 +43,6 @@
@@ -126,7 +126,7 @@ index 55554b9..9296b5f 100644
  static void fork_worker(struct init_action *a)
  {
  	pid_t p;
-@@ -150,12 +213,18 @@ static void runrc(struct init_action *a)
+@@ -158,12 +221,18 @@ static void runrc(struct init_action *a)
  static void askfirst(struct init_action *a)
  {
  	int i;
@@ -144,10 +144,10 @@ index 55554b9..9296b5f 100644
 +		tty->running = true;
 +
  	a->tout.cb = respawn;
- 	for (i = MAX_ARGS - 1; i >= 1; i--)
- 		a->argv[i] = a->argv[i - 1];
-@@ -166,30 +235,41 @@ static void askfirst(struct init_action *a)
- 	fork_worker(a);
+ 	/* shift arguments only if not yet done */
+ 	if (a->argv[0] != ask) {
+@@ -178,30 +247,41 @@ static void askfirst(struct init_action *a)
+ 		fork_worker(a);
  }
  
 +static int add_action(struct init_action *a, const char *name);
@@ -201,9 +201,9 @@ index 55554b9..9296b5f 100644
 +	askconsole_run = 1;
 +
  	a->tout.cb = respawn;
- 	for (i = MAX_ARGS - 1; i >= 1; i--)
- 		a->argv[i] = a->argv[i - 1];
-@@ -282,6 +362,8 @@ void procd_inittab(void)
+ 	/* shift arguments only if not yet done */
+ 	if (a->argv[0] != ask) {
+@@ -296,6 +376,8 @@ void procd_inittab(void)
  		return;
  	}
  

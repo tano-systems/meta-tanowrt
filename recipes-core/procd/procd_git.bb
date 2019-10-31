@@ -46,9 +46,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 08.10.2019
-# procd: Add cached and available to memory table
-SRCREV = "258aa04328a20213b12228d01d494c1e22f8d510"
+# 02.01.2019
+# procd: simplify code in procd_inittab_run
+SRCREV = "7fb2e1dfa2214a9b35fa955e98a386e2f3ccb730"
 
 S = "${WORKDIR}/git"
 
