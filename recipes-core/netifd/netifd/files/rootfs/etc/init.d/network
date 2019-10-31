@@ -44,13 +44,6 @@ stop_service() {
 	sleep 1
 }
 
-service_running() {
-	ubus -t 30 wait_for network.interface
-	if [ -x /sbin/wifi ]; then
-		/sbin/wifi reload_legacy
-	fi
-}
-
 validate_atm_bridge_section()
 {
 	uci_validate_section network "atm-bridge" "${1}" \
