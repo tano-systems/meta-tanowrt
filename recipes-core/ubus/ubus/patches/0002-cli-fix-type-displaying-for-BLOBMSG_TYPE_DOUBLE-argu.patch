@@ -1,0 +1,28 @@
+From fc1860649a0a21547bc2b5cbef4b2acc3c39f97a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 30 Oct 2019 00:15:26 +0300
+Subject: [PATCH] cli: fix type displaying for BLOBMSG_TYPE_DOUBLE arguments
+
+Display BLOBMSG_TYPE_DOUBLE type ubus methods arguments
+as "Double" instead of "(unknown)".
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ cli.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cli.c b/cli.c
+index 19ccbb5..2cd8692 100644
+--- a/cli.c
++++ b/cli.c
+@@ -45,6 +45,7 @@ static const char *format_type(void *priv, struct blob_attr *attr)
+ 		[BLOBMSG_TYPE_STRING] = "\"String\"",
+ 		[BLOBMSG_TYPE_ARRAY] = "\"Array\"",
+ 		[BLOBMSG_TYPE_TABLE] = "\"Table\"",
++		[BLOBMSG_TYPE_DOUBLE] = "\"Double\"",
+ 	};
+ 	const char *type = NULL;
+ 	int typeid;
+-- 
+2.16.2.windows.1
+
