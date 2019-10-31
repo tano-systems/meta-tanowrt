@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano7"
+PR = "tano8"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -20,9 +20,9 @@ SRC_URI = "\
 	file://log.init \
 "
 
-# 18.03.2019
-# kmodloader: fix and optimize loading of failed modules
-SRCREV = "5130fa4d9c5d15d643506f906927b209d7690a83"
+# 22.10.2019
+# logread: add option to filter for facilities
+SRCREV = "17689b61a1cdc05b2c27fc5a33407e1a3c384137"
 
 S = "${WORKDIR}/git"
 
