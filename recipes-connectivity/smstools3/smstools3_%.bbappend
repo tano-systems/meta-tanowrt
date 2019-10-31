@@ -1,5 +1,5 @@
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -32,7 +32,7 @@ do_install_append() {
 
 	# Remove spool directories
 	# It will be created by init script
-	rm -rf ${D}${localstatedir}/spool
+	rm -rf ${D}${localstatedir}
 
 	# Install procd init script
 	install -m 0755 ${WORKDIR}/smstools3.init "${D}${sysconfdir}/init.d/smstools3"
