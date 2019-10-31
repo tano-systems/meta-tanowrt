@@ -1,4 +1,4 @@
-From 9a76614d805fbd874caa795a02811ba6d262c376 Mon Sep 17 00:00:00 2001
+From b0fc91a00419f41cf12b90102af3e5b4a4b96504 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 20:05:05 +0300
 Subject: [PATCH 09/10] instance: Improve error messages

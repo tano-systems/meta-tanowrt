@@ -1,4 +1,4 @@
-From 846741720a4b0d045360bb37bf0df60a4287db60 Mon Sep 17 00:00:00 2001
+From de0adf5254e2d201bdfbf89aeaba400460de70ab Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 05/10] hotplug: Completely remove hotplug functionality
@@ -6,13 +6,13 @@ Subject: [PATCH 05/10] hotplug: Completely remove hotplug functionality
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt  |   2 +-
- initd/preinit.c |  24 ---
- plug/coldplug.c |  73 -------
- plug/hotplug.c  | 643 --------------------------------------------------------
+ initd/preinit.c |  24 --
+ plug/coldplug.c |  74 -------
+ plug/hotplug.c  | 662 --------------------------------------------------------
  plug/hotplug.h  |  49 -----
  procd.c         |   6 +-
  state.c         |  10 -
- 7 files changed, 2 insertions(+), 805 deletions(-)
+ 7 files changed, 2 insertions(+), 825 deletions(-)
  delete mode 100644 plug/coldplug.c
  delete mode 100644 plug/hotplug.c
  delete mode 100644 plug/hotplug.h
@@ -31,7 +31,7 @@ index 56a9d85..f2f9792 100644
  
  SET(LIBS ubox ubus json-c blobmsg_json json_script)
 diff --git a/initd/preinit.c b/initd/preinit.c
-index 84e62b0..b08d284 100644
+index 9dfe5c1..d04ba6a 100644
 --- a/initd/preinit.c
 +++ b/initd/preinit.c
 @@ -31,7 +31,6 @@
@@ -76,7 +76,7 @@ index 84e62b0..b08d284 100644
 -	if (!plugd_proc.pid) {
 -		execvp(plug[0], plug);
 -		ERROR("Failed to start plugd: %m\n");
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -	if (plugd_proc.pid <= 0) {
 -		ERROR("Failed to start new plugd instance: %m\n");
@@ -89,10 +89,10 @@ index 84e62b0..b08d284 100644
  	fd = creat("/tmp/.preinit", 0600);
 diff --git a/plug/coldplug.c b/plug/coldplug.c
 deleted file mode 100644
-index 12df421..0000000
+index b185083..0000000
 --- a/plug/coldplug.c
 +++ /dev/null
-@@ -1,73 +0,0 @@
+@@ -1,74 +0,0 @@
 -/*
 - * Copyright (C) 2013 Felix Fietkau <nbd@openwrt.org>
 - * Copyright (C) 2013 John Crispin <blogic@openwrt.org>
@@ -111,6 +111,7 @@ index 12df421..0000000
 -#include <sys/types.h>
 -#include <sys/mount.h>
 -
+-#include <stdlib.h>
 -#include <unistd.h>
 -
 -#include "../procd.h"
@@ -154,7 +155,7 @@ index 12df421..0000000
 -	if (!udevtrigger.pid) {
 -		execvp(argv[0], argv);
 -		ERROR("Failed to start coldplug: %m\n");
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -
 -	if (udevtrigger.pid <= 0) {
@@ -168,10 +169,10 @@ index 12df421..0000000
 -}
 diff --git a/plug/hotplug.c b/plug/hotplug.c
 deleted file mode 100644
-index f9559c7..0000000
+index f6ef318..0000000
 --- a/plug/hotplug.c
 +++ /dev/null
-@@ -1,643 +0,0 @@
+@@ -1,662 +0,0 @@
 -/*
 - * Copyright (C) 2013 Felix Fietkau <nbd@openwrt.org>
 - * Copyright (C) 2013 John Crispin <blogic@openwrt.org>
@@ -395,7 +396,7 @@ index f9559c7..0000000
 -		argv[i] = NULL;
 -		execvp(argv[0], &argv[0]);
 -	}
--	exit(-1);
+-	exit(EXIT_FAILURE);
 -}
 -
 -static void handle_button_start(struct blob_attr *msg, struct blob_attr *data)
@@ -420,7 +421,7 @@ index f9559c7..0000000
 -
 -	if (!file || !dir || !dev) {
 -		ERROR("Request for unknown firmware %s/%s\n", dir, file);
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -
 -	path = alloca(strlen(dir) + strlen(file) + 2);
@@ -445,11 +446,11 @@ index f9559c7..0000000
 -	load = open(loadpath, O_WRONLY);
 -	if (!load) {
 -		ERROR("Failed to open %s: %m\n", loadpath);
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -	if (write(load, "1", 1) == -1) {
 -		ERROR("Failed to write to %s: %m\n", loadpath);
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -	close(load);
 -
@@ -457,7 +458,7 @@ index f9559c7..0000000
 -	fw = open(syspath, O_WRONLY);
 -	if (fw < 0) {
 -		ERROR("Failed to open %s: %m\n", syspath);
--		exit(-1);
+-		exit(EXIT_FAILURE);
 -	}
 -
 -	len = s.st_size;
@@ -483,7 +484,21 @@ index f9559c7..0000000
 -
 -	DEBUG(2, "Done loading %s\n", path);
 -
--	exit(-1);
+-	exit(EXIT_FAILURE);
+-}
+-
+-static void handle_start_console(struct blob_attr *msg, struct blob_attr *data)
+-{
+-	char *dev = blobmsg_get_string(blobmsg_data(data));
+-
+-	DEBUG(2, "Start console request for %s\n", dev);
+-
+-	procd_inittab_run("respawn");
+-	procd_inittab_run("askfirst");
+-
+-	DEBUG(2, "Done starting console for %s\n", dev);
+-
+-	exit(EXIT_FAILURE);
 -}
 -
 -enum {
@@ -492,6 +507,7 @@ index f9559c7..0000000
 -	HANDLER_EXEC,
 -	HANDLER_BUTTON,
 -	HANDLER_FW,
+-	HANDLER_START_CONSOLE,
 -};
 -
 -static struct cmd_handler {
@@ -524,6 +540,10 @@ index f9559c7..0000000
 -	[HANDLER_FW] = {
 -		.name = "load-firmware",
 -		.handler = handle_firmware,
+-	},
+-	[HANDLER_START_CONSOLE] = {
+-		.name = "start-console",
+-		.handler = handle_start_console,
 -	},
 -};
 -
