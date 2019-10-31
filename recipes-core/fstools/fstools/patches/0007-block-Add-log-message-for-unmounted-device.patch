@@ -1,4 +1,4 @@
-From bee4f4cfab7254640d6aab96d16f163238b07c61 Mon Sep 17 00:00:00 2001
+From b2754d477728c5c79fccbff67d6f324924366c3c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:03:57 +0300
 Subject: [PATCH 7/9] block: Add log message for unmounted device
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/block.c b/block.c
-index 94483e4..4b42708 100644
+index 34c476a..878c43a 100644
 --- a/block.c
 +++ b/block.c
 @@ -1048,7 +1048,7 @@ static int mount_device(struct probe_info *pr, int type)
