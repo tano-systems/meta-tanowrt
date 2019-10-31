@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -46,9 +46,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 16.07.2019
-# libblkid-tiny: increment label size to 256
-SRCREV = "4327ed40d96c95803b2d4d09ddf997c895eea071"
+# 27.10.2019
+# block: use fsck.fat instead of dosfsck
+SRCREV = "eda8b3fbcc0eb0752c4d02276950c3b977eac259"
 
 S = "${WORKDIR}/git"
 
