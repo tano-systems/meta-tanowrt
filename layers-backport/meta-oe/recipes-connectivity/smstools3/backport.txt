@@ -1,0 +1,5 @@
+﻿Recipe for smstools3 3.1.21 backported from meta-openembedded layer:
+  repository: git://git.openembedded.org/meta-openembedded
+  subfolder:  meta-oe
+  branch:     warrior
+  revision:   8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
