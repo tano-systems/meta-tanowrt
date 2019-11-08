@@ -7,7 +7,7 @@
 # Copyright (c) 2016, Inteno Broadband Technology AB. All rights reserved.
 #
 
-START=01
+START=11
 USE_PROCD=1
 #PROCD_DEBUG=1
 NAME=cgrulesengd
