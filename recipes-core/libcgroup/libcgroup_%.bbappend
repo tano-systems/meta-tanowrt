@@ -2,7 +2,7 @@
 # This file Copyright (c) 2019 Tano Systems. All Rights Reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
