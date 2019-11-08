@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -16,6 +16,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git"
 
 SRC_URI += "file://0001-Make-libubus-thread-safe.patch"
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.patch"
+SRC_URI += "file://0003-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 
 # 16.04.2019
 # ubusd: retry sending messages on EINTR

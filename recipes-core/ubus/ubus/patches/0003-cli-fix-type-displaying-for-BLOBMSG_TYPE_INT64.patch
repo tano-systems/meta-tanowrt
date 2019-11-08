@@ -1,0 +1,28 @@
+From 0f84eff87086fcd8e8948de5a5bcf6a95d33eaf6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 7 Nov 2019 03:24:01 +0300
+Subject: [PATCH] cli: fix type displaying for BLOBMSG_TYPE_INT64
+
+Display BLOBMSG_TYPE_INT64 type ubus methods arg
+as "Integer64" instead of "(unknown)".
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ cli.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cli.c b/cli.c
+index 2cd8692..c81d723 100644
+--- a/cli.c
++++ b/cli.c
+@@ -42,6 +42,7 @@ static const char *format_type(void *priv, struct blob_attr *attr)
+ 	static const char * const attr_types[] = {
+ 		[BLOBMSG_TYPE_INT8] = "\"Boolean\"",
+ 		[BLOBMSG_TYPE_INT32] = "\"Integer\"",
++		[BLOBMSG_TYPE_INT64] = "\"Integer64\"",
+ 		[BLOBMSG_TYPE_STRING] = "\"String\"",
+ 		[BLOBMSG_TYPE_ARRAY] = "\"Array\"",
+ 		[BLOBMSG_TYPE_TABLE] = "\"Table\"",
+-- 
+2.16.2.windows.1
+
