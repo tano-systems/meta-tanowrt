@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano8"
+PR = "tano9"
 
 SUMMARY = "LuCI Support for Dynamic DNS Client (ddns-scripts)"
 LICENSE = "Apache-2.0"

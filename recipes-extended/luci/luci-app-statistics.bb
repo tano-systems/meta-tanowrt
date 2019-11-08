@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano10"
+PR = "tano11"
 
 DEPENDS += "uci-native"
 
@@ -21,7 +21,7 @@ SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCO
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
 
-RDEPENDS_${PN} += "rrdtool collectd luci-lib-iptparser"
+RDEPENDS_${PN} += "rrdtool collectd luci-lib-iptparser luci-compat"
 
 # Files
 SRC_URI += "\

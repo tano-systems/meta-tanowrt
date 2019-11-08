@@ -4,14 +4,14 @@
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 PV = "0.9.0+git${SRCPV}"
 
 SUMMARY = "LuCI support for SNMP daemon"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1fd756df4d1f5f2e8c17e9d2d4eaa503"
 
-RDEPENDS_${PN} += "net-snmp-server-snmpd"
+RDEPENDS_${PN} += "net-snmp-server-snmpd luci-compat"
 RCONFLICTS_${PN} = "luci-app-snmpd"
 
 inherit openwrt-luci-app

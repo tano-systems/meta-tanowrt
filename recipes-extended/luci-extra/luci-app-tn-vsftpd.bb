@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0+git${SRCPV}"
-PR = "tano9"
+PR = "tano10"
 
 SUMMARY = "LuCI support for VSFTP server"
 LICENSE = "MIT"
@@ -18,7 +18,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-vsftpd.git;branch=${GIT_BRA
 
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "vsftpd"
+RDEPENDS_${PN} += "vsftpd luci-compat"
 
 S = "${WORKDIR}/git"
 

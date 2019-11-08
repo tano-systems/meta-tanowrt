@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.2.1+git${SRCPV}"
-PR = "tano20"
+PR = "tano21"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
@@ -19,7 +19,7 @@ GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-lldpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "lldpd"
+RDEPENDS_${PN} += "lldpd luci-compat"
 
 S = "${WORKDIR}/git"
 
