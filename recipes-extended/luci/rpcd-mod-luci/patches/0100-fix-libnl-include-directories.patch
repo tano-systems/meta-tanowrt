@@ -1,0 +1,13 @@
+diff --git a/libs/rpcd-mod-luci/src/CMakeLists.txt b/libs/rpcd-mod-luci/src/CMakeLists.txt
+index 91569b92f..e0bc9c3fe 100644
+--- a/libs/rpcd-mod-luci/src/CMakeLists.txt
++++ b/libs/rpcd-mod-luci/src/CMakeLists.txt
+@@ -14,6 +14,8 @@ ENDIF()
+ IF (NOT DEFINED LIBNL_LIBS)
+   FIND_LIBRARY(libnl NAMES libnl-3 libnl nl-3 nl)
+   SET(LIBNL_LIBS ${libnl})
++  FIND_PATH(LIBNL_LIBRARY_INCLUDE_DIR NAMES netlink/netlink.h PATH_SUFFIXES libnl3)
++  INCLUDE_DIRECTORIES(${LIBNL_LIBRARY_INCLUDE_DIR})
+ ENDIF()
+ 
+ ADD_LIBRARY(rpcd-mod-luci MODULE luci.c)
