@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "0.9.0+git${SRCPV}"
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "LuCI support for watchdog configuration"
 LICENSE = "Apache-2.0"
@@ -18,7 +18,7 @@ SRC_URI      = "git://github.com/tano-systems/luci-app-tn-watchdog.git;branch=${
 
 SRCREV = "${GIT_SRCREV}"
 
-#RDEPENDS_${PN} += "busybox-watchdog"
+RDEPENDS_${PN} += "luci-compat"
 
 S = "${WORKDIR}/git"
 

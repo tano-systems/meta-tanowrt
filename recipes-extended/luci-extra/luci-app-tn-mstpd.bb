@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.2.0+git${SRCPV}"
-PR = "tano20"
+PR = "tano21"
 
 SUMMARY = "LuCI support for MSTP daemon"
 LICENSE = "MIT"
@@ -18,7 +18,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-mstpd.git;branch=${GIT_BRAN
 
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "mstpd"
+RDEPENDS_${PN} += "mstpd luci-compat"
 
 S = "${WORKDIR}/git"
 

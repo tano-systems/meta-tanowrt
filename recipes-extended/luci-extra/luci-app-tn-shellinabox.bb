@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano3"
+PR = "tano4"
 
 SUMMARY = "LuCI Support for shellinabox"
 LICENSE = "Apache-2.0"
@@ -14,7 +14,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-shellinabox.git;protocol=ht
 SRCREV = "201c8d69688df5db88c94b46449bc75520f2ccad"
 PV = "git${SRCPV}"
 
-RDEPENDS_${PN} += "shellinabox"
+RDEPENDS_${PN} += "shellinabox luci-compat"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n

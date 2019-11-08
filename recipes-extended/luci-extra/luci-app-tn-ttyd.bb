@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano12"
+PR = "tano13"
 
 SUMMARY = "LuCI Support for ttyd"
 LICENSE = "MIT"
@@ -16,7 +16,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-ttyd.git;protocol=https"
 SRCREV = "6d1770c391959f957cd71515ad9c6ea95110361f"
 PV = "git${SRCPV}"
 
-RDEPENDS_${PN} += "ttyd (>= 1.5.2)"
+RDEPENDS_${PN} += "ttyd (>= 1.5.2) luci-compat"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
