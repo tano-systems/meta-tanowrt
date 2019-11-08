@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
