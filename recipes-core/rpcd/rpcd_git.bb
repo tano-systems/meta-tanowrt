@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 29.10.2019
-# plugin: fix double free in finish callback
-SRCREV_rpcd = "d442d62dea8d7c5f9bb58f1be257230a469f343f"
+# 10.11.2019
+# plugin: avoid truncating numeric values
+SRCREV_rpcd = "77ad0de09247b9bdce50f4cecf3e5beb5636f57f"
 
 S = "${WORKDIR}/git"
 
