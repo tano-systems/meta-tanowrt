@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -20,9 +20,9 @@ SRC_URI = "\
 PROVIDES += "libuci libuci-lua"
 RPROVIDES_${PN} += "libuci-lua libuci"
 
-# 18.06.2019
-# uci/file: replace mktemp() with mkstemp()
-SRCREV = "415f9e48436d29f612348f58f546b3ad8d74ac38"
+# 01.11.2019
+# build: Add -Wclobbered to detect problems with longjmp
+SRCREV = "fc417e808087f96466d9ce18819e16476af9527b"
 
 S = "${WORKDIR}/git"
 
