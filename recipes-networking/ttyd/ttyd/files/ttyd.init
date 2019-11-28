@@ -5,9 +5,6 @@ USE_PROCD=1
 
 OPENSSL_BIN="/usr/bin/openssl"
 
-EXTRA_COMMANDS="status"
-EXTRA_HELP="	status	Print runtime information"
-
 TTYD_COMMAND="/bin/login"
 TTYD_INIT="/etc/init.d/ttyd"
 TTYD_PID="/var/run/ttyd.pid"
@@ -144,13 +141,4 @@ start_service()
 service_triggers()
 {
 	procd_add_config_trigger "config.change" "ttyd" ${TTYD_INIT} reload
-}
-
-status()
-{
-	if [ ! -z "`pgrep ttyd`" ]; then
-		echo 1
-	else
-		echo 0
-	fi
 }
