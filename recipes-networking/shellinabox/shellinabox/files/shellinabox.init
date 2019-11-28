@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2015 snqu.com
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
 USE_PROCD=1
 START=98
@@ -9,11 +9,7 @@ SHELLINABOX_INIT=/etc/init.d/shellinabox
 SHELLINABOX_BIN=/usr/bin/shellinaboxd
 SHELLINABOX_PID=/var/run/shellinabox.pid
 
-EXTRA_COMMANDS="status"
-EXTRA_HELP="	status	Print runtime information"
-
 start_service() {
-
 	local opt_ssl
 	local opt_ssl_cert_dir
 	local opt_port
@@ -52,13 +48,4 @@ start_service() {
 service_triggers()
 {
 	procd_add_config_trigger "config.change" "shellinabox" ${SHELLINABOX_INIT} reload
-}
-
-status()
-{
-	if [ `pgrep -n $(basename $SHELLINABOX_BIN)` ]; then
-		echo 1
-	else
-		echo 0
-	fi
 }

@@ -9,7 +9,7 @@
 # This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 PV = "2.21+git${SRCPV}"
 
 DESCRIPTION = "Shell In A Box implements a web server that \
