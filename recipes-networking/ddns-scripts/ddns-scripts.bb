@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano7"
+PR = "tano8"
 PV = "2.7.8"
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"

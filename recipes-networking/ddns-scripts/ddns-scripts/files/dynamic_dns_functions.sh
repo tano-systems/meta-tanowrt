@@ -87,7 +87,8 @@ CURL=$(which curl)
 # CURL_SSL not empty then SSL support available
 CURL_SSL=$($CURL -V 2>/dev/null | grep -F "https")
 # CURL_PROXY not empty then Proxy support available
-CURL_PROXY=$(find /lib /usr/lib -name libcurl.so* -exec strings {} 2>/dev/null \; | grep -im1 "all_proxy")
+
+CURL_PROXY=$(find /lib /usr/lib -maxdepth 1 -name libcurl.so* -exec strings {} 2>/dev/null \; | grep -im1 "all_proxy")
 
 UCLIENT_FETCH=$(which uclient-fetch)
 
@@ -777,7 +778,7 @@ do_transfer() {
 	# uclient-fetch possibly with ssl support if /lib/libustream-ssl.so installed
 	elif [ -n "$UCLIENT_FETCH" ]; then
 		# UCLIENT_FETCH_SSL not empty then SSL support available
-		UCLIENT_FETCH_SSL=$(find /lib /usr/lib -name libustream-ssl.so* 2>/dev/null)
+		UCLIENT_FETCH_SSL=$(find /lib /usr/lib -maxdepth 1 -name libustream-ssl.so* 2>/dev/null)
 		__PROG="$UCLIENT_FETCH -q -O $DATFILE"
 		# force network/ip not supported
 		[ -n "$__BINDIP" ] && \
