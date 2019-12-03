@@ -1,4 +1,4 @@
-PR_append = ".2"
+PR_append = ".3"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-net/usb-net.scc", "" ,d)} \
@@ -29,4 +29,8 @@ KERNEL_FEATURES_append = " \
 	features/nls/codepage_866.scc \
 	features/nls/codepage_1251.scc \
 	features/nls/iso8859_1.scc \
+	features/leds/ledtrig_netdev.scc \
+	features/leds/ledtrig_mtd.scc \
+	features/leds/ledtrig_heartbeat.scc \
+	features/leds/ledtrig_timer.scc \
 "
