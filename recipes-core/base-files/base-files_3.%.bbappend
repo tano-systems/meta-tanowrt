@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano39.${INC_PR}"
+PR_append = ".tano40.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -43,6 +43,7 @@ SRC_URI_append = "\
     file://preinit/80_mount_root \
     file://hotplug-call \
     file://sysctl.d/10-default.conf \
+    file://sysctl.d/20-noswap.conf \
 "
 
 # Only for x86 and x86-64 architectures
@@ -170,6 +171,7 @@ do_install_append () {
 
 	install -m 0644 ${WORKDIR}/sysctl.conf ${D}${sysconfdir}/sysctl.conf
 	install -m 0644 ${WORKDIR}/sysctl.d/10-default.conf ${D}${sysconfdir}/sysctl.d/10-default.conf
+	install -m 0644 ${WORKDIR}/sysctl.d/20-noswap.conf ${D}${sysconfdir}/sysctl.d/20-noswap.conf
 
 	install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
 	install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
@@ -292,5 +294,6 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/profile \
 	${sysconfdir}/passwd \
 	${sysconfdir}/sysctl.d/10-default.conf \
+	${sysconfdir}/sysctl.d/20-noswap.conf \
 	${sysconfdir}/rc.local \
 "
