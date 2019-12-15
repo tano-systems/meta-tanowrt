@@ -6,8 +6,8 @@
 PR_append = ".0"
 
 python __anonymous() {
-    if not d.getVar("KERNEL_SRC_URI") or not d.getVar("KERNEL_SRC_BRANCH") or not d.getVar("KERNEL_SRC_SRCREV"):
-        bb.error("You need to set properly values for KERNEL_SRC_URI, KERNEL_SRC_BRANCH and KERNEL_SRC_SRCREV")
+    if not d.getVar("KERNEL_SRC_URI") or not d.getVar("KERNEL_SRC_SRCREV"):
+        bb.error("You need to set properly values for KERNEL_SRC_URI and KERNEL_SRC_SRCREV")
 
     if not d.getVar("KERNEL_CACHE_SRC_BRANCH") or not d.getVar("KERNEL_CACHE_SRC_SRCREV"):
         bb.error("You need to set properly values for KERNEL_CACHE_SRC_BRANCH and KERNEL_CACHE_SRC_SRCREV")
@@ -27,8 +27,9 @@ KMACHINE ?= "${MACHINE}"
 KERNEL_SRC_PROTOCOL ?= "git"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}:"
+
 SRC_URI += "\
-	${KERNEL_SRC_URI};name=machine;protocol=${KERNEL_SRC_PROTOCOL};branch=${KERNEL_SRC_BRANCH} \
+	${KERNEL_SRC_URI};name=machine;protocol=${KERNEL_SRC_PROTOCOL}${@oe.utils.conditional('KERNEL_SRC_BRANCH', '', '', ';branch=', d)}${KERNEL_SRC_BRANCH} \
 "
 
 # kmeta
