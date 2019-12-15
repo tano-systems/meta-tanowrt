@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Netfilter NAT"
 LICENSE = "MIT"
 
@@ -24,6 +24,7 @@ KERNEL_CONFIG_DEPENDS += "{\
 
 KERNEL_CONFIG_DEPENDS += "{\
 	option            = CONFIG_NF_NAT_REDIRECT, \
+	version           = '>= 4.0.0', \
 	required          = y|m, \
 	m_rdepends        = kernel-module-nf-nat-redirect, \
 	m_autoload        = nf_nat_redirect, \
