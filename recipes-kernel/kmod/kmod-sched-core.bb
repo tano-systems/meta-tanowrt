@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "Traffic schedulers"
 LICENSE = "MIT"
 
@@ -27,7 +27,7 @@ KERNEL_CONFIG_DEPENDS += "\
 	{ option = CONFIG_NET_CLS_U32,      required = y|m } \
 	{ option = CONFIG_NET_ACT_MIRRED,   required = y|m } \
 	{ option = CONFIG_NET_ACT_SKBEDIT,  required = y|m } \
-	{ option = CONFIG_NET_CLS_MATCHALL, required = y|m } \
+	{ option = CONFIG_NET_CLS_MATCHALL, required = y|m, version = '>= 4.0.0' } \
 	{ option = CONFIG_NET_EMATCH,       required = y   } \
 	{ option = CONFIG_NET_EMATCH_U32,   required = y|m } \
 "
