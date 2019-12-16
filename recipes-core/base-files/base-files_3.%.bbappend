@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano40.${INC_PR}"
+PR_append = ".tano41.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -40,6 +40,7 @@ SRC_URI_append = "\
     file://system.init \
     file://system.config \
     file://sysfixtime.init \
+    file://preinit/50_overlay_setup \
     file://preinit/80_mount_root \
     file://hotplug-call \
     file://sysctl.d/10-default.conf \
@@ -185,6 +186,7 @@ do_install_append () {
 
 	install -dm 0755 ${D}/lib/preinit
 	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
+	install -m 0644 ${WORKDIR}/preinit/50_overlay_setup ${D}/lib/preinit/50_overlay_setup
 
 	rm ${D}${sysconfdir}/issue.net
 	rm ${D}${sysconfdir}/TZ
