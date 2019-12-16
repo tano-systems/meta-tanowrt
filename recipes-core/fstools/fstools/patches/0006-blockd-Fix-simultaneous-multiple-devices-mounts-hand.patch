@@ -1,7 +1,8 @@
 From 9d5e407a816179151202013913b1c150a9d73a5f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 15 Nov 2018 16:24:21 +0300
-Subject: [PATCH 6/9] blockd: Fix simultaneous multiple devices mounts handling
+Subject: [PATCH 06/10] blockd: Fix simultaneous multiple devices mounts
+ handling
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
