@@ -1,2 +1,2 @@
-PR_append = ".tano0"
-RDEPENDS_${PN} += "ttf-dejavu-sans-mono"
+PR_append = "${@oe.utils.version_less_or_equal('PV', '1.0.50', '', '.tano0', d)}"
+RDEPENDS_${PN} += "${@oe.utils.version_less_or_equal('PV', '1.0.50', '', 'ttf-dejavu-sans-mono', d)}"
