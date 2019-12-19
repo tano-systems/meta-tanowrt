@@ -19,28 +19,31 @@ SRC_URI = "http://www.kernel.org/pub/software/network/iw/${BP}.tar.gz"
 SRC_URI += "\
 	file://001-nl80211_h_sync.patch \
 	file://120-antenna_gain.patch \
+	file://130-survey-bss-rx-time.patch \
 	file://200-reduce_size.patch \
-	file://separate-objdir.patch \
 "
 
-SRC_URI[md5sum] = "2067516ca9940fdb8c091ee3250da374"
-SRC_URI[sha256sum] = "a0c3aad6ff52234d03a2522ba2eba570e36abb3e60dc29bf0b1ce88dd725d6d4"
+SRC_URI[md5sum] = "6d4d1c0ee34f3a7bda0e6aafcd7aaf31"
+SRC_URI[sha256sum] = "175abbfce86348c0b70e778c13a94c0bfc9abc7a506d2bd608261583aeedf64a"
 
 inherit pkgconfig
 
-CFLAGS += "-DIW_FULL"
-
-EXTRA_OEMAKE = "\
-    -f '${S}/Makefile' \
-    \
-    'IW_FULL=1' \
-    'PREFIX=${prefix}' \
-    'SBINDIR=${sbindir}' \
-    'MANDIR=${mandir}' \
+CFLAGS += "\
+	-DIW_FULL \
+	-DCONFIG_LIBNL20 \
+	-D_GNU_SOURCE \
+	-flto \
 "
 
-B = "${WORKDIR}/build"
+EXTRA_OEMAKE = "\
+	'IW_FULL=1' \
+	'PREFIX=${prefix}' \
+	'SBINDIR=${sbindir}' \
+	'MANDIR=${mandir}' \
+"
+
+B = "${S}"
 
 do_install() {
-    oe_runmake 'DESTDIR=${D}' install
+	oe_runmake 'DESTDIR=${D}' install
 }
