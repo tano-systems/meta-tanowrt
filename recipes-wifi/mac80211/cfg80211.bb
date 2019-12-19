@@ -3,7 +3,7 @@
 #
 # Wireless configuration API
 #
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "cfg80211 is the Linux wireless LAN (802.11) configuration API"
 SUMMARY = "Wireless configuration API"
@@ -18,6 +18,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI = "\
 	file://files/mac80211.hotplug \
 	file://files/lib/netifd/wireless/mac80211.sh \
+	file://files/lib/netifd/mac80211.sh \
 	file://files/lib/wifi/mac80211.sh \
 "
 
@@ -35,4 +36,5 @@ do_install() {
 
 	install -dm 0755 ${D}${base_libdir}/netifd/wireless
 	install -m 0755 ${WORKDIR}/files/lib/netifd/wireless/mac80211.sh ${D}${base_libdir}/netifd/wireless/mac80211.sh
+	install -m 0755 ${WORKDIR}/files/lib/netifd/mac80211.sh ${D}${base_libdir}/netifd/mac80211.sh
 }
