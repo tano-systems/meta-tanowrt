@@ -6,7 +6,7 @@ SUMMARY = "User space daemon for extended IEEE 802.11 management"
 DEPENDS = "libnl openssl libubus libubox"
 SECTION = "kernel/userland"
 
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 PROVIDES += "wpa-supplicant wpad"
 RPROVIDES_${PN} += "wpa-supplicant wpad"
@@ -29,6 +29,7 @@ do_install() {
 	install -d ${D}${sbindir}
 	install -d ${D}${base_libdir}/netifd
 	install -d ${D}${sysconfdir}/rc.button
+	install -d ${D}${sysconfdir}/hotplug.d/ieee80211
 
 	# wpad
 	install -m 0755 ${B}/wpad ${D}${sbindir}/wpad
@@ -38,6 +39,7 @@ do_install() {
 	# hostapd-common
 	install -m 0644 ${WORKDIR}/hostapd.sh ${D}${base_libdir}/netifd/hostapd.sh
 	install -m 0755 ${WORKDIR}/wps-hotplug.sh ${D}${sysconfdir}/rc.button/wps
+	install -m 0755 ${WORKDIR}/hostapd.hotplug ${D}${sysconfdir}/hotplug.d/ieee80211/20-hostapd
 }
 
 FILES_${PN} += "${base_libdir}"
