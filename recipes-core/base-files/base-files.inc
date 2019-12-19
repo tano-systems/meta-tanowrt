@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-# 28.10.2019
-# base-files: hotplug-call: exit success when dir is absent
-OPENWRT_SRCREV = "f526e85426aa8d232b167e871a0b329f0205f827"
+# 30.11.2019
+# base-files: add 'wifi reconf'
+OPENWRT_SRCREV = "6becc37f33be4c2f2b5d58467bdda41c251d9e2e"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "10"
+INC_PR = "11"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
@@ -17,4 +17,3 @@ SRC_URI += "\
 "
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
-
