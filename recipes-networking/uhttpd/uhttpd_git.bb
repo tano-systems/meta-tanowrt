@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano18"
+PR = "tano19"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -26,9 +26,9 @@ SRC_URI = "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 17.08.2019
-# ubus: increase maximum ubus request size to 64KB
-SRCREV = "6b03f9605323df23d12e3876feb466f53f8d50c4"
+# 22.12.2019
+# client: fix invalid data access through invalid content-length values
+SRCREV = "5f9ae5738372aaa3a6be2f0a278933563d3f191a"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt
