@@ -265,10 +265,6 @@ service_triggers() {
 	procd_add_config_trigger "config.change" "lldpd" /etc/init.d/lldpd reload
 }
 
-service_running() {
-	pgrep "lldpd: monitor." &> /dev/null
-}
-
 lldpcli_running_config_read() {
 	json_init
 	json_load "`$LLDPCLI -f json show configuration`"
