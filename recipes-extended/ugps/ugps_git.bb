@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -19,9 +19,9 @@ SRC_URI = "\
 	file://ugps.init \
 "
 
-# 12.07.2018
-# check timegm return code
-SRCREV = "b88037b6bf6a6c812183566d96887cb0b201491b"
+# 23.07.2019
+# ugps: Fix compilation under 64-bit
+SRCREV = "cd7eabcd8c9d17dab3946002127a82ad2f9e68c2"
 
 S = "${WORKDIR}/git"
 
