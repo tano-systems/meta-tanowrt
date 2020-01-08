@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -14,13 +14,13 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git"
 
-SRC_URI += "file://0001-Make-libubus-thread-safe.patch"
-SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.patch"
-SRC_URI += "file://0003-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
+SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.patch"
+SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
+SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 16.04.2019
-# ubusd: retry sending messages on EINTR
-SRCREV = "588baa3cd784158967ec0151e6205f35cb989305"
+# 07.12.2019
+# ubus: make libubus ready for linking into C++
+SRCREV = "d35df8adda873dc75d876f72b78e84db8cfa72ee"
 
 S = "${WORKDIR}/git"
 

@@ -1,28 +1,41 @@
-From 2a1468dda206789f2d5ab3e8fd46710b1b7c1ffb Mon Sep 17 00:00:00 2001
-From: Ronny Nilsson <ronnyn@southpole.se>
-Date: Mon, 7 Mar 2016 16:53:24 +0100
-Subject: Make libubus thread safe.
+From b3651767038e6b734d422cb4f3ee126b7974b133 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 8 Jan 2020 03:27:21 +0300
+Subject: [PATCH 3/3] Make libubus thread safe
 
 Make libubus thread safe by transforming global RW variables into
 local equivalents. The remaining globals are read only constants.
 There are no changes in the user API, however applications might
 need a recompile due to a modified header file.
 
+Original patch by Ronny Nilsson <ronnyn@southpole.se>
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ libubus-internal.h |  2 +-
+ libubus-io.c       | 12 +++++-------
+ libubus-obj.c      | 42 ++++++++++++++++++++++--------------------
+ libubus-req.c      | 53 +++++++++++++++++++++++++++--------------------------
+ libubus-sub.c      |  8 ++++----
+ libubus.c          | 42 ++++++++++++++++++++----------------------
+ libubus.h          |  1 +
+ 7 files changed, 80 insertions(+), 80 deletions(-)
+
 diff --git a/libubus-internal.h b/libubus-internal.h
-index c4067d3..f80e5f0 100644
+index 24477a0..9cda8c0 100644
 --- a/libubus-internal.h
 +++ b/libubus-internal.h
 @@ -17,7 +17,7 @@
  extern struct blob_buf b;
  extern const struct ubus_method watch_method;
  
--struct blob_attr **ubus_parse_msg(struct blob_attr *msg);
-+void ubus_parse_msg(struct blob_attr **attr, struct blob_attr *msg);
+-struct blob_attr **ubus_parse_msg(struct blob_attr *msg, size_t len);
++void ubus_parse_msg(struct blob_attr **attr, struct blob_attr *msg, size_t len);
+ bool ubus_validate_hdr(struct ubus_msghdr *hdr);
  void ubus_handle_data(struct uloop_fd *u, unsigned int events);
  int ubus_send_msg(struct ubus_context *ctx, uint32_t seq,
- 		  struct blob_attr *msg, int cmd, uint32_t peer, int fd);
 diff --git a/libubus-io.c b/libubus-io.c
-index daa7106..0c10589 100644
+index 3561ac4..64da6de 100644
 --- a/libubus-io.c
 +++ b/libubus-io.c
 @@ -31,7 +31,7 @@
@@ -40,25 +53,16 @@ index daa7106..0c10589 100644
  
 -static struct blob_attr *attrbuf[UBUS_ATTR_MAX];
 -
--__hidden struct blob_attr **ubus_parse_msg(struct blob_attr *msg)
-+__hidden void ubus_parse_msg(struct blob_attr **attrbuf, struct blob_attr *msg)
+-__hidden struct blob_attr **ubus_parse_msg(struct blob_attr *msg, size_t len)
++__hidden void ubus_parse_msg(struct blob_attr **attrbuf, struct blob_attr *msg, size_t len)
  {
- 	blob_parse(msg, attrbuf, ubus_policy, UBUS_ATTR_MAX);
+ 	blob_parse_untrusted(msg, len, attrbuf, ubus_policy, UBUS_ATTR_MAX);
 -	return attrbuf;
 +	return;
  }
  
  static void wait_data(int fd, bool write)
-@@ -59,7 +57,7 @@ static void wait_data(int fd, bool write)
- 
- static int writev_retry(int fd, struct iovec *iov, int iov_len, int sock_fd)
- {
--	static struct {
-+	struct {
- 		struct cmsghdr h;
- 		int fd;
- 	} fd_buf = {
-@@ -137,8 +135,8 @@ int __hidden ubus_send_msg(struct ubus_context *ctx, uint32_t seq,
+@@ -138,8 +136,8 @@ int __hidden ubus_send_msg(struct ubus_context *ctx, uint32_t seq,
  	hdr.peer = cpu_to_be32(peer);
  
  	if (!msg) {
@@ -69,17 +73,8 @@ index daa7106..0c10589 100644
  	}
  
  	iov[1].iov_base = (char *) msg;
-@@ -158,7 +156,7 @@ static int recv_retry(struct ubus_context *ctx, struct iovec *iov, bool wait, in
- {
- 	int bytes, total = 0;
- 	int fd = ctx->sock.fd;
--	static struct {
-+	struct {
- 		struct cmsghdr h;
- 		int fd;
- 	} fd_buf = {
 diff --git a/libubus-obj.c b/libubus-obj.c
-index 2580b24..d4396c3 100644
+index 29cbb2b..6afe6fe 100644
 --- a/libubus-obj.c
 +++ b/libubus-obj.c
 @@ -117,11 +117,11 @@ void __hidden ubus_process_obj_msg(struct ubus_context *ctx, struct ubus_msghdr_
@@ -91,8 +86,8 @@ index 2580b24..d4396c3 100644
  	struct ubus_object *obj;
  	uint32_t objid;
  	void *prev_data = NULL;
--	attrbuf = ubus_parse_msg(buf->data);
-+	ubus_parse_msg(attrbuf, buf->data);
+-	attrbuf = ubus_parse_msg(buf->data, blob_raw_len(buf->data));
++	ubus_parse_msg(attrbuf, buf->data, blob_raw_len(buf->data));
  	if (!attrbuf[UBUS_ATTR_OBJID])
  		return;
  
@@ -100,9 +95,9 @@ index 2580b24..d4396c3 100644
  static void ubus_add_object_cb(struct ubus_request *req, int type, struct blob_attr *msg)
  {
  	struct ubus_object *obj = req->priv;
--	struct blob_attr **attrbuf = ubus_parse_msg(msg);
+-	struct blob_attr **attrbuf = ubus_parse_msg(msg, blob_raw_len(msg));
 +	struct blob_attr *attrbuf[UBUS_ATTR_MAX];
-+	ubus_parse_msg(attrbuf, msg);
++	ubus_parse_msg(attrbuf, msg, blob_raw_len(msg));
  
  	if (!attrbuf[UBUS_ATTR_OBJID])
  		return;
@@ -177,9 +172,9 @@ index 2580b24..d4396c3 100644
  static void ubus_remove_object_cb(struct ubus_request *req, int type, struct blob_attr *msg)
  {
  	struct ubus_object *obj = req->priv;
--	struct blob_attr **attrbuf = ubus_parse_msg(msg);
+-	struct blob_attr **attrbuf = ubus_parse_msg(msg, blob_raw_len(msg));
 +	struct blob_attr *attrbuf[UBUS_ATTR_MAX];
-+	ubus_parse_msg(attrbuf, msg);
++	ubus_parse_msg(attrbuf, msg, blob_raw_len(msg));
  
  	if (!attrbuf[UBUS_ATTR_OBJID])
  		return;
@@ -198,7 +193,7 @@ index 2580b24..d4396c3 100644
  
  	req.raw_data_cb = ubus_remove_object_cb;
 diff --git a/libubus-req.c b/libubus-req.c
-index 74446f3..0418283 100644
+index ae9d192..84fd578 100644
 --- a/libubus-req.c
 +++ b/libubus-req.c
 @@ -23,7 +23,7 @@ struct ubus_pending_data {
@@ -214,12 +209,12 @@ index 74446f3..0418283 100644
  	if (!req->data_cb)
  		return;
  
--	attr = ubus_parse_msg(data);
-+	ubus_parse_msg(attr, data);
+-	attr = ubus_parse_msg(data, blob_raw_len(data));
++	ubus_parse_msg(attr, data, blob_raw_len(data));
  	if (!attr[UBUS_ATTR_DATA])
  		return;
  
-@@ -190,10 +190,10 @@ int ubus_complete_request(struct ubus_context *ctx, struct ubus_request *req,
+@@ -188,10 +188,10 @@ int ubus_complete_request(struct ubus_context *ctx, struct ubus_request *req,
  
  void ubus_complete_deferred_request(struct ubus_context *ctx, struct ubus_request_data *req, int ret)
  {
@@ -234,7 +229,7 @@ index 74446f3..0418283 100644
  }
  
  static void ubus_put_data(struct blob_buf *buf, struct blob_attr *msg)
-@@ -209,10 +209,10 @@ int ubus_send_reply(struct ubus_context *ctx, struct ubus_request_data *req,
+@@ -207,10 +207,10 @@ int ubus_send_reply(struct ubus_context *ctx, struct ubus_request_data *req,
  {
  	int ret;
  
@@ -249,7 +244,7 @@ index 74446f3..0418283 100644
  	if (ret < 0)
  		return UBUS_STATUS_NO_DATA;
  
-@@ -223,14 +223,14 @@ int ubus_invoke_async_fd(struct ubus_context *ctx, uint32_t obj,
+@@ -221,14 +221,14 @@ int ubus_invoke_async_fd(struct ubus_context *ctx, uint32_t obj,
  			 const char *method, struct blob_attr *msg,
  			 struct ubus_request *req, int fd)
  {
@@ -269,7 +264,7 @@ index 74446f3..0418283 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  	return 0;
  }
-@@ -282,15 +282,15 @@ __ubus_notify_async(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -280,15 +280,15 @@ __ubus_notify_async(struct ubus_context *ctx, struct ubus_object *obj,
  {
  	memset(req, 0, sizeof(*req));
  
@@ -291,34 +286,43 @@ index 74446f3..0418283 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	/* wait for status message from ubusd first */
-@@ -330,7 +330,8 @@ int ubus_notify(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -328,7 +328,8 @@ int ubus_notify(struct ubus_context *ctx, struct ubus_object *obj,
  
  static bool ubus_get_status(struct ubus_msghdr_buf *buf, int *ret)
  {
--	struct blob_attr **attrbuf = ubus_parse_msg(buf->data);
+-	struct blob_attr **attrbuf = ubus_parse_msg(buf->data, blob_raw_len(buf->data));
 +	struct blob_attr *attrbuf[UBUS_ATTR_MAX];
-+	ubus_parse_msg(attrbuf, buf->data);
++	ubus_parse_msg(attrbuf, buf->data, blob_raw_len(buf->data));
  
  	if (!attrbuf[UBUS_ATTR_STATUS])
  		return false;
-@@ -426,7 +427,7 @@ ubus_find_request(struct ubus_context *ctx, uint32_t seq, uint32_t peer, int *id
+@@ -424,7 +425,7 @@ ubus_find_request(struct ubus_context *ctx, uint32_t seq, uint32_t peer, int *id
  static void ubus_process_notify_status(struct ubus_request *req, int id, struct ubus_msghdr_buf *buf)
  {
  	struct ubus_notify_request *nreq;
 -	struct blob_attr **tb;
 +	struct blob_attr *tb[UBUS_ATTR_MAX];
  	struct blob_attr *cur;
- 	int rem, idx = 1;
- 	int ret = 0;
-@@ -436,7 +437,7 @@ static void ubus_process_notify_status(struct ubus_request *req, int id, struct
+ 	size_t rem;
+ 	int idx = 1;
+@@ -435,7 +436,7 @@ static void ubus_process_notify_status(struct ubus_request *req, int id, struct
  
  	if (!id) {
  		/* first id: ubusd's status message with a list of ids */
--		tb = ubus_parse_msg(buf->data);
-+		ubus_parse_msg(tb, buf->data);
+-		tb = ubus_parse_msg(buf->data, blob_raw_len(buf->data));
++		ubus_parse_msg(tb, buf->data, blob_raw_len(buf->data));
  		if (tb[UBUS_ATTR_SUBSCRIBERS]) {
  			blob_for_each_attr(cur, tb[UBUS_ATTR_SUBSCRIBERS], rem) {
  				if (!blob_check_type(blob_data(cur), blob_len(cur), BLOB_ATTR_INT32))
+@@ -494,6 +495,6 @@ void __hidden ubus_process_req_msg(struct ubus_context *ctx, struct ubus_msghdr_
+ 
+ int __ubus_monitor(struct ubus_context *ctx, const char *type)
+ {
+-	blob_buf_init(&b, 0);
+-	return ubus_invoke(ctx, UBUS_SYSTEM_OBJECT_MONITOR, type, b.head, NULL, NULL, 1000);
++	blob_buf_init(&ctx->b, 0);
++	return ubus_invoke(ctx, UBUS_SYSTEM_OBJECT_MONITOR, type, ctx->b.head, NULL, NULL, 1000);
+ }
 diff --git a/libubus-sub.c b/libubus-sub.c
 index 8793133..a4de5eb 100644
 --- a/libubus-sub.c
@@ -340,7 +344,7 @@ index 8793133..a4de5eb 100644
  
  	return ubus_complete_request(ctx, &req, 0);
 diff --git a/libubus.c b/libubus.c
-index 260e40f..2e9cefd 100644
+index 91f317c..90f453f 100644
 --- a/libubus.c
 +++ b/libubus.c
 @@ -22,7 +22,7 @@
@@ -361,7 +365,7 @@ index 260e40f..2e9cefd 100644
  struct ubus_pending_msg {
  	struct list_head list;
  	struct ubus_msghdr_buf hdr;
-@@ -134,10 +132,10 @@ static void ubus_lookup_cb(struct ubus_request *ureq, int type, struct blob_attr
+@@ -136,10 +134,10 @@ static void ubus_lookup_cb(struct ubus_request *ureq, int type, struct blob_attr
  {
  	struct ubus_lookup_request *req;
  	struct ubus_object_data obj = {};
@@ -369,12 +373,12 @@ index 260e40f..2e9cefd 100644
 +	struct blob_attr *attr[UBUS_ATTR_MAX];
  
  	req = container_of(ureq, struct ubus_lookup_request, req);
--	attr = ubus_parse_msg(msg);
-+	ubus_parse_msg(attr, msg);
+-	attr = ubus_parse_msg(msg, blob_raw_len(msg));
++	ubus_parse_msg(attr, msg, blob_raw_len(msg));
  
  	if (!attr[UBUS_ATTR_OBJID] || !attr[UBUS_ATTR_OBJPATH] ||
  	    !attr[UBUS_ATTR_OBJTYPE])
-@@ -155,11 +153,11 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
+@@ -157,11 +155,11 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
  {
  	struct ubus_lookup_request lookup;
  
@@ -389,7 +393,7 @@ index 260e40f..2e9cefd 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	lookup.req.raw_data_cb = ubus_lookup_cb;
-@@ -170,10 +168,10 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
+@@ -172,10 +170,10 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
  
  static void ubus_lookup_id_cb(struct ubus_request *req, int type, struct blob_attr *msg)
  {
@@ -397,12 +401,12 @@ index 260e40f..2e9cefd 100644
 +	struct blob_attr *attr[UBUS_ATTR_MAX];
  	uint32_t *id = req->priv;
  
--	attr = ubus_parse_msg(msg);
-+	ubus_parse_msg(attr, msg);
+-	attr = ubus_parse_msg(msg, blob_raw_len(msg));
++	ubus_parse_msg(attr, msg, blob_raw_len(msg));
  
  	if (!attr[UBUS_ATTR_OBJID])
  		return;
-@@ -185,11 +183,11 @@ int ubus_lookup_id(struct ubus_context *ctx, const char *path, uint32_t *id)
+@@ -187,11 +185,11 @@ int ubus_lookup_id(struct ubus_context *ctx, const char *path, uint32_t *id)
  {
  	struct ubus_request req;
  
@@ -417,7 +421,7 @@ index 260e40f..2e9cefd 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	req.raw_data_cb = ubus_lookup_id_cb;
-@@ -253,15 +251,15 @@ int ubus_send_event(struct ubus_context *ctx, const char *id,
+@@ -255,15 +253,15 @@ int ubus_send_event(struct ubus_context *ctx, const char *id,
  	struct ubus_request req;
  	void *s;
  
@@ -441,7 +445,7 @@ index 260e40f..2e9cefd 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	return ubus_complete_request(ctx, &req, 0);
-@@ -357,7 +355,7 @@ struct ubus_context *ubus_connect(const char *path)
+@@ -359,7 +357,7 @@ struct ubus_context *ubus_connect(const char *path)
  
  void ubus_shutdown(struct ubus_context *ctx)
  {
@@ -451,10 +455,10 @@ index 260e40f..2e9cefd 100644
  		return;
  	close(ctx->sock.fd);
 diff --git a/libubus.h b/libubus.h
-index dc42ea7..bd41383 100644
+index 6925514..e33e084 100644
 --- a/libubus.h
 +++ b/libubus.h
-@@ -166,6 +166,7 @@ struct ubus_context {
+@@ -170,6 +170,7 @@ struct ubus_context {
  	struct ubus_msghdr_buf msgbuf;
  	uint32_t msgbuf_data_len;
  	int msgbuf_reduction_counter;
@@ -462,16 +466,6 @@ index dc42ea7..bd41383 100644
  };
  
  struct ubus_object_data {
-diff --git a/libubus-req.c b/libubus-req.c
-index 0418283..60a387f 100644
---- a/libubus-req.c
-+++ b/libubus-req.c
-@@ -496,6 +496,6 @@ void __hidden ubus_process_req_msg(struct ubus_context *ctx, struct ubus_msghdr_
- 
- int __ubus_monitor(struct ubus_context *ctx, const char *type)
- {
--	blob_buf_init(&b, 0);
--	return ubus_invoke(ctx, UBUS_SYSTEM_OBJECT_MONITOR, type, b.head, NULL, NULL, 1000);
-+	blob_buf_init(&ctx->b, 0);
-+	return ubus_invoke(ctx, UBUS_SYSTEM_OBJECT_MONITOR, type, ctx->b.head, NULL, NULL, 1000);
- }
+-- 
+2.16.2.windows.1
+
