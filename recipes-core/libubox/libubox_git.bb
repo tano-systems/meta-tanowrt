@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -46,9 +46,9 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 21.10.2019
-# libubox, jshn: add option to write output to a file
-SRCREV = "eb30a03048f83e733a9530b5741808d7d0932ff2"
+# 28.12.2019
+# blobmsg: fix wrong payload len passed from blobmsg_check_array
+SRCREV = "cd75136b1342e1e9dabf921be13240c6653640ed"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
