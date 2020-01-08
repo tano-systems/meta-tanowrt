@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "9"
+INC_PR = "10"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 EXTRA_OEMAKE += "\
