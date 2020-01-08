@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano16"
+PR = "tano17"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 23.09.2019
-# netlink: fix potential infinite loops
-SRCREV = "e76ad06d01d31fff4c482974138d2c4566e264cf"
+# 02.01.2020
+# dhcpv6-ia: introduce DHCPv6 pd and ia assignments flags
+SRCREV = "2520c483781339f6c7feae617b7e5c0137e3534d"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services
