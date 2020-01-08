@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano10"
+PR = "tano11"
 
 RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 16.10.2019
-# nl80211: handle hidden SSIDs in wpa_supplicant scan results
-SRCREV = "07315b6fdb2566a8626d8a1e4de76eb30456fe17"
+# 19.12.2019
+# nl80211: add htmode to iwinfo_ops
+SRCREV = "bf2c1069a7f14d1af1e02c8edd2b7338f0355ac8"
 
 inherit openwrt pkgconfig
 
