@@ -1,7 +1,7 @@
-From de0adf5254e2d201bdfbf89aeaba400460de70ab Mon Sep 17 00:00:00 2001
+From 243f865f88c64010c94b0779b698d4100e63d55a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
-Subject: [PATCH 05/10] hotplug: Completely remove hotplug functionality
+Subject: [PATCH 05/11] hotplug: Completely remove hotplug functionality
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -18,7 +18,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  delete mode 100644 plug/hotplug.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 56a9d85..f2f9792 100644
+index e4431a8..0c47857 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c inittab.c rcS.c ubus.c system.c sysupgrade.
@@ -29,7 +29,7 @@ index 56a9d85..f2f9792 100644
 +  SET(SOURCES ${SOURCES} watchdog.c)
  ENDIF()
  
- SET(LIBS ubox ubus json-c blobmsg_json json_script)
+ FIND_LIBRARY(ubox NAMES ubox)
 diff --git a/initd/preinit.c b/initd/preinit.c
 index 9dfe5c1..d04ba6a 100644
 --- a/initd/preinit.c
