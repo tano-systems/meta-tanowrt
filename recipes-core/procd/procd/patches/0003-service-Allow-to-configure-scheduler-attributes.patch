@@ -1,7 +1,7 @@
-From c245a30e09d4048da89d21bee17bae513c0290bd Mon Sep 17 00:00:00 2001
+From aa8ec20c17b6e43da02432ce508c1a30b22611f8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 19 Feb 2019 02:41:23 +0300
-Subject: [PATCH 03/10] service: Allow to configure scheduler attributes
+Subject: [PATCH 03/11] service: Allow to configure scheduler attributes
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -12,7 +12,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  create mode 100644 service/instance_sched.h
 
 diff --git a/service/instance.c b/service/instance.c
-index 4bc62f3..b0d5fff 100644
+index d95c301..de7cbcc 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -27,6 +27,8 @@
@@ -105,7 +105,7 @@ index 4bc62f3..b0d5fff 100644
  static void closefd(int fd)
  {
  	if (fd > STDERR_FILENO)
-@@ -523,14 +573,60 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -533,14 +583,60 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  {
  	struct blobmsg_list_node *var;
  	struct blob_attr *cur;
@@ -168,7 +168,7 @@ index 4bc62f3..b0d5fff 100644
  
  	blobmsg_for_each_attr(cur, in->command, rem)
  		argc++;
-@@ -877,12 +973,27 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -891,12 +987,27 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (!blobmsg_list_equal(&in->file, &in_new->file))
  		return true;
  
@@ -196,7 +196,7 @@ index 4bc62f3..b0d5fff 100644
  	if (string_changed(in->user, in_new->user))
  		return true;
  
-@@ -1147,12 +1258,34 @@ instance_config_parse(struct service_instance *in)
+@@ -1170,12 +1281,34 @@ instance_config_parse(struct service_instance *in)
  		}
  	}
  
@@ -231,7 +231,7 @@ index 4bc62f3..b0d5fff 100644
  	if (tb[INSTANCE_ATTR_USER]) {
  		const char *user = blobmsg_get_string(tb[INSTANCE_ATTR_USER]);
  		struct passwd *p = getpwnam(user);
-@@ -1266,6 +1399,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1289,6 +1422,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	blobmsg_list_move(&in->errors, &in_src->errors);
  	blobmsg_list_move(&in->jail.mount, &in_src->jail.mount);
  	in->trigger = in_src->trigger;
@@ -244,7 +244,7 @@ index 4bc62f3..b0d5fff 100644
  	in->command = in_src->command;
  	in->pidfile = in_src->pidfile;
  	in->respawn = in_src->respawn;
-@@ -1332,6 +1471,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+@@ -1359,6 +1498,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->proc.cb = instance_exit;
  	in->term_timeout = 5;
  	in->syslog_facility = LOG_DAEMON;
@@ -257,7 +257,7 @@ index 4bc62f3..b0d5fff 100644
  
  #ifdef CGROUP_SUPPORT
  	in->cg_sticky = 0;
-@@ -1455,6 +1600,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1482,6 +1627,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  

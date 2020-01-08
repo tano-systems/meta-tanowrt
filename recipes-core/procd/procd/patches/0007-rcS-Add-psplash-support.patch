@@ -1,7 +1,7 @@
-From 60b033a334333de25a102c600dcd516137cba4dc Mon Sep 17 00:00:00 2001
+From d617633757ec432c1dd90235644793c21b8bb13f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
-Subject: [PATCH 07/10] rcS: Add psplash support
+Subject: [PATCH 07/11] rcS: Add psplash support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,12 +10,12 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f2f9792..3bc810a 100644
+index 0c47857..bfb1bc4 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -27,6 +27,13 @@ ENDIF()
+@@ -33,6 +33,13 @@ FIND_LIBRARY(json NAMES json-c json)
  
- SET(LIBS ubox ubus json-c blobmsg_json json_script)
+ SET(LIBS ${ubox} ${ubus} ${json} ${blobmsg_json} ${json_script})
  
 +IF(PSPLASH_SUPPORT)
 +	ADD_DEFINITIONS(-DPSPLASH_SUPPORT)

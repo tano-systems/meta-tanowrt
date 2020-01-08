@@ -1,7 +1,7 @@
-From 9dc141c7c38ddf03ca6c03c1289e2125adc7c1b9 Mon Sep 17 00:00:00 2001
+From 09cf5f8e57174a8a915ea71bbb16905d55d382f8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
-Subject: [PATCH 01/10] service: allow to change service's current directory
+Subject: [PATCH 01/11] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+)
 
 diff --git a/service/instance.c b/service/instance.c
-index b4284e7..21a5962 100644
+index b0c9807..c3576d2 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -61,6 +61,7 @@ enum {
@@ -29,7 +29,7 @@ index b4284e7..21a5962 100644
  };
  
  enum {
-@@ -378,6 +380,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -392,6 +394,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		ERROR("failed to set user id %d: %m\n", in->uid);
  		exit(127);
  	}
@@ -40,7 +40,7 @@ index b4284e7..21a5962 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -685,6 +691,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -699,6 +705,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (!blobmsg_list_equal(&in->errors, &in_new->errors))
  		return true;
  
@@ -50,7 +50,7 @@ index b4284e7..21a5962 100644
  	return false;
  }
  
-@@ -954,6 +963,12 @@ instance_config_parse(struct service_instance *in)
+@@ -977,6 +986,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -63,7 +63,7 @@ index b4284e7..21a5962 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1018,6 +1033,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1041,6 +1056,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->seccomp = in_src->seccomp;
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
@@ -71,7 +71,7 @@ index b4284e7..21a5962 100644
  
  	free(in->config);
  	in->config = in_src->config;
-@@ -1187,5 +1203,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1214,5 +1230,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  
