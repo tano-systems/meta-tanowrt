@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano17"
+PR = "tano18"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 10.12.2019
-# file: extend exec acl checks to commands with arguments
-SRCREV_rpcd = "aaa08366e6384d9933a405d1218b03c1b167f9e5"
+# 27.11.2019
+# iwinfo: add current hw and ht mode to info call
+SRCREV_rpcd = "efe51f41d6288fa8503cc4f2efb37a777767d505"
 
 S = "${WORKDIR}/git"
 
