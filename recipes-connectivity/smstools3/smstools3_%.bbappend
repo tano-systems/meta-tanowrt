@@ -1,5 +1,5 @@
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
