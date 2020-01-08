@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 SUMMARY = "Small stream SSL library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ustream-ssl.git;a=summary"
 LICENSE = "BSD"
@@ -13,9 +13,9 @@ DEPENDS = "libubox openssl"
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ustream-ssl.git \
           "
 
-# 17.08.2019
-# Revise supported ciphersuites
-SRCREV = "e8f9c22d02fccde1d992f324280fb9966d3b4be6"
+# 08.12.2019
+# ustream-ssl: mbedtls: fix ssl client verification
+SRCREV = "30cebb4fc78e49e0432a404f7c9dd8c9a93b3cc3"
 
 S = "${WORKDIR}/git"
 
