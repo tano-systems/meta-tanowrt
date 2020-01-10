@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano42.${INC_PR}"
+PR_append = ".tano43.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
