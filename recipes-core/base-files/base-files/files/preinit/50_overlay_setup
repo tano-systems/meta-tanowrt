@@ -1,8 +1,9 @@
 #!/bin/sh
-# Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
 do_overlay_setup() {
-	OVERLAY_PARTITION=`cat /proc/cmdline | sed -e 's/^.*overlay_partition=\([a-zA-Z0-9_-]*\).*$/\1/g'`
+	CMDLINE=`cat /proc/cmdline | grep 'overlay_partition='`
+	OVERLAY_PARTITION=`echo ${CMDLINE} | sed -e 's/^.*overlay_partition=\([a-zA-Z0-9_-]*\).*$/\1/g'`
 
 	if [ "$OVERLAY_PARTITION" != "" ]; then
 		echo "$OVERLAY_PARTITION" > /tmp/overlay_partition
