@@ -1,8 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano22"
+PR = "tano23"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -48,9 +48,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 27.10.2019
-# block: use fsck.fat instead of dosfsck
-SRCREV = "eda8b3fbcc0eb0752c4d02276950c3b977eac259"
+# 05.01.2019
+# block: re-discover mtd devices on extroot mount retry
+SRCREV = "823faa0f3edb93fac528bc35588cea81f0a77146"
 
 S = "${WORKDIR}/git"
 
