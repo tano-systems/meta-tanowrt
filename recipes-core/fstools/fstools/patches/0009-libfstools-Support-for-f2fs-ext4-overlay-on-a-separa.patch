@@ -1,4 +1,4 @@
-From 29c87c495c7d21320996f8d95034a4bd9efb50f9 Mon Sep 17 00:00:00 2001
+From ba3c8d5274db52da6a12f89c26a46d0b9736b6f7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 16 Aug 2019 19:50:29 +0300
 Subject: [PATCH 09/11] libfstools: Support for f2fs/ext4 overlay on a separate
@@ -15,10 +15,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  3 files changed, 512 insertions(+), 19 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7f13c4f..ecb5003 100644
+index a586577..cf55d89 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -53,6 +53,14 @@ INSTALL(FILES libubi/libubi-tiny.h libubi/libubi.h libubi/ubi-media.h
+@@ -54,6 +54,14 @@ INSTALL(FILES libubi/libubi-tiny.h libubi/libubi.h libubi/ubi-media.h
  	DESTINATION include
  )
  

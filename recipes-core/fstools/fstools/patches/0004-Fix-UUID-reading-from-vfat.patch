@@ -1,4 +1,4 @@
-From 68bed0c1482129951875aa7393f21897ab3e3c4e Mon Sep 17 00:00:00 2001
+From 55423cb311d6bcbb4a56d99a4ea2b7f4afa48e4b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 11 Oct 2018 12:43:56 +0300
 Subject: [PATCH 04/11] Fix UUID reading from vfat
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/libblkid-tiny/vfat.c b/libblkid-tiny/vfat.c
-index 49b865a..3b97144 100644
+index e70dd75..3129694 100644
 --- a/libblkid-tiny/vfat.c
 +++ b/libblkid-tiny/vfat.c
-@@ -302,6 +302,12 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+@@ -304,6 +304,12 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
  {
  	struct vfat_super_block *vs;
  	struct msdos_super_block *ms;
@@ -23,9 +23,9 @@ index 49b865a..3b97144 100644
 +	} saved;
 +
  	unsigned char *vol_label = 0;
+ 	const unsigned char *boot_label = NULL;
  	unsigned char *vol_serno = NULL, vol_label_buf[12] = { 0 };
- 	uint16_t sector_size = 0, reserved;
-@@ -326,7 +332,10 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+@@ -328,7 +334,10 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
  	if (ms->ms_fat_length) {
  		/* the label may be an attribute in the root directory */
  		uint32_t root_start = (reserved + fat_size) * sector_size;
@@ -37,18 +37,18 @@ index 49b865a..3b97144 100644
  
  		vol_label = search_fat_label(pr, root_start, root_dir_entries);
  		if (vol_label) {
-@@ -335,8 +344,8 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+@@ -336,8 +345,8 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+ 			vol_label = vol_label_buf;
  		}
  
- 		if (!vol_label || !memcmp(vol_label, no_name, 11))
--			vol_label = ms->ms_label;
+-		boot_label = ms->ms_label;
 -		vol_serno = ms->ms_serno;
-+			vol_label = saved.ms.ms_label;
++		boot_label = saved.ms.ms_label;
 +		vol_serno = saved.ms.ms_serno;
  
  		blkid_probe_set_value(pr, "SEC_TYPE", (unsigned char *) "msdos",
                                sizeof("msdos"));
-@@ -351,6 +360,9 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+@@ -352,6 +361,9 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
  		uint16_t fsinfo_sect;
  		int maxloop = 100;
  
@@ -58,7 +58,7 @@ index 49b865a..3b97144 100644
  		/* Search the FAT32 root dir for the label attribute */
  		uint32_t buf_size = vs->vs_cluster_size * sector_size;
  		uint32_t start_data_sect = reserved + fat_size;
-@@ -363,7 +375,7 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+@@ -364,7 +376,7 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
  			uint64_t next_off, fat_entry_off;
  			int count;
  
@@ -68,12 +68,12 @@ index 49b865a..3b97144 100644
  				sector_size;
  
 @@ -390,15 +402,15 @@ static int probe_vfat(blkid_probe pr, const struct blkid_idmag *mag)
+ 
  		version = "FAT32";
  
- 		if (!vol_label || !memcmp(vol_label, no_name, 11))
--			vol_label = vs->vs_label;
+-		boot_label = vs->vs_label;
 -		vol_serno = vs->vs_serno;
-+			vol_label = saved.vs.vs_label;
++		boot_label = saved.vs.vs_label;
 +		vol_serno = saved.vs.vs_serno;
  
  		/*

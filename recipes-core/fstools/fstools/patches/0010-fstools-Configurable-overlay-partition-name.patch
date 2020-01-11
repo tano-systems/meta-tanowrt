@@ -1,4 +1,4 @@
-From 2be3b93325419ade75f3c1cd25dd5329e3982baa Mon Sep 17 00:00:00 2001
+From ab8631a2c2e3ac8100ca14ae44254888c4dd2d14 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
 Subject: [PATCH 10/11] fstools: Configurable overlay partition name
@@ -20,7 +20,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  create mode 100644 overlay_partition.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ecb5003..97e7080 100644
+index cf55d89..2735bdd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -14,7 +14,8 @@ ADD_LIBRARY(fstools SHARED
@@ -33,7 +33,7 @@ index ecb5003..97e7080 100644
  TARGET_LINK_LIBRARIES(fstools ubox)
  INSTALL(TARGETS fstools LIBRARY DESTINATION lib)
  
-@@ -69,7 +70,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
+@@ -70,7 +71,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  	ADD_DEFINITIONS(-DOVL_MOUNT_FULL_ACCESS_TIME)
  ENDIF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  
@@ -42,7 +42,7 @@ index ecb5003..97e7080 100644
  TARGET_LINK_LIBRARIES(mount_root fstools)
  INSTALL(TARGETS mount_root RUNTIME DESTINATION sbin)
  
-@@ -79,7 +80,7 @@ ADD_EXECUTABLE(blockd blockd.c)
+@@ -80,7 +81,7 @@ ADD_EXECUTABLE(blockd blockd.c)
  TARGET_LINK_LIBRARIES(blockd fstools ubus blobmsg_json ${json})
  INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
  
@@ -51,7 +51,7 @@ index ecb5003..97e7080 100644
  IF(DEFINED CMAKE_UBIFS_EXTROOT)
  	ADD_DEFINITIONS(-DUBIFS_EXTROOT)
  	TARGET_LINK_LIBRARIES(block blkid-tiny dl uci ubox ubus blobmsg_json ubi-utils ${json})
-@@ -88,14 +89,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
+@@ -89,14 +90,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
  ENDIF(DEFINED CMAKE_UBIFS_EXTROOT)
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
@@ -70,7 +70,7 @@ index ecb5003..97e7080 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index dfa242d..e512395 100644
+index 6a76386..f3d38ea 100644
 --- a/block.c
 +++ b/block.c
 @@ -45,6 +45,7 @@
@@ -81,15 +81,15 @@ index dfa242d..e512395 100644
  #include "probe.h"
  
  #define AUTOFS_MOUNT_PATH       "/tmp/run/blockd/"
-@@ -1523,6 +1524,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1598,6 +1599,7 @@ static int mount_extroot(char *cfg)
+ static int main_extroot(int argc, char **argv)
  {
- 	struct probe_info *pr;
  	char blkdev_path[32] = { 0 };
 +	char overlay_label[64];
  	int err = -1;
  #ifdef UBIFS_EXTROOT
  	libubi_t libubi;
-@@ -1543,12 +1545,14 @@ static int main_extroot(int argc, char **argv)
+@@ -1618,12 +1620,14 @@ static int main_extroot(int argc, char **argv)
  	ulog_threshold(LOG_INFO);
  
  	/*
@@ -104,9 +104,9 @@ index dfa242d..e512395 100644
 -	find_block_mtd("\"rootfs_data\"", blkdev_path, sizeof(blkdev_path));
 +	find_block_mtd(overlay_label, blkdev_path, sizeof(blkdev_path));
  	if (blkdev_path[0]) {
- 		pr = find_block_info(NULL, NULL, blkdev_path);
- 		if (pr && !strcmp(pr->type, "jffs2")) {
-@@ -1575,7 +1579,7 @@ static int main_extroot(int argc, char **argv)
+ 		struct device *dev = find_block_device(NULL, NULL, blkdev_path);
+ 		if (dev && !strcmp(dev->pr->type, "jffs2")) {
+@@ -1650,7 +1654,7 @@ static int main_extroot(int argc, char **argv)
  	memset(blkdev_path, 0, sizeof(blkdev_path));
  	libubi = libubi_open();
  	if (libubi) {

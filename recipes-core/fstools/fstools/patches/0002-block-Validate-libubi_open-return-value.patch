@@ -1,4 +1,4 @@
-From 265c8b5276fbcf2965c7e782c37d772282cfb58a Mon Sep 17 00:00:00 2001
+From 3663a4c56186543cdba273a0f2650bbe2c818e4d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:17:30 +0300
 Subject: [PATCH 02/11] block: Validate libubi_open() return value
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/block.c b/block.c
-index a849500..95602a0 100644
+index 50d877f..5606772 100644
 --- a/block.c
 +++ b/block.c
-@@ -1567,22 +1567,24 @@ static int main_extroot(int argc, char **argv)
+@@ -1643,22 +1643,24 @@ static int main_extroot(int argc, char **argv)
  	/* ... but it also could be an UBI volume */
  	memset(blkdev_path, 0, sizeof(blkdev_path));
  	libubi = libubi_open();
