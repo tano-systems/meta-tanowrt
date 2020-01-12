@@ -1,11 +1,11 @@
 #
 # Network ports status LuCI application
 #
-# Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "2.0.0+git${SRCPV}"
-PR = "tano2"
+PV = "2.0.1+git${SRCPV}"
+PR = "tano0"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
@@ -18,7 +18,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "1372a07d5f4c8d58bbb8c8b0276fb77879cdd3b7"
+GIT_SRCREV   = "1158f2894e1bca58497883e5c74d2beb085cc66d"
 GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-netports.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
