@@ -13,3 +13,7 @@ MIRRORS_prepend = "\
 	gitsm://${GIT_OPENWRT_ORG}/(.*)/(.*)          gitsm://github.com/git-openwrt-org-mirror/BASENAME \n\
 	https://${GIT_OPENWRT_ORG}/(.*)/(.*)          https://github.com/git-openwrt-org-mirror/BASENAME \n\
 "
+
+MIRRORS_prepend = "\
+	https://${SOURCEFORGE_MIRROR}/.* https://netcologne.dl.sourceforge.net/PATH \
+"
