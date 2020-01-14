@@ -62,6 +62,18 @@ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch \
      which SDL-devel xterm
 ```
 
+## Configure default system shell command interpreter
+
+*Only for Ubuntu*
+
+You need to configure the default system shell command interpreter for shell scripts to bash. You can do it with the command:
+
+```shell
+sudo dpkg-reconfigure dash
+```
+
+Select `No` when it asks you to install dash as `/bin/sh`.
+
 ## Initialize Build Environment
 
 Clone openembedded-core repository:
