@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "1"
+INC_PR = "2"
 
 inherit openwrt-services
 
@@ -34,6 +34,7 @@ PACKAGECONFIG ??= "\
 	lzo \
 	lz4 \
 	server \
+	iproute2 \
 	fragment \
 	multihome \
 	def-auth \
