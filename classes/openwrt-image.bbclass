@@ -5,6 +5,8 @@ inherit openwrt-kmods
 
 IMAGE_OVERLAY_NAME_SUFFIX = ".overlay"
 
+IMAGE_OVERHEAD_FACTOR = "1"
+
 #
 # Available IMAGE_FEATURES:
 #
