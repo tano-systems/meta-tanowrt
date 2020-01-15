@@ -1,7 +1,7 @@
 From ba3c8d5274db52da6a12f89c26a46d0b9736b6f7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 16 Aug 2019 19:50:29 +0300
-Subject: [PATCH 09/11] libfstools: Support for f2fs/ext4 overlay on a separate
+Subject: [PATCH 09/12] libfstools: Support for f2fs/ext4 overlay on a separate
  disk partition
 
 Added support for f2fs and ext4 overlay on a separate partition on the
