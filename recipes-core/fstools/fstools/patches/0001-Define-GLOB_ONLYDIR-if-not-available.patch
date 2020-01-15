@@ -1,7 +1,7 @@
 From 4c1ba54e4a96154e56a7011b76ad14ceeb7c266d Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 22 Jan 2016 05:07:43 +0000
-Subject: [PATCH 01/11] Define GLOB_ONLYDIR if not available
+Subject: [PATCH 01/12] Define GLOB_ONLYDIR if not available
 
 musl does not define GLOB_ONLYDIR
 
