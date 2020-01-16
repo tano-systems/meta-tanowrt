@@ -107,7 +107,7 @@ After executing any of the specified commands, the current directory will be aut
 
 Below we build for `qemux86-64` machine as an example:
 ```shell
-MACHINE=qemux86-64 bitbake openwrt-image-full
+MACHINE=qemux86-64 bitbake tanowrt-image-full
 ```
 
 Other available machines are listed in the section "[Supported QEMU Machines](#Supported-QEMU-Machines)".

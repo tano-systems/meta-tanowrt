@@ -27,7 +27,7 @@ MACHINE ??= "qemux86-64-screen"
 SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
 
 # Where to place the build output
-TMPDIR = "${TOPDIR}/openwrt"
+TMPDIR = "${TOPDIR}/tanowrt"
 
 # Package Management configuration
 PACKAGE_CLASSES ?= "package_ipk"

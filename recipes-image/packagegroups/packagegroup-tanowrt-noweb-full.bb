@@ -7,22 +7,22 @@ LICENSE = "MIT"
 inherit packagegroup openwrt
 
 PACKAGES = "\
-	packagegroup-openwrt-noweb-full \
-	packagegroup-openwrt-noweb-full-base \
-	packagegroup-openwrt-noweb-full-network \
-	packagegroup-openwrt-noweb-full-console \
+	packagegroup-tanowrt-noweb-full \
+	packagegroup-tanowrt-noweb-full-base \
+	packagegroup-tanowrt-noweb-full-network \
+	packagegroup-tanowrt-noweb-full-console \
 "
 
-# packagegroup-openwrt-noweb-full
+# packagegroup-tanowrt-noweb-full
 RDEPENDS_${PN} = "\
-	packagegroup-openwrt-noweb-full-base \
-	packagegroup-openwrt-noweb-full-network \
-	packagegroup-openwrt-noweb-full-console \
+	packagegroup-tanowrt-noweb-full-base \
+	packagegroup-tanowrt-noweb-full-network \
+	packagegroup-tanowrt-noweb-full-console \
 "
 
-# packagegroup-openwrt-noweb-full-base
+# packagegroup-tanowrt-noweb-full-base
 RDEPENDS_${PN}-base = "\
-	packagegroup-openwrt-noweb-base \
+	packagegroup-tanowrt-noweb-base \
 	libubox-lua \
 	fstools \
 	eudev \
@@ -40,14 +40,14 @@ RDEPENDS_${PN}-base = "\
 	nano \
 "
 
-# packagegroup-openwrt-noweb-full-console
+# packagegroup-tanowrt-noweb-full-console
 RDEPENDS_${PN}-console = "\
 	ncurses \
 	ncurses-terminfo \
 	htop \
 "
 
-# packagegroup-openwrt-noweb-full-network
+# packagegroup-tanowrt-noweb-full-network
 RDEPENDS_${PN}-network = "\
 	tcpdump \
 	umbim \

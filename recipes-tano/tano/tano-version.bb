@@ -55,8 +55,8 @@ do_install() {
 		${D}/usr/lib/os-release \
 
 	echo "TanoWrt Distribution ${DISTRO_VERSION}" > ${D}${sysconfdir}/tano-version
-	echo "Built from branch: ${TANO_OPENWRT_SCM_BRANCH}" >> ${D}${sysconfdir}/tano-version
-	echo "Revision: ${TANO_OPENWRT_SCM_REVISION}" >> ${D}${sysconfdir}/tano-version
+	echo "Built from branch: ${TANOWRT_SCM_BRANCH}" >> ${D}${sysconfdir}/tano-version
+	echo "Revision: ${TANOWRT_SCM_REVISION}" >> ${D}${sysconfdir}/tano-version
 	echo "Target system: ${TARGET_SYS}" >> ${D}${sysconfdir}/tano-version
 
 	echo "${@get_layers(bb, d)}" > ${D}${sysconfdir}/tano-build-info

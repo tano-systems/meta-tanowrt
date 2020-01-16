@@ -14,7 +14,7 @@ PACKAGES = "\
 	${PN}-firmware \
 "
 
-# packagegroup-openwrt-wifi
+# packagegroup-tanowrt-wifi
 RDEPENDS_${PN} = "\
 	${PN}-firmware \
 	iwinfo \
@@ -24,7 +24,7 @@ RDEPENDS_${PN} = "\
 	hostapd \
 "
 
-# packagegroup-openwrt-wifi-firmware
+# packagegroup-tanowrt-wifi-firmware
 RDEPENDS_${PN}-firmware = "\
 	linux-firmware-rtl8192ce \
 	linux-firmware-rtl8192cu \

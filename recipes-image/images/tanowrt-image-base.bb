@@ -4,9 +4,9 @@
 
 PR_append = ".1"
 
-SUMMARY = "OpenWrt Base Image"
+SUMMARY = "TanoWrt Base Image"
 LICENSE = "MIT"
 
-require recipes-image/images/openwrt-image-minimal.bb
+require recipes-image/images/tanowrt-image-minimal.bb
 
-CORE_IMAGE_EXTRA_INSTALL += "packagegroup-openwrt-base"
+CORE_IMAGE_EXTRA_INSTALL += "packagegroup-tanowrt-base"
