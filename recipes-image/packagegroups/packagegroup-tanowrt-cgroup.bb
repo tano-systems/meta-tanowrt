@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup openwrt
 
-# packagegroup-openwrt-cgroup
+# packagegroup-tanowrt-cgroup
 RDEPENDS_${PN} = "\
 	libcgroup \
 	libcgroup-procd \

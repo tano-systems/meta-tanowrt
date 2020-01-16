@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup openwrt
 
-# packagegroup-openwrt-perftools
+# packagegroup-tanowrt-perftools
 RDEPENDS_${PN} = "\
 	iperf2 \
 	iftop \

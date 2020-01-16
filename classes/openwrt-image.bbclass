@@ -14,9 +14,9 @@ IMAGE_OVERHEAD_FACTOR = "1"
 # - cgroup
 # - perftools
 #
-FEATURE_PACKAGES_cgroup = "packagegroup-openwrt-cgroup"
-FEATURE_PACKAGES_wifi = "packagegroup-openwrt-wifi"
-FEATURE_PACKAGES_perftools = "packagegroup-openwrt-perftools"
+FEATURE_PACKAGES_cgroup = "packagegroup-tanowrt-cgroup"
+FEATURE_PACKAGES_wifi = "packagegroup-tanowrt-wifi"
+FEATURE_PACKAGES_perftools = "packagegroup-tanowrt-perftools"
 
 #
 # Create empty overlay image

@@ -7,7 +7,7 @@
 
 inherit tano-scmrevision
 
-OPENWRT_VERSION_SRCREV = "${TANO_OPENWRT_SCM_REVISION}"
+OPENWRT_VERSION_SRCREV = "${TANOWRT_SCM_REVISION}"
 
 #
 # These options allow to override the version information embedded in

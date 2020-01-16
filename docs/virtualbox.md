@@ -1,6 +1,6 @@
 ﻿# Running image inside Oracle VirtualBox
 
-Tested with `openwrt-image-full` image builded for `qemux86-64` machine.
+Tested with `tanowrt-image-full` image builded for `qemux86-64` machine.
 
 ## Building a VMDK image
 
@@ -12,14 +12,14 @@ By default VMDK images automatically produced for the folowing machines:
 - `qemux86-64`;
 - `qemux86-64-screen`.
 
-For example, build a `openwrt-image-full` image for `qemux86-64` machine:
+For example, build a `tanowrt-image-full` image for `qemux86-64` machine:
 ```
-$ MACHINE=qemux86-64 bitbake openwrt-image-full
+$ MACHINE=qemux86-64 bitbake tanowrt-image-full
 ```
 
 When the build is complete, the VMDK image file will be located in folder
 ```
-./openwrt-glibc/deploy/images/qemux86-64/openwrt-image-full-qemux86-64.wic.vmdk
+./tanowrt-glibc/deploy/images/qemux86-64/tanowrt-image-full-qemux86-64.wic.vmdk
 ```
 
 ## Running the VMDK image
@@ -44,7 +44,7 @@ From the Oracle VM VirtualBox Manager, change VM settings:
 1. Under Storage > Add new storage controller > Add SATA Controller
 2. Under Storage > Controller: SATA > Add Hard Disk
 3. Select: Choose existing disk
-4. Virtual hard disk file: .../openwrt-image-full-qemux86-64.wic.vmdk
+4. Virtual hard disk file: .../tanowrt-image-full-qemux86-64.wic.vmdk
 5. Click "OK"
 
 From the Oracle VM VirtualBox Manager, start the VM.

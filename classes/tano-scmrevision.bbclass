@@ -56,12 +56,12 @@ def mark_recipe_dependencies(path, d):
         mark_dependency(d, tagdir)
 
 
-TANO_OPENWRT_SCM_BRANCH = ""
-TANO_OPENWRT_SCM_REVISION = ""
+TANOWRT_SCM_BRANCH = ""
+TANOWRT_SCM_REVISION = ""
 
 python () {
-    tano_base = d.getVar('TANO_OPENWRT_BASE')
+    tano_base = d.getVar('TANOWRT_BASE')
     mark_recipe_dependencies(tano_base, d)
-    d.setVar('TANO_OPENWRT_SCM_REVISION', get_git_revision(tano_base))
-    d.setVar('TANO_OPENWRT_SCM_BRANCH', get_git_branch(tano_base))
+    d.setVar('TANOWRT_SCM_REVISION', get_git_revision(tano_base))
+    d.setVar('TANOWRT_SCM_BRANCH', get_git_branch(tano_base))
 }
