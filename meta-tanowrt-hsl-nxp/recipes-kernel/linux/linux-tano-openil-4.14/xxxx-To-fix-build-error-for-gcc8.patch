@@ -1,0 +1,244 @@
+From 62ae603bd8f7ff0e4f0aac98ac7d464f7d7483e0 Mon Sep 17 00:00:00 2001
+From: Zheng Ruoqin <zhengrq.fnst@cn.fujitsu.com>
+Date: Fri, 11 Jan 2019 12:23:26 +0900
+Subject: [PATCH] To fix build error for gcc8.
+
+Signed-off-by: Zheng Ruoqin <zhengrq.fnst@cn.fujitsu.com>
+---
+ drivers/soc/fsl/qbman/qman.c            | 12 ++++++------
+ drivers/staging/fsl_qbman/qman_config.c |  4 ----
+ drivers/staging/fsl_qbman/qman_high.c   | 10 +++++-----
+ drivers/staging/fsl_qbman/qman_low.h    |  6 +++---
+ include/linux/fsl_qman.h                | 18 ++++++++++--------
+ include/soc/fsl/qman.h                  |  2 +-
+ 6 files changed, 25 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 92df053..947b392 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -688,7 +688,7 @@ static inline void qm_dqrr_pvb_update(struct qm_portal *portal)
+ 	 *  when accessing 'verb', use __raw_readb() to ensure that compiler
+ 	 * inlining doesn't try to optimise out "excess reads".
+ 	 */
+-	if ((__raw_readb(&res->verb) & QM_DQRR_VERB_VBIT) == dqrr->vbit) {
++	if ((__raw_readb(&res->ern.verb) & QM_DQRR_VERB_VBIT) == dqrr->vbit) {
+ 		dqrr->pi = (dqrr->pi + 1) & (QM_DQRR_SIZE - 1);
+ 		if (!dqrr->pi)
+ 			dqrr->vbit ^= QM_DQRR_VERB_VBIT;
+@@ -1131,9 +1131,9 @@ static int drain_mr_fqrni(struct qm_portal *p)
+ 		if (!msg)
+ 			return 0;
+ 	}
+-	if ((msg->verb & QM_MR_VERB_TYPE_MASK) != QM_MR_VERB_FQRNI) {
++	if ((msg->ern.verb & QM_MR_VERB_TYPE_MASK) != QM_MR_VERB_FQRNI) {
+ 		/* We aren't draining anything but FQRNIs */
+-		pr_err("Found verb 0x%x in MR\n", msg->verb);
++		pr_err("Found verb 0x%x in MR\n", msg->ern.verb);
+ 		return -1;
+ 	}
+ 	qm_mr_next(p);
+@@ -1416,7 +1416,7 @@ static void qm_mr_process_task(struct work_struct *work)
+ 		if (!msg)
+ 			break;
+ 
+-		verb = msg->verb & QM_MR_VERB_TYPE_MASK;
++		verb = msg->ern.verb & QM_MR_VERB_TYPE_MASK;
+ 		/* The message is a software ERN iff the 0x20 bit is clear */
+ 		if (verb & 0x20) {
+ 			switch (verb) {
+@@ -1981,7 +1981,7 @@ int qman_retire_fq(struct qman_fq *fq, u32 *flags)
+ 			 */
+ 			union qm_mr_entry msg;
+ 
+-			msg.verb = QM_MR_VERB_FQRNI;
++			msg.ern.verb = QM_MR_VERB_FQRNI;
+ 			msg.fq.fqs = mcr->alterfq.fqs;
+ 			qm_fqid_set(&msg.fq, fq->fqid);
+ 			msg.fq.context_b = cpu_to_be32(fq_to_tag(fq));
+@@ -2482,7 +2482,7 @@ static int _qm_mr_consume_and_match_verb(struct qm_portal *p, int v)
+ 	qm_mr_pvb_update(p);
+ 	msg = qm_mr_current(p);
+ 	while (msg) {
+-		if ((msg->verb & QM_MR_VERB_TYPE_MASK) == v)
++		if ((msg->ern.verb & QM_MR_VERB_TYPE_MASK) == v)
+ 			found = 1;
+ 		qm_mr_next(p);
+ 		qm_mr_cci_consume_to_current(p);
+diff --git a/drivers/staging/fsl_qbman/qman_config.c b/drivers/staging/fsl_qbman/qman_config.c
+index 0406313..1da8d9b 100644
+--- a/drivers/staging/fsl_qbman/qman_config.c
++++ b/drivers/staging/fsl_qbman/qman_config.c
+@@ -812,10 +812,6 @@ int qman_set_sdest(u16 channel, unsigned int cpu_idx)
+ 
+ 	if (!qman_have_ccsr())
+ 		return -ENODEV;
+-	if ((qman_ip_rev & 0xFF00) == QMAN_REV31) {
+-		/* LS1043A - only one L2 cache */
+-		cpu_idx = 0;
+-	}
+ 
+ 	if ((qman_ip_rev & 0xFF00) >= QMAN_REV30) {
+ 		before = qm_in(REV3_QCSP_IO_CFG(idx));
+diff --git a/drivers/staging/fsl_qbman/qman_high.c b/drivers/staging/fsl_qbman/qman_high.c
+index f80dadf..8181124 100644
+--- a/drivers/staging/fsl_qbman/qman_high.c
++++ b/drivers/staging/fsl_qbman/qman_high.c
+@@ -518,9 +518,9 @@ static int drain_mr_fqrni(struct qm_portal *p)
+ 		if (!msg)
+ 			return 0;
+ 	}
+-	if ((msg->verb & QM_MR_VERB_TYPE_MASK) != QM_MR_VERB_FQRNI) {
++	if ((msg->ern.verb & QM_MR_VERB_TYPE_MASK) != QM_MR_VERB_FQRNI) {
+ 		/* We aren't draining anything but FQRNIs */
+-		pr_err("QMan found verb 0x%x in MR\n", msg->verb);
++		pr_err("QMan found verb 0x%x in MR\n", msg->ern.verb);
+ 		return -1;
+ 	}
+ 	qm_mr_next(p);
+@@ -735,7 +735,7 @@ struct qman_portal *qman_create_portal(
+ 			 * qm_mr_current returned successfully
+ 			 */
+ 			pr_err("Qman MR unclean, MR VERB 0x%x, rc 0x%x\n, addr 0x%x",
+-				e->verb, e->ern.rc, e->ern.fd.addr_lo);
++				e->ern.verb, e->ern.rc, e->ern.fd.addr_lo);
+ 			goto fail_dqrr_mr_empty;
+ 		}
+ 	}
+@@ -1059,7 +1059,7 @@ static u32 __poll_portal_slow(struct qman_portal *p, u32 is)
+ 			goto mr_done;
+ 		swapped_msg = *msg;
+ 		hw_fd_to_cpu(&swapped_msg.ern.fd);
+-		verb = msg->verb & QM_MR_VERB_TYPE_MASK;
++		verb = msg->ern.verb & QM_MR_VERB_TYPE_MASK;
+ 		/* The message is a software ERN iff the 0x20 bit is set */
+ 		if (verb & 0x20) {
+ 			switch (verb) {
+@@ -1958,7 +1958,7 @@ int qman_retire_fq(struct qman_fq *fq, u32 *flags)
+ 			 * immediate or not, we have to fake a "MR" entry to
+ 			 * look like an FQRNI... */
+ 			struct qm_mr_entry msg;
+-			msg.verb = QM_MR_VERB_FQRNI;
++			msg.ern.verb = QM_MR_VERB_FQRNI;
+ 			msg.fq.fqs = mcr->alterfq.fqs;
+ 			msg.fq.fqid = fq->fqid;
+ #ifdef CONFIG_FSL_QMAN_FQ_LOOKUP
+diff --git a/drivers/staging/fsl_qbman/qman_low.h b/drivers/staging/fsl_qbman/qman_low.h
+index d58af1b..17f7186 100644
+--- a/drivers/staging/fsl_qbman/qman_low.h
++++ b/drivers/staging/fsl_qbman/qman_low.h
+@@ -1025,7 +1025,7 @@ static inline void qm_mr_pvb_update(struct qm_portal *portal)
+ 	DPA_ASSERT(mr->pmode == qm_mr_pvb);
+ 	/* when accessing 'verb', use __raw_readb() to ensure that compiler
+ 	 * inlining doesn't try to optimise out "excess reads". */
+-	if ((__raw_readb(&res->verb) & QM_MR_VERB_VBIT) == mr->vbit) {
++	if ((__raw_readb(&res->ern.verb) & QM_MR_VERB_VBIT) == mr->vbit) {
+ 		mr->pi = (mr->pi + 1) & (QM_MR_SIZE - 1);
+ 		if (!mr->pi)
+ 			mr->vbit ^= QM_MR_VERB_VBIT;
+@@ -1337,7 +1337,7 @@ static inline int qm_shutdown_fq(struct qm_portal **portal, int portal_count,
+ 					qm_mr_pvb_update(portal[i]);
+ 					msg = qm_mr_current(portal[i]);
+ 					while (msg) {
+-						if ((msg->verb &
++						if ((msg->ern.verb &
+ 						     QM_MR_VERB_TYPE_MASK)
+ 						    == QM_MR_VERB_FQRN)
+ 							found_fqrn = 1;
+@@ -1403,7 +1403,7 @@ static inline int qm_shutdown_fq(struct qm_portal **portal, int portal_count,
+ 			qm_mr_pvb_update(portal[0]);
+ 			msg = qm_mr_current(portal[0]);
+ 			while (msg) {
+-				if ((msg->verb & QM_MR_VERB_TYPE_MASK) ==
++				if ((msg->ern.verb & QM_MR_VERB_TYPE_MASK) ==
+ 				    QM_MR_VERB_FQRL)
+ 					orl_empty = 1;
+ 				qm_mr_next(portal[0]);
+diff --git a/include/linux/fsl_qman.h b/include/linux/fsl_qman.h
+index 56c05fd..d7e5aa7 100644
+--- a/include/linux/fsl_qman.h
++++ b/include/linux/fsl_qman.h
+@@ -412,7 +412,7 @@ struct qm_eqcr_entry {
+ 	u32 tag;
+ 	struct qm_fd fd;
+ 	u8 __reserved3[32];
+-} __packed;
++} __packed __aligned(8);
+ #define QM_EQCR_VERB_VBIT		0x80
+ #define QM_EQCR_VERB_CMD_MASK		0x61	/* but only one value; */
+ #define QM_EQCR_VERB_CMD_ENQUEUE	0x01
+@@ -456,9 +456,9 @@ struct qm_dqrr_entry {
+ /* See 1.5.8.3: "ERN Message Response" */
+ /* See 1.5.8.4: "FQ State Change Notification" */
+ struct qm_mr_entry {
+-	u8 verb;
+ 	union {
+ 		struct {
++			u8 verb;
+ 			u8 dca;
+ 			u16 seqnum;
+ 			u8 rc;		/* Rejection Code */
+@@ -466,8 +466,9 @@ struct qm_mr_entry {
+ 			u32 fqid;	/* 24-bit */
+ 			u32 tag;
+ 			struct qm_fd fd;
+-		} __packed ern;
++		} __packed __aligned(8) ern;
+ 		struct {
++			u8 verb;
+ #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+ 			u8 colour:2;	/* See QM_MR_DCERN_COLOUR_* */
+ 			u8 __reserved1:3;
+@@ -483,17 +484,18 @@ struct qm_mr_entry {
+ 			u32 fqid;	/* 24-bit */
+ 			u32 tag;
+ 			struct qm_fd fd;
+-		} __packed dcern;
++		} __packed __aligned(8) dcern;
+ 		struct {
++			u8 verb;
+ 			u8 fqs;		/* Frame Queue Status */
+ 			u8 __reserved1[6];
+ 			u32 fqid;	/* 24-bit */
+ 			u32 contextB;
+ 			u8 __reserved2[16];
+-		} __packed fq;		/* FQRN/FQRNI/FQRL/FQPN */
++		} __packed __aligned(8) fq;		/* FQRN/FQRNI/FQRL/FQPN */
+ 	};
+ 	u8 __reserved2[32];
+-} __packed;
++} __packed __aligned(8);
+ #define QM_MR_VERB_VBIT			0x80
+ /* The "ern" VERB bits match QM_EQCR_VERB_*** so aren't reproduced here. ERNs
+  * originating from direct-connect portals ("dcern") use 0x20 as a verb which
+@@ -1671,12 +1673,12 @@ struct qm_mcr_ceetm_ccgr_query {
+ } __packed;
+ 
+ struct qm_mcr_ceetm_cq_peek_pop_xsfdrread {
++	struct qm_fd fd;
+ 	u8 stat;
+ 	u8 __reserved1[11];
+ 	u16 dctidx;
+-	struct qm_fd fd;
+ 	u8 __reserved2[32];
+-} __packed;
++} __packed __aligned(8);
+ 
+ struct qm_mcr_ceetm_statistics_query {
+ 	u8 __reserved1[17];
+diff --git a/include/soc/fsl/qman.h b/include/soc/fsl/qman.h
+index 7732e48..4cf1b69 100644
+--- a/include/soc/fsl/qman.h
++++ b/include/soc/fsl/qman.h
+@@ -84,7 +84,7 @@ struct qm_fd {
+ 		__be32 cmd;
+ 		__be32 status;
+ 	};
+-} __aligned(8);
++}__aligned(8);
+ 
+ #define QM_FD_FORMAT_SG		BIT(31)
+ #define QM_FD_FORMAT_LONG	BIT(30)
+-- 
+1.8.3.1
+

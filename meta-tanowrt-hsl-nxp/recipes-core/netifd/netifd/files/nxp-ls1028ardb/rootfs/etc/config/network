@@ -1,0 +1,24 @@
+#
+# Default network configuration for
+# NXP LS1028A RDB Board
+#
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config interface 'wan'
+	option ifname 'eno0'
+	option proto 'dhcp'
+
+config interface 'eno3'
+	option ifname 'eno3'
+	option proto 'none'
+
+config interface 'lan'
+	option ifname 'swp0 swp1 swp2 swp3 swp5'
+	option type 'bridge'
+	option proto 'dhcp'
+	option stp '1'
+	option igmp_snooping '1'

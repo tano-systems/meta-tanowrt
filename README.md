@@ -80,9 +80,11 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 | Layer                      | Hardware                                   |
 | -------------------------- | ------------------------------------------ |
 | [meta-tanowrt]             | QEMU for x86 (32-bit and 64-bit) and ARMv5 |
+| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                     |
 | [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                        |
 
 [meta-tanowrt]: meta-tanowrt/README.md
+[meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
 [meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
 
 ## Access

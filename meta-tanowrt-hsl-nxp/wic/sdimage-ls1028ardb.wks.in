@@ -1,0 +1,18 @@
+#
+# short-description: Create SD card image with a boot partition
+#
+# long-description: Creates a partitioned SD card image:
+#   - before partition 0:
+#        - rcw
+#        - u-boot
+#        - u-boot-env
+#        - ppa
+#   - partition 0: vfat partition with boot files
+#   - partition 1: root filesystem
+#
+part rcw --source rawcopy --sourceparams="file=rcw.bin" --ondisk mmcblk0 --no-table --align 4
+part u-boot --source rawcopy --sourceparams="file=${UBOOT_IMAGE_BINARY}" --ondisk mmcblk0 --no-table --align 1024 --size 2
+part u-boot-env --source rawcopy --sourceparams="file=${UBOOT_IMAGE_ENV_BINARY}" --ondisk mmcblk0 --no-table --align 1024 --size 1
+part ppa --source rawcopy --sourceparams="file=ppa.itb" --ondisk mmcblk0  --no-table --align 1024 --size 1
+part   --ondisk mmcblk0 --source bootimg-partition --fstype=vfat --label boot --active --align 4096
+part / --ondisk mmcblk0 --source rootfs --fstype=squashfs --align 1024

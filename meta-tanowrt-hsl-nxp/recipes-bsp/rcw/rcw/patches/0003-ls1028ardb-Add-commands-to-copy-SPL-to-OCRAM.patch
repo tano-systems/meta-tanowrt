@@ -1,0 +1,199 @@
+From 341f908071b03d627552a24e9d8e1f46661f40f4 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 15 Jan 2020 05:11:56 +0300
+Subject: [PATCH 3/3] ls1028ardb: Add commands to copy SPL to OCRAM
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ ls1028ardb/R_SQPP_0x85bb/rcw_1300.rcw          | 3 +++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1300_emmcboot.rcw | 6 ++++++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1300_sdboot.rcw   | 6 ++++++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1500_emmcboot.rcw | 6 ++++++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu600.rcw   | 3 +++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu700.rcw   | 3 +++
+ ls1028ardb/R_SQPP_0x85bb/rcw_1500_sdboot.rcw   | 6 ++++++
+ ls1028ardb/R_SQPP_0x85bb/rcw_800.rcw           | 3 +++
+ ls1028asi/block_copy_cmds_emmc.rcw             | 7 +++++++
+ ls1028asi/block_copy_cmds_sdhc.rcw             | 7 +++++++
+ ls1028asi/bootlocptr_flexspi.rcw               | 8 ++++++++
+ ls1028asi/bootlocptr_sdhc.rcw                  | 8 ++++++++
+ 12 files changed, 66 insertions(+)
+ create mode 100644 ls1028asi/block_copy_cmds_emmc.rcw
+ create mode 100644 ls1028asi/block_copy_cmds_sdhc.rcw
+ create mode 100644 ls1028asi/bootlocptr_flexspi.rcw
+ create mode 100644 ls1028asi/bootlocptr_sdhc.rcw
+
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1300.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1300.rcw
+index af6fdf6..258e487 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1300.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1300.rcw
+@@ -39,5 +39,8 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_flexspi.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1300_emmcboot.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1300_emmcboot.rcw
+index a5ed4d4..4e6f198 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1300_emmcboot.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1300_emmcboot.rcw
+@@ -39,5 +39,11 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_sdhc.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
++
++/* Copy SPL to OCRAM */
++#include <../ls1028asi/block_copy_cmds_emmc.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1300_sdboot.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1300_sdboot.rcw
+index c930b83..f95ba99 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1300_sdboot.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1300_sdboot.rcw
+@@ -39,5 +39,11 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_sdhc.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
++
++/* Copy SPL to OCRAM */
++#include <../ls1028asi/block_copy_cmds_sdhc.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_emmcboot.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_emmcboot.rcw
+index 16070d0..a2b4fa1 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_emmcboot.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_emmcboot.rcw
+@@ -39,5 +39,11 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_sdhc.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
++
++/* Copy SPL to OCRAM */
++#include <../ls1028asi/block_copy_cmds_emmc.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu600.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu600.rcw
+index b9a58ce..f798290 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu600.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu600.rcw
+@@ -39,5 +39,8 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_flexspi.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu700.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu700.rcw
+index 6c705e6..5351355 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu700.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_gpu700.rcw
+@@ -39,5 +39,8 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_flexspi.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_sdboot.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_sdboot.rcw
+index 6003645..7b547d0 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_1500_sdboot.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_1500_sdboot.rcw
+@@ -39,5 +39,11 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_sdhc.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
++
++/* Copy SPL to OCRAM */
++#include <../ls1028asi/block_copy_cmds_sdhc.rcw>
+diff --git a/ls1028ardb/R_SQPP_0x85bb/rcw_800.rcw b/ls1028ardb/R_SQPP_0x85bb/rcw_800.rcw
+index 81d209f..42eaf19 100644
+--- a/ls1028ardb/R_SQPP_0x85bb/rcw_800.rcw
++++ b/ls1028ardb/R_SQPP_0x85bb/rcw_800.rcw
+@@ -39,5 +39,8 @@ SRDS_PRTCL_S1_L1=5
+ SRDS_PRTCL_S1_L2=11
+ SRDS_PRTCL_S1_L3=11
+ 
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_flexspi.rcw>
++
+ /* Errata for PCIe controller */
+ #include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
+diff --git a/ls1028asi/block_copy_cmds_emmc.rcw b/ls1028asi/block_copy_cmds_emmc.rcw
+new file mode 100644
+index 0000000..b6fada8
+--- /dev/null
++++ b/ls1028asi/block_copy_cmds_emmc.rcw
+@@ -0,0 +1,7 @@
++/*
++ * Copy SPL driver from MMC to OCRAM.
++ */
++
++.pbi
++blockcopy 0x09,0x00100000,0x18010000,0x00015000
++.end
+\ No newline at end of file
+diff --git a/ls1028asi/block_copy_cmds_sdhc.rcw b/ls1028asi/block_copy_cmds_sdhc.rcw
+new file mode 100644
+index 0000000..c0973b0
+--- /dev/null
++++ b/ls1028asi/block_copy_cmds_sdhc.rcw
+@@ -0,0 +1,7 @@
++/*
++ * Copy SPL driver from MMC to OCRAM.
++ */
++
++.pbi
++blockcopy 0x08,0x00100000,0x18010000,0x00015000
++.end
+diff --git a/ls1028asi/bootlocptr_flexspi.rcw b/ls1028asi/bootlocptr_flexspi.rcw
+new file mode 100644
+index 0000000..ecded7b
+--- /dev/null
++++ b/ls1028asi/bootlocptr_flexspi.rcw
+@@ -0,0 +1,8 @@
++/*
++ * Set the boot location pointer to QSPI flash boot area.
++ */
++
++.pbi
++write 0x01e00400,0x20100000
++write 0x01e00404,0x00000000
++.end
+diff --git a/ls1028asi/bootlocptr_sdhc.rcw b/ls1028asi/bootlocptr_sdhc.rcw
+new file mode 100644
+index 0000000..b6b5cb8
+--- /dev/null
++++ b/ls1028asi/bootlocptr_sdhc.rcw
+@@ -0,0 +1,8 @@
++/*
++ * Set the boot location pointer to the SDHC flash boot area.
++ */
++
++.pbi
++write 0x01e00400,0x18010000
++write 0x01e00404,0x00000000
++.end
+-- 
+2.16.2.windows.1
+
