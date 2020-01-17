@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<remote name="yoctoproject" fetch="git://git.yoctoproject.org" />
+	<remote name="openembedded" fetch="git://git.openembedded.org" />
+	<remote name="tano-public" fetch="https://github.com/tano-systems" />
+	<remote name="tano-private" fetch="ssh://git@git.tano-systems.com:8892/tano/yocto" pushurl="ssh://git@git.tano-systems.com:8892/tano/yocto" />
+</manifest>
