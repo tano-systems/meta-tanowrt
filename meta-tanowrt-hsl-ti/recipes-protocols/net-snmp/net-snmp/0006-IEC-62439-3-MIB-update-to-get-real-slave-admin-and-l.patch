@@ -1,0 +1,610 @@
+From 0d3b1eee5e6a5c78ff83434f00628f6752f43d72 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Mon, 15 May 2017 19:07:39 -0400
+Subject: [PATCH 06/12] IEC-62439-3-MIB: update to get real slave admin and
+ link state
+
+This update includes retrieving real values admin and link state
+of slave interfaces from linux Ethernet interfaces and using that
+instead of hard coded values. We still have some of the hard coded
+values in place which needs to be updated later.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceConfigTable_data_access.c          | 375 ++++++++++++++-------
+ .../lreInterfaceConfigTable_data_access.h          |   5 +-
+ 2 files changed, 253 insertions(+), 127 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index 0bc3ba6..6c67e93 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -20,12 +20,13 @@
+ #define lre_interface_raw_file "/var/ip_command_out.txt"
+ #define ip_command "ip -d link 1>&2 >/var/ip_command_out.txt\n"
+ 
++/* for parsing hsr/prp interface parameters */
+ enum lre_interface_param_index {
+-	INDEX_IF_NAME,
+-	INDEX_MAC_ADDRESS,
+-	INDEX_SLAVE1_IF_NAME,
+-	INDEX_SLAVE2_IF_NAME,
+-	INDEX_INTERFACE_LAST
++	INDEX_HSR_PRP_IF_NAME,
++	INDEX_HSR_PRP_MAC_ADDRESS,
++	INDEX_HSR_PRP_SLAVE1_IF_NAME,
++	INDEX_HSR_PRP_SLAVE2_IF_NAME,
++	INDEX_HSR_PRP_LAST
+ };
+ 
+ struct lre_node_s {
+@@ -34,7 +35,11 @@ struct lre_node_s {
+ 	char if_name[128];
+ 	char mac_address[32];
+ 	char slave1_if_name[128];
+-	char slave2_if_name[128];
++        int slave1_admin_state;
++        int slave1_link_state;
++        char slave2_if_name[128];
++        int slave2_admin_state;
++        int slave2_link_state;
+ };
+ 
+ struct lre_nodes_s {
+@@ -42,6 +47,14 @@ struct lre_nodes_s {
+ 	struct lre_nodes_s *next;
+ };
+ 
++/* for parsing interface parameters */
++enum lre_iface_param_index {
++	INDEX_IF_NAME,
++	INDEX_ADMIN_STATE,
++	INDEX_LINK_STATE,
++	INDEX_LAST
++};
++
+ static int lre_prefix_string_ifindex(const char *line, int *if_index)
+ {
+ 	char str[32];
+@@ -50,7 +63,7 @@ static int lre_prefix_string_ifindex(const char *line, int *if_index)
+ 
+ 	bzero(str, sizeof(str));
+ 	if (!isdigit(*ptr))
+-		return 0;
++	return 0;
+ 
+ 	bzero(str, sizeof(str));
+ 	while(*ptr && (*ptr != ':')) {
+@@ -76,7 +89,7 @@ static int lre_prefix_string_ifindex(const char *line, int *if_index)
+ 
+ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ {
+-	int ret = 0, index = 0, marker_index = 1, param_index = INDEX_IF_NAME, len;
++	int ret = 0, index = 0, marker_index = 1, param_index = INDEX_HSR_PRP_IF_NAME, len;
+ 	char *save, *token, *temp = (char *)malloc(strlen(interface) + 1);
+ 
+ 	if (!temp)
+@@ -93,21 +106,21 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ 			else {
+ 				len = strlen(token);
+ 				switch (param_index) {
+-					case INDEX_IF_NAME:
++					case INDEX_HSR_PRP_IF_NAME:
+ 					     strcpy(node->if_name, token);
+ 					     if (len)
+ 						node->if_name[len-1] = '\0';
+ 					     param_index++;
+ 					     break;
+-					case INDEX_MAC_ADDRESS:
++					case INDEX_HSR_PRP_MAC_ADDRESS:
+ 					     strcpy(node->mac_address, token);
+ 					     param_index++;
+ 					     break;
+-					case INDEX_SLAVE1_IF_NAME:
++					case INDEX_HSR_PRP_SLAVE1_IF_NAME:
+ 					     strcpy(node->slave1_if_name, token);
+ 					     param_index++;
+ 					     break;
+-					case INDEX_SLAVE2_IF_NAME:
++					case INDEX_HSR_PRP_SLAVE2_IF_NAME:
+ 					     strcpy(node->slave2_if_name, token);
+ 					     param_index++;
+ 					     break;
+@@ -132,7 +145,7 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ 		index++;
+ 	}
+ 
+-	if (param_index == INDEX_INTERFACE_LAST)
++	if (param_index == INDEX_HSR_PRP_LAST)
+ 		ret = 1;
+ 
+         free(temp);
+@@ -142,6 +155,133 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ #define LRE_CONFIG_MAX_INTERFACES	32
+ #define LRE_CONFIG_BIFFER_SZ		1024
+ 
++static int lre_config_get_if_name_state(const char *interface,
++					 char *if_name,
++                                         int *admin_state,
++				         int *link_state)
++{
++     int ret = 0, index = 0, marker_index = 1,
++	 param_index = INDEX_IF_NAME, len;
++     char *save, *token, *temp = (char *)malloc(strlen(interface));
++
++     if (temp == NULL)
++		return -1;
++
++     /* Tokeniser below modify the interface buffer. So use a copy */
++     strcpy(temp, interface);
++     token = strtok_r(temp, " ", &save);
++     while (token) {
++         if (index == marker_index) {
++               /* interface name */
++	     len = strlen(token);
++	     switch (param_index) {
++                case INDEX_IF_NAME:
++		   strcpy(if_name, token);
++		   /* overwrite : with null */
++		   if (len)
++		       if_name[len-1] = '\0';
++		   param_index++;
++		   break;
++
++		case INDEX_ADMIN_STATE:
++		   /* if <UP> is not available, admin state is assumed to be
++		    * down
++		    */
++                   *admin_state = 0;
++		   if ((token[0] == '<') && (token[len-1] == '>')) {
++                       if (strstr(token, "UP"))
++				*admin_state = 1;
++		       else
++				*admin_state = 0;
++		       param_index++;
++	           }
++		   break;
++
++		case INDEX_LINK_STATE:
++		   *link_state = 0;
++		   if (strstr(token, "UP"))
++		       *link_state = 1;
++		   param_index++;
++		   break;
++		default:
++		   ;
++		}
++           }
++
++           if (!strcmp(token, "state"))
++		marker_index = index + 1;
++
++	   token = strtok_r(NULL, " ", &save);
++	   if ((index == INDEX_IF_NAME) ||
++	       (index == INDEX_ADMIN_STATE))
++		marker_index = index + 1;
++
++	   if (param_index == INDEX_LAST)
++	       break;
++
++	   index++;
++     }
++
++     free(temp);
++     return ret;
++}
++
++int lre_config_get_slave_states(const char *file_name,
++				const char *eth1_name,
++				int *eth1_admin_state,
++				int *eth1_link_state,
++				const char *eth2_name,
++				int *eth2_admin_state,
++				int *eth2_link_state)
++{
++    int ret = 0, if_index, eth1_found = 0, eth2_found = 0, admin_state = 0, link_state = 0;
++    char if_name[128];
++    char *interface;
++    char *line;
++    FILE *fp;
++
++    fp = fopen(file_name, "r");
++    if (fp == NULL)
++	return -1;
++
++    interface = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++    line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++
++    if ((interface == NULL) || (line == NULL)) {
++	    printf("No memory\n");
++	    ret = -1;
++	    goto out;
++    }
++
++    while (!(eth1_found && eth2_found)) {
++           if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++               if (lre_prefix_string_ifindex(line, &if_index)) {
++                   ret = lre_config_get_if_name_state(line, if_name,
++                                                       &admin_state, 
++						       &link_state);
++	           if (!ret) {
++		       if (!strcmp(if_name, eth1_name)) {
++                           eth1_found = 1;
++                           *eth1_admin_state = admin_state;
++		           *eth1_link_state = link_state;
++		       } else if (!strcmp(if_name, eth2_name)) {
++		           eth2_found = 1;
++                           *eth2_admin_state = admin_state;
++		           *eth2_link_state = link_state;
++		       }
++	           }
++               }
++           }
++    }
++
++out:
++    fclose(fp);
++    free(interface);
++    free(line);
++
++    return ret;
++}
++
+ static int lre_config_get_num_interfaces(const char *file_name,
+                                          struct lre_nodes_s *nodes)
+ {
+@@ -233,6 +373,40 @@ out:
+     return ret;
+ }
+ 
++int
++handle_lreInterfaceCount(netsnmp_mib_handler *handler,
++                         netsnmp_handler_registration *reginfo,
++                         netsnmp_agent_request_info   *reqinfo,
++                         netsnmp_request_info         *requests)
++{
++    int count;
++    struct lre_nodes_s nodes;
++    /* We are never called for a GETNEXT if it's registered as a
++    "instance", as it's "magically" handled for us.  */
++
++    /* a instance handler also only hands us one request at a time, so
++       we don't need to loop over a list of requests; we'll only get one */
++
++    switch(reqinfo->mode) {
++        case MODE_GET:
++
++	    count = lre_config_get_num_interfaces(lre_interface_raw_file, &nodes);
++	    if (count <= 0)
++                return SNMP_ERR_GENERR;
++
++            snmp_set_var_typed_value(requests->requestvb, ASN_INTEGER,
++	                             &count/* XXX: a pointer to the scalar's data */,
++	                             sizeof(count) /* XXX: the length of the data in bytes */);
++	    break;
++        default:
++            /* we should never get here, so this is a really bad error */
++            snmp_log(LOG_ERR, "unknown mode (%d) in handle_lreInterfaceCount\n", reqinfo->mode );
++            return SNMP_ERR_GENERR;
++    }
++
++    return SNMP_ERR_NOERROR;
++}
++
+ /** @ingroup interface
+  * @addtogroup data_access data_access: Routines to access data
+  *
+@@ -269,6 +443,8 @@ out:
+ int
+ lreInterfaceConfigTable_init_data(lreInterfaceConfigTable_registration * lreInterfaceConfigTable_reg)
+ {
++    const oid lreInterfaceCount_oid[] = {1,0,62439,2,21,0,0,2};
++
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_init_data","called\n"));
+ 
+     /*
+@@ -289,6 +465,9 @@ lreInterfaceConfigTable_init_data(lreInterfaceConfigTable_registration * lreInte
+     ***---------------------------------------------***
+     ***              END  EXAMPLE CODE              ***
+     ***************************************************/
++    netsnmp_register_scalar(netsnmp_create_handler_registration("lreInterfaceCount",
++                            handle_lreInterfaceCount, lreInterfaceCount_oid,
++                            OID_LENGTH(lreInterfaceCount_oid), HANDLER_CAN_RONLY));
+ 
+     return MFD_SUCCESS;
+ } /* lreInterfaceConfigTable_init_data */
+@@ -423,6 +602,7 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+ {
+     lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx;
+     struct lre_nodes_s nodes, *temp, *prev;
++    int lre_mac_address[6];
+     size_t count = 0;
+     int ret;
+ 
+@@ -489,6 +669,17 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      */
+     /** no mapping */
+ 
++    ret = lre_config_get_slave_states(lre_interface_raw_file,
++		                      temp->data.slave1_if_name,
++				      &temp->data.slave1_admin_state,
++				      &temp->data.slave1_link_state,
++				      temp->data.slave2_if_name,
++				      &temp->data.slave2_admin_state,
++				      &temp->data.slave2_link_state);
++
++    if (ret < 0)
++	    snmp_log(LOG_ERR,"couldn't get slave states\n");
++
+     rowreq_ctx->data.lreRowStatus = ROWSTATUS_ACTIVE;
+ 
+     /*
+@@ -511,12 +702,14 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      * make sure there is enough space for lreNodeName data
+      */
+     rowreq_ctx->data.lreNodeName_len = strlen(temp->data.if_name) * sizeof(temp->data.if_name[0]);
++#if 0
+     if ((NULL == rowreq_ctx->data.lreNodeName) ||
+         (rowreq_ctx->data.lreNodeName_len <
+          (strlen(temp->data.if_name) * sizeof(temp->data.if_name[0])))) {
+         snmp_log(LOG_ERR,"not enough space for value (lreNodeName), lreNodeName_len %d,\n", rowreq_ctx->data.lreNodeName_len);
+         return MFD_ERROR;
+     }
++#endif
+ 
+     memcpy(rowreq_ctx->data.lreNodeName, temp->data.if_name,
+ 	   strlen(temp->data.if_name) * sizeof(temp->data.if_name[0]));
+@@ -538,181 +731,114 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     }
+     rowreq_ctx->data.lreVersionName_len = lreVersionName_len* sizeof(lreVersionName[0]);
+     memcpy( rowreq_ctx->data.lreVersionName, lreVersionName, lreVersionName_len* sizeof(lreVersionName[0]) );
+-#else
+-    rowreq_ctx->data.lreVersionName[0] = 'v';
+-    rowreq_ctx->data.lreVersionName[1] = 'e';
+-    rowreq_ctx->data.lreVersionName[2] = 'r';
+-    rowreq_ctx->data.lreVersionName[3] = '1';
+-    rowreq_ctx->data.lreVersionName[4] = '\0';
+-    rowreq_ctx->data.lreVersionName_len = 4;
+ #endif
+ 
+-    /*
+-     * setup/save data for lreMacAddress
+-     * lreMacAddress(6)/MacAddress/ASN_OCTET_STR/char(char)//L/A/W/e/R/d/H
+-     */
+-    /** no mapping */
+-    /*
+-     * make sure there is enough space for lreMacAddress data
+-     */
+-#if TODO
+-    if ((NULL == rowreq_ctx->data.lreMacAddress) ||
+-        (rowreq_ctx->data.lreMacAddress_len <
+-         (lreMacAddress_len* sizeof(lreMacAddress[0])))) {
+-        snmp_log(LOG_ERR,"not enough space for value (lreMacAddress)\n");
+-        return MFD_ERROR;
+-    }
+-    rowreq_ctx->data.lreMacAddress_len = lreMacAddress_len* sizeof(lreMacAddress[0]);
+-    memcpy( rowreq_ctx->data.lreMacAddress, lreMacAddress, lreMacAddress_len* sizeof(lreMacAddress[0]) );
+-#else
+-    rowreq_ctx->data.lreMacAddress[0] = 1;
+-    rowreq_ctx->data.lreMacAddress[1] = 2;
+-    rowreq_ctx->data.lreMacAddress[2] = 3;
+-    rowreq_ctx->data.lreMacAddress[3] = 4;
+-    rowreq_ctx->data.lreMacAddress[4] = 5;
+-    rowreq_ctx->data.lreMacAddress[5] = 6;
+-    rowreq_ctx->data.lreMacAddress_len = 6;
+-#endif
++    rowreq_ctx->data.lreMacAddress_len = sizeof(lre_mac_address) / sizeof(int);
++    sscanf(temp->data.mac_address, "%x:%x:%x:%x:%x:%x",
++	   &lre_mac_address[0], &lre_mac_address[1], &lre_mac_address[2],
++	   &lre_mac_address[3], &lre_mac_address[4], &lre_mac_address[5]);
+ 
+-    /*
+-     * setup/save data for lrePortAdminStateA
+-     * lrePortAdminStateA(7)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+-     */
+-    /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lrePortAdminStateA = lrePortAdminStateA;
+-#else
+-    rowreq_ctx->data.lrePortAdminStateA = 0;
+-#endif
++    rowreq_ctx->data.lreMacAddress[0] = (char)lre_mac_address[0];
++    rowreq_ctx->data.lreMacAddress[1] = (char)lre_mac_address[1];
++    rowreq_ctx->data.lreMacAddress[2] = (char)lre_mac_address[2];
++    rowreq_ctx->data.lreMacAddress[3] = (char)lre_mac_address[3];
++    rowreq_ctx->data.lreMacAddress[4] = (char)lre_mac_address[4];
++    rowreq_ctx->data.lreMacAddress[5] = (char)lre_mac_address[5];
+ 
+     /*
+-     * setup/save data for lrePortAdminStateB
+-     * lrePortAdminStateB(8)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
++     * setup/save data for lrePortAdminStateA/B
++     * lrePortAdminStateA(7)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lrePortAdminStateB = lrePortAdminStateB;
+-#else
+-    rowreq_ctx->data.lrePortAdminStateB = 1;
+-#endif
++    if (temp->data.slave1_admin_state)
++        rowreq_ctx->data.lrePortAdminStateA = LREPORTADMINSTATEA_ACTIVE;
++    else
++        rowreq_ctx->data.lrePortAdminStateA = LREPORTADMINSTATEA_NOTACTIVE;
++    if (temp->data.slave2_admin_state)
++        rowreq_ctx->data.lrePortAdminStateB = LREPORTADMINSTATEB_ACTIVE;
++    else
++        rowreq_ctx->data.lrePortAdminStateB = LREPORTADMINSTATEB_NOTACTIVE;
+ 
+     /*
+-     * setup/save data for lreLinkStatusA
++     * setup/save data for lreLinkStatusA/B
+      * lreLinkStatusA(9)/INTEGER/ASN_INTEGER/long(u_long)//l/A/w/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreLinkStatusA = lreLinkStatusA;
+-#else
+-    rowreq_ctx->data.lreLinkStatusA = 0;
+-#endif
+-
+-    /*
+-     * setup/save data for lreLinkStatusB
+-     * lreLinkStatusB(10)/INTEGER/ASN_INTEGER/long(u_long)//l/A/w/E/r/d/h
+-     */
+-    /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreLinkStatusB = lreLinkStatusB;
+-#else
+-    rowreq_ctx->data.lreLinkStatusB = 1;
+-#endif
++    if (temp->data.slave1_link_state)
++        rowreq_ctx->data.lreLinkStatusA = LRELINKSTATUSA_UP;
++    else
++        rowreq_ctx->data.lreLinkStatusA = LRELINKSTATUSA_DOWN;
++    if (temp->data.slave2_link_state)
++        rowreq_ctx->data.lreLinkStatusB = LRELINKSTATUSB_UP;
++    else
++        rowreq_ctx->data.lreLinkStatusB = LRELINKSTATUSB_DOWN;
+ 
+     /*
+      * setup/save data for lreDuplicateDiscard
+      * lreDuplicateDiscard(11)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreDuplicateDiscard = lreDuplicateDiscard;
+-#else
+-    rowreq_ctx->data.lreDuplicateDiscard = 2;
+-#endif
++    rowreq_ctx->data.lreDuplicateDiscard = LREDUPLICATEDISCARD_DISCARD;
+ 
+     /*
+      * setup/save data for lreTransparentReception
+      * lreTransparentReception(12)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreTransparentReception = lreTransparentReception;
+-#else
+-    rowreq_ctx->data.lreTransparentReception = 1;
+-#endif
++    rowreq_ctx->data.lreTransparentReception = LRETRANSPARENTRECEPTION_REMOVERCT;
+ 
+     /*
+      * setup/save data for lreHsrLREMode
+      * lreHsrLREMode(13)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreHsrLREMode = lreHsrLREMode;
+-#else
+-    rowreq_ctx->data.lreHsrLREMode = 1;
+-#endif
++    rowreq_ctx->data.lreHsrLREMode = LREHSRLREMODE_MODEH;
+     /*
+      * setup/save data for lreSwitchingEndNode
+      * lreSwitchingEndNode(14)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreSwitchingEndNode = lreSwitchingEndNode;
+-#else
+-    rowreq_ctx->data.lreSwitchingEndNode = 2;
+-#endif
++    if (!strcmp(temp->data.type, "hsr"))
++        rowreq_ctx->data.lreSwitchingEndNode = LRESWITCHINGENDNODE_HSRNODE;
++    else
++        rowreq_ctx->data.lreSwitchingEndNode = LRESWITCHINGENDNODE_PRPNODE;
+ 
+     /*
+      * setup/save data for lreRedBoxIdentity
+      * lreRedBoxIdentity(15)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreRedBoxIdentity = lreRedBoxIdentity;
+-#else
+-    rowreq_ctx->data.lreRedBoxIdentity = 1;
+-#endif
++    rowreq_ctx->data.lreRedBoxIdentity = LREREDBOXIDENTITY_ID1A;
+ 
+     /*
+      * setup/save data for lreEvaluateSupervision
+      * lreEvaluateSupervision(16)/TruthValue/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreEvaluateSupervision = lreEvaluateSupervision;
+-#else
+-    rowreq_ctx->data.lreEvaluateSupervision = 2;
+-#endif
++    rowreq_ctx->data.lreEvaluateSupervision = TRUTHVALUE_TRUE;
+ 
+     /*
+      * setup/save data for lreNodesTableClear
+      * lreNodesTableClear(17)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreNodesTableClear = lreNodesTableClear;
+-#else
+-    rowreq_ctx->data.lreNodesTableClear = 1;
+-#endif
++    rowreq_ctx->data.lreNodesTableClear = LRENODESTABLECLEAR_NOOP;
+ 
+     /*
+      * setup/save data for lreProxyNodeTableClear
+      * lreProxyNodeTableClear(18)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreProxyNodeTableClear = lreProxyNodeTableClear;
+-#endif
++    rowreq_ctx->data.lreProxyNodeTableClear = LREPROXYNODETABLECLEAR_NOOP;
+ 
+     /*
+      * setup/save data for lreDupListResideMaxTime
+      * lreDupListResideMaxTime(19)/SecondFraction/ASN_INTEGER/long(long)//l/A/W/e/r/D/H
+      */
+     /** no mapping */
+-#if TODO
+-        rowreq_ctx->data.lreDupListResideMaxTime = lreDupListResideMaxTime;
+-#else
+-        rowreq_ctx->data.lreDupListResideMaxTime = 500;
+-#endif
++
++    /* TODO */
++    rowreq_ctx->data.lreDupListResideMaxTime = 500;
+ 
+         /*
+          * insert into table container
+@@ -725,9 +851,6 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+         ++count;
+     } while (temp);
+ 
+-    if (count != ret)
+-        snmp_log(LOG_WARNING,"Inconsistency of raw count and node count\n");
+-
+     DEBUGMSGT(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load",
+                "inserted %d records\n", count));
+ 
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.h b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.h
+index ffa37e3..7e92c43 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.h
+@@ -71,7 +71,10 @@ int lreInterfaceConfigTable_validate_index( lreInterfaceConfigTable_registration
+                                lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx);
+ int lreInterfaceConfigIndex_check_index( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx ); /* internal */
+ 
+-
++int handle_lreInterfaceCount(netsnmp_mib_handler *handler,
++		              netsnmp_handler_registration *reginfo,
++		              netsnmp_agent_request_info   *reqinfo,
++		              netsnmp_request_info         *requests);
+ #ifdef __cplusplus
+ }
+ #endif
+-- 
+1.9.1
+

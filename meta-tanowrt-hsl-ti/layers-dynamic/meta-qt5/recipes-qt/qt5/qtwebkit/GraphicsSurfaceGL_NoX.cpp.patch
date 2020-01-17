@@ -1,0 +1,270 @@
+diff -Nurp8 Source/WebCore/platform/graphics/surfaces/qt/GraphicsSurfaceGL_NoX.cpp Source-new/WebCore/platform/graphics/surfaces/qt/GraphicsSurfaceGL_NoX.cpp
+--- qtwebkit/Source/WebCore/platform/graphics/surfaces/qt/GraphicsSurfaceGL_NoX.cpp	1970-01-01 05:30:00.000000000 +0530
++++ qtwebkit-new/Source/WebCore/platform/graphics/surfaces/qt/GraphicsSurfaceGL_NoX.cpp	2013-09-07 13:43:55.186851650 +0530
+@@ -0,0 +1,266 @@
++/*
++ Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies)
++
++ This library is free software; you can redistribute it and/or
++ modify it under the terms of the GNU Library General Public
++ License as published by the Free Software Foundation; either
++ version 2 of the License, or (at your option) any later version.
++
++ This library is distributed in the hope that it will be useful,
++ but WITHOUT ANY WARRANTY; without even the implied warranty of
++ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ Library General Public License for more details.
++
++ You should have received a copy of the GNU Library General Public License
++ along with this library; see the file COPYING.LIB.  If not, write to
++ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
++ Boston, MA 02110-1301, USA.
++ */
++
++#include "config.h"
++#include "GraphicsSurface.h"
++
++#if USE(GRAPHICS_SURFACE)
++
++#include "NotImplemented.h"
++#include "TextureMapperGL.h"
++
++#if PLATFORM(QT)
++// Qt headers must be included before gl headers.
++#include <QGuiApplication>
++#include <QOpenGLContext>
++#include <qpa/qplatformnativeinterface.h>
++#elif PLATFORM(EFL)
++#include <GL/gl.h>
++#endif
++
++ #include <GLES2/gl2.h>
++
++namespace WebCore {
++
++class OffScreenRootWindow {
++public:
++    OffScreenRootWindow()
++    {
++        ++m_refCount;
++    }
++
++    ~OffScreenRootWindow()
++    {
++        if (--m_refCount)
++            return;
++    }
++
++private:
++    static int m_refCount;
++};
++
++int OffScreenRootWindow::m_refCount = 0;
++
++
++struct GraphicsSurfacePrivate {
++    GraphicsSurfacePrivate(const PlatformGraphicsContext3D shareContext = 0)
++        : m_textureIsYInverted(false)
++        , m_hasAlpha(false)
++        , m_isReceiver(false)
++    {
++
++#if PLATFORM(QT)
++        if (shareContext) {
++#if 0
++            // This code path requires QXcbNativeInterface::nativeResourceForContext() which is not availble in Qt5 on the build bots yet.
++            QPlatformNativeInterface* nativeInterface = QGuiApplication::platformNativeInterface();
++            shareContextObject = static_cast<GLXContext>(nativeInterface->nativeResourceForContext(QByteArrayLiteral("glxcontext"), shareContext));
++            if (!shareContextObject)
++                return;
++#else
++            // This code path should be removed as soon as QXcbNativeInterface::nativeResourceForContext() can provide the GLXContext.
++            QOpenGLContext* previousContext = QOpenGLContext::currentContext();
++            QSurface* previousSurface = previousContext->surface();
++            QSurface* currentSurface = shareContext->surface();
++            shareContext->makeCurrent(currentSurface);
++
++
++            previousContext->makeCurrent(previousSurface);
++#endif
++        }
++#else
++        UNUSED_PARAM(shareContext);
++#endif
++
++
++    }
++
++    GraphicsSurfacePrivate(uint32_t winId)
++        : m_textureIsYInverted(false)
++        , m_hasAlpha(false)
++        , m_isReceiver(true)
++    { }
++
++    ~GraphicsSurfacePrivate()
++    {
++    }
++
++    uint32_t createSurface(const IntSize& size)
++    {
++        return 0;
++    }
++
++    void createPixmap(uint32_t winId)
++    {
++    }
++
++    bool textureIsYInverted()
++    {
++        return m_textureIsYInverted;
++    }
++
++    void makeCurrent()
++    {
++    }
++
++    void doneCurrent()
++    {
++    }
++
++    void swapBuffers()
++    {
++    }
++
++    void copyFromTexture(uint32_t texture, const IntRect& sourceRect)
++    {
++        makeCurrent();
++
++        swapBuffers();
++        doneCurrent();
++    }
++
++    void* display() const { return 0; }
++
++    IntSize size() const
++    {
++        return IntSize(0, 0);
++    }
++
++private:
++    OffScreenRootWindow m_offScreenWindow;
++    IntSize m_size;
++    bool m_textureIsYInverted;
++    bool m_hasAlpha;
++    bool m_isReceiver;
++};
++
++static bool resolveGLMethods()
++{
++    return true;
++}
++
++GraphicsSurfaceToken GraphicsSurface::platformExport()
++{
++    return GraphicsSurfaceToken();
++}
++
++uint32_t GraphicsSurface::platformGetTextureID()
++{
++    return 0;
++}
++
++void GraphicsSurface::platformCopyToGLTexture(uint32_t /*target*/, uint32_t /*id*/, const IntRect& /*targetRect*/, const IntPoint& /*offset*/)
++{
++    // This is not supported by NoX
++}
++
++void GraphicsSurface::platformCopyFromTexture(uint32_t texture, const IntRect& sourceRect)
++{
++    m_private->copyFromTexture(texture, sourceRect);
++}
++
++
++void GraphicsSurface::platformPaintToTextureMapper(TextureMapper* textureMapper, const FloatRect& targetRect, const TransformationMatrix& transform, float opacity, BitmapTexture* mask)
++{
++    TextureMapperGL* texMapGL = static_cast<TextureMapperGL*>(textureMapper);
++    TransformationMatrix adjustedTransform = transform;
++    adjustedTransform.multiply(TransformationMatrix::rectToRect(FloatRect(FloatPoint::zero(), m_private->size()), targetRect));
++    TextureMapperGL::Flags flags = m_private->textureIsYInverted() ? TextureMapperGL::ShouldFlipTexture : 0;
++    flags |= TextureMapperGL::SupportsBlending;
++    texMapGL->drawTexture(platformGetTextureID(), flags, m_private->size(), targetRect, adjustedTransform, opacity, mask);
++}
++
++uint32_t GraphicsSurface::platformFrontBuffer() const
++{
++    return 0;
++}
++
++uint32_t GraphicsSurface::platformSwapBuffers()
++{
++    m_private->swapBuffers();
++    return 0;
++}
++
++IntSize GraphicsSurface::platformSize() const
++{
++    return m_private->size();
++}
++
++PassRefPtr<GraphicsSurface> GraphicsSurface::platformCreate(const IntSize& size, Flags flags, const PlatformGraphicsContext3D shareContext)
++{
++    if (flags & SupportsCopyToTexture || flags & SupportsSingleBuffered)
++        return PassRefPtr<GraphicsSurface>();
++
++    RefPtr<GraphicsSurface> surface = adoptRef(new GraphicsSurface(size, flags));
++
++    surface->m_private = new GraphicsSurfacePrivate(shareContext);
++    if (!resolveGLMethods())
++        return PassRefPtr<GraphicsSurface>();
++
++    surface->m_platformSurface = surface->m_private->createSurface(size);
++
++    return surface;
++}
++
++PassRefPtr<GraphicsSurface> GraphicsSurface::platformImport(const IntSize& size, Flags flags, const GraphicsSurfaceToken& token)
++{
++    if (flags & SupportsCopyToTexture || flags & SupportsSingleBuffered)
++        return PassRefPtr<GraphicsSurface>();
++
++    RefPtr<GraphicsSurface> surface = adoptRef(new GraphicsSurface(size, flags));
++    surface->m_platformSurface = token.frontBufferHandle;
++
++    surface->m_private = new GraphicsSurfacePrivate(surface->m_platformSurface);
++    if (!resolveGLMethods())
++        return PassRefPtr<GraphicsSurface>();
++
++    return surface;
++}
++
++char* GraphicsSurface::platformLock(const IntRect&, int* /*outputStride*/, LockOptions)
++{
++    // GraphicsSurface is currently only being used for WebGL, which does not require this locking mechanism.
++    return 0;
++}
++
++void GraphicsSurface::platformUnlock()
++{
++    // GraphicsSurface is currently only being used for WebGL, which does not require this locking mechanism.
++}
++
++void GraphicsSurface::platformDestroy()
++{
++    m_private = 0;
++}
++
++#if !PLATFORM(QT)
++PassOwnPtr<GraphicsContext> GraphicsSurface::platformBeginPaint(const IntSize&, char*, int)
++{
++    notImplemented();
++    return nullptr;
++}
++
++PassRefPtr<Image> GraphicsSurface::createReadOnlyImage(const IntRect&)
++{
++    notImplemented();
++    return 0;
++}
++#endif
++}
++#endif

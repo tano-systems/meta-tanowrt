@@ -1,0 +1,85 @@
+From a12dafbf33d19584bc44606ea2ddd7304cdfb5c8 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Fri, 2 Jun 2017 14:20:51 -0400
+Subject: [PATCH 12/12] IEC-62439-3-MIB: Fix index issue in table
+ implementation
+
+It is recommended to avoid starting various table indexes from
+zero. So fix this in the table implementations.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c   | 6 +++---
+ .../lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c     | 2 +-
+ .../IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c       | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index f3c6976..90fa13d 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -257,7 +257,7 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     /*
+      * lreInterfaceConfigIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+      */
+-    u_long   lreInterfaceConfigIndex = 0;
++    u_long   lreInterfaceConfigIndex = 1;
+ 
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load","called\n"));
+     /* use ip command to get the interface details into a file
+@@ -604,7 +604,7 @@ lreInterfaceConfigIndex_check_index( lreInterfaceConfigTable_rowreq_ctx *rowreq_
+      * check that index value in the table context is legal.
+      * (rowreq_ctx->tbl_idx.lreInterfaceConfigIndex)
+      */
+-    if (rowreq_ctx->tbl_idx.lreInterfaceConfigIndex > 0)
++    if (rowreq_ctx->tbl_idx.lreInterfaceConfigIndex > 1)
+ 	    return MFD_ERROR;
+ 
+     return MFD_SUCCESS; /* lreInterfaceConfigIndex index ok */
+@@ -654,7 +654,7 @@ lreInterfaceConfigTable_validate_index( lreInterfaceConfigTable_registration * l
+     /*
+      * TODO:430:M: |-> Validate potential lreInterfaceConfigTable index.
+      */
+-    if(rowreq_ctx->tbl_idx.lreInterfaceConfigIndex > 0) {
++    if(rowreq_ctx->tbl_idx.lreInterfaceConfigIndex > 1) {
+         snmp_log(LOG_WARNING,"invalid index for a new row in the "
+                  "lreInterfaceConfigTable table.\n");
+         /*
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+index 6e5ef42..5f4a241 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+@@ -215,7 +215,7 @@ lreInterfaceStatsTable_container_load(netsnmp_container *container)
+         /*
+          * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+          */
+-    u_long   lreInterfaceStatsIndex = 0;
++    u_long   lreInterfaceStatsIndex = 1;
+ 
+     
+     ret = lre_config_get_num_interfaces(&nodes);
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+index 696596e..648331b 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+@@ -226,7 +226,7 @@ lreNodesTable_container_load(netsnmp_container *container)
+     /*
+      * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+      */
+-    u_long   lreInterfaceStatsIndex = 0;
++    u_long   lreInterfaceStatsIndex = 1;
+ 
+     ret = lre_config_get_num_interfaces(&nodes);
+     if(ret <= 0)
+@@ -258,7 +258,7 @@ lreNodesTable_container_load(netsnmp_container *container)
+         /*
+          * lreNodesIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+          */
+-        u_long   lreNodesIndex = 0;
++        u_long   lreNodesIndex = 1;
+ 	count = 0;
+         r_current = &r_nodes;
+ 	do {
+-- 
+1.9.1
+

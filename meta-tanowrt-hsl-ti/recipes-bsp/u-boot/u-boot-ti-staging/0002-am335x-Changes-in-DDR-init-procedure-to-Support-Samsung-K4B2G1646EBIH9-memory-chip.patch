@@ -1,0 +1,38 @@
+Subject: [U-Boot] [RFC PATCH] am335x: Changes in DDR init procedure to Support Samsung K4B2G1646EBIH9 memory chip
+
+K4B2G1646EBIH9 Samsung memory chip used now on chiliSOM requires
+refresh register REF CTRL to be initialized with large enough
+value, faster than it is implemented in `config_sdram` in ddr.c
+for am33xx, that mean before setting ZQ CTRL. Change should
+not interferee with already supported DDR chips cause refresh rate value
+is large enough to cover initialization, but it will finish during
+`udelay` below anyway. If this is not acceptable I can `ifdef` this
+line with config introduced in previous patch.
+
+Signed-off-by: Maciej Zagrabski <maciej.zagrab...@grinn-global.com>
+---
+ arch/arm/mach-omap2/am33xx/ddr.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/mach-omap2/am33xx/ddr.c b/arch/arm/mach-omap2/am33xx/ddr.c
+index be6f4d72ccd..3684508bb1c 100644
+--- a/arch/arm/mach-omap2/am33xx/ddr.c
++++ b/arch/arm/mach-omap2/am33xx/ddr.c
+@@ -188,12 +188,13 @@ void config_sdram(const struct emif_regs *regs, int nr)
+ 	writel(regs->ref_ctrl, &emif_reg[nr]->emif_sdram_ref_ctrl);
+ #else
+ 	if (regs->zq_config) {
++		/* Trigger initialization */
++		writel(0x00003100, &emif_reg[nr]->emif_sdram_ref_ctrl);
++
+ 		writel(regs->zq_config, &emif_reg[nr]->emif_zq_config);
+ 		writel(regs->sdram_config, &cstat->secure_emif_sdram_config);
+ 		writel(regs->sdram_config, &emif_reg[nr]->emif_sdram_config);
+ 
+-		/* Trigger initialization */
+-		writel(0x00003100, &emif_reg[nr]->emif_sdram_ref_ctrl);
+ 		/* Wait 1ms because of L3 timeout error */
+ 		udelay(1000);
+ 
+-- 
+2.11.0

@@ -1,0 +1,41 @@
+From c778ba9d040562854ed5b1989e6c19c8128b32cb Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 3 Jun 2020 07:28:00 +0300
+Subject: [PATCH 3/3] drivers/tty: increase priority for tty_buffer_worker
+
+---
+ drivers/tty/tty_buffer.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/tty_buffer.c b/drivers/tty/tty_buffer.c
+index 631a52e6c720..135eff2f3022 100644
+--- a/drivers/tty/tty_buffer.c
++++ b/drivers/tty/tty_buffer.c
+@@ -18,7 +18,7 @@
+ #include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/ratelimit.h>
+-
++#include <uapi/linux/sched/types.h>
+ 
+ #define MIN_TTYB_SIZE	256
+ #define TTYB_ALIGN_MASK	255
+@@ -567,11 +567,15 @@ bool tty_buffer_queue_work(struct tty_port *port)
+ 
+ void tty_buffer_init_kthread(void)
+ {
++	struct sched_param param = { .sched_priority = 71 };
++
+ 	tty_buffer_worker = kthread_create_worker(0, "tty");
+ 	if (IS_ERR(tty_buffer_worker)) {
+ 		pr_err("Failed to create tty buffer kworker\n");
+ 		return;
+ 	}
++
++	sched_setscheduler(tty_buffer_worker->task, SCHED_FIFO, &param);
+ }
+ 
+ /**
+-- 
+2.17.1
+

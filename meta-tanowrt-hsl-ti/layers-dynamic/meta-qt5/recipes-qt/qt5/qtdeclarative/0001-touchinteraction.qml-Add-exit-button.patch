@@ -1,0 +1,60 @@
+From 9048b28bde9bf4375f539885eeaa1f92dd2eb258 Mon Sep 17 00:00:00 2001
+From: Eric Ruei <e-ruei1@ti.com>
+Date: Tue, 16 Aug 2016 15:09:04 -0400
+Subject: [PATCH] touchinteraction.qml: Add "exit" button
+
+Signed-off-by: Eric Ruei <e-ruei1@ti.com>
+---
+ .../quick/touchinteraction/touchinteraction.qml    | 38 ++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/examples/quick/touchinteraction/touchinteraction.qml b/examples/quick/touchinteraction/touchinteraction.qml
+index 2ffb513..2c6934c 100644
+--- a/examples/quick/touchinteraction/touchinteraction.qml
++++ b/examples/quick/touchinteraction/touchinteraction.qml
+@@ -55,4 +55,42 @@ Item {
+             addExample("Corkboards", "Uses touch input on items inside a Flickable", Qt.resolvedUrl("flickable/corkboards.qml"));
+         }
+     }
++
++    Item {
++        id: exit
++
++        width: parent.width / 10
++        height: parent.height /10
++
++        anchors {
++            bottom: parent.bottom
++            left: parent.left
++            bottomMargin: 40
++        }
++
++        Rectangle {
++            id: bgr
++            anchors.fill: parent
++            color: mouseArea.pressed ? "#757575" : "#212121"
++            radius: height / 15
++
++            Text {
++                id: text
++                anchors.centerIn: parent
++                text: "Exit"
++                font.pixelSize: 0.4 * parent.height
++                color: mouseArea.pressed ? "black" : "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++            }
++
++            MouseArea {
++                id: mouseArea
++                anchors.fill: parent
++                onClicked: {
++                    Qt.quit()
++                }
++            }
++        }
++    }
+ }
+-- 
+1.9.1
+

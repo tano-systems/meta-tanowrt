@@ -1,0 +1,51 @@
+From 4a7b39ce66a2db623b8852b282e68988243a59de Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Mon, 20 Nov 2017 15:39:58 -0500
+Subject: [PATCH] IEC-62439-3-MIB: fix duplicate discard mode setting for PRP
+
+Currently for duplicate discard mode processing, the agent update
+only the configuration value at the PRU, but not at the upper layer
+linux prp driver. This is needed since upper layer driver generate
+the SV frames and the TLV type is different for different modes.
+So fix this by updating the value at Linux PRP driver as well when
+agent update the MIB variable for duplcate discard mode.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../IEC-62439-3-MIB/lre_config_interface_access.c      | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+index d31c441..a85b35e 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -419,12 +419,22 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 		fp = fopen("/sys/kernel/debug/hsr/hsr_mode", "w");
+ 		if (!fp)
+ 			return -EINVAL;
+-		snprintf(line, BUF_SIZE - 1, "%d", val);
+-		line[BUF_SIZE - 1] = '\0';
+-		fwrite(line, sizeof(char), strlen(line), fp);
+-		fclose(fp);
++		goto out;
++	}
++
++	if (!hsr && index == NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD) {
++		fp = fopen("/sys/kernel/debug/prp/duplicate_discard", "w");
++		if (!fp)
++			return -EINVAL;
++		goto out;
+ 	}
+ 	return 0;
++out:
++	snprintf(line, BUF_SIZE - 1, "%d", val);
++	line[BUF_SIZE - 1] = '\0';
++	fwrite(line, sizeof(char), strlen(line), fp);
++	fclose(fp);
++	return 0;
+ }
+ 
+ #define lre_interface_raw_file "/var/ip_command_out.txt"
+-- 
+1.9.1
+

@@ -1,0 +1,38 @@
+diff --git a/drivers/tty/tty_buffer.c b/drivers/tty/tty_buffer.c
+index 18bd7f48a319..7cf42f6570a0 100644
+--- a/drivers/tty/tty_buffer.c
++++ b/drivers/tty/tty_buffer.c
+@@ -13,11 +13,13 @@
+ #include <linux/string.h>
+ #include <linux/slab.h>
+ #include <linux/sched.h>
++#include <linux/sched/rt.h>
+ #include <linux/wait.h>
+ #include <linux/bitops.h>
+ #include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/ratelimit.h>
++#include <uapi/linux/sched/types.h>
+ 
+ 
+ #define MIN_TTYB_SIZE	256
+@@ -562,12 +564,16 @@ bool tty_buffer_queue_work(struct tty_port *port)
+ 
+ void tty_buffer_init_kthread(void)
+ {
++	struct sched_param param = { .sched_priority = 71 };
++
+ 	tty_buffer_worker = kthread_create_worker(0, "tty");
+ 	if (IS_ERR(tty_buffer_worker)) {
+ 		pr_err("Failed to create tty buffer kworker\n");
+ 		return;
+ 	}
++
++	sched_setscheduler(tty_buffer_worker->task, SCHED_FIFO, &param);
+ }
+ 
+ /**
+ 
+-- 
+2.7.4
+

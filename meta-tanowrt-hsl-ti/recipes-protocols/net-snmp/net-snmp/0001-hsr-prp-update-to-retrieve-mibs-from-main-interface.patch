@@ -1,0 +1,698 @@
+From b819fae5467c93fbf278ea806272b5e573c7e265 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Fri, 24 Aug 2018 17:07:33 -0400
+Subject: [PATCH] hsr/prp: update to retrieve mibs from main interface
+
+Current code retrieves the MIBs data from kernel using the
+slave interfaces which was originally done as a prototype.
+Clean up this and retrieve the same from the upper device's
+(hsr/prp) interface (internally this is passed to lower
+slave device within kernel and retrieved for offload devices).
+
+Interface used is changed to procfs instead of debugfs as
+the latter can't be used for production code.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceConfigTable_data_access.c          |  18 ++-
+ .../lreInterfaceConfigTable_data_get.c             |  37 ++++--
+ .../lreInterfaceConfigTable_data_set.c             |  63 +++++++---
+ .../lreInterfaceStatsTable_data_access.c           |   2 +-
+ .../lreNodesTable/lreNodesTable_data_access.c      |   9 +-
+ .../IEC-62439-3-MIB/lre_config_interface.h         |  34 ++++--
+ .../IEC-62439-3-MIB/lre_config_interface_access.c  | 133 ++++++++++-----------
+ 7 files changed, 177 insertions(+), 119 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index 8eb8b63..547908a 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -571,6 +571,7 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx;
+     struct lre_nodes_s nodes, *temp;
+     int lre_mac_address[6], hsr = 0;
++    char node_name[32];
+     size_t count = 0;
+     int ret;
+ 
+@@ -726,8 +727,13 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+              if (rowreq_ctx->data.lreNodeType == LRENODETYPE_HSR)
+ 	         hsr = 1;
+ 
++	     lre_node_name_cpy(&node_name[0], sizeof(node_name),
++		      rowreq_ctx->data.lreNodeName,
++		      rowreq_ctx->data.lreNodeName_len);
++
+              rowreq_ctx->data.lreDuplicateDiscard =
+-	         snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD, hsr);
++	         snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_DUPLICATE_DISCARD_INDX,
++						     node_name);
+ 
+              /*
+               * setup/save data for lreTransparentReception
+@@ -735,7 +741,8 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+               */
+              if (!hsr)
+ 	         rowreq_ctx->data.lreTransparentReception =
+-                    snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION, hsr);
++                    snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_TRANSPARENT_RECEPTION_INDX,
++							node_name);
+              else
+ 	          rowreq_ctx->data.lreTransparentReception = LRETRANSPARENTRECEPTION_REMOVERCT;
+ 
+@@ -744,7 +751,9 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+               * lreHsrLREMode(13)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+               */
+              if (hsr)
+-	         rowreq_ctx->data.lreHsrLREMode = snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_HSR_MODE, hsr);
++	         rowreq_ctx->data.lreHsrLREMode =
++			 snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_HSR_MODE_INDX,
++							     node_name);
+              else
+ 	         rowreq_ctx->data.lreHsrLREMode = LREHSRLREMODE_MODEH;
+              /*
+@@ -793,7 +802,8 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+ 
+              /* TODO */
+              rowreq_ctx->data.lreDupListResideMaxTime =
+-	        snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr);
++	        snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX,
++						    node_name);
+ 
+              /*
+               * insert into table container
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
+index 8325496..d60ed7a 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
+@@ -1043,11 +1043,10 @@ lreLinkStatusB_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lre
+ int
+ lreDuplicateDiscard_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lreDuplicateDiscard_val_ptr )
+ {
+-   int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++   char node_name[32];
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreDuplicateDiscard_val_ptr );
+ 
+-
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreDuplicateDiscard_get","called\n"));
+ 
+     netsnmp_assert(NULL != rowreq_ctx);
+@@ -1056,8 +1055,12 @@ lreDuplicateDiscard_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long
+  * TODO:231:o: |-> Extract the current value of the lreDuplicateDiscard data.
+  * copy (* lreDuplicateDiscard_val_ptr ) from rowreq_ctx->data
+  */
++    lre_node_name_cpy(&node_name[0], sizeof(node_name),
++		      rowreq_ctx->data.lreNodeName,
++		      rowreq_ctx->data.lreNodeName_len);
+     rowreq_ctx->data.lreDuplicateDiscard =
+-	    snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD, hsr);
++	    snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_DUPLICATE_DISCARD_INDX,
++						node_name);
+ 
+     (* lreDuplicateDiscard_val_ptr ) = rowreq_ctx->data.lreDuplicateDiscard;
+ 
+@@ -1112,8 +1115,15 @@ lreTransparentReception_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_l
+     netsnmp_assert(NULL != rowreq_ctx);
+ 
+    if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_PRPNODE) {
++	   char node_name[32];
++
++	   lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			     rowreq_ctx->data.lreNodeName,
++			     rowreq_ctx->data.lreNodeName_len);
++
+ 	   rowreq_ctx->data.lreTransparentReception =
+-		   snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION, 0);
++		   snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_TRANSPARENT_RECEPTION_INDX,
++						       node_name);
+ 	   (* lreTransparentReception_val_ptr ) = rowreq_ctx->data.lreTransparentReception;
+    }
+ /*
+@@ -1189,8 +1199,15 @@ lreHsrLREMode_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lreH
+  * copy (* lreHsrLREMode_val_ptr ) from rowreq_ctx->data
+  */
+     if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE) {
+-		rowreq_ctx->data.lreHsrLREMode =
+-			snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_HSR_MODE, 1);
++	char node_name[32];
++
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
++
++	rowreq_ctx->data.lreHsrLREMode =
++			snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_HSR_MODE_INDX,
++							    node_name);
+ 	(* lreHsrLREMode_val_ptr ) = rowreq_ctx->data.lreHsrLREMode;
+     }
+ 
+@@ -1521,7 +1538,7 @@ the longest time an entry may reside in the duplicates list,
+ int
+ lreDupListResideMaxTime_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, long * lreDupListResideMaxTime_val_ptr )
+ {
+-   int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++   char node_name[32];
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreDupListResideMaxTime_val_ptr );
+ 
+@@ -1535,8 +1552,12 @@ lreDupListResideMaxTime_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, lon
+  * copy (* lreDupListResideMaxTime_val_ptr ) from rowreq_ctx->data
+  */
+ 
++    lre_node_name_cpy(&node_name[0], sizeof(node_name),
++		      rowreq_ctx->data.lreNodeName,
++		      rowreq_ctx->data.lreNodeName_len);
+     rowreq_ctx->data.lreDupListResideMaxTime =
+-	    snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr);
++	    snmp_access_lre_interface_param_get(LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX,
++						node_name);
+     (* lreDupListResideMaxTime_val_ptr ) = rowreq_ctx->data.lreDupListResideMaxTime;
+ 
+     return MFD_SUCCESS;
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
+index 7a320d6..5a48cf5 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
+@@ -548,45 +548,71 @@ lreInterfaceConfigTable_undo_cleanup( lreInterfaceConfigTable_rowreq_ctx *rowreq
+ 
+ static int lre_interface_config_set_duplicate_discard(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+ {
+-	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
+-
+-	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD, hsr,
+-						 rowreq_ctx->data.lreDuplicateDiscard);
++	char node_name[32];
++
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
++	snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_DUPLICATE_DISCARD_INDX,
++					    node_name,
++					    rowreq_ctx->data.lreDuplicateDiscard);
+ 	return MFD_SUCCESS;
+ }
+ 
+ static int lre_interface_config_set_transparent_reception(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+ {
++	char node_name[32];
++
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
++
+ 	if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_PRPNODE)
+-		snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION, 0,
+-							 rowreq_ctx->data.lreTransparentReception);
++		snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_TRANSPARENT_RECEPTION_INDX,
++						    node_name,
++						    rowreq_ctx->data.lreTransparentReception);
+ 	return MFD_SUCCESS;
+ }
+ 
+ static int lre_interface_config_set_hsr_lre_mode(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+ {
++	char node_name[32];
++
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
+ 	if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE)
+-		snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_HSR_MODE, 1,
+-							 rowreq_ctx->data.lreHsrLREMode);
++		snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_HSR_MODE_INDX,
++						    node_name,
++						    rowreq_ctx->data.lreHsrLREMode);
+ 	return MFD_SUCCESS;
+ }
+ 
+ static int lre_interface_config_set_node_table_clear(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+ {
+-	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++	char node_name[32];
++
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
+ 
+-	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE_CLEAR, hsr,
+-						 rowreq_ctx->data.lreNodesTableClear);
++	snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_NODE_TABLE_CLEAR_INDX,
++					    node_name,
++					    rowreq_ctx->data.lreNodesTableClear);
+ 
+ 	return MFD_SUCCESS;
+ }
+ 
+ static int lre_interface_config_set_duplicate_reside_max_time(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+ {
+-	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++	char node_name[32];
+ 
+-	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr,
+-							 rowreq_ctx->data.lreDupListResideMaxTime);
++	lre_node_name_cpy(&node_name[0], sizeof(node_name),
++			  rowreq_ctx->data.lreNodeName,
++			  rowreq_ctx->data.lreNodeName_len);
++	snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX,
++					    rowreq_ctx->data.lreNodeName,
++					    rowreq_ctx->data.lreDupListResideMaxTime);
+ 	return MFD_SUCCESS;
+ }
+ 
+@@ -3487,7 +3513,7 @@ lreDupListResideMaxTime_undo_setup( lreInterfaceConfigTable_rowreq_ctx *rowreq_c
+ int
+ lreDupListResideMaxTime_set( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, long lreDupListResideMaxTime_val )
+ {
+-    int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++    char node_name[32];
+ 
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreDupListResideMaxTime_set","called\n"));
+ 
+@@ -3498,8 +3524,11 @@ lreDupListResideMaxTime_set( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, lon
+      * TODO:461:M: |-> Set lreDupListResideMaxTime value.
+      * set lreDupListResideMaxTime value in rowreq_ctx->data
+      */
+-    snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr,
+-					lreDupListResideMaxTime_val);
++
++    lre_node_name_cpy(node_name, 32, rowreq_ctx->data.lreNodeName,
++		      rowreq_ctx->data.lreNodeName_len);
++    snmp_access_lre_interface_param_set(LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX,
++					node_name, lreDupListResideMaxTime_val);
+     rowreq_ctx->data.lreDupListResideMaxTime = lreDupListResideMaxTime_val;
+ 
+     return MFD_SUCCESS;
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+index 4a3b771..d57aa06 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+@@ -567,7 +567,7 @@ lreInterfaceStatsTable_container_load(netsnmp_container *container)
+             return MFD_RESOURCE_UNAVAILABLE;
+         }
+ 
+-        ret = lre_interface_stats_get(temp->data.slave1_if_name, stats_counters);
++        ret = lre_interface_stats_get(temp->data.if_name, stats_counters);
+         if (ret < 0) {
+             snmp_log(LOG_ERR,"error accessing date for "
+                      "lreInterfaceStatsTable\n");
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+index 6fa1533..2d9945a 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+@@ -544,7 +544,7 @@ lreNodesTable_container_load(netsnmp_container *container)
+     unsigned int  num_nodes = 0;
+     struct lre_remote_nodes_s r_nodes, *r_current;
+     struct lre_nodes_s nodes, *current;
+-    int ret, hsr;
++    int ret;
+ 
+     /*
+      * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+@@ -559,12 +559,7 @@ lreNodesTable_container_load(netsnmp_container *container)
+ 
+     do {
+ 
+-	if (!strcmp(current->data.type, "hsr"))
+-            hsr = 1;
+-	else
+-            hsr = 0;
+-
+-	ret = snmp_access_get_remote_nodes(&r_nodes, hsr, &num_nodes);
++	ret = snmp_access_get_remote_nodes(&r_nodes, current->data.if_name, &num_nodes);
+ 	if (ret < 0) {
+ 		if (!lreInterfaceStatsIndex) {
+ 			if (!num_nodes) {
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+index df6f040..2f458f4 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+@@ -329,14 +329,15 @@
+ #ifndef NETSNMP_ACCESS_INTERFACE_H
+ #define NETSNMP_ACCESS_INTERFACE_H
+ 
+-enum netsnmp_access_lre_config_file_index {
+-	NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME,
+-	NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD,
+-	NETSNMP_LRE_CONFIG_IFACE_HSR_MODE,
+-	NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE_CLEAR,
+-	NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION,
+-	NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE,
+-	NETSNMP_LRE_CONFIG_IFACE_LAST,
++enum lre_procfs_file_index {
++	LRE_PROCFS_FILE_NT_INDX,
++	LRE_PROCFS_FILE_LRE_STATS_INDX,
++	LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX,
++	LRE_PROCFS_FILE_DUPLICATE_DISCARD_INDX,
++	LRE_PROCFS_FILE_HSR_MODE_INDX,
++	LRE_PROCFS_FILE_NODE_TABLE_CLEAR_INDX,
++	LRE_PROCFS_FILE_TRANSPARENT_RECEPTION_INDX,
++	LRE_PROCFS_FILE_LAST,
+ };
+ 
+ /* for parsing hsr/prp interface parameters */
+@@ -425,13 +426,20 @@ struct lre_remote_nodes_s {
+ 	struct lre_remote_nodes_s *next;
+ };
+ 
+-int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr);
+-int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_index index, int hsr, int val);
++int snmp_access_lre_interface_param_get(enum lre_procfs_file_index index,
++					char *node_name);
++int snmp_access_lre_interface_param_set(enum lre_procfs_file_index index,
++					char *node_name,
++					int val);
+ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes);
+ int lre_config_get_slave_states(const char *eth1_name, int *eth1_admin_state,
+-				int *eth1_link_state, const char *eth2_name, int *eth2_admin_state,
++				int *eth1_link_state, const char *eth2_name,
++				int *eth2_admin_state,
+ 				int *eth2_link_state);
+-int lre_interface_stats_get(char *if_name, u_int lre_stats[]);
+-int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes, int hsr, unsigned int *num_nodes);
++int lre_interface_stats_get(char *node_name, u_int lre_stats[]);
++int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes,
++				 char *node_name,
++				 unsigned int *num_nodes);
+ void lre_node_cleanup(struct lre_nodes_s *nodes);
++void lre_node_name_cpy(char *name, int name_len, char *node_name, int len);
+ #endif
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+index a85b35e..b4b876d 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -328,28 +328,38 @@
+ #include <errno.h>
+ #include "lre_config_interface.h"
+ 
+-#define DEBUGFS_PREFIX_HSR	"/sys/kernel/debug/prueth-hsr/"
+-#define DEBUGFS_PREFIX_PRP	"/sys/kernel/debug/prueth-prp/"
++#define PROCFS_PREFIX	"/proc/"
+ 
+-static char debugfs_file_names[][64] = { "dup_list_reside_max_time",
+-	"duplicate_discard", "hsr_mode", "node_table_clear",
+-	"transparent_reception", "node_table"};
++static char procfs_file_names[][32] = { "node-table", "lre-stats", "dlrmt",
++					"dd-mode", "hsr-mode", "clear-nt",
++					"prp-tr" };
+ 
+ #define BUF_SIZE	128
+ #define BUF1_SIZE	512
+ #define BUF2_SIZE	1024
+ 
+-static void get_file_name(char *str, int size,
+-			  enum netsnmp_access_lre_config_file_index index, int hsr)
++void lre_node_name_cpy(char *name, int name_len, char *node_name, int len)
+ {
+-	if (hsr)
+-		strncpy(str, DEBUGFS_PREFIX_HSR, size - 1);
+-	else
+-		strncpy(str, DEBUGFS_PREFIX_PRP, size - 1);
+-	strncat(str, debugfs_file_names[index], size - strlen(str) - 1);
++	if (len > name_len) {
++		printf("Invalid len, source len %d, dest len %d, truncating\n",
++			len, name_len);
++	}
++	bzero(name, name_len);
++	strncpy(name, node_name, name_len - 1);
++	name[name_len - 1] = '\0';
++}
++
++static void get_procfs_file_name(char *file_name, char *node_name, int size,
++			         enum lre_procfs_file_index index)
++{
++	strncpy(file_name, PROCFS_PREFIX, size - 1);
++	strncat(file_name, node_name, size - strlen(file_name) - 1);
++	strncat(file_name, "/", size - strlen(file_name) - 1);
++	strncat(file_name, procfs_file_names[index], size - strlen(file_name) - 1);
+ }
+ 
+-int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr)
++int snmp_access_lre_interface_param_get(enum lre_procfs_file_index index,
++					char *node_name)
+ {
+ 	FILE *fp;
+ 	char line[BUF2_SIZE];
+@@ -357,10 +367,10 @@ int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_inde
+ 	int val = -1;
+ 	unsigned long long temp;
+ 
+-	if (index >= NETSNMP_LRE_CONFIG_IFACE_LAST)
++	if (index >= LRE_PROCFS_FILE_LAST)
+ 		return -EINVAL;
+ 
+-	get_file_name(filename, BUF_SIZE, index, hsr);
++	get_procfs_file_name(filename, node_name, BUF_SIZE, index);
+ 	filename[BUF_SIZE - 1] = '\0';
+ 
+ 	fp = fopen(filename, "r");
+@@ -374,7 +384,7 @@ int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_inde
+ 	}
+ 	fclose(fp);
+ 
+-	if (index == NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME) {
++	if (index == LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX) {
+ 		/* value is in msec */
+ 		temp = (val * 1000000) / 15259;
+ 		val = (int)temp;
+@@ -383,8 +393,8 @@ int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_inde
+ 	return val;
+ }
+ 
+-int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_index index,
+-				        int hsr, int val)
++int snmp_access_lre_interface_param_set(enum lre_procfs_file_index index,
++				        char *node_name, int val)
+ {
+ 	FILE *fp;
+ 	char line[BUF_SIZE];
+@@ -392,10 +402,10 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 	unsigned long long temp;
+ 
+ 
+-	if (index >= NETSNMP_LRE_CONFIG_IFACE_LAST)
++	if (index >= LRE_PROCFS_FILE_LAST)
+ 		return -EINVAL;
+ 
+-	if (index == NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME) {
++	if (index == LRE_PROCFS_FILE_DUP_LIST_RESIDE_MAX_TIME_INDX) {
+ 		/* value is in msec */
+ 		temp = val * 15259 / 1000;
+ 		/* in msec */
+@@ -404,7 +414,7 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 			val++;
+ 	}
+ 
+-	get_file_name(filename, BUF_SIZE, index, hsr);
++	get_procfs_file_name(filename, node_name, BUF_SIZE, index);
+ 
+ 	fp = fopen(filename, "w");
+ 	if (!fp)
+@@ -415,25 +425,6 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 	fwrite(line, sizeof(char), strlen(line), fp);
+ 	fclose(fp);
+ 
+-	if (hsr && index == NETSNMP_LRE_CONFIG_IFACE_HSR_MODE) {
+-		fp = fopen("/sys/kernel/debug/hsr/hsr_mode", "w");
+-		if (!fp)
+-			return -EINVAL;
+-		goto out;
+-	}
+-
+-	if (!hsr && index == NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD) {
+-		fp = fopen("/sys/kernel/debug/prp/duplicate_discard", "w");
+-		if (!fp)
+-			return -EINVAL;
+-		goto out;
+-	}
+-	return 0;
+-out:
+-	snprintf(line, BUF_SIZE - 1, "%d", val);
+-	line[BUF_SIZE - 1] = '\0';
+-	fwrite(line, sizeof(char), strlen(line), fp);
+-	fclose(fp);
+ 	return 0;
+ }
+ 
+@@ -538,7 +529,7 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ }
+ 
+ #define LRE_CONFIG_MAX_INTERFACES	32
+-#define LRE_CONFIG_BIFFER_SZ		1024
++#define LRE_CONFIG_BUFFER_SZ		1024
+ 
+ static int lre_config_get_if_name_state(const char *interface,
+ 					 char *if_name,
+@@ -628,8 +619,8 @@ int lre_config_get_slave_states(const char *eth1_name,
+     if (fp == NULL)
+ 	return -1;
+ 
+-    interface = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
+-    line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++    interface = (char *)malloc(LRE_CONFIG_BUFFER_SZ);
++    line = (char *)malloc(LRE_CONFIG_BUFFER_SZ);
+ 
+     if ((interface == NULL) || (line == NULL)) {
+ 	    ret = -1;
+@@ -637,7 +628,7 @@ int lre_config_get_slave_states(const char *eth1_name,
+     }
+ 
+     while (!(eth1_found && eth2_found)) {
+-           if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++           if (fgets(line, LRE_CONFIG_BUFFER_SZ, fp)) {
+                if (lre_prefix_string_ifindex(line, &if_index)) {
+                    ret = lre_config_get_if_name_state(line, if_name,
+                                                        &admin_state,
+@@ -679,8 +670,8 @@ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes)
+     if (fp == NULL)
+ 	return -1;
+ 
+-    interface = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
+-    line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++    interface = (char *)malloc(LRE_CONFIG_BUFFER_SZ);
++    line = (char *)malloc(LRE_CONFIG_BUFFER_SZ);
+     if ((interface == NULL) || (line == NULL)) {
+ 	    ret = -1;
+ 	    goto out;
+@@ -689,7 +680,7 @@ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes)
+     while(!done) {
+         last_if_index = -1;
+         while (1) {
+-            if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++            if (fgets(line, LRE_CONFIG_BUFFER_SZ, fp)) {
+                 size = strlen(line);
+                 if (lre_prefix_string_ifindex(line, &if_index)) {
+                     if (last_size) {
+@@ -708,7 +699,7 @@ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes)
+ 			}
+                     }
+ 
+-                    bzero(interface, LRE_CONFIG_BIFFER_SZ);
++                    bzero(interface, LRE_CONFIG_BUFFER_SZ);
+                     last_size = size;
+                     strcpy(interface, line);
+                     ifindex_found = 1;
+@@ -721,7 +712,7 @@ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes)
+                         continue;
+                     }
+ 
+-                    if ((last_size + size) <= (LRE_CONFIG_BIFFER_SZ  - 1)) {
++                    if ((last_size + size) <= (LRE_CONFIG_BUFFER_SZ  - 1)) {
+                         strcpy(&interface[last_size], line);
+                         last_size += size;
+                     } else {
+@@ -764,9 +755,6 @@ static const char *lre_iface_stats[LRE_CNT_LAST] = {
+ 	"lreMultiRxC:", "lreOwnRxA:", "lreOwnRxB:",
+ };
+ 
+-#define ethtool_cmd_str "ethtool -S "
+-#define ethtool_output_file "/var/ethtool_out.txt"
+-
+ static void lre_stats_update_counter(u_int lre_stats[], char *name, char *val)
+ {
+ 	int i;
+@@ -785,26 +773,25 @@ static void lre_stats_update_counter(u_int lre_stats[], char *name, char *val)
+ 
+ int lre_interface_stats_get(char *if_name, u_int lre_stats[])
+ {
+-	char ethtool_cmd[80], *line, *token, *save, *stats_name;
++	char *line, *token, *save, *stats_name;
+ 	int ret = 0, index = 0, i;
++	char filename[BUF_SIZE];
+ 	FILE *fp;
+ 
+-	sprintf(ethtool_cmd, "%s%s 2>&1 > %s\n",
+-		ethtool_cmd_str, if_name, ethtool_output_file);
+-	system(ethtool_cmd);
+-
+-	fp = fopen(ethtool_output_file, "r");
++	get_procfs_file_name(filename, if_name, BUF_SIZE,
++			    LRE_PROCFS_FILE_LRE_STATS_INDX);
++	fp = fopen(filename, "r");
+ 	if (fp == NULL)
+ 		return -1;
+ 
+-	line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++	line = (char *)malloc(LRE_CONFIG_BUFFER_SZ);
+ 	if (line == NULL) {
+ 		ret = -1;
+ 		goto out;
+ 	}
+ 
+ 	while(1) {
+-		if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++		if (fgets(line, LRE_CONFIG_BUFFER_SZ, fp)) {
+ 			token = strtok_r(line, " ", &save);
+ 			i = 0;
+ 			stats_name = NULL;
+@@ -838,12 +825,17 @@ static int lre_get_node_info(char *line, struct lre_node_table_entry_s *node)
+ {
+ 	char *save, *token, *temp = (char *)malloc(strlen(line) + 1);
+ 	int marker_index = 0, ret = 0;
++	char *delimiter;
++	char space[] = " ";
++	char linefeed[] = "\n";
+ 
++
++	delimiter = space;
+ 	if (!temp)
+ 		return -1;
+ 
+ 	strcpy(temp, line);
+-	token = strtok_r(temp, " ", &save);
++	token = strtok_r(temp, delimiter, &save);
+ 	node->remote_node_type = LRE_NODE_UNKNOWN;
+ 	while (token) {
+ 		switch (marker_index) {
+@@ -859,6 +851,8 @@ static int lre_get_node_info(char *line, struct lre_node_table_entry_s *node)
+ 				node->remote_node_type = LRE_NODE_DANH;
+ 			if (strstr(token, "DANP"))
+ 				node->remote_node_type = LRE_NODE_DANP;
++			marker_index++;
++			delimiter = space;
+ 			break;
+ 		case 3:
+ 			if (strstr(token, "RxA=")) {
+@@ -876,13 +870,12 @@ static int lre_get_node_info(char *line, struct lre_node_table_entry_s *node)
+ 			;
+ 		}
+ 
+-		if (strstr(token, "ADDR:"))
+-			marker_index++;
+-
+-		if (strstr(token, "Sup="))
++		if (strstr(token, "ADDR:")) {
+ 			marker_index++;
++			delimiter = linefeed;
++		}
+ 
+-		token = strtok_r(NULL, " ", &save);
++		token = strtok_r(NULL, delimiter, &save);
+ 	}
+ 
+ 	if ((node->remote_node_type != LRE_NODE_DANP) &&
+@@ -893,7 +886,9 @@ static int lre_get_node_info(char *line, struct lre_node_table_entry_s *node)
+ 	return ret;
+ }
+ 
+-int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes, int hsr, unsigned int *num_nodes)
++int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes,
++				 char *node_name,
++				 unsigned int *num_nodes)
+ {
+ 	FILE *fp = NULL;
+ 	char *line, *file_name, *node_buf;
+@@ -909,8 +904,8 @@ int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes, int hsr, unsi
+ 		goto out;
+ 	}
+ 
+-	get_file_name(file_name, BUF_SIZE,
+-		      NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE, hsr);
++	get_procfs_file_name(file_name, node_name, BUF_SIZE,
++			     LRE_PROCFS_FILE_NT_INDX);
+ 
+ 	fp = fopen(file_name, "r");
+ 	if (!fp) {
+-- 
+1.9.1
+

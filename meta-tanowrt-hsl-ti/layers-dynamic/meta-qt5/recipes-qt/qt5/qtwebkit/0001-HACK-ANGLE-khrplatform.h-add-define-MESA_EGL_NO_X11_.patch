@@ -1,0 +1,30 @@
+From 4a21fcedd886772b7e1bd40861835f1b4f33c7ff Mon Sep 17 00:00:00 2001
+From: Eric Ruei <e-ruei1@ti.com>
+Date: Fri, 30 Aug 2019 17:41:13 -0400
+Subject: [PATCH] HACK: ANGLE/khrplatform.h: add #define
+ MESA_EGL_NO_X11_HEADERS
+
+Note: Only the KHR/khrplatform.h at sysroot/usr/include should be used.
+      This patch is a tentative workaround to make both files compatible
+
+Upstream-Status: Inappropriate [tentative workaround only]
+
+Signed-off-by: Eric Ruei <e-ruei1@ti.com>
+---
+ Source/ThirdParty/ANGLE/include/KHR/khrplatform.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Source/ThirdParty/ANGLE/include/KHR/khrplatform.h b/Source/ThirdParty/ANGLE/include/KHR/khrplatform.h
+index c9e6f17d3..4e3ff69a8 100644
+--- a/Source/ThirdParty/ANGLE/include/KHR/khrplatform.h
++++ b/Source/ThirdParty/ANGLE/include/KHR/khrplatform.h
+@@ -279,4 +279,6 @@ typedef enum {
+     KHRONOS_BOOLEAN_ENUM_FORCE_SIZE = KHRONOS_MAX_ENUM
+ } khronos_boolean_enum_t;
+ 
++#define MESA_EGL_NO_X11_HEADERS
++
+ #endif /* __khrplatform_h_ */
+-- 
+2.17.1
+

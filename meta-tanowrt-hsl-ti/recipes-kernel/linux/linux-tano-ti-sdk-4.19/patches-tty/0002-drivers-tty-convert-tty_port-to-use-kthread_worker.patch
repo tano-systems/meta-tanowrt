@@ -1,0 +1,119 @@
+diff --git a/drivers/tty/tty_buffer.c b/drivers/tty/tty_buffer.c
+index e0090e65d83a..18bd7f48a319 100644
+--- a/drivers/tty/tty_buffer.c
++++ b/drivers/tty/tty_buffer.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <linux/types.h>
++#include <linux/kthread.h>
+ #include <linux/errno.h>
+ #include <linux/tty.h>
+ #include <linux/tty_driver.h>
+@@ -492,7 +493,7 @@ receive_buf(struct tty_port *port, struct tty_buffer *head, int count)
+  *		 'consumer'
+  */
+ 
+-static void flush_to_ldisc(struct work_struct *work)
++static void flush_to_ldisc(struct kthread_work *work)
+ {
+ 	struct tty_port *port = container_of(work, struct tty_port, buf.work);
+ 	struct tty_bufhead *buf = &port->buf;
+@@ -552,10 +553,20 @@ void tty_flip_buffer_push(struct tty_port *port)
+ }
+ EXPORT_SYMBOL(tty_flip_buffer_push);
+ 
++static struct kthread_worker *tty_buffer_worker;
++
+ bool tty_buffer_queue_work(struct tty_port *port)
+ {
+-	struct tty_bufhead *buf = &port->buf;
+-	return schedule_work(&buf->work);
++	return kthread_queue_work(tty_buffer_worker, &port->buf.work);
++}
++
++void tty_buffer_init_kthread(void)
++{
++	tty_buffer_worker = kthread_create_worker(0, "tty");
++	if (IS_ERR(tty_buffer_worker)) {
++		pr_err("Failed to create tty buffer kworker\n");
++		return;
++	}
+ }
+ 
+ /**
+@@ -577,7 +588,7 @@ void tty_buffer_init(struct tty_port *port)
+ 	init_llist_head(&buf->free);
+ 	atomic_set(&buf->mem_used, 0);
+ 	atomic_set(&buf->priority, 0);
+-	INIT_WORK(&buf->work, flush_to_ldisc);
++	kthread_init_work(&buf->work, flush_to_ldisc);
+ 	buf->mem_limit = TTYB_DEFAULT_MEM_LIMIT;
+ }
+ 
+@@ -609,12 +620,12 @@ bool tty_buffer_restart_work(struct tty_port *port)
+ 	return tty_buffer_queue_work(port);
+ }
+ 
+-bool tty_buffer_cancel_work(struct tty_port *port)
++void tty_buffer_cancel_work(struct tty_port *port)
+ {
+-	return cancel_work_sync(&port->buf.work);
++	tty_buffer_flush_work(port);
+ }
+ 
+ void tty_buffer_flush_work(struct tty_port *port)
+ {
+-	flush_work(&port->buf.work);
++	kthread_flush_work(&port->buf.work);
+ }
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index bfe9ad85b362..5fd7cecbe4e7 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -3342,6 +3342,7 @@ void console_sysfs_notify(void)
+  */
+ int __init tty_init(void)
+ {
++	tty_buffer_init_kthread();
+ 	tty_sysctl_init();
+ 	cdev_init(&tty_cdev, &tty_fops);
+ 	if (cdev_add(&tty_cdev, MKDEV(TTYAUX_MAJOR, 0), 1) ||
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index 226a9eff0766..924c1093967e 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -3,9 +3,9 @@
+ #define _LINUX_TTY_H
+ 
+ #include <linux/fs.h>
++#include <linux/kthread.h>
+ #include <linux/major.h>
+ #include <linux/termios.h>
+-#include <linux/workqueue.h>
+ #include <linux/tty_driver.h>
+ #include <linux/tty_ldisc.h>
+ #include <linux/mutex.h>
+@@ -84,7 +84,7 @@ static inline char *flag_buf_ptr(struct tty_buffer *b, int ofs)
+ 
+ struct tty_bufhead {
+ 	struct tty_buffer *head;	/* Queue head */
+-	struct work_struct work;
++	struct kthread_work work;
+ 	struct mutex	   lock;
+ 	atomic_t	   priority;
+ 	struct tty_buffer sentinel;
+@@ -503,8 +503,9 @@ extern void tty_buffer_flush(struct tty_struct *tty, struct tty_ldisc *ld);
+ extern bool tty_buffer_queue_work(struct tty_port *port);
+ extern void tty_buffer_init(struct tty_port *port);
+ extern void tty_buffer_set_lock_subclass(struct tty_port *port);
++extern void tty_buffer_init_kthread(void);
+ extern bool tty_buffer_restart_work(struct tty_port *port);
+-extern bool tty_buffer_cancel_work(struct tty_port *port);
++extern void tty_buffer_cancel_work(struct tty_port *port);
+ extern void tty_buffer_flush_work(struct tty_port *port);
+ extern speed_t tty_termios_baud_rate(struct ktermios *termios);
+ extern speed_t tty_termios_input_baud_rate(struct ktermios *termios);
+-- 
+2.7.4
+

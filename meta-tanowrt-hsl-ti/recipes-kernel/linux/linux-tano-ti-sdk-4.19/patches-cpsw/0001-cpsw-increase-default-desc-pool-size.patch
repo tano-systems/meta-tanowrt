@@ -1,0 +1,13 @@
+diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
+index fdd7636..75bffcd 100644
+--- a/drivers/net/ethernet/ti/cpsw.c
++++ b/drivers/net/ethernet/ti/cpsw.c
+@@ -156,7 +156,7 @@ do {								\
+ 		cpsw->data.active_slave)
+ #define IRQ_NUM			2
+ #define CPSW_MAX_QUEUES		8
+-#define CPSW_CPDMA_DESCS_POOL_SIZE_DEFAULT 256
++#define CPSW_CPDMA_DESCS_POOL_SIZE_DEFAULT 2048
+ #define CPSW_FIFO_QUEUE_TYPE_SHIFT	16
+ #define CPSW_FIFO_SHAPE_EN_SHIFT	16
+ #define CPSW_FIFO_RATE_EN_SHIFT		20

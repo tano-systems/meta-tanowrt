@@ -1,0 +1,28 @@
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 7 Dec 2018 09:22:50 +0300
+Subject: [PATCH] musb_gadget: Do not use CPPI DMA for transfers <= 8 bytes
+
+Fix for problem discussed here:
+http://e2e.ti.com/support/processors/f/791/t/675060
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/usb/musb/musb_gadget.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
+index 87f932d..6be1290 100644
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -276,7 +276,7 @@ static void txstate(struct musb *musb, struct musb_request *req)
+ 		request_size = min_t(size_t, request->length - request->actual,
+ 					musb_ep->dma->max_len);
+ 
+-		use_dma = (request->dma != DMA_ADDR_INVALID && request_size);
++		use_dma = (request->dma != DMA_ADDR_INVALID && request_size > 8);
+ 
+ 		/* MUSB_TXCSR_P_ISO is still set correctly */
+ 
+-- 
+2.7.4
+

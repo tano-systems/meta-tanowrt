@@ -1,0 +1,401 @@
+From 78fce3c13e93fcfec7ccaee9d5638f46b5f9c9a5 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Thu, 11 May 2017 16:14:19 -0400
+Subject: [PATCH 05/12] IEC-62439-3-MIB: refractor code for re-use
+
+---
+ .../lreInterfaceConfigTable_data_access.c          | 270 ++++++++++++---------
+ 1 file changed, 150 insertions(+), 120 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index e749514..0bc3ba6 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -28,21 +28,31 @@ enum lre_interface_param_index {
+ 	INDEX_INTERFACE_LAST
+ };
+ 
+-struct lre_interface_params {
++struct lre_node_s {
+ 	int if_index;
+-	char node_type[16];
++	char type[16];
+ 	char if_name[128];
+ 	char mac_address[32];
+ 	char slave1_if_name[128];
+ 	char slave2_if_name[128];
+ };
+ 
+-static int lre_prefix_string_ifindex(char *line, int *if_index)
++struct lre_nodes_s {
++	struct lre_node_s data;
++	struct lre_nodes_s *next;
++};
++
++static int lre_prefix_string_ifindex(const char *line, int *if_index)
+ {
+-	char str[32], *ptr = line;
++	char str[32];
++	const char *ptr = line;
+ 	int count = 0;
+ 
+ 	bzero(str, sizeof(str));
++	if (!isdigit(*ptr))
++		return 0;
++
++	bzero(str, sizeof(str));
+ 	while(*ptr && (*ptr != ':')) {
+ 		if (!isdigit(*ptr))
+ 			break;
+@@ -64,12 +74,17 @@ static int lre_prefix_string_ifindex(char *line, int *if_index)
+ 	return 0;
+ }
+ 
+-static int lre_get_hsr_prp_interface(char *interface, struct lre_interface_params *params)
++static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ {
+-	char *save;
+-	char *token = strtok_r(interface, " ", &save);
+-	int index = 0, marker_index = 1, param_index = INDEX_IF_NAME, len;
++	int ret = 0, index = 0, marker_index = 1, param_index = INDEX_IF_NAME, len;
++	char *save, *token, *temp = (char *)malloc(strlen(interface) + 1);
+ 
++	if (!temp)
++		return -1;
++
++	/* Tokeniser below modify the interface buffer. So use a copy */
++	strcpy(temp, interface);
++	token = strtok_r(temp, " ", &save);
+ 	while (token) {
+ 		if (index == marker_index) {
+ 			/* interface name */
+@@ -79,21 +94,21 @@ static int lre_get_hsr_prp_interface(char *interface, struct lre_interface_param
+ 				len = strlen(token);
+ 				switch (param_index) {
+ 					case INDEX_IF_NAME:
+-					     strcpy(params->if_name, token);
++					     strcpy(node->if_name, token);
+ 					     if (len)
+-						params->if_name[len-1] = '\0';
++						node->if_name[len-1] = '\0';
+ 					     param_index++;
+ 					     break;
+ 					case INDEX_MAC_ADDRESS:
+-					     strcpy(params->mac_address, token);
++					     strcpy(node->mac_address, token);
+ 					     param_index++;
+ 					     break;
+ 					case INDEX_SLAVE1_IF_NAME:
+-					     strcpy(params->slave1_if_name, token);
++					     strcpy(node->slave1_if_name, token);
+ 					     param_index++;
+ 					     break;
+ 					case INDEX_SLAVE2_IF_NAME:
+-					     strcpy(params->slave2_if_name, token);
++					     strcpy(node->slave2_if_name, token);
+ 					     param_index++;
+ 					     break;
+ 					default:
+@@ -106,7 +121,7 @@ static int lre_get_hsr_prp_interface(char *interface, struct lre_interface_param
+ 
+ 		if (!strcmp(token, "prp") ||
+ 		    !strcmp(token, "hsr")) {
+-			strcpy(params->node_type, token);
++			strcpy(node->type, token);
+ 			marker_index = index + 1;
+ 		}
+ 
+@@ -118,16 +133,104 @@ static int lre_get_hsr_prp_interface(char *interface, struct lre_interface_param
+ 	}
+ 
+ 	if (param_index == INDEX_INTERFACE_LAST)
+-		return 1;
+-	return 0;
++		ret = 1;
++
++        free(temp);
++	return ret;
+ }
+ 
+-int lre_interface_parse_hsr_prp_interfaces(FILE *filep,
+-					   struct lre_interface_params *ifaces)
++#define LRE_CONFIG_MAX_INTERFACES	32
++#define LRE_CONFIG_BIFFER_SZ		1024
++
++static int lre_config_get_num_interfaces(const char *file_name,
++                                         struct lre_nodes_s *nodes)
+ {
+-	int count = 0;
++    int count = 0, ret = 0, last_if_index, if_index, done = 0, size, last_size = 0,
++	ifindex_found;
++    struct lre_nodes_s *prev = nodes, *current = nodes;
++    char *interface;
++    char *line;
++    FILE *fp;
+ 
+-	return count;
++    system(ip_command);
++    fp = fopen(file_name, "r");
++    if (fp == NULL)
++	return -1;
++
++    interface = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++    line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++    if ((interface == NULL) || (line == NULL)) {
++	    ret = -1;
++	    goto out;
++    }
++
++    while(!done) {
++        last_if_index = -1;
++        while (1) {
++            if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++                size = strlen(line);
++                if (lre_prefix_string_ifindex(line, &if_index)) {
++                    if (last_size) {
++                        interface[last_size] = '\0';
++                        if (lre_get_hsr_prp_node_info(interface, &current->data)) {
++                            current->data.if_index = last_if_index;
++                            /* parse upto LRE_CONFIG_MAX_INTERFACES interfaces
++			     * */
++                            if (++count < LRE_CONFIG_MAX_INTERFACES) {
++                                current->next =
++				(struct lre_nodes_s *)malloc(sizeof(struct lre_nodes_s));
++			        prev = current;
++			        current = current->next;
++                            } else
++				goto out;
++			}
++                    }
++
++                    bzero(interface, LRE_CONFIG_BIFFER_SZ);
++                    last_size = size;
++                    strcpy(interface, line);
++                    ifindex_found = 1;
++                    last_if_index = if_index;
++                } else {
++                    if (!ifindex_found) {
++                        /* error. Throw the string as this should never
++                         * happen
++                         */
++                        continue;
++                    }
++
++                    if ((last_size + size) <= (LRE_CONFIG_BIFFER_SZ  - 1)) {
++                        strcpy(&interface[last_size], line);
++                        last_size += size;
++                    } else {
++                        /* error */
++			ret = -1;
++			goto out;
++                    }
++                }
++            } else {
++                interface[last_size] = '\0';
++                if (lre_get_hsr_prp_node_info(interface, &current->data)) {
++                    current->data.if_index = last_if_index;
++		    current->next = NULL;
++		    count++;
++		} else {
++		    if (current != nodes) {
++			free(current);
++			prev->next = NULL;
++		    }
++		}
++                done = 1;
++                break;
++            }
++        }
++    }
++    ret = count;
++out:
++    fclose(fp);
++    free(interface);
++    free(line);
++    return ret;
+ }
+ 
+ /** @ingroup interface
+@@ -319,29 +422,22 @@ int
+ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+ {
+     lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx;
+-    size_t                 count = 0;
+-    int ret, done = 0;
+-    FILE *filep;
+-    char line[MAX_LINE_SIZE];
+-    char interface[1024];
+-    int ifindex_found = 0, if_index, last_if_index, last_size = 0, size = 0;
+-    struct lre_interface_params if_params;
++    struct lre_nodes_s nodes, *temp, *prev;
++    size_t count = 0;
++    int ret;
+ 
+     /*
+      * temporary storage for index values
+      */
+-        /*
+-         * lreInterfaceConfigIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+-         */
++    /*
++     * lreInterfaceConfigIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
++     */
+     u_long   lreInterfaceConfigIndex = 0;
+ 
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load","called\n"));
+-    /*
+-     * this example code is based on a data source that is a
+-     * text file to be read and parsed.
++    /* use ip command to get the interface details into a file
++     * and parse the same to get interface information.
+      */
+-    system(ip_command);
+-
+ 
+     /*
+     ***************************************************
+@@ -350,79 +446,15 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     /*
+      * open our data file.
+      */
+-    filep = fopen(lre_interface_raw_file, "r");
+-    if(NULL ==  filep) {
+-        return MFD_RESOURCE_UNAVAILABLE;
+-    }
++    ret = lre_config_get_num_interfaces(lre_interface_raw_file, &nodes);
+ 
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
+-    /*
+-     * TODO:351:M: |-> Load/update data in the lreInterfaceConfigTable container.
+-     * loop over your lreInterfaceConfigTable data, allocate a rowreq context,
+-     * set the index(es) [and data, optionally] and insert into
+-     * the container.
+-     */
+-     while(!done) {
+-       last_if_index = -1;
+-       while (1) {
+-       if (fgets(line, sizeof(line), filep)) {
+-		size = strlen(line);
+-		if (lre_prefix_string_ifindex(line, &if_index)) {
+-			if (last_size) {
+-				interface[last_size] = '\0';
+-				if (lre_get_hsr_prp_interface(interface, &if_params)) {
+-					if_params.if_index = if_index;
+-					last_if_index = -1;
+-					last_size = 0;
+-					ifindex_found = 0;
+-					break;
+-				}
+-			}
+-			bzero(interface, sizeof(interface));
+-			last_size = size;
+-			strcpy(interface, line);
+-			ifindex_found = 1;
+-			last_if_index = if_index;
+-		} else {
+-			if (!ifindex_found) {
+-				/* error. Throw the string as this should never
+-				 * happen
+-				 */
+-				continue;
+-			}
+-			if ((last_size + size) <= (sizeof(interface) - 1)) {
+-				strcpy(&interface[last_size], line);
+-				last_size += size;
+-			} else {
+-				/* error */
+-				fclose(filep);
+-				return MFD_RESOURCE_UNAVAILABLE;
+-			}
+-		}
+-     } else {
+-		interface[last_size] = '\0';
+-		if (lre_get_hsr_prp_interface(interface, &if_params))
+-			if_params.if_index = last_if_index;
+-		done = 1;
+-		break;
+-     }
++    if(ret <= 0)
++        return MFD_RESOURCE_UNAVAILABLE;
+ 
+-    }
++    temp = &nodes;
++    prev = NULL;
+ 
+-    if ((if_params.if_index < 0) && (count == 0)) {
+-	fclose(filep);
+-	return MFD_RESOURCE_UNAVAILABLE;
+-    }
+-    /*
+-     * parse line into variables
+-     */
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++    do  {
+ 
+      /*
+       * TODO:352:M: |   |-> set indexes in new lreInterfaceConfigTable rowreq context.
+@@ -465,7 +497,7 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      */
+     /** no mapping */
+ 
+-    if (!strcmp(if_params.node_type, "hsr"))
++    if (!strcmp(temp->data.type, "hsr"))
+ 	rowreq_ctx->data.lreNodeType = LRENODETYPE_HSR;
+     else
+ 	rowreq_ctx->data.lreNodeType = LRENODETYPE_PRPMODE1;
+@@ -478,14 +510,16 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     /*
+      * make sure there is enough space for lreNodeName data
+      */
+-    rowreq_ctx->data.lreNodeName_len = strlen(if_params.if_name) * sizeof(if_params.if_name[0]);
++    rowreq_ctx->data.lreNodeName_len = strlen(temp->data.if_name) * sizeof(temp->data.if_name[0]);
+     if ((NULL == rowreq_ctx->data.lreNodeName) ||
+         (rowreq_ctx->data.lreNodeName_len <
+-         (strlen(if_params.if_name) * sizeof(if_params.if_name[0])))) {
++         (strlen(temp->data.if_name) * sizeof(temp->data.if_name[0])))) {
+         snmp_log(LOG_ERR,"not enough space for value (lreNodeName), lreNodeName_len %d,\n", rowreq_ctx->data.lreNodeName_len);
+         return MFD_ERROR;
+     }
+-    memcpy( rowreq_ctx->data.lreNodeName, if_params.if_name, strlen(if_params.if_name) * sizeof(if_params.if_name[0]));
++
++    memcpy(rowreq_ctx->data.lreNodeName, temp->data.if_name,
++	   strlen(temp->data.if_name) * sizeof(temp->data.if_name[0]));
+ 
+     /*
+      * setup/save data for lreVersionName
+@@ -684,19 +718,15 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+          * insert into table container
+          */
+         CONTAINER_INSERT(container, rowreq_ctx);
++	temp = temp->next;
++	if (prev)
++            free(prev);
++        prev = temp;
+         ++count;
+-    }
++    } while (temp);
+ 
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    if(NULL != filep)
+-        fclose(filep);
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++    if (count != ret)
++        snmp_log(LOG_WARNING,"Inconsistency of raw count and node count\n");
+ 
+     DEBUGMSGT(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load",
+                "inserted %d records\n", count));
+-- 
+1.9.1
+

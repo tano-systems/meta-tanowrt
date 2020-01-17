@@ -1,0 +1,32 @@
+From 01f5318317824d4f3616390be41eb785b35366b2 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Tue, 10 Oct 2017 14:17:05 -0400
+Subject: [PATCH] IEC-62439-3-MIB: fix lreManufacturerName displaying dots at
+ the end
+
+When an snmp query is made on the lreManufacturerName, it displays
+Linux with dots as
+Linux...........................................................
+This patch fixes this issue.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c b/agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c
+index a20e9d0..ddee0fc 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c
+@@ -371,7 +371,7 @@ handle_lreManufacturerName(netsnmp_mib_handler *handler,
+ 	    name[sizeof(name)-1] = '\0';
+             snmp_set_var_typed_value(requests->requestvb, ASN_OCTET_STR,
+                                      &name[0] /* XXX: a pointer to the scalar's data */,
+-                                     sizeof(name) /* XXX: the length of the data in bytes */);
++                                     strlen(name) /* XXX: the length of the data in bytes */);
+             break;
+ 
+ 
+-- 
+1.9.1
+

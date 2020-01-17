@@ -1,0 +1,33 @@
+From adad036a785f6b3910e6305181e7711c2bac0df6 Mon Sep 17 00:00:00 2001
+From: Jacob Stiffler <j-stiffler@ti.com>
+Date: Fri, 12 Jun 2015 08:34:17 -0400
+Subject: [PATCH 1/2] deform: Fix how controls are shown.
+
+* Workaround for issue when controls are full screen, and user clicks
+  OK, black surface remains covering the entire screen.
+* If controls are not full screen, then they must retain focus while
+  opened.
+
+Signed-off-by: Jacob Stiffler <j-stiffler@ti.com>
+---
+ examples/widgets/painting/deform/pathdeform.cpp |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/examples/widgets/painting/deform/pathdeform.cpp b/examples/widgets/painting/deform/pathdeform.cpp
+index 287f700..f8ecc3b 100644
+--- a/examples/widgets/painting/deform/pathdeform.cpp
++++ b/examples/widgets/painting/deform/pathdeform.cpp
+@@ -266,7 +266,9 @@ PathDeformWidget::PathDeformWidget(QWidget *parent, bool smallScreen)
+ 
+ void PathDeformWidget::showControls()
+ {
+-    m_controls->showFullScreen();
++    // Hide first to keep controls in foreground.
++    m_controls->hide();
++    m_controls->show();
+ }
+ 
+ void PathDeformWidget::hideControls()
+-- 
+1.7.9.5
+

@@ -1,0 +1,411 @@
+From 0a881ee06337cf26c6febe898dda706f66bf9ce7 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Wed, 10 May 2017 15:23:36 -0400
+Subject: [PATCH 04/12] IEC-62439-3-MIB: update lreInterfaceTable to use real
+ hsr/prp i/f values
+
+In this patch, add a quick solution to retrieve the hsr/prp interfaces
+at Linux and use it in the lreInterfaceTable query response instead of
+hard coded values for
+ 1. lreNodeType
+ 2. lreNodeName
+
+The same is retrieved from Linux kernel using ip command and parse the
+output of the command.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceConfigTable_data_access.c          | 282 +++++++++++++++------
+ 1 file changed, 201 insertions(+), 81 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index 46ba469..e749514 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -5,6 +5,7 @@
+  * $Id:$
+  */
+ /* standard Net-SNMP includes */
++#include <ctype.h>
+ #include <net-snmp/net-snmp-config.h>
+ #include <net-snmp/net-snmp-features.h>
+ #include <net-snmp/net-snmp-includes.h>
+@@ -16,6 +17,119 @@
+ 
+ #include "lreInterfaceConfigTable_data_access.h"
+ 
++#define lre_interface_raw_file "/var/ip_command_out.txt"
++#define ip_command "ip -d link 1>&2 >/var/ip_command_out.txt\n"
++
++enum lre_interface_param_index {
++	INDEX_IF_NAME,
++	INDEX_MAC_ADDRESS,
++	INDEX_SLAVE1_IF_NAME,
++	INDEX_SLAVE2_IF_NAME,
++	INDEX_INTERFACE_LAST
++};
++
++struct lre_interface_params {
++	int if_index;
++	char node_type[16];
++	char if_name[128];
++	char mac_address[32];
++	char slave1_if_name[128];
++	char slave2_if_name[128];
++};
++
++static int lre_prefix_string_ifindex(char *line, int *if_index)
++{
++	char str[32], *ptr = line;
++	int count = 0;
++
++	bzero(str, sizeof(str));
++	while(*ptr && (*ptr != ':')) {
++		if (!isdigit(*ptr))
++			break;
++		count++;
++		ptr++;
++	}
++
++	if (*ptr == ':') {
++		if (count && (count < sizeof(str))) {
++			while (count--) {
++			      str[count] = line[count];
++			}
++		}
++		if (strlen(str)) {
++			*if_index = atoi(str);
++			return 1;
++		}
++	}
++	return 0;
++}
++
++static int lre_get_hsr_prp_interface(char *interface, struct lre_interface_params *params)
++{
++	char *save;
++	char *token = strtok_r(interface, " ", &save);
++	int index = 0, marker_index = 1, param_index = INDEX_IF_NAME, len;
++
++	while (token) {
++		if (index == marker_index) {
++			/* interface name */
++			if (!strcmp(token, "slave1"))
++				marker_index = index + 1;
++			else {
++				len = strlen(token);
++				switch (param_index) {
++					case INDEX_IF_NAME:
++					     strcpy(params->if_name, token);
++					     if (len)
++						params->if_name[len-1] = '\0';
++					     param_index++;
++					     break;
++					case INDEX_MAC_ADDRESS:
++					     strcpy(params->mac_address, token);
++					     param_index++;
++					     break;
++					case INDEX_SLAVE1_IF_NAME:
++					     strcpy(params->slave1_if_name, token);
++					     param_index++;
++					     break;
++					case INDEX_SLAVE2_IF_NAME:
++					     strcpy(params->slave2_if_name, token);
++					     param_index++;
++					     break;
++					default:
++					     ;
++				};
++			}
++		}
++		if (!strcmp(token, "link/ether"))
++			marker_index = index + 1;
++
++		if (!strcmp(token, "prp") ||
++		    !strcmp(token, "hsr")) {
++			strcpy(params->node_type, token);
++			marker_index = index + 1;
++		}
++
++		if (!strcmp(token, "slave2"))
++			marker_index = index + 1;
++
++	        token = strtok_r(NULL, " ", &save);
++		index++;
++	}
++
++	if (param_index == INDEX_INTERFACE_LAST)
++		return 1;
++	return 0;
++}
++
++int lre_interface_parse_hsr_prp_interfaces(FILE *filep,
++					   struct lre_interface_params *ifaces)
++{
++	int count = 0;
++
++	return count;
++}
++
+ /** @ingroup interface
+  * @addtogroup data_access data_access: Routines to access data
+  *
+@@ -206,6 +320,12 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+ {
+     lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx;
+     size_t                 count = 0;
++    int ret, done = 0;
++    FILE *filep;
++    char line[MAX_LINE_SIZE];
++    char interface[1024];
++    int ifindex_found = 0, if_index, last_if_index, last_size = 0, size = 0;
++    struct lre_interface_params if_params;
+ 
+     /*
+      * temporary storage for index values
+@@ -213,20 +333,15 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+         /*
+          * lreInterfaceConfigIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+          */
+-#if TODO
+-   u_long   lreInterfaceConfigIndex;
+-#else
+-   u_long   lreInterfaceConfigIndex = 0;
+-#endif
++    u_long   lreInterfaceConfigIndex = 0;
+ 
++    DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load","called\n"));
+     /*
+      * this example code is based on a data source that is a
+      * text file to be read and parsed.
+      */
+-    FILE *filep;
+-    char line[MAX_LINE_SIZE];
++    system(ip_command);
+ 
+-    DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreInterfaceConfigTable_container_load","called\n"));
+ 
+     /*
+     ***************************************************
+@@ -235,12 +350,10 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     /*
+      * open our data file.
+      */
+-#if TODO
+-    filep = fopen("/etc/dummy.conf", "r");
++    filep = fopen(lre_interface_raw_file, "r");
+     if(NULL ==  filep) {
+         return MFD_RESOURCE_UNAVAILABLE;
+     }
+-#endif
+ 
+     /*
+     ***---------------------------------------------***
+@@ -252,33 +365,57 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      * set the index(es) [and data, optionally] and insert into
+      * the container.
+      */
+-#if TODO
+-    while( 1 ) {
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    /*
+-     * get a line (skip blank lines)
+-     */
+-
+-    do {
+-        if (!fgets(line, sizeof(line), filep)) {
+-            /* we're done */
+-            fclose(filep);
+-            filep = NULL;
+-        }
+-    } while (filep && (line[0] == '\n'));
++     while(!done) {
++       last_if_index = -1;
++       while (1) {
++       if (fgets(line, sizeof(line), filep)) {
++		size = strlen(line);
++		if (lre_prefix_string_ifindex(line, &if_index)) {
++			if (last_size) {
++				interface[last_size] = '\0';
++				if (lre_get_hsr_prp_interface(interface, &if_params)) {
++					if_params.if_index = if_index;
++					last_if_index = -1;
++					last_size = 0;
++					ifindex_found = 0;
++					break;
++				}
++			}
++			bzero(interface, sizeof(interface));
++			last_size = size;
++			strcpy(interface, line);
++			ifindex_found = 1;
++			last_if_index = if_index;
++		} else {
++			if (!ifindex_found) {
++				/* error. Throw the string as this should never
++				 * happen
++				 */
++				continue;
++			}
++			if ((last_size + size) <= (sizeof(interface) - 1)) {
++				strcpy(&interface[last_size], line);
++				last_size += size;
++			} else {
++				/* error */
++				fclose(filep);
++				return MFD_RESOURCE_UNAVAILABLE;
++			}
++		}
++     } else {
++		interface[last_size] = '\0';
++		if (lre_get_hsr_prp_interface(interface, &if_params))
++			if_params.if_index = last_if_index;
++		done = 1;
++		break;
++     }
+ 
+-    /*
+-     * check for end of data
+-     */
+-    if(NULL == filep)
+-        break;
+-#else
+-    filep = NULL;
+-#endif
++    }
+ 
++    if ((if_params.if_index < 0) && (count == 0)) {
++	fclose(filep);
++	return MFD_RESOURCE_UNAVAILABLE;
++    }
+     /*
+      * parse line into variables
+      */
+@@ -287,26 +424,24 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     ***              END  EXAMPLE CODE              ***
+     ***************************************************/
+ 
+-        /*
+-         * TODO:352:M: |   |-> set indexes in new lreInterfaceConfigTable rowreq context.
+-         * data context will be set from the param (unless NULL,
+-         *      in which case a new data context will be allocated)
+-         */
+-        rowreq_ctx = lreInterfaceConfigTable_allocate_rowreq_ctx(NULL);
+-        if (NULL == rowreq_ctx) {
+-            snmp_log(LOG_ERR, "memory allocation failed\n");
+-            return MFD_RESOURCE_UNAVAILABLE;
+-        }
+-        if(MFD_SUCCESS != lreInterfaceConfigTable_indexes_set(rowreq_ctx
+-                               , lreInterfaceConfigIndex
++     /*
++      * TODO:352:M: |   |-> set indexes in new lreInterfaceConfigTable rowreq context.
++      * data context will be set from the param (unless NULL,
++      *      in which case a new data context will be allocated)
++      */
++     rowreq_ctx = lreInterfaceConfigTable_allocate_rowreq_ctx(NULL);
++     if (NULL == rowreq_ctx) {
++         snmp_log(LOG_ERR, "memory allocation failed\n");
++         return MFD_RESOURCE_UNAVAILABLE;
++     }
++     if(MFD_SUCCESS != lreInterfaceConfigTable_indexes_set(rowreq_ctx
++                            , lreInterfaceConfigIndex
+                )) {
+-            snmp_log(LOG_ERR,"error setting index while loading "
+-                     "lreInterfaceConfigTable data.\n");
+-            lreInterfaceConfigTable_release_rowreq_ctx(rowreq_ctx);
+-#if TODO
++         snmp_log(LOG_ERR,"error setting index while loading "
++                 "lreInterfaceConfigTable data.\n");
++         lreInterfaceConfigTable_release_rowreq_ctx(rowreq_ctx);
+             continue;
+-#endif
+-        }
++     }
+ 
+         /*
+          * TODO:352:r: |   |-> populate lreInterfaceConfigTable data context.
+@@ -322,22 +457,18 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      */
+     /** no mapping */
+ 
+-#if TODO
+-    rowreq_ctx->data.lreRowStatus = lreRowStatus;
+-#else
+-    rowreq_ctx->data.lreRowStatus = 1;
+-#endif
++    rowreq_ctx->data.lreRowStatus = ROWSTATUS_ACTIVE;
+ 
+     /*
+      * setup/save data for lreNodeType
+      * lreNodeType(3)/INTEGER/ASN_INTEGER/long(u_long)//l/A/W/E/r/d/h
+      */
+     /** no mapping */
+-#if TODO
+-    rowreq_ctx->data.lreNodeType = lreNodeType;
+-#else
+-    rowreq_ctx->data.lreNodeType = 1;
+-#endif
++
++    if (!strcmp(if_params.node_type, "hsr"))
++	rowreq_ctx->data.lreNodeType = LRENODETYPE_HSR;
++    else
++	rowreq_ctx->data.lreNodeType = LRENODETYPE_PRPMODE1;
+ 
+     /*
+      * setup/save data for lreNodeName
+@@ -347,23 +478,14 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+     /*
+      * make sure there is enough space for lreNodeName data
+      */
+-#if TODO
++    rowreq_ctx->data.lreNodeName_len = strlen(if_params.if_name) * sizeof(if_params.if_name[0]);
+     if ((NULL == rowreq_ctx->data.lreNodeName) ||
+         (rowreq_ctx->data.lreNodeName_len <
+-         (lreNodeName_len* sizeof(lreNodeName[0])))) {
+-        snmp_log(LOG_ERR,"not enough space for value (lreNodeName)\n");
++         (strlen(if_params.if_name) * sizeof(if_params.if_name[0])))) {
++        snmp_log(LOG_ERR,"not enough space for value (lreNodeName), lreNodeName_len %d,\n", rowreq_ctx->data.lreNodeName_len);
+         return MFD_ERROR;
+     }
+-    rowreq_ctx->data.lreNodeName_len = lreNodeName_len* sizeof(lreNodeName[0]);
+-    memcpy( rowreq_ctx->data.lreNodeName, lreNodeName, lreNodeName_len* sizeof(lreNodeName[0]) );
+-#else
+-    rowreq_ctx->data.lreNodeName[0] = 'h';
+-    rowreq_ctx->data.lreNodeName[1] = 's';
+-    rowreq_ctx->data.lreNodeName[2] = 'r';
+-    rowreq_ctx->data.lreNodeName[3] = '0';
+-    rowreq_ctx->data.lreNodeName[4] = '\0';
+-    rowreq_ctx->data.lreNodeName_len = 4;
+-#endif
++    memcpy( rowreq_ctx->data.lreNodeName, if_params.if_name, strlen(if_params.if_name) * sizeof(if_params.if_name[0]));
+ 
+     /*
+      * setup/save data for lreVersionName
+@@ -553,9 +675,9 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+      */
+     /** no mapping */
+ #if TODO
+-    rowreq_ctx->data.lreDupListResideMaxTime = lreDupListResideMaxTime;
++        rowreq_ctx->data.lreDupListResideMaxTime = lreDupListResideMaxTime;
+ #else
+-    rowreq_ctx->data.lreDupListResideMaxTime = 500;
++        rowreq_ctx->data.lreDupListResideMaxTime = 500;
+ #endif
+ 
+         /*
+@@ -563,9 +685,7 @@ lreInterfaceConfigTable_container_load(netsnmp_container *container)
+          */
+         CONTAINER_INSERT(container, rowreq_ctx);
+         ++count;
+-#if TODO
+     }
+-#endif
+ 
+     /*
+     ***************************************************
+-- 
+1.9.1
+

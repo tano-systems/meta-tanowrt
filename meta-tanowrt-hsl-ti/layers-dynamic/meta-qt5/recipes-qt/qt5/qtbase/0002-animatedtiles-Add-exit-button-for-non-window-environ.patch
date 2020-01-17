@@ -1,0 +1,81 @@
+From 98476756ed6313c13adadf9d86bb921008c61eff Mon Sep 17 00:00:00 2001
+From: Jake Stiffler <jake@mcsdk-hpc-test.(none)>
+Date: Fri, 20 Mar 2015 15:00:51 -0400
+Subject: [PATCH 2/2] animatedtiles: Add exit button for non-window
+ environment.
+
+Signed-off-by: Jake Stiffler <jake@mcsdk-hpc-test.(none)>
+---
+ .../animation/animatedtiles/animatedtiles.qrc      |    1 +
+ examples/widgets/animation/animatedtiles/main.cpp  |   13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/examples/widgets/animation/animatedtiles/animatedtiles.qrc b/examples/widgets/animation/animatedtiles/animatedtiles.qrc
+index c43a979..3675345 100644
+--- a/examples/widgets/animation/animatedtiles/animatedtiles.qrc
++++ b/examples/widgets/animation/animatedtiles/animatedtiles.qrc
+@@ -6,6 +6,7 @@
+     <file>images/figure8.png</file>
+     <file>images/kinetic.png</file>
+     <file>images/random.png</file>
++    <file>images/quit.png</file>
+     <file>images/tile.png</file>
+ </qresource>
+ </RCC>
+diff --git a/examples/widgets/animation/animatedtiles/main.cpp b/examples/widgets/animation/animatedtiles/main.cpp
+index 09e9790..d8491d7 100644
+--- a/examples/widgets/animation/animatedtiles/main.cpp
++++ b/examples/widgets/animation/animatedtiles/main.cpp
+@@ -97,6 +97,12 @@ public:
+         painter->drawPixmap(-_pix.width()/2, -_pix.height()/2, _pix);
+     }
+ 
++public slots:
++    void quitClicked()
++    {
++        qApp->quit();
++    }
++
+ signals:
+     void pressed();
+ 
+@@ -121,6 +127,7 @@ class View : public QGraphicsView
+ public:
+     View(QGraphicsScene *scene) : QGraphicsView(scene) { }
+ 
++
+ protected:
+     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE
+     {
+@@ -156,16 +163,18 @@ int main(int argc, char **argv)
+     Button *randomButton = new Button(QPixmap(":/images/random.png"), buttonParent);
+     Button *tiledButton = new Button(QPixmap(":/images/tile.png"), buttonParent);
+     Button *centeredButton = new Button(QPixmap(":/images/centered.png"), buttonParent);
++    Button *quitButton = new Button(QPixmap(":/images/quit.png"), buttonParent);
+ 
+     ellipseButton->setPos(-100, -100);
+     figure8Button->setPos(100, -100);
+     randomButton->setPos(0, 0);
+     tiledButton->setPos(-100, 100);
+     centeredButton->setPos(100, 100);
++    quitButton->setPos(100, -600);
+ 
+     scene.addItem(buttonParent);
+     buttonParent->setTransform(QTransform::fromScale(0.75, 0.75), true);
+-    buttonParent->setPos(200, 200);
++    buttonParent->setPos(400, 200);
+     buttonParent->setZValue(65);
+ 
+     // States
+@@ -239,6 +248,8 @@ int main(int argc, char **argv)
+     trans = rootState->addTransition(centeredButton, SIGNAL(pressed()), centeredState);
+     trans->addAnimation(group);
+ 
++    QObject::connect(quitButton, SIGNAL(pressed()), quitButton, SLOT(quitClicked()));
++
+     QTimer timer;
+     timer.start(125);
+     timer.setSingleShot(true);
+-- 
+1.7.9.5
+

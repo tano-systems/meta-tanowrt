@@ -1,0 +1,43 @@
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 17 Dec 2018 01:24:49 +0300
+Subject: [PATCH] musb_core: Add sysfs entry for musb->port1_status value
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/usb/musb/musb_core.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/drivers/usb/musb/musb_core.c b/drivers/usb/musb/musb_core.c
+index ff17e94..69dc11b 100644
+--- a/drivers/usb/musb/musb_core.c
++++ b/drivers/usb/musb/musb_core.c
+@@ -1828,10 +1828,26 @@ musb_srp_store(struct device *dev, struct device_attribute *attr,
+ }
+ static DEVICE_ATTR_WO(srp);
+ 
++static ssize_t
++musb_port1_status_show(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	struct musb  *musb = dev_to_musb(dev);
++	unsigned int  status;
++	unsigned long flags;
++
++	spin_lock_irqsave(&musb->lock, flags);
++	status = musb->port1_status;
++	spin_unlock_irqrestore(&musb->lock, flags);
++
++	return sprintf(buf, "0x%x\n", status);
++}
++static DEVICE_ATTR(port1_status, 0444, musb_port1_status_show, NULL);
++
+ static struct attribute *musb_attributes[] = {
+ 	&dev_attr_mode.attr,
+ 	&dev_attr_vbus.attr,
+ 	&dev_attr_srp.attr,
++	&dev_attr_port1_status.attr,
+ 	NULL
+ };
+ 
+-- 
+2.7.4
+

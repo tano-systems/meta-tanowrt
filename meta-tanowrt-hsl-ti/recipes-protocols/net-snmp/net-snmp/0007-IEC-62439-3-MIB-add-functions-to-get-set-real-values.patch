@@ -1,0 +1,469 @@
+From bcd2991e3244f564f6d9fff6e986bf2800aa74f4 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Wed, 24 May 2017 11:28:59 -0400
+Subject: [PATCH 07/12] IEC-62439-3-MIB: add functions to get/set real values
+
+This patch provides real functions to get/set values at Linux kernel
+for the MIBs. Also set cache timeout to zero as we want to see real
+values, not cached ones. Fixed a bug causing SET commands failing due to
+incorrect option checking.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceConfigTable_data_access.c          |  5 +-
+ .../lreInterfaceConfigTable_data_get.c             | 27 +++++--
+ .../lreInterfaceConfigTable_data_get.h             |  1 +
+ .../lreInterfaceConfigTable_data_set.c             | 62 +++++++++++++--
+ .../lreInterfaceConfigTable_data_set.h             |  1 +
+ .../lreInterfaceConfigTable_interface.c            |  4 +-
+ .../IEC-62439-3-MIB/lre_config_interface.h         | 22 ++++++
+ .../IEC-62439-3-MIB/lre_config_interface_access.c  | 92 ++++++++++++++++++++++
+ agent/mibgroup/iec-62439-3-mib.h                   |  1 +
+ 9 files changed, 197 insertions(+), 18 deletions(-)
+ create mode 100644 agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+ create mode 100644 agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+index 6c67e93..28fff22 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c
+@@ -257,7 +257,7 @@ int lre_config_get_slave_states(const char *file_name,
+            if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
+                if (lre_prefix_string_ifindex(line, &if_index)) {
+                    ret = lre_config_get_if_name_state(line, if_name,
+-                                                       &admin_state, 
++                                                       &admin_state,
+ 						       &link_state);
+ 	           if (!ret) {
+ 		       if (!strcmp(if_name, eth1_name)) {
+@@ -533,7 +533,8 @@ lreInterfaceConfigTable_container_init(netsnmp_container **container_ptr_ptr,
+      * by the MFD helper. To completely disable caching, set
+      * cache->enabled to 0.
+      */
+-    cache->timeout = LREINTERFACECONFIGTABLE_CACHE_TIMEOUT; /* seconds */
++    /* cache->timeout = LREINTERFACECONFIGTABLE_CACHE_TIMEOUT; */ /* seconds */
++    cache->timeout = 0;
+ } /* lreInterfaceConfigTable_container_init */
+ 
+ /**
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
+index 49cffd1..966d7d0 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.c
+@@ -12,6 +12,7 @@
+ 
+ /* include our parent header */
+ #include "lreInterfaceConfigTable.h"
++#include "../lre_config_interface.h"
+ 
+ 
+ /** @defgroup data_get data_get: Routines to get data
+@@ -719,6 +720,7 @@ lreLinkStatusB_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lre
+ int
+ lreDuplicateDiscard_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lreDuplicateDiscard_val_ptr )
+ {
++   int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreDuplicateDiscard_val_ptr );
+ 
+@@ -731,6 +733,9 @@ lreDuplicateDiscard_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long
+  * TODO:231:o: |-> Extract the current value of the lreDuplicateDiscard data.
+  * copy (* lreDuplicateDiscard_val_ptr ) from rowreq_ctx->data
+  */
++    rowreq_ctx->data.lreDuplicateDiscard =
++	    snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD, hsr);
++
+     (* lreDuplicateDiscard_val_ptr ) = rowreq_ctx->data.lreDuplicateDiscard;
+ 
+     return MFD_SUCCESS;
+@@ -775,21 +780,24 @@ lreDuplicateDiscard_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long
+ int
+ lreTransparentReception_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lreTransparentReception_val_ptr )
+ {
++   int rc = MFD_SUCCESS;
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreTransparentReception_val_ptr );
+ 
+-
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreTransparentReception_get","called\n"));
+ 
+     netsnmp_assert(NULL != rowreq_ctx);
+ 
++   if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_PRPNODE) {
++	   rowreq_ctx->data.lreTransparentReception =
++		   snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION, 0);
++	   (* lreTransparentReception_val_ptr ) = rowreq_ctx->data.lreTransparentReception;
++   }
+ /*
+  * TODO:231:o: |-> Extract the current value of the lreTransparentReception data.
+  * copy (* lreTransparentReception_val_ptr ) from rowreq_ctx->data
+  */
+-    (* lreTransparentReception_val_ptr ) = rowreq_ctx->data.lreTransparentReception;
+-
+-    return MFD_SUCCESS;
++   return rc;
+ } /* lreTransparentReception_get */
+ 
+ /*---------------------------------------------------------------------
+@@ -857,7 +865,11 @@ lreHsrLREMode_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long * lreH
+  * TODO:231:o: |-> Extract the current value of the lreHsrLREMode data.
+  * copy (* lreHsrLREMode_val_ptr ) from rowreq_ctx->data
+  */
+-    (* lreHsrLREMode_val_ptr ) = rowreq_ctx->data.lreHsrLREMode;
++    if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE) {
++		rowreq_ctx->data.lreHsrLREMode =
++			snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_HSR_MODE, 1);
++	(* lreHsrLREMode_val_ptr ) = rowreq_ctx->data.lreHsrLREMode;
++    }
+ 
+     return MFD_SUCCESS;
+ } /* lreHsrLREMode_get */
+@@ -1082,7 +1094,6 @@ lreNodesTableClear_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, u_long *
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreNodesTableClear_val_ptr );
+ 
+-
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreNodesTableClear_get","called\n"));
+ 
+     netsnmp_assert(NULL != rowreq_ctx);
+@@ -1187,6 +1198,7 @@ the longest time an entry may reside in the duplicates list,
+ int
+ lreDupListResideMaxTime_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, long * lreDupListResideMaxTime_val_ptr )
+ {
++   int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
+    /** we should have a non-NULL pointer */
+    netsnmp_assert( NULL != lreDupListResideMaxTime_val_ptr );
+ 
+@@ -1199,6 +1211,9 @@ lreDupListResideMaxTime_get( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, lon
+  * TODO:231:o: |-> Extract the current value of the lreDupListResideMaxTime data.
+  * copy (* lreDupListResideMaxTime_val_ptr ) from rowreq_ctx->data
+  */
++
++    rowreq_ctx->data.lreDupListResideMaxTime =
++	    snmp_access_lre_interface_param_get(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr);
+     (* lreDupListResideMaxTime_val_ptr ) = rowreq_ctx->data.lreDupListResideMaxTime;
+ 
+     return MFD_SUCCESS;
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.h b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.h
+index 3175fc9..028638f 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_get.h
+@@ -19,6 +19,7 @@
+ extern "C" {
+ #endif
+ 
++config_require(IEC-62439-3-MIB/lre_config_interface_access)
+ /* *********************************************************************
+  * GET function declarations
+  */
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
+index 38db196..be1efaf 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.c
+@@ -13,7 +13,7 @@
+ 
+ /* include our parent header */
+ #include "lreInterfaceConfigTable.h"
+-
++#include "../lre_config_interface.h"
+ 
+ /** @defgroup data_set data_set: Routines to set data
+  *
+@@ -82,7 +82,7 @@
+      *       |       |               | S                                 |
+      *       |       |        +==============+         +==============+  |
+      *       |       |        ||   commit   ||-------->||     undo   ||  |
+-     *       |       |        ||            || E       ||    commit  ||  |
++     *       |       |        ||            || E       ||    cemmit  ||  |
+      *       |       |        +==============+         +==============+  |
+      *       |       |               | S                     U |<--------+
+      *       |       |        +--------------+         +==============+
+@@ -223,6 +223,50 @@ lreInterfaceConfigTable_undo_cleanup( lreInterfaceConfigTable_rowreq_ctx *rowreq
+     return rc;
+ } /* lreInterfaceConfigTable_undo_cleanup */
+ 
++static int lre_interface_config_set_duplicate_discard(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
++{
++	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++
++	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD, hsr,
++						 rowreq_ctx->data.lreDuplicateDiscard);
++	return MFD_SUCCESS;
++}
++
++static int lre_interface_config_set_transparent_reception(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
++{
++	if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_PRPNODE)
++		snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION, 0,
++							 rowreq_ctx->data.lreTransparentReception);
++	return MFD_SUCCESS;
++}
++
++static int lre_interface_config_set_hsr_lre_mode(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
++{
++	if (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE)
++		snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_HSR_MODE, 1,
++							 rowreq_ctx->data.lreHsrLREMode);
++	return MFD_SUCCESS;
++}
++
++static int lre_interface_config_set_node_table_clear(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
++{
++	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++
++	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE_CLEAR, hsr,
++						 rowreq_ctx->data.lreNodesTableClear);
++
++	return MFD_SUCCESS;
++}
++
++static int lre_interface_config_set_duplicate_reside_max_time(lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
++{
++	int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
++
++	snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr,
++							 rowreq_ctx->data.lreDupListResideMaxTime);
++	return MFD_SUCCESS;
++}
++
+ /**
+  * commit new values.
+  *
+@@ -372,7 +416,7 @@ lreInterfaceConfigTable_commit( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+        /*
+         * TODO:482:o: |-> commit column lreDuplicateDiscard.
+         */
+-       rc = -1;
++       rc = lre_interface_config_set_duplicate_discard(rowreq_ctx);
+        if(-1 == rc) {
+            snmp_log(LOG_ERR,"lreInterfaceConfigTable column lreDuplicateDiscard commit failed\n");
+        }
+@@ -389,7 +433,7 @@ lreInterfaceConfigTable_commit( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+        /*
+         * TODO:482:o: |-> commit column lreTransparentReception.
+         */
+-       rc = -1;
++       rc = lre_interface_config_set_transparent_reception(rowreq_ctx);
+        if(-1 == rc) {
+            snmp_log(LOG_ERR,"lreInterfaceConfigTable column lreTransparentReception commit failed\n");
+        }
+@@ -406,7 +450,7 @@ lreInterfaceConfigTable_commit( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+        /*
+         * TODO:482:o: |-> commit column lreHsrLREMode.
+         */
+-       rc = -1;
++       rc = lre_interface_config_set_hsr_lre_mode(rowreq_ctx);
+        if(-1 == rc) {
+            snmp_log(LOG_ERR,"lreInterfaceConfigTable column lreHsrLREMode commit failed\n");
+        }
+@@ -474,7 +518,7 @@ lreInterfaceConfigTable_commit( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+        /*
+         * TODO:482:o: |-> commit column lreNodesTableClear.
+         */
+-       rc = -1;
++       rc = lre_interface_config_set_node_table_clear(rowreq_ctx);
+        if(-1 == rc) {
+            snmp_log(LOG_ERR,"lreInterfaceConfigTable column lreNodesTableClear commit failed\n");
+        }
+@@ -508,7 +552,7 @@ lreInterfaceConfigTable_commit( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx)
+        /*
+         * TODO:482:o: |-> commit column lreDupListResideMaxTime.
+         */
+-       rc = -1;
++       rc = lre_interface_config_set_duplicate_reside_max_time(rowreq_ctx);
+        if(-1 == rc) {
+            snmp_log(LOG_ERR,"lreInterfaceConfigTable column lreDupListResideMaxTime commit failed\n");
+        }
+@@ -3065,7 +3109,6 @@ lreDupListResideMaxTime_check_value( lreInterfaceConfigTable_rowreq_ctx *rowreq_
+     /*
+      * TODO:441:o: |-> Check for valid lreDupListResideMaxTime value.
+      */
+-
+     return MFD_SUCCESS; /* lreDupListResideMaxTime value not illegal */
+ } /* lreDupListResideMaxTime_check_value */
+ 
+@@ -3121,6 +3164,7 @@ lreDupListResideMaxTime_undo_setup( lreInterfaceConfigTable_rowreq_ctx *rowreq_c
+ int
+ lreDupListResideMaxTime_set( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, long lreDupListResideMaxTime_val )
+ {
++    int hsr = (rowreq_ctx->data.lreSwitchingEndNode == LRESWITCHINGENDNODE_HSRNODE);
+ 
+     DEBUGMSGTL(("verbose:lreInterfaceConfigTable:lreDupListResideMaxTime_set","called\n"));
+ 
+@@ -3131,6 +3175,8 @@ lreDupListResideMaxTime_set( lreInterfaceConfigTable_rowreq_ctx *rowreq_ctx, lon
+      * TODO:461:M: |-> Set lreDupListResideMaxTime value.
+      * set lreDupListResideMaxTime value in rowreq_ctx->data
+      */
++    snmp_access_lre_interface_param_set(NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME, hsr,
++					lreDupListResideMaxTime_val);
+     rowreq_ctx->data.lreDupListResideMaxTime = lreDupListResideMaxTime_val;
+ 
+     return MFD_SUCCESS;
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.h b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.h
+index fe2324e..1fe1de7 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_data_set.h
+@@ -11,6 +11,7 @@
+ extern "C" {
+ #endif
+ 
++config_require(IEC-62439-3-MIB/lre_config_interface_access)
+ /* *********************************************************************
+  * SET function declarations
+  */
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_interface.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_interface.c
+index bf42819..db12f76 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_interface.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable_interface.c
+@@ -243,9 +243,9 @@ _lreInterfaceConfigTable_initialize_interface(lreInterfaceConfigTable_registrati
+                                                   lreInterfaceConfigTable_oid_size,
+                                                   HANDLER_CAN_BABY_STEP |
+ #if !(defined(NETSNMP_NO_WRITE_SUPPORT) || defined(NETSNMP_DISABLE_SET_SUPPORT))
+-                                                  HANDLER_CAN_RONLY
+-#else
+                                                   HANDLER_CAN_RWRITE
++#else
++                                                  HANDLER_CAN_RONLY
+ #endif /* NETSNMP_NO_WRITE_SUPPORT || NETSNMP_DISABLE_SET_SUPPORT */
+                                                   );
+     if(NULL == reginfo) {
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+new file mode 100644
+index 0000000..4a3d1e4
+--- /dev/null
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+@@ -0,0 +1,22 @@
++/*
++ * interface data access header
++ *
++ * $Id$
++ */
++#ifndef NETSNMP_ACCESS_INTERFACE_H
++#define NETSNMP_ACCESS_INTERFACE_H
++
++enum netsnmp_access_lre_config_file_index {
++	NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME,
++	NETSNMP_LRE_CONFIG_IFACE_DUPLICATE_DISCARD,
++	NETSNMP_LRE_CONFIG_IFACE_HSR_MODE,
++	NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE_CLEAR,
++	NETSNMP_LRE_CONFIG_IFACE_TRANSPARENT_RECEPTION,
++	NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE,
++	NETSNMP_LRE_CONFIG_IFACE_LAST,
++};
++
++int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr);
++int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_index index, int hsr, int val);
++
++#endif
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+new file mode 100644
+index 0000000..1144fbf
+--- /dev/null
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -0,0 +1,92 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <ctype.h>
++#include <errno.h>
++#include "lre_config_interface.h"
++
++#define DEBUGFS_PREFIX_HSR	"/sys/kernel/debug/prueth-hsr/"
++#define DEBUGFS_PREFIX_PRP	"/sys/kernel/debug/prueth-prp/"
++
++static char debugfs_file_names[][64] = { "dup_list_reside_max_time",
++	"duplicate_discard", "hsr_mode", "node_table_clear",
++	"transparent_reception", "node_table"};
++
++static void get_file_name(char *str, enum netsnmp_access_lre_config_file_index index, int hsr)
++{
++	if (hsr)
++		strcpy(str, DEBUGFS_PREFIX_HSR);
++	else
++		strcpy(str, DEBUGFS_PREFIX_PRP);
++	strncat(str, debugfs_file_names[index],
++		strlen(debugfs_file_names[index]));
++}
++
++int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr)
++{
++	FILE *fp;
++	char line[1024];
++	char filename[128];
++	int val = -1, len;
++	unsigned long long temp;
++
++	if (index >= NETSNMP_LRE_CONFIG_IFACE_LAST)
++		return -EINVAL;
++
++	get_file_name(filename, index, hsr);
++
++	fp = fopen(filename, "r");
++	if (!fp)
++		return -EINVAL;
++
++	if (fgets(line, 1024, fp)) {
++		line[1023] = '\0';
++		if (line[0] && (line[0] != '\n'))
++			sscanf(line, "%d", &val);
++	}
++	fclose(fp);
++
++	if (index == NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME) {
++		/* value is in msec */
++		temp = (val * 1000000) / 15259;
++		val = (int)temp;
++	}
++
++	return val;
++}
++
++int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_index index,
++				        int hsr, int val)
++{
++	int ret = 0;
++	FILE *fp;
++	char line[128];
++	char filename[128];
++	unsigned long long temp;
++
++
++	if (index >= NETSNMP_LRE_CONFIG_IFACE_LAST)
++		return -EINVAL;
++
++	if (index == NETSNMP_LRE_CONFIG_IFACE_DUP_LIST_RESIDE_MAX_TIME) {
++		/* value is in msec */
++		temp = val * 15259 / 1000;
++		/* in msec */
++		val = (int)temp / 1000;
++		if ((temp % 1000) >= 500)
++			val++;
++	}
++
++	get_file_name(filename, index, hsr);
++
++	fp = fopen(filename, "w");
++	if (!fp)
++		return -EINVAL;
++
++	snprintf(line, sizeof(line)-1, "%d", val);
++	line[sizeof(line)-1] = '\0';
++	ret = fwrite(line, sizeof(char), strlen(line), fp);
++	fclose(fp);
++
++	return 0;
++}
+diff --git a/agent/mibgroup/iec-62439-3-mib.h b/agent/mibgroup/iec-62439-3-mib.h
+index 9afe698..c47e472 100644
+--- a/agent/mibgroup/iec-62439-3-mib.h
++++ b/agent/mibgroup/iec-62439-3-mib.h
+@@ -3,5 +3,6 @@
+  */
+ 
+ config_require(IEC-62439-3-MIB/lreManufacturerName)
++config_require(IEC-62439-3-MIB/lre_config_interface_access)
+ config_require(IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable)
+ config_add_mib(IEC-62439-3-MIB)
+-- 
+1.9.1
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+# Copyright (C) 2020 Tano Systems LLC
+
+display_lcd_message() {
+	if [ -e /dev/tty1 ]; then
+		if [ -e /sys/class/graphics/fbcon/cursor_blink ]; then
+			echo 0 > /sys/class/graphics/fbcon/cursor_blink
+		fi
+
+		# 12x2 = 123456789012123456789012
+		echo -n " TanoWrt by Tano Systems" > /dev/tty1
+	fi
+}
+
+boot_hook_add preinit_main display_lcd_message

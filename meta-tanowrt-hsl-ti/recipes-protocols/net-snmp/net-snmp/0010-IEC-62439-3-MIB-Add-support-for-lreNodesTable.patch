@@ -1,0 +1,1234 @@
+From 89955313ba190474c6a7ff2e0c4dd37b973c81c7 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Thu, 25 May 2017 11:38:39 -0400
+Subject: [PATCH 10/12] IEC-62439-3-MIB: Add support for lreNodesTable
+
+This add support for lreNodesTable. This is a temporary change
+to allow doing protocol testing.
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../lreInterfaceStatsTable_data_access.c           | 437 ++++++++-------------
+ .../lreNodesTable/lreNodesTable_data_access.c      | 268 ++++++-------
+ .../IEC-62439-3-MIB/lre_config_interface.h         |  54 ++-
+ .../IEC-62439-3-MIB/lre_config_interface_access.c  | 263 ++++++++++++-
+ agent/mibgroup/iec-62439-3-mib.h                   |   2 +
+ 5 files changed, 593 insertions(+), 431 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+index 71fa8d5..c76b3d1 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable_data_access.c
+@@ -12,9 +12,8 @@
+ 
+ /* include our parent header */
+ #include "lreInterfaceStatsTable.h"
+-
+-
+ #include "lreInterfaceStatsTable_data_access.h"
++#include "../lre_config_interface.h"
+ 
+ /** @ingroup interface
+  * @addtogroup data_access data_access: Routines to access data
+@@ -137,7 +136,7 @@ lreInterfaceStatsTable_container_init(netsnmp_container **container_ptr_ptr,
+      * by the MFD helper. To completely disable caching, set
+      * cache->enabled to 0.
+      */
+-    cache->timeout = LREINTERFACESTATSTABLE_CACHE_TIMEOUT; /* seconds */
++    cache->timeout = 0; /* seconds */
+ } /* lreInterfaceStatsTable_container_init */
+ 
+ /**
+@@ -206,6 +205,9 @@ lreInterfaceStatsTable_container_load(netsnmp_container *container)
+ {
+     lreInterfaceStatsTable_rowreq_ctx *rowreq_ctx;
+     size_t                 count = 0;
++    struct lre_nodes_s nodes, *temp, *prev;
++    u_int stats_counters[LRE_CNT_LAST];
++    int ret;
+ 
+     /*
+      * temporary storage for index values
+@@ -213,294 +215,201 @@ lreInterfaceStatsTable_container_load(netsnmp_container *container)
+         /*
+          * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+          */
+-   u_long   lreInterfaceStatsIndex;
++    u_long   lreInterfaceStatsIndex = 0;
+ 
+     
+-    /*
+-     * this example code is based on a data source that is a
+-     * text file to be read and parsed.
+-     */
+-    FILE *filep;
+-    char line[MAX_LINE_SIZE];
+-
+-    DEBUGMSGTL(("verbose:lreInterfaceStatsTable:lreInterfaceStatsTable_container_load","called\n"));
+-
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    /*
+-     * open our data file.
+-     */
+-    filep = fopen("/etc/dummy.conf", "r");
+-    if(NULL ==  filep) {
++    ret = lre_config_get_num_interfaces(&nodes);
++    if(ret <= 0)
+         return MFD_RESOURCE_UNAVAILABLE;
+-    }
+ 
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
+-    /*
+-     * TODO:351:M: |-> Load/update data in the lreInterfaceStatsTable container.
+-     * loop over your lreInterfaceStatsTable data, allocate a rowreq context,
+-     * set the index(es) [and data, optionally] and insert into
+-     * the container.
+-     */
+-    while( 1 ) {
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    /*
+-     * get a line (skip blank lines)
+-     */
+-    do {
+-        if (!fgets(line, sizeof(line), filep)) {
+-            /* we're done */
+-            fclose(filep);
+-            filep = NULL;
+-        }
+-    } while (filep && (line[0] == '\n'));
++    temp = &nodes;
++    prev = NULL;
+ 
+-    /*
+-     * check for end of data
+-     */
+-    if(NULL == filep)
+-        break;
++    do  {
+ 
+-    /*
+-     * parse line into variables
+-     */
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++        DEBUGMSGTL(("verbose:lreInterfaceStatsTable:lreInterfaceStatsTable_container_load","called\n"));
+ 
+-        /*
+-         * TODO:352:M: |   |-> set indexes in new lreInterfaceStatsTable rowreq context.
+-         * data context will be set from the param (unless NULL,
+-         *      in which case a new data context will be allocated)
+-         */
+         rowreq_ctx = lreInterfaceStatsTable_allocate_rowreq_ctx(NULL);
+         if (NULL == rowreq_ctx) {
+             snmp_log(LOG_ERR, "memory allocation failed\n");
+             return MFD_RESOURCE_UNAVAILABLE;
+         }
+-        if(MFD_SUCCESS != lreInterfaceStatsTable_indexes_set(rowreq_ctx
+-                               , lreInterfaceStatsIndex
+-               )) {
++
++        if(MFD_SUCCESS !=
++	    lreInterfaceStatsTable_indexes_set(rowreq_ctx, lreInterfaceStatsIndex)) {
+             snmp_log(LOG_ERR,"error setting index while loading "
+                      "lreInterfaceStatsTable data.\n");
+             lreInterfaceStatsTable_release_rowreq_ctx(rowreq_ctx);
+             continue;
+         }
+ 
++        ret = lre_interface_stats_get(temp->data.slave1_if_name, stats_counters);
++        if (ret < 0) {
++            snmp_log(LOG_ERR,"error accessing date for "
++                     "lreInterfaceStatsTable\n");
++            lreInterfaceStatsTable_release_rowreq_ctx(rowreq_ctx);
++            return MFD_RESOURCE_UNAVAILABLE;
++        }
++
++        rowreq_ctx->data.lreCntTxA = stats_counters[LRE_CNT_TX_A];
+         /*
+-         * TODO:352:r: |   |-> populate lreInterfaceStatsTable data context.
+-         * Populate data context here. (optionally, delay until row prep)
++         * setup/save data for lreCntTxB
++         * lreCntTxB(3)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+          */
+-    /*
+-     * TRANSIENT or semi-TRANSIENT data:
+-     * copy data or save any info needed to do it in row_prep.
+-     */
+-    /*
+-     * setup/save data for lreCntTxA
+-     * lreCntTxA(2)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntTxA = lreCntTxA;
+-    
+-    /*
+-     * setup/save data for lreCntTxB
+-     * lreCntTxB(3)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntTxB = lreCntTxB;
+-    
+-    /*
+-     * setup/save data for lreCntTxC
+-     * lreCntTxC(4)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntTxC = lreCntTxC;
+-    
+-    /*
+-     * setup/save data for lreCntErrWrongLanA
+-     * lreCntErrWrongLanA(5)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrWrongLanA = lreCntErrWrongLanA;
+-    
+-    /*
+-     * setup/save data for lreCntErrWrongLanB
+-     * lreCntErrWrongLanB(6)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrWrongLanB = lreCntErrWrongLanB;
+-    
+-    /*
+-     * setup/save data for lreCntErrWrongLanC
+-     * lreCntErrWrongLanC(7)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrWrongLanC = lreCntErrWrongLanC;
+-    
+-    /*
+-     * setup/save data for lreCntRxA
+-     * lreCntRxA(8)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntRxA = lreCntRxA;
+-    
+-    /*
+-     * setup/save data for lreCntRxB
+-     * lreCntRxB(9)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntRxB = lreCntRxB;
+-    
+-    /*
+-     * setup/save data for lreCntRxC
+-     * lreCntRxC(10)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntRxC = lreCntRxC;
+-    
+-    /*
+-     * setup/save data for lreCntErrorsA
+-     * lreCntErrorsA(11)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrorsA = lreCntErrorsA;
+-    
+-    /*
+-     * setup/save data for lreCntErrorsB
+-     * lreCntErrorsB(12)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrorsB = lreCntErrorsB;
+-    
+-    /*
+-     * setup/save data for lreCntErrorsC
+-     * lreCntErrorsC(13)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntErrorsC = lreCntErrorsC;
+-    
+-    /*
+-     * setup/save data for lreCntNodes
+-     * lreCntNodes(14)/INTEGER32/ASN_INTEGER/long(long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntNodes = lreCntNodes;
+-    
+-    /*
+-     * setup/save data for lreCntProxyNodes
+-     * lreCntProxyNodes(15)/INTEGER32/ASN_INTEGER/long(long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntProxyNodes = lreCntProxyNodes;
+-    
+-    /*
+-     * setup/save data for lreCntUniqueA
+-     * lreCntUniqueA(16)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntUniqueA = lreCntUniqueA;
+-    
+-    /*
+-     * setup/save data for lreCntUniqueB
+-     * lreCntUniqueB(17)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntUniqueB = lreCntUniqueB;
+-    
+-    /*
+-     * setup/save data for lreCntUniqueC
+-     * lreCntUniqueC(18)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntUniqueC = lreCntUniqueC;
+-    
+-    /*
+-     * setup/save data for lreCntDuplicateA
+-     * lreCntDuplicateA(19)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntDuplicateA = lreCntDuplicateA;
+-    
+-    /*
+-     * setup/save data for lreCntDuplicateB
+-     * lreCntDuplicateB(20)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntDuplicateB = lreCntDuplicateB;
+-    
+-    /*
+-     * setup/save data for lreCntDuplicateC
+-     * lreCntDuplicateC(21)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntDuplicateC = lreCntDuplicateC;
+-    
+-    /*
+-     * setup/save data for lreCntMultiA
+-     * lreCntMultiA(22)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntMultiA = lreCntMultiA;
+-    
+-    /*
+-     * setup/save data for lreCntMultiB
+-     * lreCntMultiB(23)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntMultiB = lreCntMultiB;
+-    
+-    /*
+-     * setup/save data for lreCntMultiC
+-     * lreCntMultiC(24)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntMultiC = lreCntMultiC;
+-    
+-    /*
+-     * setup/save data for lreCntOwnRxA
+-     * lreCntOwnRxA(25)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntOwnRxA = lreCntOwnRxA;
+-    
+-    /*
+-     * setup/save data for lreCntOwnRxB
+-     * lreCntOwnRxB(26)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreCntOwnRxB = lreCntOwnRxB;
+-    
+-        
++        /** no mapping */
++        rowreq_ctx->data.lreCntTxB = stats_counters[LRE_CNT_TX_B];
++        /*
++         * setup/save data for lreCntTxC
++         * lreCntTxC(4)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntTxC = stats_counters[LRE_CNT_TX_C];
++        /*
++         * setup/save data for lreCntErrWrongLanA
++         * lreCntErrWrongLanA(5)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrWrongLanA = stats_counters[LRE_CNT_ERR_WRONG_LAN_A];
++        /*
++         * setup/save data for lreCntErrWrongLanB
++         * lreCntErrWrongLanB(6)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrWrongLanB = stats_counters[LRE_CNT_ERR_WRONG_LAN_B];
++        /*
++         * setup/save data for lreCntErrWrongLanC
++         * lreCntErrWrongLanC(7)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrWrongLanC = stats_counters[LRE_CNT_ERR_WRONG_LAN_C];
++        /*
++         * setup/save data for lreCntRxA
++         * lreCntRxA(8)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntRxA = stats_counters[LRE_CNT_RX_A];
++        /*
++         * setup/save data for lreCntRxB
++         * lreCntRxB(9)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntRxB = stats_counters[LRE_CNT_RX_B];
++        /*
++         * setup/save data for lreCntRxC
++         * lreCntRxC(10)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntRxC = stats_counters[LRE_CNT_RX_C];
+         /*
+-         * insert into table container
++         * setup/save data for lreCntErrorsA
++         * lreCntErrorsA(11)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
+          */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrorsA = stats_counters[LRE_CNT_ERRORS_A];
++        /*
++         * setup/save data for lreCntErrorsB
++         * lreCntErrorsB(12)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrorsB = stats_counters[LRE_CNT_ERRORS_B];
++        /*
++         * setup/save data for lreCntErrorsC
++         * lreCntErrorsC(13)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntErrorsC = stats_counters[LRE_CNT_ERRORS_C];
++        /*
++         * setup/save data for lreCntNodes
++         * lreCntNodes(14)/INTEGER32/ASN_INTEGER/long(long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntNodes = stats_counters[LRE_CNT_NODES];
++        /*
++         * setup/save data for lreCntProxyNodes
++         * lreCntProxyNodes(15)/INTEGER32/ASN_INTEGER/long(long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntProxyNodes = stats_counters[LRE_CNT_PROXY_NODES];
++        /*
++         * setup/save data for lreCntUniqueA
++         * lreCntUniqueA(16)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntUniqueA = stats_counters[LRE_CNT_UNIQUE_A];
++        /*
++         * setup/save data for lreCntUniqueB
++         * lreCntUniqueB(17)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntUniqueB = stats_counters[LRE_CNT_UNIQUE_B];
++        /*
++         * setup/save data for lreCntUniqueC
++         * lreCntUniqueC(18)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntUniqueC = stats_counters[LRE_CNT_UNIQUE_C];
++        /*
++         * setup/save data for lreCntDuplicateA
++         * lreCntDuplicateA(19)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntDuplicateA = stats_counters[LRE_CNT_DUPLICATE_A];
++        /*
++         * setup/save data for lreCntDuplicateB
++         * lreCntDuplicateB(20)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntDuplicateB = stats_counters[LRE_CNT_DUPLICATE_B];
++        /*
++         * setup/save data for lreCntDuplicateC
++         * lreCntDuplicateC(21)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntDuplicateC = stats_counters[LRE_CNT_DUPLICATE_C];
++        /*
++         * setup/save data for lreCntMultiA
++         * lreCntMultiA(22)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntMultiA = stats_counters[LRE_CNT_MULTI_A];
++        /*
++         * setup/save data for lreCntMultiB
++         * lreCntMultiB(23)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntMultiB = stats_counters[LRE_CNT_MULTI_B];
++        /*
++         * setup/save data for lreCntMultiC
++         * lreCntMultiC(24)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntMultiC = stats_counters[LRE_CNT_MULTI_C];
++        /*
++         * setup/save data for lreCntOwnRxA
++         * lreCntOwnRxA(25)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntOwnRxA = stats_counters[LRE_CNT_OWN_RX_A];
++        /*
++         * setup/save data for lreCntOwnRxB
++         * lreCntOwnRxB(26)/COUNTER/ASN_COUNTER/u_long(u_long)//l/A/w/e/r/d/h
++         */
++        /** no mapping */
++        rowreq_ctx->data.lreCntOwnRxB = stats_counters[LRE_CNT_OWN_RX_B];
++        /*
++        * insert into table container
++        */
+         CONTAINER_INSERT(container, rowreq_ctx);
+-        ++count;
+-    }
+ 
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    if(NULL != filep)
+-        fclose(filep);
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++        temp = temp->next;
++        if (prev)
++            free(prev);
++        prev = temp;
++        ++count;
++    } while (temp);
+ 
+     DEBUGMSGT(("verbose:lreInterfaceStatsTable:lreInterfaceStatsTable_container_load",
+                "inserted %d records\n", count));
+-
+     return MFD_SUCCESS;
+ } /* lreInterfaceStatsTable_container_load */
+ 
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+index 03e9163..7cce160 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lreNodesTable/lreNodesTable_data_access.c
+@@ -15,6 +15,7 @@
+ 
+ 
+ #include "lreNodesTable_data_access.h"
++#include "../lre_config_interface.h"
+ 
+ /** @ingroup interface
+  * @addtogroup data_access data_access: Routines to access data
+@@ -137,7 +138,7 @@ lreNodesTable_container_init(netsnmp_container **container_ptr_ptr,
+      * by the MFD helper. To completely disable caching, set
+      * cache->enabled to 0.
+      */
+-    cache->timeout = LRENODESTABLE_CACHE_TIMEOUT; /* seconds */
++    cache->timeout = 0; /* seconds */
+ } /* lreNodesTable_container_init */
+ 
+ /**
+@@ -168,6 +169,28 @@ lreNodesTable_container_shutdown(netsnmp_container *container_ptr)
+ 
+ } /* lreNodesTable_container_shutdown */
+ 
++static void lre_node_cleanup(struct lre_nodes_s *nodes)
++{
++    struct lre_nodes_s *current = nodes, *temp;
++
++    while (current) {
++	temp = current->next;
++	free(current);
++	current = temp;
++    }
++}
++
++static void lre_r_node_cleanup(struct lre_remote_nodes_s *nodes)
++{
++    struct lre_remote_nodes_s *current = nodes, *temp;
++
++    while (current) {
++	temp = current->next;
++	free(current);
++	current = temp;
++    }
++}
++
+ /**
+  * load initial data
+  *
+@@ -205,169 +228,114 @@ int
+ lreNodesTable_container_load(netsnmp_container *container)
+ {
+     lreNodesTable_rowreq_ctx *rowreq_ctx;
+-    size_t                 count = 0;
+-
+-    /*
+-     * temporary storage for index values
+-     */
+-        /*
+-         * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+-         */
+-   u_long   lreInterfaceStatsIndex;
+-        /*
+-         * lreNodesIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+-         */
+-   u_long   lreNodesIndex;
++    size_t count = 0;
++    unsigned int  num_nodes = 0;
++    struct lre_remote_nodes_s r_nodes, *r_current;
++    struct lre_nodes_s nodes, *current;
++    int ret, hsr;
+ 
+-    
+     /*
+-     * this example code is based on a data source that is a
+-     * text file to be read and parsed.
++     * lreInterfaceStatsIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+      */
+-    FILE *filep;
+-    char line[MAX_LINE_SIZE];
+-
+-    DEBUGMSGTL(("verbose:lreNodesTable:lreNodesTable_container_load","called\n"));
++    u_long   lreInterfaceStatsIndex = 0;
+ 
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    /*
+-     * open our data file.
+-     */
+-    filep = fopen("/etc/dummy.conf", "r");
+-    if(NULL ==  filep) {
++    ret = lre_config_get_num_interfaces(&nodes);
++    if(ret <= 0)
+         return MFD_RESOURCE_UNAVAILABLE;
+-    }
+-
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
+-    /*
+-     * TODO:351:M: |-> Load/update data in the lreNodesTable container.
+-     * loop over your lreNodesTable data, allocate a rowreq context,
+-     * set the index(es) [and data, optionally] and insert into
+-     * the container.
+-     */
+-    while( 1 ) {
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    /*
+-     * get a line (skip blank lines)
+-     */
+-    do {
+-        if (!fgets(line, sizeof(line), filep)) {
+-            /* we're done */
+-            fclose(filep);
+-            filep = NULL;
+-        }
+-    } while (filep && (line[0] == '\n'));
+ 
+-    /*
+-     * check for end of data
+-     */
+-    if(NULL == filep)
+-        break;
++    current = &nodes;
+ 
+-    /*
+-     * parse line into variables
+-     */
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++    do {
+ 
+-        /*
+-         * TODO:352:M: |   |-> set indexes in new lreNodesTable rowreq context.
+-         * data context will be set from the param (unless NULL,
+-         *      in which case a new data context will be allocated)
+-         */
+-        rowreq_ctx = lreNodesTable_allocate_rowreq_ctx(NULL);
+-        if (NULL == rowreq_ctx) {
+-            snmp_log(LOG_ERR, "memory allocation failed\n");
+-            return MFD_RESOURCE_UNAVAILABLE;
+-        }
+-        if(MFD_SUCCESS != lreNodesTable_indexes_set(rowreq_ctx
+-                               , lreInterfaceStatsIndex
+-                               , lreNodesIndex
+-               )) {
+-            snmp_log(LOG_ERR,"error setting index while loading "
+-                     "lreNodesTable data.\n");
+-            lreNodesTable_release_rowreq_ctx(rowreq_ctx);
+-            continue;
+-        }
++	if (!strcmp(current->data.type, "hsr"))
++            hsr = 1;
++	else
++            hsr = 0;
++
++	ret = snmp_access_get_remote_nodes(&r_nodes, hsr, &num_nodes);
++	if (ret < 0) {
++		if (!lreInterfaceStatsIndex) {
++			if (!num_nodes) {
++				/* TODO clean up inteface nodes */
++				lre_node_cleanup(nodes.next);
++				lre_r_node_cleanup(r_nodes.next);
++			}
++		} else {
++			if (!num_nodes)
++				continue;
++		}
++	}
+ 
+         /*
+-         * TODO:352:r: |   |-> populate lreNodesTable data context.
+-         * Populate data context here. (optionally, delay until row prep)
++         * lreNodesIndex(1)/UNSIGNED32/ASN_UNSIGNED/u_long(u_long)//l/a/w/e/r/d/h
+          */
+-    /*
+-     * TRANSIENT or semi-TRANSIENT data:
+-     * copy data or save any info needed to do it in row_prep.
+-     */
+-    /*
+-     * setup/save data for lreNodesMacAddress
+-     * lreNodesMacAddress(2)/MacAddress/ASN_OCTET_STR/char(char)//L/A/w/e/R/d/H
+-     */
+-    /** no mapping */
+-    /*
+-     * make sure there is enough space for lreNodesMacAddress data
+-     */
+-    if ((NULL == rowreq_ctx->data.lreNodesMacAddress) ||
+-        (rowreq_ctx->data.lreNodesMacAddress_len <
+-         (lreNodesMacAddress_len* sizeof(lreNodesMacAddress[0])))) {
+-        snmp_log(LOG_ERR,"not enough space for value (lreNodesMacAddress)\n");
+-        return MFD_ERROR;
+-    }
+-    rowreq_ctx->data.lreNodesMacAddress_len = lreNodesMacAddress_len* sizeof(lreNodesMacAddress[0]);
+-    memcpy( rowreq_ctx->data.lreNodesMacAddress, lreNodesMacAddress, lreNodesMacAddress_len* sizeof(lreNodesMacAddress[0]) );
+-    
+-    /*
+-     * setup/save data for lreTimeLastSeenA
+-     * lreTimeLastSeenA(3)/TICKS/ASN_TIMETICKS/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreTimeLastSeenA = lreTimeLastSeenA;
+-    
+-    /*
+-     * setup/save data for lreTimeLastSeenB
+-     * lreTimeLastSeenB(4)/TICKS/ASN_TIMETICKS/u_long(u_long)//l/A/w/e/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreTimeLastSeenB = lreTimeLastSeenB;
+-    
+-    /*
+-     * setup/save data for lreRemNodeType
+-     * lreRemNodeType(5)/INTEGER/ASN_INTEGER/long(u_long)//l/A/w/E/r/d/h
+-     */
+-    /** no mapping */
+-    rowreq_ctx->data.lreRemNodeType = lreRemNodeType;
++        u_long   lreNodesIndex = 0;
++	count = 0;
++        r_current = &r_nodes;
++	do {
++		rowreq_ctx = lreNodesTable_allocate_rowreq_ctx(NULL);
++		if (NULL == rowreq_ctx) {
++			snmp_log(LOG_ERR, "memory allocation failed\n");
++			/* TODO clean up inteface nodes */
++			lre_node_cleanup(nodes.next);
++			lre_r_node_cleanup(r_nodes.next);
++			return MFD_RESOURCE_UNAVAILABLE;
++		}
++		if(MFD_SUCCESS != lreNodesTable_indexes_set(rowreq_ctx
++				, lreInterfaceStatsIndex
++				, lreNodesIndex)) {
++			snmp_log(LOG_ERR,"error setting index while loading "
++				 "lreNodesTable data.\n");
++			lre_r_node_cleanup(r_nodes.next);
++			lreNodesTable_release_rowreq_ctx(rowreq_ctx);
++			continue;
++		}
++
++		rowreq_ctx->data.lreNodesMacAddress_len = 6;
++		rowreq_ctx->data.lreNodesMacAddress[0] = (char)r_current->data.mac_address[0];
++		rowreq_ctx->data.lreNodesMacAddress[1] = (char)r_current->data.mac_address[1];
++		rowreq_ctx->data.lreNodesMacAddress[2] = (char)r_current->data.mac_address[2];
++		rowreq_ctx->data.lreNodesMacAddress[3] = (char)r_current->data.mac_address[3];
++		rowreq_ctx->data.lreNodesMacAddress[4] = (char)r_current->data.mac_address[4];
++		rowreq_ctx->data.lreNodesMacAddress[5] = (char)r_current->data.mac_address[5];
++
++		/*
++		 * setup/save data for lreTimeLastSeenA
++		 * lreTimeLastSeenA(3)/TICKS/ASN_TIMETICKS/u_long(u_long)//l/A/w/e/r/d/h
++		 */
++		rowreq_ctx->data.lreTimeLastSeenA = r_current->data.time_last_seen_a;
+     
+-        
+-        /*
+-         * insert into table container
+-         */
+-        CONTAINER_INSERT(container, rowreq_ctx);
+-        ++count;
+-    }
++		/*
++		 * setup/save data for lreTimeLastSeenB
++		 * lreTimeLastSeenB(4)/TICKS/ASN_TIMETICKS/u_long(u_long)//l/A/w/e/r/d/h
++		 */
++		rowreq_ctx->data.lreTimeLastSeenB = r_current->data.time_last_seen_b;
++
++		/*
++		 * setup/save data for lreRemNodeType
++		 * lreRemNodeType(5)/INTEGER/ASN_INTEGER/long(u_long)//l/A/w/E/r/d/h
++		 */
++		rowreq_ctx->data.lreRemNodeType = r_current->data.remote_node_type;
++ 
++		/*
++		 * insert into table container
++		 */
++		CONTAINER_INSERT(container, rowreq_ctx);
++		r_current = r_current->next;
++		++count;
++		lreNodesIndex++;
++	} while (r_current);
++
++	lre_r_node_cleanup(r_nodes.next);
++
++        DEBUGMSGT(("verbose:lreNodesTable:lreNodesTable_container_load",
++               "inserted %d records\n", count));
++	current = current->next;
++	lreInterfaceStatsIndex++;
+ 
+-    /*
+-    ***************************************************
+-    ***             START EXAMPLE CODE              ***
+-    ***---------------------------------------------***/
+-    if(NULL != filep)
+-        fclose(filep);
+-    /*
+-    ***---------------------------------------------***
+-    ***              END  EXAMPLE CODE              ***
+-    ***************************************************/
++    } while (current);
+ 
+-    DEBUGMSGT(("verbose:lreNodesTable:lreNodesTable_container_load",
+-               "inserted %d records\n", count));
++    lre_node_cleanup(nodes.next);
+ 
+     return MFD_SUCCESS;
+ } /* lreNodesTable_container_load */
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+index b9b64a9..d35701e 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+@@ -51,11 +51,63 @@ enum lre_iface_param_index {
+ 	INDEX_LAST
+ };
+ 
++enum lre_iface_stats {
++	LRE_CNT_TX_A,
++	LRE_CNT_TX_B,
++	LRE_CNT_TX_C,
++	LRE_CNT_ERR_WRONG_LAN_A,
++	LRE_CNT_ERR_WRONG_LAN_B,
++	LRE_CNT_ERR_WRONG_LAN_C,
++	LRE_CNT_RX_A,
++	LRE_CNT_RX_B,
++	LRE_CNT_RX_C,
++	LRE_CNT_ERRORS_A,
++	LRE_CNT_ERRORS_B,
++	LRE_CNT_ERRORS_C,
++	LRE_CNT_NODES,
++	LRE_CNT_PROXY_NODES,
++	LRE_CNT_UNIQUE_A,
++	LRE_CNT_UNIQUE_B,
++	LRE_CNT_UNIQUE_C,
++	LRE_CNT_DUPLICATE_A,
++	LRE_CNT_DUPLICATE_B,
++	LRE_CNT_DUPLICATE_C,
++	LRE_CNT_MULTI_A,
++	LRE_CNT_MULTI_B,
++	LRE_CNT_MULTI_C,
++	LRE_CNT_OWN_RX_A,
++	LRE_CNT_OWN_RX_B,
++	LRE_CNT_LAST,
++};
++
++enum lre_node_type {
++	LRE_NODE_DANP,
++	LRE_NODE_REDBOXP,
++	LRE_NODE_VDANP,
++	LRE_NODE_DANH,
++	LRE_NODE_REDBOXH,
++	LRE_NODE_VDANH,
++	LRE_NODE_UNKNOWN,
++};
++
++struct lre_node_table_entry_s {
++	int mac_address[6];
++	unsigned int time_last_seen_a;
++	unsigned int time_last_seen_b;
++	enum lre_node_type remote_node_type;
++};
++
++struct lre_remote_nodes_s {
++	struct lre_node_table_entry_s data;
++	struct lre_remote_nodes_s *next;
++};
++
+ int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr);
+ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_index index, int hsr, int val);
+ int lre_config_get_num_interfaces(struct lre_nodes_s *nodes);
+ int lre_config_get_slave_states(const char *eth1_name, int *eth1_admin_state,
+ 				int *eth1_link_state, const char *eth2_name, int *eth2_admin_state,
+ 				int *eth2_link_state);
+-
++int lre_interface_stats_get(char *if_name, u_int lre_stats[]);
++int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes, int hsr, unsigned int *num_nodes);
+ #endif
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+index b442337..3b24597 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -12,35 +12,40 @@ static char debugfs_file_names[][64] = { "dup_list_reside_max_time",
+ 	"duplicate_discard", "hsr_mode", "node_table_clear",
+ 	"transparent_reception", "node_table"};
+ 
+-static void get_file_name(char *str, enum netsnmp_access_lre_config_file_index index, int hsr)
++#define BUF_SIZE	128
++#define BUF1_SIZE	512
++#define BUF2_SIZE	1024
++
++static void get_file_name(char *str, int size,
++			  enum netsnmp_access_lre_config_file_index index, int hsr)
+ {
+ 	if (hsr)
+-		strcpy(str, DEBUGFS_PREFIX_HSR);
++		strncpy(str, DEBUGFS_PREFIX_HSR, size - 1);
+ 	else
+-		strcpy(str, DEBUGFS_PREFIX_PRP);
+-	strncat(str, debugfs_file_names[index],
+-		strlen(debugfs_file_names[index]));
++		strncpy(str, DEBUGFS_PREFIX_PRP, size - 1);
++	strncat(str, debugfs_file_names[index], size - strlen(str) - 1);
+ }
+ 
+ int snmp_access_lre_interface_param_get(enum netsnmp_access_lre_config_file_index index, int hsr)
+ {
+ 	FILE *fp;
+-	char line[1024];
+-	char filename[128];
++	char line[BUF2_SIZE];
++	char filename[BUF_SIZE];
+ 	int val = -1;
+ 	unsigned long long temp;
+ 
+ 	if (index >= NETSNMP_LRE_CONFIG_IFACE_LAST)
+ 		return -EINVAL;
+ 
+-	get_file_name(filename, index, hsr);
++	get_file_name(filename, BUF_SIZE, index, hsr);
++	filename[BUF_SIZE - 1] = '\0';
+ 
+ 	fp = fopen(filename, "r");
+ 	if (!fp)
+ 		return -EINVAL;
+ 
+-	if (fgets(line, 1024, fp)) {
+-		line[1023] = '\0';
++	if (fgets(line, BUF2_SIZE, fp)) {
++		line[BUF2_SIZE - 1] = '\0';
+ 		if (line[0] && (line[0] != '\n'))
+ 			sscanf(line, "%d", &val);
+ 	}
+@@ -59,8 +64,8 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 				        int hsr, int val)
+ {
+ 	FILE *fp;
+-	char line[128];
+-	char filename[128];
++	char line[BUF_SIZE];
++	char filename[BUF_SIZE];
+ 	unsigned long long temp;
+ 
+ 
+@@ -76,14 +81,14 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 			val++;
+ 	}
+ 
+-	get_file_name(filename, index, hsr);
++	get_file_name(filename, BUF_SIZE, index, hsr);
+ 
+ 	fp = fopen(filename, "w");
+ 	if (!fp)
+ 		return -EINVAL;
+ 
+-	snprintf(line, sizeof(line)-1, "%d", val);
+-	line[sizeof(line)-1] = '\0';
++	snprintf(line, BUF_SIZE - 1, "%d", val);
++	line[BUF_SIZE - 1] = '\0';
+ 	fwrite(line, sizeof(char), strlen(line), fp);
+ 	fclose(fp);
+ 
+@@ -273,7 +278,7 @@ int lre_config_get_slave_states(const char *eth1_name,
+ {
+     int ret = 0, if_index, eth1_found = 0, eth2_found = 0, admin_state = 0, link_state = 0;
+     const char *file_name = lre_interface_raw_file;
+-    char if_name[128];
++    char if_name[BUF_SIZE];
+     char *line, *interface;
+     FILE *fp;
+ 
+@@ -408,3 +413,229 @@ out:
+     free(line);
+     return ret;
+ }
++
++static const char *lre_iface_stats[LRE_CNT_LAST] = {
++	"lreTxA:", "lreTxB:", "lreTxC:", "lreErrWrongLanA:", "lreErrWrongLanB:",
++	"lreErrWrongLanC:", "lreRxA:", "lreRxB:", "lreRxC:", "lreErrorsA:",
++	"lreErrorsB:", "lreErrorsC:", "lreNodes:", "lreProxyNodes:",
++	"lreUniqueRxA:", "lreUniqueRxB:", "lreUniqueRxC:", "lreDuplicateRxA:",
++	"lreDuplicateRxB:", "lreDuplicateRxC:", "lreMultiRxA:", "lreMultiRxB:",
++	"lreMultiRxC:", "lreOwnRxA:", "lreOwnRxB:",
++};
++
++#define ethtool_cmd_str "ethtool -S "
++#define ethtool_output_file "/var/ethtool_out.txt"
++
++static void lre_stats_update_counter(u_int lre_stats[], char *name, char *val)
++{
++	int i;
++
++	if (!name || !val)
++		return;
++
++	for (i = 0; i < LRE_CNT_LAST; i++) {
++		if (!strcmp(lre_iface_stats[i], name)) {
++			lre_stats[i] = strtoul(val, NULL, 10);
++			break;
++		}
++	}
++
++}
++
++int lre_interface_stats_get(char *if_name, u_int lre_stats[])
++{
++	char ethtool_cmd[80], *line, *token, *save, *stats_name;
++	int ret = 0, index = 0, i;
++	FILE *fp;
++
++	sprintf(ethtool_cmd, "%s%s 2>&1 > %s\n",
++		ethtool_cmd_str, if_name, ethtool_output_file);
++	system(ethtool_cmd);
++
++	fp = fopen(ethtool_output_file, "r");
++	if (fp == NULL)
++		return -1;
++
++	line = (char *)malloc(LRE_CONFIG_BIFFER_SZ);
++	if (line == NULL) {
++		ret = -1;
++		goto out;
++	}
++
++	while(1) {
++		if (fgets(line, LRE_CONFIG_BIFFER_SZ, fp)) {
++			token = strtok_r(line, " ", &save);
++			i = 0;
++			stats_name = NULL;
++			while(token) {
++				if (!i) {
++					stats_name = token;
++				} else if (i == 1) {
++					if (stats_name) {
++						lre_stats_update_counter(lre_stats, stats_name, token);
++					}
++				} else {
++					break;
++				}
++				token = strtok_r(NULL, " ", &save);
++				i++;
++			}
++
++		} else {
++			break;
++		}
++		index++;
++	}
++
++out:
++	fclose(fp);
++	free(line);
++	return ret;
++}
++
++static int lre_get_node_info(char *line, struct lre_node_table_entry_s *node)
++{
++	char *save, *token, *temp = (char *)malloc(strlen(line) + 1);
++	int marker_index = 0, ret = 0;
++
++	if (!temp)
++		return -1;
++
++	strcpy(temp, line);
++	token = strtok_r(temp, " ", &save);
++	node->remote_node_type = LRE_NODE_UNKNOWN;
++	while (token) {
++		switch (marker_index) {
++		case 1:
++			sscanf(token, "%x:%x:%x:%x:%x:%x",
++			       &node->mac_address[0], &node->mac_address[1],
++			       &node->mac_address[2], &node->mac_address[3],
++			       &node->mac_address[4], &node->mac_address[5]);
++			marker_index++;
++			break;
++		case 2:
++			if (strstr(token, "DANH"))
++				node->remote_node_type = LRE_NODE_DANH;
++			if (strstr(token, "DANP"))
++				node->remote_node_type = LRE_NODE_DANP;
++			break;
++		case 3:
++			if (strstr(token, "RxA=")) {
++				sscanf(token, "RxA=%d", &node->time_last_seen_a);
++				marker_index++;
++			}
++			break;
++		case 4:
++			if (strstr(token, "RxB=")) {
++				sscanf(token, "RxB=%d", &node->time_last_seen_b);
++			}
++			break;
++
++		default:
++			;
++		}
++
++		if (strstr(token, "ADDR:"))
++			marker_index++;
++
++		if (strstr(token, "Sup="))
++			marker_index++;
++
++		token = strtok_r(NULL, " ", &save);
++	}
++
++	if ((node->remote_node_type != LRE_NODE_DANP) &&
++	    (node->remote_node_type != LRE_NODE_DANH))
++		ret = -1;
++
++	free(temp);
++	return ret;
++}
++
++int snmp_access_get_remote_nodes(struct lre_remote_nodes_s *nodes, int hsr, unsigned int *num_nodes)
++{
++	FILE *fp = NULL;
++	char *line, *file_name, *node_buf;
++	int size, last_size = 0, ret = 0, found = 0;
++	struct lre_remote_nodes_s *prev = nodes, *current = nodes;
++
++	file_name = (char *)malloc(BUF_SIZE);
++	line = (char *)malloc(BUF_SIZE);
++	node_buf = (char *)malloc(BUF1_SIZE);
++
++	if ((file_name == NULL) || (line == NULL) || (node_buf == NULL)) {
++		ret = -1;
++		goto out;
++	}
++
++	get_file_name(file_name, BUF_SIZE,
++		      NETSNMP_LRE_CONFIG_IFACE_NODE_TABLE, hsr);
++
++	fp = fopen(file_name, "r");
++	if (!fp) {
++		ret = -1;
++		goto out;
++	}
++
++	*num_nodes = 0;
++	current->next = NULL;
++	bzero(node_buf, BUF1_SIZE);
++	while (1) {
++		if (!fgets(line, BUF_SIZE, fp)) {
++			node_buf[last_size] = '\0';
++			ret = lre_get_node_info(node_buf, &current->data);
++			if ((ret < 0) && (current != nodes)) {
++				free(current);
++				prev->next = NULL;
++			} else {
++				(*num_nodes)++;
++			}
++			ret = 0;
++			break;
++		}
++
++		if (line[0] == '\n')
++			continue;
++
++		size = strlen(line);
++		if (strstr(line, "Remote")) {
++			found = 1;
++			continue;
++		} else {
++			if (!found)
++				continue;
++		}
++
++		if (strstr(line, "Node")) {
++			if (strlen(node_buf)) {
++				node_buf[last_size] = '\0';
++				ret = lre_get_node_info(node_buf, &current->data);
++				if (!ret) {
++					(*num_nodes)++;
++					current->next =
++					(struct lre_remote_nodes_s *)malloc(
++						sizeof(struct lre_remote_nodes_s));
++					prev = current;
++					current = current->next;
++					current->next = NULL;
++				}
++				ret = 0;
++				bzero(node_buf, BUF1_SIZE);
++			}
++			strncpy(node_buf, line, BUF1_SIZE - 1);
++			last_size = size;
++
++		} else {
++			strncat(node_buf, line, BUF1_SIZE - strlen(node_buf) - 1);
++			last_size += size;
++		}
++
++	}
++out:
++	if (fp)
++		fclose(fp);
++	free(file_name);
++	free(line);
++	free(node_buf);
++	return ret;
++}
+diff --git a/agent/mibgroup/iec-62439-3-mib.h b/agent/mibgroup/iec-62439-3-mib.h
+index c47e472..d163d16 100644
+--- a/agent/mibgroup/iec-62439-3-mib.h
++++ b/agent/mibgroup/iec-62439-3-mib.h
+@@ -5,4 +5,6 @@
+ config_require(IEC-62439-3-MIB/lreManufacturerName)
+ config_require(IEC-62439-3-MIB/lre_config_interface_access)
+ config_require(IEC-62439-3-MIB/lreInterfaceConfigTable/lreInterfaceConfigTable)
++config_require(IEC-62439-3-MIB/lreInterfaceStatsTable/lreInterfaceStatsTable)
++config_require(IEC-62439-3-MIB/lreNodesTable/lreNodesTable)
+ config_add_mib(IEC-62439-3-MIB)
+-- 
+1.9.1
+

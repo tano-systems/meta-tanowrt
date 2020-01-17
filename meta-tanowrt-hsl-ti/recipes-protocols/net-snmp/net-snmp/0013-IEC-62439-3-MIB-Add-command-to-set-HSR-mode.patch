@@ -1,0 +1,32 @@
+From fbd6a804b92bb7e98d4b3467225e38a481141573 Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Wed, 14 Jun 2017 19:11:25 -0400
+Subject: [PATCH 13/14] IEC-62439-3-MIB: Add command to set HSR mode
+
+---
+ agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+index 1d7d6f5..b389a9f 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -92,6 +92,15 @@ int snmp_access_lre_interface_param_set(enum netsnmp_access_lre_config_file_inde
+ 	fwrite(line, sizeof(char), strlen(line), fp);
+ 	fclose(fp);
+ 
++	if (hsr && index == NETSNMP_LRE_CONFIG_IFACE_HSR_MODE) {
++		fp = fopen("/sys/kernel/debug/hsr/hsr_mode", "w");
++		if (!fp)
++			return -EINVAL;
++		snprintf(line, BUF_SIZE - 1, "%d", val);
++		line[BUF_SIZE - 1] = '\0';
++		fwrite(line, sizeof(char), strlen(line), fp);
++		fclose(fp);
++	}
+ 	return 0;
+ }
+ 
+-- 
+1.9.1
+
