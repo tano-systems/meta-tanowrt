@@ -73,13 +73,17 @@ More detailed information about installing repo tool can be founded [here](https
 
 TanoWrt Linux distribution core layer, located in `meta-tanowrt` subdirectory of this repository, supports only machines designed to run in QEMU.
 
+Support for real hardware is provided by additional hardware support layers (HSL) located in the `meta-tanowrt-hsl-*` subdirectories of this repository.
+
 Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers:
 
 | Layer                      | Hardware                                   |
 | -------------------------- | ------------------------------------------ |
 | [meta-tanowrt]             | QEMU for x86 (32-bit and 64-bit) and ARMv5 |
+| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                        |
 
 [meta-tanowrt]: meta-tanowrt/README.md
+[meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
 
 ## Access
 

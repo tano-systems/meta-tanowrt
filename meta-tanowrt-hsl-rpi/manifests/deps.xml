@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<!-- meta-raspberrypi -->
+	<project path="meta-rapsberrypi"
+	         name="meta-raspberrypi"
+	         remote="yoctoproject"
+	         upstream="warrior"
+	         revision="2f0fa9a087b9ded28797d3087ccfa8f48bf5dd13" />
+</manifest>

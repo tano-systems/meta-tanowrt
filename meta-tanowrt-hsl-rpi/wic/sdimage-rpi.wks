@@ -1,0 +1,11 @@
+#
+# short-description: Create SD card image with a boot partition
+#
+# long-description: Creates a partitioned SD card image:
+#   - Boot files are located in the first vfat partition.
+#   - Rootfs are located in the second squashfs parition.
+#   - Third ext4 partition is for the overlay filesystem and
+#     will be created automatically at first boot.
+#
+part --source bootimg-partition --fstype=vfat --label boot --ondisk mmcblk0 --active --align 4096 --size 20
+part / --source rootfs --ondisk mmcblk0 --fstype=squashfs --align 4096
