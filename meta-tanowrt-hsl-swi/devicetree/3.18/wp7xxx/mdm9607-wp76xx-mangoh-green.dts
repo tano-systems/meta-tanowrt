@@ -1,0 +1,157 @@
+/*
+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+
+#include "mdm9607-wp76xx.dtsi"
+
+/ {
+	model = "Sierra Wireless, Inc. MDM 9607 WP series";
+	compatible = "qcom,mdm9607-mtp", "qcom,mdm9607", "qcom,mtp";
+	qcom,board-id = <8 0x81>;
+};
+
+&sdhc_2 {
+	status = "ok";
+	ti,non-removable;
+	ti,needs-special-hs-handling;
+	cap-power-off-card;
+	keep-power-in-suspend;
+	wlcore: wlcore@0 {
+		compatible = "ti,wlcore";
+		reg = <2>;
+	};
+};
+
+&soc {
+	sierra_gpio {
+		// In (parentess) described real mangOH Green signals
+		// GPIO expander 1
+		alias-ARDUINO_RESET_LEVEL = <300 0>; // I/O_0
+		alias-BATTCHRGR_PG_N = <301 0>;      // I/O_1
+		alias-BATTGAUGE_GPIO = <302 0>;      // I/O_2
+		alias-LED_ON = <303 0>;              // I/O_3
+		alias-ATMEGA_RESET_GPIO = <304 0>;   // I/O_4
+		alias-CONNECT_TO_AV_LED = <305 0>;   // I/O_5
+		alias-PCM_ANALOG_SELECT = <306 0>;   // I/O_6
+		alias-CONNECT_TO_AV = <307 0>;       // I/O_7
+		alias-BOARD_REV_RES1 = <308 0>;      // I/O_8
+		alias-BOARD_REV_RES2 = <309 0>;      // I/O_9
+		alias-UART_EXP1_ENN = <310 0>;       // I/O_10
+		alias-UART_EXP1_IN = <311 0>;        // I/O_11
+		alias-UART_EXP2_IN = <312 0>;        // I/O_12
+		alias-SDIO_SEL = <313 0>;            // I/O_13
+		alias-SPI_EXP1_ENN = <314 0>;        // I/O_14
+		alias-SPI_EXP1_IN = <315 0>;         // I/O_15
+		// GPIO expander 2
+		alias-IOT0_GPIO3 = <320 0>;          // I/O_0 (GPIOEXP_INT1)
+		alias-IOT0_GPIO2 = <321 0>;          // I/O_1 (Battery detect)
+		alias-IOT0_GPIO1 = <322 0>;          // I/O_2 (GPIO_SCF3_RESET)
+		alias-IOT1_GPIO3 = <323 0>;          // I/O_3 (LED_CARD_DETECT_IOT0)
+		alias-IOT1_GPIO2 = <324 0>;          // I/O_4 (LED_CARD_DETECT_IOT1)
+		alias-IOT1_GPIO1 = <325 0>;          // I/O_5 (LED_CARD_DETECT_IOT2)
+		alias-IOT2_GPIO3 = <326 0>;          // I/O_6 (UIM2_PWM_SELECT)
+		alias-IOT2_GPIO2 = <327 0>;          // I/O_7 (UIM2_M2_S_SELECT)
+		alias-IOT2_GPIO1 = <328 0>;          // I/O_8 (TP900)
+		alias-SENSOR_INT1 = <329 0>;         // I/O_9
+		alias-SENSOR_INT2 = <330 0>;         // I/O_10
+		alias-CARD_DETECT_IOT0 = <331 0>;    // I/O_11
+		alias-CARD_DETECT_IOT2 = <332 0>;    // I/O_12
+		alias-CARD_DETECT_IOT1 = <333 0>;    // I/O_13
+		alias-GPIOEXP_INT3 = <334 0>;        // I/O_14
+		alias-BATTCHRGR_INT = <335 0>;       // I/O_15
+		// GPIO expander 3
+		alias-USB_HUB_INTN = <340 0>;        // I/O_0
+		alias-HUB_CONNECT = <341 0>;         // I/O_1
+		alias-GPIO_IOT2_RESET = <342 0>;     // I/O_2
+		alias-GPIO_IOT1_RESET = <343 0>;     // I/O_3
+		alias-GPIO_IOT0_RESET = <344 0>;     // I/O_4
+		alias-IOT0_GPIO4 = <345 0>;          // I/O_5 (TP901)
+		alias-IOT1_GPIO4 = <346 0>;          // I/O_6 (TP902)
+		alias-IOT2_GPIO4 = <347 0>;          // I/O_7 (TP903)
+		alias-UART_EXP2_ENN = <348 0>;       // I/O_8
+		alias-PCM_EXP1_ENN = <349 0>;        // I/O_9
+		alias-PCM_EXP1_SEL = <350 0>;        // I/O_10
+		alias-ARD_FTDI = <351 0>;            // I/O_11
+		alias-LCD_ON_OFF = <352 0>;          // I/O_12 (TP904)
+		alias-FAST_SIM_SWITCH = <353 0>;     // I/O_13 (TP905)
+		alias-ARDUINO_USB_CTRL = <354 0>;    // I/O_14 (TP906)
+		alias-RS232_ENABLE = <355 0>;        // I/O_15
+	};
+};
+
+&i2c_4 {
+	ioexp-mux@71 {
+		// IO expanders are below the I2C switch PCA9548
+		compatible = "nxp,pca9548";
+		reg = <0x71>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		i2c@4 {
+			// IO expander 1: channel 4
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <4>;
+			ioexp1_gpios: io_exp@3e {
+				#gpio-cells = <2>;
+				gpio-controller;
+				compatible = "sx1509q";
+				reg = <0x3e>;
+				sx150x,pullup_ena = <0x0>;
+				sx150x,pulldn_ena = <0x0>;
+				sx150x,float_ena = <0x0>;
+				sx150x,polarity = <0x0>;
+				label = "ioexp1-gpio";
+				sx150x,gpio_base = <300>;
+			};
+		};
+		i2c@5 {
+			// IO expander 1: channel 5
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <5>;
+			ioexp2_gpios: io_exp@3f {
+				#gpio-cells = <2>;
+				gpio-controller;
+				compatible = "sx1509q";
+				reg = <0x3f>;
+				/* Set pullup for GPIO 11, 12, 13 to select card inserted */
+				sx150x,pullup_ena = <0x3800>;
+				sx150x,pulldn_ena = <0x0>;
+				sx150x,float_ena = <0x0>;
+				sx150x,polarity = <0x0>;
+				label = "ioexp2-gpio";
+				sx150x,gpio_base = <320>;
+			};
+		};
+		i2c@6 {
+			// IO expander 3: channel 6
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <6>;
+			ioexp3_gpios: io_exp@70 {
+				#gpio-cells = <2>;
+				gpio-controller;
+				compatible = "sx1509q";
+				reg = <0x70>;
+				sx150x,pullup_ena = <0x0>;
+				sx150x,pulldn_ena = <0x0>;
+				sx150x,float_ena = <0x0>;
+				sx150x,polarity = <0x0>;
+				label = "ioexp3-gpio";
+				sx150x,gpio_base = <340>;
+			};
+		};
+	};
+};

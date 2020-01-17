@@ -1,0 +1,28 @@
+/*
+ * swimcu.dtsi  --  dts configuration for swimcu kl03
+ *
+ * Copyright (c) 2016 Sierra Wireless, Inc.
+ *
+ *  This program is free software; you can redistribute  it and/or modify it
+ *  under  the terms of  the GNU General  Public License as published by the
+ *  Free Software Foundation;  either version 2 of the  License, or (at your
+ *  option) any later version.
+ *
+ */
+
+&i2c_4 {
+	swimcu@3a{
+		compatible = "swimcu,mkl03";
+		reg = <0x3a>;
+		swimcu,nr-gpio = <5>;
+		swimcu,nr-adc = <2>;
+		swimcu,adc-base = <2>;
+
+		swimcu,func-fwupd-en = /bits/ 8 <1>;
+		swimcu,func-pm-en = /bits/ 8 <1>;
+		swimcu,func-event-en = /bits/ 8 <1>;
+
+		swimcu,hw-id-1 = <&pm8019_gpios 1 0>;
+		swimcu,hw-id-0 = <&pm8019_gpios 3 0>;
+	};
+};

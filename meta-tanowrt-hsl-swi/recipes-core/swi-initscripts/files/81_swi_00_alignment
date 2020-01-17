@@ -1,0 +1,11 @@
+#!/bin/sh
+
+START=00
+
+do_swi_alignment() {
+	if [ -e /proc/cpu/alignment ]; then
+		echo "3" > /proc/cpu/alignment
+	fi
+}
+
+boot_hook_add preinit_main do_swi_alignment

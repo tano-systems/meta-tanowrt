@@ -1,0 +1,28 @@
+#!/bin/sh /etc/rc.common
+
+##########################################################################
+#
+# DESCRIPTION:
+# Indicate to IPA driver that FWs are available from user space for fetching
+# and loading
+#
+# Copyright 2015 Qualcomm Technologies, Inc. All rights reserved.
+# Qualcomm Technologies Proprietary and Confidential.
+#
+# Copyright (C) 2020, Tano Systems LLC,
+#     Anton Kikin <a.kikin@tano-systems.com>
+#
+##########################################################################
+
+START=17
+
+start() {
+	# A write to /dev/ipa will indicate that user space is available and the
+	# FWs can be fetched.
+	echo 1 > /dev/ipa
+	return 0
+}
+
+stop() {
+	return 0
+}

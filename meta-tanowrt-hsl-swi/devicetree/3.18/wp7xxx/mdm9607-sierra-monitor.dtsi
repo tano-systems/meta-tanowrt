@@ -1,0 +1,63 @@
+/* Copyright (c) 2015, Sierra Wireless, Inc. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+&soc {
+	qcom,sierra-monitor {
+		compatible = "sierra,sierra-monitor";
+
+		sierra,startup-time = <0>;
+		sierra,sleep-time = <0>;
+		sierra,wake-time = <0>;
+
+		/* check if swiapp exists */
+	/*	sierra,monitor_resource@1 {
+			sierra,path = "/usr/bin/swiapp";
+		}; */
+
+		/* check if mpss is loaded */
+	/*	sierra,monitor_resource@2 {
+			sierra,path = "/sys/class/subsys/subsys_modem/device/subsys[0-9]/state";
+			sierra,value = "ONLINE";
+			sierra,force-dload = <1>;
+		}; */
+
+/*  The following was intended for EM/CM and might not be applicable for
+ *  WP so they are disabled.
+ */
+		/* check if USB enabled */
+	/*	sierra,monitor_resource@0 {
+			sierra,path = "/sys/class/android_usb/android0/enable";
+			sierra,value = "1";
+			sierra,force-dload = <1>;
+		}; */
+
+		/* check if process running */
+	/*	sierra,monitor_resource@3 {
+			sierra,process = "qti";
+		}; */
+
+		/* check if process running */
+	/*	sierra,monitor_resource@4 {
+			sierra,process = "netmgrd";
+		}; */
+
+		/* check if process running */
+	/*	sierra,monitor_resource@5 {
+			sierra,process = "qmuxd";
+		}; */
+
+		/* check if process running */
+	/*	sierra,monitor_resource@6 {
+			sierra,process = "swi_atfwd";
+		};*/
+	};
+};
+

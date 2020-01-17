@@ -1,0 +1,20 @@
+# LAYER_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+LCONF_VERSION = "7"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  ##OEROOT##/meta-tanowrt/meta-tanowrt-hsl-swi \
+  ##OEROOT##/meta-tanowrt/meta-tanowrt \
+  ##OEROOT##/meta-swi/meta-swi-mdm9x28 \
+  ##OEROOT##/meta-swi/meta-swi-mdm9xxx \
+  ##OEROOT##/meta-swi/common \
+  ##OEROOT##/meta-openembedded/meta-oe \
+  ##OEROOT##/meta-openembedded/meta-python \
+  ##OEROOT##/meta-openembedded/meta-networking \
+  ##OEROOT##/meta-openembedded/meta-multimedia \
+  ##OEROOT##/meta-openembedded/meta-filesystems \
+  ##OEROOT##/meta \
+"

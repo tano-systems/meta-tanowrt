@@ -1,0 +1,22 @@
+diff --git a/app/aboot/aboot.c b/app/aboot/aboot.c
+index 73e26ce8..877746f8 100644
+--- a/app/aboot/aboot.c
++++ b/app/aboot/aboot.c
+@@ -179,7 +179,7 @@ static const char *emmc_cmdline = " androidboot.emmc=true";
+ static const char *usb_sn_cmdline = " androidboot.serialno=";
+ static const char *androidboot_mode = " androidboot.mode=";
+ static const char *alarmboot_cmdline = " androidboot.alarmboot=true";
+-static const char *loglevel         = " quiet";
++static const char *loglevel         = " "; /* quiet */
+ static const char *battchg_pause = " androidboot.mode=charger";
+ static const char *auth_kernel = " androidboot.authorized_kernel=true";
+ static const char *secondary_gpt_enable = " gpt";
+@@ -199,7 +199,7 @@ static const char *warmboot_cmdline = " qpnp-power-on.warm_boot=1";
+ static const char *baseband_apq_nowgr   = " androidboot.baseband=baseband_apq_nowgr";
+ /* SWISTART */
+ #ifdef SIERRA
+-static const char *lkquiet          = " quiet";
++static const char *lkquiet          = " "; /* quiet */
+ static const char *lkversion        = " lkversion=" LKVERSION;
+ #endif /* SIERRA */
+ /* SWISTOP */

@@ -1,0 +1,84 @@
+#!/bin/sh
+# --------------------------------------------------------------
+# Copyright (c) 2012 Sierra Wireless. All Rights Reserved.
+# --------------------------------------------------------------
+# restart_swi_apps: Simple script to restart swi apps if they are not running
+
+# import run environment
+source /etc/run.env
+
+# This function will kill a process
+kill_process() {
+  if [ -n "$(ps | grep -v grep | grep "$1")" ]; then
+    ps | grep -v grep | grep "$1" | awk '{print $1}' | xargs kill -TERM
+  else
+    swi_log "$1 does not exist"
+    return;
+  fi
+  sleep 1;
+  if [ -n "$(ps | grep -v grep | grep "$1")" ]; then
+    ps | grep -v grep | grep "$1" | awk '{print $1}' | xargs kill -KILL
+  else
+    swi_log "killing $1 by signal TERM"
+    return;
+  fi
+  sleep 1;
+  if [ -n "$(ps | grep -v grep | grep "$1")" ]; then
+    swi_log "restart_swi_apps can't kill $1"
+    exit -1;
+  else
+    swi_log "killing $1 by signal KILL"
+    return;
+  fi
+}
+
+# This function will start swiapp
+start_swiapp() {
+  # Terminate all hostapd instances - swiapp spawns them again
+  kill_process hostapd
+
+  # Terminate all aplay instances
+  kill_process aplay
+
+  # Terminate all arec instances
+  kill_process arec
+
+  free | logger;
+  sleep 1;
+  /usr/bin/swiapp > /dev/null 2>&1 &
+}
+
+# Bail out if this script is already running
+if [ $(ps | grep -v grep | grep "swi-restart_swi_apps" | wc -l) -gt 2 ]; then
+  echo "restart_swi_apps is already running!"
+  exit 0
+fi
+
+# Save the HW type
+TYPE=`bsinfo -st`
+DELAY=15
+
+if ! ps | grep -v grep | grep -q "swiapp"; then
+  swi_log "Starting swiapp..."
+  start_swiapp
+fi
+
+while [ 1 ]
+do
+  sleep ${DELAY}
+
+  # This will start swiapp if it is not running
+  if ! ps | grep -v grep | grep -q "swiapp"; then
+    swi_log "swiapp killed, restart it"
+    start_swiapp
+  fi
+
+#  if ! ps | grep -v grep | grep -q "swisync"; then
+#    if [ -x /usr/bin/swisync ]; then
+#      swi_log "swisync killed, restart it"
+#      /usr/bin/swisync > /dev/null 2>&1 &
+#    fi
+#  fi
+
+  DELAY=5
+done

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<remote name="legato-io" fetch="https://gitlab.com/legato.io" />
+
+	<!-- meta-swi -->
+	<project path="meta-swi"
+	         name="meta-swi"
+	         remote="legato-io"
+	         upstream="yocto-2.7-ref"
+	         revision="f0523effb2837875ad93f0c94a0ef05f77d34364" />
+</manifest>
+
+
+

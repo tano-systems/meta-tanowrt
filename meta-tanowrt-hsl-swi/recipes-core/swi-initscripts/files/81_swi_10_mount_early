@@ -1,0 +1,343 @@
+#!/bin/sh
+
+#
+# Add here mounts of the file systems needed early in the boot process.
+# This file is reserved for system use, because system file systems typically
+# need more flexibility when it comes down to mount paths and error handling.
+# Customer file system mounts should go to fstab or elsewhere.
+#
+
+source /etc/run.env
+
+UBI_MNTOPT_DEFAULT="sync"
+
+# Get mtd device number which corresponds to mtd partition name.
+# Parameters:
+#    $1 - mtd partition name
+#
+# If there is an error, negative number will be returned.
+get_mtdpart_dev_num()
+{
+	local mtd_part_name=${1}
+	local mtd_dev_num=
+	local err=$SWI_ERR_MAX
+
+	if [ -z ${mtd_part_name} ] ; then
+		echo "swi-preinit: MTD partition name is empty" > /dev/kmsg
+		return ${err}
+	fi
+
+	mtd_dev_num=$( cat /proc/mtd | \
+	               grep ${mtd_part_name} -w | \
+	               awk '{print $1}' | \
+	               sed 's/://g' | \
+	               grep -o "[0-9]*" )
+
+	if [ -z ${mtd_dev_num} ] ; then
+		echo "swi-preinit: MTD partition ${mtd_part_name} device number is not available" > /dev/kmsg
+		mtd_dev_num=${err}
+	fi
+
+	return ${mtd_dev_num}
+}
+
+# Generic function to mount ubi filesystems. Parameters:
+#   $1 - mtd partition name
+#   $2 - file system mount point
+#   $3 - file system type to mount
+#   $4 - ubi logical device number
+#   $5 - ubi logical volume number
+#   $6 - ubifs mount options (default ones should be excluded)
+mount_ubifs()
+{
+	local mtd_part_name=$1
+	local mntpt=$2
+	local fstype=$3
+	local ubi_dev_num=$4
+	local ubi_vol_num=$5
+	local ubifs_mnt_options=$6
+
+	local mtd_dev_num=
+	local ubi_dev_vol_pair=${ubi_dev_num}_${ubi_vol_num}
+	local ret=${SWI_OK}
+	local ubidev_name=ubi
+
+	# Get mtd device number
+	get_mtdpart_dev_num ${mtd_part_name}
+	mtd_dev_num=$?
+	if [ ${mtd_dev_num} -eq $SWI_ERR_MAX ] ; then
+		# Error obtaining mtd device number, get out.
+		return ${SWI_ERR}
+	fi
+
+	# Make link between physical and logical UBI device. If device does not
+	# show up, we need to exit.
+	# If device exist do not detach and then attach again - save boot up time
+	if ! [ -c "/dev/ubi${ubi_dev_num}" ]; then
+		ubiattach -m ${mtd_dev_num} -d ${ubi_dev_num}
+		if [ $? -ne 0 ] ; then
+			echo "swi-preinit: Unable to attach mtd partition ${mtd_part_name} to UBI logical device ${ubi_dev_num}" > /dev/kmsg
+			return ${SWI_ERR}
+		fi
+		wait_on_file "/dev/ubi${ubi_dev_vol_pair}"
+		if [ $? -ne ${SWI_OK} ] ; then
+			echo "swi-preinit: Tired of waiting on /dev/ubi${ubi_dev_vol_pair}, exiting" > /dev/kmsg
+			return ${SWI_ERR}
+		fi
+	fi
+
+	# Create corresponding block device. It is not needed for UBIFS volumes,
+	# but it is needed for volumes containg file systems like squashfs.
+	# If device does not show up for whatever reason, we need to exit.
+	if [ "${fstype}" == "squashfs" ] ; then
+		SQFS_FLAG=$(dd if=/dev/ubi${ubi_dev_vol_pair} count=1 bs=4 2>/dev/null)
+		if echo $SQFS_FLAG | grep 'hsqs' > /dev/null; then
+			# squashfs volume, create UBI block device
+			if ! [ -b "/dev/ubiblock${ubi_dev_vol_pair}" ]; then
+				ubiblock --create /dev/ubi${ubi_dev_vol_pair}
+				if [ $? -ne 0 ] ; then
+					echo "swi-preinit: Unable to use ubi${ubi_dev_num} partition ${ubi_vol_num}" > /dev/kmsg
+					ubidetach -m ${mtd_dev_num}
+					return ${SWI_ERR}
+				fi
+				wait_on_file "/dev/ubiblock${ubi_dev_vol_pair}"
+				if [ $? -ne ${SWI_OK} ] ; then
+					echo "swi-preinit: Tired of waiting on /dev/ubiblock${ubi_dev_vol_pair}, exiting." > /dev/kmsg
+					return ${SWI_ERR}
+				fi
+			fi
+		fi
+
+		# Mount UBI volume. squashfs UBI volumes are using ubiblock instead of ubi
+		# device.
+		ubidev_name=ubiblock
+	fi
+
+	mount -t ${fstype} /dev/${ubidev_name}${ubi_dev_vol_pair} ${mntpt} \
+		-o${UBI_MNTOPT_DEFAULT},${ubifs_mnt_options}
+	if [ $? -ne 0 ] ; then
+		# detach will release block device as well.
+		echo "swi-preinit: Unable to mount /dev/ubiblock${ubi_dev_vol_pair} onto ${mntpt}" > /dev/kmsg
+		ubidetach -m ${mtd_dev_num}
+		return ${SWI_ERR}
+	fi
+
+	# Release resources in case of error.
+	if [ ${ret} -ne ${SWI_OK} ]; then
+		umount ${mntpt}
+		ubidetach -m ${mtd_dev_num}
+	fi
+
+	return ${ret}
+}
+
+# Try to mount R/W UBIFS using various mount options. The reason for this is that
+# some of the platforms are UBIFS capable, but do not have quota support.
+# Always try to mount with quota support first. Parameters:
+#   $1 - mtd partition name
+#   $2 - file system mount point
+#   $3 - UBI logical device number
+#   $4 - UBI volume associated with UBI logical device number
+mount_ubifs_multi_mount_options()
+{
+	local mtd_part_name=$1
+	local mntpt=$2
+	local ubi_dev_num=$3
+	local ubi_vol_num=$4
+
+	# Try to mount UBIFS partition using various mount options. Do not change
+	# parameter order, you will break things.
+	list="rw"
+	for item in ${list} ; do
+		echo "swi-preinit: Trying to mount UBIFS on ${mntpt} using [${item}] mount options..." > /dev/kmsg
+		mount_ubifs ${mtd_part_name} ${mntpt} \
+		            ubifs ${ubi_dev_num} ${ubi_vol_num} "${item}"
+		if [ $? -eq ${SWI_OK} ]; then
+			echo "swi-preinit: UBIFS volume successfully mounted on ${mntpt}" > /dev/kmsg
+			return ${SWI_OK}
+		fi
+	done
+
+	return ${SWI_ERR}
+}
+
+# Create single ubi volume. Parameters:
+#   $1 - mtd partition name
+#   $2 - ubi device number
+#   $3 - ubi volume number associated with ubi device number
+#   $4 - ubi volume name
+#   $5 - ubi volume size. If not specified, whole MTD device will be used.
+create_single_ubi_vol()
+{
+    local mtd_part_name=$1
+    local ubi_dev_num=$2
+    local ubi_vol_num=$3
+    local ubi_vol_name=$4
+    local ubi_vol_size=$5
+
+    local mtd_dev_num=-1
+    local ret=${SWI_OK}
+
+    get_mtdpart_dev_num ${mtd_part_name}
+    mtd_dev_num=$?
+    if [ ${mtd_dev_num} -eq $SWI_ERR_MAX ] ; then
+        # Error obtaining mtd device number, get out.
+        return ${SWI_ERR}
+    fi
+
+    # Format MTD device for UBI use.
+    ubiformat /dev/mtd${mtd_dev_num} -y
+    if [ $? -ne 0 ] ; then
+        echo "swi-preinit: Cannot format mtd${mtd_dev_num}" > /dev/kmsg
+        return ${SWI_ERR}
+    fi
+
+    # Make link between physical and logical UBI device. If device does not
+    # show up, tough luck.
+    ubiattach -m ${mtd_dev_num} -d ${ubi_dev_num}
+    if [ $? -ne 0 ] ; then
+        echo "swi-preinit: Unable to attach mtd partition ${mtd_part_name} to UBI logical device ${ubi_dev_num}" > /dev/kmsg
+        return ${SWI_ERR}
+    fi
+    wait_on_file "/dev/ubi${ubi_dev_num}"
+    if [ $? -ne ${SWI_OK} ] ; then
+        echo "swi-preinit: Tired of waiting on /dev/ubi${ubi_dev_num}, exiting." > /dev/kmsg
+        return ${SWI_ERR}
+    fi
+
+    # If volume size is not specified, whole device will be used.
+    if [ -z "${ubi_vol_size}" ] ; then
+        ubi_vol_size=$( ubinfo -d ${ubi_dev_num} | \
+                               grep "Amount of available logical eraseblocks" | \
+                               awk '{ print $9 }' | \
+                               xargs printf "%.0f" )
+        if [ ${ubi_vol_size} -gt 0 ] ; then
+            # Make sure that rounding is taken into account, otherwise mkvol
+            # may fail.
+            ubi_vol_size=$( echo $(( ${ubi_vol_size} - 1 )) )
+        fi
+    fi
+
+    # Now, make UBI volume. If vol size happens to be 0 (small flash partition)
+    # mkvol will fail, which is perfectly fine.
+    echo "swi-preinit: Making single volume, size ${ubi_vol_size}MiB on UBI device number ${ubi_dev_num}..." > /dev/kmsg
+    ubimkvol /dev/ubi${ubi_dev_num} -N ${ubi_vol_name} -s ${ubi_vol_size}MiB
+    if [ $? -ne 0 ] ; then
+        echo "swi-preinit: Cannot make UBI volume ${ubi_vol_name} on UBI device number ${ubi_dev_num}" > /dev/kmsg
+        ret=${SWI_ERR}
+    fi
+
+    # Make sure detach happens. ubifs mount will attach it again.
+    ubidetach -m ${mtd_dev_num}
+
+    return ${ret}
+}
+
+# Mount user partition. UBIFS will be used if all possible unless YAFFS2 is
+# forced by the user.
+mount_early_user_start()
+{
+#    local mtd_part_name=${USER_MTDEV_NAME}
+#    local mtd_part_size=0
+#    local var=""
+
+    if [ ! -d ${FLASH_MOUNTPOINT} ]; then
+        mkdir -p ${FLASH_MOUNTPOINT}
+    fi
+
+    return ${SWI_OK}
+
+#    if [ -z "$mtd_part_name" ]; then
+#        return ${SWI_OK}
+#    fi
+
+#    # User may be forcing file system. We will let upper layers decide what is
+#    # going to happen, if there is an error.
+
+#    # Try UBIFS first.
+
+#    # Try to mount existing UBIFS partition first.
+#    mount_ubifs_multi_mount_options ${mtd_part_name} \
+#                                    ${FLASH_MOUNTPOINT} \
+#                                    ${UBI_USER1_DEVNUM} \
+#                                    ${UBI_USER1_VOLNUM}
+#    if [ $? -eq ${SWI_OK} ] ; then
+#        # It actually worked, and we do not have to be here any more.
+#        return ${SWI_OK}
+#    fi
+
+#    # That did not work, so we need to force this partition to be single
+#    # volume UBIFS .
+#    create_single_ubi_vol ${mtd_part_name} ${UBI_USER1_DEVNUM} \
+#                          ${UBI_USER1_VOLNUM} ${UBI_USER1_VOLNAME}
+#    if [ $? -ne ${SWI_OK} ] ; then
+#        # UBI volume creation did not work, so get out since user wanted
+#        # UBIFS.
+#        return ${SWI_ERR}
+#    fi
+
+#    # Now we mount UBIFS volume created above.
+#    mount_ubifs_multi_mount_options ${mtd_part_name} \
+#                                    ${FLASH_MOUNTPOINT} \
+#                                    ${UBI_USER1_DEVNUM} \
+#                                    ${UBI_USER1_VOLNUM}
+#    if [ $? -ne ${SWI_OK} ] ; then
+#        # There is nothing we can do here, user wanted forced UBIFS file
+#        # system, but we cannot mount it.
+#        return ${SWI_ERR}
+#    fi
+
+#    # user partition is ubifs now.
+#    return ${SWI_OK}
+}
+
+mount_early_legato_start()
+{
+	local ret=${SWI_OK}
+	local mtd_dev_num=0
+
+	echo "swi-preinit: mount Legato from partition $LEGATO_MTDEV_NAME" > /dev/kmsg
+
+	if [ ! -d ${FLASH_MOUNTPOINT_LEGATO} ]; then
+		mkdir -p ${FLASH_MOUNTPOINT_LEGATO}
+		if [ $? -ne 0 ]; then
+			echo "swi-preinit: Unable to create mount point ${FLASH_MOUNTPOINT_LEGATO}" > /dev/kmsg
+			return ${SWI_ERR}
+		fi
+	fi
+
+	# Get mtd device number
+	get_mtdpart_dev_num ${LEGATO_MTDEV_NAME}
+	mtd_dev_num=$?
+	if [ ${mtd_dev_num} -eq $SWI_ERR_MAX ] ; then
+		# Error obtaining mtd device number, get out.
+		echo "swi-preinit: Can't determine mtd device number for ${LEGATO_MTDEV_NAME}" > /dev/kmsg
+		return ${SWI_ERR}
+	fi
+
+	# Try to mount squashfs file system first. It is sitting on top of
+	# UBI volume, and we need to use ubifs related commands to try to
+	# mount it.
+	mount_ubifs ${LEGATO_MTDEV_NAME} \
+	            ${FLASH_MOUNTPOINT_LEGATO} \
+	            squashfs \
+	            ${UBI_USER0_DEVNUM} \
+	            ${UBI_USER0_LEGATO_VOLNUM} \
+	            ro
+	ret=$?
+	if [ ${ret} -eq ${SWI_OK} ]; then
+		echo "swi-preinit: SQUASHFS successfully mounted on ${FLASH_MOUNTPOINT_LEGATO}" > /dev/kmsg
+		return ${ret}
+	else
+		echo "swi-preinit: Failed to mount Legato partitions" > /dev/kmsg
+		return ${ret}
+	fi
+}
+
+do_swi_mount_early() {
+	umount /sys/fs/cgroup
+	mount_early_user_start
+	mount_early_legato_start
+}
+
+boot_hook_add preinit_main do_swi_mount_early

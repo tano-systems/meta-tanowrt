@@ -1,0 +1,26 @@
+From a0d70171ebd82474a42fecfa7bac73d8f2d49e44 Mon Sep 17 00:00:00 2001
+From: Bertrand Roussel <broussel@sierrawireless.com>
+Date: Thu, 14 Feb 2019 18:09:34 -0800
+Subject: [PATCH] arm: fix dprintf format
+
+Signed-off-by: Bertrand Roussel <broussel@sierrawireless.com>
+---
+ arch/arm/faults.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/faults.c b/arch/arm/faults.c
+index 1b412ac4c..46816a14a 100644
+--- a/arch/arm/faults.c
++++ b/arch/arm/faults.c
+@@ -63,7 +63,7 @@ static void exception_die(struct arm_fault_frame *frame, int pc_off, const char
+ {
+ 	inc_critical_section();
+ 	frame->pc += pc_off;
+-	dprintf(CRITICAL, msg);
++	dprintf(CRITICAL, "%s", msg);
+ 	dump_fault_frame(frame);
+ 	
+ 	halt();
+-- 
+2.20.1
+

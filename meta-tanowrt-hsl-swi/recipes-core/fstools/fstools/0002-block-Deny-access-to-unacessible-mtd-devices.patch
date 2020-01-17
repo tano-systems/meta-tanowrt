@@ -1,0 +1,49 @@
+From 8de146dba9fb81ef1c2f53ef8fa542063472d851 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 16 Mar 2020 19:32:16 +0300
+Subject: [PATCH 2/2] block: Deny access to unacessible mtd devices
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ block.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/block.c b/block.c
+index 8d77086..b5afa72 100644
+--- a/block.c
++++ b/block.c
+@@ -511,6 +511,23 @@ static int _cache_load(const char *path)
+ 		return -1;
+ 
+ 	for (j = 0; j < gl.gl_pathc; j++) {
++		/*
++		 * Devices /dev/mtdblock1,2,3,5,18,19,20 cannot be accessed
++		 * from userspace on WP76xx modules. The system hangs when
++		 * accessing these devices.
++		 */
++
++		/* ULOG_ERR("%s: probing device '%s'...\n", __FUNCTION__, gl.gl_pathv[j]); */
++
++		if (!strcmp(gl.gl_pathv[j], "/dev/mtdblock1") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock2") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock3") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock5") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock18") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock19") ||
++		    !strcmp(gl.gl_pathv[j], "/dev/mtdblock20"))
++		    continue;
++
+ 		struct probe_info *pr = _probe_path(gl.gl_pathv[j]);
+ 		if (pr) {
+ 			dev = malloc(sizeof(struct device));
+@@ -522,7 +539,6 @@ static int _cache_load(const char *path)
+ 	}
+ 
+ 	globfree(&gl);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.25.0.windows.1
+

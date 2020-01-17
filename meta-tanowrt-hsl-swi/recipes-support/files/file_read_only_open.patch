@@ -1,0 +1,28 @@
+From 0cccd10bbff0889fa950ee6e7f43e6d416026b2e Mon Sep 17 00:00:00 2001
+From: Caupar Gu <CGu@sierrawireless.com>
+Date: Fri, 17 Jun 2016 08:45:47 +0800
+Subject: [PATCH] ubi port is read only, and will return ENXIO when open it as
+ RDWR mode
+
+Signed-off-by: Caupar Gu <CGu@sierrawireless.com>
+---
+ lib/utils_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/utils_device.c b/lib/utils_device.c
+index 1f3a168..a1f04c5 100644
+--- a/lib/utils_device.c
++++ b/lib/utils_device.c
+@@ -550,7 +550,8 @@ static int device_info(struct crypt_device *cd,
+ 	/* Try to open read-write to check whether it is a read-only device */
+ 	/* coverity[toctou] */
+ 	fd = open(device->path, O_RDWR | flags);
+-	if (fd == -1 && errno == EROFS) {
++	// ubi port is prohibit, when try to read it with RDWR mode and got EPERM
++	if (fd == -1 && (errno == EROFS || errno == EPERM)) {
+ 		real_readonly = 1;
+ 		fd = open(device->path, O_RDONLY | flags);
+ 	}
+-- 
+2.19.2
+

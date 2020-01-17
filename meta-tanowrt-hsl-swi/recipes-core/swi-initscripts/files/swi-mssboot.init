@@ -1,0 +1,40 @@
+#!/bin/sh /etc/rc.common
+
+START=17
+
+start() {
+	echo "Starting modem dependent daemons..." > /dev/kmsg
+	search_dir="/sys/bus/msm_subsys/devices/"
+	for entry in `ls $search_dir`
+	do
+		subsys_temp=`cat $search_dir/$entry/name`
+		if [ "$subsys_temp" == "modem" ]
+		then
+			break
+		fi
+	done
+	counter=0
+	while [ ${counter} -le 150 ]
+	do
+		msstate=`cat $search_dir/$entry/state`
+		if [ "$msstate" == "ONLINE" ]
+		then
+			echo "Load modem done" > /dev/kmsg
+			exit 0
+		fi
+		counter=$(( $counter + 1 ))
+		usleep 100000
+	done
+
+	echo "Load modem error" > /dev/kmsg
+	exit 1
+}
+
+stop() {
+	return 0;
+}
+
+restart() {
+	stop
+	start
+}

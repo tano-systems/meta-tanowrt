@@ -1,0 +1,53 @@
+diff --git a/target/mdm9607/init.c b/target/mdm9607/init.c
+index e3df4237..5c8240df 100755
+--- a/target/mdm9607/init.c
++++ b/target/mdm9607/init.c
+@@ -84,7 +84,8 @@ static struct ptable flash_ptable;
+ #define QPIC_NAND_MAX_DESC_LEN   0x7FFF
+ 
+ #define LAST_NAND_PTN_LEN_PATTERN 0xFFFFFFFF
+-#define UBI_CMDLINE " rootfstype=ubifs rootflags=bulk_read"
++#define UBI_CMDLINE_ROOTFSTYPE " rootfstype=ubifs"
++#define UBI_CMDLINE_ROOTFLAGS " rootflags=bulk_read"
+ 
+ #define CE1_INSTANCE            1
+ #define CE_EE                   1
+@@ -296,7 +297,7 @@ int get_target_boot_params(const char *cmdline, const char *part, char **buf)
+ {
+ 	struct ptable *ptable;
+ 	int system_ptn_index = -1;
+-	uint32_t buflen = strlen(UBI_CMDLINE) + strlen(" root=ubi0:rootfs ubi.mtd=") + sizeof(int) + 1; /* 1 byte for null character*/
++	uint32_t buflen = strlen(UBI_CMDLINE_ROOTFSTYPE) + strlen(UBI_CMDLINE_ROOTFLAGS) + strlen(" root=ubi0:rootfs ubi.mtd=") + sizeof(int) + 1; /* 1 byte for null character*/
+ 
+ 	if (!cmdline || !part ) {
+ 	        dprintf(CRITICAL, "WARN: Invalid input param\n");
+@@ -322,8 +323,19 @@ int get_target_boot_params(const char *cmdline, const char *part, char **buf)
+ 		free(*buf);
+ 		return -1;
+ 	}
++
+ 	/* Adding command line parameters according to target boot type */
+-	snprintf(*buf, buflen, UBI_CMDLINE);
++	**buf = 0;
++
++	/* Add rootfstype only if not already specified in existing cmdline */
++	if (strncmp(cmdline, "rootfstype=", strlen("rootfstype=")) &&
++	    !strstr(cmdline, " rootfstype="))
++		snprintf(*buf + strlen(*buf), buflen - strlen(*buf), UBI_CMDLINE_ROOTFSTYPE);
++
++	/* Add rootflags only if not already specified in existing cmdline */
++	if (strncmp(cmdline, "rootflags=", strlen("rootflags=")) &&
++	    !strstr(cmdline, " rootflags="))
++		snprintf(*buf + strlen(*buf), buflen - strlen(*buf), UBI_CMDLINE_ROOTFLAGS);
+ 
+ 	/*check if cmdline contains "root=" at the beginning of buffer or
+ 	* " root=" in the middle of buffer.
+@@ -332,7 +344,7 @@ int get_target_boot_params(const char *cmdline, const char *part, char **buf)
+ 		(strstr(cmdline, " root="))))
+ 		dprintf(DEBUG, "DEBUG: cmdline has root=\n");
+ 	else
+-		snprintf(*buf+strlen(*buf), buflen, " root=ubi0:rootfs ubi.mtd=%d", system_ptn_index);
++		snprintf(*buf+strlen(*buf), buflen-strlen(*buf), " root=ubi0:rootfs ubi.mtd=%d", system_ptn_index);
+ 		/*in success case buf will be freed in the calling function of this*/
+ 	return 0;
+ }

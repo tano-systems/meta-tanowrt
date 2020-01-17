@@ -1,0 +1,23 @@
+#!/bin/sh
+
+##########################################################################
+#
+# Copyright (c) 2012-2016 Sierra Wireless
+#
+# Copyright (C) 2020, Tano Systems LLC,
+#     Anton Kikin <a.kikin@tano-systems.com>
+#
+##########################################################################
+
+do_swi_confighw() {
+	# Provide helper to access tty for AT
+	if [ -e "/dev/smd8" ] && ! [ -e "/dev/ttyAT" ]; then
+		ln -s "/dev/smd8" "/dev/ttyAT"
+	fi
+
+	# Disable autosleep
+	echo off > /sys/power/autosleep
+
+}
+
+boot_hook_add preinit_main do_swi_confighw

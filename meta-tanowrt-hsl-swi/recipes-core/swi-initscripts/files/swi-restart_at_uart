@@ -1,0 +1,53 @@
+#!/bin/sh
+# --------------------------------------------------------------
+# Copyright (c) 2017 Sierra Wireless. All Rights Reserved.
+# --------------------------------------------------------------
+# startAT: Simple script to start UART port bridging to AT_UART_DEVICE
+# if the specific UART is configured as AT service
+
+# start AT_UART_DEVICE minitoring and bridging
+source /etc/run.env
+
+uart_get_srv
+
+unset AT_UART_DEVICE
+unset AT_SMD_DEVICE
+
+AT_SMD_DEVICE=/dev/smd11
+
+######################################################################
+# Important Note: The AT service is now handled to MPSS, so in here
+#                 we do not need to start any AT service in APSS
+######################################################################
+if  [ x${UART1_SERVICE} = "xAT" ]; then
+  swi_log "Mapped UART1 for AT service"
+#  AT_UART_DEVICE=${UART1_DEVICE}
+elif [ x${UART2_SERVICE} = "xAT" ]; then
+  swi_log "Mapped UART2 for AT service"
+#  AT_UART_DEVICE=${UART2_DEVICE}
+else
+  swi_log "NO UART map for AT service"
+fi
+
+if [ x${AT_UART_DEVICE} != "x" ]; then
+  while [ 1 ]
+  do
+    if [ -e ${AT_UART_DEVICE} ] && [ -e ${AT_SMD_DEVICE} ]; then
+      # disable tty echo
+#      stty -F ${AT_UART_DEVICE} -echo
+#      cat ${AT_UART_DEVICE} > ${AT_SMD_DEVICE} &
+      # remember pid so it can be killed later
+#      atuartpid=$!
+#      cat ${AT_SMD_DEVICE} > ${AT_UART_DEVICE}
+      # exit, kill atuartpid too
+#      kill ${atuartpid}
+#      sleep 15
+    elif [ -e ${AT_UART_DEVICE} ]; then
+      # wait 15s for AT_SMD_DEVICE show up
+      sleep 15
+    else
+      # not be enabled, exit
+      break
+    fi
+  done
+fi
