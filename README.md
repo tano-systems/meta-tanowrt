@@ -81,6 +81,12 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 
 [meta-tanowrt]: meta-tanowrt/README.md
 
+## Access
+
+The following credentials are used by default to access the operating system (terminal) and the LuCI web-configuration interface:
+* User name: `root`
+* Password: `root`
+
 ## Limitations
 
 Works with OE Release 2.7 (Warrior).
