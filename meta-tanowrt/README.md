@@ -138,6 +138,8 @@ This layer depends on:
   URI: <git://git.openembedded.org/bitbake>  
   Branch: 1.36  
 
+The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
+
 ## License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
