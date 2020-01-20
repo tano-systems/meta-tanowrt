@@ -1,13 +1,13 @@
 # This file Copyright (C) 2015 Khem Raj <raj.khem@gmail.com> and
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-#           Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+#           Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-# 30.11.2019
-# base-files: add 'wifi reconf'
-OPENWRT_SRCREV = "6becc37f33be4c2f2b5d58467bdda41c251d9e2e"
+# 18.01.2020
+# base-files/functions.sh: use grep -q instead of []
+OPENWRT_SRCREV = "8df14c229c02a3b9329afc6e3ebf4f8aec5b59ed"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "11"
+INC_PR = "12"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
