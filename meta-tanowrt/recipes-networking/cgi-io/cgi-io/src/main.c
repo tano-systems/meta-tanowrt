@@ -37,6 +37,7 @@
 
 #include "multipart_parser.h"
 
+#define READ_BLOCK 4096
 
 enum part {
 	PART_UNKNOWN,
@@ -146,6 +147,7 @@ static char *
 checksum(const char *applet, size_t sumlen, const char *file)
 {
 	pid_t pid;
+	int r;
 	int fds[2];
 	static char chksum[65];
 
@@ -174,10 +176,13 @@ checksum(const char *applet, size_t sumlen, const char *file)
 
 	default:
 		memset(chksum, 0, sizeof(chksum));
-		read(fds[0], chksum, sumlen);
+		r = read(fds[0], chksum, sumlen);
 		waitpid(pid, NULL, 0);
 		close(fds[0]);
 		close(fds[1]);
+
+		if (r < 0)
+			return NULL;
 	}
 
 	return chksum;
@@ -443,7 +448,7 @@ filecopy(void)
 #endif
 	{
 		int len;
-		char buf[4096];
+		char buf[READ_BLOCK];
 
 		if (lseek(st.tempfd, 0, SEEK_SET) < 0)
 		{
@@ -490,7 +495,7 @@ header_field(multipart_parser *p, const char *data, size_t len)
 static int
 header_value(multipart_parser *p, const char *data, size_t len)
 {
-	int i, j;
+	size_t i, j;
 
 	if (!st.is_content_disposition)
 		return 0;
@@ -560,6 +565,8 @@ data_begin_cb(multipart_parser *p)
 static int
 data_cb(multipart_parser *p, const char *data, size_t len)
 {
+	int wlen = len;
+
 	switch (st.parttype)
 	{
 	case PART_SESSIONID:
@@ -575,14 +582,14 @@ data_cb(multipart_parser *p, const char *data, size_t len)
 		break;
 
 	case PART_FILEDATA:
-		if (write(st.tempfd, data, len) != len)
+		if (write(st.tempfd, data, len) != wlen)
 		{
 			close(st.tempfd);
 			return response(false, "I/O failure while writing temporary file");
 		}
 
 		if (!st.filedata)
-			st.filedata = !!len;
+			st.filedata = !!wlen;
 
 		break;
 
@@ -716,7 +723,8 @@ static int
 main_upload(int argc, char *argv[])
 {
 	int rem, len;
-	char buf[4096];
+	bool done = false;
+	char buf[READ_BLOCK];
 	multipart_parser *p;
 
 	p = init_parser();
@@ -729,16 +737,13 @@ main_upload(int argc, char *argv[])
 
 	while ((len = read(0, buf, sizeof(buf))) > 0)
 	{
-		rem = multipart_parser_execute(p, buf, len);
-
-		if (rem < len)
-			break;
+		if (!done) {
+			rem = multipart_parser_execute(p, buf, len);
+			done = (rem < len);
+		}
 	}
 
 	multipart_parser_free(p);
-
-	/* read remaining post data */
-	while ((len = read(0, buf, sizeof(buf))) > 0);
 
 	return 0;
 }
@@ -748,7 +753,7 @@ main_download(int argc, char **argv)
 {
 	char *fields[] = { "sessionid", NULL, "path", NULL, "filename", NULL, "mimetype", NULL };
 	unsigned long long size = 0;
-	char *p, buf[4096];
+	char *p, buf[READ_BLOCK];
 	ssize_t len = 0;
 	struct stat s;
 	int rfd;
@@ -768,7 +773,7 @@ main_download(int argc, char **argv)
 		return failure(403, 0, "Requested path is not a regular file or block device");
 
 	for (p = fields[5]; p && *p; p++)
-		if (!isalnum(*p) && !strchr(" ()<>@,;:[]?.=%", *p))
+		if (!isalnum(*p) && !strchr(" ()<>@,;:[]?.=%-", *p))
 			return failure(400, 0, "Invalid characters in filename");
 
 	for (p = fields[7]; p && *p; p++)
@@ -826,6 +831,7 @@ main_backup(int argc, char **argv)
 {
 	pid_t pid;
 	time_t now;
+	int r;
 	int len;
 	int status;
 	int fds[2];
@@ -852,7 +858,9 @@ main_backup(int argc, char **argv)
 		close(fds[0]);
 		close(fds[1]);
 
-		chdir("/");
+		r = chdir("/");
+		if (r < 0)
+			return failure(500, errno, "Failed chdir('/')");
 
 		execl("/sbin/sysupgrade", "/sbin/sysupgrade",
 		      "--empty-dirs", "--create-backup", "-", NULL);
@@ -860,6 +868,8 @@ main_backup(int argc, char **argv)
 		return -1;
 
 	default:
+		close(fds[1]);
+
 		now = time(NULL);
 		strftime(datestr, sizeof(datestr) - 1, "%Y-%m-%d", localtime(&now));
 
@@ -874,13 +884,243 @@ main_backup(int argc, char **argv)
 		fflush(stdout);
 
 		do {
-			len = splice(fds[0], NULL, 1, NULL, 4096, SPLICE_F_MORE);
+			len = splice(fds[0], NULL, 1, NULL, READ_BLOCK, SPLICE_F_MORE);
 		} while (len > 0);
 
 		waitpid(pid, &status, 0);
 
 		close(fds[0]);
+
+		return 0;
+	}
+}
+
+static const char *
+lookup_executable(const char *cmd)
+{
+	size_t plen = 0, clen = strlen(cmd) + 1;
+	static char path[PATH_MAX];
+	char *search, *p;
+	struct stat s;
+
+	if (!stat(cmd, &s) && S_ISREG(s.st_mode))
+		return cmd;
+
+	search = getenv("PATH");
+
+	if (!search)
+		search = "/bin:/usr/bin:/sbin:/usr/sbin";
+
+	p = search;
+
+	do {
+		if (*p != ':' && *p != '\0')
+			continue;
+
+		plen = p - search;
+
+		if ((plen + clen) >= sizeof(path))
+			continue;
+
+		strncpy(path, search, plen);
+		sprintf(path + plen, "/%s", cmd);
+
+		if (!stat(path, &s) && S_ISREG(s.st_mode))
+			return path;
+
+		search = p + 1;
+	} while (*p++);
+
+	return NULL;
+}
+
+static char **
+parse_command(const char *cmdline)
+{
+	const char *p = cmdline, *s;
+	char **argv = NULL, *out;
+	size_t arglen = 0;
+	int argnum = 0;
+	bool esc;
+
+	while (isspace(*cmdline))
+		cmdline++;
+
+	for (p = cmdline, s = p, esc = false; p; p++) {
+		if (esc) {
+			esc = false;
+		}
+		else if (*p == '\\' && p[1] != 0) {
+			esc = true;
+		}
+		else if (isspace(*p) || *p == 0) {
+			if (p > s) {
+				argnum += 1;
+				arglen += sizeof(char *) + (p - s) + 1;
+			}
+
+			s = p + 1;
+		}
+
+		if (*p == 0)
+			break;
+	}
+
+	if (arglen == 0)
+		return NULL;
+
+	argv = calloc(1, arglen + sizeof(char *));
+
+	if (!argv)
+		return NULL;
+
+	out = (char *)argv + sizeof(char *) * (argnum + 1);
+	argv[0] = out;
+
+	for (p = cmdline, s = p, esc = false, argnum = 0; p; p++) {
+		if (esc) {
+			esc = false;
+			*out++ = *p;
+		}
+		else if (*p == '\\' && p[1] != 0) {
+			esc = true;
+		}
+		else if (isspace(*p) || *p == 0) {
+			if (p > s) {
+				*out++ = ' ';
+				argv[++argnum] = out;
+			}
+
+			s = p + 1;
+		}
+		else {
+			*out++ = *p;
+		}
+
+		if (*p == 0)
+			break;
+	}
+
+	argv[argnum] = NULL;
+	out[-1] = 0;
+
+	return argv;
+}
+
+static int
+main_exec(int argc, char **argv)
+{
+	char *fields[] = { "sessionid", NULL, "command", NULL, "filename", NULL, "mimetype", NULL };
+	int i, devnull, status, fds[2];
+	bool allowed = false;
+	ssize_t len = 0;
+	const char *exe;
+	char *p, **args;
+	pid_t pid;
+
+	postdecode(fields, 4);
+
+	if (!fields[1] || !session_access(fields[1], "cgi-io", "exec", "read"))
+		return failure(403, 0, "Exec permission denied");
+
+	for (p = fields[5]; p && *p; p++)
+		if (!isalnum(*p) && !strchr(" ()<>@,;:[]?.=%-", *p))
+			return failure(400, 0, "Invalid characters in filename");
+
+	for (p = fields[7]; p && *p; p++)
+		if (!isalnum(*p) && !strchr(" .;=/-", *p))
+			return failure(400, 0, "Invalid characters in mimetype");
+
+	args = fields[3] ? parse_command(fields[3]) : NULL;
+
+	if (!args)
+		return failure(400, 0, "Invalid command parameter");
+
+	/* First check if we find an ACL match for the whole cmdline ... */
+	allowed = session_access(fields[1], "file", args[0], "exec");
+
+	/* Now split the command vector... */
+	for (i = 1; args[i]; i++)
+		args[i][-1] = 0;
+
+	/* Find executable... */
+	exe = lookup_executable(args[0]);
+
+	if (!exe) {
+		free(args);
+		return failure(404, 0, "Executable not found");
+	}
+
+	/* If there was no ACL match, check for a match on the executable */
+	if (!allowed && !session_access(fields[1], "file", exe, "exec")) {
+		free(args);
+		return failure(403, 0, "Access to command denied by ACL");
+	}
+
+	if (pipe(fds)) {
+		free(args);
+		return failure(500, errno, "Failed to spawn pipe");
+	}
+
+	switch ((pid = fork()))
+	{
+	case -1:
+		free(args);
+		close(fds[0]);
 		close(fds[1]);
+		return failure(500, errno, "Failed to fork process");
+
+	case 0:
+		devnull = open("/dev/null", O_RDWR);
+
+		if (devnull > -1) {
+			dup2(devnull, 0);
+			dup2(devnull, 2);
+			close(devnull);
+		}
+		else {
+			close(0);
+			close(2);
+		}
+
+		dup2(fds[1], 1);
+		close(fds[0]);
+		close(fds[1]);
+
+		if (chdir("/") < 0) {
+			free(args);
+			return failure(500, errno, "Failed chdir('/')");
+		}
+
+		if (execv(exe, args) < 0) {
+			free(args);
+			return failure(500, errno, "Failed execv(...)");
+		}
+
+		return -1;
+
+	default:
+		close(fds[1]);
+
+		printf("Status: 200 OK\r\n");
+		printf("Content-Type: %s\r\n",
+		       fields[7] ? fields[7] : "application/octet-stream");
+
+		if (fields[5])
+			printf("Content-Disposition: attachment; filename=\"%s\"\r\n",
+			       fields[5]);
+
+		printf("\r\n");
+		fflush(stdout);
+
+		do {
+			len = splice(fds[0], NULL, 1, NULL, READ_BLOCK, SPLICE_F_MORE);
+		} while (len > 0);
+
+		waitpid(pid, &status, 0);
+
+		close(fds[0]);
+		free(args);
 
 		return 0;
 	}
@@ -894,6 +1134,8 @@ int main(int argc, char **argv)
 		return main_download(argc, argv);
 	else if (strstr(argv[0], "cgi-backup"))
 		return main_backup(argc, argv);
+	else if (strstr(argv[0], "cgi-exec"))
+		return main_exec(argc, argv);
 
 	return -1;
 }
