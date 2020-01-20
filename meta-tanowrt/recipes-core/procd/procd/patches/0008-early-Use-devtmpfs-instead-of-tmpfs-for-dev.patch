@@ -1,4 +1,4 @@
-From 97578d35b46478774e9f1961a74cc724d04b8e31 Mon Sep 17 00:00:00 2001
+From 78eb950e7a1053dd618a44992fcade3f6c0abfb2 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Jul 2019 05:40:01 +0300
 Subject: [PATCH 08/11] early: Use devtmpfs instead of tmpfs for /dev

@@ -1,4 +1,4 @@
-From aa8ec20c17b6e43da02432ce508c1a30b22611f8 Mon Sep 17 00:00:00 2001
+From e8818ce935cf467c9f85a819288100ea3245315b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 19 Feb 2019 02:41:23 +0300
 Subject: [PATCH 03/11] service: Allow to configure scheduler attributes
@@ -12,7 +12,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  create mode 100644 service/instance_sched.h
 
 diff --git a/service/instance.c b/service/instance.c
-index d95c301..de7cbcc 100644
+index 43d6bb0..f796528 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -27,6 +27,8 @@
@@ -231,7 +231,7 @@ index d95c301..de7cbcc 100644
  	if (tb[INSTANCE_ATTR_USER]) {
  		const char *user = blobmsg_get_string(tb[INSTANCE_ATTR_USER]);
  		struct passwd *p = getpwnam(user);
-@@ -1289,6 +1422,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1303,6 +1436,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	blobmsg_list_move(&in->errors, &in_src->errors);
  	blobmsg_list_move(&in->jail.mount, &in_src->jail.mount);
  	in->trigger = in_src->trigger;
@@ -242,9 +242,9 @@ index d95c301..de7cbcc 100644
 +	in->deadline = in_src->deadline;
 +	in->period = in_src->period;
  	in->command = in_src->command;
- 	in->pidfile = in_src->pidfile;
  	in->respawn = in_src->respawn;
-@@ -1359,6 +1498,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+ 	in->respawn_retry = in_src->respawn_retry;
+@@ -1376,6 +1515,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->proc.cb = instance_exit;
  	in->term_timeout = 5;
  	in->syslog_facility = LOG_DAEMON;
@@ -257,7 +257,7 @@ index d95c301..de7cbcc 100644
  
  #ifdef CGROUP_SUPPORT
  	in->cg_sticky = 0;
-@@ -1482,6 +1627,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1499,6 +1644,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  

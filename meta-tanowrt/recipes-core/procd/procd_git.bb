@@ -1,9 +1,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano34"
+PR = "tano35"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -47,9 +47,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 04.01.2020
-# instance: strdup string attributes
-SRCREV = "a5af33ce9a16f6aa599f19cc7161e067fab9495d"
+# 19.01.2020
+# instance: Fix instance_config_move_strdup() function
+SRCREV = "0a11aa405d3fbe970458d1cc154970e817826616"
 
 S = "${WORKDIR}/git"
 
