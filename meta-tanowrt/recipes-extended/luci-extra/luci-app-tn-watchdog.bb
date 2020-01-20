@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "0.9.0+git${SRCPV}"
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "LuCI support for watchdog configuration"
 LICENSE = "Apache-2.0"
@@ -25,3 +25,19 @@ S = "${WORKDIR}/git"
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
 inherit luasrcdiet
+
+LUCI_APP_TN_WATCHDOG_HIDE_FOOTER ?= "1"
+
+do_install_append() {
+	install -d ${D}${sysconfdir}/uci-defaults
+
+	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_watchdog_footer
+
+	echo "#!/bin/sh" > ${UCIDEFFILE}
+	echo "uci -q batch <<-EOF >/dev/null" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_watchdog=internal" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_watchdog.hide_footer=${LUCI_APP_TN_WATCHDOG_HIDE_FOOTER}" >> ${UCIDEFFILE}
+	echo "    commit luci" >> ${UCIDEFFILE}
+	echo "EOF" >> ${UCIDEFFILE}
+	echo "exit 0" >> ${UCIDEFFILE}
+}
