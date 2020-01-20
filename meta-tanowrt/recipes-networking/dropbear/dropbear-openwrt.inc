@@ -1,11 +1,12 @@
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "2"
+INC_PR = "3"
 
 # OpenWrt files
 SRC_URI_append = "\
 	file://dropbear.config \
 	file://dropbear.init \
+	file://dropbear.failsafe \
 "
 
 # OpenWrt configuration
@@ -41,7 +42,7 @@ SRC_URI_append = "\
 	file://901-bundled-libs-cflags.patch \
 "
 
-FILES_${PN} += "/root"
+FILES_${PN} += "/root /lib/preinit"
 
 do_configure_append() {
 	: > ${B}/localoptions.h
@@ -74,6 +75,9 @@ do_install_append() {
 
     # Make link to dropbearkey in /usr/bin
     ln -s ${sbindir}/dropbear ${D}${bindir}/dropbearkey
+
+    install -d ${D}/lib/preinit
+    install -m 0644 ${WORKDIR}/dropbear.failsafe ${D}/lib/preinit/99_10_failsafe_dropbear
 }
 
 CONFFILES_${PN}_append = "\
