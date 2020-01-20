@@ -1,8 +1,8 @@
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano17"
+PR = "tano18"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 02.01.2020
-# dhcpv6-ia: introduce DHCPv6 pd and ia assignments flags
-SRCREV = "2520c483781339f6c7feae617b7e5c0137e3534d"
+# 14.01.2020
+# dhcpv6-ia: use dhcp leasetime to set preferred/valid statefull lifetimes
+SRCREV = "6db312a698e920ff61505ef1f42469880829774d"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt openwrt-services
