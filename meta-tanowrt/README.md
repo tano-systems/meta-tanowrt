@@ -1,5 +1,5 @@
 
-<img src="docs/tano-logo.svg?raw=true" width="200">
+<img src="./docs/tano-logo.svg" width="200">
 
 # meta-tanowrt
 
