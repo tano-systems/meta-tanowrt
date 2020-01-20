@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano4"
+PR = "tano5"
 PV = "0.9.0+git${SRCPV}"
 
 SUMMARY = "LuCI support for SNMP daemon"
@@ -27,3 +27,18 @@ SRCREV = "${GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
+LUCI_APP_TN_SNMPD_HIDE_FOOTER ?= "1"
+
+do_install_append() {
+	install -d ${D}${sysconfdir}/uci-defaults
+
+	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_snmpd_footer
+
+	echo "#!/bin/sh" > ${UCIDEFFILE}
+	echo "uci -q batch <<-EOF >/dev/null" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_snmpd=internal" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_snmpd.hide_footer=${LUCI_APP_TN_SNMPD_HIDE_FOOTER}" >> ${UCIDEFFILE}
+	echo "    commit luci" >> ${UCIDEFFILE}
+	echo "EOF" >> ${UCIDEFFILE}
+	echo "exit 0" >> ${UCIDEFFILE}
+}
