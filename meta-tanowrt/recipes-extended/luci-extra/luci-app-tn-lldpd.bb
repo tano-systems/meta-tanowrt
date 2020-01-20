@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.2.1+git${SRCPV}"
-PR = "tano22"
+PR = "tano23"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
@@ -26,3 +26,19 @@ S = "${WORKDIR}/git"
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
 inherit luasrcdiet
+
+LUCI_APP_TN_LLDPD_HIDE_FOOTER ?= "1"
+
+do_install_append() {
+	install -d ${D}${sysconfdir}/uci-defaults
+
+	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_lldpd_footer
+
+	echo "#!/bin/sh" > ${UCIDEFFILE}
+	echo "uci -q batch <<-EOF >/dev/null" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_lldpd=internal" >> ${UCIDEFFILE}
+	echo "    set luci.app_tn_lldpd.hide_footer=${LUCI_APP_TN_LLDPD_HIDE_FOOTER}" >> ${UCIDEFFILE}
+	echo "    commit luci" >> ${UCIDEFFILE}
+	echo "EOF" >> ${UCIDEFFILE}
+	echo "exit 0" >> ${UCIDEFFILE}
+}
