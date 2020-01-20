@@ -1,9 +1,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -46,9 +46,9 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 28.12.2019
-# blobmsg: fix wrong payload len passed from blobmsg_check_array
-SRCREV = "cd75136b1342e1e9dabf921be13240c6653640ed"
+# 12.01.2020
+# blobmsg: blobmsg_parse and blobmsg_parse_array oob read fixes
+SRCREV = "43a103ff17ee5872669f8712606578c90c14591d"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
