@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano24"
+PR = "tano25"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -40,7 +40,6 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0009-libfstools-Support-for-f2fs-ext4-overlay-on-a-separa.patch \
 	file://0010-fstools-Configurable-overlay-partition-name.patch \
 	file://0011-libfstools-Fix-64-bit-compilation-issues.patch \
-	file://0012-fstools-libblkid-tiny-Fix-label-size-in-blkid_struct.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
@@ -49,9 +48,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 05.01.2019
-# block: re-discover mtd devices on extroot mount retry
-SRCREV = "823faa0f3edb93fac528bc35588cea81f0a77146"
+# 04.01.2020
+# fstools: Add support to read-only MTD partitions (eg. recovery images)
+SRCREV = "f5c7c1813f52e6d7b59ecfb2f9f95e69b05b1980"
 
 S = "${WORKDIR}/git"
 
