@@ -1,4 +1,4 @@
-From f0fab324e30dca05ea3c5faabf9987ad13d93748 Mon Sep 17 00:00:00 2001
+From dcf847e459a7d807470eb778f44cc6d6bf758292 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 26 Feb 2019 19:57:49 +0300
 Subject: [PATCH 04/11] hotplug: Remove '/dev/' prefix from DEVNAME variable

@@ -1,4 +1,4 @@
-From 09cf5f8e57174a8a915ea71bbb16905d55d382f8 Mon Sep 17 00:00:00 2001
+From c2431a78531743af0387f57f48eca9ead00c675d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
 Subject: [PATCH 01/11] service: allow to change service's current directory
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+)
 
 diff --git a/service/instance.c b/service/instance.c
-index b0c9807..c3576d2 100644
+index 14da862..6761cf5 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -61,6 +61,7 @@ enum {
@@ -63,15 +63,15 @@ index b0c9807..c3576d2 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1041,6 +1056,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
- 	in->seccomp = in_src->seccomp;
+@@ -1053,6 +1068,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+ 	in->trace = in_src->trace;
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
 +	in->chdir = in_src->chdir;
  
- 	free(in->config);
- 	in->config = in_src->config;
-@@ -1214,5 +1230,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+ 	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
+ 	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
+@@ -1231,5 +1247,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  

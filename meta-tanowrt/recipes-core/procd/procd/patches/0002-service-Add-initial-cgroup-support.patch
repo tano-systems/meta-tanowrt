@@ -1,4 +1,4 @@
-From 361f649b558efdbfdbf5090047e433f71248a0a9 Mon Sep 17 00:00:00 2001
+From 5372ec8961e01f8b45712633374c039b114c46c6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 9 Feb 2019 01:18:40 +0300
 Subject: [PATCH 02/11] service: Add initial cgroup support
@@ -27,7 +27,7 @@ index a566acd..e4431a8 100644
    ADD_DEFINITIONS(-DUDEV_DEBUG -g3)
  ENDIF()
 diff --git a/service/instance.c b/service/instance.c
-index c3576d2..d95c301 100644
+index 6761cf5..43d6bb0 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -1,6 +1,7 @@
@@ -330,7 +330,7 @@ index c3576d2..d95c301 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1057,6 +1301,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1069,6 +1313,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
  	in->chdir = in_src->chdir;
@@ -339,9 +339,9 @@ index c3576d2..d95c301 100644
 +	in->cg_group = in_src->cg_group;
 +#endif
  
- 	free(in->config);
- 	in->config = in_src->config;
-@@ -1112,6 +1360,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+ 	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
+ 	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
+@@ -1129,6 +1377,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->term_timeout = 5;
  	in->syslog_facility = LOG_DAEMON;
  
@@ -352,7 +352,7 @@ index c3576d2..d95c301 100644
  	in->_stdout.fd.fd = -2;
  	in->_stdout.stream.string_data = true;
  	in->_stdout.stream.notify_read = instance_stdout;
-@@ -1233,5 +1485,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1250,5 +1502,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (in->chdir)
  		blobmsg_add_string(b, "chdir", in->chdir);
  
