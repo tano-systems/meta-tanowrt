@@ -4,9 +4,9 @@ LUCI_GIT_BRANCH   ?= "tano/master"
 LUCI_GIT_PROTOCOL ?= "git"
 
 # 20.01.2020
-LUCI_GIT_SRCREV ?= "bcbcd9fb5aff53f0cf6be70bcb8be8c7f3e1d86c"
+LUCI_GIT_SRCREV ?= "e4a9503bacfbffbfa7c67789e79c370b9be1a9b1"
 
-PR_append = ".38"
+PR_append = ".39"
 
 libdir = "/usr/lib"
 
