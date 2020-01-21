@@ -1,5 +1,5 @@
 #
-# This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
 SUMMARY = "Collects and summarises system performance statistics"
@@ -7,44 +7,68 @@ DESCRIPTION = "collectd is a daemon which collects system performance statistics
 LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
-PV = "5.8.1"
-PR = "tano3"
+PV = "5.10.0"
+PR = "tano0"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "rrdtool libgcrypt libtool flex"
 RDEPENDS_${PN} += "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '', d)}"
 
 SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
-SRC_URI[sha256sum] = "e796fda27ce06377f491ad91aa286962a68c2b54076aa77a29673d53204453da"
+SRC_URI[sha256sum] = "a03359f563023e744c2dc743008a00a848f4cd506e072621d86b6d8313c0375b"
 
 # Files (OpenWrt)
 SRC_URI += "\
-	file://collectd.conf \
+	file://collectd.uci \
 	file://collectd.init \
-"
-
-# Patches (from meta-openembedded)
-SRC_URI += "\
-    file://0001-no-gcrypt-badpath.patch \
-    file://0002-conditionally-check-libvirt.patch \
-    file://0003-fix-to-build-with-glibc-2.25.patch \
-    file://0004-configure-Check-for-Wno-error-format-truncation-comp.patch \
-    file://0005-Disable-new-gcc8-warnings.patch \
-    file://0006-irq-plugin-Fix-config-reading.patch \
+	file://usr/share/collectd/plugin/apcups.json \
+	file://usr/share/collectd/plugin/conntrack.json \
+	file://usr/share/collectd/plugin/contextswitch.json \
+	file://usr/share/collectd/plugin/cpu.json \
+	file://usr/share/collectd/plugin/cpufreq.json \
+	file://usr/share/collectd/plugin/csv.json \
+	file://usr/share/collectd/plugin/curl.json \
+	file://usr/share/collectd/plugin/df.json \
+	file://usr/share/collectd/plugin/disk.json \
+	file://usr/share/collectd/plugin/dns.json \
+	file://usr/share/collectd/plugin/email.json \
+	file://usr/share/collectd/plugin/entropy.json \
+	file://usr/share/collectd/plugin/exec.json \
+	file://usr/share/collectd/plugin/interface.json \
+	file://usr/share/collectd/plugin/iptables.json \
+	file://usr/share/collectd/plugin/irq.json \
+	file://usr/share/collectd/plugin/iwinfo.json \
+	file://usr/share/collectd/plugin/load.json \
+	file://usr/share/collectd/plugin/logfile.json \
+	file://usr/share/collectd/plugin/lua.json \
+	file://usr/share/collectd/plugin/memory.json \
+	file://usr/share/collectd/plugin/netlink.json \
+	file://usr/share/collectd/plugin/network.json \
+	file://usr/share/collectd/plugin/nut.json \
+	file://usr/share/collectd/plugin/olsrd.json \
+	file://usr/share/collectd/plugin/openvpn.json \
+	file://usr/share/collectd/plugin/ping.json \
+	file://usr/share/collectd/plugin/processes.json \
+	file://usr/share/collectd/plugin/rrdtool.json \
+	file://usr/share/collectd/plugin/sensors.json \
+	file://usr/share/collectd/plugin/tcpconns.json \
+	file://usr/share/collectd/plugin/thermal.json \
+	file://usr/share/collectd/plugin/unixsock.json \
+	file://usr/share/collectd/plugin/uptime.json \
+	file://usr/share/collectd/plugin/vmem.json \
 "
 
 # Patches (from OpenWrt)
 SRC_URI += "\
-    file://1001-undefined-AM_PATH_LIBGCRYPT.patch \
-    file://1050-backport-modbus-little-endian.patch \
-    file://1100-rrdtool-add-rrasingle-option.patch \
-    file://1140-fix-fqdnlookup.patch \
-    file://1300-delay-first-read-cycle.patch \
-    file://1400-fix-olsrd-get-all.patch \
-    file://1600-fix-libmodbus-detection.patch \
-    file://1700-disable-sys-capability-check.patch \
-    file://1900-add-iwinfo-plugin.patch \
-    file://1920-fix-ping-droprate.patch \
+    file://001-undefined-AM_PATH_LIBGCRYPT.patch \
+    file://100-rrdtool-add-rrasingle-option.patch \
+    file://140-fix-fqdnlookup.patch \
+    file://300-delay-first-read-cycle.patch \
+    file://320-reaction-to-ntp-time-change-at-boot.patch \
+    file://400-fix-olsrd-get-all.patch \
+    file://600-fix-libmodbus-detection.patch \
+    file://700-disable-sys-capability-check.patch \
+    file://900-add-iwinfo-plugin.patch \
 "
 
 # update-rc.d systemd pythonnative 
@@ -64,7 +88,6 @@ PACKAGECONFIG ??= "\
     cpu \
     entropy \
     exec \
-    filecount \
     network \
     disk \
     interface \
@@ -85,6 +108,7 @@ PACKAGECONFIG[apache] = "--enable-apache,--disable-apache,libcurl"
 PACKAGECONFIG[apcups] = "--enable-apcups,--disable-apcups,"
 PACKAGECONFIG[ascent] = "--enable-ascent,--disable-ascent,libcurl libxml2"
 PACKAGECONFIG[bind]   = "--enable-bind,--disable-bind,libcurl libxml2"
+PACKAGECONFIG[check_uptime] = "--enable-check_uptime,--disable-check_uptime,"
 PACKAGECONFIG[chrony] = "--enable-chrony,--disable-chrony,"
 PACKAGECONFIG[conntrack] = "--enable-conntrack,--disable-conntrack,"
 PACKAGECONFIG[contextswitch] = "--enable-contextswitch,--disable-contextswitch,"
@@ -98,6 +122,7 @@ PACKAGECONFIG[email] = "--enable-email,--disable-email,"
 PACKAGECONFIG[entropy] = "--enable-entropy,--disable-entropy,"
 PACKAGECONFIG[exec] = "--enable-exec,--disable-exec,"
 PACKAGECONFIG[filecount] = "--enable-filecount,--disable-filecount,"
+PACKAGECONFIG[fhcount] = "--enable-fhcount,--disable-fhcount,"
 PACKAGECONFIG[fscache] = "--enable-fscache,--disable-fscache,"
 PACKAGECONFIG[interface] = "--enable-interface,--disable-interface,"
 PACKAGECONFIG[iptables] = "--enable-iptables,--disable-iptables,iptables"
@@ -120,6 +145,7 @@ PACKAGECONFIG[nginx] = "--enable-nginx,--disable-nginx,libcurl"
 PACKAGECONFIG[ntpd] = "--enable-ntpd,--disable-ntpd,"
 PACKAGECONFIG[olsrd] = "--enable-olsrd,--disable-olsrd,"
 PACKAGECONFIG[openvpn] = "--enable-openvpn,--disable-openvpn,"
+PACKAGECONFIG[pcie_errors] = "--enable-pcie_errors,--disable-pcie_errors,"
 PACKAGECONFIG[ping] = "--enable-ping,--disable-ping,liboping"
 PACKAGECONFIG[postgresql] = "--enable-postgresql --with-libpq=yes, --disable-postgresql --with-libpq=no,postgresql"
 PACKAGECONFIG[powerdns] = "--enable-powerdns,--disable-powerdns,"
@@ -148,6 +174,7 @@ PACKAGECONFIG[vmem] = "--enable-vmem,--disable-vmem,"
 PACKAGECONFIG[wireless] = "--enable-wireless,--disable-wireless,"
 PACKAGECONFIG[write_graphite] = "--enable-write_graphite,--disable-write_graphite,"
 PACKAGECONFIG[write_http] = "--enable-write_http,--disable-write_http,libcurl"
+PACKAGECONFIG[write_syslog] = "--enable-write_syslog,--disable-write_syslog,"
 
 EXTRA_OECONF = " \
     ${FPLAYOUT} \
@@ -185,7 +212,6 @@ EXTRA_OECONF = " \
     --disable-dpdkstat \
     --disable-drbd \
     --disable-ethstat \
-    --disable-fhcount \
     --disable-gmond \
     --disable-gps \
     --disable-grpc \
@@ -263,17 +289,35 @@ do_install_append() {
     # Install configuration files
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/collectd/conf.d
-    install -m 0644 ${WORKDIR}/collectd.conf ${D}${sysconfdir}/collectd.conf
 
     # Install init script
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/collectd.init ${D}${sysconfdir}/init.d/collectd
 
+    # Install UCI config
+    install -d ${D}${sysconfdir}/config
+    install -m 0644 ${WORKDIR}/collectd.uci ${D}${sysconfdir}/config/collectd
+
+    # Install plugin JSONs
+    install -d ${D}/usr/share/collectd/plugin
+    for plugin in $(ls ${D}/usr/lib/collectd/*.so); do
+        PLUGIN_FILE=$(basename ${plugin})
+        PLUGIN_NAME=${PLUGIN_FILE%.*}
+        if [ -e ${WORKDIR}/usr/share/collectd/plugin/${PLUGIN_NAME}.json ]; then
+            install -m 0644 ${WORKDIR}/usr/share/collectd/plugin/${PLUGIN_NAME}.json \
+                                  ${D}/usr/share/collectd/plugin/${PLUGIN_NAME}.json
+        else
+            bbwarn "No JSON configuration template for plugin ${PLUGIN_FILE}"
+        fi
+    done
+
     rmdir "${D}${localstatedir}/run"
     rmdir --ignore-fail-on-non-empty "${D}${localstatedir}"
 }
 
-CONFFILES_${PN} = "${sysconfdir}/collectd.conf"
+CONFFILES_${PN} += "${sysconfdir}/config/collectd"
+
+FILES_${PN} += "/usr/share/collectd/plugin/"
 
 # threshold.so load.so are also provided by gegl
 # disk.so is also provided by libgphoto2-camlibs
