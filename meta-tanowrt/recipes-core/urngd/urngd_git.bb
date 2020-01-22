@@ -1,7 +1,7 @@
-# This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano2"
-PV = "1.0.0+git${SRCPV}"
+PR = "tano0"
+PV = "1.0.2+git${SRCPV}"
 
 SUMMARY = "OpenWrt non-physical true random number generator based on timing jitter"
 DESCRIPTION = "urngd is OpenWrt's micro non-physical true random number generator based on \
@@ -30,7 +30,7 @@ SRC_URI = "\
 	file://urngd.init \
 "
 
-SRCREV = "c057e177ace7704a3d4e2e1272baaf2e2d21cbed"
+SRCREV = "c7f7b6b65b82eda4675b42d8cd28d76ea7aebf1a"
 
 S = "${WORKDIR}/git"
 
