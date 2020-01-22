@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<default sync-j="4" />
+	<include name="meta-tanowrt/manifests/remotes.xml" />
+
+	<!-- OpenEmbedded Core -->
+	<project path="."
+	         name="openembedded-core"
+	         remote="openembedded"
+	         upstream="rocko"
+	         revision="3638cb32ba9ba32b4d498fc31ab7fdf82f0d2495" />
+
+	<!-- OpenEmbedded Layers -->
+	<project path="meta-openembedded"
+	         name="meta-openembedded"
+	         remote="openembedded"
+	         upstream="rocko"
+	         revision="eae996301d9c097bcbeb8046f08041dc82bb62f8" />
+
+	<!-- Bitbake -->
+	<project path="bitbake"
+	         name="bitbake"
+	         remote="openembedded"
+	         upstream="1.36"
+	         revision="8bd16328a9332c57b03198826e22b48fadcd21d9" />
+
+	<!-- TanoWrt layers -->
+	<project path="meta-tanowrt"
+	         name="meta-tanowrt"
+	         remote="tano-private"
+	         upstream="rocko-dev"
+	         revision="refs/heads/rocko-dev" />
+</manifest>
