@@ -2,7 +2,7 @@
 # Tano Systems LuCI Theme bitbake recipe
 # Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 #
-PR = "tano11"
+PR = "tano12"
 PV = "0.0.9+git${SRCPV}"
 
 SUMMARY = "LuCI Theme by Tano Systems"
@@ -19,7 +19,7 @@ LUCI_THEME_NAME = "tano"
 LUCI_THEME_TANO_GIT_URI      ?= "git://github.com/tano-systems/luci-theme-tano.git"
 LUCI_THEME_TANO_GIT_BRANCH   ?= "master"
 LUCI_THEME_TANO_GIT_PROTOCOL ?= "https"
-LUCI_THEME_TANO_GIT_SRCREV   ?= "9a3cffe971e998e0326d67702170783711aaf939"
+LUCI_THEME_TANO_GIT_SRCREV   ?= "a8d55f5a630506109c59a4173b6487b5d2048a91"
 
 SRC_URI = "${LUCI_THEME_TANO_GIT_URI};name=theme;branch=${LUCI_THEME_TANO_GIT_BRANCH};protocol=${LUCI_THEME_TANO_GIT_PROTOCOL}"
 SRCREV_theme = "${LUCI_THEME_TANO_GIT_SRCREV}"
