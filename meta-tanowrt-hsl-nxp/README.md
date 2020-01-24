@@ -33,6 +33,11 @@ repo init -u https://github.com/tano-systems/meta-tanowrt \
           -b master
 ```
 
+Synchronize all repositories by executing a command:
+```shell
+repo sync
+```
+
 ## Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
