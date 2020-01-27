@@ -92,7 +92,7 @@ ACCEPT_FSL_EULA = "1"
 
 ## Building
 
-Build SD card image for Raspberry Pi 3 Model B or B+ board as an example:
+Build SD card image for NXP LS1028A RDB board as an example:
 
 ```shell
 MACHINE=nxp-ls1028ardb bitbake tanowrt-image-full
