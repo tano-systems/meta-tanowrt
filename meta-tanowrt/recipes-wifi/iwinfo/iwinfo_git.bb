@@ -1,5 +1,5 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "Library for accessing wireless device drivers"
@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano11"
+PR = "tano12"
 
 RDEPENDS_${PN} += "kmod-cfg80211"
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 19.12.2019
-# nl80211: add htmode to iwinfo_ops
-SRCREV = "bf2c1069a7f14d1af1e02c8edd2b7338f0355ac8"
+# 29.01.2020
+# iwinfo: add device id for Atheros AR9287
+SRCREV = "bb216982951698833bbdf4a88872e9b5ccd026a5"
 
 inherit openwrt pkgconfig
 
