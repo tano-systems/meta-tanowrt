@@ -1,8 +1,8 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano18"
+PR = "tano19"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -30,9 +30,9 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 23.09.2019
-# utils: fix resource leak
-SRCREV = "daed0cf9831c07863e5a2a572c2dd242fe757a31"
+# 24.01.2020
+# defaults: robustify flow table detection.
+SRCREV = "7cc2a84d5fa28a79033dcf882d474d151e3d0c89"
 
 S = "${WORKDIR}/git"
 
