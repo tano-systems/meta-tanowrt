@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano18"
+PR = "tano19"
 SUMMARY = "Extras TanoWrt system requirements"
 LICENSE = "MIT"
 
@@ -46,5 +46,4 @@ RDEPENDS_${PN}-luci = "\
 	luci-proto-ncm \
 	luci-proto-qmi \
 	luci-proto-wireguard \
-	luci-theme-bootstrap \
 "
