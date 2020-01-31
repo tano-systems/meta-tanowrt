@@ -1,7 +1,7 @@
 #
 # TanoWrt Git revision
 #
-# Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 # gitrev_run and mark_recipe_dependencies taken from
@@ -61,7 +61,8 @@ TANOWRT_SCM_REVISION = ""
 
 python () {
     tano_base = d.getVar('TANOWRT_BASE')
-    mark_recipe_dependencies(tano_base, d)
-    d.setVar('TANOWRT_SCM_REVISION', get_git_revision(tano_base))
-    d.setVar('TANOWRT_SCM_BRANCH', get_git_branch(tano_base))
+    repo_base = os.path.normpath(os.path.join(tano_base, ".."))
+    mark_recipe_dependencies(repo_base, d)
+    d.setVar('TANOWRT_SCM_REVISION', get_git_revision(repo_base))
+    d.setVar('TANOWRT_SCM_BRANCH', get_git_branch(repo_base))
 }
