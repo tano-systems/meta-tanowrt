@@ -4,13 +4,15 @@
 # This file Copyright (C) 2018-2019 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "OpenWrt LuCI po2lmo utility"
 HOMEPAGE = "https://github.com/openwrt/luci"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://po2lmo.c;beginline=1;endline=17;md5=7f0fc61456071c6f845e350f9be6d9c4"
 SECTION = "base"
+
+DEPENDS += "lemon-native"
 
 require recipes-extended/luci/luci.inc
 

@@ -6,6 +6,7 @@
 #
 
 DEPENDS += "po2lmo-native"
+DEPENDS += "lemon-native"
 
 inherit openwrt-luci
 
