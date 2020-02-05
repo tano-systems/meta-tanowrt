@@ -7,7 +7,7 @@ Index: git/modules/luci-base/CMakeLists.txt
 +
 +PROJECT(luci-base C)
 +
-+ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c)
++ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c src/plural_formula.c)
 +SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
 +
 +INSTALL(DIRECTORY luasrc/

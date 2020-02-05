@@ -1,11 +1,11 @@
 #
 # LuCI core libraries
 #
-# This file Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -13,6 +13,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
+DEPENDS += "lemon-native"
 DEPENDS += "lua5.1"
 
 RDEPENDS_${PN} += "\
@@ -103,3 +104,9 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/luci \
 	${sysconfdir}/config/ucitrack \
 "
+
+# This is needed for parser.so success build
+do_configure_prepend() {
+	oe_runmake -C ${S}/src/ clean
+	oe_runmake -C ${S}/src/ plural_formula.c
+}
