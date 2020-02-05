@@ -1,7 +1,7 @@
 #
 # LuCI languages (i18n) packages generation class
 #
-# Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -34,9 +34,9 @@ LUCI_LANG_it="Italiano (Italian)"
 LUCI_LANG_ja="日本語 (Japanese)"
 LUCI_LANG_ko="한국어 (Korean)"
 LUCI_LANG_ms="Bahasa Melayu (Malay)"
-LUCI_LANG_no="Norsk (Norwegian)"
+LUCI_LANG_nb_NO="Norsk (Norwegian)"
 LUCI_LANG_pl="Polski (Polish)"
-LUCI_LANG_pt_br="Português do Brasil (Brazialian Portuguese)"
+LUCI_LANG_pt_BR="Português do Brasil (Brazialian Portuguese)"
 LUCI_LANG_pt="Português (Portuguese)"
 LUCI_LANG_ro="Română (Romanian)"
 LUCI_LANG_ru="Русский (Russian)"
@@ -45,8 +45,8 @@ LUCI_LANG_sv="Svenska (Swedish)"
 LUCI_LANG_tr="Türkçe (Turkish)"
 LUCI_LANG_uk="украї́нська (Ukrainian)"
 LUCI_LANG_vi="Tiếng Việt (Vietnamese)"
-LUCI_LANG_zh_cn="中文 (Chinese)"
-LUCI_LANG_zh_tw="臺灣華語 (Taiwanese)"
+LUCI_LANG_zh_Hans="中文 (Chinese)"
+LUCI_LANG_zh_Hant="臺灣華語 (Taiwanese)"
 
 LUCI_PKG_SRC ?= "${S}"
 
