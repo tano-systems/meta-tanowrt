@@ -25,7 +25,8 @@ def get_git_branch(p):
     import subprocess
 
     try:
-        ref = gitrev_run("git symbolic-ref -q HEAD", p)
+        rev = gitrev_run("git rev-parse HEAD", p)
+        ref = gitrev_run("git name-rev --name-only %s" % rev, p)
         return os.path.basename(ref)
     except OSError:
         return None
