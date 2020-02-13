@@ -1,4 +1,4 @@
-From 7344e530c26e2dbdbab7f8b9c1a0182e1a9d4aa1 Mon Sep 17 00:00:00 2001
+From a2b27cd42c49ac7b998af51ebb9b766fd132dc7f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:17:30 +0300
 Subject: [PATCH 02/11] block: Validate libubi_open() return value
@@ -52,5 +52,5 @@ index 50d877f..5606772 100644
  
  	return mount_extroot(NULL);
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

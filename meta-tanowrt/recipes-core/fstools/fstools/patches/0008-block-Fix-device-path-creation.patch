@@ -1,4 +1,4 @@
-From 3e70733d334b2d1ae2bb1c86d2965d4ba6403cb9 Mon Sep 17 00:00:00 2001
+From ea6f5432af2978a3e3ca2805bee6661cebbadf5e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
 Subject: [PATCH 08/11] block: Fix device path creation
@@ -9,11 +9,11 @@ it to the beginning of the device name.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- block.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ block.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
 diff --git a/block.c b/block.c
-index 7ed283d..6a76386 100644
+index 7ed283d..0fe02a5 100644
 --- a/block.c
 +++ b/block.c
 @@ -211,14 +211,6 @@ static char *blobmsg_get_strdup(struct blob_attr *attr)
@@ -49,6 +49,15 @@ index 7ed283d..6a76386 100644
  	if (tb[SWAP_PRIO])
  		m->prio = blobmsg_get_u32(tb[SWAP_PRIO]);
  	if (m->prio)
+@@ -523,7 +515,7 @@ static int _cache_load(const char *path)
+ 			dev = malloc(sizeof(struct device));
+ 			dev->pr = pr;
+ 			dev->m = find_block(pr->uuid, pr->label,
+-					basename(pr->dev), NULL);
++					pr->dev, NULL);
+ 			vlist_add(&devices, &dev->node, dev);
+ 		}
+ 	}
 @@ -591,7 +583,7 @@ static struct device* find_block_device(char *uuid, char *label, char *path)
  
  	if (path)
@@ -101,6 +110,15 @@ index 7ed283d..6a76386 100644
  
  	err = umount2(mp, MNT_DETACH);
  	if (err) {
+@@ -1229,7 +1222,7 @@ static int mount_action(char *action, char *device, int type)
+ 			blockd_notify(device, NULL, NULL);
+ 
+ 		if (!the_dev || !the_dev->m || the_dev->m->type != TYPE_MOUNT) {
+-			snprintf(path, sizeof(path), "/dev/%s", device);
++			snprintf(path, sizeof(path), "%s", device);
+ 			umount_device(path, type, true);
+ 		} else
+ 			vlist_for_element_to_last_reverse(&devices, the_dev, dev, node)
 @@ -1512,7 +1505,7 @@ static int check_extroot(char *path)
  				return 0;
  
@@ -111,5 +129,5 @@ index 7ed283d..6a76386 100644
  		}
  	}
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 
