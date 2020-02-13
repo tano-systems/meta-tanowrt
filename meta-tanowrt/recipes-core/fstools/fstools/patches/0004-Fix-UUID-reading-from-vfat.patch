@@ -1,4 +1,4 @@
-From 296a7697249a6dc35dad293da9ce7aafe6a2cb84 Mon Sep 17 00:00:00 2001
+From 06c00bfe417f9ba5073b23d95a60285178a1ffe4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 11 Oct 2018 12:43:56 +0300
 Subject: [PATCH 04/11] Fix UUID reading from vfat
@@ -87,5 +87,5 @@ index e70dd75..3129694 100644
  			struct fat32_fsinfo *fsinfo;
  
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 
