@@ -1,10 +1,10 @@
 #
 # LuCI Statistics Application
 #
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano11"
+PR = "tano12"
 
 DEPENDS += "uci-native"
 
@@ -21,7 +21,7 @@ SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCO
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
 
-RDEPENDS_${PN} += "rrdtool collectd luci-lib-iptparser luci-compat"
+RDEPENDS_${PN} += "rrdtool collectd luci-base"
 
 # Files
 SRC_URI += "\
