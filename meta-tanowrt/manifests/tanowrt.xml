@@ -8,7 +8,7 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="warrior"
-	         revision="0a1b1e88b936177344392e185fbd077622d88b3e" />
+	         revision="a63d59f64a2d1f450a7639426cae8e0373a2d764" />
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
