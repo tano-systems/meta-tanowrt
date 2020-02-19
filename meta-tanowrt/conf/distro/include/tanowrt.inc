@@ -73,6 +73,9 @@ require conf/distro/include/tanowrt-mirrors.inc
 # Unbreak multimachine builds
 LICENSE_DIRECTORY = "${DEPLOY_DIR}/licenses/${MACHINE_ARCH}"
 
+# Distro maintainer
+MAINTAINER = "TanoWrt Developers <https://github.com/tano-systems/meta-tanowrt>"
+
 #
 # Dynamic includes
 #
