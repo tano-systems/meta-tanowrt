@@ -1,5 +1,11 @@
 require wireguard.inc
 
+SRC_URI = "https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${PV}.tar.xz"
+SRC_URI[md5sum] = "f599d811071b51d69984eb6aa99ab467"
+SRC_URI[sha256sum] = "0def6f3608ec06f6dfc454aa5281a7c38b06ff27096cb341448d20602da4e923"
+
+S = "${WORKDIR}/wireguard-linux-compat-${PV}/src"
+
 inherit module kernel-module-split
 
 DEPENDS = "virtual/kernel libmnl"
