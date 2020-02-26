@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "10"
+INC_PR = "11"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 EXTRA_OEMAKE += "\
@@ -46,6 +46,8 @@ SRC_URI += "\
 	file://0030-Fix-entries-in-etc-hosts-disabling-static-leases.patch \
 	file://0031-Fix-missing-braces-in-8eac67c0a15b673c8d27002c248651.patch \
 	file://0032-Change-read_leases-to-skip-invalid-entries.patch \
+	file://0040-Fix-crash-when-negative-SRV-response-over-TCP-gets-s.patch \
+	file://050-crypto-use-nettle-ecc_curve-access-functions.patch \
 	file://110-ipset-remove-old-kernel-support.patch \
 	file://230-fix-poll-h-include-warning-on-musl.patch \
 "
