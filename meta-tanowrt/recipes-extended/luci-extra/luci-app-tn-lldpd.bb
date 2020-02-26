@@ -6,14 +6,14 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.2.1+git${SRCPV}"
-PR = "tano23"
+PR = "tano24"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "e6a43a705345a3f3e04afef574575f075f63d620"
+GIT_SRCREV   = "e4bf6d51588de7a9036f8d854ee20ead0d26a08f"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-lldpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
