@@ -1,7 +1,7 @@
-PR_append = ".0"
+PR_append = ".1"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-3.18"
-KERNEL_CACHE_SRC_SRCREV ?= "16bdf25d273e239933fbc6659f2882c68673a50e"
+KERNEL_CACHE_SRC_SRCREV ?= "337ffe5a89b77de40a72a93dd685f9a120b3b1db"
 
 KERNEL_FEATURES_append = "\
 	patches/openwrt/generic/600.scc \
