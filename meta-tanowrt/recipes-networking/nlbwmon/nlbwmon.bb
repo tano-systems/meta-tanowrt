@@ -1,9 +1,9 @@
 #
-# This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
-# LEDE Traffic Usage Monitor
+# OpenWrt/LEDE Traffic Usage Monitor
 #
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "LEDE Traffic Usage Monitor"
 LICENSE = "ISC"
