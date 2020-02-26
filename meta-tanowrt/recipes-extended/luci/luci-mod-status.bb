@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano2"
+PR = "tano3"
 
 SUMMARY = "LuCI Status Pages"
 LICENSE = "Apache-2.0"
@@ -18,3 +18,5 @@ inherit openwrt-luci-mod
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=modules/luci-mod-status;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
+
+RRECOMMENDS_${PN} += "luci-app-tn-logview"
