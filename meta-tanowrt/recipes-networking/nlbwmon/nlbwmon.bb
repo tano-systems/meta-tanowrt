@@ -3,7 +3,7 @@
 #
 # OpenWrt/LEDE Traffic Usage Monitor
 #
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "LEDE Traffic Usage Monitor"
 LICENSE = "ISC"
@@ -23,7 +23,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	git://github.com/jow-/nlbwmon.git \
 "
-SRCREV = "4574e6e80e3a5ab8de65886baa0d563dfee589ff"
+SRCREV = "e921ca0af9957d3cb05797acfb8bde4d7d2278e5"
 
 SRC_URI += "\
 	file://nlbwmon.init \
