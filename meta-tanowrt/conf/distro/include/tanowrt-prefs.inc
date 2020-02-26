@@ -5,7 +5,6 @@ include conf/distro/include/qt5-versions.inc
 PREFERRED_VERSION_iptables = "1.6.2"
 PREFERRED_VERSION_usbutils = "007"
 PREFERRED_VERSION_libwebsockets = "3.2%"
-PREFERRED_VERSION_wireguard = "0.0.20190702"
 PREFERRED_VERSION_qrencode = "4.0.2"
 PREFERRED_VERSION_rrdtool = "1.0.50"
 
