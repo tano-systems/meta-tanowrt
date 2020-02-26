@@ -1,15 +1,15 @@
 # Wireless Central Regulatory Domain Database
 SUMMARY = "Wireless Central Regulatory Domain Database"
-HOMEPAGE = "http://wireless.kernel.org/en/developers/Regulatory/CRDA"
+HOMEPAGE = "https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/"
 SECTION = "net"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=07c4f6dea3845b02a18dc00c8c87699c"
 
-PR = "tano2"
-PV = "2017.10.20"
+PR = "tano0"
+PV = "2019.06.03"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git;protocol=https"
-SRCREV = "4343d359ed5e7404de8803a74df186457b26ab79"
+SRCREV = "49b8d9c09b145c2124184921640fa44f96630afc"
 
 B = "${WORKDIR}/build"
 S = "${WORKDIR}/git"
@@ -19,7 +19,7 @@ DEPENDS += "python-native"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI += "\
-	file://100-regdb-write-firmware-file-format-version-code-20.patch \
+	file://010-regdb-fix-compatibility-with-python2.patch \
 	file://500-world-regd-5GHz.patch \
 "
 
