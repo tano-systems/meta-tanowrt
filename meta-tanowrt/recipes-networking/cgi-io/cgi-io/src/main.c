@@ -482,34 +482,45 @@ filecopy(void)
 		int len;
 		char buf[READ_BLOCK];
 
-		if (lseek(st.tempfd, 0, SEEK_SET) < 0)
+		snprintf(buf, sizeof(buf), "/proc/self/fd/%d", st.tempfd);
+
+		if (unlink(st.filename) < 0 && errno != ENOENT)
 		{
 			close(st.tempfd);
-			return response(false, "Failed to rewind temp file");
+			return response(false, "Failed to unlink existing file");
 		}
 
-		st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-
-		if (st.filefd < 0)
+		if (linkat(AT_FDCWD, buf, AT_FDCWD, st.filename, AT_SYMLINK_FOLLOW) < 0)
 		{
-			close(st.tempfd);
-			return response(false, "Failed to open target file");
-		}
-
-		while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
-		{
-			if (write(st.filefd, buf, len) != len)
+			if (lseek(st.tempfd, 0, SEEK_SET) < 0)
 			{
 				close(st.tempfd);
-				close(st.filefd);
-				return response(false, "I/O failure while writing target file");
+				return response(false, "Failed to rewind temp file");
 			}
+
+			st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+
+			if (st.filefd < 0)
+			{
+				close(st.tempfd);
+				return response(false, "Failed to open target file");
+			}
+
+			while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
+			{
+				if (write(st.filefd, buf, len) != len)
+				{
+					close(st.tempfd);
+					close(st.filefd);
+					return response(false, "I/O failure while writing target file");
+				}
+			}
+
+			close(st.filefd);
 		}
 
-		close(st.filefd);
+		close(st.tempfd);
 	}
-
-	close(st.tempfd);
 
 	if (chmod(st.filename, st.filemode))
 		return response(false, "Failed to chmod target file");
@@ -558,8 +569,6 @@ header_value(multipart_parser *p, const char *data, size_t len)
 static int
 data_begin_cb(multipart_parser *p)
 {
-	char tmpname[24] = "/tmp/luci-upload.XXXXXX";
-
 	if (st.parttype == PART_FILEDATA)
 	{
 		if (!st.sessionid)
@@ -582,12 +591,10 @@ data_begin_cb(multipart_parser *p)
 		else
 #endif
 		{
-			st.tempfd = mkstemp(tmpname);
+			st.tempfd = open("/tmp", O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
 
 			if (st.tempfd < 0)
 				return response(false, "Failed to create temporary file");
-
-			unlink(tmpname);
 		}
 	}
 
