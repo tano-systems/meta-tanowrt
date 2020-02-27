@@ -14,7 +14,6 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 RDEPENDS_${PN} += "wireguard-tools kmod-wireguard"
 
 inherit openwrt-luci-proto
-inherit luasrcdiet
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=protocols/luci-proto-wireguard;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
