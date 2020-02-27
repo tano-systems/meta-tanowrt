@@ -20,6 +20,5 @@ RDEPENDS_${PN} += "ttyd (>= 1.5.2) luci-compat"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 S = "${WORKDIR}/git"

@@ -24,4 +24,3 @@ S = "${WORKDIR}/git"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
