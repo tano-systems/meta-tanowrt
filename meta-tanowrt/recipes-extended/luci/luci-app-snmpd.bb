@@ -15,7 +15,6 @@ RCONFLICTS_${PN} = "luci-app-tn-snmpd"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-snmpd;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

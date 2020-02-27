@@ -18,6 +18,5 @@ RDEPENDS_${PN} += "shellinabox luci-compat"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 S = "${WORKDIR}/git"

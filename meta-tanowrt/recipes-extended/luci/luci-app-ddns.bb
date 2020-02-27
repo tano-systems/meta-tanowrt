@@ -12,7 +12,6 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 # +luci-mod-admin-full
 RDEPENDS_${PN} += "ddns-scripts luci-lib-ipkg luci-mod-admin-full"

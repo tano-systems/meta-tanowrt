@@ -9,7 +9,6 @@ PR = "tano0"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 SUMMARY = "Log viewer LuCI application"
 LICENSE = "MIT"

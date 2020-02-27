@@ -24,7 +24,6 @@ S = "${WORKDIR}/git"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 LUCI_APP_TN_MSTPD_HIDE_FOOTER ?= "1"
 

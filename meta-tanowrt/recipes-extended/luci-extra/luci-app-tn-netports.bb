@@ -9,7 +9,6 @@ PR = "tano1"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 RDEPENDS_${PN} += "luabitop"
 

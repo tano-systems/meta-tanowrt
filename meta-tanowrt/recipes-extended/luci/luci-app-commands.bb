@@ -15,7 +15,6 @@ RDEPENDS_${PN} += "luci-compat"
 inherit pkgconfig
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit luasrcdiet
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-commands;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
