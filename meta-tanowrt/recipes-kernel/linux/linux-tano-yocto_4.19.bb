@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019, Tano Systems, All rights reserved
+# Copyright (C) 2019-2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Yocto Linux kernel 4.19 (standard)
@@ -9,7 +9,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano6"
+MACHINE_KERNEL_PR_append = "tano7"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
@@ -19,17 +19,17 @@ KERNEL_SRC_BRANCH_qemux86 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH_qemux86-64 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH ?= "v4.19/standard/base"
 
-KERNEL_SRC_SRCREV_machine_qemuarm ?= "c12bc1a098be009c44582e75af630ff573155473"
-KERNEL_SRC_SRCREV_machine_qemux86 ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
-KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
-KERNEL_SRC_SRCREV ?= "f0c6c85e155632580bd44a5db01cbb19dcc1559c"
+KERNEL_SRC_SRCREV_machine_qemuarm ?= "4d9d89763cde098e4a8b879e8c831e35a5f39ae6"
+KERNEL_SRC_SRCREV_machine_qemux86 ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
+KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
+KERNEL_SRC_SRCREV ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
 
-LINUX_VERSION ?= "4.19.44"
+LINUX_VERSION ?= "4.19.87"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-4.19"
-YOCTO_KERNEL_CACHE_SRCREV = "ad235db461bf4595c668700ca8a909c322009cc1"
+YOCTO_KERNEL_CACHE_SRCREV = "4f5d761316a9cf14605e5d0cc91b53c1b2e9dc6a"
 
 require recipes-kernel/linux/tano-kernel-cache-4.19.inc
 require recipes-kernel/linux/linux-tano-yocto.inc
