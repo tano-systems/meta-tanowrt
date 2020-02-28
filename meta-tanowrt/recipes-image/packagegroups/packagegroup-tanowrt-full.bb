@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 SUMMARY = "Extras TanoWrt system requirements"
 LICENSE = "MIT"
 
@@ -21,12 +21,6 @@ RDEPENDS_${PN} = "\
 	packagegroup-tanowrt-full-luci \
 "
 
-#luci-app-commands
-#luci-app-qos
-#luci-app-mwan3
-#luci-app-nlbwmon
-#luci-app-tn-ttyd
-
 # packagegroup-tanowrt-full-luci
 RDEPENDS_${PN}-luci = "\
 	luci-app-tn-lldpd \
@@ -41,6 +35,8 @@ RDEPENDS_${PN}-luci = "\
 	luci-app-tn-vsftpd \
 	luci-app-tn-shellinabox \
 	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'luci-app-tn-watchdog', '', d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'luci-app-ledtrig-rssi', '', d)} \
+	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'luci-app-ledtrig-usbport', '',d)} \
 	luci-proto-3g \
 	luci-proto-ppp \
 	luci-proto-ncm \
