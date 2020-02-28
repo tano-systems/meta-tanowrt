@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 def kernel_get_version(d):
@@ -22,3 +22,6 @@ def kernel_get_config(config, d):
             return match.group(1)
 
     return "n"
+
+def kernel_version_compare(checkvalue, d):
+    return bb.utils.vercmp_string(kernel_get_version(d), checkvalue)
