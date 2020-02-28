@@ -1,7 +1,11 @@
-PR_append = ".9"
+PR_append = ".10"
 
 KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.19"
-KERNEL_CACHE_SRC_SRCREV ?= "3d64d57757ab472135c89409946103b27dfcd10e"
+KERNEL_CACHE_SRC_SRCREV ?= "a4b544a0a0a32f2a9b380c075a49136b15ba046c"
+
+KERNEL_FEATURES_append = "\
+	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-leds/ledtrig_usbport.scc", "" ,d)} \
+"
 
 KERNEL_FEATURES_append = "\
 	patches/openwrt/generic/550.scc \
