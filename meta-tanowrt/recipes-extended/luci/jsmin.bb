@@ -4,12 +4,12 @@
 # This file Copyright (C) 2019 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "The JavaScript Minifier"
 HOMEPAGE = "https://github.com/openwrt/luci"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://jsmin.c;beginline=4;endline=24;md5=648b51db3c42cb6e2405d79aae547c8d"
+LIC_FILES_CHKSUM = "file://jsmin.c;beginline=4;endline=24;md5=4c8157a1c93fdaa847b4d5ccc33c7c63"
 SECTION = "base"
 
 require recipes-extended/luci/luci.inc
