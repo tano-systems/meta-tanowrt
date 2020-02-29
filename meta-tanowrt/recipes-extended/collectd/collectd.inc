@@ -2,7 +2,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "1"
+INC_PR = "2"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -289,15 +289,14 @@ do_install_append() {
         fi
     done
 
-    rmdir "${D}${localstatedir}/run"
-    rmdir --ignore-fail-on-non-empty "${D}${localstatedir}"
+    rm -rf "${D}${localstatedir}"
 }
 
 CONFFILES_${PN} += "\
 	${sysconfdir}/config/collectd \
 "
 
-FILES_${PN} += "/usr/share/collectd/plugin/"
+FILES_${PN} = "${sysconfdir}/ /usr/"
 
 # threshold.so load.so are also provided by gegl
 # disk.so is also provided by libgphoto2-camlibs
