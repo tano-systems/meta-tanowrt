@@ -2,7 +2,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "2"
+INC_PR = "3"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -293,6 +293,7 @@ do_install_append() {
 }
 
 CONFFILES_${PN} += "\
+	${sysconfdir}/collectd.conf \
 	${sysconfdir}/config/collectd \
 "
 
