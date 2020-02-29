@@ -1,0 +1,188 @@
+From a6dede9b9c79db4431e113da5b0b4fdb96145336 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 29 Feb 2020 03:41:55 +0300
+Subject: [PATCH] rrdtool: Fix librrdtool version <= 1.0.50 functions calls
+
+Library librrdtool versions < 1.2 has no threadsafety support.
+We must use one lock for all library calls. Both for creating
+RRD's (rrd_create) and for updating (rrd_update).
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/rrdtool.c                   | 11 +++++++----
+ src/utils/rrdcreate/rrdcreate.c | 41 +++++++++++++++++++++++++++++++++--------
+ src/utils/rrdcreate/rrdcreate.h |  4 ++++
+ 3 files changed, 44 insertions(+), 12 deletions(-)
+
+diff --git a/src/rrdtool.c b/src/rrdtool.c
+index bd5943c5..05b49bd7 100644
+--- a/src/rrdtool.c
++++ b/src/rrdtool.c
+@@ -63,12 +63,19 @@ static const char *config_keys[] = {
+     "XFF",          "WritesPerSecond", "RandomTimeout"};
+ static int config_keys_num = STATIC_ARRAY_SIZE(config_keys);
+ 
++#if !HAVE_THREADSAFE_LIBRRD
++static pthread_mutex_t librrd_lock = PTHREAD_MUTEX_INITIALIZER;
++#endif
++
+ /* If datadir is zero, the daemon's basedir is used. If stepsize or heartbeat
+  * is zero a default, depending on the `interval' member of the value list is
+  * being used. */
+ static char *datadir;
+ static double write_rate;
+ static rrdcreate_config_t rrdcreate_config = {
++#if !HAVE_THREADSAFE_LIBRRD
++    /* librrd_lock = */&librrd_lock,
++#endif
+     /* stepsize = */ 0,
+     /* heartbeat = */ 0,
+     /* rrarows = */ 1200,
+@@ -100,10 +107,6 @@ static int queue_thread_running = 1;
+ static pthread_mutex_t queue_lock = PTHREAD_MUTEX_INITIALIZER;
+ static pthread_cond_t queue_cond = PTHREAD_COND_INITIALIZER;
+ 
+-#if !HAVE_THREADSAFE_LIBRRD
+-static pthread_mutex_t librrd_lock = PTHREAD_MUTEX_INITIALIZER;
+-#endif
+-
+ static int do_shutdown;
+ 
+ #if HAVE_THREADSAFE_LIBRRD
+diff --git a/src/utils/rrdcreate/rrdcreate.c b/src/utils/rrdcreate/rrdcreate.c
+index f543e11c..0ec5b39a 100644
+--- a/src/utils/rrdcreate/rrdcreate.c
++++ b/src/utils/rrdcreate/rrdcreate.c
+@@ -33,6 +33,9 @@
+ #include <rrd.h>
+ 
+ struct srrd_create_args_s {
++#if !HAVE_THREADSAFE_LIBRRD
++  pthread_mutex_t *librrd_lock;
++#endif
+   char *filename;
+   unsigned long pdp_step;
+   time_t last_up;
+@@ -57,10 +60,6 @@ static int rra_timespans_num = STATIC_ARRAY_SIZE(rra_timespans);
+ static const char *const rra_types[] = {"AVERAGE", "MIN", "MAX"};
+ static int rra_types_num = STATIC_ARRAY_SIZE(rra_types);
+ 
+-#if !defined(HAVE_THREADSAFE_LIBRRD)
+-static pthread_mutex_t librrd_lock = PTHREAD_MUTEX_INITIALIZER;
+-#endif
+-
+ static async_create_file_t *async_creation_list;
+ static pthread_mutex_t async_creation_lock = PTHREAD_MUTEX_INITIALIZER;
+ 
+@@ -348,7 +347,7 @@ static int srrd_create(const char *filename, /* {{{ */
+ #else  /* !HAVE_THREADSAFE_LIBRRD */
+ static int srrd_create(const char *filename, /* {{{ */
+                        unsigned long pdp_step, time_t last_up, int argc,
+-                       const char **argv) {
++                       const char **argv, pthread_mutex_t *librrd_lock) {
+   int status;
+ 
+   int new_argc;
+@@ -380,12 +379,12 @@ static int srrd_create(const char *filename, /* {{{ */
+   memcpy(new_argv + 6, argv, argc * sizeof(char *));
+   new_argv[new_argc] = NULL;
+ 
+-  pthread_mutex_lock(&librrd_lock);
++  pthread_mutex_lock(librrd_lock);
+   optind = 0; /* bug in librrd? */
+   rrd_clear_error();
+ 
+   status = rrd_create(new_argc, new_argv);
+-  pthread_mutex_unlock(&librrd_lock);
++  pthread_mutex_unlock(librrd_lock);
+ 
+   if (status != 0) {
+     P_WARNING("srrd_create: rrd_create (%s) failed: %s", filename,
+@@ -498,8 +497,13 @@ static void *srrd_create_thread(void *targs) /* {{{ */
+ 
+   ssnprintf(tmpfile, sizeof(tmpfile), "%s.async", args->filename);
+ 
++#if HAVE_THREADSAFE_LIBRRD
+   status = srrd_create(tmpfile, args->pdp_step, args->last_up, args->argc,
+                        (void *)args->argv);
++#else
++  status = srrd_create(tmpfile, args->pdp_step, args->last_up, args->argc,
++                       (void *)args->argv, args->librrd_lock);
++#endif
+   if (status != 0) {
+     P_WARNING("srrd_create_thread: srrd_create (%s) returned status %i.",
+               args->filename, status);
+@@ -528,9 +532,17 @@ static void *srrd_create_thread(void *targs) /* {{{ */
+   return 0;
+ } /* }}} void *srrd_create_thread */
+ 
++#if HAVE_THREADSAFE_LIBRRD
++static int srrd_create_async(const char *filename, /* {{{ */
++                             unsigned long pdp_step, time_t last_up, int argc,
++                             const char **argv)
++#else
+ static int srrd_create_async(const char *filename, /* {{{ */
+                              unsigned long pdp_step, time_t last_up, int argc,
+-                             const char **argv) {
++                             const char **argv,
++                             pthread_mutex_t *librrd_lock)
++#endif
++{
+   srrd_create_args_t *args;
+   pthread_t thread;
+   pthread_attr_t attr;
+@@ -542,6 +554,10 @@ static int srrd_create_async(const char *filename, /* {{{ */
+   if (args == NULL)
+     return -1;
+ 
++#if !HAVE_THREADSAFE_LIBRRD
++  args->librrd_lock = librrd_lock;
++#endif
++
+   status = pthread_attr_init(&attr);
+   if (status != 0) {
+     srrd_create_args_destroy(args);
+@@ -622,8 +638,13 @@ int cu_rrd_create_file(const char *filename, /* {{{ */
+     stepsize = (unsigned long)CDTIME_T_TO_TIME_T(vl->interval);
+ 
+   if (cfg->async) {
++#if HAVE_THREADSAFE_LIBRRD
+     status = srrd_create_async(filename, stepsize, last_up, argc,
+                                (const char **)argv);
++#else
++    status = srrd_create_async(filename, stepsize, last_up, argc,
++                               (const char **)argv, cfg->librrd_lock);
++#endif
+     if (status != 0)
+       P_WARNING("cu_rrd_create_file: srrd_create_async (%s) "
+                 "returned status %i.",
+@@ -639,7 +660,11 @@ int cu_rrd_create_file(const char *filename, /* {{{ */
+         P_ERROR("cu_rrd_create_file: Unable to lock file \"%s\".", filename);
+     } else {
+       status =
++#if HAVE_THREADSAFE_LIBRRD
+           srrd_create(filename, stepsize, last_up, argc, (const char **)argv);
++#else
++          srrd_create(filename, stepsize, last_up, argc, (const char **)argv, cfg->librrd_lock);
++#endif
+ 
+       if (status != 0) {
+         P_WARNING("cu_rrd_create_file: srrd_create (%s) returned status %i.",
+diff --git a/src/utils/rrdcreate/rrdcreate.h b/src/utils/rrdcreate/rrdcreate.h
+index b2277e75..0558bbd6 100644
+--- a/src/utils/rrdcreate/rrdcreate.h
++++ b/src/utils/rrdcreate/rrdcreate.h
+@@ -32,6 +32,10 @@
+ #include <stddef.h>
+ 
+ struct rrdcreate_config_s {
++#if !defined(HAVE_THREADSAFE_LIBRRD)
++  pthread_mutex_t *librrd_lock;
++#endif
++
+   unsigned long stepsize;
+   int heartbeat;
+   int rrarows;
+-- 
+2.16.2.windows.1
+
