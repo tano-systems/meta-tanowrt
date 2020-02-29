@@ -1,10 +1,10 @@
 #
 # Dynamic DNS Client scripts (with IPv6 support)
 #
-# This file Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano8"
+PR = "tano9"
 PV = "2.7.8"
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
