@@ -6,7 +6,7 @@ SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
 SRC_URI[sha256sum] = "a03359f563023e744c2dc743008a00a848f4cd506e072621d86b6d8313c0375b"
 
 PV = "5.10.0"
-PR = "tano0.${INC_PR}"
+PR = "tano1.${INC_PR}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches_${PV}:"
@@ -31,6 +31,7 @@ SRC_URI += "\
 # Patches
 SRC_URI += "\
     file://2001-irq-plugin-Fix-config-reading.patch \
+    file://2002-rrdtool-Fix-librrdtool-version-1.0.50-functions-call.patch \
 "
 
 require collectd.inc
