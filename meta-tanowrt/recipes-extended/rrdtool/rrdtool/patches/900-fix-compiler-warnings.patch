@@ -1,0 +1,533 @@
+From 7bcde18f23bc7bac51b6118165a6f59184a2764d Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 29 Feb 2020 00:30:25 +0300
+Subject: [PATCH] fix compiler warnings
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ cgilib-0.4/cgi.c          |  8 ++++----
+ cgilib-0.4/cgi.h          |  4 ++--
+ contrib/trytime/trytime.c |  4 ++--
+ gd1.3/gd.c                | 50 +++++++++++++++++++++++------------------------
+ libpng-1.0.9/pngrutil.c   |  2 +-
+ libpng-1.0.9/pngwutil.c   |  2 ++
+ src/gdpng.c               |  1 +
+ src/gifsize.c             |  7 +------
+ src/parsetime.c           |  4 +---
+ src/pngsize.c             |  1 +
+ src/rrd_cgi.c             | 11 +++--------
+ src/rrd_fetch.c           |  6 +++---
+ src/rrd_graph.c           |  8 ++++----
+ src/rrd_resize.c          |  4 ++--
+ src/rrd_tune.c            |  2 +-
+ src/rrd_update.c          |  2 --
+ 16 files changed, 53 insertions(+), 63 deletions(-)
+
+diff --git a/cgilib-0.4/cgi.c b/cgilib-0.4/cgi.c
+index fae4c86..8f601d1 100644
+--- a/cgilib-0.4/cgi.c
++++ b/cgilib-0.4/cgi.c
+@@ -26,7 +26,7 @@
+ int cgiDebugLevel = 0;
+ int cgiDebugStderr = 1;
+ 
+-void cgiHeader ()
++void cgiHeader (void)
+ {
+     printf ("Content-type: text/html\n\n");
+ }
+@@ -43,7 +43,7 @@ void cgiDebug (int level, int where)
+ 	cgiDebugStderr = 1;
+ }
+ 
+-char *cgiDecodeString (char *text)
++static char *cgiDecodeString (char *text)
+ {
+     char *cp, *xp;
+ 
+@@ -72,7 +72,7 @@ char *cgiDecodeString (char *text)
+  *  Read from stdin if no string is provided via CGI.  Variables that
+  *  doesn't have a value associated with it doesn't get stored.
+  */
+-s_cgi **cgiInit ()
++s_cgi **cgiInit (void)
+ {
+     int length;
+     char *line = NULL;
+@@ -255,7 +255,7 @@ char *cgiGetValue(s_cgi **parms, const char *var)
+ void cgiRedirect (const char *url)
+ {
+     if (url && strlen(url)) {
+-	printf ("Content-type: text/html\nContent-length: %d\n", 77+(strlen(url)*2));
++	printf ("Content-type: text/html\nContent-length: %lu\n", (long unsigned int)(77+(strlen(url)*2)));
+ 	printf ("Status: 302 Temporal Relocation\n");
+ 	printf ("Location: %s\n\n", url);
+ 	printf ("<html>\n<body>\nThe page has been moved to <a href=\"%s\">%s</a>\n</body>\n</html>\n", url, url);
+diff --git a/cgilib-0.4/cgi.h b/cgilib-0.4/cgi.h
+index fe2c640..d530fdd 100644
+--- a/cgilib-0.4/cgi.h
++++ b/cgilib-0.4/cgi.h
+@@ -29,7 +29,7 @@ typedef struct cgi_s {
+  * 
+  *  returns a valid CGI Header (Content-type...)
+  */
+-void cgiHeader ();
++void cgiHeader (void);
+ 
+ /* cgiDebug
+  * 
+@@ -41,7 +41,7 @@ void cgiDebug (int level, int where);
+  *
+  *  Reads in variables set via POST or stdin
+  */
+-s_cgi **cgiInit ();
++s_cgi **cgiInit (void);
+ 
+ /* cgiGetValue
+  *
+diff --git a/contrib/trytime/trytime.c b/contrib/trytime/trytime.c
+index 71669e7..ba86487 100644
+--- a/contrib/trytime/trytime.c
++++ b/contrib/trytime/trytime.c
+@@ -57,7 +57,7 @@ int main ( int ac, char **av )
+ 	switch(opt)
+ 	{
+ 	case 's': 
+-	    strncpy( soption, optarg, BUF_LEN );
++	    strncpy( soption, optarg, BUF_LEN - 1 );
+ 	    if ((parsetime_error = parsetime(optarg, &start_tv))) {
+ 		fprintf( stderr, "ERROR: start time: %s\n", parsetime_error );
+ 		exit(1);
+@@ -65,7 +65,7 @@ int main ( int ac, char **av )
+ 	    
+ 	    break;
+ 	case 'e': 
+-	    strncpy( eoption, optarg, BUF_LEN );
++	    strncpy( eoption, optarg, BUF_LEN - 1 );
+ 	    if ((parsetime_error = parsetime(optarg, &end_tv))) {
+ 	        fprintf( stderr, "ERROR: end time: %s\n", parsetime_error );
+ 		exit(1);
+diff --git a/gd1.3/gd.c b/gd1.3/gd.c
+index 75d4bd3..5e8c760 100644
+--- a/gd1.3/gd.c
++++ b/gd1.3/gd.c
+@@ -481,7 +481,7 @@ void gdImageString(gdImagePtr im, gdFontPtr f,
+ {
+ 	int i;
+ 	int l;
+-	l = strlen(s);
++	l = strlen((const char *)s);
+ 	for (i=0; (i<l); i++) {
+ 		gdImageChar(im, f, x, y, s[i], color);
+ 		x += f->w;
+@@ -493,7 +493,7 @@ void gdImageStringUp(gdImagePtr im, gdFontPtr f,
+ {
+ 	int i;
+ 	int l;
+-	l = strlen(s);
++	l = strlen((const char *)s);
+ 	for (i=0; (i<l); i++) {
+ 		gdImageCharUp(im, f, x, y, s[i], color);
+ 		y -= f->w;
+@@ -1554,7 +1554,7 @@ static struct {
+ } GifScreen;
+ #endif
+ 
+-static int ZeroDataBlock;
++
+ 
+ 
+ void gdImageRectangle(gdImagePtr im, int x1, int y1, int x2, int y2, int color)
+@@ -1717,7 +1717,7 @@ void gdImageCopyResized(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int
+ 	free(sty);
+ }
+ 
+-int gdGetWord(int *result, FILE *in)
++static int gdGetWord(int *result, FILE *in)
+ {
+ 	int r;
+ 	r = getc(in);
+@@ -1733,13 +1733,13 @@ int gdGetWord(int *result, FILE *in)
+ 	return 1;
+ }
+ 
+-void gdPutWord(int w, FILE *out)
++static void gdPutWord(int w, FILE *out)
+ {
+ 	putc((unsigned char)(w >> 8), out);
+ 	putc((unsigned char)(w & 0xFF), out);
+ }
+ 
+-int gdGetByte(int *result, FILE *in)
++static int gdGetByte(int *result, FILE *in)
+ {
+ 	int r;
+ 	r = getc(in);
+@@ -1890,8 +1890,8 @@ gdImageCreateFromXbm(FILE *fd)
+ 	x = 0;
+ 	y = 0;
+ 	for (i=0; (i < bytes); i++) {
+-		char h[3];
+-		int b;
++		char hh[3];
++		unsigned int b;
+ 		/* Skip spaces, commas, CRs, 0x */
+ 		while(1) {
+ 			ch = getc(fd);
+@@ -1907,14 +1907,14 @@ gdImageCreateFromXbm(FILE *fd)
+ 		if (ch == EOF) {
+ 			goto fail;
+ 		}
+-		h[0] = ch;
++		hh[0] = ch;
+ 		ch = getc(fd);
+ 		if (ch == EOF) {
+ 			goto fail;
+ 		}
+-		h[1] = ch;
+-		h[2] = '\0';
+-		sscanf(h, "%x", &b);		
++		hh[1] = ch;
++		hh[2] = '\0';
++		sscanf(hh, "%x", &b);		
+ 		for (bit = 1; (bit <= 128); (bit = bit << 1)) {
+ 			gdImageSetPixel(im, x++, y, (b & bit) ? 1 : 0);	
+ 			if (x == im->sx) {
+@@ -1994,7 +1994,7 @@ void gdImageFilledPolygon(gdImagePtr im, gdPointPtr p, int n, int c)
+ 		ints = 0;
+ 		for (i=0; (i <= n); i++) {
+ 			int x1, x2;
+-			int y1, y2;
++			int yy1, yy2;
+ 			int dir;
+ 			int ind1, ind2;
+ 			int lastInd1 = 0;
+@@ -2005,31 +2005,31 @@ void gdImageFilledPolygon(gdImagePtr im, gdPointPtr p, int n, int c)
+ 				ind1 = i-1;
+ 				ind2 = i;
+ 			}
+-			y1 = p[ind1].y;
+-			y2 = p[ind2].y;
+-			if (y1 < y2) {
+-				y1 = p[ind1].y;
+-				y2 = p[ind2].y;
++			yy1 = p[ind1].y;
++			yy2 = p[ind2].y;
++			if (yy1 < yy2) {
++				yy1 = p[ind1].y;
++				yy2 = p[ind2].y;
+ 				x1 = p[ind1].x;
+ 				x2 = p[ind2].x;
+ 				dir = -1;
+-			} else if (y1 > y2) {
+-				y2 = p[ind1].y;
+-				y1 = p[ind2].y;
++			} else if (yy1 > yy2) {
++				yy2 = p[ind1].y;
++				yy1 = p[ind2].y;
+ 				x2 = p[ind1].x;
+ 				x1 = p[ind2].x;
+ 				dir = 1;
+ 			} else {
+ 				/* Horizontal; just draw it */
+ 				gdImageLine(im, 
+-					p[ind1].x, y1, 
+-					p[ind2].x, y1,
++					p[ind1].x, yy1, 
++					p[ind2].x, yy1,
+ 					c);
+ 				continue;
+ 			}
+-			if ((y >= y1) && (y <= y2)) {
++			if ((y >= yy1) && (y <= yy2)) {
+ 				int inter = 
+-					(y-y1) * (x2-x1) / (y2-y1) + x1;
++					(y-yy1) * (x2-x1) / (yy2-yy1) + x1;
+ 				/* Only count intersections once
+ 					except at maxima and minima. Also, 
+ 					if two consecutive intersections are
+diff --git a/libpng-1.0.9/pngrutil.c b/libpng-1.0.9/pngrutil.c
+index 765ca7b..56b5b12 100644
+--- a/libpng-1.0.9/pngrutil.c
++++ b/libpng-1.0.9/pngrutil.c
+@@ -258,7 +258,7 @@ png_decompress_chunk(png_structp png_ptr, int comp_type,
+       if (ret != Z_STREAM_END)
+       {
+ #if !defined(PNG_NO_STDIO) && !defined(_WIN32_WCE)
+-         char umsg[50];
++         char umsg[60];
+ 
+          if (ret == Z_BUF_ERROR)
+             sprintf(umsg,"Buffer error in compressed datastream in %s chunk",
+diff --git a/libpng-1.0.9/pngwutil.c b/libpng-1.0.9/pngwutil.c
+index f87c86b..8038a5e 100644
+--- a/libpng-1.0.9/pngwutil.c
++++ b/libpng-1.0.9/pngwutil.c
+@@ -344,8 +344,10 @@ png_write_compressed_data_out(png_structp png_ptr, compression_state *comp)
+       comp->output_ptr[i]=NULL;
+    }
+    if (comp->max_output_ptr != 0)
++   {
+       png_free(png_ptr, comp->output_ptr);
+       comp->output_ptr=NULL;
++   }
+    /* write anything left in zbuf */
+    if (png_ptr->zstream.avail_out < (png_uint_32)png_ptr->zbuf_size)
+       png_write_chunk_data(png_ptr, png_ptr->zbuf,
+diff --git a/src/gdpng.c b/src/gdpng.c
+index 713235f..aa4c348 100644
+--- a/src/gdpng.c
++++ b/src/gdpng.c
+@@ -7,6 +7,7 @@
+ #include <png.h>
+ #include <gd.h>
+ #include <stdlib.h>
++#include "rrd_tool.h"
+ 
+ typedef struct _jmpbuf_wrapper {
+   jmp_buf jmpbuf;
+diff --git a/src/gifsize.c b/src/gifsize.c
+index 739b66d..62a99f6 100644
+--- a/src/gifsize.c
++++ b/src/gifsize.c
+@@ -21,6 +21,7 @@
+ #include <math.h>
+ #include <string.h>
+ #include <stdlib.h>
++#include "rrd_tool.h"
+ 
+ 
+ #define MAXCOLORMAPSIZE     256
+@@ -59,9 +60,6 @@ GifSize(FILE *fd, long *width, long *height)
+ {
+        int imageNumber;
+        int BitPixel;
+-       int ColorResolution;
+-       int Background;
+-       int AspectRatio;
+        int Transparent = (-1);
+        unsigned char   buf[16];
+        unsigned char   c;
+@@ -87,9 +85,6 @@ GifSize(FILE *fd, long *width, long *height)
+ 		return 0;
+ 	}
+        BitPixel        = 2<<(buf[4]&0x07);
+-       ColorResolution = (int) (((buf[4]&0x70)>>3)+1);
+-       Background      = buf[5];
+-       AspectRatio     = buf[6];
+ 
+        if (BitSet(buf[4], LOCALCOLORMAP)) {    /* Global Colormap */
+                if (ReadColorMap(fd, BitPixel, ColorMap)) {
+diff --git a/src/parsetime.c b/src/parsetime.c
+index ce965bc..d60785d 100644
+--- a/src/parsetime.c
++++ b/src/parsetime.c
+@@ -244,7 +244,7 @@ static int need_to_free = 0; /* means that we need deallocating memory */
+ 
+ /* Local functions */
+ 
+-void EnsureMemFree ()
++static void EnsureMemFree ()
+ {
+   if( need_to_free )
+     {
+@@ -660,7 +660,6 @@ static char *
+ day(struct rrd_time_value *ptv)
+ {
+     long mday=0, wday, mon, year = ptv->tm.tm_year;
+-    int tlen;
+     time_t montime;
+ 
+     switch (sc_tokid) {
+@@ -712,7 +711,6 @@ day(struct rrd_time_value *ptv)
+     case NUMBER:
+ 	    /* get numeric <sec since 1970>, MM/DD/[YY]YY, or DD.MM.[YY]YY
+ 	     */
+-	    tlen = strlen(sc_token);
+ 	    mon = atol(sc_token);
+             if (mon > 10*365*24*60*60) {
+                 montime = mon;
+diff --git a/src/pngsize.c b/src/pngsize.c
+index 8bf0ab4..78ac69c 100644
+--- a/src/pngsize.c
++++ b/src/pngsize.c
+@@ -5,6 +5,7 @@
+  *****************************************************************************/
+ 
+ #include <png.h>
++#include "rrd_tool.h"
+ 
+ int
+ PngSize(FILE *fd, long *width, long *height)
+diff --git a/src/rrd_cgi.c b/src/rrd_cgi.c
+index 5ee2121..e69967e 100644
+--- a/src/rrd_cgi.c
++++ b/src/rrd_cgi.c
+@@ -255,9 +255,7 @@ char * stralloc(const char *str){
+ }
+ 
+ int main(int argc, char *argv[]) {
+-	long length;
+ 	char *buffer;
+-	char *server_url = NULL;
+ 	long i;
+ 	long filter=0;
+ #ifdef MUST_DISABLE_SIGFPE
+@@ -294,17 +292,14 @@ int main(int argc, char *argv[]) {
+ 	if (!filter) {
+ 		cgiDebug(0,0);
+ 		cgiArg = cgiInit();
+-		server_url = getenv("SERVER_URL");
+ 	}
+ 
+ 	/* make sure we have one extra argument, 
+ 	   if there are others, we do not care Apache gives several */
+ 
+-	if ( optind >= argc ) { 
++	if ( optind >= argc ) {
+ 		fprintf(stderr, "ERROR: expected a filename\n");
+ 		exit(1);
+-	} else {
+-		length = readfile(argv[optind], &buffer, 1);
+ 	}
+ 
+ 	if(rrd_test_error()) {
+@@ -345,8 +340,8 @@ int main(int argc, char *argv[]) {
+ 
+ 	if (!filter) {
+ 		printf ("Content-Type: text/html\n" 
+-				"Content-Length: %d\n", 
+-				strlen(buffer));
++				"Content-Length: %lu\n", 
++				(long unsigned int)strlen(buffer));
+ 
+ 		if (labs(goodfor) > 0) {
+ 			time_t now;
+diff --git a/src/rrd_fetch.c b/src/rrd_fetch.c
+index 7b4a236..09e0ca9 100644
+--- a/src/rrd_fetch.c
++++ b/src/rrd_fetch.c
+@@ -146,7 +146,7 @@ rrd_fetch_fn(
+     
+     /* when was the really last update of this file ? */
+ 
+-    if (((*ds_namv) = (char **) malloc(rrd.stat_head->ds_cnt * sizeof(char*)))==NULL){
++    if (((*ds_namv) = (char **) malloc(rrd.stat_head->ds_cnt * sizeof(char*) + 1))==NULL){
+ 	rrd_set_error("malloc fetch ds_namv array");
+ 	rrd_free(&rrd);
+ 	fclose(in_file);
+@@ -154,14 +154,14 @@ rrd_fetch_fn(
+     }
+     
+     for(i=0;i<rrd.stat_head->ds_cnt;i++){
+-	if ((((*ds_namv)[i]) = malloc(sizeof(char) * DS_NAM_SIZE))==NULL){
++	if ((((*ds_namv)[i]) = malloc(sizeof(char) * (DS_NAM_SIZE + 1)))==NULL){
+ 	    rrd_set_error("malloc fetch ds_namv entry");
+ 	    rrd_free(&rrd);
+ 	    free(*ds_namv);
+ 	    fclose(in_file);
+ 	    return(-1);
+ 	}
+-	strncpy((*ds_namv)[i],rrd.ds_def[i].ds_nam,DS_NAM_SIZE-1);
++	strncpy((*ds_namv)[i],rrd.ds_def[i].ds_nam,DS_NAM_SIZE);
+ 	(*ds_namv)[i][DS_NAM_SIZE-1]='\0';
+ 
+     }
+diff --git a/src/rrd_graph.c b/src/rrd_graph.c
+index 07bc68d..0918008 100644
+--- a/src/rrd_graph.c
++++ b/src/rrd_graph.c
+@@ -2460,7 +2460,7 @@ copyImage(gdImagePtr gif, char *image, int copy_white)
+       }
+       gdImageDestroy(img); 
+      }
+-     close(fi); 
++     fclose(fi); 
+    } else {
+      rrd_set_error("Error Opeing %s: %s",image,  strerror(errno));
+    }
+@@ -2623,7 +2623,7 @@ graph_paint(image_desc_t *im, char ***calcpr)
+ 
+   if (im->bkg_image){	/* background image added first */
+     copyImage(gif,im->bkg_image,1);
+-    if (rrd_test_error) return(-1);
++    if (rrd_test_error()) return(-1);
+   }
+   else
+    {
+@@ -2770,7 +2770,7 @@ graph_paint(image_desc_t *im, char ***calcpr)
+ 
+   if (im->ovl_image) {	/* overlay image added last */
+     copyImage(gif,im->ovl_image,0);
+-    if (rrd_test_error) return(-1);
++    if (rrd_test_error()) return(-1);
+    }
+     if (strcmp(im->graphfile,"-")==0) {
+ #ifdef WIN32
+@@ -3294,7 +3294,7 @@ im.unit = 0; /* do not display unit if not set */
+ 	    if(sscanf(
+ 		&argv[i][argstart],
+ 		"%lu#%2x%2x%2x:%n",
+-		&im.gdes[im.gdes_c-1].xrule,
++		(long unsigned int *)&im.gdes[im.gdes_c-1].xrule,
+ 		&col_red,
+ 		&col_green,
+ 		&col_blue,
+diff --git a/src/rrd_resize.c b/src/rrd_resize.c
+index 612509d..1360a67 100644
+--- a/src/rrd_resize.c
++++ b/src/rrd_resize.c
+@@ -18,7 +18,7 @@ rrd_resize(int argc, char **argv)
+     unsigned long     l,rra;
+     long              modify;
+     unsigned long     target_rra;
+-    int               grow=0,shrink=0;
++    int               shrink=0;
+     char             *endptr;
+ 
+     infilename=argv[1];
+@@ -33,7 +33,7 @@ rrd_resize(int argc, char **argv)
+ 
+     target_rra=strtol(argv[2],&endptr,0);
+ 
+-    if (!strcmp(argv[3],"GROW")) grow=1;
++    if (!strcmp(argv[3],"GROW")) { ; }
+     else if (!strcmp(argv[3],"SHRINK")) shrink=1;
+     else {
+         rrd_set_error("I can only GROW or SHRINK");
+diff --git a/src/rrd_tune.c b/src/rrd_tune.c
+index bc5a423..4b6d52a 100644
+--- a/src/rrd_tune.c
++++ b/src/rrd_tune.c
+@@ -142,7 +142,7 @@ rrd_tune(int argc, char **argv)
+ 	        fclose(rrd_file);
+ 		return -1;
+ 	    }
+-	    strncpy(rrd.ds_def[ds].ds_nam,ds_new,DS_NAM_SIZE-1);
++	    strncpy(rrd.ds_def[ds].ds_nam,ds_new,DS_NAM_SIZE);
+ 	    rrd.ds_def[ds].ds_nam[DS_NAM_SIZE-1]='\0';
+ 	    break;
+ 	case '?':
+diff --git a/src/rrd_update.c b/src/rrd_update.c
+index 42b355e..ab64356 100644
+--- a/src/rrd_update.c
++++ b/src/rrd_update.c
+@@ -93,7 +93,6 @@ rrd_update(int argc, char **argv)
+     rrd_t            rrd;
+     time_t           current_time = time(NULL);
+     char             **updvals;
+-    int              wrote_to_file = 0;
+     char             *template = NULL;          
+     char             *endptr; /* used in the conversion */
+ 
+@@ -671,7 +670,6 @@ rrd_update(int argc, char **argv)
+ 				break;
+ 			    }
+ 			    rra_current += sizeof(rrd_value_t);
+-			    wrote_to_file = 1;
+ 
+ #ifdef DEBUG
+ 			    fprintf(stderr,"  -- RRA WROTE new at %ld\n",ftell(rrd_file));
+-- 
+2.16.2.windows.1
+
