@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2013-2014 OpenWrt.org
-# Copyright (C) 2018-2019 Tano Systems
+# Copyright (C) 2018-2020 Tano Systems
 
 START=00
 STOP=90
@@ -70,9 +70,9 @@ hwclock_call() {
 	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $args || exit 0
 
 	if [ "$1" = "save" ]; then
-		logger -t sysfixtime "saved '$(date)' to $rtc_dev"
+		logger -t sysfixtime -p daemon.info "saved '$(date)' to $rtc_dev"
 	else
-		logger -t sysfixtime "restored '$(date)' from $rtc_dev"
+		logger -t sysfixtime -p daemon.info "restored '$(date)' from $rtc_dev"
 	fi
 }
 
