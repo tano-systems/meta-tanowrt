@@ -2,7 +2,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "3"
+INC_PR = "4"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -45,6 +45,7 @@ SRC_URI += "\
 	file://usr/share/collectd/plugin/ping.json \
 	file://usr/share/collectd/plugin/processes.json \
 	file://usr/share/collectd/plugin/rrdtool.json \
+	file://usr/share/collectd/plugin/syslog.json \
 	file://usr/share/collectd/plugin/sensors.json \
 	file://usr/share/collectd/plugin/tcpconns.json \
 	file://usr/share/collectd/plugin/thermal.json \
@@ -82,6 +83,7 @@ PACKAGECONFIG ??= "\
     rrdtool \
     tcpconns \
     uptime \
+    syslog \
 "
 
 PACKAGECONFIG[aggregation] = "--enable-aggregation,--disable-aggregation,"
