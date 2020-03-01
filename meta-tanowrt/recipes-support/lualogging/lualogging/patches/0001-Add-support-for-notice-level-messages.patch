@@ -1,0 +1,36 @@
+From 8ded4d007c37c3aa090afa5870b4b685998a6420 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 1 Mar 2020 05:39:14 +0300
+Subject: [PATCH] Add support for notice level messages
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/logging.lua | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/logging.lua b/src/logging.lua
+index f1f7062..ee429d1 100644
+--- a/src/logging.lua
++++ b/src/logging.lua
+@@ -30,6 +30,9 @@ DEBUG = "DEBUG",
+ -- progress of the application at coarse-grained level
+ INFO = "INFO",
+ 
++-- The NOTICE level designates for normal but significant conditions
++NOTICE = "NOTICE",
++
+ -- The WARN level designates potentially harmful situations
+ WARN = "WARN",
+ 
+@@ -42,7 +45,7 @@ ERROR = "ERROR",
+ FATAL = "FATAL",
+ }
+ 
+-local LEVEL = {"DEBUG", "INFO", "WARN", "ERROR", "FATAL"}
++local LEVEL = {"DEBUG", "INFO", "NOTICE", "WARN", "ERROR", "FATAL"}
+ local MAX_LEVELS = #LEVEL
+ -- make level names to order
+ for i=1,MAX_LEVELS do
+-- 
+2.16.2.windows.1
+
