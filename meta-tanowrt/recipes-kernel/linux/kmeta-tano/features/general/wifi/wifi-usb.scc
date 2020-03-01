@@ -1,0 +1,12 @@
+define KFEATURE_DESCRIPTION "Enable USB WiFi Drivers"
+define KFEATURE_COMPATIBILITY board
+
+include wifi-common.scc
+
+kconf hardware atheros-usb.cfg
+kconf hardware atmel-usb.cfg
+kconf hardware broadcom-usb.cfg
+kconf hardware mediatek-usb.cfg
+kconf hardware ralink-usb.cfg
+kconf hardware realtek-usb.cfg
+kconf hardware zydas-usb.cfg

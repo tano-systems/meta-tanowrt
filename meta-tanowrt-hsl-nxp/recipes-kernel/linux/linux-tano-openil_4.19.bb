@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_SRC_URI ?= "git://github.com/openil/linux.git;nobranch=1"
@@ -29,5 +29,5 @@ require recipes-kernel/linux/linux-tano-openil.inc
 require recipes-kernel/linux/linux-tano.inc
 
 # Failed to patch original
-KERNEL_FEATURES_remove = "patches/openwrt/generic/662.scc"
+KERNEL_FEATURES_remove = "patches/openwrt/generic-${LINUX_VERSION_SHORT}/662.scc"
 SRC_URI_append = "file://662.patch"

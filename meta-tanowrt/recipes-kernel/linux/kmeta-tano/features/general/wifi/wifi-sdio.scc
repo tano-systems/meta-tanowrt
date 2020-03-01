@@ -1,0 +1,7 @@
+define KFEATURE_DESCRIPTION "Enable SDIO WiFi Drivers"
+define KFEATURE_COMPATIBILITY board
+
+include wifi-common.scc
+
+kconf hardware broadcom-sdio.cfg
+

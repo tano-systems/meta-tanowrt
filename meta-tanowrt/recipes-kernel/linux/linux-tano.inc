@@ -1,16 +1,13 @@
 #
-# Copyright (C) 2019, Tano Systems, All rights reserved
+# Copyright (C) 2019-2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".0"
+PR_append = ".1"
 
 python __anonymous() {
-    if not d.getVar("KERNEL_SRC_URI") or not d.getVar("KERNEL_SRC_SRCREV"):
-        bb.error("You need to set properly values for KERNEL_SRC_URI and KERNEL_SRC_SRCREV")
-
-    if not d.getVar("KERNEL_CACHE_SRC_BRANCH") or not d.getVar("KERNEL_CACHE_SRC_SRCREV"):
-        bb.error("You need to set properly values for KERNEL_CACHE_SRC_BRANCH and KERNEL_CACHE_SRC_SRCREV")
+    if not d.getVar("KERNEL_CACHE_DIR"):
+        bb.error("You need to set properly value for KERNEL_CACHE_DIR")
 }
 
 # LEVELS:
@@ -28,27 +25,25 @@ KERNEL_SRC_PROTOCOL ?= "git"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}:"
 
+#
+# Kernel source SRC_URI
+#
 SRC_URI += "\
 	${KERNEL_SRC_URI};name=machine;protocol=${KERNEL_SRC_PROTOCOL}${@oe.utils.conditional('KERNEL_SRC_BRANCH', '', '', ';branch=', d)}${KERNEL_SRC_BRANCH} \
 "
 
-# kmeta
-KERNEL_CACHE_ENABLE ?= "1"
-KERNEL_CACHE_SRC_URI ?= "git://github.com/tano-systems/tano-kernel-cache.git"
-KERNEL_CACHE_SRC_PROTOCOL ?= "git"
-
+#
+# Kernel cache SRC_URI
 #
 # Override all other kmeta data by specifying name starting with 'zz-' (destsuffix).
 # All include paths will be sorted by spp with 'sort' tool.
 #
 SRC_URI += "\
-	${KERNEL_CACHE_SRC_URI};type=kmeta;name=metatano;protocol=${KERNEL_CACHE_SRC_PROTOCOL};branch=${KERNEL_CACHE_SRC_BRANCH};destsuffix=zz-kernel-cache-tano \
+	file://${KERNEL_CACHE_DIR};type=kmeta;name=metatano;destsuffix=zz-kernel-cache-tano/${KERNEL_CACHE_DIR};subdir=zz-kernel-cache-tano \
 "
 
 SRCREV_machine = "${KERNEL_SRC_SRCREV}"
-SRCREV_metatano = "${KERNEL_CACHE_SRC_SRCREV}"
-
-SRCREV_FORMAT = "machine_metatano"
+SRCREV_FORMAT = "machine"
 
 require recipes-kernel/linux/linux-yocto.inc
 

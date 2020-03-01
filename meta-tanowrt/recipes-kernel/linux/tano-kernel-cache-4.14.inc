@@ -1,30 +1,29 @@
-PR_append = ".6"
+PR_append = ".7"
 
-KERNEL_CACHE_SRC_BRANCH ?= "kernel-4.14"
-KERNEL_CACHE_SRC_SRCREV ?= "446ccc84e25d4011588b550003b918ba23c74ad4"
+KERNEL_CACHE_DIR = "kmeta-tano"
 
 KERNEL_FEATURES_append = "\
-	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-leds/ledtrig_usbport.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 "
 
-#	patches/openwrt/generic/550.scc \
-#	patches/openwrt/generic/640.scc \
-#	patches/openwrt/generic/660.scc \
-#	patches/openwrt/generic/662.scc \
-#	patches/openwrt/generic/663.scc \
+#	patches/openwrt/generic-${LINUX_VERSION_SHORT}/550.scc \
+#	patches/openwrt/generic-${LINUX_VERSION_SHORT}/640.scc \
+#	patches/openwrt/generic-${LINUX_VERSION_SHORT}/660.scc \
+#	patches/openwrt/generic-${LINUX_VERSION_SHORT}/662.scc \
+#	patches/openwrt/generic-${LINUX_VERSION_SHORT}/663.scc \
 #
 
 KERNEL_FEATURES_append = "\
-	patches/openwrt/generic/600.scc \
-	patches/openwrt/generic/610.scc \
-	patches/openwrt/generic/611.scc \
-	patches/openwrt/generic/612.scc \
-	patches/openwrt/generic/613.scc \
-	patches/openwrt/generic/616.scc \
-	patches/openwrt/generic/620.scc \
-	patches/openwrt/generic/630.scc \
-	patches/openwrt/generic/655.scc \
-	patches/openwrt/generic/681.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/600.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/610.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/611.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/612.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/613.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/616.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/620.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/630.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/655.scc \
+	patches/openwrt/generic-${LINUX_VERSION_SHORT}/681.scc \
 "
 
 require recipes-kernel/linux/tano-kernel-cache.inc

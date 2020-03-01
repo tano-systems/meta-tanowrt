@@ -1,0 +1,6 @@
+define KFEATURE_DESCRIPTION "Enable profiling and timerstats"
+define KFEATURE_COMPATIBILITY board
+
+kconf non-hardware profiling.cfg
+
+include features/general/debug/debug-kernel.scc

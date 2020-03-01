@@ -1,0 +1,8 @@
+#
+# Not directly sourced via a kernel type but via an external bb
+#
+
+define KFEATURE_DESCRIPTION "netfilter nf_tables"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware nf_tables.cfg

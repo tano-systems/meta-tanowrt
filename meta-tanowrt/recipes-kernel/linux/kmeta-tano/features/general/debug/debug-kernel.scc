@@ -1,0 +1,5 @@
+
+define KFEATURE_DESCRIPTION "Enable debug kernel and some important debug features"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware debug-kernel.cfg

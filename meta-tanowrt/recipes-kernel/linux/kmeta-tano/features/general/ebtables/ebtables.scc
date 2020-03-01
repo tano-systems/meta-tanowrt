@@ -1,0 +1,8 @@
+#
+# Not directly sourced via a kernel type but via an external bb
+#
+
+define KFEATURE_DESCRIPTION "Enable Bridge Netfilter options"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware ebtables.cfg

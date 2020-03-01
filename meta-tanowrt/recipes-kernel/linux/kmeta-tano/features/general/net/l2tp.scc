@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Layer 2 Tunneling Protocol Support"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware l2tp.cfg

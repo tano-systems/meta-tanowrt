@@ -1,0 +1,9 @@
+# Add early printk to a kernel config
+# Additional general debugging can be added to new .scc/.cfg pairs as needed
+# Other subsystem or driver debugging configs should be in their respective
+# .scc/.cfg files
+
+define KFEATURE_DESCRIPTION "Enable early printk for debugging"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware printk.cfg

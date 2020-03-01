@@ -9,7 +9,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 LINUX_RPI_BRANCH ?= "rpi-4.19.y"
@@ -21,6 +21,8 @@ KERNEL_SRC_SRCREV ?= "55b89745a4782db50e86291bd1adee8fb44b84ad"
 LINUX_VERSION ?= "4.19.57"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
+
+LINUX_VERSION_SHORT = "${@oe.utils.trim_version("${LINUX_VERSION}", 2)}"
 
 require recipes-kernel/linux/tano-kernel-cache-4.19.inc
 require recipes-kernel/linux/linux-tano-rpi.inc

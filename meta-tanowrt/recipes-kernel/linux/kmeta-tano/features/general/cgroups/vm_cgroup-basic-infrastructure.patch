@@ -1,0 +1,235 @@
+From cf1841647be36b0e854f2ed2609294c3296e7ddb Mon Sep 17 00:00:00 2001
+From: Vladimir Davydov <vdavydov@parallels.com>
+Date: Fri, 8 Aug 2014 09:20:33 +0800
+Subject: [PATCH 1/7] vm_cgroup: basic infrastructure
+
+Taken from https://lkml.org/lkml/2014/7/3/407
+
+This patch introduces the vm cgroup to control address space expansion
+of tasks that belong to a cgroup. The idea is to provide a mechanism to
+limit memory overcommit not only for the whole system, but also on per
+cgroup basis.
+
+This patch only adds some basic cgroup methods, like alloc/free and
+write/read, while the real accounting/limiting is done in the following
+patches.
+
+Signed-off-by: Vladimir Davydov <vdavydov@parallels.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Bruce Ashfield <bruce.ashfield@windriver.com>
+---
+ include/linux/cgroup_subsys.h |   4 ++
+ include/linux/vm_cgroup.h     |  18 ++++++
+ init/Kconfig                  |   4 ++
+ mm/Makefile                   |   1 +
+ mm/vm_cgroup.c                | 131 ++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 158 insertions(+)
+ create mode 100644 include/linux/vm_cgroup.h
+ create mode 100644 mm/vm_cgroup.c
+
+diff --git a/include/linux/cgroup_subsys.h b/include/linux/cgroup_subsys.h
+index defadc0cb593..b42297397959 100644
+--- a/include/linux/cgroup_subsys.h
++++ b/include/linux/cgroup_subsys.h
+@@ -55,6 +55,10 @@ SUBSYS(hugetlb)
+ SUBSYS(files)
+ #endif
+ 
++#if IS_ENABLED(CONFIG_CGROUP_VM)
++SUBSYS(vm)
++#endif
++
+ /*
+  * DO NOT ADD ANY SUBSYSTEM WITHOUT EXPLICIT ACKS FROM CGROUP MAINTAINERS.
+  */
+diff --git a/include/linux/vm_cgroup.h b/include/linux/vm_cgroup.h
+new file mode 100644
+index 000000000000..b629c9affa4b
+--- /dev/null
++++ b/include/linux/vm_cgroup.h
+@@ -0,0 +1,18 @@
++#ifndef _LINUX_VM_CGROUP_H
++#define _LINUX_VM_CGROUP_H
++
++#ifdef CONFIG_CGROUP_VM
++static inline bool vm_cgroup_disabled(void)
++{
++	if (vm_cgrp_subsys.disabled)
++		return true;
++	return false;
++}
++#else /* !CONFIG_CGROUP_VM */
++static inline bool vm_cgroup_disabled(void)
++{
++	return true;
++}
++#endif /* CONFIG_CGROUP_VM */
++
++#endif /* _LINUX_VM_CGROUP_H */
+diff --git a/init/Kconfig b/init/Kconfig
+index a8c839203375..63516d737728 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -982,6 +982,10 @@ config MEMCG_KMEM
+ 	  the kmem extension can use it to guarantee that no group of processes
+ 	  will ever exhaust kernel resources alone.
+ 
++config CGROUP_VM
++	bool "Virtual Memory Resource Controller for Control Groups"
++	default n
++
+ config CGROUP_HUGETLB
+ 	bool "HugeTLB Resource Controller for Control Groups"
+ 	depends on RESOURCE_COUNTERS && HUGETLB_PAGE
+diff --git a/mm/Makefile b/mm/Makefile
+index 310c90a09264..bddfca7b991c 100644
+--- a/mm/Makefile
++++ b/mm/Makefile
+@@ -52,6 +52,7 @@ obj-$(CONFIG_MIGRATION) += migrate.o
+ obj-$(CONFIG_QUICKLIST) += quicklist.o
+ obj-$(CONFIG_TRANSPARENT_HUGEPAGE) += huge_memory.o
+ obj-$(CONFIG_MEMCG) += memcontrol.o page_cgroup.o vmpressure.o
++obj-$(CONFIG_CGROUP_VM) += vm_cgroup.o
+ obj-$(CONFIG_CGROUP_HUGETLB) += hugetlb_cgroup.o
+ obj-$(CONFIG_MEMORY_FAILURE) += memory-failure.o
+ obj-$(CONFIG_HWPOISON_INJECT) += hwpoison-inject.o
+diff --git a/mm/vm_cgroup.c b/mm/vm_cgroup.c
+new file mode 100644
+index 000000000000..7f5b81482748
+--- /dev/null
++++ b/mm/vm_cgroup.c
+@@ -0,0 +1,131 @@
++#include <linux/cgroup.h>
++#include <linux/res_counter.h>
++#include <linux/mm.h>
++#include <linux/slab.h>
++#include <linux/vm_cgroup.h>
++
++struct vm_cgroup {
++	struct cgroup_subsys_state css;
++
++	/*
++	 * The counter to account for vm usage.
++	 */
++	struct res_counter res;
++};
++
++static struct vm_cgroup *root_vm_cgroup __read_mostly;
++
++static inline bool vm_cgroup_is_root(struct vm_cgroup *vmcg)
++{
++	return vmcg == root_vm_cgroup;
++}
++
++static struct vm_cgroup *vm_cgroup_from_css(struct cgroup_subsys_state *s)
++{
++	return s ? container_of(s, struct vm_cgroup, css) : NULL;
++}
++
++static struct cgroup_subsys_state *
++vm_cgroup_css_alloc(struct cgroup_subsys_state *parent_css)
++{
++	struct vm_cgroup *parent = vm_cgroup_from_css(parent_css);
++	struct vm_cgroup *vmcg;
++
++	vmcg = kzalloc(sizeof(*vmcg), GFP_KERNEL);
++	if (!vmcg)
++		return ERR_PTR(-ENOMEM);
++
++	res_counter_init(&vmcg->res, parent ? &parent->res : NULL);
++
++	if (!parent)
++		root_vm_cgroup = vmcg;
++
++	return &vmcg->css;
++}
++
++static void vm_cgroup_css_free(struct cgroup_subsys_state *css)
++{
++	struct vm_cgroup *vmcg = vm_cgroup_from_css(css);
++
++	kfree(vmcg);
++}
++
++static u64 vm_cgroup_read_u64(struct cgroup_subsys_state *css,
++			      struct cftype *cft)
++{
++	struct vm_cgroup *vmcg = vm_cgroup_from_css(css);
++	int memb = cft->private;
++
++	return res_counter_read_u64(&vmcg->res, memb);
++}
++
++static ssize_t vm_cgroup_write(struct kernfs_open_file *of,
++			       char *buf, size_t nbytes, loff_t off)
++{
++	struct vm_cgroup *vmcg = vm_cgroup_from_css(of_css(of));
++	unsigned long long val;
++	int ret;
++
++	if (vm_cgroup_is_root(vmcg))
++		return -EINVAL;
++
++	buf = strstrip(buf);
++	ret = res_counter_memparse_write_strategy(buf, &val);
++	if (ret)
++		return ret;
++
++	ret = res_counter_set_limit(&vmcg->res, val);
++	return ret ?: nbytes;
++}
++
++static ssize_t vm_cgroup_reset(struct kernfs_open_file *of, char *buf,
++			       size_t nbytes, loff_t off)
++{
++	struct vm_cgroup *vmcg= vm_cgroup_from_css(of_css(of));
++	int memb = of_cft(of)->private;
++
++	switch (memb) {
++	case RES_MAX_USAGE:
++		res_counter_reset_max(&vmcg->res);
++		break;
++	case RES_FAILCNT:
++		res_counter_reset_failcnt(&vmcg->res);
++		break;
++	default:
++		BUG();
++	}
++	return nbytes;
++}
++
++static struct cftype vm_cgroup_files[] = {
++	{
++		.name = "usage_in_bytes",
++		.private = RES_USAGE,
++		.read_u64 = vm_cgroup_read_u64,
++	},
++	{
++		.name = "max_usage_in_bytes",
++		.private = RES_MAX_USAGE,
++		.write = vm_cgroup_reset,
++		.read_u64 = vm_cgroup_read_u64,
++	},
++	{
++		.name = "limit_in_bytes",
++		.private = RES_LIMIT,
++		.write = vm_cgroup_write,
++		.read_u64 = vm_cgroup_read_u64,
++	},
++	{
++		.name = "failcnt",
++		.private = RES_FAILCNT,
++		.write = vm_cgroup_reset,
++		.read_u64 = vm_cgroup_read_u64,
++	},
++	{ },	/* terminate */
++};
++
++struct cgroup_subsys vm_cgrp_subsys = {
++	.css_alloc = vm_cgroup_css_alloc,
++	.css_free = vm_cgroup_css_free,
++	.base_cftypes = vm_cgroup_files,
++};
+-- 
+1.8.1.2
+

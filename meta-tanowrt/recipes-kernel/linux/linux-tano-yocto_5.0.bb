@@ -9,7 +9,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.0:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
@@ -27,6 +27,8 @@ KERNEL_SRC_SRCREV ?= "55dd15336b7301b686a0c183f5372b49c1003d03"
 LINUX_VERSION ?= "5.0.19"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
+
+LINUX_VERSION_SHORT = "${@oe.utils.trim_version("${LINUX_VERSION}", 2)}"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-5.0"
 YOCTO_KERNEL_CACHE_SRCREV = "7f6e97c357746382d4339e7e0463637e715acd4b"

@@ -1,0 +1,79 @@
+This README introduces cgroup (controller group) concepts, provides basic
+information and some basic example use cases.
+
+There are five parts as follows in this README:
+
+1. Control Groups
+
+   Control Groups provide a mechanism for aggregating/partitioning sets of
+   tasks, and all their future children, into hierarchical groups with
+   specialized behavior. The use of VFS in Groups is the key technical
+   characteristic, which is the main reason that there is only a minimum of
+   additional kernel code to add cgroup into current kernel, accompanying
+   with using all of merits of VFS.
+
+   Please refer to Documentation/cgroups/*.txt for more detailed information.
+
+2. Some basic test usage for a few controllers:
+
+   1) memory controller
+      	
+      Steps to validate memory controller as follows:
+ 
+	# mkdir -p /cgroups/memcg
+	# mount -t cgroup none /cgroups/memcg -o memory
+
+	# mkdir /cgroups/memcg/0
+	# echo $$ >  /cgroups/memcg/0/tasks
+
+	# echo 30M > /cgroups/memcg/0/memory.limit_in_bytes
+	# cat /cgroups/memcg/0/memory.limit_in_bytes
+	31457280
+	# cat /cgroups/memcg/0/memory.usage_in_bytes
+ 	106496
+	Then scp a great file to remote machine, and check usage_in_bytes,
+	which will gradually increase to the cap of limit_in_bytes.
+	# cat memory.usage_in_bytes 
+	31387648
+
+        Please refer to Documentation/controllers/memory.txt 
+	for more detailed information.
+	
+   2) net traffic controller
+      Notes: Please read the related document and understand the source codes
+             before using this group controller.
+ 
+	*) Set QoS for cgroup
+	
+	   tc qdisc add dev eth1 root handle 1: htb default 30
+	   tc class add dev eth1 parent 1:0  classid 1:10 htb rate 1mbit ceil 1mbit
+	   tc class add dev eth1 parent 1:0  classid 1:20 htb rate 40mbit ceil 40mbit
+
+	   tc filter add dev eth1 protocol ip parent 1: prio 1 handle 10: cgroup
+
+	*) In another shell do the following is high recommended
+	   mkdir -p /cgroups/net_cls
+	   mount -t cgroup net_cls -o net_cls /cgroups/net_cls
+	   mkdir /cgroups/net_cls/scp
+	   echo 0x10010 > /cgroups/net_cls/scp/net_cls.classid
+	   #here, 0x10010 comes from classid,e.g 10:20=>0x100020
+	   echo $$ > /cgroups/net_cls/scp/tasks
+	*) tc -s class show dev  eth1
+
+3. Add/remove a new controller named foo into Wind River Linux.
+
+   To add a new controller into Wind River Linux, the kernel should be
+   patched using one of the techniques covered in the user's guide. 
+   Typically, this means patching the kernel via a template. 
+
+4. Notes: 
+
+   These controllers are in active development by their respective communities.
+   They are stable as tested by Wind River and form a basis for future 
+   extension and deployment. Each configuration is unique, so care must be
+   taken to ensure applicability and stability of the controllers.
+
+5. References:
+
+   * net controller:
+	http://www.ktrap.org/mailarchive/linux-netdev/2009/6/15/5973233

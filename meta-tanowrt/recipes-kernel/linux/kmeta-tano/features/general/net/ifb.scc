@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "IFB Support"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware ifb.cfg

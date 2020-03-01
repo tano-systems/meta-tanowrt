@@ -1,0 +1,3 @@
+define KFEATURE_DESCRIPTION "Enable numa support"
+
+kconf hardware numa.cfg

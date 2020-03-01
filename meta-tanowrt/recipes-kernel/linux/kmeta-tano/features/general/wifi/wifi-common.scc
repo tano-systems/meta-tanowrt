@@ -1,0 +1,7 @@
+define KFEATURE_DESCRIPTION "Enable Common WiFi Kernel Features"
+define KFEATURE_COMPATIBILITY board
+
+kconf hardware wifi-common.cfg
+
+include features/general/mac80211/mac80211.scc
+include features/general/net/phylib.scc

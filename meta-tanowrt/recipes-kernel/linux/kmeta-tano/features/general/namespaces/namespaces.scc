@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Enable namespace support"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware namespaces.cfg

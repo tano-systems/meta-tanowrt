@@ -1,0 +1,6 @@
+define KFEATURE_DESCRIPTION "Enable iwlwifi support"
+define KFEATURE_COMPATIBILITY board
+
+kconf hardware iwlwifi.cfg
+
+include features/general/mac80211/mac80211.scc

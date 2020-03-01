@@ -1,0 +1,14 @@
+define KFEATURE_DESCRIPTION "Enable PCI(e) WiFi Drivers"
+define KFEATURE_COMPATIBILITY board
+
+include wifi-common.scc
+
+kconf hardware atheros-pci.cfg
+kconf hardware broadcom-pci.cfg
+kconf hardware mediatek-pci.cfg
+kconf hardware ralink-pci.cfg
+kconf hardware realtek-pci.cfg
+
+include features/general/iwlwifi/iwlwifi.scc
+include features/general/iwlegacy/iwlegacy.scc
+

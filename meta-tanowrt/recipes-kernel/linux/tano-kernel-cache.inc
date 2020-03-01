@@ -1,37 +1,37 @@
-PR_append = ".4"
+PR_append = ".5"
 
 KERNEL_FEATURES_append = " \
-	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-net/usb-net.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/usb-serial/usb-serial.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/cgroups/cgroups.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "wifi usbhost", " features/wifi/wifi-usb.scc", "" ,d)} \
-	${@bb.utils.contains("COMBINED_FEATURES", "wifi pci", " features/wifi/wifi-pci.scc", "" ,d)} \
-	features/general/ikconfig.scc \
-	features/net_sched/net_sched.scc \
-	features/netfilter/netfilter.scc \
-	features/nf_tables/nf_tables.scc \
-	features/ebtables/ebtables.scc \
-	features/net/routing.scc \
-	features/net/l2tp.scc \
-	features/net/ipset.scc \
-	features/net/atm.scc \
-	features/net/ifb.scc \
-	features/net/ppp.scc \
-	features/net/tun.scc \
-	features/net/vxlan.scc \
-	features/gre/gre-enable.scc \
-	features/net/phylib.scc \
-	features/fs/squashfs.scc \
-	features/fs/f2fs.scc \
-	features/fs/overlayfs.scc \
-	features/fs/autofs4_fs.scc \
-	features/nls/utf8.scc \
-	features/nls/codepage_437.scc \
-	features/nls/codepage_866.scc \
-	features/nls/codepage_1251.scc \
-	features/nls/iso8859_1.scc \
-	features/leds/ledtrig_netdev.scc \
-	features/leds/ledtrig_mtd.scc \
-	features/leds/ledtrig_heartbeat.scc \
-	features/leds/ledtrig_timer.scc \
+	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-serial/usb-serial.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/general/cgroups/cgroups.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "wifi usbhost", " features/general/wifi/wifi-usb.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "wifi pci", " features/general/wifi/wifi-pci.scc", "" ,d)} \
+	features/general/general/ikconfig.scc \
+	features/general/net_sched/net_sched.scc \
+	features/general/netfilter/netfilter.scc \
+	features/general/nf_tables/nf_tables.scc \
+	features/general/ebtables/ebtables.scc \
+	features/general/net/routing.scc \
+	features/general/net/l2tp.scc \
+	features/general/net/ipset.scc \
+	features/general/net/atm.scc \
+	features/general/net/ifb.scc \
+	features/general/net/ppp.scc \
+	features/general/net/tun.scc \
+	features/general/net/vxlan.scc \
+	features/general/gre/gre-enable.scc \
+	features/general/net/phylib.scc \
+	features/general/fs/squashfs.scc \
+	features/general/fs/f2fs.scc \
+	features/general/fs/overlayfs.scc \
+	features/general/fs/autofs4_fs.scc \
+	features/general/nls/utf8.scc \
+	features/general/nls/codepage_437.scc \
+	features/general/nls/codepage_866.scc \
+	features/general/nls/codepage_1251.scc \
+	features/general/nls/iso8859_1.scc \
+	features/general/leds/ledtrig_netdev.scc \
+	features/general/leds/ledtrig_mtd.scc \
+	features/general/leds/ledtrig_heartbeat.scc \
+	features/general/leds/ledtrig_timer.scc \
 "

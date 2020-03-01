@@ -1,0 +1,7 @@
+
+define KFEATURE_DESCRIPTION "Enable latencytop"
+define KFEATURE_COMPATIBILITY arch
+
+kconf non-hardware latencytop.cfg
+
+include features/general/debug/debug-kernel.scc

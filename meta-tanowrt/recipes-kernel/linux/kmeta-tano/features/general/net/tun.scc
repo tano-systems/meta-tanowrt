@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Universal TUN/TAP device driver support"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware tun.cfg

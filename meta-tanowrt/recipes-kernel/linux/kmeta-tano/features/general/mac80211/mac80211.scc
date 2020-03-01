@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Enable mac 80211 + WLAN support"
+define KFEATURE_COMPATIBILITY board
+
+kconf hardware mac80211.cfg

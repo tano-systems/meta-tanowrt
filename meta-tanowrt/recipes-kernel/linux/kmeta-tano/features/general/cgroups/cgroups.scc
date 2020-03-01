@@ -1,0 +1,17 @@
+define KFEATURE_DESCRIPTION "Enable cgroups and selected controllers \
+                             namespaces and associated functionality"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware cgroups.cfg
+
+include features/general/namespaces/namespaces.scc
+
+# patch cgroups-Resource-controller-for-open-files.patch
+# patch Fix-RFC-cgroups-Resource-controller-for-open-files.patch
+# patch vm_cgroup-basic-infrastructure.patch
+# patch vm_cgroup-backport-dependence-to-fix-vm_cgroup-infra.patch
+# patch vm_cgroup-private-writable-mappings-accounting.patch
+# patch vm_cgroup-backport-dependence-to-fix-vm_cgroup-mappi.patch
+# patch shmem-pass-inode-to-shmem_acct_-methods.patch
+# patch vm_cgroup-shared-memory-accounting.patch
+# patch vm_cgroup-do-not-charge-tasks-in-root-cgroup.patch

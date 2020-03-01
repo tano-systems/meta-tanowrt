@@ -1,0 +1,107 @@
+From a36af1327d41aae19708fdf35b0cbc7e1b73a4b4 Mon Sep 17 00:00:00 2001
+From: He Zhe <zhe.he@windriver.com>
+Date: Wed, 30 Jul 2014 16:58:52 +0800
+Subject: [PATCH 2/2] Fix [RFC] cgroups: Resource controller for open files.
+
+The original patch is based on:
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+fad01e866afdbe01a1f3ec06a39c3a8b9e197014
+3.15-rc8
+
+Modify variable and macro in fs/filescontrol.c and include/linux/cgroup_subsys.h
+according to target version. Correct wrong handling which causes boot failure in
+fs/file.c.
+
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Bruce Ashfield <bruce.ashfield@windriver.com>
+---
+ fs/file.c                     |  6 ++++--
+ fs/filescontrol.c             | 12 +++++++-----
+ include/linux/cgroup_subsys.h |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/fs/file.c b/fs/file.c
+index 4b84070bf8f4..e615dc918ac8 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -820,8 +820,10 @@ static int do_dup2(struct files_struct *files,
+ 
+ #ifdef CONFIG_CGROUP_FILES
+ 	if (!tofree)
+-		if (!files_cgroup_alloc_fd(files, 1))
+-			goto Ebusy;
++		if (files_cgroup_alloc_fd(files, 1)) {
++			spin_unlock(&files->file_lock);
++			return -EMFILE;
++		}
+ #endif
+ 
+ 	get_file(file);
+diff --git a/fs/filescontrol.c b/fs/filescontrol.c
+index c532d02eb023..0ba8ffaa85d3 100644
+--- a/fs/filescontrol.c
++++ b/fs/filescontrol.c
+@@ -23,8 +23,8 @@
+ #include <linux/fs.h>
+ #include <linux/fdtable.h>
+ 
+-struct cgroup_subsys files_cgrp_subsys __read_mostly;
+-EXPORT_SYMBOL(files_cgrp_subsys);
++struct cgroup_subsys files_subsys __read_mostly;
++EXPORT_SYMBOL(files_subsys);
+ 
+ struct files_cgroup {
+ 	struct cgroup_subsys_state css;
+@@ -92,9 +92,10 @@ u64 files_cgroup_count_fds(struct files_struct *files)
+ 
+ static u64 files_in_taskset(struct cgroup_taskset *tset)
+ {
++	struct cgroup_subsys_state *css = NULL;
+ 	struct task_struct *task;
+ 	u64 files = 0;
+-	cgroup_taskset_for_each(task, tset) {
++	cgroup_taskset_for_each(task, css, tset) {
+ 		if (!thread_group_leader(task))
+ 			continue;
+ 
+@@ -212,13 +213,14 @@ static struct cftype files[] = {
+ 	{ }
+ };
+ 
+-struct cgroup_subsys files_cgrp_subsys = {
++struct cgroup_subsys files_subsys = {
+ 	.name = "files",
+ 	.css_alloc = files_cgroup_css_alloc,
+ 	.css_free = files_cgroup_css_free,
+ 	.can_attach = files_cgroup_can_attach,
+ 	.attach = files_cgroup_attach,
+ 	.base_cftypes = files,
++	.subsys_id = files_subsys_id,
+ };
+ 
+ void files_cgroup_assign(struct files_struct *files)
+@@ -227,7 +229,7 @@ void files_cgroup_assign(struct files_struct *files)
+ 	struct cgroup_subsys_state *css;
+ 
+ 	task_lock(tsk);
+-	css = task_css(tsk, files_cgrp_id);
++	css = task_css(tsk, files_subsys_id);
+ 	css_get(css);
+ 	files->files_cgroup = container_of(css, struct files_cgroup, css);
+ 	task_unlock(tsk);
+diff --git a/include/linux/cgroup_subsys.h b/include/linux/cgroup_subsys.h
+index e6c9a40f29e3..defadc0cb593 100644
+--- a/include/linux/cgroup_subsys.h
++++ b/include/linux/cgroup_subsys.h
+@@ -51,7 +51,7 @@ SUBSYS(net_prio)
+ SUBSYS(hugetlb)
+ #endif
+ 
+-#if IS_ENABLED(CONFIG_CGROUP_FILES)
++#if IS_SUBSYS_ENABLED(CONFIG_CGROUP_FILES)
+ SUBSYS(files)
+ #endif
+ 
+-- 
+1.8.1.2
+
