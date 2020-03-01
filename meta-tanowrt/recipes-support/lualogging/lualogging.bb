@@ -1,6 +1,6 @@
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 PV = "1.3.0"
 
 SUMMARY = "A simple API to use logging features in Lua"
@@ -17,6 +17,8 @@ RDEPENDS_${PN} += "lua5.1"
 
 SRC_URI = "git://github.com/Neopallium/lualogging.git"
 SRCREV = "c85130120406b9641e96ab05f782dde819fbd102"
+
+SRC_URI += "file://0001-Add-support-for-notice-level-messages.patch"
 
 S = "${WORKDIR}/git"
 
