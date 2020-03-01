@@ -1,6 +1,6 @@
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 PV = "1.0.0-2"
 
 DESCRIPTION = "Addon for lualogging to log to the system log on unix systems"
@@ -17,7 +17,8 @@ RDEPENDS_${PN} += "lua5.1 lualogging"
 SRC_URI = "git://github.com/LuaDist2/luasyslog.git"
 SRCREV = "4b95dd20b15cdc36b748055eedfe23dfed77deae"
 
-SRC_URI += "file://0001-Fix-Makefile.patch"
+SRC_URI += "file://0001-Fix-Makefile.patch \
+            file://0002-Add-support-for-notice-level-messages.patch"
 
 S = "${WORKDIR}/git"
 B = "${S}"
