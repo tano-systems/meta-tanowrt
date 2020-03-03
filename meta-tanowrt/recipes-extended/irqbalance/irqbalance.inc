@@ -1,15 +1,15 @@
 #
 # Copyright (C) 2013 Wind River Systems, Inc.
-# Copyright (C) 2019 Tano Systems, Ltd.
+# Copyright (C) 2019-2020 Tano Systems LLC
 #
-SUMMARY = "IRQ allocation daemon"
+SUMMARY = "IRQ usage balancing for multi-core systems"
 DESCRIPTION = "A daemon to balance interrupts across multiple CPUs, \
 which can lead to better performance and IO balance on SMP systems."
 
 HOMEPAGE = "http://code.google.com/p/irqbalance/"
 BUGTRACKER = "http://code.google.com/p/irqbalance/issues/list"
 
-INC_PR = "0"
+INC_PR = "1"
 
 SRC_URI += "file://irqbalance.config.in \
             file://irqbalance.init \
@@ -30,15 +30,17 @@ OPENWRT_SERVICE_STATE_irqbalance-irqbalance ?= "enabled"
 
 EXTRA_OECONF = "--program-transform-name= \
                 --with-systemd=no \
+                --without-irqbalance-ui \
                "
 
 IRQBALANCE_CONFIG_ENABLED ?= "0"
 
 # let the recipes or appends define options
-PACKAGECONFIG ?= ""
+PACKAGECONFIG ?= "static-glib2"
 
 # enable,disable,depends,rdepends
 #
+PACAKGECONFIG[static-glib2] = "--enable-static=glib2,,"
 PACKAGECONFIG[numa] = "--enable-numa,--disable-numa,numactl,"
 PACKAGECONFIG[libcap-ng] = "--with-libcap-ng,--without-libcap-ng,libcap-ng,"
 
@@ -54,5 +56,5 @@ do_install () {
 	install -m 0755 ${WORKDIR}/irqbalance.init ${D}${sysconfdir}/init.d/irqbalance
 
 	install -d ${D}${sysconfdir}/config
-	install -m 0755 ${WORKDIR}/irqbalance.config ${D}${sysconfdir}/config/irqbalance
+	install -m 0644 ${WORKDIR}/irqbalance.config ${D}${sysconfdir}/config/irqbalance
 }
