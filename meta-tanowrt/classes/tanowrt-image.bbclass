@@ -21,6 +21,7 @@ IMAGE_OVERHEAD_FACTOR = "1"
 
 BAD_RECOMMENDATIONS += "busybox-syslog"
 BAD_RECOMMENDATIONS += "busybox-udhcpc"
+BAD_RECOMMENDATIONS += "shared-mime-info"
 
 #
 # Available IMAGE_FEATURES
