@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano45.${INC_PR}"
+PR_append = ".tano46.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -294,6 +294,7 @@ CONFFILES_${PN}_append = "\
 	${sysconfdir}/hostname \
 	${sysconfdir}/group \
 	${sysconfdir}/profile \
+	${sysconfdir}/shinit \
 	${sysconfdir}/passwd \
 	${sysconfdir}/sysctl.d/10-default.conf \
 	${sysconfdir}/sysctl.d/20-noswap.conf \
