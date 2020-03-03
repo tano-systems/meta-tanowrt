@@ -1,9 +1,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano26"
+PR = "tano27"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -24,7 +24,7 @@ SRC_URI += "\
 	file://rootfs/etc/config/network \
 	file://rootfs/etc/config/wireless \
 	file://rootfs/etc/hotplug.d/iface/00-netstate \
-	file://rootfs/etc/hotplug.d/net/20-smp-tune \
+	file://rootfs/etc/hotplug.d/net/20-smp-packet-steering \
 	file://rootfs/etc/init.d/network \
 	file://rootfs/lib/netifd/proto/dhcp.sh \
 	file://rootfs/lib/netifd/dhcp.script \
@@ -68,7 +68,7 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/hotplug.d/iface
 	install -d ${D}${sysconfdir}/hotplug.d/net
 	install -m 0755 ${WORKDIR}/rootfs/etc/hotplug.d/iface/00-netstate ${D}${sysconfdir}/hotplug.d/iface/
-	install -m 0755 ${WORKDIR}/rootfs/etc/hotplug.d/net/20-smp-tune ${D}${sysconfdir}/hotplug.d/net/
+	install -m 0755 ${WORKDIR}/rootfs/etc/hotplug.d/net/20-smp-packet-steering ${D}${sysconfdir}/hotplug.d/net/
 
 	install -d ${D}${base_libdir}/netifd/proto
 	install -m 0755 ${WORKDIR}/rootfs/lib/netifd/proto/dhcp.sh ${D}${base_libdir}/netifd/proto/
