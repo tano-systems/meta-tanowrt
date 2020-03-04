@@ -9,7 +9,7 @@ which can lead to better performance and IO balance on SMP systems."
 HOMEPAGE = "http://code.google.com/p/irqbalance/"
 BUGTRACKER = "http://code.google.com/p/irqbalance/issues/list"
 
-INC_PR = "1"
+INC_PR = "2"
 
 SRC_URI += "file://irqbalance.config.in \
             file://irqbalance.init \
@@ -40,7 +40,7 @@ PACKAGECONFIG ?= "static-glib2"
 
 # enable,disable,depends,rdepends
 #
-PACAKGECONFIG[static-glib2] = "--enable-static=glib2,,"
+PACKAGECONFIG[static-glib2] = "--enable-static=glib2,,"
 PACKAGECONFIG[numa] = "--enable-numa,--disable-numa,numactl,"
 PACKAGECONFIG[libcap-ng] = "--with-libcap-ng,--without-libcap-ng,libcap-ng,"
 
