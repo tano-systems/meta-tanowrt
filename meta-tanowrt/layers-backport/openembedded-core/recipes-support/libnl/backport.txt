@@ -1,0 +1,4 @@
+﻿Recipe for libnl 3.5.0 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: d6b1809e8cd7ca78c5b442177393d4299a96ec65
