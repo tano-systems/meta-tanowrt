@@ -1,7 +1,7 @@
 From 28bf05880dc9341577d976f9b915a23874d12c60 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 20:05:05 +0300
-Subject: [PATCH 09/11] instance: Improve error messages
+Subject: [PATCH 09/12] instance: Improve error messages
 
 Add service and instance names to error messages.
 

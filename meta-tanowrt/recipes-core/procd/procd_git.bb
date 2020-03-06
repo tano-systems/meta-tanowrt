@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano35"
+PR = "tano36"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -35,6 +35,7 @@ SRC_URI += "\
 	file://0009-instance-Improve-error-messages.patch \
 	file://0010-inittab-Handle-multiple-consoles-in-proc-cmdline.patch \
 	file://0011-instance-Fix-64-bit-compilation-issues.patch \
+	file://0012-system-Add-tm_gmtoff-to-system.info-ubus-call.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 

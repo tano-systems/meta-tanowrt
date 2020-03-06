@@ -1,7 +1,7 @@
 From f772e87a27c6ad5a44b6c9110de5bad761701b52 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
-Subject: [PATCH 10/11] inittab: Handle multiple consoles in /proc/cmdline
+Subject: [PATCH 10/12] inittab: Handle multiple consoles in /proc/cmdline
 
 If askconsole (or askconsolelate) specified without id, then process
 will be executed for all tty's defined in the kernel command line
