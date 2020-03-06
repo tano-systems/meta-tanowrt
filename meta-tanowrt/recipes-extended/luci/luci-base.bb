@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -78,7 +78,7 @@ do_install_append() {
 
 	# Configure initial mediaurlbase
 	install -d ${D}${sysconfdir}/uci-defaults
-	install -m 0755 ${WORKDIR}/99_luci-theme-initial ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
+	install -m 0755 ${WORKDIR}/99_luci-theme-initial ${D}${sysconfdir}/uci-defaults/zz_luci-theme-initial
 
 	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
 	sed -i -e "s/\(luci\.main\.mediaurlbase\)=.*/\1=${MEDIAURLBASE_ESCAPED}/" ${D}${sysconfdir}/uci-defaults/99_luci-theme-initial
