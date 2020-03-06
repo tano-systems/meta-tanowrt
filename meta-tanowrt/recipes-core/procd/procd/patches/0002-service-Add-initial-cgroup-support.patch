@@ -1,7 +1,7 @@
 From 5372ec8961e01f8b45712633374c039b114c46c6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 9 Feb 2019 01:18:40 +0300
-Subject: [PATCH 02/11] service: Add initial cgroup support
+Subject: [PATCH 02/12] service: Add initial cgroup support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

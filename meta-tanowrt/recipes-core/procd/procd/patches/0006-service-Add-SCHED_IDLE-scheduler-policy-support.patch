@@ -1,7 +1,7 @@
 From 66565bbfad686e667f4fe7675fc4da3caa663d72 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 22 Jun 2019 06:02:50 +0300
-Subject: [PATCH 06/11] service: Add SCHED_IDLE scheduler policy support
+Subject: [PATCH 06/12] service: Add SCHED_IDLE scheduler policy support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
