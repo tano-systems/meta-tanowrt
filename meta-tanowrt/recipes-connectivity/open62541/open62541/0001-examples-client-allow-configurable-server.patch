@@ -1,0 +1,53 @@
+From 69a658e534ff484faebe72fa7d1b6d484e49e7cd Mon Sep 17 00:00:00 2001
+From: Jacob Stiffler <j-stiffler@ti.com>
+Date: Wed, 27 Feb 2019 11:08:32 -0500
+Subject: [PATCH] examples: client: allow configurable server
+
+* Enable a remote server URL to be provided as an argument.
+* Default to localhost if no arguments are provided.
+
+Upstream-Status: Pending
+
+Signed-off-by: Jacob Stiffler <j-stiffler@ti.com>
+---
+ examples/client.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/examples/client.c b/examples/client.c
+index f04bed9..dfc56f5 100644
+--- a/examples/client.c
++++ b/examples/client.c
+@@ -29,13 +29,18 @@ nodeIter(UA_NodeId childId, UA_Boolean isInverse, UA_NodeId referenceTypeId, voi
+ }
+ 
+ int main(int argc, char *argv[]) {
++    char *ua_server = "opc.tcp://localhost:4840";
++    if(argc > 1) {
++        ua_server = argv[1];
++    }
++
+     UA_Client *client = UA_Client_new();
+     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+ 
+     /* Listing endpoints */
+     UA_EndpointDescription* endpointArray = NULL;
+     size_t endpointArraySize = 0;
+-    UA_StatusCode retval = UA_Client_getEndpoints(client, "opc.tcp://localhost:4840",
++    UA_StatusCode retval = UA_Client_getEndpoints(client, ua_server,
+                                                   &endpointArraySize, &endpointArray);
+     if(retval != UA_STATUSCODE_GOOD) {
+         UA_Array_delete(endpointArray, endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
+@@ -51,8 +56,8 @@ int main(int argc, char *argv[]) {
+     UA_Array_delete(endpointArray,endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
+ 
+     /* Connect to a server */
+-    /* anonymous connect would be: retval = UA_Client_connect(client, "opc.tcp://localhost:4840"); */
+-    retval = UA_Client_connect_username(client, "opc.tcp://localhost:4840", "user1", "password");
++    /* anonymous connect would be: retval = UA_Client_connect(client, ua_server); */
++    retval = UA_Client_connect_username(client, ua_server, "user1", "password");
+     if(retval != UA_STATUSCODE_GOOD) {
+         UA_Client_delete(client);
+         return EXIT_FAILURE;
+-- 
+2.7.4
+
