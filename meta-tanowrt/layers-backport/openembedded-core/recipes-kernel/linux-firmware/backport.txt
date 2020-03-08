@@ -1,0 +1,4 @@
+﻿Recipe for linux-firmware 20200122 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: 5d579fc2fe71637fc6e071aa66542befa39ac8bb
