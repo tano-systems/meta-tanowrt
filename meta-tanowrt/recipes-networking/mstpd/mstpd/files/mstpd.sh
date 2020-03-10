@@ -117,16 +117,17 @@ mstpd_configure_port()
 	local br_port="$3"
 
 	config_load 'mstpd'
-	config_get mstpctl_portpathcost  "$br_ifname" "port_${br_port}_pathcost"
-	config_get mstpctl_portadminedge "$br_ifname" "port_${br_port}_adminedge"
-	config_get mstpctl_portautoedge  "$br_ifname" "port_${br_port}_autoedge"
-	config_get mstpctl_portp2p       "$br_ifname" "port_${br_port}_p2p"
-	config_get mstpctl_portbpduguard "$br_ifname" "port_${br_port}_bpduguard"
-	config_get mstpctl_portrestrrole "$br_ifname" "port_${br_port}_restrrole"
-	config_get mstpctl_portrestrtcn  "$br_ifname" "port_${br_port}_restrtcn"
-	config_get mstpctl_portnetwork   "$br_ifname" "port_${br_port}_network"
-	config_get mstpctl_porttreeprio  "$br_ifname" "port_${br_port}_treeprio"
-	config_get mstpctl_porttreecost  "$br_ifname" "port_${br_port}_treecost"
+	config_get mstpctl_portpathcost   "$br_ifname" "port_${br_port}_pathcost"
+	config_get mstpctl_portadminedge  "$br_ifname" "port_${br_port}_adminedge"
+	config_get mstpctl_portautoedge   "$br_ifname" "port_${br_port}_autoedge"
+	config_get mstpctl_portp2p        "$br_ifname" "port_${br_port}_p2p"
+	config_get mstpctl_portbpduguard  "$br_ifname" "port_${br_port}_bpduguard"
+	config_get mstpctl_portbpdufilter "$br_ifname" "port_${br_port}_bpdufilter"
+	config_get mstpctl_portrestrrole  "$br_ifname" "port_${br_port}_restrrole"
+	config_get mstpctl_portrestrtcn   "$br_ifname" "port_${br_port}_restrtcn"
+	config_get mstpctl_portnetwork    "$br_ifname" "port_${br_port}_network"
+	config_get mstpctl_porttreeprio   "$br_ifname" "port_${br_port}_treeprio"
+	config_get mstpctl_porttreecost   "$br_ifname" "port_${br_port}_treecost"
 
 	if [ "$mstpctl_portpathcost" ]; then
 		${MSTPCTL_BIN} setportpathcost "$br_sysname" "$br_port" "$mstpctl_portpathcost"
@@ -151,6 +152,11 @@ mstpd_configure_port()
 	if [ "$mstpctl_portbpduguard" ]; then
 		${MSTPCTL_BIN} setbpduguard "$br_sysname" "$br_port" "$mstpctl_portbpduguard"
 		mstpd_log_debug "lib: port '$br_sysname:$br_port': setbpduguard $mstpctl_portbpduguard"
+	fi
+
+	if [ "$mstpctl_portbpdufilter" ]; then
+		${MSTPCTL_BIN} setportbpdufilter "$br_sysname" "$br_port" "$mstpctl_portbpdufilter"
+		mstpd_log_debug "lib: port '$br_sysname:$br_port': setportbpdufilter $mstpctl_portbpdufilter"
 	fi
 
 	if [ "$mstpctl_portrestrrole" ]; then
