@@ -1,4 +1,4 @@
-From 2ba7a9d36896b6d9a0688ee182a3168a7a27e63e Mon Sep 17 00:00:00 2001
+From ecf59160856f42e0a40be3d1beb817757c6b0a50 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 6 Dec 2018 03:09:45 +0300
 Subject: [PATCH] ctl_main.c: Display information only for added bridges
@@ -12,9 +12,9 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  bridge_track.c      | 16 ++++++++++
  ctl_functions.h     | 36 ++++++++++++++++++++++
- ctl_main.c          | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ ctl_main.c          | 87 ++++++++++++++++++++++++++++++++++++++++++++++++++---
  ctl_socket_server.c |  2 ++
- 4 files changed, 138 insertions(+), 5 deletions(-)
+ 4 files changed, 136 insertions(+), 5 deletions(-)
 
 diff --git a/bridge_track.c b/bridge_track.c
 index 968e15b..26c3210 100644
@@ -91,10 +91,10 @@ index 9ed4e98..f6f24c6 100644
  #define SERVER_MESSAGE_CASE(name)                            \
      case CMD_CODE_ ## name : do                              \
 diff --git a/ctl_main.c b/ctl_main.c
-index fe86a05..4582cc4 100644
+index ac77584..bef72f8 100644
 --- a/ctl_main.c
 +++ b/ctl_main.c
-@@ -454,6 +454,7 @@ static inline int get_bridge_list(struct dirent ***namelist)
+@@ -455,6 +455,7 @@ static inline int get_bridge_list(struct dirent ***namelist)
  static int cmd_showbridge(int argc, char *const *argv)
  {
      int i, count = 0;
@@ -102,7 +102,7 @@ index fe86a05..4582cc4 100644
      int r = 0;
      struct dirent **namelist;
      param_id_t param_id = PARAM_NULL;
-@@ -488,18 +489,26 @@ static int cmd_showbridge(int argc, char *const *argv)
+@@ -489,18 +490,26 @@ static int cmd_showbridge(int argc, char *const *argv)
  
      for(i = 0; i < count; ++i)
      {
@@ -134,7 +134,7 @@ index fe86a05..4582cc4 100644
      }
  
      do_arrayend_fmt();
-@@ -514,6 +523,68 @@ static int cmd_showbridge(int argc, char *const *argv)
+@@ -515,6 +524,68 @@ static int cmd_showbridge(int argc, char *const *argv)
      return r;
  }
  
@@ -203,16 +203,7 @@ index fe86a05..4582cc4 100644
  static int do_showtree_fmt_plain(const MSTI_BridgeStatus *s,
                                   const char *br_name,
                                   int mstid,
-@@ -1006,6 +1077,8 @@ static int do_showport_fmt_json(const CIST_PortStatus *s,
-                        BOOL_STR(s->bpdu_guard_port));
-                 printf("\"bpdu-guard-error\":\"%s\",",
-                        BOOL_STR(s->bpdu_guard_error));
-+                printf("\"bpdu-filter-port\":\"%s\",",
-+                       BOOL_STR(s->bpdu_filter_port));
-                 printf("\"network-port\":\"%s\",",
-                        BOOL_STR(s->network_port));
-                 printf("\"ba-inconsistent\":\"%s\",",
-@@ -2177,6 +2250,10 @@ static const struct command commands[] =
+@@ -2187,6 +2258,10 @@ static const struct command commands[] =
      {1, 32, "delbridge", cmd_delbridge,
       "<bridge> [<bridge> ...]", "Remove bridges from the mstpd's list"},
  
@@ -223,7 +214,7 @@ index fe86a05..4582cc4 100644
      /* Show global bridge */
      {0, 32, "showbridge", cmd_showbridge,
       "[<bridge> ... [param]]", "Show bridge state for the CIST"},
-@@ -2554,6 +2631,8 @@ CLIENT_SIDE_FUNCTION(set_vid2fid)
+@@ -2564,6 +2639,8 @@ CLIENT_SIDE_FUNCTION(set_vid2fid)
  CLIENT_SIDE_FUNCTION(set_fid2mstid)
  CLIENT_SIDE_FUNCTION(set_vids2fids)
  CLIENT_SIDE_FUNCTION(set_fids2mstids)

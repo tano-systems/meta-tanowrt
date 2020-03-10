@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano2"
+PR = "tano3"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -14,13 +14,12 @@ RDEPENDS_${PN} += "bridge-utils"
 SRC_URI = "\
 	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
 	file://0001-ctl_main.c-Display-information-only-for-added-bridge.patch \
-	file://0002-Fix-building-for-GCC-8.2.patch \
 "
 
 PV = "0.0.8+git${SRCPV}"
 
-# 31.05.2019 ctl_main: allow batch commands from stdin as well 
-SRCREV = "03b5ebaa53fc5d2d47617de1e40d8180d18dd506"
+# 10.10.2019 treewide: allow room for null-char in strncpy()
+SRCREV = "d27d7e93485d881d8ff3a7f85309b545edbe1fc6"
 
 SRC_URI += "\
 	file://bridge-stp \
