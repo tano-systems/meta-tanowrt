@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -30,9 +30,9 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 24.01.2020
-# defaults: robustify flow table detection.
-SRCREV = "7cc2a84d5fa28a79033dcf882d474d151e3d0c89"
+# 13.03.2020
+# firewall3: defaults: fix uci flow_offloading option
+SRCREV = "f87d0b0f607420424cfcb4ff5a376d7659fa5b6b"
 
 S = "${WORKDIR}/git"
 
