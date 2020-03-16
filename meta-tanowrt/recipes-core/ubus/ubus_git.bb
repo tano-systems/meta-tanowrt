@@ -1,8 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 07.12.2019
-# ubus: make libubus ready for linking into C++
-SRCREV = "d35df8adda873dc75d876f72b78e84db8cfa72ee"
+# 03.02.2020
+# lua: avoid truncation of large numeric values
+SRCREV = "171469e3138cce191892e20b6fd35b52c9368064"
 
 S = "${WORKDIR}/git"
 
