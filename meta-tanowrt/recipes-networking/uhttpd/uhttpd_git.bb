@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano21"
+PR = "tano22"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -26,9 +26,9 @@ SRC_URI = "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 11.02.2020
-# file: poke ustream after starting deferred program
-SRCREV = "2ee323c01079248baa9465969df9e25b5fb68cdf"
+# 13.03.2020
+# client: allow keep-alive for POST requests
+SRCREV = "5e9c23c6f40ff26209ef22cfeeda4904a5918f3d"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt-services openwrt
