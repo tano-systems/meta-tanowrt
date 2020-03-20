@@ -3,11 +3,11 @@
 # Hotplug script for the Network ports status LuCI application
 # (luci-app-tn-netports)
 #
-# This script version 1.0.2
+# This script version 1.0.3
 #
 # Place this script to '/etc/hotplug.d/net' folder
 #
-# Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -23,6 +23,9 @@
 
 PORT_DEVICE="${INTERFACE}"
 
+# Replace all '-' to '_' because UCI sections can't contain '-' characters.
+PORT_DEVICE_UCI="${PORT_DEVICE//-/_}"
+
 if [ "${ACTION}" = "add" ]; then
 	#
 	# Ignore interfaces that already exists in the config
@@ -30,7 +33,7 @@ if [ "${ACTION}" = "add" ]; then
 	#
 	if [ `uci -q show luci_netports | \
 	      grep -v ".hotplug_" | \
-	      grep -c ".ifname='${PORT_DEVICE}'"` -gt 0 ]; then
+	      grep -c ".ifname='${PORT_DEVICE_UCI}'"` -gt 0 ]; then
 		exit 0
 	fi
 
@@ -116,10 +119,10 @@ if [ "${ACTION}" = "add" ]; then
 	#
 	# Add or update port information in the configuration
 	#
-	uci -q set luci_netports.hotplug_${PORT_DEVICE}=port
-	uci -q set luci_netports.hotplug_${PORT_DEVICE}.name="${PORT_NAME}"
-	uci -q set luci_netports.hotplug_${PORT_DEVICE}.ifname="${PORT_DEVICE}"
-	uci -q set luci_netports.hotplug_${PORT_DEVICE}.type="${PORT_TYPE}"
+	uci -q set luci_netports.hotplug_${PORT_DEVICE_UCI}=port
+	uci -q set luci_netports.hotplug_${PORT_DEVICE_UCI}.name="${PORT_NAME}"
+	uci -q set luci_netports.hotplug_${PORT_DEVICE_UCI}.ifname="${PORT_DEVICE}"
+	uci -q set luci_netports.hotplug_${PORT_DEVICE_UCI}.type="${PORT_TYPE}"
 
 	#
 	# Commit
@@ -128,7 +131,7 @@ if [ "${ACTION}" = "add" ]; then
 
 elif [ "${ACTION}" = "remove" ]; then
 
-	uci -q delete luci_netports.hotplug_${PORT_DEVICE}
+	uci -q delete luci_netports.hotplug_${PORT_DEVICE_UCI}
 	uci -q commit luci_netports
 
 fi
