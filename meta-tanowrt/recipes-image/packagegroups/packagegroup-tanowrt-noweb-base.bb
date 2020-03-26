@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano7"
+PR = "tano8"
 SUMMARY = "Normal TanoWrt system requirements without web-interface"
 DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system without web-interface"
 LICENSE = "MIT"
@@ -28,5 +28,4 @@ RDEPENDS_${PN}-network = "\
 	dnsmasq \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcp6c', '', d)} \
 	odhcpd \
-	umdnsd \
 "
