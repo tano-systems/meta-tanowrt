@@ -1,6 +1,6 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano7"
+PR = "tano8"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -51,7 +51,6 @@ RDEPENDS_${PN}-console = "\
 RDEPENDS_${PN}-network = "\
 	tcpdump \
 	umbim \
-	umdnsd \
 	ethtool \
 	curl \
 	drill \
