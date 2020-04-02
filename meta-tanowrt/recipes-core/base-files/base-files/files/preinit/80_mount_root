@@ -1,15 +1,30 @@
 #!/bin/sh
 # Copyright (C) 2006 OpenWrt.org
 # Copyright (C) 2010 Vertical Communications
+# Copyright (C) 2020 Tano Systems LLC
+
+COLOR_LIGHT_RED='\033[0;91m'
+COLOR_LIGHT_GREEN='\033[0;92m'
+COLOR_RESET='\033[0m'
 
 do_mount_root() {
 	mount_root
 	boot_run_hook preinit_mount_root
+
+	# Reset (cleanup) overlay filesystem
+	[ -f /etc/overlay-reset -o -f /etc/factory-reset ] && {
+		mount_root done
+		echo -e "${COLOR_LIGHT_RED}Cleaning the overlay filesystem...${COLOR_RESET}"
+		firstboot -r -y
+	}
+
 	[ -f /sysupgrade.tgz ] && {
 		echo "- config restore -"
 		cd /
 		tar xzf /sysupgrade.tgz
 	}
+
+	echo -e "${COLOR_LIGHT_GREEN}Overlay filesystem mounted${COLOR_RESET}"
 }
 
 [ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_mount_root
