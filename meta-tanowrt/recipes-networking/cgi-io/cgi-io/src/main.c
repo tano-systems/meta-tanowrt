@@ -518,9 +518,9 @@ filecopy(void)
 
 			close(st.filefd);
 		}
-
-		close(st.tempfd);
 	}
+
+	close(st.tempfd);
 
 	if (chmod(st.filename, st.filemode))
 		return response(false, "Failed to chmod target file");
