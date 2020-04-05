@@ -5,7 +5,8 @@
 [1;37m   | | (_| | | | | (_) [1;34m\  /\  /| |  | |_   [1;37m(c) 2018-2020, Tano Systems
 [1;37m   |_|\__,_|_| |_|\___/ [1;34m\/  \/ |_|   \__|  [1;34mhttps://tano-systems.com
 [0;37m
-[0;37m   Build:   [1;34m%R
-[0;37m   Version: [1;34m%v
-[0;37m   Board:   [1;34m%P
+[0;37m   Board:    [1;34m%P
+[0;37m   Release:  [1;34m%v
+[0;37m   Revision: [1;34m%R
+[1;34m             #ROOTFS_GEN_TIMESTAMP#
 [0;37m

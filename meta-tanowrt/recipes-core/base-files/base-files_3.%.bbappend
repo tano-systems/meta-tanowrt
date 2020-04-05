@@ -1,10 +1,10 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano47.${INC_PR}"
+PR_append = ".tano48.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -39,6 +39,8 @@ SRC_URI_append = "\
     file://boot.init \
     file://system.init \
     file://system.config \
+    file://openwrt_release \
+    file://openwrt_version \
     file://sysfixtime.init \
     file://preinit/50_overlay_setup \
     file://preinit/80_mount_root \
@@ -174,6 +176,8 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/sysctl.d/10-default.conf ${D}${sysconfdir}/sysctl.d/10-default.conf
 	install -m 0644 ${WORKDIR}/sysctl.d/20-noswap.conf ${D}${sysconfdir}/sysctl.d/20-noswap.conf
 
+	install -m 0644 ${WORKDIR}/openwrt_release ${D}${sysconfdir}/openwrt_release
+	install -m 0644 ${WORKDIR}/openwrt_version ${D}${sysconfdir}/openwrt_version
 	install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
 	install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
 	install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
