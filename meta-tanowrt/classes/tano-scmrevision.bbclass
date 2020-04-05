@@ -27,7 +27,7 @@ def get_git_branch(p):
     try:
         rev = gitrev_run("git rev-parse HEAD", p)
         ref = gitrev_run("git name-rev --name-only %s" % rev, p)
-        return os.path.basename(ref)
+        return ref
     except OSError:
         return None
 
