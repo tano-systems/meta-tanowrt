@@ -8,7 +8,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 PV = "${DISTRO_VERSION}"
-PR = "tano1"
+PR = "tano2"
 
 SRC_URI = "file://os-release"
 
@@ -55,9 +55,17 @@ do_install() {
 		${D}/usr/lib/os-release \
 
 	echo "TanoWrt Distribution ${DISTRO_VERSION}" > ${D}${sysconfdir}/tano-version
-	echo "Built from branch: ${TANOWRT_SCM_BRANCH}" >> ${D}${sysconfdir}/tano-version
 	echo "Revision: ${TANOWRT_SCM_REVISION}" >> ${D}${sysconfdir}/tano-version
+	echo "Branch: ${TANOWRT_SCM_BRANCH}" >> ${D}${sysconfdir}/tano-version
+
+	#
+	# ${ROOTFS_GET_TIMESTAMP} will be replaced by actual timestamp
+	# at the image generation step (see openwrt-image.bbclass)
+	#
+	echo "Timestamp: #ROOTFS_GEN_TIMESTAMP#" >> ${D}${sysconfdir}/tano-version
 	echo "Target system: ${TARGET_SYS}" >> ${D}${sysconfdir}/tano-version
+	echo "Target machine: ${MACHINE}" >> ${D}${sysconfdir}/tano-version
+
 
 	echo "${@get_layers(bb, d)}" > ${D}${sysconfdir}/tano-build-info
 }

@@ -1,5 +1,6 @@
 NAME="%D"
 VERSION="%V"
+TIMESTAMP="#ROOTFS_GEN_TIMESTAMP#"
 ID="%d"
 ID_LIKE="lede openwrt"
 PRETTY_NAME="%D %V"
