@@ -59,11 +59,14 @@ def mark_recipe_dependencies(path, d):
 
 TANOWRT_SCM_BRANCH = ""
 TANOWRT_SCM_REVISION = ""
+TANOWRT_SCM_REVISION_SHORT = ""
 
 python () {
     tano_base = d.getVar('TANOWRT_BASE')
     repo_base = os.path.normpath(os.path.join(tano_base, ".."))
     mark_recipe_dependencies(repo_base, d)
-    d.setVar('TANOWRT_SCM_REVISION', get_git_revision(repo_base))
+    rev = get_git_revision(repo_base)
+    d.setVar('TANOWRT_SCM_REVISION', rev)
+    d.setVar('TANOWRT_SCM_REVISION_SHORT', rev[:12])
     d.setVar('TANOWRT_SCM_BRANCH', get_git_branch(repo_base))
 }
