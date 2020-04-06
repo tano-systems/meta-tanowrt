@@ -117,10 +117,11 @@ session_access_cb(struct ubus_request *req, int type, struct blob_attr *msg)
 }
 
 static bool
-session_access(const char *sid, const char *scope, const char *obj, const char *func)
+session_access(const char *sid, const char *scope, const char *obj, const char *func, bool *expired)
 {
 	uint32_t id;
 	bool allow = false;
+	int res;
 	struct ubus_context *ctx;
 	static struct blob_buf req;
 
@@ -135,7 +136,11 @@ session_access(const char *sid, const char *scope, const char *obj, const char *
 	blobmsg_add_string(&req, "object", obj);
 	blobmsg_add_string(&req, "function", func);
 
-	ubus_invoke(ctx, id, "access", req.head, session_access_cb, &allow, 500);
+	res = ubus_invoke(ctx, id, "access", req.head, session_access_cb, &allow, 500);
+	if ((res == UBUS_STATUS_NOT_FOUND) && expired)
+		*expired = true;
+	else
+		*expired = false;
 
 out:
 	if (ctx)
@@ -464,6 +469,18 @@ failure(int code, int e, const char *message)
 }
 
 static int
+response_session_expired(void)
+{
+	return response(false, "Session expired");
+}
+
+static int
+failure_session_expired(void)
+{
+	return failure(403, 0, "Session expired");
+}
+
+static int
 filecopy(void)
 {
 	if (!st.filedata)
@@ -571,14 +588,18 @@ data_begin_cb(multipart_parser *p)
 {
 	if (st.parttype == PART_FILEDATA)
 	{
+		bool session_expired = false;
 		if (!st.sessionid)
 			return response(false, "File data without session");
 
 		if (!st.filename)
 			return response(false, "File data without name");
 
-		if (!session_access(st.sessionid, "file", st.filename, "write"))
-			return response(false, "Access to path denied by ACL");
+		if (!session_access(st.sessionid, "file", st.filename, "write", &session_expired)) {
+			return session_expired
+				? response_session_expired()
+				: response(false, "Access to path denied by ACL");
+		}
 
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 		if (st.direct_write)
@@ -660,10 +681,16 @@ data_end_cb(multipart_parser *p)
 {
 	if (st.parttype == PART_SESSIONID)
 	{
-		if (!session_access(st.sessionid, "cgi-io", "upload", "write"))
-		{
-			errno = EPERM;
-			return response(false, "Upload permission denied");
+		bool session_expired = false;
+		if (!session_access(st.sessionid, "cgi-io", "upload", "write", &session_expired)) {
+			if (session_expired) {
+				errno = EACCES;
+				return response_session_expired();
+			}
+			else {
+				errno = EPERM;
+				return response(false, "Upload permission denied");
+			}
 		}
 	}
 	else if (st.parttype == PART_FILEDATA)
@@ -804,14 +831,21 @@ main_download(int argc, char **argv)
 	ssize_t len = 0;
 	struct stat s;
 	int rfd;
+	bool session_expired = false;
 
 	autochar *post = postdecode(fields, 4);
 
-	if (!fields[1] || !session_access(fields[1], "cgi-io", "download", "read"))
-		return failure(403, 0, "Download permission denied");
+	if (!fields[1] || !session_access(fields[1], "cgi-io", "download", "read", &session_expired)) {
+		return session_expired
+			? failure_session_expired()
+			: failure(403, 0, "Download permission denied");
+	}
 
-	if (!fields[3] || !session_access(fields[1], "file", fields[3], "read"))
-		return failure(403, 0, "Access to path denied by ACL");
+	if (!fields[3] || !session_access(fields[1], "file", fields[3], "read", &session_expired)) {
+		return session_expired
+			? failure_session_expired()
+			: failure(403, 0, "Access to path denied by ACL");
+	}
 
 	if (stat(fields[3], &s))
 		return failure(404, errno, "Failed to stat requested path");
@@ -892,14 +926,18 @@ main_backup(int argc, char **argv)
 	int len;
 	int status;
 	int fds[2];
+	bool session_expired = false;
 	char datestr[16] = { 0 };
 	char hostname[64] = { 0 };
 	char *fields[] = { "sessionid", NULL };
 
 	autochar *post = postdecode(fields, 1);
 
-	if (!fields[1] || !session_access(fields[1], "cgi-io", "backup", "read"))
-		return failure(403, 0, "Backup permission denied");
+	if (!fields[1] || !session_access(fields[1], "cgi-io", "backup", "read", &session_expired)) {
+		return session_expired
+			? failure_session_expired()
+			: failure(403, 0, "Backup permission denied");
+	}
 
 	if (pipe(fds))
 		return failure(500, errno, "Failed to spawn pipe");
@@ -1072,6 +1110,7 @@ main_exec(int argc, char **argv)
 	char *fields[] = { "sessionid", NULL, "command", NULL, "filename", NULL, "mimetype", NULL };
 	int i, devnull, status, fds[2];
 	bool allowed = false;
+	bool session_expired = false;
 	ssize_t len = 0;
 	const char *exe;
 	char *p, **args;
@@ -1079,8 +1118,11 @@ main_exec(int argc, char **argv)
 
 	autochar *post = postdecode(fields, 4);
 
-	if (!fields[1] || !session_access(fields[1], "cgi-io", "exec", "read"))
-		return failure(403, 0, "Exec permission denied");
+	if (!fields[1] || !session_access(fields[1], "cgi-io", "exec", "read", &session_expired)) {
+		return session_expired
+			? failure_session_expired()
+			: failure(403, 0, "Exec permission denied");
+	}
 
 	for (p = fields[5]; p && *p; p++)
 		if (!isalnum(*p) && !strchr(" ()<>@,;:[]?.=%-", *p))
@@ -1096,7 +1138,7 @@ main_exec(int argc, char **argv)
 		return failure(400, 0, "Invalid command parameter");
 
 	/* First check if we find an ACL match for the whole cmdline ... */
-	allowed = session_access(fields[1], "file", args[0], "exec");
+	allowed = session_access(fields[1], "file", args[0], "exec", &session_expired);
 
 	/* Now split the command vector... */
 	for (i = 1; args[i]; i++)
@@ -1111,9 +1153,11 @@ main_exec(int argc, char **argv)
 	}
 
 	/* If there was no ACL match, check for a match on the executable */
-	if (!allowed && !session_access(fields[1], "file", exe, "exec")) {
+	if (!allowed && !session_access(fields[1], "file", exe, "exec", &session_expired)) {
 		free(args);
-		return failure(403, 0, "Access to command denied by ACL");
+		return session_expired
+			? failure_session_expired()
+			: failure(403, 0, "Access to command denied by ACL");
 	}
 
 	if (pipe(fds)) {
