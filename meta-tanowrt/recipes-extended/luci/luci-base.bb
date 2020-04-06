@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano6"
+PR = "tano7"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -57,6 +57,8 @@ SRC_URI += "\
 	file://cmake.patch;pnum=3 \
 	file://99_luci-theme-initial \
 "
+
+LUCI_VERSION ?= "${PV}-${PR} git-${@d.getVar('SRCREV', d)[:12]}"
 
 apply_luci_version() {
 	LUCI_VERSION_SRC="${S}/luasrc/version.lua"

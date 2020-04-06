@@ -3,10 +3,10 @@ LUCI_GIT_URI      ?= "git://github.com/tano-systems/luci.git"
 LUCI_GIT_BRANCH   ?= "tano/master"
 LUCI_GIT_PROTOCOL ?= "git"
 
-# 05.04.2020
-LUCI_GIT_SRCREV ?= "34ef7112fc3238a4697a1f5e2dd4c1f6618a4be2"
+# 08.04.2020
+LUCI_GIT_SRCREV ?= "36cefb9a53147ae8cba214ad59fcb55426e39143"
 
-PR_append = ".52"
+PR_append = ".54"
 
 libdir = "/usr/lib"
 
@@ -14,7 +14,6 @@ libdir = "/usr/lib"
 LUCI_DISTNAME     ?= "Host System"
 LUCI_DISTVERSION  ?= "SDK"
 LUCI_NAME         ?= "LuCI"
-LUCI_VERSION      ?= "SVN"
 
 # Languages to install
 LUCI_LANGUAGES ?= "en"
