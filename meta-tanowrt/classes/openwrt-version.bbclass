@@ -42,7 +42,7 @@ OPENWRT_VERSION_NUMBER ?= "${DISTRO_VERSION}"
 # repository version of the source, e.g. the number of commits
 # since a branch point or a short Git commit ID.
 #
-OPENWRT_VERSION_CODE ?= "git-${OPENWRT_VERSION_SRCREV_SHORT} #ROOTFS_GEN_TIMESTAMP#"
+OPENWRT_VERSION_CODE ?= "${MACHINE} git-${OPENWRT_VERSION_SRCREV_SHORT} #ROOTFS_GEN_TIMESTAMP#"
 
 #
 # Release repository
