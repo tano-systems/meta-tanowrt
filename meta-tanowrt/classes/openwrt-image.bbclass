@@ -43,3 +43,30 @@ python create_symlinks_append() {
     else:
         bb.note("Skipping symlink, source does not exist: %s -> %s" % (dst, src))
 }
+
+ROOTFS_GEN_TIMESTAMP = "${@time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(d.getVar('DATETIME', d), '%Y%m%d%H%M%S'))} UTC"
+ROOTFS_GEN_TIMESTAMP[vardepsexclude] += "DATETIME"
+
+# Substitutes '#ROOTFS_GEN_TIMESTAMP#' in some rootfs files with
+# actual timestamp value
+do_substitute_timestamp() {
+	FILES_TO_SUBSTITUTE="\
+		${sysconfdir}/issue \
+		${sysconfdir}/tano-version \
+		${sysconfdir}/openwrt_version \
+		${sysconfdir}/openwrt_release \
+		${libdir}/os-release \
+	"
+
+	for file in ${FILES_TO_SUBSTITUTE}; do
+		if [ -f "${IMAGE_ROOTFS}${file}" ]; then
+			sed -i \
+			    -e "s,#ROOTFS_GEN_TIMESTAMP#,${ROOTFS_GEN_TIMESTAMP},g" \
+			    ${IMAGE_ROOTFS}/${file}
+		fi
+	done
+}
+
+# Inject the version file in the rootfs directory before it
+# is being packaged into an image.
+IMAGE_PREPROCESS_COMMAND += "do_substitute_timestamp; "

@@ -8,6 +8,7 @@
 inherit tano-scmrevision
 
 OPENWRT_VERSION_SRCREV = "${TANOWRT_SCM_REVISION}"
+OPENWRT_VERSION_SRCREV_SHORT = "${TANOWRT_SCM_REVISION_SHORT}"
 
 #
 # These options allow to override the version information embedded in
@@ -41,7 +42,7 @@ OPENWRT_VERSION_NUMBER ?= "${DISTRO_VERSION}"
 # repository version of the source, e.g. the number of commits
 # since a branch point or a short Git commit ID.
 #
-OPENWRT_VERSION_CODE ?= "${OPENWRT_VERSION_SRCREV}"
+OPENWRT_VERSION_CODE ?= "git-${OPENWRT_VERSION_SRCREV_SHORT} #ROOTFS_GEN_TIMESTAMP#"
 
 #
 # Release repository
@@ -116,6 +117,7 @@ OPENWRT_VERSION_DIST_LU="${@d.getVar('OPENWRT_VERSION_DIST', True).replace(' ', 
 # VERSION_SED script
 #
 # %R .. Repository revision ID
+# %r .. Repository revision ID (short)
 # %V .. Configured release version number or "SNAPSHOT", uppercase
 # %v .. Configured release version number or "snapshot", lowercase
 # %C .. Configured release revision code or value of %R, uppercase
@@ -140,6 +142,7 @@ OPENWRT_VERSION_SED = "sed -i \
 	-e 's,%D,${OPENWRT_VERSION_DIST},g' \
 	-e 's,%d,${OPENWRT_VERSION_DIST_LU},g' \
 	-e 's,%R,${OPENWRT_VERSION_SRCREV},g' \
+	-e 's,%r,${OPENWRT_VERSION_SRCREV_SHORT},g' \
 	-e 's,%T,${MACHINE},g' \
 	-e 's,%S,${MACHINE},g' \
 	-e 's,%A,${TARGET_ARCH},g' \
@@ -160,6 +163,7 @@ do_unpack[vardeps] += "\
 	OPENWRT_VERSION_CODE \
 	OPENWRT_VERSION_DIST \
 	OPENWRT_VERSION_SRCREV \
+	OPENWRT_VERSION_SRCREV_SHORT \
 	OPENWRT_VERSION_MANUFACTURER \
 	OPENWRT_VERSION_MANUFACTURER_URL \
 	OPENWRT_VERSION_BUG_URL \
