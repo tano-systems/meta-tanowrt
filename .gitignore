@@ -4,3 +4,7 @@
 *.orig
 *.rej
 *~
+meta-*/
+!meta-tanowrt
+!meta-tanowrt-hsl-nxp
+!meta-tanowrt-hsl-rpi
