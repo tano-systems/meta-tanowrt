@@ -329,6 +329,15 @@ snmpd_setup_fw_rules() {
 	HANDLED_SNMP_ZONES="$HANDLED_SNMP_ZONES $zone"
 }
 
+snmpd_ignore_if_add() {
+	local ignored
+	config_get ignored general ignore_interfaces ''
+
+	for iface in $ignored; do
+		echo "ignore_if ${iface}" >> $CONFIGFILE
+	done
+}
+
 start_service() {
 	[ -f "$CONFIGFILE" ] && rm -f "$CONFIGFILE"
 
@@ -365,6 +374,7 @@ start_service() {
 	append_parm v1trapaddress host v1trapaddress
 	append_parm trapsess trapsess trapsess
 	config_foreach snmpd_snmpv3_add snmpd
+	snmpd_ignore_if_add
 
 	procd_set_param command $PROG -Lf /var/log/snmpd.log -f
 	procd_set_param file $CONFIGFILE

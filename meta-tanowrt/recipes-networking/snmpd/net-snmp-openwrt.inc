@@ -1,6 +1,6 @@
 # This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "0"
+INC_PR = "1"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
@@ -26,6 +26,7 @@ SRC_URI += "\
 	file://170-ldflags.patch \
 	file://750-ieee802dot11.patch \
 	file://900-musl-compat.patch \
+	file://901-ignore-interfaces.patch \
 "
 
 ##

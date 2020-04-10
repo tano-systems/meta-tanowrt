@@ -1,0 +1,203 @@
+diff --git a/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c b/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
+index 17f4e4e7be09..62de81e2ea9f 100644
+--- a/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
++++ b/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
+@@ -122,6 +122,9 @@ dot3stats_interface_ioctl_ifindex_get (int fd, const char *name) {
+     struct ifreq    ifrq;
+     int rc = 0;
+ 
++    if (netsnmp_access_interface_ignore(name))
++        return 0;
++
+     DEBUGMSGTL(("access:dot3StatsTable:interface_ioctl_ifindex_get", "called\n"));
+                  
+     rc = _dot3Stats_ioctl_get(fd, SIOCGIFINDEX, &ifrq, name);
+diff --git a/agent/mibgroup/if-mib/data_access/interface.c b/agent/mibgroup/if-mib/data_access/interface.c
+index a22aa400dfe4..b9cb58282695 100644
+--- a/agent/mibgroup/if-mib/data_access/interface.c
++++ b/agent/mibgroup/if-mib/data_access/interface.c
+@@ -25,6 +25,7 @@ netsnmp_feature_child_of(interface_legacy, interface_all)
+ netsnmp_feature_require(interface_arch_set_admin_status)
+ #endif /* NETSNMP_FEATURE_REQUIRE_INTERFACE_ACCESS_ENTRY_SET_ADMIN_STATUS */
+ 
++
+ /**---------------------------------------------------------------------*/
+ /*
+  * local static vars
+@@ -32,6 +33,7 @@ netsnmp_feature_require(interface_arch_set_admin_status)
+ static netsnmp_conf_if_list *conf_list = NULL;
+ static int need_wrap_check = -1;
+ static int _access_interface_init = 0;
++static netsnmp_ignore_if_list *ignore_list = NULL;
+ 
+ /*
+  * local static prototypes
+@@ -45,6 +47,8 @@ static void _access_interface_entry_release(netsnmp_interface_entry * entry,
+ static void _access_interface_entry_save_name(const char *name, oid index);
+ static void _parse_interface_config(const char *token, char *cptr);
+ static void _free_interface_config(void);
++static void _parse_ignore_if_config(const char *token, char *cptr);
++static void _free_ignore_if_config(void);
+ 
+ 
+ /**
+@@ -56,6 +60,9 @@ init_interface(void)
+     snmpd_register_config_handler("interface", _parse_interface_config,
+                                   _free_interface_config,
+                                   "name type speed");
++    snmpd_register_config_handler("ignore_if", _parse_ignore_if_config,
++                                  _free_ignore_if_config,
++                                  "name");
+ }
+ 
+ 
+@@ -782,6 +789,21 @@ netsnmp_access_interface_entry_overrides(netsnmp_interface_entry *entry)
+     }
+ }
+ 
++int netsnmp_access_interface_ignore(const char * name)
++{
++    netsnmp_ignore_if_list * if_ptr;
++
++    netsnmp_assert(1 == _access_interface_init);
++    if(NULL == name)
++        return 0;
++
++    for (if_ptr = ignore_list; if_ptr; if_ptr = if_ptr->next)
++        if (memcmp(name, if_ptr->name, strlen(if_ptr->name)) == 0)
++            return 1;
++
++    return 0;
++}
++
+ /**---------------------------------------------------------------------*/
+ /*
+  * interface config token
+@@ -857,3 +879,58 @@ _free_interface_config(void)
+     }
+     conf_list = NULL;
+ }
++
++/**---------------------------------------------------------------------*/
++/*
++ * ignore interface config token
++ */
++/**
++ */
++static void
++_parse_ignore_if_config(const char *token, char *cptr)
++{
++    netsnmp_ignore_if_list *if_ptr, *if_new;
++    char                   *name, *st;
++
++    name = strtok_r(cptr, " \t", &st);
++    if (!name) {
++        config_perror("Missing NAME parameter");
++        return;
++    }
++    if_ptr = ignore_list;
++    while (if_ptr)
++        if (strcmp(if_ptr->name, name))
++            if_ptr = if_ptr->next;
++        else
++            break;
++    if (if_ptr) {
++        config_pwarn("Duplicate ignore interface specification");
++        return;
++    }
++    if_new = SNMP_MALLOC_TYPEDEF(netsnmp_ignore_if_list);
++    if (!if_new) {
++        config_perror("Out of memory");
++        return;
++    }
++    if_new->name = strdup(name);
++    if (!if_new->name) {
++        config_perror("Out of memory");
++        free(if_new);
++        return;
++    }
++    if_new->next = ignore_list;
++    ignore_list = if_new;
++}
++
++static void
++_free_ignore_if_config(void)
++{
++    netsnmp_ignore_if_list   *if_ptr = ignore_list, *if_next;
++    while (if_ptr) {
++        if_next = if_ptr->next;
++        free(NETSNMP_REMOVE_CONST(char *, if_ptr->name));
++        free(if_ptr);
++        if_ptr = if_next;
++    }
++    ignore_list = NULL;
++}
+diff --git a/agent/mibgroup/if-mib/data_access/interface_linux.c b/agent/mibgroup/if-mib/data_access/interface_linux.c
+index d62232d27ac0..f7b3f3f97ffa 100644
+--- a/agent/mibgroup/if-mib/data_access/interface_linux.c
++++ b/agent/mibgroup/if-mib/data_access/interface_linux.c
+@@ -701,6 +701,8 @@ netsnmp_arch_interface_container_load(netsnmp_container* container,
+          */
+         *stats++ = 0; /* null terminate name */
+ 
++        if (netsnmp_access_interface_ignore(ifstart))
++            continue;
+         if_index = netsnmp_arch_interface_index_find(ifstart);
+ 
+         /*
+diff --git a/agent/mibgroup/ip-mib/data_access/ipaddress_ioctl.c b/agent/mibgroup/ip-mib/data_access/ipaddress_ioctl.c
+index 65888982f06b..1f997eb62442 100644
+--- a/agent/mibgroup/ip-mib/data_access/ipaddress_ioctl.c
++++ b/agent/mibgroup/ip-mib/data_access/ipaddress_ioctl.c
+@@ -172,6 +172,9 @@ _netsnmp_ioctl_ipaddress_container_load_v4(netsnmp_container *container,
+             continue;
+         }
+ 
++        if (netsnmp_access_interface_ignore(ifrp->ifr_name))
++            continue;
++
+         /*
+          */
+         entry = netsnmp_access_ipaddress_entry_create();
+diff --git a/agent/mibgroup/ip-mib/data_access/ipaddress_linux.c b/agent/mibgroup/ip-mib/data_access/ipaddress_linux.c
+index 8743130db2c3..052a7e6f1b8c 100644
+--- a/agent/mibgroup/ip-mib/data_access/ipaddress_linux.c
++++ b/agent/mibgroup/ip-mib/data_access/ipaddress_linux.c
+@@ -262,6 +262,9 @@ _load_v6(netsnmp_container *container, int idx_offset)
+         DEBUGMSGTL(("access:ipaddress:container",
+                     "addr %s, index %d, pfx %d, scope %d, flags 0x%X, name %s\n",
+                     addr, if_index, pfx_len, scope, flags, if_name));
++
++        if (netsnmp_access_interface_ignore(if_name))
++            continue;
+         /*
+          */
+         entry = netsnmp_access_ipaddress_entry_create();
+diff --git a/include/net-snmp/data_access/interface.h b/include/net-snmp/data_access/interface.h
+index 20013ede3298..e38c3338da64 100644
+--- a/include/net-snmp/data_access/interface.h
++++ b/include/net-snmp/data_access/interface.h
+@@ -204,6 +204,11 @@ typedef struct _conf_if_list {
+ 
+     typedef netsnmp_conf_if_list conf_if_list; /* backwards compat */
+ 
++typedef struct _ignore_if_list {
++    const char     *name;
++    struct _ignore_if_list *next;
++} netsnmp_ignore_if_list;
++
+ /**---------------------------------------------------------------------*/
+ /*
+  * ACCESS function prototypes
+@@ -283,6 +288,11 @@ void netsnmp_access_interface_entry_overrides(netsnmp_interface_entry *);
+ netsnmp_conf_if_list *
+ netsnmp_access_interface_entry_overrides_get(const char * name);
+ 
++/*
++ * Check if the interface has to ignored (1: true, 0: false)
++ */
++int netsnmp_access_interface_ignore(const char * name);
++
+ /**---------------------------------------------------------------------*/
+ 
+ #if defined( USING_IF_MIB_IFTABLE_IFTABLE_DATA_ACCESS_MODULE ) && \
