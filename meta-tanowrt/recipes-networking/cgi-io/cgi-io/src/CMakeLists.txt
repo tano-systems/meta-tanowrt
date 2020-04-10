@@ -4,6 +4,7 @@ PROJECT(cgi-io C)
 
 OPTION(ENABLE_UPLOAD_CHKSUM_OPTIONS "Enable uploaded file checksum calculation options" OFF)
 OPTION(ENABLE_DIRECT_WRITE_MODE "Enable direct write mode (without temporary file)" OFF)
+OPTION(ENABLE_APPEND_MODE "Enable append write mode (works only in combination with direct mode)" OFF)
 
 INCLUDE(CheckFunctionExists)
 
@@ -21,6 +22,10 @@ ENDIF()
 
 IF(ENABLE_DIRECT_WRITE_MODE)
   ADD_DEFINITIONS(-DENABLE_DIRECT_WRITE_MODE)
+ENDIF()
+
+IF(ENABLE_APPEND_MODE)
+  ADD_DEFINITIONS(-DENABLE_APPEND_MODE)
 ENDIF()
 
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")

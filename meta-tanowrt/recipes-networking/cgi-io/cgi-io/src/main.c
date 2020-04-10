@@ -53,6 +53,9 @@ enum part {
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 	PART_DIRECT_WRITE,
 #endif
+#if defined(ENABLE_APPEND_MODE)
+	PART_APPEND,
+#endif
 };
 
 const char *parts[] = {
@@ -67,6 +70,9 @@ const char *parts[] = {
 #endif
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 	"direct_write",
+#endif
+#if defined(ENABLE_APPEND_MODE)
+	"append",
 #endif
 };
 
@@ -86,6 +92,9 @@ struct state
 #endif
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 	int direct_write;
+#endif
+#if defined(ENABLE_APPEND_MODE)
+	int append;
 #endif
 };
 
@@ -137,10 +146,12 @@ session_access(const char *sid, const char *scope, const char *obj, const char *
 	blobmsg_add_string(&req, "function", func);
 
 	res = ubus_invoke(ctx, id, "access", req.head, session_access_cb, &allow, 500);
-	if ((res == UBUS_STATUS_NOT_FOUND) && expired)
-		*expired = true;
-	else
-		*expired = false;
+	if (expired) {
+		if (res == UBUS_STATUS_NOT_FOUND)
+			*expired = true;
+		else
+			*expired = false;
+	}
 
 out:
 	if (ctx)
@@ -604,7 +615,15 @@ data_begin_cb(multipart_parser *p)
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 		if (st.direct_write)
 		{
+#if defined(ENABLE_APPEND_MODE)
+			if (st.append) {
+				st.tempfd = open(st.filename, O_APPEND | O_WRONLY, 0600);
+			} else {
+				st.tempfd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+			}
+#else
 			st.tempfd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+#endif
 
 			if (st.tempfd < 0)
 				return response(false, "Failed to open target file");
@@ -666,6 +685,12 @@ data_cb(multipart_parser *p, const char *data, size_t len)
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 	case PART_DIRECT_WRITE:
 		st.direct_write = !!strtoul(data, NULL, 10);
+		break;
+#endif
+
+#if defined(ENABLE_APPEND_MODE)
+	case PART_APPEND:
+		st.append = !!strtoul(data, NULL, 10);
 		break;
 #endif
 
@@ -776,6 +801,9 @@ init_parser(void)
 #endif
 #if defined(ENABLE_DIRECT_WRITE_MODE)
 	st.direct_write = 0;
+#endif
+#if defined(ENABLE_APPEND_MODE)
+	st.append = 0;
 #endif
 
 	p = multipart_parser_init(boundary, &s);

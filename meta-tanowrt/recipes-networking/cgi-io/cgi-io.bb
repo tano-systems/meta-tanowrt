@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano12"
+PR = "tano13"
 
 DESCRIPTION = "This package contains an cgi utility that is useful for up/downloading files"
 SUMMARY = "CGI utility for handling up/downloading of files"
@@ -25,13 +25,15 @@ S = "${WORKDIR}"
 
 inherit cmake pkgconfig
 
-PACKAGECONFIG ??= "enable-chksum-options enable-direct-write-mode"
+PACKAGECONFIG ??= "enable-chksum-options enable-direct-write-mode enable-append-mode"
 PACKAGECONFIG[enable-chksum-options] = ""
 PACKAGECONFIG[enable-direct-write-mode] = ""
+PACKAGECONFIG[enable-append-mode] = ""
 
 EXTRA_OECMAKE += "\
 	-DENABLE_UPLOAD_CHKSUM_OPTIONS=${@bb.utils.contains('PACKAGECONFIG', 'enable-chksum-options', 'ON', 'OFF', d)} \
 	-DENABLE_DIRECT_WRITE_MODE=${@bb.utils.contains('PACKAGECONFIG', 'enable-direct-write-mode', 'ON', 'OFF', d)} \
+	-DENABLE_APPEND_MODE=${@bb.utils.contains('PACKAGECONFIG', 'enable-append-mode', 'ON', 'OFF', d)} \
 "
 
 FILES_${PN} = "\
