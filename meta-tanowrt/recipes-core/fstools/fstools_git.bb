@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano26"
+PR = "tano27"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -93,7 +93,7 @@ do_install_append() {
 	ln -s /sbin/block ${D}/usr/sbin/swapoff
 
 	install -m 0755 ${WORKDIR}/fstab.init ${D}${sysconfdir}/init.d/fstab
-	install -m 0755 ${WORKDIR}/fstab.config ${D}${sysconfdir}/config/fstab
+	install -m 0644 ${WORKDIR}/fstab.config ${D}${sysconfdir}/config/fstab
 	install -m 0755 ${WORKDIR}/fstab.default ${D}${sysconfdir}/uci-defaults/10-fstab
 	install -m 0755 ${WORKDIR}/blockd.init ${D}${sysconfdir}/init.d/blockd
 	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
