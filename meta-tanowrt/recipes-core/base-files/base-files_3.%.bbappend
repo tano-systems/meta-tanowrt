@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano48.${INC_PR}"
+PR_append = ".tano49.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -237,6 +237,12 @@ do_install_append () {
 		install -m 0644 ${WORKDIR}/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
 		install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
 		install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
+	fi
+
+	if [ "${ROOT_HOME}" != "/home/root" ]; then
+		# Make symlink /home/root to real root's home
+		mkdir -p ${D}/home
+		ln -s ${ROOT_HOME} ${D}/home/root
 	fi
 
 	install -dm 0755 ${D}${libdir}/locale
