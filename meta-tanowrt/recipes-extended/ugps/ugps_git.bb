@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -32,7 +32,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/ugps.init ${D}${sysconfdir}/init.d/ugps
 
 	install -d ${D}${sysconfdir}/config
-	install -m 0755 ${WORKDIR}/gps.config ${D}${sysconfdir}/config/gps
+	install -m 0644 ${WORKDIR}/gps.config ${D}${sysconfdir}/config/gps
 }
 
 FILES_${PN} += "${libdir}/*"
