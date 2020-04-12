@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 SUMMARY = "Extras TanoWrt system requirements"
 LICENSE = "MIT"
 
@@ -42,4 +42,5 @@ RDEPENDS_${PN}-luci = "\
 	luci-proto-ncm \
 	luci-proto-qmi \
 	luci-proto-wireguard \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'luci-proto-ipv6', '', d)} \
 "
