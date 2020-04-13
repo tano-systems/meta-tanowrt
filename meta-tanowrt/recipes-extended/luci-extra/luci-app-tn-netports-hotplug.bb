@@ -4,7 +4,7 @@
 # Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "1.0.3"
+PV = "1.0.4"
 PR = "tano0"
 
 inherit allarch

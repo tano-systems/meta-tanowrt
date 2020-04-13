@@ -3,7 +3,7 @@
 # Hotplug script for the Network ports status LuCI application
 # (luci-app-tn-netports)
 #
-# This script version 1.0.3
+# This script version 1.0.4
 #
 # Place this script to '/etc/hotplug.d/net' folder
 #
@@ -90,7 +90,12 @@ if [ "${ACTION}" = "add" ]; then
 
 			usb*[0-9])
 				PORT_TYPE="usb_rndis"
-				[ -z "${PORT_NAME}" ] && PORT_NAME="USB"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="USB RNDIS"
+				;;
+
+			ecm*[0-9])
+				PORT_TYPE="usb_rndis"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="USB ECM"
 				;;
 
 			tun*[0-9]|tap*[0-9])
@@ -105,11 +110,17 @@ if [ "${ACTION}" = "add" ]; then
 
 			ppp*[0-9])
 				PORT_TYPE="ppp"
-				[ -z "${PORT_NAME}" ] && PORT_NAME="PPP"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="PPP Connection"
 				;;
 
 			wwan*[0-9])
 				PORT_TYPE="usb_3g"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="USB Modem Connection"
+				;;
+
+			3g-*)
+				PORT_TYPE="gprs"
+				[ -z "${PORT_NAME}" ] && PORT_NAME="Modem Connection"
 				;;
 		esac
 	fi
