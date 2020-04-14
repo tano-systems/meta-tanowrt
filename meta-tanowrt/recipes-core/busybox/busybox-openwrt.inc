@@ -1,29 +1,12 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 INC_PR = "20"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
-"
-
-# Patches
-SRC_URI_append = "\
-	file://110-no_static_libgcc.patch \
-	file://130-mconf_missing_sigwinch.patch \
-	file://200-udhcpc_reduce_msgs.patch \
-	file://201-udhcpc_changed_ifindex.patch \
-	file://210-add_netmsg_util.patch \
-	file://220-add_lock_util.patch \
-	file://230-add_nslookup_lede.patch \
-	file://240-telnetd_intr.patch \
-	file://250-date-k-flag.patch \
-	file://270-libbb_make_unicode_printable.patch \
-	file://301-ip-link-fix-netlink-msg-size.patch \
-	file://520-loginutils-handle-crypt-failures.patch \
-	file://530-ip-use-rtnl_send_check-on-flush-commands.patch \
 "
 
 # Configuration fragments
