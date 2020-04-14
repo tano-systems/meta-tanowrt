@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=77aab877b104825ae877cbff4e362c04"
 RCONFLICTS_${PN} = "luci-app-ttyd"
 
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-ttyd.git;protocol=https"
-SRCREV = "7bbd62b661e7a25dc8e53712e2cdaf0b5c6abd35"
+SRCREV = "50fa5197569ece3ce1c1bc505164d067eb9f5914"
 PV = "git${SRCPV}"
 
 RDEPENDS_${PN} += "ttyd (>= 1.5.2) luci-compat"
