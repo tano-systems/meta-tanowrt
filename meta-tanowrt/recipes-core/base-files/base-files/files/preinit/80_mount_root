@@ -3,9 +3,105 @@
 # Copyright (C) 2010 Vertical Communications
 # Copyright (C) 2020 Tano Systems LLC
 
-COLOR_LIGHT_RED='\033[0;91m'
-COLOR_LIGHT_GREEN='\033[0;92m'
-COLOR_RESET='\033[0m'
+CLR_RED='\033[0;91m'
+CLR_GREEN='\033[0;92m'
+CLR_RESET='\033[0m'
+
+pw_restore() {
+	local PW_PART=$1
+
+	# Restore /etc/<part> from ROM
+	if [ -f "/rom/${PW_PART}" ]; then
+		cp -f "/rom/${PW_PART}" "${PW_PART}"
+		sync
+		echo -e "${CLR_GREEN}${PW_PART}: Restored from ROM storage${CLR_RESET}"
+	else
+		echo -e "${CLR_RED}${PW_PART}: Can't restore from ROM storage${CLR_RESET}"
+	fi
+}
+
+pw_validate() {
+	local REGEX_LOGIN="[-_a-z]*"
+	local REGEX_PASSWORD="[a-zA-Z0-9/.!*\$]*"
+	local REGEX_PATH="/[^:]*"
+	local REGEX_USER_INFO="[^:]*"
+
+	export COUNT_VALID=0
+	export COUNT_INVALID=0
+
+	local PW_PART=$1
+	local REGEX
+
+	if [ "${PW_PART}" = "/etc/passwd" ]; then
+		REGEX="^${REGEX_LOGIN}:${REGEX_PASSWORD}:[0-9]*:[0-9]*:${REGEX_USER_INFO}:${REGEX_PATH}:${REGEX_PATH}$"
+	elif [ "${PW_PART}" = "/etc/shadow" ]; then
+		REGEX="^${REGEX_LOGIN}:${REGEX_PASSWORD}:[0-9]*:[0-9]*:[0-9]*:[0-9]*:[0-9]*:[0-9]*:$"
+	else
+		echo -e "${CLR_RED}${PW_PART}: Don't know how to verify that"
+		COUNT_VALID=1
+		return
+	fi
+
+	while read line; do
+		echo $line | tr -d '\n\r' | grep -q "${REGEX}"
+
+		if [ "$?" = "0" ]; then
+			COUNT_VALID=$(($COUNT_VALID + 1))
+		else
+			COUNT_INVALID=$(($COUNT_INVALID + 1))
+		fi
+	done < "${PW_PART}"
+}
+
+pw_check_and_fix() {
+	local PW_PART=$1
+
+	[ ! -f "${PW_PART}" ] && (
+		# /etc/<part> is not exists. Restore it from ROM
+		echo -e "${CLR_RED}${PW_PART}: Not exists${CLR_RESET}"
+		pw_restore "${PW_PART}"
+	)
+
+	[ -f "${PW_PART}.lock" -o -f "${PW_PART}+" -o -f "${PW_PART}-" ] && (
+		# The existence of any of these files indicates that the
+		# password change operation has not been successfully completed.
+		# Remove any of these files and perform extra checks.
+		rm -f "${PW_PART}.lock" "${PW_PART}+" "${PW_PART}-"
+
+		echo -e "${CLR_RED}${PW_PART}: Incomplete password change operation${CLR_RESET}"
+	)
+
+	# validate the /etc/<part> file
+	pw_validate "${PW_PART}"
+
+	if [ "${COUNT_VALID}" = "0" -a "${COUNT_INVALID}" = "0" ]; then
+		# /etc/<part> seems to be empty or corrupted. Restoring from ROM
+		echo -e "${CLR_RED}${PW_PART}: Corrupted or empty${CLR_RESET}"
+		pw_restore "${PW_PART}"
+	elif [ "${COUNT_INVALID}" != "0" ]; then
+		# /etc/<part> has invalid lines. Restoring from ROM
+		echo -e "${CLR_RED}${PW_PART}: Invalid data${CLR_RESET}"
+		pw_restore "${PW_PART}"
+	fi
+}
+
+do_rootfs_checks() {
+	#
+	# If we have any problems with /etc/passwd, the ubus service
+	# will not be able to determine the credentials (the glibc
+	# getpwuid() and getpwgrid() functions are used) of the client
+	# and will refuse to connect any client. The first client to
+	# connect to ubus is procd. If procd fails to connect to ubus,
+	# the device will turn into a brick. We try to prevent this
+	# by recovering files from ROM in case they are damaged.
+	#
+	# Such failures with /etc/passwd have been reported on some
+	# devices with overlayfs in case of power failure immediately
+	# after password change by passwd or chpasswd utilities.
+	#
+	pw_check_and_fix "/etc/passwd"
+	pw_check_and_fix "/etc/shadow"
+}
 
 do_mount_root() {
 	mount_root
@@ -14,7 +110,7 @@ do_mount_root() {
 	# Reset (cleanup) overlay filesystem
 	[ -f /etc/overlay-reset -o -f /etc/factory-reset ] && {
 		mount_root done
-		echo -e "${COLOR_LIGHT_RED}Cleaning the overlay filesystem...${COLOR_RESET}"
+		echo -e "${CLR_RED}Cleaning the overlay filesystem...${CLR_RESET}"
 		firstboot -r -y
 	}
 
@@ -24,7 +120,8 @@ do_mount_root() {
 		tar xzf /sysupgrade.tgz
 	}
 
-	echo -e "${COLOR_LIGHT_GREEN}Overlay filesystem mounted${COLOR_RESET}"
+	echo -e "${CLR_GREEN}Root filesystem mounted${CLR_RESET}"
 }
 
 [ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_mount_root
+boot_hook_add preinit_main do_rootfs_checks
