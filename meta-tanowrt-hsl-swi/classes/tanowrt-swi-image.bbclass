@@ -381,22 +381,21 @@ generate_cwe_target() {
         ;;
     esac
 
-    if [ "${LEGATO_BUILD}" != "true" ]; then
-        echo "Generating CWE package for $TARGET ($PAGE_SIZE, kernel, lk, rootfs)"
-        generate_cwe_pid $PID $PLATFORM $PAGE_SIZE \
-            ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.${TARGET}.spk \
-            default true true false false
-        generate_cwe_symlink \
-            ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.${TARGET}.spk \
-            ${IMAGE_NAME}.${TARGET}.spk
+    echo "Generating CWE package for $TARGET ($PAGE_SIZE, kernel, lk, rootfs, legato = ${LEGATO_BUILD})"
+    generate_cwe_pid $PID $PLATFORM $PAGE_SIZE \
+        ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.${TARGET}.spk \
+        default true true ${LEGATO_BUILD} false
+    generate_cwe_symlink \
+        ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.${TARGET}.spk \
+        ${IMAGE_NAME}.${TARGET}.spk
 
-        generate_cwe_pid $PID $PLATFORM $PAGE_SIZE \
-            ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.${TARGET}.clean.spk \
-            default true true false true
-        generate_cwe_symlink \
-            ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.${TARGET}.clean.spk \
-            ${IMAGE_NAME}.${TARGET}.clean.spk
-    fi
+    echo "Generating CWE package for $TARGET ($PAGE_SIZE, kernel, lk, rootfs, legato = ${LEGATO_BUILD}, overlay reset)"
+    generate_cwe_pid $PID $PLATFORM $PAGE_SIZE \
+        ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.${TARGET}.clean.spk \
+        default true true ${LEGATO_BUILD} true
+    generate_cwe_symlink \
+        ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.${TARGET}.clean.spk \
+        ${IMAGE_NAME}.${TARGET}.clean.spk
 }
 
 do_generate_cwe[depends] += "cwetool-native:do_populate_sysroot"
