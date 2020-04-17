@@ -145,7 +145,6 @@ When the build is complete, the following CWE and SPK images are generated, loca
 | Image                                    | Format  | Description                                                            |
 | ---------------------------------------- | ------- | ---------------------------------------------------------------------- |
 | `<imagename>-<MACHINE>.wp76xx.spk`       | CWE     | Bootloader, linux kernel and root filesystem                           |
-| `<imagename>-<MACHINE>.wp76xx.clean.spk` | CWE     | Bootloader, linux kernel, root filesystem and empty overlay filesystem |
 
 Where `<imagename>` is replaced by the name of the image built, and `<MACHINE>` is replaced by `MACHINE` value. For example, if the `tanowrt-image-full` image was built for `mangoh-green-wp7607` machine, then image `<imagename>-<MACHINE>.wp76xx.spk` will be named `tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk`.
 
@@ -159,7 +158,7 @@ Where `<imagename>` is replaced by the name of the image built, and `<MACHINE>` 
 
 #### Flashing Image to Device
 
-Note that when flashing the `<imagename>-<MACHINE>.wp76xx.spk` images (see "[Building](#building)" section), user data in overlayfs are not cleared. This allows flashing of a new system while keeping the user configuration. However, it can also cause issues with the new firmware as it may not update some important files. **So we recommend that you always flash the image `<imagename>-<MACHINE>.wp76xx.clean.spk`**, especially at the first flashing of a new device where there was another system different from TanoWrt.
+Note that when flashing the `<imagename>-<MACHINE>.wp76xx.spk` images (see "[Building](#building)" section), user data in overlayfs are not cleared. This allows flashing of a new system while keeping the user configuration. However, it can also cause issues with the new firmware as it may not update some important files. See "[Used Flash Partitions](#used-flash-partitions)" section for extra information about clearing overlayfs data.
 
 To write the builded image to the device, follow these steps:
 
@@ -182,7 +181,7 @@ To write the builded image to the device, follow these steps:
     ```shell
     swiflash -m wp76xx \
         -p /dev/serial/by-id/usb-Sierra_Wireless__Incorporated_Sierra_Wireless_WP7607_VN91720016071042 \
-        -i ~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607/tanowrt-image-full-mangoh-green-wp7607.wp76xx.clean.spk
+        -i ~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607/tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk
     ```
 
 6.  Wait until the flashing is complete.
@@ -273,7 +272,7 @@ Here is a list of used by system MTD partitions and their descriptions.
 | mtd15 | swirw   |   25 MiB | *Unused*                             |
 | mtd16 | userapp |  131 MiB | Overlay filesystem (ubifs)           |
 
-All user data are stored in overlayfs in partition mtd16 (userapp). Data in this partition cleared when flashing to device `<imagename>-<MACHINE>.wp76xx.clean.spk` [images](#building). You can also clean up this partition manually using the command:
+All user data are stored in overlayfs in partition mtd16 (userapp). You can clean up this partition manually after system is boots up using the command:
 ```
 jffs2reset -r -y
 ```
