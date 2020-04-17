@@ -137,7 +137,7 @@ prepare_ubi_ps() {
         create_ubi_image $page_size $ubinize_cfg $ubi_path $ubi_link_path
     done
 
-    ubi_path="${IMGDEPLOYDIR}/userapp-reset.ubifs.${page_size}.ubi"
+    ubi_path="${IMGDEPLOYDIR}/${IMAGE_NAME}.reset.ubifs.${page_size}.ubi"
     create_reset_ubinize_config ${ubinize_cfg}
     create_ubi_image $page_size $ubinize_cfg $ubi_path
 }
@@ -316,7 +316,7 @@ generate_cwe_pid() {
 
     if [ "$OVERLAY_RESET" = "true" ]; then
         OVERLAY_RESET_OPT="-uapp"
-        OVERLAY_RESET_IMG="${DEPLOY_DIR_IMAGE}/userapp-reset.ubifs.${PAGE_SIZE}.ubi"
+        OVERLAY_RESET_IMG="${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.reset.ubifs.${PAGE_SIZE}.ubi"
     fi
 
     # get production name
