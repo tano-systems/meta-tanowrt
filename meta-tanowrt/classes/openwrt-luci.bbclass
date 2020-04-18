@@ -50,6 +50,8 @@ post_install_actions() {
 		find "${ACTIONS_DIR}" -type f -name '*.htm' | while read src; do
 			sed -i -e "s/<%# *\([^ ]*\)PKG_VERSION *%>/\1${LUCI_PKG_VERSION}/g" \
 			       -e "s/\"\(<%= *\(media\|resource\) *%>[^\"]*\.\(js\|css\|gif\|ico\|png\|jpg\|svg\)\)\"/\"\1?v=${LUCI_PKG_VERSION}\"/g" \
+			       -e "s/#PKG_VERSION/${LUCI_PKG_VERSION}/g" \
+			       -e "s/\${PKG_VERSION}/${LUCI_PKG_VERSION}/g" \
 			          "$src"
 		done
 
@@ -66,6 +68,8 @@ post_install_actions() {
 			sed -i -e "s/<%# *\([^ ]*\)PKG_VERSION *%>/\1${LUCI_PKG_VERSION}/g" \
 			       -e "s/\(?v=\)#PKG_VERSION/\1${LUCI_PKG_VERSION}/g" \
 			       -e "s/\(?v=\)\${PKG_VERSION}/\1${LUCI_PKG_VERSION}/g" \
+			       -e "s/#PKG_VERSION/${LUCI_PKG_VERSION}/g" \
+			       -e "s/\${PKG_VERSION}/${LUCI_PKG_VERSION}/g" \
 			          "$src"
 		done
 	fi
