@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.2+git${SRCPV}"
-PR = "tano3"
+PR = "tano4"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
@@ -17,7 +17,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "cb77cdaacbfd4e46ab04416b4fc0ed58d687edbb"
+GIT_SRCREV   = "8faa918e9951d265048dfa30357bf00519d8babc"
 GIT_PROTOCOL = "https"
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-netports.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 
