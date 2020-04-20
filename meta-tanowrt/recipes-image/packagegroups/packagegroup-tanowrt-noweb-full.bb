@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano8"
+PR = "tano9"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
@@ -32,9 +32,7 @@ RDEPENDS_${PN}-base = "\
 	${@bb.utils.contains('COMBINED_FEATURES', 'usbhost', 'usbmode', '',d)} \
 	mtd-utils \
 	mtd-utils-ubifs \
-	apcupsd \
 	cpulimit \
-	ugps \
 	rpcd-mod-file \
 	schedtool-dl \
 	nano \
