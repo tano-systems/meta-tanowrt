@@ -1,6 +1,6 @@
 ##########################################################################
 #
-# Copyright (C) 2018-2019, Tano Systems,
+# Copyright (C) 2018-2020, Tano Systems,
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################
@@ -117,17 +117,17 @@ mstpd_configure_port()
 	local br_port="$3"
 
 	config_load 'mstpd'
-	config_get mstpctl_portpathcost   "$br_ifname" "port_${br_port}_pathcost"
-	config_get mstpctl_portadminedge  "$br_ifname" "port_${br_port}_adminedge"
-	config_get mstpctl_portautoedge   "$br_ifname" "port_${br_port}_autoedge"
-	config_get mstpctl_portp2p        "$br_ifname" "port_${br_port}_p2p"
-	config_get mstpctl_portbpduguard  "$br_ifname" "port_${br_port}_bpduguard"
-	config_get mstpctl_portbpdufilter "$br_ifname" "port_${br_port}_bpdufilter"
-	config_get mstpctl_portrestrrole  "$br_ifname" "port_${br_port}_restrrole"
-	config_get mstpctl_portrestrtcn   "$br_ifname" "port_${br_port}_restrtcn"
-	config_get mstpctl_portnetwork    "$br_ifname" "port_${br_port}_network"
-	config_get mstpctl_porttreeprio   "$br_ifname" "port_${br_port}_treeprio"
-	config_get mstpctl_porttreecost   "$br_ifname" "port_${br_port}_treecost"
+	config_get mstpctl_portpathcost   "$br_port" "pathcost"
+	config_get mstpctl_portadminedge  "$br_port" "adminedge"
+	config_get mstpctl_portautoedge   "$br_port" "autoedge"
+	config_get mstpctl_portp2p        "$br_port" "p2p"
+	config_get mstpctl_portbpduguard  "$br_port" "bpduguard"
+	config_get mstpctl_portbpdufilter "$br_port" "bpdufilter"
+	config_get mstpctl_portrestrrole  "$br_port" "restrrole"
+	config_get mstpctl_portrestrtcn   "$br_port" "restrtcn"
+	config_get mstpctl_portnetwork    "$br_port" "network"
+	config_get mstpctl_porttreeprio   "$br_port" "treeprio"
+	config_get mstpctl_porttreecost   "$br_port" "treecost"
 
 	if [ "$mstpctl_portpathcost" ]; then
 		${MSTPCTL_BIN} setportpathcost "$br_sysname" "$br_port" "$mstpctl_portpathcost"
