@@ -1,7 +1,7 @@
 #
 # LuCI package class
 #
-# Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018, 2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -22,6 +22,7 @@ LUCI_PKG_EXECUTABLE ?= "\
 	${D}${LUCI_INSTALL_ROOT_PATH}${sysconfdir}/uci-defaults/* \
 	${D}${LUCI_INSTALL_ROOT_PATH}${sysconfdir}/init.d/* \
 	${D}/usr/libexec/rpcd/* \
+	${D}/usr/libexec/* \
 	${D}/usr/bin/* \
 "
 
