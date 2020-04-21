@@ -1,8 +1,8 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano18"
+PR = "tano19"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 27.11.2019
-# iwinfo: add current hw and ht mode to info call
-SRCREV_rpcd = "efe51f41d6288fa8503cc4f2efb37a777767d505"
+# 17.03.2020
+# session: deny access if password login is disabled
+SRCREV_rpcd = "3df62bcebd2caff47506ccffb42df8d2d2123c06"
 
 S = "${WORKDIR}/git"
 
