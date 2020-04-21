@@ -1,4 +1,4 @@
-PR_append = ".2"
+PR_append = ".3"
 
 KERNEL_CACHE_DIR = "kmeta-tano"
 
@@ -16,7 +16,6 @@ KERNEL_FEATURES_append = "\
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/611.scc \
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/612.scc \
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/613.scc \
-	patches/openwrt/generic-${LINUX_VERSION_SHORT}/616.scc \
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/620.scc \
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/640.scc \
 	patches/openwrt/generic-${LINUX_VERSION_SHORT}/655.scc \
