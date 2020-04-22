@@ -1,25 +1,26 @@
 #
 # LuCI support for LLDP daemon
-# OpenWrt/LEDE 18.06.x, 19.07
 #
 # Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "1.2.1+git${SRCPV}"
-PR = "tano25"
+PV = "2.0.0+git${SRCPV}"
+PR = "tano0"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "be29b5fc25ba972e573af451d401667a9823ec55"
+GIT_SRCREV   = "1867453810223386a6ed914411d2283d5502b82a"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-lldpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "lldpd luci-compat"
+LUCI_DO_MINIFY_CSS = "1"
+
+RDEPENDS_${PN} += "lldpd"
 
 S = "${WORKDIR}/git"
 
