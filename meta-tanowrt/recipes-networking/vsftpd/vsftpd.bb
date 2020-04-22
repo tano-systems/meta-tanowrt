@@ -18,7 +18,7 @@ LIC_FILES_CHKSUM = " \
 "
 
 PV = "3.0.3"
-PR = "tano3"
+PR = "tano4"
 
 DEPENDS = "libcap openssl libuci virtual/crypt"
 
@@ -35,8 +35,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI += "\
 	file://vsftpd.init \
 	file://vsftpd.config \
-	file://vsftpd_wrapper \
-	file://vsftpd_prepare \
 "
 
 # Patches
@@ -75,10 +73,6 @@ do_install() {
 
 	install -dm 0755 ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/vsftpd.init ${D}${sysconfdir}/init.d/vsftpd
-
-	install -dm 0755 ${D}${sbindir}
-	install -m 0755 ${WORKDIR}/vsftpd_wrapper ${D}${sbindir}/vsftpd_wrapper
-	install -m 0755 ${WORKDIR}/vsftpd_prepare ${D}${sbindir}/vsftpd_prepare
 }
 
 CONFFILES_${PN}_append = "\
