@@ -2,9 +2,10 @@
 #
 # Copyright (C) 2008 OpenWrt.org
 #
-# Copyright (C) 2018-2019 Tano Systems, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Tano Systems, Anton Kikin <a.kikin@tano-systems.com>
 #   - added dlmod functionality
 #   - added simple SNMPv3 support
+#   - added logging configuration support
 #
 START=50
 
@@ -338,6 +339,45 @@ snmpd_ignore_if_add() {
 	done
 }
 
+snmpd_configure_logging() {
+	local log_syslog
+	local log_syslog_facility
+	local log_syslog_priority
+	local log_file
+	local log_file_path
+	local log_file_priority
+
+	config_get_bool log_syslog "general" log_syslog 0
+
+	# d - LOG_DAEMON,
+	# u - LOG_USER,
+	# 0-7 - LOG_LOCAL0 through LOG_LOCAL7.
+	config_get log_syslog_facility "general" log_syslog_facility "d"
+
+	# 0 or ! - LOG_EMERG
+	# 1 or a - LOG_ALERT
+	# 2 or c - LOG_CRIT
+	# 3 or e - LOG_ERR
+	# 4 or w - LOG_WARN
+	# 5 or n - LOG_NOTICE
+	# 6 or i - LOG_INFO
+	# 7 or d - LOG_DEBUG
+	config_get log_syslog_priority "general" log_syslog_priority "i"
+
+	if [ $log_syslog -ne 0 ]; then
+		procd_append_param command "-LS ${log_syslog_priority} ${log_syslog_facility}"
+	fi
+
+	config_get_bool log_file "general" log_file 0
+	config_get log_file_path "general" log_file_path "/var/log/snmpd.log"
+	config_get log_file_priority "general" log_file_priority "i"
+
+	if [ $log_file -ne 0 ]; then
+		mkdir -p $(dirname "${log_file_path}")
+		procd_append_param command "-LF ${log_file_priority} ${log_file_path}"
+	fi
+}
+
 start_service() {
 	[ -f "$CONFIGFILE" ] && rm -f "$CONFIGFILE"
 
@@ -347,6 +387,10 @@ start_service() {
 	[ "$snmp_enabled" -eq 0 ] && return
 
 	procd_open_instance
+
+	procd_set_param command $PROG -f
+	procd_set_param file $CONFIGFILE
+	procd_set_param respawn
 
 	config_foreach snmpd_agent_add agent
 	config_foreach snmpd_agentx_add agentx
@@ -375,10 +419,7 @@ start_service() {
 	append_parm trapsess trapsess trapsess
 	config_foreach snmpd_snmpv3_add snmpd
 	snmpd_ignore_if_add
-
-	procd_set_param command $PROG -Lf /var/log/snmpd.log -f
-	procd_set_param file $CONFIGFILE
-	procd_set_param respawn
+	snmpd_configure_logging
 
 	for iface in $(ls /sys/class/net 2>/dev/null); do
 		procd_append_param netdev "$iface"

@@ -1,6 +1,6 @@
-# This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "1"
+INC_PR = "2"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
