@@ -116,7 +116,6 @@ mstpd_configure_port()
 	local br_sysname="$2"
 	local br_port="$3"
 
-	config_load 'mstpd'
 	config_get mstpctl_portpathcost   "$br_port" "pathcost"
 	config_get mstpctl_portadminedge  "$br_port" "adminedge"
 	config_get mstpctl_portautoedge   "$br_port" "autoedge"
@@ -235,7 +234,6 @@ mstpd_configure_bridge()
 		return 1
 	fi
 
-	config_load 'mstpd'
 	config_get mstpctl_forcevers   "$br_ifname" 'forcevers'
 	config_get mstpctl_maxwait     "$br_ifname" 'maxwait'
 	config_get mstpctl_ageing      "$br_ifname" 'ageing'
@@ -364,6 +362,9 @@ mstpd_configure()
 		mstpd_log_error "lib: mstpd is disabled"
 		exit 2
 	fi
+
+	# Migrate old configuration structure to new
+	/usr/lib/mstpctl-utils/mstpd-config-migrate.sh
 
 	# Read the mstpd config
 	config_load 'mstpd'
