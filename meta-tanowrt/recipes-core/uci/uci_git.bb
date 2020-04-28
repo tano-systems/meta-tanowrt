@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano10"
+PR = "tano11"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -20,9 +20,9 @@ SRC_URI = "\
 PROVIDES += "libuci libuci-lua"
 RPROVIDES_${PN} += "libuci-lua libuci"
 
-# 28.01.2020
-# file: fix segfault in uci_parse_option
-SRCREV = "e8d83732f9eb571dce71aa915ff38a072579610b"
+# 24.04.2020
+# file: preserve original file mode after commit
+SRCREV = "ec8d3233948603485e1b97384113fac9f1bab5d6"
 
 S = "${WORKDIR}/git"
 
