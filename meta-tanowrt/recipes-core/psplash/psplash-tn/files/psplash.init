@@ -2,7 +2,7 @@
 
 ##########################################################################
 #
-# Copyright (C) 2019, Tano Systems,
+# Copyright (C) 2019-2020, Tano Systems,
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################
@@ -12,7 +12,7 @@ START=00
 USE_PROCD=1
 
 PSPLASH_TMPDIR="/tmp/psplash"
-PSPLASH_ROTATION_FILE="/etc/rotation"
+PSPLASH_ANGLE_FILE="/etc/rotation"
 PSPLASH_BIN="/usr/bin/psplash"
 PSPLASH_ARGS=""
 PSPLASH_INIT_SCRIPTS="/etc/psplash-init.d"
@@ -20,12 +20,6 @@ PSPLASH_INIT_SCRIPTS="/etc/psplash-init.d"
 psplash_init()
 {
 	local CMDLINE
-
-	if [ ! -e /dev/fb0 ]; then
-		echo "Framebuffer /dev/fb0 not detected"
-		echo "Boot splashscreen disabled"
-		exit 0;
-	fi
 
 	read CMDLINE < /proc/cmdline
 	for x in $CMDLINE; do
@@ -49,43 +43,32 @@ psplash_init()
 
 start_service()
 {
-	local rotation
-	local rotation_file
-	local bin_default
-	local bin_0
-	local bin_90
-	local bin_180
-	local bin_270
+	local angle
+	local angle_file
 
 	psplash_init
 
 	config_load "psplash"
 
-	config_get rotation 'psplash' 'rotation' 0
-	config_get rotation_file 'psplash' 'rotation_file' 0
+	config_get angle 'config' 'rotation' 0
+	config_get fbdev_id 'config' 'fbdev_id' 0
+	config_get angle_file 'config' 'rotation_file' ${PSPLASH_ANGLE_FILE}
 
-	# Default binary
-	config_get bin_default 'psplash' 'bin_default' "${PSPLASH_BIN}"
-
-	# Rotated binaries
-	config_get bin_0   'psplash' 'bin_rotation_0'   "${bin_default}"
-	config_get bin_90  'psplash' 'bin_rotation_90'  "${bin_default}"
-	config_get bin_180 'psplash' 'bin_rotation_180' "${bin_default}"
-	config_get bin_270 'psplash' 'bin_rotation_270' "${bin_default}"
-
-	if [ -n "$rotation_file" -a -e "${rotation_file}" ]; then
-		read rotation < "${rotation_file}"
+	if [ ! -e "/dev/fb${fbdev_id}" ]; then
+		echo "Framebuffer /dev/fb${fbdev_id} not detected"
+		echo "Boot splashscreen disabled"
+		exit 0;
 	fi
 
-	[ -n "$rotation" ] || rotation=0
+	if [ -n "$angle_file" -a -e "${angle_file}" ]; then
+		read angle < "${angle_file}"
+	fi
 
-	case $rotation in
+	[ -n "$angle" ] || angle=0
+
+	case $angle in
 		0|90|180|270)
-			PSPLASH_BIN="$(eval echo "\$bin_${rotation}")"
-			PSPLASH_ARGS="--angle ${rotation}"
-			;;
-		*)
-			PSPLASH_BIN="${bin_default}"
+			PSPLASH_ARGS="--angle ${angle}"
 			;;
 	esac
 

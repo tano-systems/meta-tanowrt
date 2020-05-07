@@ -6,7 +6,7 @@ IMAGE_FEATURES += "splash"
 #
 # Psplash
 #
-SPLASH = "psplash-tano"
+SPLASH = "psplash"
 
 XSERVER_QEMU_ALLX86 = "\
 	xf86-video-cirrus \
