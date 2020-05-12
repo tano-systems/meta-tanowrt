@@ -3,7 +3,7 @@
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano1"
+PR = "tano2"
 PV = "0.4.1+git${SRCPV}"
 
 SUMMARY = "Open-source Modbus TCP to Modbus RTU (RS-232/485) gateway"
