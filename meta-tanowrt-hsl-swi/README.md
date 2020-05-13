@@ -289,8 +289,14 @@ The following credentials are used to access the operating system (terminal) and
 This layer has very little support for the modem hardware. Using this layer you can only set up a PPP connection using the internal modem AT command port. This is all the capabilities of this layer for using modem hardware.
 
 For support more sophisticated features of the modem hardware, an additional `meta-tanowrt-hsl-swi-extras` layer is required. Extra `meta-tanowrt-hsl-swi-extras` layer is a [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Sierra Wireless modules contains recipes for proprietary/commercial software. Extra `meta-tanowrt-hsl-swi-extras` layer provides support for the following features:
-- partial or full firmware update over web-interface (LuCI);
+- partial or full firmware upgrade over web-interface (LuCI);
+
+	![LuCI Firmware Upgrade Application](docs/extra-fwu-upgrade.png)
+
 - control and monitor over web-interface (LuCI) or/and ubus modem data connection (supported LTE/UMTS/GSM modes);
+
+	![LuCI Firmware Upgrade Application](docs/extra-mdm-status.png)
+
 - control and monitor over web-interface (LuCI) or/and ubus GNSS subsystem;
 - receiving and sending SMS over web-interface (LuCI) or/and ubus with notifications (full UCS2 alphabet support);
 - [Legato Framework](https://legato.io/);
