@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "0.9.0+git${SRCPV}"
-PR = "tano5"
+PR = "tano6"
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
@@ -19,7 +19,7 @@ RDEPENDS_${PN} += "syslog-fc"
 GIT_URI      = "git://github.com/tano-systems/luci-app-tn-logview.git"
 GIT_BRANCH   = "master"
 GIT_PROTOCOL = "https"
-GIT_SRCREV   = "5d63017232de2755f18ee84a18d6cfe0b63d0c93"
+GIT_SRCREV   = "d250cf2ec4bb7c2325e36ecd8a2587b7e964ab99"
 
 SRC_URI = "${GIT_URI};branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 SRCREV = "${GIT_SRCREV}"
