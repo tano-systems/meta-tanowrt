@@ -20,9 +20,8 @@ LOCALVERSION = ""
 
 KERNEL_IMAGETYPE ?= "Image"
 
-MACHINE_INCLUDE = "empty.inc"
-MACHINE_INCLUDE_nxp-ls1028ardb = "recipes-kernel/linux/linux-tano-qoriq-nxp-ls1028ardb.inc"
-require ${MACHINE_INCLUDE}
+KERNEL_MACHINE_INCLUDE_nxp-ls1028ardb ?= "recipes-kernel/linux/linux-tano-qoriq-nxp-ls1028ardb.inc"
+include ${KERNEL_MACHINE_INCLUDE}
 
 # Failed to patch original
 KERNEL_FEATURES_remove = "patches/openwrt/generic-${LINUX_VERSION_SHORT}/662.scc"
