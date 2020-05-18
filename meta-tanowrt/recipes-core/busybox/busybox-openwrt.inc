@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "20"
+INC_PR = "21"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
@@ -65,7 +65,7 @@ do_install_append() {
 
 	if [ "${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', '1', '0', d)}" == "1" ]; then
 		install -m 0755 ${WORKDIR}/watchdog.init ${D}${sysconfdir}/init.d/watchdog
-		install -m 0755 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
+		install -m 0644 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
 	fi
 
 	if grep "CONFIG_CROND=y" ${B}/.config; then
