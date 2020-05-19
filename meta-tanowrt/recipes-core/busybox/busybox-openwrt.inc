@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "21"
+INC_PR = "22"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
