@@ -140,3 +140,7 @@ python split_kernel_module_packages () {
         if len(os.listdir(dir)) == 0:
             os.rmdir(dir)
 }
+
+def kernel_full_version(version):
+    parts = version.split("-", 1)
+    return parts[0]
