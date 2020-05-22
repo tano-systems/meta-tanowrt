@@ -60,7 +60,7 @@ do_install() {
 
 	#
 	# ${ROOTFS_GET_TIMESTAMP} will be replaced by actual timestamp
-	# at the image generation step (see openwrt-image.bbclass)
+	# at the image generation step (see tanowrt-image.bbclass)
 	#
 	echo "Timestamp: #ROOTFS_GEN_TIMESTAMP#" >> ${D}${sysconfdir}/tano-version
 	echo "Target system: ${TARGET_SYS}" >> ${D}${sysconfdir}/tano-version

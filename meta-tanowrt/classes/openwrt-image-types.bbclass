@@ -1,3 +1,5 @@
-#
-# Copyright (C) 2018, 2020 Anton Kikin <a.kikin@tano-systems.com>
-#
+python __anonymous() {
+    bb.warn("Class openwrt-image-types is deprecated, please use tanowrt-image-types instead")
+}
+
+inherit tanowrt-image-types

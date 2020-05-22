@@ -11,7 +11,7 @@ SUMMARY = "TanoWrt Minimal Complete Image"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${TANOWRT_BASE}/LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
-inherit openwrt-image
+inherit tanowrt-image
 inherit rootfs-var-lib-opkg-symlink
 inherit rootfs-rm-boot-dir
 inherit rootfs-rm-opkg-lists

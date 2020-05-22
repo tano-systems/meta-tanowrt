@@ -1,7 +1,7 @@
 require conf/distro/include/tanowrt-toolchain.inc
 require conf/distro/include/tanowrt-sdk.inc
 
-IMAGE_CLASSES += "openwrt-image-types"
+IMAGE_CLASSES += "tanowrt-image-types"
 
 # Virtual runtimes
 VIRTUAL-RUNTIME_dev_manager = "udev"
