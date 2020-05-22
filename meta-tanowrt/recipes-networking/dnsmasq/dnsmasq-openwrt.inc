@@ -66,11 +66,11 @@ SRC_URI += "\
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-inherit openwrt openwrt-services useradd
+inherit openwrt tanowrt-services useradd
 
-OPENWRT_SERVICE_PACKAGES = "dnsmasq"
-OPENWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
-OPENWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "dnsmasq"
+TANOWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
+TANOWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
 
 do_install_append() {
     install -d ${D}${sysconfdir}

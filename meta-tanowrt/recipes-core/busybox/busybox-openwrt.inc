@@ -33,18 +33,18 @@ SRC_URI_append = "\
 	file://watchdog.config \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "busybox"
+TANOWRT_SERVICE_PACKAGES = "busybox"
 
-OPENWRT_SERVICE_SCRIPTS_busybox += "\
+TANOWRT_SERVICE_SCRIPTS_busybox += "\
 	cron \
 	sysntpd \
 	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'watchdog', '', d)} \
 "
-OPENWRT_SERVICE_STATE_busybox-cron ?= "enabled"
-OPENWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
-OPENWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
+TANOWRT_SERVICE_STATE_busybox-cron ?= "enabled"
+TANOWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
+TANOWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
 
 do_install_append() {
 	if grep "CONFIG_UDHCPC=y" ${B}/.config; then

@@ -44,11 +44,11 @@ LDFLAGS += "-pthread"
 USERADD_PACKAGES = "${PN}"
 GROUPADD_PARAM_${PN} = "--system netdata"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "netdata"
-OPENWRT_SERVICE_SCRIPTS_netdata += "netdata"
-OPENWRT_SERVICE_STATE_netdata-netdata ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "netdata"
+TANOWRT_SERVICE_SCRIPTS_netdata += "netdata"
+TANOWRT_SERVICE_STATE_netdata-netdata ?= "enabled"
 
 do_install_append() {
 	install -dm 0755 ${D}${sysconfdir}/netdata/custom-plugins.d

@@ -31,11 +31,11 @@ RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 SRCREV = "5e9c23c6f40ff26209ef22cfeeda4904a5918f3d"
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt-services openwrt
+inherit cmake pkgconfig tanowrt-services openwrt
 
-OPENWRT_SERVICE_PACKAGES = "uhttpd"
-OPENWRT_SERVICE_SCRIPTS_uhttpd += "uhttpd"
-OPENWRT_SERVICE_STATE_uhttpd-uhttpd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "uhttpd"
+TANOWRT_SERVICE_SCRIPTS_uhttpd += "uhttpd"
+TANOWRT_SERVICE_STATE_uhttpd-uhttpd ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

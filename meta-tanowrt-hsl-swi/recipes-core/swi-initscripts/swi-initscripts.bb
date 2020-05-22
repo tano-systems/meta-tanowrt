@@ -40,20 +40,20 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "swi-initscripts"
-OPENWRT_SERVICE_SCRIPTS_swi-initscripts ?= "\
+TANOWRT_SERVICE_PACKAGES = "swi-initscripts"
+TANOWRT_SERVICE_SCRIPTS_swi-initscripts ?= "\
 	swi-01-load-modem \
 	swi-04-ipa-fws \
 	swi-13-mssboot \
 	swi-22-power-config \
 "
 
-OPENWRT_SERVICE_STATE_swi-initscripts-swi-01-load-modem ?= "enabled"
-OPENWRT_SERVICE_STATE_swi-initscripts-swi-04-ipa-fws ?= "enabled"
-OPENWRT_SERVICE_STATE_swi-initscripts-swi-13-mssboot ?= "enabled"
-OPENWRT_SERVICE_STATE_swi-initscripts-swi-22-power-config ?= "enabled"
+TANOWRT_SERVICE_STATE_swi-initscripts-swi-01-load-modem ?= "enabled"
+TANOWRT_SERVICE_STATE_swi-initscripts-swi-04-ipa-fws ?= "enabled"
+TANOWRT_SERVICE_STATE_swi-initscripts-swi-13-mssboot ?= "enabled"
+TANOWRT_SERVICE_STATE_swi-initscripts-swi-22-power-config ?= "enabled"
 
 TMPL_FLAGS ??= ""
 

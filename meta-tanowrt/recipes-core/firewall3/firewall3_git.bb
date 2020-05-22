@@ -36,11 +36,11 @@ SRCREV = "f87d0b0f607420424cfcb4ff5a376d7659fa5b6b"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt-services
+inherit cmake pkgconfig tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES                  = "firewall3"
-OPENWRT_SERVICE_SCRIPTS_firewall3        += "firewall"
-OPENWRT_SERVICE_STATE_firewall3-firewall ?= "enabled"
+TANOWRT_SERVICE_PACKAGES                  = "firewall3"
+TANOWRT_SERVICE_SCRIPTS_firewall3        += "firewall"
+TANOWRT_SERVICE_STATE_firewall3-firewall ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

@@ -16,11 +16,11 @@ SRC_URI += "\
 	file://rootfs/sbin/urandom_seed \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "urandom-seed"
-OPENWRT_SERVICE_SCRIPTS_urandom-seed += "urandom_seed"
-OPENWRT_SERVICE_STATE_urandom-seed-urandom_seed ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "urandom-seed"
+TANOWRT_SERVICE_SCRIPTS_urandom-seed += "urandom_seed"
+TANOWRT_SERVICE_STATE_urandom-seed-urandom_seed ?= "enabled"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

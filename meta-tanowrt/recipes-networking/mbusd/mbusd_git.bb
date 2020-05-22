@@ -27,10 +27,10 @@ SRCREV = "88916fe82daeadeff59de03b9f1647603f67be42"
 
 S = "${WORKDIR}/git"
 
-inherit cmake openwrt-services
-OPENWRT_SERVICE_PACKAGES = "mbusd"
-OPENWRT_SERVICE_SCRIPTS_mbusd += "mbusd"
-OPENWRT_SERVICE_STATE_mbusd-mbusd ?= "enabled"
+inherit cmake tanowrt-services
+TANOWRT_SERVICE_PACKAGES = "mbusd"
+TANOWRT_SERVICE_SCRIPTS_mbusd += "mbusd"
+TANOWRT_SERVICE_STATE_mbusd-mbusd ?= "enabled"
 
 do_install_append() {
 	# Install procd init script

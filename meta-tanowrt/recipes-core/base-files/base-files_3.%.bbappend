@@ -64,19 +64,19 @@ SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
 
 inherit tanowrt-version
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "base-files"
+TANOWRT_SERVICE_PACKAGES = "base-files"
 
-OPENWRT_SERVICE_SCRIPTS_base-files += "boot done sysctl umount gpio_switch led sysfixtime system"
-OPENWRT_SERVICE_STATE_base-files-gpio_switch ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-led ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-sysfixtime ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-system ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-boot ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-done ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-sysctl ?= "enabled"
-OPENWRT_SERVICE_STATE_base-files-umount ?= "enabled"
+TANOWRT_SERVICE_SCRIPTS_base-files += "boot done sysctl umount gpio_switch led sysfixtime system"
+TANOWRT_SERVICE_STATE_base-files-gpio_switch ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-led ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-sysfixtime ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-system ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-boot ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-done ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-sysctl ?= "enabled"
+TANOWRT_SERVICE_STATE_base-files-umount ?= "enabled"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

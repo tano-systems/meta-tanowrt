@@ -22,11 +22,11 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-inherit openwrt openwrt-services
+inherit openwrt tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "rssileds"
-OPENWRT_SERVICE_SCRIPTS_rssileds += "rssileds"
-OPENWRT_SERVICE_STATE_rssileds-rssileds ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "rssileds"
+TANOWRT_SERVICE_SCRIPTS_rssileds += "rssileds"
+TANOWRT_SERVICE_STATE_rssileds-rssileds ?= "enabled"
 
 do_compile() {
 	${CC} ${CFLAGS} ${LDFLAGS} -Wall -c -liwinfo -o ${S}/rssileds ${S}/rssileds.c

@@ -22,11 +22,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f \
 
 DEPENDS = "glib-2.0"
 
-inherit autotools pkgconfig openwrt-services
+inherit autotools pkgconfig tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "irqbalance"
-OPENWRT_SERVICE_SCRIPTS_irqbalance ?= "irqbalance"
-OPENWRT_SERVICE_STATE_irqbalance-irqbalance ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "irqbalance"
+TANOWRT_SERVICE_SCRIPTS_irqbalance ?= "irqbalance"
+TANOWRT_SERVICE_STATE_irqbalance-irqbalance ?= "enabled"
 
 EXTRA_OECONF = "--program-transform-name= \
                 --with-systemd=no \

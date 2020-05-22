@@ -24,7 +24,7 @@ SRCREV_rpcd = "3df62bcebd2caff47506ccffb42df8d2d2123c06"
 
 S = "${WORKDIR}/git"
 
-inherit cmake openwrt-services openwrt
+inherit cmake tanowrt-services openwrt
 
 PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
 
@@ -35,9 +35,9 @@ EXTRA_OECMAKE += "\
   -DRPCSYS_SUPPORT=ON \
 "
 
-OPENWRT_SERVICE_PACKAGES = "rpcd"
-OPENWRT_SERVICE_SCRIPTS_rpcd += "rpcd"
-OPENWRT_SERVICE_STATE_rpcd-rpcd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "rpcd"
+TANOWRT_SERVICE_SCRIPTS_rpcd += "rpcd"
+TANOWRT_SERVICE_STATE_rpcd-rpcd ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

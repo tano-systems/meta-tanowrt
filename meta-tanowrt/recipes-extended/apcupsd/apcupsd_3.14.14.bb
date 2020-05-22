@@ -28,11 +28,11 @@ SRC_URI += "\
 	file://commfailure \
 "
 
-inherit autotools pkgconfig openwrt-services
+inherit autotools pkgconfig tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "apcupsd"
-OPENWRT_SERVICE_SCRIPTS_apcupsd += "apcupsd"
-OPENWRT_SERVICE_STATE_apcupsd-apcupsd ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "apcupsd"
+TANOWRT_SERVICE_SCRIPTS_apcupsd += "apcupsd"
+TANOWRT_SERVICE_STATE_apcupsd-apcupsd ?= "disabled"
 
 LD = "${CXX}"
 

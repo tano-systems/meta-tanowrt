@@ -94,8 +94,8 @@ USERADD_PACKAGES = "${PN}"
 USERADD_PARAM_${PN} = "--system --no-create-home --shell /bin/false \
                        --user-group mosquitto"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "mosquitto"
-OPENWRT_SERVICE_SCRIPTS_mosquitto += "mosquitto"
-OPENWRT_SERVICE_STATE_mosquitto-mosquitto ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "mosquitto"
+TANOWRT_SERVICE_SCRIPTS_mosquitto += "mosquitto"
+TANOWRT_SERVICE_STATE_mosquitto-mosquitto ?= "enabled"

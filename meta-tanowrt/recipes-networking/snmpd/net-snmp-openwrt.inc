@@ -4,15 +4,15 @@ INC_PR = "2"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "net-snmp-server-snmpd net-snmp-server-snmptrapd"
+TANOWRT_SERVICE_PACKAGES = "net-snmp-server-snmpd net-snmp-server-snmptrapd"
 
-OPENWRT_SERVICE_SCRIPTS_net-snmp-server-snmpd += "snmpd"
-OPENWRT_SERVICE_STATE_net-snmp-server-snmpd-snmpd ?= "enabled"
+TANOWRT_SERVICE_SCRIPTS_net-snmp-server-snmpd += "snmpd"
+TANOWRT_SERVICE_STATE_net-snmp-server-snmpd-snmpd ?= "enabled"
 
-OPENWRT_SERVICE_SCRIPTS_net-snmp-server-snmptrapd += "snmptrapd"
-OPENWRT_SERVICE_STATE_net-snmp-server-snmptrapd-snmptrapd ?= "disabled"
+TANOWRT_SERVICE_SCRIPTS_net-snmp-server-snmptrapd += "snmptrapd"
+TANOWRT_SERVICE_STATE_net-snmp-server-snmptrapd-snmptrapd ?= "disabled"
 
 SRC_URI += "\
 	file://snmpd.config \

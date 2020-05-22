@@ -21,8 +21,8 @@ do_install() {
 ALLOW_EMPTY_${PN} = "1"
 FILES_${PN} = "${sysconfdir}/init.d/usb-gadget-network"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "usb-gadget-network"
-OPENWRT_SERVICE_SCRIPTS_usb-gadget-network += "usb-gadget-network"
-OPENWRT_SERVICE_STATE_usb-gadget-network-usb-gadget-network ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "usb-gadget-network"
+TANOWRT_SERVICE_SCRIPTS_usb-gadget-network += "usb-gadget-network"
+TANOWRT_SERVICE_STATE_usb-gadget-network-usb-gadget-network ?= "enabled"

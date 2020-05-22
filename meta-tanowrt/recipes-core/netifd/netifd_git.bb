@@ -41,11 +41,11 @@ SRCREV_netifd = "64f4eb79fe2977320660f8940bc908fa4def807b"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt openwrt-services update-alternatives
+inherit cmake pkgconfig openwrt tanowrt-services update-alternatives
 
-OPENWRT_SERVICE_PACKAGES = "netifd"
-OPENWRT_SERVICE_SCRIPTS_netifd += "network"
-OPENWRT_SERVICE_STATE_netifd-network ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "netifd"
+TANOWRT_SERVICE_SCRIPTS_netifd += "network"
+TANOWRT_SERVICE_STATE_netifd-network ?= "enabled"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 

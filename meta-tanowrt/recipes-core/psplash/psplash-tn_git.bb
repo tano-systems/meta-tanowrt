@@ -47,11 +47,11 @@ SRC_URI = "${PSPLASH_TN_GIT_URI};branch=${PSPLASH_TN_GIT_BRANCH};protocol=${PSPL
 
 UPSTREAM_CHECK_COMMITS = "1"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "psplash-tn"
-OPENWRT_SERVICE_SCRIPTS_psplash-tn ?= "psplash"
-OPENWRT_SERVICE_STATE_psplash-tn-psplash ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "psplash-tn"
+TANOWRT_SERVICE_SCRIPTS_psplash-tn ?= "psplash"
+TANOWRT_SERVICE_STATE_psplash-tn-psplash ?= "enabled"
 
 S = "${WORKDIR}/git"
 

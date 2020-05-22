@@ -26,11 +26,11 @@ SRCREV = "0e34af143373126fc62b43612233a158694ec643"
 
 S = "${WORKDIR}/git"
 
-inherit cmake openwrt-services openwrt
+inherit cmake tanowrt-services openwrt
 
-OPENWRT_SERVICE_PACKAGES = "ubox"
-OPENWRT_SERVICE_SCRIPTS_ubox += "log"
-OPENWRT_SERVICE_STATE_ubox-log ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "ubox"
+TANOWRT_SERVICE_SCRIPTS_ubox += "log"
+TANOWRT_SERVICE_STATE_ubox-log ?= "enabled"
 
 do_install_append () {
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then

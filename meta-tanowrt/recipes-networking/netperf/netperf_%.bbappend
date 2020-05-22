@@ -4,11 +4,11 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://netserver.init"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "netperf"
-OPENWRT_SERVICE_SCRIPTS_netperf += "netserver"
-OPENWRT_SERVICE_STATE_netperf-netserver ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "netperf"
+TANOWRT_SERVICE_SCRIPTS_netperf += "netserver"
+TANOWRT_SERVICE_STATE_netperf-netserver ?= "disabled"
 
 do_install_append() {
 	# Remove sysvinit script

@@ -56,12 +56,12 @@ S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "fstools"
-OPENWRT_SERVICE_SCRIPTS_fstools += "fstab blockd"
-OPENWRT_SERVICE_STATE_fstools-fstab ?= "enabled"
-OPENWRT_SERVICE_STATE_fstools-blockd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "fstools"
+TANOWRT_SERVICE_SCRIPTS_fstools += "fstab blockd"
+TANOWRT_SERVICE_STATE_fstools-fstab ?= "enabled"
+TANOWRT_SERVICE_STATE_fstools-blockd ?= "enabled"
 
 EXTRA_OECMAKE += "${EXTRA_OECONF}"
 

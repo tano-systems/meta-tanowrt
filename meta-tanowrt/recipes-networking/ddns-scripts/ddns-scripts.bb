@@ -38,11 +38,11 @@ SRC_URI = "\
 	file://dynamic_dns_functions.sh \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "ddns-scripts"
-OPENWRT_SERVICE_SCRIPTS_ddns-scripts += "ddns"
-OPENWRT_SERVICE_STATE_ddns-scripts-ddns ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "ddns-scripts"
+TANOWRT_SERVICE_SCRIPTS_ddns-scripts += "ddns"
+TANOWRT_SERVICE_STATE_ddns-scripts-ddns ?= "disabled"
 
 DEPENDS += "curl openssl"
 RDEPENDS_${PN} += "openssl-bin"

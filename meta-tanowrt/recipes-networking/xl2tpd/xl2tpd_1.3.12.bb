@@ -27,11 +27,11 @@ SRC_URI += "\
 	file://options.xl2tpd \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "xl2tpd"
-OPENWRT_SERVICE_SCRIPTS_xl2tpd += "xl2tpd"
-OPENWRT_SERVICE_STATE_xl2tpd-xl2tpd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "xl2tpd"
+TANOWRT_SERVICE_SCRIPTS_xl2tpd += "xl2tpd"
+TANOWRT_SERVICE_STATE_xl2tpd-xl2tpd ?= "enabled"
 
 S = "${WORKDIR}/git"
 

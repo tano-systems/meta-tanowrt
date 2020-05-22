@@ -11,11 +11,11 @@ PACKAGES += "${PN}-procd"
 RRECOMMENDS_${PN} += "${PN}-procd"
 RDEPENDS_${PN}-procd += "${PN}"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "libcgroup-procd"
-OPENWRT_SERVICE_SCRIPTS_libcgroup-procd += "cgroups"
-OPENWRT_SERVICE_STATE_libcgroup-procd-cgroups ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "libcgroup-procd"
+TANOWRT_SERVICE_SCRIPTS_libcgroup-procd += "cgroups"
+TANOWRT_SERVICE_STATE_libcgroup-procd-cgroups ?= "enabled"
 
 SRC_URI += "\
 	file://cgroups.config \

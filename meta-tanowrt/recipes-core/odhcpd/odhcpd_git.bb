@@ -26,11 +26,11 @@ SRC_URI = "\
 SRCREV = "6594c6b182a9065570316cf3a7a6a72a7afda150"
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt openwrt-services
+inherit cmake pkgconfig openwrt tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "odhcpd"
-OPENWRT_SERVICE_SCRIPTS_odhcpd += "odhcpd"
-OPENWRT_SERVICE_STATE_odhcpd-odhcpd ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "odhcpd"
+TANOWRT_SERVICE_SCRIPTS_odhcpd += "odhcpd"
+TANOWRT_SERVICE_STATE_odhcpd-odhcpd ?= "disabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

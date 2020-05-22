@@ -38,11 +38,11 @@ SRC_URI = "\
 	file://generate.sh \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "qos-scripts"
-OPENWRT_SERVICE_SCRIPTS_qos-scripts += "qos"
-OPENWRT_SERVICE_STATE_qos-scripts-qos ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "qos-scripts"
+TANOWRT_SERVICE_SCRIPTS_qos-scripts += "qos"
+TANOWRT_SERVICE_STATE_qos-scripts-qos ?= "enabled"
 
 FILES_${PN} += "${libdir}/"
 

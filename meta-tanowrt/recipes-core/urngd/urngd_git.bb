@@ -38,11 +38,11 @@ EXTRA_OECMAKE += "\
   -DCMAKE_INSTALL_SBINDIR:PATH=${base_sbindir} \
 "
 
-inherit cmake openwrt-services
+inherit cmake tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "urngd"
-OPENWRT_SERVICE_SCRIPTS_urngd += "urngd"
-OPENWRT_SERVICE_STATE_urngd-urngd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "urngd"
+TANOWRT_SERVICE_SCRIPTS_urngd += "urngd"
+TANOWRT_SERVICE_STATE_urngd-urngd ?= "enabled"
 
 do_install_append() {
 	install -dm 0755 ${D}${sysconfdir}/init.d

@@ -14,11 +14,11 @@ SRC_URI += "\
 	file://004-modem-processes.patch \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "smstools3"
-OPENWRT_SERVICE_SCRIPTS_smstools3 += "smstools3"
-OPENWRT_SERVICE_STATE_smstools3-smstools3 ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "smstools3"
+TANOWRT_SERVICE_SCRIPTS_smstools3 += "smstools3"
+TANOWRT_SERVICE_STATE_smstools3-smstools3 ?= "disabled"
 
 #CFLAGS += "-D USE_ICONV"
 CFLAGS += "-D NUMBER_OF_MODEMS=1"

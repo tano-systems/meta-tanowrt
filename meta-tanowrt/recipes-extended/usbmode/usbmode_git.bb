@@ -42,11 +42,11 @@ S = "${WORKDIR}/git"
 
 do_fetch[cleandirs] += "${WORKDIR}/data"
 
-inherit cmake pkgconfig openwrt openwrt-services
+inherit cmake pkgconfig openwrt tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "usbmode"
-OPENWRT_SERVICE_SCRIPTS_usbmode += "usbmode"
-OPENWRT_SERVICE_STATE_usbmode-usbmode ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "usbmode"
+TANOWRT_SERVICE_SCRIPTS_usbmode += "usbmode"
+TANOWRT_SERVICE_STATE_usbmode-usbmode ?= "enabled"
 
 do_configure_append() {
 	if [ -d "${WORKDIR}/data" ]; then

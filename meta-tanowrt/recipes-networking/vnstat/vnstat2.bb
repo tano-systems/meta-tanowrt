@@ -28,11 +28,11 @@ S = "${WORKDIR}/vnstat-${PV}"
 
 inherit autotools-brokensep
 inherit pkgconfig
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "vnstat2"
-OPENWRT_SERVICE_SCRIPTS_vnstat2 += "vnstat"
-OPENWRT_SERVICE_STATE_vnstat2-vnstat ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "vnstat2"
+TANOWRT_SERVICE_SCRIPTS_vnstat2 += "vnstat"
+TANOWRT_SERVICE_STATE_vnstat2-vnstat ?= "enabled"
 
 EXTRA_OECONF = " \
 	--disable-extra-paths \

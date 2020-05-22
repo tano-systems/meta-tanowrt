@@ -54,11 +54,11 @@ SRC_URI += "\
 	file://usr/share/collectd/plugin/vmem.json \
 "
 
-inherit autotools pkgconfig openwrt-services
+inherit autotools pkgconfig tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "collectd"
-OPENWRT_SERVICE_SCRIPTS_collectd += "collectd"
-OPENWRT_SERVICE_STATE_collectd-collectd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "collectd"
+TANOWRT_SERVICE_SCRIPTS_collectd += "collectd"
+TANOWRT_SERVICE_STATE_collectd-collectd ?= "enabled"
 
 # Floatingpoint layout, architecture dependent
 # 'nothing', 'endianflip' or 'intswap'

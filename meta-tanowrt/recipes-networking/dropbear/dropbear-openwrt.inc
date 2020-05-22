@@ -24,11 +24,11 @@ EXTRA_OECONF_append += "\
 	--enable-bundled-libtom \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "dropbear"
-OPENWRT_SERVICE_SCRIPTS_dropbear += "dropbear"
-OPENWRT_SERVICE_STATE_dropbear-dropbear ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "dropbear"
+TANOWRT_SERVICE_SCRIPTS_dropbear += "dropbear"
+TANOWRT_SERVICE_STATE_dropbear-dropbear ?= "enabled"
 
 # OpenWrt patches
 SRC_URI_append = "\

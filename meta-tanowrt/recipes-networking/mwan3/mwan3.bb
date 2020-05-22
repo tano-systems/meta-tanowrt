@@ -39,11 +39,11 @@ SRC_URI = "\
 	file://mwan3rtmon \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "mwan3"
-OPENWRT_SERVICE_SCRIPTS_mwan3 += "mwan3"
-OPENWRT_SERVICE_STATE_mwan3-mwan3 ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "mwan3"
+TANOWRT_SERVICE_SCRIPTS_mwan3 += "mwan3"
+TANOWRT_SERVICE_STATE_mwan3-mwan3 ?= "disabled"
 
 FILES_${PN} += "${libdir}/ ${base_libdir}/"
 

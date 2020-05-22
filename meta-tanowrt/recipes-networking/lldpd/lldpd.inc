@@ -49,11 +49,11 @@ SRC_URI_append = "\
     file://lldpd.init \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "lldpd"
-OPENWRT_SERVICE_SCRIPTS_lldpd += "lldpd"
-OPENWRT_SERVICE_STATE_lldpd-lldpd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "lldpd"
+TANOWRT_SERVICE_SCRIPTS_lldpd += "lldpd"
+TANOWRT_SERVICE_STATE_lldpd-lldpd ?= "enabled"
 
 do_install_append() {
 	install -Dm 0755 ${WORKDIR}/lldpd.init    ${D}${sysconfdir}/init.d/lldpd

@@ -60,11 +60,11 @@ do_install_append() {
 
 FILES_${PN} += "/lib/functions/"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "mstpd"
-OPENWRT_SERVICE_SCRIPTS_mstpd += "mstpd"
-OPENWRT_SERVICE_STATE_mstpd-mstpd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "mstpd"
+TANOWRT_SERVICE_SCRIPTS_mstpd += "mstpd"
+TANOWRT_SERVICE_STATE_mstpd-mstpd ?= "enabled"
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/mstpd \

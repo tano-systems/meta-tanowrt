@@ -9,7 +9,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://udev.init file://local.rules file://openwrt-hotplug.rules"
 
-inherit openwrt-services
+inherit tanowrt-services
 inherit useradd
 
 RRECOMMENDS_${PN}_remove = "eudev-hwdb"
@@ -28,9 +28,9 @@ GROUPADD_PARAM_${PN} = "\
     -f -r floppy; \
     -f -r kvm;"
 
-OPENWRT_SERVICE_PACKAGES = "eudev"
-OPENWRT_SERVICE_SCRIPTS_eudev += "udev"
-OPENWRT_SERVICE_STATE_eudev-udev ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "eudev"
+TANOWRT_SERVICE_SCRIPTS_eudev += "udev"
+TANOWRT_SERVICE_STATE_eudev-udev ?= "enabled"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

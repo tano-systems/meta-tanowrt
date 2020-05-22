@@ -54,11 +54,11 @@ RDEPENDS_${PN} += "\
 
 EXTRA_OECONF += " --disable-runtime-loading"
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "shellinabox"
-OPENWRT_SERVICE_SCRIPTS_shellinabox += "shellinabox"
-OPENWRT_SERVICE_STATE_shellinabox-shellinabox ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "shellinabox"
+TANOWRT_SERVICE_SCRIPTS_shellinabox += "shellinabox"
+TANOWRT_SERVICE_STATE_shellinabox-shellinabox ?= "enabled"
 
 do_install_append() {
 	install -d -m 0755 ${D}${sysconfdir}/config

@@ -40,11 +40,11 @@ python __anonymous() {
 inherit openwrt-lua
 inherit openwrt-luci-mod
 inherit openwrt-luci-i18n
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "luci-base"
-OPENWRT_SERVICE_SCRIPTS_luci-base += "ucitrack"
-OPENWRT_SERVICE_STATE_luci-base-ucitrack ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "luci-base"
+TANOWRT_SERVICE_SCRIPTS_luci-base += "ucitrack"
+TANOWRT_SERVICE_STATE_luci-base-ucitrack ?= "enabled"
 
 # Remove the dependency on ourselves
 RDEPENDS_${PN}_remove = "luci-base"

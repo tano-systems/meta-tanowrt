@@ -28,11 +28,11 @@ S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig openwrt
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "umdnsd"
-OPENWRT_SERVICE_SCRIPTS_umdnsd += "umdns"
-OPENWRT_SERVICE_STATE_umdnsd-umdns ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "umdnsd"
+TANOWRT_SERVICE_SCRIPTS_umdnsd += "umdns"
+TANOWRT_SERVICE_STATE_umdnsd-umdns ?= "enabled"
 
 FILES_${PN}  += "${libdir}/*"
 

@@ -8,7 +8,7 @@
 
 INC_PR = "2"
 
-inherit openwrt-services
+inherit tanowrt-services
 
 SRC_URI += " \
     file://openvpn.config \
@@ -23,9 +23,9 @@ SRC_URI += " \
     file://220-disable_des.patch \
     file://210-build_always_use_internal_lz4.patch"
 
-OPENWRT_SERVICE_PACKAGES = "openvpn"
-OPENWRT_SERVICE_SCRIPTS_openvpn += "openvpn"
-OPENWRT_SERVICE_STATE_openvpn-openvpn ?= "disabled"
+TANOWRT_SERVICE_PACKAGES = "openvpn"
+TANOWRT_SERVICE_SCRIPTS_openvpn += "openvpn"
+TANOWRT_SERVICE_STATE_openvpn-openvpn ?= "disabled"
 
 CFLAGS += "-ffunction-sections -fdata-sections"
 

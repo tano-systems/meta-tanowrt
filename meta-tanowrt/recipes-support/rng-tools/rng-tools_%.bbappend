@@ -2,7 +2,7 @@
 PR_append = ".tano0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-inherit openwrt-services
+inherit tanowrt-services
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[rngtest] = ",,"
@@ -27,6 +27,6 @@ do_install_append() {
 FILES_${PN} += "${bindir}"
 CONFFILES_${PN} = "${sysconfdir}/config/rngd"
 
-OPENWRT_SERVICE_PACKAGES = "rng-tools"
-OPENWRT_SERVICE_SCRIPTS_rng-tools += "rngd"
-OPENWRT_SERVICE_STATE_rng-tools-rngd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "rng-tools"
+TANOWRT_SERVICE_SCRIPTS_rng-tools += "rngd"
+TANOWRT_SERVICE_STATE_rng-tools-rngd ?= "enabled"

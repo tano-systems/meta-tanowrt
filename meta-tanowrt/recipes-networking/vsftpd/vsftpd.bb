@@ -51,11 +51,11 @@ SRC_URI += "\
 	file://102-keep-local-user-rights.patch \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "vsftpd"
-OPENWRT_SERVICE_SCRIPTS_vsftpd += "vsftpd"
-OPENWRT_SERVICE_STATE_vsftpd-vsftpd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "vsftpd"
+TANOWRT_SERVICE_SCRIPTS_vsftpd += "vsftpd"
+TANOWRT_SERVICE_STATE_vsftpd-vsftpd ?= "enabled"
 
 LDFLAGS_append =" -lcrypt -lcap -luci"
 EXTRA_OEMAKE = "-e MAKEFLAGS="

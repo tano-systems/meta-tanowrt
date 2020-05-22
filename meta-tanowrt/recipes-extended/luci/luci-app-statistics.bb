@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit openwrt-luci-app
 inherit openwrt-luci-i18n
-inherit openwrt-services
+inherit tanowrt-services
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-statistics;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
@@ -27,9 +27,9 @@ SRC_URI += "\
 	file://luci_statistics.init \
 "
 
-OPENWRT_SERVICE_PACKAGES = "luci-app-statistics"
-OPENWRT_SERVICE_SCRIPTS_luci-app-statistics += "luci_statistics"
-OPENWRT_SERVICE_STATE_luci-app-statistics-luci_statistics ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "luci-app-statistics"
+TANOWRT_SERVICE_SCRIPTS_luci-app-statistics += "luci_statistics"
+TANOWRT_SERVICE_STATE_luci-app-statistics-luci_statistics ?= "enabled"
 
 CONFFILES_${PN} = "${sysconfdir}/config/luci_statistics"
 

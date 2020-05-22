@@ -30,11 +30,11 @@ SRC_URI += "\
 	file://ttyd.config \
 "
 
-inherit openwrt-services
+inherit tanowrt-services
 
-OPENWRT_SERVICE_PACKAGES = "ttyd"
-OPENWRT_SERVICE_SCRIPTS_ttyd += "ttyd"
-OPENWRT_SERVICE_STATE_ttyd-ttyd ?= "enabled"
+TANOWRT_SERVICE_PACKAGES = "ttyd"
+TANOWRT_SERVICE_SCRIPTS_ttyd += "ttyd"
+TANOWRT_SERVICE_STATE_ttyd-ttyd ?= "enabled"
 
 do_install_append() {
 	install -d -m 0755 ${D}${sysconfdir}/config
