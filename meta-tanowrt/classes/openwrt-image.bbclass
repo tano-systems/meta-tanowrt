@@ -1,7 +1,7 @@
 #
 inherit core-image
 inherit openwrt
-inherit openwrt-kmods
+inherit tanowrt-kmods
 
 IMAGE_OVERLAY_NAME_SUFFIX = ".overlay"
 
