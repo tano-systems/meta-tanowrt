@@ -63,7 +63,7 @@ SRC_URI_append = "\
 SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
 
-inherit openwrt-version
+inherit tanowrt-version
 inherit openwrt-services
 
 OPENWRT_SERVICE_PACKAGES = "base-files"

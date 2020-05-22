@@ -16,7 +16,7 @@ PACKAGES = "${PN}"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit tano-scmrevision
-inherit openwrt-version
+inherit tanowrt-version
 
 def get_layers(bb, d):
     layers = (d.getVar("BBLAYERS", 1) or "").split()
