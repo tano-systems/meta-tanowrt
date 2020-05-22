@@ -15,7 +15,7 @@ DEPENDS += "lua5.1-native lua5.1 libnl"
 
 inherit cmake
 inherit tanowrt-luci-lib
-inherit openwrt-lua
+inherit tanowrt-lua
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3"
 

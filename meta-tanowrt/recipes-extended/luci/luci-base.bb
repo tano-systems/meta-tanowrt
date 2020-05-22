@@ -37,7 +37,7 @@ python __anonymous() {
     d.delVarFlag('do_compile', 'noexec')
 }
 
-inherit openwrt-lua
+inherit tanowrt-lua
 inherit tanowrt-luci-mod
 inherit tanowrt-luci-i18n
 inherit tanowrt-services

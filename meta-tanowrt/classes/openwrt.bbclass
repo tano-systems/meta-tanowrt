@@ -5,4 +5,4 @@
 
 FILES_SOLIBSDEV = ""
 
-inherit openwrt-lua
+inherit tanowrt-lua

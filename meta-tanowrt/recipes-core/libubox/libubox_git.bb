@@ -53,7 +53,7 @@ PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt-lua
+inherit cmake pkgconfig tanowrt-lua
 
 EXTRA_OECMAKE += "\
                 -DBUILD_LUA=${@bb.utils.contains('PACKAGECONFIG', 'lua', 'ON', 'OFF', d)} \

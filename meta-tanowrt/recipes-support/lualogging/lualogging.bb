@@ -11,7 +11,7 @@ DEPENDS = "lua5.1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-inherit openwrt-lua
+inherit tanowrt-lua
 
 RDEPENDS_${PN} += "lua5.1"
 
