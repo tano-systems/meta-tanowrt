@@ -66,7 +66,7 @@ SRC_URI += "\
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-inherit openwrt tanowrt-services useradd
+inherit tanowrt tanowrt-services useradd
 
 TANOWRT_SERVICE_PACKAGES = "dnsmasq"
 TANOWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"

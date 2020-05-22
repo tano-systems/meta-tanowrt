@@ -4,7 +4,7 @@ PR = "tano9"
 SUMMARY = "Extras Openwrt system requirements without web-interface"
 LICENSE = "MIT"
 
-inherit packagegroup openwrt
+inherit packagegroup tanowrt
 
 PACKAGES = "\
 	packagegroup-tanowrt-noweb-full \

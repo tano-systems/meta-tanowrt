@@ -21,6 +21,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 OECMAKE_C_FLAGS += "-Wno-error=discarded-qualifiers"

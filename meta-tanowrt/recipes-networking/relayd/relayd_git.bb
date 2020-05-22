@@ -20,7 +20,7 @@ SRCREV = "ad0b25ad74345d367c62311e14b279f5ccb8ef13"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 FILES_${PN}  += "${libdir}/*"
 

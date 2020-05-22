@@ -29,7 +29,7 @@ SRC_URI += "\
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 FILES_${PN} += "\
 	${base_libdir}/netifd/proto/mbim.sh \

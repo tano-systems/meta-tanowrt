@@ -33,7 +33,7 @@ S = "${WORKDIR}/git"
 PROVIDES += "ubusd libubus libubus-lua"
 RPROVIDES_${PN} += "ubusd libubus libubus-lua"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 do_install_append () {
     install -dm 0755 ${D}/sbin

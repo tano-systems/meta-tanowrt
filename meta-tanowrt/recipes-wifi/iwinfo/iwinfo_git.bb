@@ -18,7 +18,7 @@ PROVIDES += "libiwinfo libiwinfo-lua"
 # iwinfo: add device id for Atheros AR9287
 SRCREV = "bb216982951698833bbdf4a88872e9b5ccd026a5"
 
-inherit openwrt pkgconfig
+inherit tanowrt pkgconfig
 
 PACKAGECONFIG ??= "backend-nl80211"
 PACKAGECONFIG[backend-nl80211] = ",,libnl,"

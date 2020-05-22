@@ -24,7 +24,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

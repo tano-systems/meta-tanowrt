@@ -9,7 +9,7 @@ DEPENDS = "lua5.1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-inherit cmake openwrt pkgconfig
+inherit cmake tanowrt pkgconfig
 
 SRC_URI = "\
 	git://github.com/jow-/lucihttp.git;protocol=https \

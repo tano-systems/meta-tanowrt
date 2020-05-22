@@ -42,7 +42,7 @@ S = "${WORKDIR}/git"
 
 do_fetch[cleandirs] += "${WORKDIR}/data"
 
-inherit cmake pkgconfig openwrt tanowrt-services
+inherit cmake pkgconfig tanowrt tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "usbmode"
 TANOWRT_SERVICE_SCRIPTS_usbmode += "usbmode"

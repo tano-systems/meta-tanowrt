@@ -11,7 +11,7 @@ SRC_URI += "\
 	file://modutils.init \
 	"
 
-inherit openwrt tanowrt-services
+inherit tanowrt tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "modutils-initscripts"
 TANOWRT_SERVICE_SCRIPTS_modutils-initscripts += "modutils"

@@ -58,7 +58,7 @@ REQUIRED_DISTRO_FEATURES = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
 inherit distro_features_check
 
-inherit cmake openwrt pkgconfig
+inherit cmake tanowrt pkgconfig
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

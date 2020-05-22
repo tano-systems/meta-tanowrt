@@ -7,7 +7,7 @@ LICENSE = "MIT"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup openwrt
+inherit packagegroup tanowrt
 
 # packagegroup-tanowrt-perftools
 RDEPENDS_${PN} = "\

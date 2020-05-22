@@ -26,7 +26,7 @@ SRCREV = "ec8d3233948603485e1b97384113fac9f1bab5d6"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 

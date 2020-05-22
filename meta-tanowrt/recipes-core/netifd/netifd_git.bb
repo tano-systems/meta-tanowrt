@@ -41,7 +41,7 @@ SRCREV_netifd = "64f4eb79fe2977320660f8940bc908fa4def807b"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt tanowrt-services update-alternatives
+inherit cmake pkgconfig tanowrt tanowrt-services update-alternatives
 
 TANOWRT_SERVICE_PACKAGES = "netifd"
 TANOWRT_SERVICE_SCRIPTS_netifd += "network"

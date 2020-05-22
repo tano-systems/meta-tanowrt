@@ -19,7 +19,7 @@ SRCREV = "5e1bc3429cbf9c3be4db65ef5dbf21ea99cf5b95"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig openwrt
+inherit cmake pkgconfig tanowrt
 
 do_install_append() {
 	install -d ${D}${includedir}/libubox

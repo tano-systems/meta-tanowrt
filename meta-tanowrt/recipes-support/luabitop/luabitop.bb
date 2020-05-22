@@ -10,7 +10,7 @@ DEPENDS = "lua5.1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-inherit openwrt pkgconfig
+inherit tanowrt-lua pkgconfig
 
 SRC_URI = "http://bitop.luajit.org/download/LuaBitOp-${PV}.tar.gz"
 SRC_URI[md5sum] = "d0c1080fe0c844e8477279668e2d0d06"

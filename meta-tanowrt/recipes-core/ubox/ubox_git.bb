@@ -26,7 +26,7 @@ SRCREV = "0e34af143373126fc62b43612233a158694ec643"
 
 S = "${WORKDIR}/git"
 
-inherit cmake tanowrt-services openwrt
+inherit cmake tanowrt-services tanowrt
 
 TANOWRT_SERVICE_PACKAGES = "ubox"
 TANOWRT_SERVICE_SCRIPTS_ubox += "log"

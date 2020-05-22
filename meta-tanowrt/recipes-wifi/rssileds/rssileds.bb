@@ -22,7 +22,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-inherit openwrt tanowrt-services
+inherit tanowrt tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "rssileds"
 TANOWRT_SERVICE_SCRIPTS_rssileds += "rssileds"

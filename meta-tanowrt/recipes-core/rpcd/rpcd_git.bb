@@ -24,7 +24,7 @@ SRCREV_rpcd = "3df62bcebd2caff47506ccffb42df8d2d2123c06"
 
 S = "${WORKDIR}/git"
 
-inherit cmake tanowrt-services openwrt
+inherit cmake tanowrt-services tanowrt
 
 PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
 

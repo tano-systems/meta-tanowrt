@@ -4,7 +4,7 @@
 # Note that VIRTUAL-RUNTIME_network_manager nor VIRTUAL-RUNTIME_syslog
 # are essential for booting a standalone system so not included here.
 
-inherit openwrt
+inherit tanowrt
 
 PR_append = ".tano0"
 

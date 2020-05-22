@@ -11,7 +11,7 @@ LICENSE = "MIT"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup openwrt
+inherit packagegroup tanowrt
 
 PACKAGES = "\
 	packagegroup-tanowrt-base \

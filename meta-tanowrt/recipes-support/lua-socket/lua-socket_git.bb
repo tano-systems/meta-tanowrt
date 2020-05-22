@@ -20,7 +20,7 @@ SRCREV = "d1ec29be7f982db75864155dd61a058902e1cae2"
 
 S = "${WORKDIR}/git"
 
-inherit openwrt
+inherit tanowrt-lua
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 

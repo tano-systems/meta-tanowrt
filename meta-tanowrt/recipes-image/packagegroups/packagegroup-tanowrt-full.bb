@@ -8,7 +8,7 @@ PR = "tano21"
 SUMMARY = "Extras TanoWrt system requirements"
 LICENSE = "MIT"
 
-inherit packagegroup openwrt
+inherit packagegroup tanowrt
 
 PACKAGES = "\
 	packagegroup-tanowrt-full \
