@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 RDEPENDS_${PN} += "luci-base libiwinfo-lua"
 RRECOMMENDS_${PN} += "curl"
 
-inherit openwrt-luci-mod
+inherit tanowrt-luci-mod
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=modules/luci-mod-network;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

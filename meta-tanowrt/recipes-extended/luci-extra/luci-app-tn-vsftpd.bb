@@ -22,5 +22,5 @@ RDEPENDS_${PN} += "vsftpd"
 
 S = "${WORKDIR}/git"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n

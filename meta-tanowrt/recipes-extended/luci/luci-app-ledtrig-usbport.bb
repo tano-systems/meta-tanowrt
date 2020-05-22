@@ -22,8 +22,8 @@ python populate_packages_prepend() {
 
 RDEPENDS_${PN} += "kmod-usb-ledtrig-usbport"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-ledtrig-usbport;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

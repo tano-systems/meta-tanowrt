@@ -38,8 +38,8 @@ python __anonymous() {
 }
 
 inherit openwrt-lua
-inherit openwrt-luci-mod
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-mod
+inherit tanowrt-luci-i18n
 inherit tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "luci-base"

@@ -1,7 +1,5 @@
-#
-# LuCI library class
-#
-# Copyright (c) 2019, Tano Systems. All Rights Reserved.
-# Anton Kikin <a.kikin@tano-systems.com>
-#
-inherit openwrt-luci-pkg
+python __anonymous() {
+    bb.warn("Class openwrt-luci-lib is deprecated, please use tanowrt-luci-lib instead")
+}
+
+inherit tanowrt-luci-lib

@@ -24,8 +24,8 @@ RDEPENDS_${PN} += "lldpd"
 
 S = "${WORKDIR}/git"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 LUCI_APP_TN_LLDPD_HIDE_FOOTER ?= "1"
 

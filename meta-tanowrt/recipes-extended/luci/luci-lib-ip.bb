@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 DEPENDS += "lua5.1-native lua5.1 libnl"
 
 inherit cmake
-inherit openwrt-luci-lib
+inherit tanowrt-luci-lib
 inherit openwrt-lua
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3"

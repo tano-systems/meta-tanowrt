@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 RDEPENDS_${PN} += "luci-base luci-mod-status luci-mod-system luci-mod-network"
 
-inherit openwrt-luci-mod
+inherit tanowrt-luci-mod
 
 ALLOW_EMPTY_${PN} = "1"
 

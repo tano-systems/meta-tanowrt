@@ -7,8 +7,8 @@
 PV = "0.9.0+git${SRCPV}"
 PR = "tano6"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 SUMMARY = "Log viewer LuCI application"
 LICENSE = "MIT"

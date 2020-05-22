@@ -14,7 +14,7 @@ SECTION = "base"
 
 DEPENDS += "iwinfo"
 
-inherit openwrt-luci
+inherit tanowrt-luci
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=modules/luci-mod-status/src;destsuffix=git/"
 SRCREV  = "${LUCI_GIT_SRCREV}"

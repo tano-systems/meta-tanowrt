@@ -12,8 +12,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 RDEPENDS_${PN} += "qos-scripts luci-compat"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-qos;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

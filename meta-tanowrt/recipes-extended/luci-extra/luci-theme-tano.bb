@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=572ff0d89ff068a9a5f7b4bc844b09cc"
 
 DEPENDS += "nodejs-native"
 
-inherit openwrt-luci-theme
+inherit tanowrt-luci-theme
 
 LUCI_THEME_NAME = "tano"
 

@@ -16,7 +16,7 @@ PV = "git${SRCPV}"
 
 RDEPENDS_${PN} += "shellinabox"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 S = "${WORKDIR}/git"

@@ -14,7 +14,7 @@ DEPENDS += "libubox libubus rpcd"
 RDEPENDS_${PN} += "rpcd"
 
 inherit cmake
-inherit openwrt-luci
+inherit tanowrt-luci
 
 LUCI_DO_POST_INSTALL_ACTIONS = "0"
 

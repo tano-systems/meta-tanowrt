@@ -16,7 +16,7 @@ RDEPENDS_${PN} += "rpcd"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit cmake
-inherit openwrt-luci
+inherit tanowrt-luci
 
 LUCI_DO_POST_INSTALL_ACTIONS = "0"
 

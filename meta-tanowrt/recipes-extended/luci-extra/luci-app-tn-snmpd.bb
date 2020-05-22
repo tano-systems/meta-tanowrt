@@ -14,8 +14,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1fd756df4d1f5f2e8c17e9d2d4eaa503"
 RDEPENDS_${PN} += "net-snmp-server-snmpd"
 RCONFLICTS_${PN} = "luci-app-snmpd"
 
-inherit openwrt-luci-app
-inherit openwrt-luci-i18n
+inherit tanowrt-luci-app
+inherit tanowrt-luci-i18n
 
 GIT_BRANCH   = "master"
 GIT_SRCREV   = "12cfe8a00997513f3004e75d6715e0659e750b91"
