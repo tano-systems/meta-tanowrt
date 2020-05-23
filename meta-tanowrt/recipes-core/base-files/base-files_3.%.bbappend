@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano50.${INC_PR}"
+PR_append = ".tano51.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -267,6 +267,8 @@ do_install_append () {
 	sed -i "s#%PATH%#/usr/sbin:/usr/bin:/sbin:/bin#g" \
 		${D}${sysconfdir}/preinit \
 		${D}${base_sbindir}/hotplug-call
+
+	sed -i 's#:/root:#:${ROOT_HOME}:#' ${D}${sysconfdir}/passwd
 }
 
 pkg_preinst_${PN} () {
