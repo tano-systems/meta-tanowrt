@@ -18,6 +18,8 @@
 #
 inherit kernel-config
 
+KERNEL_KMOD_MUTE_RECOMMENDATION_WARNINGS ?= "0"
+
 def get_op_ver(s, d):
     i = s.replace(" ", "")
     op  = ""
@@ -36,6 +38,8 @@ def get_op_ver(s, d):
 
 def kernel_config_depends(d):
     import re
+
+    mute_warnings = (d.getVar('KERNEL_KMOD_MUTE_RECOMMENDATION_WARNINGS', True) == '1')
 
     bb.debug(1, 'Check kernel configuration dependencies...');
 
@@ -150,8 +154,12 @@ def kernel_config_depends(d):
         bb.debug(1, "      m_autoload          = %s" % (", ".join(m_autoload)))
 
         if kvalue not in required:
-            bb.warn('It is recommended to set the kernel option %s to %s' \
-                % (koption, " or ".join(required)));
+            if mute_warnings == True:
+                bb.debug(1, 'It is recommended to set the kernel option %s to %s' \
+                    % (koption, " or ".join(required)));
+            else:
+                bb.warn('It is recommended to set the kernel option %s to %s' \
+                    % (koption, " or ".join(required)));
             continue
 
         if kvalue == 'm':
