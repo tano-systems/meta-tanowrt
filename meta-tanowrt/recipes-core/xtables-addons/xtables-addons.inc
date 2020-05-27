@@ -6,7 +6,7 @@ DEPENDS = "virtual/kernel iptables bc-native"
 
 inherit autotools kernel-module-split module-base pkgconfig
 
-INC_PR = "0"
+INC_PR = "1"
 
 do_compile[depends] += "virtual/kernel:do_deploy"
 
@@ -17,7 +17,8 @@ EXTRA_OECONF = "\
 	--with-xtlibdir=${libdir}/iptables \
 "
 
-EXTRA_OEMAKE = "M=${S}/extentions DESTDIR=${D} V=1"
+EXTRA_OEMAKE = "M=${S}/extensions DESTDIR=${D} V=1 DEPMOD=/bin/true"
+MAKE_TARGETS = "all"
 MODULES_INSTALL_TARGET = "install"
 
 FILES_${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
