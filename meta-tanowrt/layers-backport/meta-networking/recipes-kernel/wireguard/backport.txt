@@ -1,0 +1,5 @@
+﻿Recipes for wireguard and wireguard-tools backported from meta-openembedded layer:
+  repository: git://git.openembedded.org/meta-openembedded
+  subdirectory: meta-networking
+  branch: master
+  revision: 713e70bd253310dcfa77709df163c7898bb401b3
