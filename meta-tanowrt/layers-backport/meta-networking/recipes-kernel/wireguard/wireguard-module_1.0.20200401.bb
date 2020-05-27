@@ -1,10 +1,8 @@
 require wireguard.inc
 
-SRC_URI = "https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${PV}.tar.xz"
-SRC_URI[md5sum] = "f599d811071b51d69984eb6aa99ab467"
-SRC_URI[sha256sum] = "0def6f3608ec06f6dfc454aa5281a7c38b06ff27096cb341448d20602da4e923"
+SRCREV = "43f57dac7b8305024f83addc533c9eede6509129"
 
-S = "${WORKDIR}/wireguard-linux-compat-${PV}/src"
+SRC_URI = "git://git.zx2c4.com/wireguard-linux-compat"
 
 inherit module kernel-module-split
 
@@ -35,5 +33,3 @@ module_do_install() {
     install -m 0644 ${MODULE_NAME}.ko \
     ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/${MODULE_NAME}/${MODULE_NAME}.ko
 }
-
-KERNEL_MODULE_AUTOLOAD += "wireguard"
