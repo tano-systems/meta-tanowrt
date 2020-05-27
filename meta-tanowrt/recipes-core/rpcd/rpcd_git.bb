@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano19"
+PR = "tano20"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 17.03.2020
-# session: deny access if password login is disabled
-SRCREV_rpcd = "3df62bcebd2caff47506ccffb42df8d2d2123c06"
+# 26.05.2020
+# uci: reset uci_ptr flags when merging options during section add
+SRCREV_rpcd = "078bb57e0769c987c05244abe1f7d8d53e0e323e"
 
 S = "${WORKDIR}/git"
 
