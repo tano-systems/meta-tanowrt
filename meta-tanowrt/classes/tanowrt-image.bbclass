@@ -3,6 +3,9 @@ inherit core-image
 inherit tanowrt
 inherit tanowrt-kmods
 
+# Disable runtime dependency on run-postinsts
+ROOTFS_BOOTSTRAP_INSTALL = ""
+
 IMAGE_OVERLAY_NAME_SUFFIX = ".overlay"
 
 IMAGE_OVERHEAD_FACTOR = "1"
