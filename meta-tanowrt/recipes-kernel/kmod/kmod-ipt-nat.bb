@@ -1,6 +1,6 @@
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018, 2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano0"
+PR = "tano1"
 SUMMARY = "Basic NAT targets"
 LICENSE = "MIT"
 
@@ -35,7 +35,8 @@ KERNEL_CONFIG_DEPENDS += "{\
 	required          = y|m, \
 	m_rdepends        = kernel-module-ipt-masquerade, \
 	m_autoload        = ipt_MASQUERADE, \
-	m_autoload_script = ipt-nat \
+	m_autoload_script = ipt-nat, \
+	version           = '< 5.4.0' \
 }"
 
 KERNEL_CONFIG_DEPENDS += "{\
