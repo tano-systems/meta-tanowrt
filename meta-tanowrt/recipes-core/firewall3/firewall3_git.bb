@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -67,7 +67,7 @@ do_install_append() {
 
 FILES_${PN} += "${libdir}/* /usr/share/fw3/"
 
-RDEPENDS_${PN} += "ipset xtables-addons"
+RDEPENDS_${PN} += "ipset iptables"
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/firewall \
