@@ -5,7 +5,7 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="warrior"
-	         revision="ca019eec1304ca2a400ea744c0eaafe0a766d5d1" />
+	         revision="db3ce703d03b18e8a4120969d32ff7f344f34fe9" />
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
@@ -19,5 +19,5 @@
 	         name="bitbake"
 	         remote="openembedded"
 	         upstream="1.42"
-	         revision="4ce50bbd34eefeabfeca89a6a66c71598d3c58f6" />
+	         revision="7f7126211170439ac1d7d72e980786ce0edb7bb7" />
 </manifest>
