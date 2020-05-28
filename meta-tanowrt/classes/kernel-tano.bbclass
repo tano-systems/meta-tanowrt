@@ -164,3 +164,27 @@ python split_kernel_module_packages () {
 def kernel_full_version(version):
     parts = version.split("-", 1)
     return parts[0]
+
+def kernel_dtb2dts(var, d):
+    value = d.getVar(var, True) or ''
+    return value.replace('.dtb', '.dts')
+
+KERNEL_DEVICETREE_COPY ?= ""
+KERNEL_DEVICETREE_COPY_DST_mipsarch ?= "${S}/arch/mips/boot/dts"
+KERNEL_DEVICETREE_COPY_DST_microblaze ?= "${S}/arch/microblaze/boot/dts"
+KERNEL_DEVICETREE_COPY_DST_aarch64 ?= "${S}/arch/arm64/boot/dts"
+KERNEL_DEVICETREE_COPY_DST_arm ?= "${S}/arch/arm/boot/dts"
+
+do_configure_append() {
+	if [ ! -z "${KERNEL_DEVICETREE_COPY_DST}" ]; then
+		for f in ${KERNEL_DEVICETREE_COPY}; do
+			bbdebug 1 "${f} (copy ${f} to ${KERNEL_DEVICETREE_COPY_DST}/${f})"
+			if [ -e "${KERNEL_DEVICETREE_COPY_DST}/${f}" ]; then
+				rm -f ${KERNEL_DEVICETREE_COPY_DST}/${f}.orig
+				mv ${KERNEL_DEVICETREE_COPY_DST}/${f} ${KERNEL_DEVICETREE_COPY_DST}/${f}.orig
+			fi
+			install -D -m 0644 ${WORKDIR}/${f} \
+			                   ${KERNEL_DEVICETREE_COPY_DST}/${f}
+		done
+	fi
+}
