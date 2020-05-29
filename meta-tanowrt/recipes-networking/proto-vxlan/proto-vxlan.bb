@@ -4,7 +4,7 @@
 # Virtual eXtensible LAN config support
 #
 PV = "0.0.2"
-PR = "tano0"
+PR = "tano1"
 
 inherit allarch
 
@@ -13,7 +13,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-RDEPENDS_${PN} += "kmod-vxlan"
+inherit kmod/vxlan
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

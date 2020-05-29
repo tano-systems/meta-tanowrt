@@ -8,9 +8,9 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano12"
+PR = "tano13"
 
-RDEPENDS_${PN} += "kmod-cfg80211"
+inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 

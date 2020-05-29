@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
@@ -11,7 +11,8 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=20;md5=3f7041e5710007661d7
 SECTION = "base"
 DEPENDS = "libubox json-c"
 
-RDEPENDS_${PN} += "kmod-usb-net kmod-usb-net-qmi-wwan"
+inherit kmod/usb-net
+inherit kmod/usb-net-qmi-wwan
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"

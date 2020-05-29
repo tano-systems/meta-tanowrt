@@ -1,5 +1,5 @@
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -38,8 +38,9 @@ do_install_append() {
 }
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
-RDEPENDS_${PN} += "kmod-sched-core"
 
-RDEPENDS_${PN}-tc += "kmod-sched-core"
+# ${PN}-tc
+inherit kmod/sched-core
+
 FILES_${PN}-tc += "${sysconfdir}/hotplug.d/iface"
 

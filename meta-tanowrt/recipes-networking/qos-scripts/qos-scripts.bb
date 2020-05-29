@@ -6,7 +6,7 @@
 # entries.
 #
 PV = "1.3.1"
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "QoS scripts"
 LICENSE = "GPLv2"
@@ -16,12 +16,13 @@ SECTION = "net"
 RDEPENDS_${PN} += "\
 	iptables \
 	iproute2-tc \
-	kmod-sched-core \
-	kmod-sched-connmark \
-	kmod-ifb \
-	kmod-ipt-ipopt \
-	kmod-ipt-conntrack-extra \
 "
+
+inherit kmod/sched-core
+inherit kmod/sched-connmark
+inherit kmod/ifb
+inherit kmod/ipt-ipopt
+inherit kmod/ipt-conntrack-extra
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 

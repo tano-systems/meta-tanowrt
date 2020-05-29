@@ -1,6 +1,6 @@
 #
 # Kernel configuration dependencies
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Example:
 #
@@ -179,8 +179,11 @@ def kernel_config_depends(d):
                 postinst += "mkdir -p $D${sysconfdir}/modules.d\n"
 
                 for module in m_autoload:
-                    postinst += "echo \"%s\" >> $D${sysconfdir}/modules.d/%s\n" \
+                    postinst += "if [ ! -f $D${sysconfdir}/modules.d/%s -o \"$(grep %s $D${sysconfdir}/modules.d/%s -c)\" = \"0\" ]; then\n" \
+                        % (m_autoload_script, module, m_autoload_script)
+                    postinst += "\techo \"%s\" >> $D${sysconfdir}/modules.d/%s\n" \
                         % (module, m_autoload_script)
+                    postinst += "fi\n"
 
                 if m_autoload_early:
                     postinst += "mkdir -p $D${sysconfdir}/modules-boot.d\n"

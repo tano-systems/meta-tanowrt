@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "0"
+INC_PR = "1"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 EXTRA_OEMAKE += "\
@@ -84,7 +84,7 @@ USERADD_PARAM_${PN} = "--system -d /var/lib/dnsmasq --no-create-home \
   --shell /bin/false --user-group dnsmasq"
 
 RDEPENDS_${PN} += "jsonpath"
-RDEPENDS_${PN} += "kmod-ipt-ipset"
+inherit kmod/ipt-ipset
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILES_${PN}_append = "\

@@ -3,7 +3,7 @@
 #
 # OpenWrt/LEDE Traffic Usage Monitor
 #
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "LEDE Traffic Usage Monitor"
 LICENSE = "ISC"
@@ -12,9 +12,7 @@ SECTION = "net"
 
 DEPENDS += "libubox zlib libnl"
 
-RDEPENDS_${PN} += "\
-	kmod-nf-conntrack-netlink \
-"
+inherit kmod/nf-conntrack-netlink
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 

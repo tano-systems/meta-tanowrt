@@ -4,9 +4,9 @@ require hostapd.inc
 
 SUMMARY = "802.1x authentication test utility"
 DEPENDS = "libnl openssl libubus libubox"
-RDEPENDS_${PN} += "kmod-cfg80211"
+inherit kmod/cfg80211
 
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 do_compile() {
 	oe_runmake eapol_test -C ${B}/wpa_supplicant CONFIG_EAPOL_TEST=y

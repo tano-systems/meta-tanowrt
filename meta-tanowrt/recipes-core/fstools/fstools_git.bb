@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://ubi.c;beginline=1;endline=17;md5=8ccc371d64f0b3a8d910
 SECTION = "base"
 DEPENDS += "util-linux ubus uci"
 
-RDEPENDS_${PN} += "kmod-fs-autofs4"
+inherit kmod/fs-autofs4
 
 # fsck.ext and fsck.vfat support
 RDEPENDS_${PN} += "\

@@ -4,7 +4,7 @@
 # This file Copyright (c) 2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "LuCI Support for ledtrigger usbport"
 LICENSE = "Apache-2.0"
@@ -20,7 +20,7 @@ python populate_packages_prepend() {
         bb.fatal('Package %s requires kernel version >= 4.14' % d.getVar('PN', True))
 }
 
-RDEPENDS_${PN} += "kmod-usb-ledtrig-usbport"
+inherit kmod/usb-ledtrig-usbport
 
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n

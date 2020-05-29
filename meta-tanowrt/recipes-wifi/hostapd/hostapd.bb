@@ -6,13 +6,13 @@ SUMMARY = "User space daemon for extended IEEE 802.11 management"
 DEPENDS = "libnl openssl libubus libubox"
 SECTION = "kernel/userland"
 
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 PROVIDES += "wpa-supplicant wpad"
 RPROVIDES_${PN} += "wpa-supplicant wpad"
 RREPLACES_${PN}  += "wpa-supplicant"
 RCONFLICTS_${PN}  += "wpa-supplicant"
-RDEPENDS_${PN} += "kmod-cfg80211"
+inherit kmod/cfg80211
 
 do_compile() {
 	oe_runmake hostapd_cli hostapd_multi.a -C ${B}/hostapd MULTICALL=1
