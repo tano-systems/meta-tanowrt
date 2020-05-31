@@ -1,20 +1,21 @@
 # Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano2"
+PR = "tano3"
 SUMMARY = "WiFi support packages"
 DESCRIPTION = "The set of packages required for a WiFi support"
 LICENSE = "MIT"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup tanowrt
+inherit packagegroup
 
 PACKAGES = "\
 	${PN} \
 	${PN}-firmware \
 "
 
-# packagegroup-tanowrt-wifi
+do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
+
 RDEPENDS_${PN} = "\
 	${PN}-firmware \
 	iwinfo \
@@ -22,10 +23,10 @@ RDEPENDS_${PN} = "\
 	cfg80211 \
 	iw \
 	hostapd \
+	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'luci-app-ledtrig-rssi', '', d)} \
 "
 
-# packagegroup-tanowrt-wifi-firmware
-RDEPENDS_${PN}-firmware = "\
+RRECOMMENDS_${PN}-firmware = "\
 	linux-firmware-rtl8192ce \
 	linux-firmware-rtl8192cu \
 	linux-firmware-rtl8192su \

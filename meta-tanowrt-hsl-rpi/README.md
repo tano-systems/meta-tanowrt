@@ -10,9 +10,10 @@
 
 ## Supported Images
 
-| Recipe               | Image                          |
-| -------------------- | ------------------------------ |
-| `tanowrt-image-full` | Full TanoWrt image             |
+| Recipe               | Image                                       |
+| -------------------- | ------------------------------------------- |
+| `tanowrt-image-base` | TanoWrt base image                          |
+| `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
 
 ## Prerequisites
 

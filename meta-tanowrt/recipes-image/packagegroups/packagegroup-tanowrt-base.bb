@@ -4,38 +4,102 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
-SUMMARY = "Normal TanoWrt system requirements"
-DESCRIPTION = "The set of packages required for a more traditional full-featured Openwrt system"
+PR = "tano4"
+SUMMARY = "Base TanoWrt system requirements"
+DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup tanowrt
+inherit packagegroup
+
+do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
 PACKAGES = "\
 	packagegroup-tanowrt-base \
-	packagegroup-tanowrt-base-luci \
+	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci', '', d)} \
+	packagegroup-tanowrt-base-core \
+	packagegroup-tanowrt-base-tools \
+	packagegroup-tanowrt-base-network \
 	packagegroup-tanowrt-base-machine \
 "
 
 # packagegroup-tanowrt-base
 RDEPENDS_${PN} = "\
-	packagegroup-tanowrt-noweb-base \
-	packagegroup-tanowrt-base-luci \
+	packagegroup-tanowrt-base-core \
+	packagegroup-tanowrt-base-network \
+	packagegroup-tanowrt-base-tools \
 	packagegroup-tanowrt-base-machine \
+	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci ', '', d)} \
+	make-ext4fs \
+	eudev \
+	mtd-utils \
+	${@bb.utils.contains('MACHINE_FEATURES', 'ubifs', 'mtd-utils-ubifs', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'libusb1', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'usbutils', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'usbreset', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'usbmode', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbgadget', 'usb-gadget-network', '',d)} \
+"
+
+# packagegroup-tanowrt-base-luci
+RDEPENDS_${PN}-luci = "\
+	lua5.1 \
+	uhttpd \
+	luci \
+	luci-app-firewall \
+	luci-app-uhttpd \
+	luci-app-tn-netports \
+	luci-app-tn-netports-hotplug \
+	luci-theme-tano \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'luci-proto-ipv6', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'luci-app-ledtrig-usbport', '',d)} \
+"
+
+# packagegroup-tanowrt-base-tools
+RDEPENDS_${PN}-tools = "\
+	nano \
+	cpulimit \
+	schedtool-dl \
+	${@bb.utils.contains('MACHINE_FEATURES', 'pci', 'pciutils', '',d)} \
+"
+
+# packagegroup-tanowrt-base-core
+RDEPENDS_${PN}-core = "\
+	packagegroup-core-boot \
+	tzdata-europe \
+	tzdata-asia \
+	urandom-seed \
+	rng-tools \
+	rpcd \
+	rpcd-mod-file \
+	ubox \
+	ubus \
+	uci \
+	libubox \
+	libubox-lua \
+	fstools \
+"
+
+# packagegroup-tanowrt-base-network
+RDEPENDS_${PN}-network = "\
+	${VIRTUAL-RUNTIME_network_manager} \
+	dnsmasq \
+	firewall3 \
+	iptables \
+	uclient \
+	ustream-ssl \
+	odhcpd \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'odhcp6c', '', d)} \
+	ipset \
+	tcpdump \
+	ethtool \
+	curl \
+	drill \
+	iproute2 \
 "
 
 SUMMARY_packagegroup-tanowrt-base-machine = "${MACHINE} extras"
 SUMMARY_packagegroup-tanowrt-base-machine = "Extra packages required to fully support ${MACHINE} hardware"
 RDEPENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RDEPENDS}"
 RRECOMMENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RRECOMMENDS}"
-
-# packagegroup-tanowrt-base-luci
-RDEPENDS_${PN}-luci = "\
-	lua5.1 \
-	luci \
-	luci-theme-tano \
-	luci-app-firewall \
-	uhttpd \
-"

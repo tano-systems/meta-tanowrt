@@ -1,15 +1,31 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
-
-PR_append = ".2"
-
-SUMMARY = "TanoWrt Base Image"
-LICENSE = "MIT"
-
-BAD_RECOMMENDATIONS += "busybox-syslog"
-BAD_RECOMMENDATIONS += "busybox-udhcpc"
 
 require recipes-image/images/tanowrt-image-base.bb
 
-CORE_IMAGE_EXTRA_INSTALL += "packagegroup-tanowrt-full"
+PR_append = ".3"
+SUMMARY = "TanoWrt full featured image"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+IMAGE_FEATURES += "\
+	perftools \
+	mbusgw \
+	snmp \
+	ddns \
+	ftp \
+	openvpn \
+	ssh \
+	modem \
+	mqtt \
+	statistics \
+	webterminal \
+	wireguard \
+	${@bb.utils.filter('MACHINE_FEATURES', 'wifi watchdog cgroup stp lldp', d)} \
+"
+
+CORE_IMAGE_EXTRA_INSTALL += "\
+	ncurses \
+	ncurses-terminfo \
+	htop \
+"

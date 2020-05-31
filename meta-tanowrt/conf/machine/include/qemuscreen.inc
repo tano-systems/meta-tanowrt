@@ -1,11 +1,11 @@
 #
 # Machine/distro features
 #
-IMAGE_FEATURES += "splash"
 
 #
 # Psplash
 #
+IMAGE_FEATURES += "splash"
 SPLASH = "psplash"
 
 XSERVER_QEMU_ALLX86 = "\

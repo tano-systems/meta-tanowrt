@@ -30,7 +30,8 @@ In the near future it is planned to implement support for the following carrier 
 
 | Image (recipe)       | Description                                   |
 | -------------------- | --------------------------------------------- |
-| `tanowrt-image-full` | Default full TanoWrt image with base packages |
+| `tanowrt-image-base` | TanoWrt base image                            |
+| `tanowrt-image-full` | TanoWrt full featured image (recommended)     |
 
 ## Prerequisites
 

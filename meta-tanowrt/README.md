@@ -28,6 +28,13 @@ This layer supports the following machines designed to run in QEMU:
 | `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (16 MiB)  |
 | `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (16 MiB)  |
 
+## Supported Images
+
+| Recipe               | Image                                       |
+| -------------------- | ------------------------------------------- |
+| `tanowrt-image-base` | TanoWrt base image                          |
+| `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
+
 ## Prerequisites
 
 Follow the instructions outlined in "[Prerequisites](../README.md#Prerequisites)" section of the root README.md.
