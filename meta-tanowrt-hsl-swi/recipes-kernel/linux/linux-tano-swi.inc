@@ -11,6 +11,7 @@ PR_append = ".0"
 COMPATIBLE_MACHINE = "(swi-mdm9x28)"
 
 KERNEL_MACHINE_INCLUDE_mangoh-green-wp7607 ?= "recipes-kernel/linux/linux-tano-swi-mangoh-green-wp7607.inc"
+KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-swi-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 inherit android-signing
