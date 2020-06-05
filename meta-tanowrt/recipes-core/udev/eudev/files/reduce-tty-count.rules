@@ -1,0 +1,2 @@
+# This will get rid of tty device files numbered 20 and above
+KERNEL=="tty[2-9][0-9]", RUN="/bin/rm /dev/%k", OPTIONS+="ignore_device"
