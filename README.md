@@ -5,9 +5,9 @@
 
 This repository contains OpenEmbedded layers of TanoWrt Linux distribution by Tano Systems.
 
-## Prerequisites
+## 1 Prerequisites
 
-### Install Required Packages
+### 1.1 Install Required Packages
 
 Install the required packages by executing the following commands depending on your distribution:
 - Ubuntu or Debian
@@ -46,7 +46,7 @@ Install the required packages by executing the following commands depending on y
          which SDL-devel xterm
     ```
 
-### Configure Default System Shell
+### 1.2 Configure Default System Shell
 
 *Only for Ubuntu*
 
@@ -58,7 +58,7 @@ sudo dpkg-reconfigure dash
 
 Select `No` when it asks you to install dash as `/bin/sh`.
 
-### Install Repo Tool
+### 1.3 Install Repo Tool
 
 ```shell
 mkdir -p ~/bin
@@ -69,7 +69,7 @@ chmod a+x ~/bin/repo
 
 More detailed information about installing repo tool can be founded [here](https://gerrit.googlesource.com/git-repo).
 
-## Supported Hardware
+## 2 Supported Hardware
 
 TanoWrt Linux distribution core layer, located in `meta-tanowrt` subdirectory of this repository, supports only machines designed to run in QEMU.
 
@@ -89,20 +89,20 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 [meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
 [meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
 
-## Access
+## 3 Access
 
 The following credentials are used by default to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## Limitations
+## 4 Limitations
 
 Works with OE Release 2.7 (Warrior).
 
-## License
+## 5 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## Maintainers
+## 6 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>

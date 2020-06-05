@@ -2,7 +2,7 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Sierra Wireless LTE modules.
 
-## Supported Modules
+## 1 Supported Modules
 
 <p align="middle">
 <img src="docs/wp7607.jpg?raw=true" width="500px" /> <img src="docs/sierra-logo.png?raw=true" width="250px" />
@@ -16,7 +16,7 @@
 Support for the following modules is planned:
 - Sierra Wireless AirPrime [WP7702](https://www.sierrawireless.com/products-and-solutions/embedded-solutions/products/wp7702/) LPWA module.
 
-## Supported Carrier Boards
+## 2 Supported Carrier Boards
 
 | `MACHINE`             | Board(s)                                                                                                                                                                                                                                                                      |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -26,18 +26,18 @@ In the near future it is planned to implement support for the following carrier 
 - [mangOH Red](https://mangoh.io/mangoh-red);
 - [mangOH Yellow](https://mangoh.io/mangoh-yellow).
 
-## Supported Images
+## 3 Supported Images
 
 | Image (recipe)       | Description                                   |
 | -------------------- | --------------------------------------------- |
 | `tanowrt-image-base` | TanoWrt base image                            |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)     |
 
-## Prerequisites
+## 4 Prerequisites
 
-Follow the instructions outlined in "[Prerequisites](../README.md#Prerequisites)" section of the root README.md.
+Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
-### Install swiflash command line tool
+### 4.1 Install swiflash command line tool
 
 This utility is required for writing (flashing) CWE (SPK) image to the device.
 
@@ -50,7 +50,7 @@ sudo apt-get install /tmp/swiflash_latest.deb
 
 To install the tool on other systems, follow the instructions outlined [here](https://source.sierrawireless.com/resources/airprime/software/swiflash/).
 
-## Initialize Repositories
+## 5 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
 
@@ -73,7 +73,7 @@ Synchronize all repositories by executing a command:
 repo sync
 ```
 
-## Initialize Build Environment
+## 6 Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
 
@@ -118,7 +118,7 @@ If the `build` subdirectory with configuration has already been created, this co
 
 After executing `oe-init-build-env` script, the current directory will be automatically changed to `build` subdirectory of the working directory. Any build commands must be always run from the `build` subdirectory.
 
-## Building
+## 7 Building
 
 To build images for required device run following command:
 
@@ -126,7 +126,7 @@ To build images for required device run following command:
 MACHINE=<MACHINE> bitbake <imagename>
 ```
 
-Where `<MACHINE>` should be replaced by one of the [supported machine](#supported-carrier-boards), and `<imagename>` by one of the [supported images](#supported-images).
+Where `<MACHINE>` should be replaced by one of the [supported machine](#2-supported-carrier-boards), and `<imagename>` by one of the [supported images](#3-supported-images).
 
 For example, to build `tanowrt-image-full` image for mangOH Green with WP7607 (or WP7607-1) module run following command:
 
@@ -149,17 +149,17 @@ When the build is complete, the following CWE and SPK images are generated, loca
 
 Where `<imagename>` is replaced by the name of the image built, and `<MACHINE>` is replaced by `MACHINE` value. For example, if the `tanowrt-image-full` image was built for `mangoh-green-wp7607` machine, then image `<imagename>-<MACHINE>.wp76xx.spk` will be named `tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk`.
 
-## Running on Hardware
+## 8 Running on Hardware
 
-### mangOH Green (`mangoh-green-wp7607`)
+### 8.1 mangOH Green (`mangoh-green-wp7607`)
 
 <p align="middle">
 <img src="docs/mangoh-green.png?raw=true" width="500px" /> <img src="docs/mangoh-logo.png?raw=true" width="200px" />
 </p>
 
-#### Flashing Image to Device
+#### 8.1.2 Flashing Image to Device
 
-Note that when flashing the `<imagename>-<MACHINE>.wp76xx.spk` images (see "[Building](#building)" section), user data in overlayfs are not cleared. This allows flashing of a new system while keeping the user configuration. However, it can also cause issues with the new firmware as it may not update some important files. See "[Used Flash Partitions](#used-flash-partitions)" section for extra information about clearing overlayfs data.
+Note that when flashing the `<imagename>-<MACHINE>.wp76xx.spk` images (see "[Building](#7-building)" section), user data in overlayfs are not cleared. This allows flashing of a new system while keeping the user configuration. However, it can also cause issues with the new firmware as it may not update some important files. See "[Used Flash Partitions](#11-used-flash-partitions)" section for extra information about clearing overlayfs data.
 
 To write the builded image to the device, follow these steps:
 
@@ -167,7 +167,7 @@ To write the builded image to the device, follow these steps:
 2.  Turn SW401-7 (TP1_BOOT) DIP switch to ON state.
 3.  Connect mangOH Green board with your PC via micro-USB cable (connector CN311).
 4.  Power on mangOH Green board.
-5.  Run the [swiflash](#install-swiflash-command-line-tool) utility on your PC as follows:
+5.  Run the [swiflash](#4-1-install-swiflash-command-line-tool) utility on your PC as follows:
 
     ```shell
     swiflash -m wp76xx -i <path-to-image> -p <port>
@@ -191,7 +191,7 @@ To write the builded image to the device, follow these steps:
 9.  Power on mangOH Green board.
 10. Flashed system will be booting.
 
-#### Booting
+#### 8.1.3 Booting
 
 At startup, the bootloader and Linux kernel log messages are outputed to the serial port UART2 (RS232 DB9 connector CN700 on board) with the following parameters:
 
@@ -201,9 +201,9 @@ At startup, the bootloader and Linux kernel log messages are outputed to the ser
 - Parity: none
 - Flow control: none
 
-When the system boot is complete, a terminal will be accessible on the UART2 port. For login use credentials described in the "[Access](#access)" section.
+When the system boot is complete, a terminal will be accessible on the UART2 port. For login use credentials described in the "[Access](#12-access)" section.
 
-## Default Network Configuration
+## 9 Default Network Configuration
 
 By default configured and enabled only `eth0` interface with static IPv4 address 192.168.10.1 with enabled DHCP server on it.
 
@@ -211,12 +211,12 @@ The web-configuration interface can be accessed via `eth0` interface through HTT
 
 <img src="docs/luci-overview.png?raw=true" width="100%">
 
-Modem data connection interface `3g-modem` disabled by default. You need to manually [configure](#setup-modem-data-connection) it for enabling (see next section).
+Modem data connection interface `3g-modem` disabled by default. You need to manually [configure](#10-setup-modem-data-connection) it for enabling (see next section).
 
-## Setting Up a Modem Data Connection
+## 10 Setting Up a Modem Data Connection
 
 1.  Connect the mangOH Green board (connector CN1100) to your PC with ethernet cable (RJ45 connectors at both ends).
-2.  Go to the web interface (default IP is 192.168.10.1) of the mangOH Green board and login using credentials described in the "[Access](#access)" section.
+2.  Go to the web interface (default IP is 192.168.10.1) of the mangOH Green board and login using credentials described in the "[Access](#12-access)" section.
 3.  Go to network interfaces configuration page ("Network -> Interfaces" in main menu)
 4.  Click the "Edit" button on the "MODEM" interface line:
 
@@ -260,7 +260,7 @@ Modem data connection interface `3g-modem` disabled by default. You need to manu
 	![LuCI. New IPv4 upstream interface](docs/mdc-connected-ipv4-upstream.png)
 
 
-## Used Flash Partitions
+## 11 Used Flash Partitions
 
 Here is a list of used by system MTD partitions and their descriptions.
 
@@ -279,13 +279,13 @@ jffs2reset -r -y
 ```
 or over web-interface LuCI (see "Restore" section in "System -> Backup").
 
-## Access
+## 12 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## Limitations
+## 13 Limitations
 
 This layer has very little support for the modem hardware. Using this layer you can only set up a PPP connection using the internal modem AT command port. This is all the capabilities of this layer for using modem hardware.
 
@@ -305,7 +305,7 @@ For support more sophisticated features of the modem hardware, an additional `me
 
 Sources of `meta-tanowrt-hsl-swi-extras` layer cannot be published publicly due to Qualcomm Inc. and Sierra Wireless Inc. proprietary licenses restrictions but can be provided commercially. Please contact Tano Systems LLC for details.
 
-## Dependencies
+## 14 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -326,10 +326,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## License
+## 15 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## Maintainers
+## 16 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>

@@ -2,24 +2,24 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the NXP (Freescale) boards.
 
-## Supported Hardware
+## 1 Supported Hardware
 
 | `MACHINE`        | Board(s)                                                                                                           |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `nxp-ls1028ardb` | [NXP LS1028A RDB board](https://www.nxp.com/design/qoriq-developer-resources/ls1028a-development-board:LS1028ARDB) |
 
-## Supported Images
+## 2 Supported Images
 
 | Recipe               | Image                                       |
 | -------------------- | ------------------------------------------- |
 | `tanowrt-image-base` | TanoWrt base image                          |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
 
-## Prerequisites
+## 3 Prerequisites
 
-Follow the instructions outlined in "[Prerequisites](../README.md#Prerequisites)" section of the root README.md.
+Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
-## Initialize Repositories
+## 4 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
 ```shell
@@ -39,7 +39,7 @@ Synchronize all repositories by executing a command:
 repo sync
 ```
 
-## Initialize Build Environment
+## 5 Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
 ```shell
@@ -81,7 +81,7 @@ If the `build` subdirectory with configuration has already been created, this co
 
 After executing `oe-init-build-env` script, the current directory will be automatically changed to `build` subdirectory of the working directory. Any build commands must be always run from the `build` subdirectory.
 
-## Freescale EULA
+## 6 Freescale EULA
 
 To build any images with this layer you need to read and accept the Freescale EULA located in the `EULA` file at the root of the `meta-freescale` layer (`~/tanowrt/meta-freescale/EULA`).
 
@@ -91,7 +91,7 @@ If you accept the Freescale EULA, you must manually add the following line to `l
 ACCEPT_FSL_EULA = "1"
 ```
 
-## Building
+## 7 Building
 
 Build SD card image for NXP LS1028A RDB board as an example:
 
@@ -104,17 +104,17 @@ When the build is complete, the SD card image file will be located in folder
 ./tanowrt-glibc/deploy/images/nxp-ls1028ardb/tanowrt-image-full-nxp-ls1028ardb.sdcard.img
 ```
 
-All images supported by this layer are listed in the "[Supported Images](#Supported-Images)" section.
+All images supported by this layer are listed in the "[Supported Images](#2-Supported-Images)" section.
 
-Other available machines are listed in the "[Supported Hardware](#Supported-Hardware)" section.
+Other available machines are listed in the "[Supported Hardware](#1-Supported-Hardware)" section.
 
-## Running on Hardware
+## 8 Running on Hardware
 
-### LS1028A RDB Board (`nxp-ls1028ardb`)
+### 8.1 LS1028A RDB Board (`nxp-ls1028ardb`)
 
 ![LS1028ARDB](docs/ls1028ardb-front.jpg)
 
-#### Write Bootable SD Card
+#### 8.1.1 Write Bootable SD Card
 
 Go to the deploy directory:
 
@@ -128,7 +128,7 @@ Use the `dd` utility to write the generated `.sdcard.img` image to the SD card (
 dd if=tanowrt-image-full-nxp-ls1028ardb.sdcard.img of=dev/mmcblk0 bs=512
 ```
 
-#### Prepare Hardware
+#### 8.1.2 Prepare Hardware
 
 Set the DIP switches on the board as follows ('0' is OFF, '1' is ON):
 
@@ -140,11 +140,11 @@ Set the DIP switches on the board as follows ('0' is OFF, '1' is ON):
 
 <img src="docs/ls1028ardb-dip-switches-sd-boot.jpg?raw=true" width="400">
 
-#### Booting
+#### 8.1.3 Booting
 
-Insert the prepared SD card into the slot on the LS1028A RDB board and turn it on. You can access to the system console over UART1 port. For login use credentials specified in "[Access](#Access)" section.
+Insert the prepared SD card into the slot on the LS1028A RDB board and turn it on. You can access to the system console over UART1 port. For login use credentials specified in "[Access](#9-Access)" section.
 
-#### Default Network Configuration
+#### 8.1.4 Default Network Configuration
 
 <img src="docs/ls1028ardb-network-ports.png?raw=true" width="100%">
 
@@ -156,13 +156,13 @@ The web-configuration interface can be accessed via any of the SWP0–3 ports th
 
 The network port MAC0 (interface `eno0`) is a separate network interface included in the WAN firewall zone with enabled translation (NAT) from LAN zone. The IP address of the `eno0` interface is also configured with a DHCP client. A firewall with blocking rules for incoming traffic is enabled on the `eno0` interface. Therefore, there is no access to the web configuration interface through this interface.
 
-## Access
+## 9 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## Dependencies
+## 10 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -174,10 +174,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## License
+## 11 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## Maintainers
+## 12 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>

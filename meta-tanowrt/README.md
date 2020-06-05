@@ -15,7 +15,7 @@ This layer is initially based on a OE metadata layer for OpenWrt by [Khem Raj](h
 
 Most OpenWrt packages corresponds to OpenWrt 19.07 or higher.
 
-## Supported QEMU Machines
+## 1 Supported QEMU Machines
 
 This layer supports the following machines designed to run in QEMU:
 
@@ -28,18 +28,18 @@ This layer supports the following machines designed to run in QEMU:
 | `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (16 MiB)  |
 | `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (16 MiB)  |
 
-## Supported Images
+## 2 Supported Images
 
 | Recipe               | Image                                       |
 | -------------------- | ------------------------------------------- |
 | `tanowrt-image-base` | TanoWrt base image                          |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
 
-## Prerequisites
+## 3 Prerequisites
 
-Follow the instructions outlined in "[Prerequisites](../README.md#Prerequisites)" section of the root README.md.
+Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
-## Initialize Repositories
+## 4 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
 ```shell
@@ -59,7 +59,7 @@ Synchronize all repositories by executing a command:
 repo sync
 ```
 
-## Initialize Build Environment
+## 5 Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
 ```shell
@@ -107,22 +107,22 @@ Below we build for `qemux86-64` machine as an example:
 MACHINE=qemux86-64 bitbake tanowrt-image-full
 ```
 
-Other available machines are listed in the section "[Supported QEMU Machines](#Supported-QEMU-Machines)".
+Other available machines are listed in the section "[Supported QEMU Machines](#1-Supported-QEMU-Machines)".
 
-## Running
+## 6 Running
 
-### QEMU
+### 6.1 QEMU
 
 Run command:
 ```shell
 runqemu qemux86-64
 ```
 
-### Oracle VirtualBox
+### 6.2 Oracle VirtualBox
 
 You can run builded images for x86 machines (32 or 64-bit) in Oracle VirtualBox following this [instruction](docs/virtualbox.md).
 
-## Dependencies
+## 7 Dependencies
 
 This layer depends on:
 
@@ -152,10 +152,10 @@ This layer depends on:
 
 The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
 
-## License
+## 8 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## Maintainers
+## 9 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>

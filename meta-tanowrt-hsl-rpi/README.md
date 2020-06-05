@@ -2,24 +2,24 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Raspberry Pi boards.
 
-## Supported Hardware
+## 1 Supported Hardware
 
 | `MACHINE` | Board(s)                   |
 | --------- | -------------------------- |
 | `rpi3`    | Raspberry Pi 3 Model B/B+  |
 
-## Supported Images
+## 2 Supported Images
 
 | Recipe               | Image                                       |
 | -------------------- | ------------------------------------------- |
 | `tanowrt-image-base` | TanoWrt base image                          |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
 
-## Prerequisites
+## 3 Prerequisites
 
-Follow the instructions outlined in "[Prerequisites](../README.md#Prerequisites)" section of the root README.md.
+Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
-## Initialize Repositories
+## 4 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
 ```shell
@@ -39,7 +39,7 @@ Synchronize all repositories by executing a command:
 repo sync
 ```
 
-## Initialize Build Environment
+## 5 Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
 ```shell
@@ -81,7 +81,7 @@ If the `build` subdirectory with configuration has already been created, this co
 
 After executing `oe-init-build-env` script, the current directory will be automatically changed to `build` subdirectory of the working directory. Any build commands must be always run from the `build` subdirectory.
 
-## Building
+## 6 Building
 
 Build SD card image for Raspberry Pi 3 Model B or B+ board as an example:
 
@@ -94,13 +94,13 @@ When the build is complete, the SD card image file will be located in folder
 ./tanowrt-glibc/deploy/images/rpi3/tanowrt-image-full-rpi3.sdcard.img
 ```
 
-All images supported by this layer are listed in the "[Supported Images](#Supported-Images)" section.
+All images supported by this layer are listed in the "[Supported Images](#2-Supported-Images)" section.
 
-Other available machines are listed in the "[Supported Hardware](#Supported-Hardware)" section.
+Other available machines are listed in the "[Supported Hardware](#1-Supported-Hardware)" section.
 
-## Running on Hardware
+## 7 Running on Hardware
 
-### Write Bootable SD Card
+### 7.1 Write Bootable SD Card
 
 Go to the deploy directory:
 
@@ -114,17 +114,17 @@ Use the `dd` utility to write the generated `.sdcard.img` image to the SD card (
 dd if=tanowrt-image-full-rpi3.sdcard.img of=dev/mmcblk0 bs=512
 ```
 
-### Booting
+### 7.2 Booting
 
-Insert the prepared SD card into the slot on the Raspberry Pi board and turn it on. For login use credentials specified in "[Access](#Access)" section.
+Insert the prepared SD card into the slot on the Raspberry Pi board and turn it on. For login use credentials specified in "[Access](#8-Access)" section.
 
-## Access
+## 8 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## Dependencies
+## 9 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -136,10 +136,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## License
+## 10 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## Maintainers
+## 11 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
