@@ -1,0 +1,27 @@
+From 1fbeb7df06d36e98a2c03ecaaa0817733b425c09 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 9 Jun 2020 03:00:46 +0300
+Subject: [PATCH] Fix compilation error
+
+Fixes: f62a52b ("treewide: replace unsafe string functions")
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ iptables.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/iptables.c b/iptables.c
+index e7e8b59..9e8fa74 100644
+--- a/iptables.c
++++ b/iptables.c
+@@ -1208,7 +1208,7 @@ fw3_ipt_rule_time(struct fw3_ipt_rule *r, struct fw3_time *time)
+ 					rem--;
+ 				}
+ 
+-				p += snprintf(p, rem, "%u", i);
++				len = snprintf(p, rem, "%u", i);
+ 
+ 				if (len < 0 || len >= rem)
+ 					break;
+-- 
+2.16.2.windows.1
+

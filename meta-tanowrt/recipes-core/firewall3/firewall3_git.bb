@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano22"
+PR = "tano23"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -20,6 +20,8 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git \
            file://firewall.user \
 "
 
+SRC_URI += "file://0001-Fix-compilation-error.patch"
+
 # Kernel dependencies and module autoloading
 inherit kmod/ipt-core
 inherit kmod/ipt-conntrack ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kmod/nf-conntrack6', '', d)}
@@ -27,9 +29,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 13.03.2020
-# firewall3: defaults: fix uci flow_offloading option
-SRCREV = "f87d0b0f607420424cfcb4ff5a376d7659fa5b6b"
+# 07.05.2020
+# redirects: fix segmentation fault
+SRCREV = "050816af322f0a8ed8dd04d620f42cb3d0a1ac06"
 
 S = "${WORKDIR}/git"
 
