@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "1"
+INC_PR = "2"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 EXTRA_OEMAKE += "\
@@ -94,4 +94,5 @@ FILES_${PN}_append = "\
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/dhcp \
 	${sysconfdir}/dnsmasq.conf \
+	${sysconfdir}/dnsmasq.d/ \
 "
