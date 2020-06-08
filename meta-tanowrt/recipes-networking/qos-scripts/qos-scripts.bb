@@ -6,7 +6,7 @@
 # entries.
 #
 PV = "1.3.1"
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "QoS scripts"
 LICENSE = "GPLv2"
