@@ -1,4 +1,4 @@
-From b869693c6af9516681e0c5662f2e43ec42c2a2db Mon Sep 17 00:00:00 2001
+From 8e2ce0e4e88522f74eee310a18e99273998973f4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:03:57 +0300
 Subject: [PATCH 07/11] block: Add log message for unmounted device
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/block.c b/block.c
-index 41997e6..7ed283d 100644
+index 4e348a0..0417ab4 100644
 --- a/block.c
 +++ b/block.c
-@@ -1101,7 +1101,7 @@ static int mount_device(struct device *dev, int type)
+@@ -1033,7 +1033,7 @@ static int mount_device(struct probe_info *pr, int type)
  	mp = find_mount_point(pr->dev);
  	if (mp) {
  		if (m && m->type == TYPE_MOUNT && strcmp(m->target, mp)) {
@@ -21,7 +21,7 @@ index 41997e6..7ed283d 100644
  			err = -1;
  		} else
  			err = 0;
-@@ -1171,6 +1171,8 @@ static int mount_device(struct device *dev, int type)
+@@ -1105,6 +1105,8 @@ static int mount_device(struct probe_info *pr, int type)
  		ULOG_ERR("mounting %s (%s) as %s failed (%d) - %m\n",
  				pr->dev, pr->type, target, errno);
  		return err;
@@ -30,7 +30,7 @@ index 41997e6..7ed283d 100644
  	}
  
  	handle_swapfiles(true);
-@@ -1200,7 +1202,7 @@ static int umount_device(char *path, int type, bool all)
+@@ -1134,7 +1136,7 @@ static int umount_device(char *path, int type, bool all)
  		ULOG_ERR("unmounting %s (%s) failed (%d) - %m\n", path, mp,
  			 errno);
  	} else {
@@ -40,5 +40,5 @@ index 41997e6..7ed283d 100644
  	}
  
 -- 
-2.25.0.windows.1
+2.16.2.windows.1
 

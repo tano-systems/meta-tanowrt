@@ -1,4 +1,4 @@
-From 8de146dba9fb81ef1c2f53ef8fa542063472d851 Mon Sep 17 00:00:00 2001
+From 1dc86558c7758b0a992283f35a8f4bb1fb16b91c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Mar 2020 19:32:16 +0300
 Subject: [PATCH 2/2] block: Deny access to unacessible mtd devices
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/block.c b/block.c
-index 8d77086..b5afa72 100644
+index c8c5fde..87ba94d 100644
 --- a/block.c
 +++ b/block.c
-@@ -511,6 +511,23 @@ static int _cache_load(const char *path)
+@@ -500,13 +500,29 @@ static int _cache_load(const char *path)
  		return -1;
  
  	for (j = 0; j < gl.gl_pathc; j++) {
@@ -34,9 +34,8 @@ index 8d77086..b5afa72 100644
 +		    continue;
 +
  		struct probe_info *pr = _probe_path(gl.gl_pathv[j]);
- 		if (pr) {
- 			dev = malloc(sizeof(struct device));
-@@ -522,7 +539,6 @@ static int _cache_load(const char *path)
+ 		if (pr)
+ 			list_add_tail(&pr->list, &devices);
  	}
  
  	globfree(&gl);

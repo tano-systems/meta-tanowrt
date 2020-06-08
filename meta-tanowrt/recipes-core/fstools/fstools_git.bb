@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano27"
+PR = "tano28"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -48,9 +48,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 04.01.2020
-# fstools: Add support to read-only MTD partitions (eg. recovery images)
-SRCREV = "f5c7c1813f52e6d7b59ecfb2f9f95e69b05b1980"
+# 12.05.2020
+# blockd: fix segfault triggered by non-autofs mounts
+SRCREV = "84269037b75de93bdd4ea75b7f50ba77ba976377"
 
 S = "${WORKDIR}/git"
 

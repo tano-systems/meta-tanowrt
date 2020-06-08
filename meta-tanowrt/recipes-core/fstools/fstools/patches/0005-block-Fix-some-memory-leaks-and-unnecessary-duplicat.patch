@@ -1,4 +1,4 @@
-From 146326dc439702382a1947caabe832d9bd84bf86 Mon Sep 17 00:00:00 2001
+From 8f7eafbbcb9a853bc4d2252ab07dfd93cef4aa3c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 15 Nov 2018 16:23:23 +0300
 Subject: [PATCH 05/11] block: Fix some memory leaks and unnecessary duplicate
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/block.c b/block.c
-index 5606772..41997e6 100644
+index e2ab381..4e348a0 100644
 --- a/block.c
 +++ b/block.c
-@@ -1109,6 +1109,17 @@ static int mount_device(struct device *dev, int type)
+@@ -1041,6 +1041,17 @@ static int mount_device(struct probe_info *pr, int type)
  		return err;
  	}
  
@@ -29,8 +29,8 @@ index 5606772..41997e6 100644
 +		free(mp);
 +
  	if (type == TYPE_HOTPLUG)
- 		blockd_notify(device, m, pr);
+ 		blockd_notify("hotplug", device, m, pr);
  
 -- 
-2.25.0.windows.1
+2.16.2.windows.1
 
