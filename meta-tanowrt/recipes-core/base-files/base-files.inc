@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-# 03.03.2020
-# base-files: Add /etc/shinit for non-login shell init
-OPENWRT_SRCREV = "12020f8a95d21547bd7d7fd1fef9cdecf2892803"
+# 24.04.2020
+# base-files: prevent issues w/ overlay on powerloss after sysupgrade
+OPENWRT_SRCREV = "880c1f0336616b0b5692ff284f83923011c548f2"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "14"
+INC_PR = "15"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "

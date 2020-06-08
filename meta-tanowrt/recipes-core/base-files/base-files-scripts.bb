@@ -43,6 +43,7 @@ do_install_append () {
 	install -Dm 0755 ${WORKDIR}/files-sysupgrade/sbin/firstboot ${D}/sbin/firstboot
 
 	install -dm 0755 ${D}/lib/upgrade
+	install -m 0755 ${WORKDIR}/files-sysupgrade/lib/upgrade/do_stage2 ${D}/lib/upgrade
 	install -m 0755 ${WORKDIR}/files-sysupgrade/lib/upgrade/stage2 ${D}/lib/upgrade
 	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/common.sh ${D}/lib/upgrade
 	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/fwtool.sh ${D}/lib/upgrade
