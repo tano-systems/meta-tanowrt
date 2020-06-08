@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano28"
+PR = "tano29"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -35,9 +35,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 01.01.2020
-# move resolv.conf.auto to /tmp/resolv.conf.d/
-SRCREV_netifd = "64f4eb79fe2977320660f8940bc908fa4def807b"
+# 11.03.2020
+# system-linux: improve handling of device rename
+SRCREV_netifd = "51e9fb8151e8f2c16ac1400bf4d64147ee7e8f5a"
 
 S = "${WORKDIR}/git"
 
