@@ -8,15 +8,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano13"
+PR = "tano14"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 29.01.2020
-# iwinfo: add device id for Atheros AR9287
-SRCREV = "bb216982951698833bbdf4a88872e9b5ccd026a5"
+# 06.04.2020
+# iwinfo: add device id for Mikrotik R11e-5HacD miniPCIe card
+SRCREV = "2faa20e5e9d107b97e393a4eb458370e80b4d720"
 
 inherit tanowrt pkgconfig
 
