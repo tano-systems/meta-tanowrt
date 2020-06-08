@@ -1,10 +1,10 @@
-# This file Copyright (c) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (c) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
 HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano7"
+INC_PR = "tano8"
 
 inherit pkgconfig
 
@@ -12,8 +12,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/hostapd:${THISDIR}/hostapd/patches:${THIS
 
 SRC_URI = "git://w1.fi/hostap.git"
 
-# 2019-08-08
-SRCREV = "ca8c2bd28ad53f431d6ee60ef754e98cfdb4c17b"
+# 2020-05-20
+SRCREV = "dd2daf0848ed8854065cc5cfca07a0538cd380af"
 
 PV = "2.9+git${SRCPV}"
 
@@ -30,6 +30,7 @@ SRC_URI += "\
 	file://hostapd.hotplug \
 	file://wps-hotplug.sh \
 	file://multicall.c \
+	file://wpad.init \
 "
 
 # Sources
@@ -52,10 +53,6 @@ SRC_URI += "\
 	file://015-mesh-do-not-use-offchan-mgmt-tx-on-DFS.patch \
 	file://016-mesh-fix-channel-switch-error-during-CAC.patch \
 	file://018-mesh-make-forwarding-configurable.patch \
-	file://051-wpa_supplicant-fix-race-condition-in-mesh-mpm-new-pe.patch \
-	file://067-0001-AP-Silently-ignore-management-frame-from-unexpected-.patch \
-	file://070-driver_nl80211-fix-WMM-queue-mapping-for-regulatory-.patch \
-	file://071-driver_nl80211-fix-regulatory-limits-for-wmm-cwmin-c.patch \
 	file://100-daemonize_fix.patch \
 	file://200-multicall.patch \
 	file://300-noscan.patch \

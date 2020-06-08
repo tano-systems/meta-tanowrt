@@ -1,4 +1,4 @@
-# This file Copyright (c) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (c) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
 require hostapd.inc
 
@@ -6,7 +6,7 @@ SUMMARY = "User space daemon for extended IEEE 802.11 management"
 DEPENDS = "libnl openssl libubus libubox"
 SECTION = "kernel/userland"
 
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.3"
 
 PROVIDES += "wpa-supplicant wpad"
 RPROVIDES_${PN} += "wpa-supplicant wpad"
@@ -29,12 +29,14 @@ do_install() {
 	install -d ${D}${sbindir}
 	install -d ${D}${base_libdir}/netifd
 	install -d ${D}${sysconfdir}/rc.button
+	install -d ${D}${sysconfdir}/init.d
 	install -d ${D}${sysconfdir}/hotplug.d/ieee80211
 
 	# wpad
 	install -m 0755 ${B}/wpad ${D}${sbindir}/wpad
 	ln -s wpad ${D}${sbindir}/hostapd
 	ln -s wpad ${D}${sbindir}/wpa_supplicant
+	install -m 0755 ${WORKDIR}/wpad.init ${D}${sysconfdir}/init.d/wpad
 
 	# hostapd-common
 	install -m 0644 ${WORKDIR}/hostapd.sh ${D}${base_libdir}/netifd/hostapd.sh
