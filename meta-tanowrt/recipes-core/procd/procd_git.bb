@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano36"
+PR = "tano37"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -36,6 +36,7 @@ SRC_URI += "\
 	file://0010-inittab-Handle-multiple-consoles-in-proc-cmdline.patch \
 	file://0011-instance-Fix-64-bit-compilation-issues.patch \
 	file://0012-system-Add-tm_gmtoff-to-system.info-ubus-call.patch \
+	file://0013-system-Handle-DISTRIB_TIMESTAMP-in-etc-openwrt_relea.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 
@@ -48,9 +49,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 19.01.2020
-# instance: Fix instance_config_move_strdup() function
-SRCREV = "0a11aa405d3fbe970458d1cc154970e817826616"
+# 20.05.2020
+# jail: handle containers seperately
+SRCREV = "b9b39e2061d7035a9d84eecbb4a4613deaf6d03f"
 
 S = "${WORKDIR}/git"
 

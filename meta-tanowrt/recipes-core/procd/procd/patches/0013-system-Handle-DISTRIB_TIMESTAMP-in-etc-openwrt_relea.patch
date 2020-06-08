@@ -1,0 +1,27 @@
+From d51712f4c8cab9eb76c54afbea183c7ecfaf6c2a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 6 Apr 2020 06:17:15 +0300
+Subject: [PATCH 13/13] system: Handle DISTRIB_TIMESTAMP in
+ /etc/openwrt_release
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ system.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/system.c b/system.c
+index 94fb995..6d0ad2e 100644
+--- a/system.c
++++ b/system.c
+@@ -185,6 +185,8 @@ static int system_board(struct ubus_context *ctx, struct ubus_object *obj,
+ 				key = "target";
+ 			else if (!strcasecmp(key, "DISTRIB_DESCRIPTION"))
+ 				key = "description";
++			else if (!strcasecmp(key, "DISTRIB_TIMESTAMP"))
++				key = "timestamp";
+ 			else
+ 				continue;
+ 
+-- 
+2.16.2.windows.1
+

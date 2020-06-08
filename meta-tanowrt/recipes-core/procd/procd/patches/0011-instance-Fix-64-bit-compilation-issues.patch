@@ -1,7 +1,7 @@
-From e7f6b886b2851f5cbba2a7b2e5ba5dbb2835ed6f Mon Sep 17 00:00:00 2001
+From 6ded59a49358237e028526f67b5bf7f64e3820e8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:14:48 +0300
-Subject: [PATCH 11/12] instance: Fix 64-bit compilation issues
+Subject: [PATCH 11/13] instance: Fix 64-bit compilation issues
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index d087a13..443d934 100644
+index 8b38b11..783652b 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -28,6 +28,7 @@
@@ -20,7 +20,7 @@ index d087a13..443d934 100644
  
  #define SYSLOG_NAMES
  #include <syslog.h>
-@@ -621,11 +622,11 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -669,11 +670,11 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  			attr.sched_runtime = in->runtime;
  			attr.sched_deadline = in->deadline;
  			attr.sched_period = in->period;

@@ -1,7 +1,7 @@
-From 2b4ad14a6c37e67552083e0bccb8b5068d39a036 Mon Sep 17 00:00:00 2001
+From de9c6c7a4e5febd9faab1419316e346da048e29e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
-Subject: [PATCH 07/12] rcS: Add psplash support
+Subject: [PATCH 07/13] rcS: Add psplash support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0c47857..bfb1bc4 100644
+index 58b7751..5cbeff8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -33,6 +33,13 @@ FIND_LIBRARY(json NAMES json-c json)

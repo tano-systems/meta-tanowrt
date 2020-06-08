@@ -1,18 +1,18 @@
-From e8818ce935cf467c9f85a819288100ea3245315b Mon Sep 17 00:00:00 2001
+From 307e6c90e16d1b840c823f93d8dc743531e4bd20 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 19 Feb 2019 02:41:23 +0300
-Subject: [PATCH 03/12] service: Allow to configure scheduler attributes
+Subject: [PATCH 03/13] service: Allow to configure scheduler attributes
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- service/instance.c       | 178 +++++++++++++++++++++++++++++++++++++++++++++--
+ service/instance.c       | 177 ++++++++++++++++++++++++++++++++++++++++++++++-
  service/instance.h       |   5 ++
  service/instance_sched.h |  92 ++++++++++++++++++++++++
- 3 files changed, 271 insertions(+), 4 deletions(-)
+ 3 files changed, 271 insertions(+), 3 deletions(-)
  create mode 100644 service/instance_sched.h
 
 diff --git a/service/instance.c b/service/instance.c
-index 43d6bb0..f796528 100644
+index e692173..e71f666 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -27,6 +27,8 @@
@@ -24,16 +24,15 @@ index 43d6bb0..f796528 100644
  #define SYSLOG_NAMES
  #include <syslog.h>
  
-@@ -51,7 +53,7 @@
+@@ -51,6 +53,7 @@
  
  #include "service.h"
  #include "instance.h"
--
 +#include "instance_sched.h"
  
- enum {
- 	INSTANCE_ATTR_COMMAND,
-@@ -61,7 +63,12 @@ enum {
+ #define UJAIL_BIN_PATH "/sbin/ujail"
+ 
+@@ -62,7 +65,12 @@ enum {
  	INSTANCE_ATTR_FILE,
  	INSTANCE_ATTR_TRIGGER,
  	INSTANCE_ATTR_RESPAWN,
@@ -47,7 +46,7 @@ index 43d6bb0..f796528 100644
  	INSTANCE_ATTR_LIMITS,
  	INSTANCE_ATTR_WATCH,
  	INSTANCE_ATTR_ERROR,
-@@ -93,7 +100,12 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
+@@ -97,7 +105,12 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_FILE] = { "file", BLOBMSG_TYPE_ARRAY },
  	[INSTANCE_ATTR_TRIGGER] = { "triggers", BLOBMSG_TYPE_ARRAY },
  	[INSTANCE_ATTR_RESPAWN] = { "respawn", BLOBMSG_TYPE_ARRAY },
@@ -60,7 +59,7 @@ index 43d6bb0..f796528 100644
  	[INSTANCE_ATTR_LIMITS] = { "limits", BLOBMSG_TYPE_TABLE },
  	[INSTANCE_ATTR_WATCH] = { "watch", BLOBMSG_TYPE_ARRAY },
  	[INSTANCE_ATTR_ERROR] = { "error", BLOBMSG_TYPE_ARRAY },
-@@ -174,6 +186,44 @@ static const struct rlimit_name rlimit_names[] = {
+@@ -191,6 +204,44 @@ static const struct rlimit_name rlimit_names[] = {
  	{ NULL, 0 }
  };
  
@@ -105,7 +104,7 @@ index 43d6bb0..f796528 100644
  static void closefd(int fd)
  {
  	if (fd > STDERR_FILENO)
-@@ -533,14 +583,60 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -580,14 +631,60 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  {
  	struct blobmsg_list_node *var;
  	struct blob_attr *cur;
@@ -168,7 +167,7 @@ index 43d6bb0..f796528 100644
  
  	blobmsg_for_each_attr(cur, in->command, rem)
  		argc++;
-@@ -891,12 +987,27 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -1009,12 +1106,27 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (!blobmsg_list_equal(&in->file, &in_new->file))
  		return true;
  
@@ -196,7 +195,7 @@ index 43d6bb0..f796528 100644
  	if (string_changed(in->user, in_new->user))
  		return true;
  
-@@ -1170,12 +1281,34 @@ instance_config_parse(struct service_instance *in)
+@@ -1315,12 +1427,34 @@ instance_config_parse(struct service_instance *in)
  		}
  	}
  
@@ -231,7 +230,7 @@ index 43d6bb0..f796528 100644
  	if (tb[INSTANCE_ATTR_USER]) {
  		const char *user = blobmsg_get_string(tb[INSTANCE_ATTR_USER]);
  		struct passwd *p = getpwnam(user);
-@@ -1303,6 +1436,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1470,6 +1604,12 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	blobmsg_list_move(&in->errors, &in_src->errors);
  	blobmsg_list_move(&in->jail.mount, &in_src->jail.mount);
  	in->trigger = in_src->trigger;
@@ -244,10 +243,10 @@ index 43d6bb0..f796528 100644
  	in->command = in_src->command;
  	in->respawn = in_src->respawn;
  	in->respawn_retry = in_src->respawn_retry;
-@@ -1376,6 +1515,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
- 	in->proc.cb = instance_exit;
- 	in->term_timeout = 5;
+@@ -1548,6 +1688,12 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->syslog_facility = LOG_DAEMON;
+ 	in->exit_code = 0;
+ 	in->require_jail = false;
 +	in->policy = SCHED_OTHER;
 +	in->priority = 0;
 +	in->nice = 0;
@@ -257,7 +256,7 @@ index 43d6bb0..f796528 100644
  
  #ifdef CGROUP_SUPPORT
  	in->cg_sticky = 0;
-@@ -1499,6 +1644,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1693,6 +1839,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (verbose && in->trigger)
  		blobmsg_add_blob(b, in->trigger);
  
@@ -290,10 +289,10 @@ index 43d6bb0..f796528 100644
  		blobmsg_add_string(b, "chdir", in->chdir);
  
 diff --git a/service/instance.h b/service/instance.h
-index 503f892..b12f787 100644
+index 5167f13..4987807 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -39,7 +39,12 @@ struct service_instance {
+@@ -44,7 +44,12 @@ struct service_instance {
  	struct service *srv;
  	const char *name;
  
