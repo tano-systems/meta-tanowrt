@@ -21,7 +21,7 @@ pw_restore() {
 }
 
 pw_validate() {
-	local REGEX_LOGIN="[-_a-z]*"
+	local REGEX_LOGIN="[-_a-zA-Z0-9]*"
 	local REGEX_PASSWORD="[a-zA-Z0-9/.!*\$]*"
 	local REGEX_PATH="/[^:]*"
 	local REGEX_USER_INFO="[^:]*"
