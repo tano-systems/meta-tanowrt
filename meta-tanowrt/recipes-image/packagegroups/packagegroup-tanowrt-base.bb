@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -22,6 +22,7 @@ PACKAGES = "\
 	packagegroup-tanowrt-base-tools \
 	packagegroup-tanowrt-base-network \
 	packagegroup-tanowrt-base-machine \
+	packagegroup-tanowrt-base-distro \
 "
 
 # packagegroup-tanowrt-base
@@ -30,6 +31,7 @@ RDEPENDS_${PN} = "\
 	packagegroup-tanowrt-base-network \
 	packagegroup-tanowrt-base-tools \
 	packagegroup-tanowrt-base-machine \
+	packagegroup-tanowrt-base-distro \
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci ', '', d)} \
 	make-ext4fs \
 	eudev \
@@ -99,7 +101,18 @@ RDEPENDS_${PN}-network = "\
 	iproute2 \
 "
 
+#
+# packages added by machine
+#
 SUMMARY_packagegroup-tanowrt-base-machine = "${MACHINE} extras"
 SUMMARY_packagegroup-tanowrt-base-machine = "Extra packages required to fully support ${MACHINE} hardware"
 RDEPENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RDEPENDS}"
 RRECOMMENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RRECOMMENDS}"
+
+#
+# packages added by distribution
+#
+SUMMARY_packagegroup-tanowrt-base-distro = "${DISTRO} extras"
+DEPENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_DEPENDS}"
+RDEPENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RDEPENDS}"
+RRECOMMENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RRECOMMENDS}"

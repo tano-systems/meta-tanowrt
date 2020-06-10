@@ -4,7 +4,7 @@
 
 require recipes-image/images/tanowrt-image-base.bb
 
-PR_append = ".3"
+PR_append = ".4"
 SUMMARY = "TanoWrt full featured image"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -15,7 +15,6 @@ IMAGE_FEATURES += "\
 	ddns \
 	ftp \
 	openvpn \
-	ssh \
 	modem \
 	mqtt \
 	statistics \

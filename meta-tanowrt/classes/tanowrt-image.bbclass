@@ -9,7 +9,7 @@ inherit rootfs-rm-opkg-lists
 inherit rootfs-var-in-tmpfs
 inherit set-root-password
 
-IMAGE_FEATURES += "package-management"
+IMAGE_FEATURES += "package-management ssh-server-dropbear"
 
 # Disable runtime dependency on run-postinsts
 ROOTFS_BOOTSTRAP_INSTALL = ""
@@ -34,7 +34,6 @@ FEATURE_PACKAGES_mqtt = "packagegroup-tanowrt-mqtt"
 FEATURE_PACKAGES_openvpn = "packagegroup-tanowrt-openvpn"
 FEATURE_PACKAGES_perftools = "packagegroup-tanowrt-perftools"
 FEATURE_PACKAGES_snmp = "packagegroup-tanowrt-snmp"
-FEATURE_PACKAGES_ssh = "packagegroup-tanowrt-ssh"
 FEATURE_PACKAGES_statistics = "packagegroup-tanowrt-statistics"
 FEATURE_PACKAGES_stp = "packagegroup-tanowrt-stp"
 FEATURE_PACKAGES_watchdog = "packagegroup-tanowrt-watchdog"

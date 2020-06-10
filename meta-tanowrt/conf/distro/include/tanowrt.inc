@@ -76,6 +76,8 @@ LICENSE_DIRECTORY = "${DEPLOY_DIR}/licenses/${MACHINE_ARCH}"
 # Distro maintainer
 MAINTAINER = "TanoWrt Developers <https://github.com/tano-systems/meta-tanowrt>"
 
+DISTRO_EXTRA_RRECOMMENDS += "openssh-sftp-server"
+
 #
 # Dynamic includes
 #
