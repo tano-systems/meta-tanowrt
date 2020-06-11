@@ -4,7 +4,7 @@
 
 require base-files.inc
 
-PR = "tano5.${INC_PR}"
+PR = "tano6.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
@@ -26,8 +26,19 @@ PACKAGES = "\
 "
 
 # sysupgrade
-FILESEXTRAPATHS_prepend := ""
-SRC_URI += "file://files-sysupgrade/*"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-sysupgrade:"
+SRC_URI += "\
+	file://etc/sysupgrade.conf \
+	file://lib/upgrade/common.sh \
+	file://lib/upgrade/do_stage2 \
+	file://lib/upgrade/fwtool.sh \
+	file://lib/upgrade/keep.d \
+	file://lib/upgrade/nand.sh \
+	file://lib/upgrade/stage2 \
+	file://lib/upgrade/keep.d/base-files-essential \
+	file://sbin/firstboot \
+	file://sbin/sysupgrade \
+"
 
 do_install_append () {
 	install -dm 0755 ${D}${sysconfdir}/config
@@ -38,19 +49,19 @@ do_install_append () {
 	install -Dm 0755 ${SC}/bin/ipcalc.sh ${D}/bin/ipcalc.sh
 
 	# sysupgrade
-	install -Dm 0644 ${WORKDIR}/files-sysupgrade/etc/sysupgrade.conf ${D}/etc/sysupgrade.conf
-	install -Dm 0755 ${WORKDIR}/files-sysupgrade/sbin/sysupgrade ${D}/sbin/sysupgrade
-	install -Dm 0755 ${WORKDIR}/files-sysupgrade/sbin/firstboot ${D}/sbin/firstboot
+	install -Dm 0644 ${WORKDIR}/etc/sysupgrade.conf ${D}/etc/sysupgrade.conf
+	install -Dm 0755 ${WORKDIR}/sbin/sysupgrade ${D}/sbin/sysupgrade
+	install -Dm 0755 ${WORKDIR}/sbin/firstboot ${D}/sbin/firstboot
 
 	install -dm 0755 ${D}/lib/upgrade
-	install -m 0755 ${WORKDIR}/files-sysupgrade/lib/upgrade/do_stage2 ${D}/lib/upgrade
-	install -m 0755 ${WORKDIR}/files-sysupgrade/lib/upgrade/stage2 ${D}/lib/upgrade
-	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/common.sh ${D}/lib/upgrade
-	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/fwtool.sh ${D}/lib/upgrade
-	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/nand.sh ${D}/lib/upgrade
+	install -m 0755 ${WORKDIR}/lib/upgrade/do_stage2 ${D}/lib/upgrade
+	install -m 0755 ${WORKDIR}/lib/upgrade/stage2 ${D}/lib/upgrade
+	install -m 0644 ${WORKDIR}/lib/upgrade/common.sh ${D}/lib/upgrade
+	install -m 0644 ${WORKDIR}/lib/upgrade/fwtool.sh ${D}/lib/upgrade
+	install -m 0644 ${WORKDIR}/lib/upgrade/nand.sh ${D}/lib/upgrade
 
 	install -dm 0755 ${D}/lib/upgrade/keep.d
-	install -m 0644 ${WORKDIR}/files-sysupgrade/lib/upgrade/keep.d/base-files-essential ${D}/lib/upgrade/keep.d
+	install -m 0644 ${WORKDIR}/lib/upgrade/keep.d/base-files-essential ${D}/lib/upgrade/keep.d
 }
 
 FILES_${PN}-openwrt = "\
@@ -64,7 +75,7 @@ FILES_${PN}-openwrt = "\
 FILES_${PN}-sysupgrade = "\
                          /etc/sysupgrade.conf \
                          /sbin/sysupgrade \
-                         /lib/upgrade/* \
+                         /lib/upgrade/ \
                          /sbin/firstboot \
                          "
 
