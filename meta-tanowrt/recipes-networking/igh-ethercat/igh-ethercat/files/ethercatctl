@@ -1,0 +1,50 @@
+#!/bin/sh
+
+#------------------------------------------------------------------------------
+#
+#  Start script for EtherCAT to use with systemd
+#
+#  Copyright (C) 2006-2012  Florian Pose, Ingenieurgemeinschaft IgH
+#  Copyright (C) 2020  Anton Kikin, Tano Systems LLC
+#
+#  This file is part of the IgH EtherCAT Master.
+#
+#------------------------------------------------------------------------------
+
+case "${1}" in
+
+start)
+	/etc/init.d/ethercat start
+	exit $?
+	;;
+
+#------------------------------------------------------------------------------
+
+stop)
+	/etc/init.d/ethercat stop
+	exit $?
+	;;
+
+#------------------------------------------------------------------------------
+
+restart)
+	/etc/init.d/ethercat restart
+	exit $?
+	;;
+
+#------------------------------------------------------------------------------
+
+status)
+	/etc/init.d/ethercat status
+	exit $?
+	;;
+
+#------------------------------------------------------------------------------
+
+*)
+	echo "USAGE: $0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+#------------------------------------------------------------------------------
