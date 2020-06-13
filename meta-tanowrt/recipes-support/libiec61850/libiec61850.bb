@@ -13,14 +13,13 @@ LICENSE = "GPL-3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 MAINTAINER = "Anton Kikin <a.kikin@tano-systems.com>"
 
-PV = "1.4.1"
+PV = "1.4.2.1"
 PR = "tano0"
 
-SRC_URI = "https://libiec61850.com/libiec61850/wp-content/uploads/2020/01/${PN}-${PV}.tar.gz"
-SRC_URI[md5sum] = "edd43293fd0029f8212f91bdb133c35b"
-SRC_URI[sha256sum] = "487cac5f1f458ff6aa90212057c58b6ab8b737fd6889865be4c217eb399fba59"
+SRC_URI = "git://github.com/mz-automation/libiec61850;protocol=https;branch=v1.4"
+SRCREV = "d798814fb463115a835da597535a625b68a39cff"
 
-S = "${WORKDIR}/${PN}-${PV}"
+S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig lib_package
 
