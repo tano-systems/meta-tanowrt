@@ -5,13 +5,9 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-PR_append = ".tano0"
-
-EXTRA_OECONF += "--enable-static"
+PR_append = ".tano1"
 
 SRC_URI += "file://600-shared-libext.patch"
-
-LDFLAGS += "-fuse-ld=bfd"
 
 do_install_append() {
 	install -d ${D}${libdir}
