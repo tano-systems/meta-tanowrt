@@ -4,6 +4,6 @@
 	<project path="meta-freescale"
 	         name="meta-freescale"
 	         remote="yoctoproject"
-	         upstream="master"
-	         revision="d8f73dcbb538533f265fadb837c80d0170e0ce10" />
+	         upstream="dunfell"
+	         revision="be4bd4650170a5e9c38875809be440daa65aa0aa" />
 </manifest>

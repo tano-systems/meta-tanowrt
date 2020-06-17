@@ -1,5 +1,7 @@
-PR_append = ".nxp2"
+PR_append = ".nxp3"
 M_ls1028ardb = "ls1028ardb"
+
+LIC_FILES_CHKSUM = "file://LICENSE;md5=45a017ee5f4cfe64b1cddf2eb06cffc7"
 
 SRC_URI = "git://source.codeaurora.org/external/qoriq/qoriq-components/rcw;nobranch=1"
 SRCREV = "LSDK-19.09"

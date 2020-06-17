@@ -31,7 +31,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt-hsl-nxp/manifests/tanowrt.xml \
-          -b warrior
+          -b dunfell
 ```
 
 Synchronize all repositories by executing a command:
@@ -176,7 +176,7 @@ Additional dependencies are listed here:
 
 * meta-freescale  
   URI: <git://git.yoctoproject.org/meta-freescale>  
-  Branch: master
+  Branch: dunfell
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 

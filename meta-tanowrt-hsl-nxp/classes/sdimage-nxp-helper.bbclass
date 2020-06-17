@@ -1,7 +1,7 @@
 
 def parse_dtbs(d):
     import re
-    kdt=re.sub(r'\b[\w-]+\/', '', d.getVar('KERNEL_DEVICETREE', ''))
+    kdt=re.sub(r'\b[\w-]+\/', '', d.getVar('KERNEL_DEVICETREE', True))
     dtbs=""
     dtbcount=1
     for DTB in kdt.split():
