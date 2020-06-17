@@ -7,11 +7,16 @@
 #
 SRCREV = "b47eea84cbb93f533b0cba2f1aaf9ca4da8706b9"
 PV = "1.6.0"
-PR = "tano0.${INC_PR}"
+PR = "tano1.${INC_PR}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://github.com/Irqbalance/irqbalance"
+
+SRC_URI += "\
+	file://100-remove-libncursesw-dependency.patch \
+	file://110-fix-runtime-socket-directory.patch \
+"
 
 S = "${WORKDIR}/git"
 
