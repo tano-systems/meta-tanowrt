@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -24,7 +24,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/umbim.git \
 # umbim: add home provider query support
 SRCREV = "184b707ddaa0acee84d02e0ffe599cb8b67782bd"
 
-CFLAGS += "-Wno-error=address-of-packed-member"
+CFLAGS += "${@oe.utils.version_less_or_equal('GCCVERSION', '8.4.0', '', '-Wno-error=address-of-packed-member', d)}"
 
 SRC_URI += "\
 	file://mbim.sh \
