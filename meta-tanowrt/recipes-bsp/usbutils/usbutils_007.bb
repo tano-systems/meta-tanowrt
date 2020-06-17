@@ -1,4 +1,4 @@
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Host side USB console utilities"
 DESCRIPTION = "Contains the lsusb utility for inspecting the devices connected to the USB bus."
