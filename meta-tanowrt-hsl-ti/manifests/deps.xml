@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
+	<!-- meta-arm -->
+	<project path="meta-arm"
+	         name="meta-arm"
+	         remote="yoctoproject"
+	         upstream="dunfell"
+	         revision="0465b4c1e332c15d6cb6d948ee8ec562bfc7d2b1" />
+
 	<!-- meta-ti -->
 	<project path="meta-ti"
 	         name="meta-ti"
 	         remote="yoctoproject"
-	         upstream="master"
-	         revision="bbc14eb4806e0c47e023642a5aba1b2d21c84972" />
+	         upstream="dunfell"
+	         revision="f2b2b2095f1a9d3ef705f7518d9db1e3141da2fb" />
 </manifest>
