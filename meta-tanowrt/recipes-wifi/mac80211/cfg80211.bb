@@ -11,7 +11,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-RDEPENDS_${PN} += "iw wireless-regdb"
+RDEPENDS_${PN} += "iw wireless-regdb-static"
 inherit kmod/cfg80211
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"

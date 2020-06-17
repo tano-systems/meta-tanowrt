@@ -22,15 +22,13 @@ diff --git a/include/uapi/linux/libc-compat.h b/include/uapi/linux/libc-compat.h
 index f38571d..30f0b67 100644
 --- a/include/uapi/linux/libc-compat.h
 +++ b/include/uapi/linux/libc-compat.h
-@@ -49,10 +49,14 @@
+@@ -49,10 +49,12 @@
  #define _LIBC_COMPAT_H
  
  /* We have included glibc headers... */
 -#if defined(__GLIBC__)
 +#if 1
-+#ifndef __USE_MISC
 +#define __USE_MISC
-+#endif
  
  /* Coordinate with glibc net/if.h header. */
  #if defined(_NET_IF_H) && defined(__USE_MISC)

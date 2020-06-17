@@ -13,7 +13,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}/patches:${THISDIR}
 
 REQUIRED_DISTRO_FEATURES = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
-inherit distro_features_check
+inherit features_check
 
 SC = "${WORKDIR}/openwrt/package/base-files/files"
 

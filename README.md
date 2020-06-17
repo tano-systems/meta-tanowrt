@@ -101,7 +101,7 @@ The following credentials are used by default to access the operating system (te
 
 ## 4 Limitations
 
-Works with OE Release 2.7 (Warrior).
+Works with OE Release 3.1 (Dunfell).
 
 ## 5 License
 

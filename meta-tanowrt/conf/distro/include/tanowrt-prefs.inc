@@ -2,7 +2,7 @@
 include conf/distro/include/qt5-versions.inc
 
 # Versions
-PREFERRED_VERSION_iptables = "1.6.2"
+PREFERRED_VERSION_iptables = "1.8.4"
 PREFERRED_VERSION_usbutils = "007"
 PREFERRED_VERSION_libwebsockets = "3.2%"
 PREFERRED_VERSION_qrencode = "4.1.1"

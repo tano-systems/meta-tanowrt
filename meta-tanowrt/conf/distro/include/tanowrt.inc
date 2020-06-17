@@ -3,6 +3,9 @@ require conf/distro/include/tanowrt-sdk.inc
 
 IMAGE_CLASSES += "tanowrt-image-types"
 
+# Required for rrdtool 1.0.50
+HOSTTOOLS += "pod2man"
+
 # Virtual runtimes
 VIRTUAL-RUNTIME_dev_manager = "udev"
 VIRTUAL-RUNTIME_login_manager = "busybox"

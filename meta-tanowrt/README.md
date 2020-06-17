@@ -51,7 +51,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt/manifests/tanowrt.xml \
-          -b warrior
+          -b dunfell
 ```
 
 Synchronize all repositories by executing a command:
@@ -135,26 +135,26 @@ This layer depends on:
 * openembedded-core  
   URI: <git://git.openembedded.org/openembedded-core.git>  
   Subdirectory: meta  
-  Branch: warrior  
+  Branch: dunfell  
 * meta-openembedded  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-oe  
-  Branch: warrior  
+  Branch: dunfell  
 * meta-python  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-python  
-  Branch: warrior  
+  Branch: dunfell  
 * meta-networking  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-networking  
-  Branch: warrior  
+  Branch: dunfell  
 * meta-filesystems  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-filesystems  
-  Branch: warrior  
+  Branch: dunfell  
 * bitbake  
   URI: <git://git.openembedded.org/bitbake>  
-  Branch: 1.42  
+  Branch: 1.46  
 
 The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
 

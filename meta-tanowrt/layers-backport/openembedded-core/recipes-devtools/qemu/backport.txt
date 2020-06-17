@@ -1,2 +1,0 @@
-﻿Backported patch from openembedded-core layer commit 2cca75155baec8358939e2aae822e256bed4cfe0
-(https://git.openembedded.org/openembedded-core/commit/meta/recipes-devtools/qemu?id=2cca75155baec8358939e2aae822e256bed4cfe0)

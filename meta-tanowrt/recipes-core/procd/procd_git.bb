@@ -69,7 +69,7 @@ S = "${WORKDIR}/git"
 
 REQUIRED_DISTRO_FEATURES = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
-inherit distro_features_check
+inherit features_check
 
 inherit cmake pkgconfig
 

@@ -8,7 +8,7 @@
 REQUIRED_DISTRO_FEATURES_class-target = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
 
-inherit distro_features_check
+inherit features_check
 
 RDEPENDS_${PN}_append_class-target = " procd "
 

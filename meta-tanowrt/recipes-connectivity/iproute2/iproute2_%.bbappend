@@ -9,19 +9,19 @@ SRC_URI += "\
 
 # Patches
 SRC_URI += "\
-	file://010-cake-fwmark.patch \
-	file://090-tc-add-support-for-action-act_ctinfo.patch \
+	file://001-devlink-update-include-files.patch \
 	file://100-configure.patch \
 	file://110-darwin_fixes.patch \
 	file://115-add-config-xtlibdir.patch \
 	file://120-no_arpd.patch \
 	file://130-no_netem.patch \
-	file://135-sync-iptables-header.patch \
 	file://140-allow_pfifo_fast.patch \
 	file://140-keep_libmnl_optional.patch \
 	file://145-keep_libelf_optional.patch \
+	file://150-keep_libcap_optional.patch \
 	file://160-libnetlink-pic.patch \
 	file://170-ip_tiny.patch \
+	file://175-reduce-dynamic-syms.patch \
 	file://180-drop_FAILED_POLICY.patch \
 	file://200-drop_libbsd_dependency.patch \
 "
