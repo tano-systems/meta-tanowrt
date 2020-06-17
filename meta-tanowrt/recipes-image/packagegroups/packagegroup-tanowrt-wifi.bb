@@ -1,6 +1,6 @@
 # Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano3"
+PR = "tano4"
 SUMMARY = "WiFi support packages"
 DESCRIPTION = "The set of packages required for a WiFi support"
 LICENSE = "MIT"
@@ -9,6 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
+PROVIDES = "${PACKAGES}"
 PACKAGES = "\
 	${PN} \
 	${PN}-firmware \

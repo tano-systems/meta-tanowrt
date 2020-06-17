@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -15,6 +15,7 @@ inherit packagegroup
 
 do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
+PROVIDES = "${PACKAGES}"
 PACKAGES = "\
 	packagegroup-tanowrt-base \
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci', '', d)} \
