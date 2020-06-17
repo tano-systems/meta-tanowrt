@@ -4,7 +4,7 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano10"
+PR = "tano11"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
