@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano23"
+PR = "tano24"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -21,6 +21,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git \
 "
 
 SRC_URI += "file://0001-Fix-compilation-error.patch"
+SRC_URI += "file://0002-options.c-Fix-compilation-with-GCC-9.3.0.patch"
 
 # Kernel dependencies and module autoloading
 inherit kmod/ipt-core

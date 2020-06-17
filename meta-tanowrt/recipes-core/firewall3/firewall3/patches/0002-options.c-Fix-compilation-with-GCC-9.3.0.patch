@@ -1,0 +1,40 @@
+From bdb244e6b6b7c6f2efbe684773ab2a667ffdfac6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 17 Jun 2020 04:44:06 +0300
+Subject: [PATCH] options.c: Fix compilation with GCC 9.3.0
+
+Fixes error:
+options.c:1113:7: error: '%s' directive argument is null [-Werror=format-overflow=]
+ 1113 |       warn_elem(e, "has invalid value '%s'", p);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ options.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/options.c b/options.c
+index aed0cfb..f60ef22 100644
+--- a/options.c
++++ b/options.c
+@@ -1100,7 +1100,7 @@ fw3_parse_options(void *s, const struct fw3_option *opts,
+ 
+ 						if (!opt->parse(dest, p, true))
+ 						{
+-							warn_elem(e, "has invalid value '%s'", p);
++							warn_elem(e, "has invalid value '%s'", p ? p : "(null)");
+ 							valid = false;
+ 							continue;
+ 						}
+@@ -1110,7 +1110,7 @@ fw3_parse_options(void *s, const struct fw3_option *opts,
+ 					 * text, so pass it to the option parser as-is. */
+ 					if (inv && !opt->parse(dest, "!", true))
+ 					{
+-						warn_elem(e, "has invalid value '%s'", p);
++						warn_elem(e, "has invalid value '%s'", p ? p : "(null)");
+ 						valid = false;
+ 					}
+ 				}
+-- 
+2.16.2.windows.1
+
