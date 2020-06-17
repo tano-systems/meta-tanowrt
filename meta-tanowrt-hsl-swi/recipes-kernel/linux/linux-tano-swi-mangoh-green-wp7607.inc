@@ -3,7 +3,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".0"
+PR_append = ".1"
 
 DT_DIR = "${MACHINE}"
 DT_DIR_mangoh-green-wp7607 = "wp7xxx"

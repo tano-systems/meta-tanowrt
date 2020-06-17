@@ -1,0 +1,52 @@
+From 3e9b347ec11b6bcdf5d82ee20cdf212d095f8631 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 24 Jun 2020 03:35:08 +0300
+Subject: [PATCH] Remove dependency on libattr
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ configure.ac                    | 1 -
+ packaging/ima-evm-utils.spec.in | 1 -
+ src/evmctl.c                    | 2 +-
+ 3 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6822f39..a2427aa 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -30,7 +30,6 @@ AC_SUBST(OPENSSL_LIBS)
+ AC_CHECK_HEADER(unistd.h)
+ AC_CHECK_HEADERS(openssl/conf.h)
+ 
+-AC_CHECK_HEADERS(attr/xattr.h, , [AC_MSG_ERROR([attr/xattr.h header not found. You need the libattr development package.])])
+ AC_CHECK_HEADERS(keyutils.h, , [AC_MSG_ERROR([keyutils.h header not found. You need the libkeyutils development package.])])
+ 
+ #debug support - yes for a while
+diff --git a/packaging/ima-evm-utils.spec.in b/packaging/ima-evm-utils.spec.in
+index 7ca6c6f..65c32f9 100644
+--- a/packaging/ima-evm-utils.spec.in
++++ b/packaging/ima-evm-utils.spec.in
+@@ -11,7 +11,6 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+ BuildRequires:    autoconf
+ BuildRequires:    automake
+ BuildRequires:    openssl-devel
+-BuildRequires:    libattr-devel
+ BuildRequires:    keyutils-libs-devel
+ 
+ %description
+diff --git a/src/evmctl.c b/src/evmctl.c
+index 2ffee78..3fbcd33 100644
+--- a/src/evmctl.c
++++ b/src/evmctl.c
+@@ -49,7 +49,7 @@
+ #include <stdint.h>
+ #include <string.h>
+ #include <dirent.h>
+-#include <attr/xattr.h>
++#include <sys/xattr.h>
+ #include <linux/xattr.h>
+ #include <getopt.h>
+ #include <keyutils.h>
+-- 
+2.16.2.windows.1
+

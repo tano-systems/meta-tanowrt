@@ -6,8 +6,8 @@
 	<project path="meta-swi"
 	         name="meta-swi.git"
 	         remote="legato-io"
-	         upstream="yocto-2.7-ref"
-	         revision="f0523effb2837875ad93f0c94a0ef05f77d34364" />
+	         upstream="yocto-3.0-ref"
+	         revision="890b91b3f5627e79e1c51b837abb5d74118dd407" />
 </manifest>
 
 

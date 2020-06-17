@@ -1,0 +1,83 @@
+From 4f712786e30ee4a844b9e3055ee4d7a948926a35 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 24 Jun 2020 17:18:48 +0300
+Subject: [PATCH] scripts/gcc-wrapper.py: Make compatible with python 3
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ scripts/gcc-wrapper.py | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/scripts/gcc-wrapper.py b/scripts/gcc-wrapper.py
+index bb0ecb97716..a5ed57061ef
+--- a/scripts/gcc-wrapper.py
++++ b/scripts/gcc-wrapper.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python2
++#! /usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ 
+ # Copyright (c) 2011-2015, The Linux Foundation. All rights reserved.
+@@ -30,6 +30,7 @@
+ # Invoke gcc, looking for warnings, and causing a failure if there are
+ # non-whitelisted warnings.
+ 
++from __future__ import print_function
+ import errno
+ import re
+ import os
+@@ -52,13 +53,15 @@ allowed_warnings = set([
+ # Capture the name of the object file, can find it.
+ ofile = None
+ 
++do_exit = False;
++
+ warning_re = re.compile(r'''(.*/|)([^/]+\.[a-z]+:\d+):(\d+:)? warning:''')
+ def interpret_warning(line):
+     """Decode the message from gcc.  The messages we care about have a filename, and a warning"""
+     line = line.rstrip('\n')
+     m = warning_re.match(line)
+     if m and m.group(2) not in allowed_warnings:
+-        print "error, forbidden warning:", m.group(2)
++        print ("error, forbidden warning:" + m.group(2))
+ 
+         # If there is a warning, remove any object if it exists.
+         if ofile:
+@@ -66,7 +69,8 @@ def interpret_warning(line):
+                 os.remove(ofile)
+             except OSError:
+                 pass
+-        sys.exit(1)
++        global do_exit
++        do_exit = True;
+ 
+ def run_gcc():
+     args = sys.argv[1:]
+@@ -83,17 +87,19 @@ def run_gcc():
+     try:
+         proc = subprocess.Popen(args, stderr=subprocess.PIPE)
+         for line in proc.stderr:
+-            print line,
+-            interpret_warning(line)
++            print (line.decode("utf-8"), end="")
++            interpret_warning(line.decode("utf-8"))
++        if do_exit:
++            sys.exit(1)
+ 
+         result = proc.wait()
+     except OSError as e:
+         result = e.errno
+         if result == errno.ENOENT:
+-            print args[0] + ':',e.strerror
+-            print 'Is your PATH set correctly?'
++            print (args[0] + ':' + e.strerror)
++            print ('Is your PATH set correctly?')
+         else:
+-            print ' '.join(args), str(e)
++            print (' '.join(args) + str(e))
+ 
+     return result
+ 
+-- 
+2.17.1
+

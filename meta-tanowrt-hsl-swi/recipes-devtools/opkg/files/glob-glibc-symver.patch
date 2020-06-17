@@ -1,0 +1,26 @@
+Index: opkg-0.3.3/libopkg/opkg_conf.c
+===================================================================
+--- opkg-0.3.3.orig/libopkg/opkg_conf.c
++++ opkg-0.3.3/libopkg/opkg_conf.c
+@@ -38,6 +38,8 @@
+ #include "file_util.h"
+ #include "xfuncs.h"
+ 
++__asm__(".symver glob,glob@GLIBC_2.2.5");
++
+ static int lock_fd;
+ 
+ static opkg_conf_t _conf;
+Index: opkg-0.3.3/libopkg/opkg_remove.c
+===================================================================
+--- opkg-0.3.3.orig/libopkg/opkg_remove.c
++++ opkg-0.3.3/libopkg/opkg_remove.c
+@@ -33,6 +33,8 @@
+ #include "sprintf_alloc.h"
+ #include "xfuncs.h"
+ 
++__asm__(".symver glob,glob@GLIBC_2.2.5");
++
+ void remove_data_files_and_list(pkg_t * pkg)
+ {
+     str_list_t installed_dirs, installed_dirs_symlinks;

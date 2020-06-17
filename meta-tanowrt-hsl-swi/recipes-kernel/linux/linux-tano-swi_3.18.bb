@@ -18,7 +18,7 @@ LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tn-2"
+MACHINE_KERNEL_PR_append = "tn-3"
 PR = "${MACHINE_KERNEL_PR}"
 
 require recipes-kernel/linux/linux-tano.inc
@@ -41,6 +41,7 @@ KERNEL_FEATURES_append = " netfilter.scc "
 SRC_URI_append = " file://coresight.scc "
 KERNEL_FEATURES_append = " coresight.scc "
 
+SRC_URI_append = " file://0001-scripts-gcc-wrapper.py-Make-compatible-with-python-3.patch "
 #SRC_URI_append = " file://0002-i2c-mux-pca954x-Backport-from-kernel-4.9.228.patch "
 
 # Already applied

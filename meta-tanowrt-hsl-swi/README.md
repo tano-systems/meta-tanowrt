@@ -64,7 +64,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt-hsl-swi/manifests/tanowrt.xml \
-          -b warrior
+          -b dunfell
 ```
 
 Synchronize all repositories by executing a command:
