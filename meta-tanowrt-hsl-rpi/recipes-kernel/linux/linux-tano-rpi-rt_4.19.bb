@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019, Tano Systems, All rights reserved
+# Copyright (C) 2019-2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Raspberry Pi Linux kernel 4.19 (preempt-rt)
@@ -8,9 +8,9 @@ LINUX_RPI_BRANCH ?= "rpi-4.19.y-rt"
 
 KERNEL_SRC_URI ?= "git://github.com/raspberrypi/linux.git;protocol=git"
 KERNEL_SRC_BRANCH ?= "${LINUX_RPI_BRANCH}"
-KERNEL_SRC_SRCREV ?= "03648815ecfbb1c1fa64a2baafb8a3f6f5902996"
+KERNEL_SRC_SRCREV ?= "e2e9cec6fb061ba58304fd391ef76747f2963557"
 
-LINUX_VERSION ?= "4.19.50-rt"
+LINUX_VERSION ?= "4.19.71-rt"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 

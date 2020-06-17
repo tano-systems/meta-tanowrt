@@ -1,16 +1,16 @@
 #
-# Copyright (C) 2019, Tano Systems, All rights reserved
+# Copyright (C) 2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
-# Raspberry Pi Linux kernel 4.19
+# Raspberry Pi Linux kernel 5.4
 #
-LINUX_RPI_BRANCH ?= "rpi-4.19.y"
+LINUX_RPI_BRANCH ?= "rpi-5.4.y"
 
 KERNEL_SRC_URI ?= "git://github.com/raspberrypi/linux.git;protocol=git"
 KERNEL_SRC_BRANCH ?= "${LINUX_RPI_BRANCH}"
-KERNEL_SRC_SRCREV ?= "106fa147d3daa58d2c1ae5f41a29d07036fe7d0a"
+KERNEL_SRC_SRCREV ?= "1c64f4bc22811d2d371b271daa3fb27895a8abdd"
 
-LINUX_VERSION ?= "4.19.127"
+LINUX_VERSION ?= "5.4.51"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
@@ -26,6 +26,3 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 KERNEL_EXTRA_ARGS_append_rpi = " DTC_FLAGS='-@ -H epapr'"
-
-# Already applied
-KERNEL_FEATURES_remove = "patches/openwrt/generic-${LINUX_VERSION_FULL}/600.scc"

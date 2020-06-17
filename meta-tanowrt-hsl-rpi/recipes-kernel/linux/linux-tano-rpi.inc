@@ -20,6 +20,7 @@ PR_append = ".3"
 inherit kernel siteinfo
 
 SRC_URI += "file://rpi-kernel-misc.cfg"
+SRC_URI += "file://powersave.cfg"
 SRC_URI += "file://defconfig"
 
 KCONFIG_MODE = "--alldefconfig"

@@ -1,0 +1,26 @@
+From 50b7e7f4619731cff3dfb4fee6c264a598938cc8 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 24 Jun 2020 17:34:03 +0300
+Subject: [PATCH] Fix compilation for RPi kernel 4.19
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/compat/compat.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/compat/compat.h b/src/compat/compat.h
+index e834081..3be3bff 100644
+--- a/src/compat/compat.h
++++ b/src/compat/compat.h
+@@ -870,7 +870,7 @@ static inline void skb_mark_not_on_list(struct sk_buff *skb)
+ })
+ #endif
+ 
+-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 5) && LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0)) || (LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 18) && !defined(ISRHEL82))
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 5) && LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0))
+ #define ipv6_dst_lookup_flow(a, b, c, d) ipv6_dst_lookup(a, b, &dst, c) + (void *)0 ?: dst
+ #endif
+ 
+-- 
+2.17.1
+

@@ -9,7 +9,10 @@ WKS_FILE = "sdimage-rpi.wks"
 WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rpi"
-PREFERRED_VERSION_linux-tano-rpi = "4.19.%"
+PREFERRED_VERSION_linux-tano-rpi = "5.4.%"
+LINUXLIBCVERSION = "5.4%"
+SDKLINUXLIBCVERSION = "5.4%"
+WIREGUARD_PATCH_RPI_4_19 = "0"
 
 # Switch from linux-firmware-rpidistro to cypress-firmware
 MACHINE_EXTRA_RRECOMMENDS_remove = "\
@@ -26,6 +29,7 @@ MACHINE_EXTRA_RRECOMMENDS_append = "\
 
 RPI_KERNEL_DEVICETREE_OVERLAYS = " \
     overlays/at86rf233.dtbo \
+    overlays/disable-bt.dtbo \
     overlays/dwc2.dtbo \
     overlays/gpio-key.dtbo \
     overlays/hifiberry-amp.dtbo \
@@ -35,17 +39,21 @@ RPI_KERNEL_DEVICETREE_OVERLAYS = " \
     overlays/i2c-rtc.dtbo \
     overlays/iqaudio-dac.dtbo \
     overlays/iqaudio-dacplus.dtbo \
-    overlays/pi3-disable-bt.dtbo \
-    overlays/pi3-miniuart-bt.dtbo \
+    overlays/miniuart-bt.dtbo \
+    overlays/mcp2515-can0.dtbo \
     overlays/pitft22.dtbo \
     overlays/pitft28-resistive.dtbo \
+    overlays/pitft28-capacitive.dtbo \
     overlays/pitft35-resistive.dtbo \
     overlays/pps-gpio.dtbo \
     overlays/rpi-ft5406.dtbo \
     overlays/rpi-poe.dtbo \
     overlays/vc4-kms-v3d.dtbo \
+    overlays/vc4-fkms-v3d.dtbo \
     overlays/w1-gpio-pullup.dtbo \
     overlays/w1-gpio.dtbo \
+    overlays/gpio-ir.dtbo \
+    overlays/gpio-ir-tx.dtbo \
 "
 
 # Load vc4 module before psplash
