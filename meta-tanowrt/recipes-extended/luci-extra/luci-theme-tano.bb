@@ -2,7 +2,7 @@
 # Tano Systems LuCI Theme bitbake recipe
 # Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 #
-PR = "tano25"
+PR = "tano26"
 PV = "0.0.9+git${SRCPV}"
 
 SUMMARY = "LuCI Theme by Tano Systems"
@@ -19,17 +19,20 @@ LUCI_THEME_NAME = "tano"
 LUCI_THEME_TANO_GIT_URI      ?= "git://github.com/tano-systems/luci-theme-tano.git"
 LUCI_THEME_TANO_GIT_BRANCH   ?= "master"
 LUCI_THEME_TANO_GIT_PROTOCOL ?= "https"
-LUCI_THEME_TANO_GIT_SRCREV   ?= "9916d9b6fe5bd0a7e77fab95f4d23bcb79ef707a"
+LUCI_THEME_TANO_GIT_SRCREV   ?= "ddce629ca15139185deca6461479bad18edb4d16"
 
 SRC_URI = "${LUCI_THEME_TANO_GIT_URI};name=theme;branch=${LUCI_THEME_TANO_GIT_BRANCH};protocol=${LUCI_THEME_TANO_GIT_PROTOCOL}"
 SRCREV_theme = "${LUCI_THEME_TANO_GIT_SRCREV}"
 SRCREV_FORMAT = "theme"
+
+SRC_URI += "file://package-lock.json"
 
 S = "${WORKDIR}/git"
 LUCI_PKG_SRC = "${S}/bundle/build"
 
 do_npm_configure() {
 	cd ${B}
+	cp ${WORKDIR}/package-lock.json ${B}/package-lock.json
 	npm cache clean --force
 	npm install
 }
