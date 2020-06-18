@@ -1,4 +1,4 @@
-From d86acc0e4265773d23c6c9bca617bbd2876443e3 Mon Sep 17 00:00:00 2001
+From 23224b9b4fcb0add5249309a186e7fe6e0fddc14 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:06:44 +0300
 Subject: [PATCH 11/11] libfstools: Fix 64-bit compilation issues
@@ -47,5 +47,5 @@ index 4b8ffee..05aa43e 100644
  			snprintf(str, sizeof(str), "mkfs.ext4 -q -L %s %s", get_overlay_partition(), v->blk);
  		}
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

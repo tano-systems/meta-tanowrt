@@ -1,4 +1,4 @@
-From ffe1ab3e395d0c03e730bd26d047816d54509bf5 Mon Sep 17 00:00:00 2001
+From 3b5488cdd6540b6d6fdbdf6ea2512782bc438ca0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
 Subject: [PATCH 08/11] block: Fix device path creation
@@ -9,11 +9,11 @@ it to the beginning of the device name.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- block.c | 35 +++++++++++++++--------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ block.c | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
 diff --git a/block.c b/block.c
-index 0417ab4..3d1a9e1 100644
+index 0417ab4..4ea2363 100644
 --- a/block.c
 +++ b/block.c
 @@ -200,14 +200,6 @@ static char *blobmsg_get_strdup(struct blob_attr *attr)
@@ -109,6 +109,15 @@ index 0417ab4..3d1a9e1 100644
  
  	err = umount2(mp, MNT_DETACH);
  	if (err) {
+@@ -1150,7 +1142,7 @@ static int mount_action(char *action, char *device, int type)
+ 
+ 	if (!action || !device)
+ 		return -1;
+-	snprintf(path, sizeof(path), "/dev/%s", device);
++	snprintf(path, sizeof(path), "%s", device);
+ 
+ 	if (!strcmp(action, "remove")) {
+ 		if (type == TYPE_HOTPLUG)
 @@ -1437,8 +1429,11 @@ static int check_extroot(char *path)
  			 errno);
  	fclose(fp);
@@ -124,5 +133,5 @@ index 0417ab4..3d1a9e1 100644
  	ULOG_ERR("extroot: UUID mismatch (root: %s, %s: %s)\n", pr->uuid,
  		 basename(path), uuid);
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

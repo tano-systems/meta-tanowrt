@@ -1,19 +1,19 @@
-From 487eb31baedfdc394d2af9c8c49a8a1e023d9998 Mon Sep 17 00:00:00 2001
+From 1b2e47effab8cc5844049f03789938cb8cfadf2f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
 Subject: [PATCH 10/11] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt        | 13 +++++++------
- block.c               | 10 +++++++---
- jffs2reset.c          |  8 ++++----
- libfstools/overlay.c  |  5 +++--
- libfstools/rootdisk.c | 11 ++++++-----
- mount_root.c          | 11 ++++++-----
- overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++
- overlay_partition.h   | 19 ++++++++++++++++++
- snapshot.c            | 15 +++++++-------
+ CMakeLists.txt        | 13 ++++++-----
+ block.c               | 10 +++++---
+ jffs2reset.c          |  8 +++----
+ libfstools/overlay.c  |  5 ++--
+ libfstools/rootdisk.c | 11 +++++----
+ mount_root.c          | 11 +++++----
+ overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
+ overlay_partition.h   | 19 +++++++++++++++
+ snapshot.c            | 15 ++++++------
  ubi.c                 |  3 ++-
  10 files changed, 116 insertions(+), 33 deletions(-)
  create mode 100644 overlay_partition.c
@@ -70,7 +70,7 @@ index cf55d89..2735bdd 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index 3d1a9e1..c8c5fde 100644
+index 4ea2363..fe96828 100644
 --- a/block.c
 +++ b/block.c
 @@ -45,6 +45,7 @@
@@ -462,5 +462,5 @@ index 0688d03..cc58f9e 100644
  	} else if (!strcmp(argv[1], "detach")) {
  		return main_detach(argv[2]);
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

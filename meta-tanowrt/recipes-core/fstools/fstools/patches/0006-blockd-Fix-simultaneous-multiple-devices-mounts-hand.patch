@@ -1,4 +1,4 @@
-From ae71a95e7a15a4308b3ba4cddb7c969cb9f6991c Mon Sep 17 00:00:00 2001
+From b22a9d26b54940591555958af5b5ae609ebc56ff Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 15 Nov 2018 16:24:21 +0300
 Subject: [PATCH 06/11] blockd: Fix simultaneous multiple devices mounts
@@ -22,5 +22,5 @@ index f0062c6..7cf2831 100644
  		vlist_delete(&devices, &device->node);
  
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

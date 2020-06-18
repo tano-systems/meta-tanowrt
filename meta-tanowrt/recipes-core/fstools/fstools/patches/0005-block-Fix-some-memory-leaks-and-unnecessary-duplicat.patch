@@ -1,4 +1,4 @@
-From 8f7eafbbcb9a853bc4d2252ab07dfd93cef4aa3c Mon Sep 17 00:00:00 2001
+From b5d22f2a2f013af88ed74d36b066111f05679ec4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 15 Nov 2018 16:23:23 +0300
 Subject: [PATCH 05/11] block: Fix some memory leaks and unnecessary duplicate
@@ -32,5 +32,5 @@ index e2ab381..4e348a0 100644
  		blockd_notify("hotplug", device, m, pr);
  
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 

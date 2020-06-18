@@ -1,4 +1,4 @@
-From f76041604f5a28e1bcc28a2a168e91a40e1cab9d Mon Sep 17 00:00:00 2001
+From 2e6bd05a537175d0c9abb4215d42272e35d2fcc0 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 22 Jan 2016 05:07:43 +0000
 Subject: [PATCH 01/11] Define GLOB_ONLYDIR if not available
@@ -27,5 +27,5 @@ index 14214a3..9b79bb7 100644
  
  static bool keep_sysupgrade;
 -- 
-2.16.2.windows.1
+2.25.0.windows.1
 
