@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "3"
+INC_PR = "4"
 
 inherit tanowrt-services
 
@@ -14,7 +14,10 @@ SRC_URI += " \
     file://openvpn.config \
     file://openvpn.init \
     file://openvpn.options \
-    file://openvpn.upgrade"
+    file://openvpn.upgrade \
+    file://etc/openvpn.user \
+    file://etc/hotplug.d/openvpn/01-user \
+    file://usr/libexec/openvpn-hotplug"
 
 # Patches
 SRC_URI += " \
@@ -96,6 +99,13 @@ do_install_append() {
 	# Install OpenVPN options
 	install -d ${D}${datadir}/openvpn
 	install -m 644 ${WORKDIR}/openvpn.options ${D}${datadir}/openvpn/openvpn.options
+
+	# Hotplug functionality
+	install -d ${D}/usr/libexec
+	install -d ${D}${sysconfdir}/hotplug.d/openvpn
+	install -m 755 ${WORKDIR}/usr/libexec/openvpn-hotplug ${D}/usr/libexec/
+	install -m 644 ${WORKDIR}/etc/hotplug.d/openvpn/01-user ${D}${sysconfdir}/hotplug.d/openvpn/
+	install -m 644 ${WORKDIR}/etc/openvpn.user ${D}${sysconfdir}/
 }
 
 CONFFILES_${PN}_append = "\
