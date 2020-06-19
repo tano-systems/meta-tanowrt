@@ -1,7 +1,7 @@
 From b314c7ce95af852a39b08a2af7f16a2389dc32aa Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 3 Jun 2020 14:06:49 +0300
-Subject: [PATCH] ti: Customize default environment
+Subject: [PATCH] ti: am335x: Customize default environment
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

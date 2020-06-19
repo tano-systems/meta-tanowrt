@@ -8,10 +8,11 @@ This layer contains various parts (recipes, files, etc.) from the [meta-arago](h
 
 ## 1 Supported Hardware
 
-| `MACHINE`         | Board(s)                                                                  |
-| ----------------- | ------------------------------------------------------------------------- |
-| `am335x-bbb-sd`   | [BeagleBone Black](https://beagleboard.org/black) (SD card image)         |
-| `am335x-icev2-sd` | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (SD card image) |
+| `MACHINE`         | Board(s)                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------- |
+| `am335x-bbb-sd`   | [BeagleBone Black](https://beagleboard.org/black) SD card image                       |
+| `am335x-icev2-sd` | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (TMDSICE3359) SD card image |
+| `am574x-idk-sd`   | [TI AM574x IDK EVM](https://www.ti.com/tool/TMDSIDK574) (TMDSIDK574) SD card image    |
 
 ## 2 Supported Images
 
@@ -210,13 +211,53 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
 
+### 7.3 TI AM574x IDK EVM (`am574x-idk-sd`)
+
+![AM574x IDK EVM](docs/am574x-idk-board.jpg)
+
+#### 7.2.1 Writing Image to SD Card
+
+Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
+
+#### 7.2.2 Preparing Hardware
+
+No special things to do.
+
+#### 7.2.3 Booting
+
+1. Insert the SD card into the slot on the EVM board (power is off).
+2. Power on board.
+3. System from SD card will be booting.
+4. For login use credentials specified in "[Access](#8-Access)" section.
+
+#### 7.2.4 Default Network Configuration
+
+By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
+
+ICSS PRU ethernet ports 3 and 4 (`eth2` and `eth3` interfaces) are not configured by default.
+
+The web-configuration interface can be accessed via Ethernet port through HTTP(s) protocol. You must see something like this in browser:
+
+![AM574x IDK EVM LuCI Overview](docs/am574x-idk-luci-overview.png)
+
+Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
+
 ## 8 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## 9 Dependencies
+## 9 Issues
+
+### 9.1 Known issues
+
+| ID       | Machine(s)      | Description                                                                                          |
+| -------- | --------------- | ---------------------------------------------------------------------------------------------------- |
+| HSL-TI-1 | `am574x-idk-sd` | USB RNDIS is not working (`usb0` interface)                                                          |
+| HSL-TI-2 | `am574x-idk-sd` | kernel 5.4: When trying to bridge PRU ethernet interfaces (`eth2` or/and `eth3`), the kernel crashes |
+
+## 10 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -228,10 +269,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## 10 License
+## 11 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 11 Maintainers
+## 12 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>

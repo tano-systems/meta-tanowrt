@@ -3,18 +3,22 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".1"
+PR_append = ".2"
 
-COMPATIBLE_MACHINE = "ti33x"
+COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
 
 KERNEL_MACHINE_INCLUDE_am335x-icev2 ?= "recipes-kernel/linux/linux-tano-ti-am335x-icev2.inc"
 KERNEL_MACHINE_INCLUDE_am335x-bbb ?= "recipes-kernel/linux/linux-tano-ti-am335x-bbb.inc"
+KERNEL_MACHINE_INCLUDE_am574x-idk ?= "recipes-kernel/linux/linux-tano-ti-am574x-idk.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-ti-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 # Add a run-time dependency for the PM firmware to be installed
 # on the target file system.
 RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_ti33x = " amx3-cm3"
+
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_dra7xx = " vpdma-fw"
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_dra7xx = " goodix-fw"
 
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 
