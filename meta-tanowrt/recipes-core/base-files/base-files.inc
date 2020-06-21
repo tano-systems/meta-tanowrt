@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-# 24.04.2020
-# base-files: prevent issues w/ overlay on powerloss after sysupgrade
-OPENWRT_SRCREV = "880c1f0336616b0b5692ff284f83923011c548f2"
+# 18.06.2020
+# base-files: gpio switch: add named GPIO support
+OPENWRT_SRCREV = "c5bf9a8ced6567c6bd9da63c6ff4c4f2f87207fd"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "15"
+INC_PR = "16"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=94d55d512a9ba36caa9b7df079bae19f "
