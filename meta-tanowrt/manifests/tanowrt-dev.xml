@@ -8,6 +8,6 @@
 	<project path="meta-tanowrt"
 	         name="meta-tanowrt"
 	         remote="tano-private"
-	         upstream="master-dev"
-	         revision="refs/heads/master-dev" />
+	         upstream="warrior-dev"
+	         revision="refs/heads/warrior-dev" />
 </manifest>
