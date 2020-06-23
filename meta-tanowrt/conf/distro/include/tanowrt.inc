@@ -54,7 +54,7 @@ DISTRO_FEATURES_remove = "\
 "
 
 # Licenses
-LICENSE_FLAGS_WHITELIST = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav"
+LICENSE_FLAGS_WHITELIST = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav commercial"
 
 # Image
 IMAGE_FSTYPES_remove = "tar.xz.md5"
