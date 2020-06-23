@@ -17,7 +17,7 @@ PACKAGES += "oping noping"
 PV = "1.9.0"
 PR = "tano2"
 
-SRC_URI = "https://noping.cc/files/${PN}-${PV}.tar.gz \
+SRC_URI = "https://noping.cc/files/${BPN}-${PV}.tar.gz \
            file://0001-Fix-building-for-GCC-8.2.patch \
            "
 
