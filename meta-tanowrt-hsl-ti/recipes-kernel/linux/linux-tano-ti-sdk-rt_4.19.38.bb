@@ -26,7 +26,7 @@ LINUX_VERSION ?= "4.19.38-rt19"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
-LINUX_VERSION_FULL = "${LINUX_VERSION}"
+LINUX_VERSION_FULL = "${@kernel_full_version("${LINUX_VERSION}")}"
 LINUX_VERSION_SHORT = "${@oe.utils.trim_version("${LINUX_VERSION}", 2)}"
 
 require recipes-kernel/linux/tano-kernel-cache-4.19.inc
