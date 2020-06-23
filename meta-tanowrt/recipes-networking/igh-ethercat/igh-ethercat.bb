@@ -1,7 +1,7 @@
 # This file Copyright (C) 2020 Tano Systems LLC
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
 PV = "1.5.2"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
@@ -30,6 +30,7 @@ SRC_URI += "\
 	file://0005-Replace-the-init_timer-with-timer_setup-function.patch \
 	file://1001-Fix-subdir-objects-configure-warning.patch \
 	file://1002-Add-support-for-5.x-kernels.patch \
+	file://1003-Fix-ethercat-tool-compilation.patch \
 "
 
 S = "${WORKDIR}/ethercat-${PV}"
