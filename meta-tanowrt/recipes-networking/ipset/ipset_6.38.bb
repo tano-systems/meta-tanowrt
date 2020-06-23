@@ -14,7 +14,7 @@ DEPENDS += "libtool libmnl"
 inherit kmod/ipt-ipset
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-SRC_URI = "http://ftp.netfilter.org/pub/ipset/${PN}-${PV}.tar.bz2"
+SRC_URI = "http://ftp.netfilter.org/pub/ipset/${BPN}-${PV}.tar.bz2"
 
 SRC_URI[md5sum] = "0e5d9c85f6b78e7dff0c996e2900574b"
 SRC_URI[sha256sum] = "ceef625ba31fe0aaa422926c7231a819de0b07644c02c17ebdd3022a29e3e244"
