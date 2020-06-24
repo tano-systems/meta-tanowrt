@@ -9,11 +9,11 @@ CONF_VERSION = "1"
 # You need to select a specific machine to target the build with. There are a selection
 # of emulated machines available which can boot and run in the QEMU emulator:
 #
-#MACHINE ?= "rpi3"
+#MACHINE ?= "rpi3-sd"
 #
 
 # This sets the default machine to be rpi3 if no other machine is selected:
-MACHINE ??= "rpi3"
+MACHINE ??= "rpi3-sd"
 
 # Where to place downloads
 #DL_DIR ?= "${TOPDIR}/downloads"

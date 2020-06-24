@@ -4,9 +4,9 @@
 
 ## 1 Supported Hardware
 
-| `MACHINE` | Board(s)                   |
-| --------- | -------------------------- |
-| `rpi3`    | Raspberry Pi 3 Model B/B+  |
+| `MACHINE` | Board(s)                                 |
+| --------- | ---------------------------------------- |
+| `rpi3-sd` | Raspberry Pi 3 Model B/B+ SD card image  |
 
 ## 2 Supported Images
 
@@ -86,12 +86,12 @@ After executing `oe-init-build-env` script, the current directory will be automa
 Build SD card image for Raspberry Pi 3 Model B or B+ board as an example:
 
 ```shell
-MACHINE=rpi3 bitbake tanowrt-image-full
+MACHINE=rpi3-sd bitbake tanowrt-image-full
 ```
 
 When the build is complete, the SD card image file will be located in folder
 ```
-./tanowrt-glibc/deploy/images/rpi3/tanowrt-image-full-rpi3.sdcard.img
+./tanowrt-glibc/deploy/images/rpi3-sd/tanowrt-image-full-rpi3-sd.sdcard.img
 ```
 
 All images supported by this layer are listed in the "[Supported Images](#2-Supported-Images)" section.
@@ -105,13 +105,13 @@ Other available machines are listed in the "[Supported Hardware](#1-Supported-Ha
 Go to the deploy directory:
 
 ```shell
-cd tanowrt-glibc/deploy/images/rpi3
+cd tanowrt-glibc/deploy/images/rpi3-sd
 ```
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card (256 MiB or larger). For example:
 
 ```shell
-dd if=tanowrt-image-full-rpi3.sdcard.img of=dev/mmcblk0 bs=512
+dd if=tanowrt-image-full-rpi3-sd.sdcard.img of=dev/mmcblk0 bs=512
 ```
 
 ### 7.2 Booting
