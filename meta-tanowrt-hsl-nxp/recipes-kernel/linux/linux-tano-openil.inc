@@ -20,7 +20,7 @@ LOCALVERSION = ""
 
 KERNEL_IMAGETYPE ?= "Image"
 
-KERNEL_MACHINE_INCLUDE_nxp-ls1028ardb ?= "recipes-kernel/linux/linux-tano-openil-nxp-ls1028ardb-${LINUX_VERSION_SHORT}.inc"
+KERNEL_MACHINE_INCLUDE_ls1028ardb ?= "recipes-kernel/linux/linux-tano-openil-ls1028ardb-${LINUX_VERSION_SHORT}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 LINUX_VERSION_EXTENSION = "-tano-openil-${LINUX_KERNEL_TYPE}"

@@ -8,7 +8,7 @@ SRC_URI += "\
 	file://luci_netports.config \
 "
 
-do_install_append_nxp-ls1028ardb() {
+do_install_append_ls1028ardb() {
 	install -d ${D}${sysconfdir}/config
 	install -m 0644 ${WORKDIR}/luci_netports.config ${D}${sysconfdir}/config/luci_netports
 }

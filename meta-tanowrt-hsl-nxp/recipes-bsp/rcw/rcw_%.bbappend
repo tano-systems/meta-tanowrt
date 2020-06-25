@@ -1,5 +1,5 @@
 PR_append = ".nxp2"
-M_nxp-ls1028ardb = "ls1028ardb"
+M_ls1028ardb = "ls1028ardb"
 
 SRC_URI = "git://source.codeaurora.org/external/qoriq/qoriq-components/rcw;nobranch=1"
 SRCREV = "LSDK-19.09"

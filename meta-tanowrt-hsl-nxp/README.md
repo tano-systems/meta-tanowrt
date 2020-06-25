@@ -4,9 +4,9 @@
 
 ## 1 Supported Hardware
 
-| `MACHINE`        | Board(s)                                                                                                           |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `nxp-ls1028ardb` | [NXP LS1028A RDB board](https://www.nxp.com/design/qoriq-developer-resources/ls1028a-development-board:LS1028ARDB) |
+| `MACHINE`       | Board(s)                                                                                                                         |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `ls1028ardb-sd` | [NXP LS1028A RDB board](https://www.nxp.com/design/qoriq-developer-resources/ls1028a-development-board:LS1028ARDB) SD card image |
 
 ## 2 Supported Images
 
@@ -96,12 +96,12 @@ ACCEPT_FSL_EULA = "1"
 Build SD card image for NXP LS1028A RDB board as an example:
 
 ```shell
-MACHINE=nxp-ls1028ardb bitbake tanowrt-image-full
+MACHINE=ls1028ardb-sd bitbake tanowrt-image-full
 ```
 
 When the build is complete, the SD card image file will be located in folder
 ```
-./tanowrt-glibc/deploy/images/nxp-ls1028ardb/tanowrt-image-full-nxp-ls1028ardb.sdcard.img
+./tanowrt-glibc/deploy/images/ls1028ardb-sd/tanowrt-image-full-ls1028ardb-sd.sdcard.img
 ```
 
 All images supported by this layer are listed in the "[Supported Images](#2-Supported-Images)" section.
@@ -110,7 +110,7 @@ Other available machines are listed in the "[Supported Hardware](#1-Supported-Ha
 
 ## 8 Running on Hardware
 
-### 8.1 LS1028A RDB Board (`nxp-ls1028ardb`)
+### 8.1 LS1028A RDB Board (`ls1028ardb-sd`)
 
 ![LS1028ARDB](docs/ls1028ardb-front.jpg)
 
@@ -119,13 +119,13 @@ Other available machines are listed in the "[Supported Hardware](#1-Supported-Ha
 Go to the deploy directory:
 
 ```shell
-cd tanowrt-glibc/deploy/images/nxp-ls1028ardb
+cd tanowrt-glibc/deploy/images/ls1028ardb-sd
 ```
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card (256 MiB or larger). For example:
 
 ```shell
-dd if=tanowrt-image-full-nxp-ls1028ardb.sdcard.img of=dev/mmcblk0 bs=512
+dd if=tanowrt-image-full-ls1028ardb-sd.sdcard.img of=dev/mmcblk0 bs=512
 ```
 
 #### 8.1.2 Prepare Hardware

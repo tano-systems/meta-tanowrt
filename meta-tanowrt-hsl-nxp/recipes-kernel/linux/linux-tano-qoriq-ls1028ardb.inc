@@ -4,17 +4,17 @@
 #
 PR_append = ".0"
 
-COMPATIBLE_MACHINE =. "nxp-ls1028ardb|"
+COMPATIBLE_MACHINE =. "ls1028ardb|"
 
 DT_DIR = "${MACHINE}"
-DT_DIR_nxp-ls1028ardb = "nxp-ls1028ardb"
+DT_DIR_ls1028ardb = "ls1028ardb"
 FILESEXTRAPATHS_prepend := "${TANOWRT_HSL_BASE}/devicetree/${LINUX_VERSION_SHORT}/${DT_DIR}:"
 
 # Config
-SRC_URI_append_nxp-ls1028ardb = " file://defconfig"
+SRC_URI_append_ls1028ardb = " file://defconfig"
 
 # Devicetree
-SRC_URI_append_nxp-ls1028ardb = "\
+SRC_URI_append_ls1028ardb = "\
 	file://fsl-ls1028a-qds.dts \
 	file://fsl-ls1028a-rdb.dts \
 	file://fsl-ls1028a.dtsi \
@@ -22,7 +22,7 @@ SRC_URI_append_nxp-ls1028ardb = "\
 	file://fsl-ls1028a-qds-x5xx.dtsi \
 "
 
-do_configure_append_nxp-ls1028ardb() {
+do_configure_append_ls1028ardb() {
 	install -d ${S}/arch/arm64/boot/dts/freescale
 	cp -f ${S}/arch/arm64/boot/dts/freescale/fsl-ls1028a-qds.dts ${S}/arch/arm64/boot/dts/freescale/fsl-ls1028a-qds.dts.orig
 	cp -f ${S}/arch/arm64/boot/dts/freescale/fsl-ls1028a-rdb.dts ${S}/arch/arm64/boot/dts/freescale/fsl-ls1028a-rdb.dts.orig

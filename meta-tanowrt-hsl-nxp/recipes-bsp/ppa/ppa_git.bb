@@ -20,7 +20,7 @@ export CROSS_COMPILE="${TARGET_PREFIX}"
 export ARCH="arm64"
 
 PPA_PLATFORM = "${MACHINE}"
-PPA_PLATFORM_nxp-ls1028ardb = "ls1028"
+PPA_PLATFORM_ls1028ardb = "ls1028"
 
 do_install() {
 	cd ${S}/ppa/ && ./build rdb-fit all

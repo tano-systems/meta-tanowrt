@@ -20,7 +20,7 @@ LOCALVERSION = ""
 
 KERNEL_IMAGETYPE ?= "Image"
 
-KERNEL_MACHINE_INCLUDE_nxp-ls1028ardb ?= "recipes-kernel/linux/linux-tano-qoriq-nxp-ls1028ardb.inc"
+KERNEL_MACHINE_INCLUDE_ls1028ardb ?= "recipes-kernel/linux/linux-tano-qoriq-ls1028ardb.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 # Failed to patch original
