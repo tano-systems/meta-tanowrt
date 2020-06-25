@@ -78,6 +78,9 @@ MAINTAINER = "TanoWrt Developers <https://github.com/tano-systems/meta-tanowrt>"
 
 DISTRO_EXTRA_RRECOMMENDS += "openssh-sftp-server"
 
+# Enable cryptodev/devcrypto engine in OpenSSL
+PACKAGECONFIG_append_pn-openssl = " cryptodev-linux"
+
 #
 # Dynamic includes
 #
