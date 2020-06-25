@@ -40,6 +40,7 @@ FEATURE_PACKAGES_watchdog = "packagegroup-tanowrt-watchdog"
 FEATURE_PACKAGES_webterminal = "packagegroup-tanowrt-webterminal"
 FEATURE_PACKAGES_wifi = "packagegroup-tanowrt-wifi"
 FEATURE_PACKAGES_wireguard = "packagegroup-tanowrt-wireguard"
+FEATURE_PACKAGES_crypto = "packagegroup-tanowrt-crypto"
 
 #
 # Create empty overlay image

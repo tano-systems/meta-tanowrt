@@ -4,7 +4,7 @@
 
 require recipes-image/images/tanowrt-image-base.bb
 
-PR_append = ".4"
+PR_append = ".5"
 SUMMARY = "TanoWrt full featured image"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -20,7 +20,7 @@ IMAGE_FEATURES += "\
 	statistics \
 	webterminal \
 	wireguard \
-	${@bb.utils.filter('MACHINE_FEATURES', 'wifi watchdog cgroup stp lldp', d)} \
+	${@bb.utils.filter('MACHINE_FEATURES', 'crypto wifi watchdog cgroup stp lldp', d)} \
 "
 
 CORE_IMAGE_EXTRA_INSTALL += "\
