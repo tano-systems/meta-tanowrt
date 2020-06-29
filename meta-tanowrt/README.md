@@ -100,6 +100,12 @@ If the `build` subdirectory with configuration has already been created, this co
 
 After executing `oe-init-build-env` script, the current directory will be automatically changed to `build` subdirectory of the working directory. Any build commands must be always run from the `build` subdirectory.
 
+Depending on your processor, set these two options in the `~/tanowrt/build/conf/local.conf` file which control how much parallelism BitBake should use:
+```
+BB_NUMBER_THREADS = "8"
+PARALLEL_MAKE = "-j 8"
+```
+
 ## Building
 
 Below we build for `qemux86-64` machine as an example:
