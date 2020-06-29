@@ -106,7 +106,7 @@ BB_NUMBER_THREADS = "8"
 PARALLEL_MAKE = "-j 8"
 ```
 
-## Building
+## 6 Building
 
 Below we build for `qemux86-64` machine as an example:
 ```shell
@@ -115,20 +115,20 @@ MACHINE=qemux86-64 bitbake tanowrt-image-full
 
 Other available machines are listed in the section "[Supported QEMU Machines](#1-Supported-QEMU-Machines)".
 
-## 6 Running
+## 7 Running
 
-### 6.1 QEMU
+### 7.1 QEMU
 
 Run command:
 ```shell
 runqemu qemux86-64
 ```
 
-### 6.2 Oracle VirtualBox
+### 7.2 Oracle VirtualBox
 
 You can run builded images for x86 machines (32 or 64-bit) in Oracle VirtualBox following this [instruction](docs/virtualbox.md).
 
-## 7 Dependencies
+## 8 Dependencies
 
 This layer depends on:
 
@@ -158,10 +158,10 @@ This layer depends on:
 
 The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
 
-## 8 License
+## 9 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 9 Maintainers
+## 10 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
