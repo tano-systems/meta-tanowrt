@@ -155,3 +155,23 @@
 		};
 	};
 };
+
+&spi_1 {
+	status = "ok";
+
+	spidev0: spidev@0{
+		compatible = "spidev";
+		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		spi-max-frequency = <125000000>;
+	};
+
+	spidev1: spidev@1{
+		compatible = "spidev";
+		reg = <1>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		spi-max-frequency = <125000000>;
+	};
+};

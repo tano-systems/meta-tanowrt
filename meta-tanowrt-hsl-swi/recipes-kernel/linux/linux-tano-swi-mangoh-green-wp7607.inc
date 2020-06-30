@@ -13,6 +13,7 @@ FILESEXTRAPATHS_prepend := "${TANOWRT_HSL_BASE}/devicetree/${LINUX_VERSION_SHORT
 SRC_URI_append_mangoh-green-wp7607 = "\
 	file://defconfig \
 	file://0001-i2c-msm-v2-Hide-I2C_MSM_ERR_NACK-errors-for-0x3a-sla.patch \
+	file://0002-spidev-Add-spidev-to-compatible-list.patch \
 "
 
 # Devicetree

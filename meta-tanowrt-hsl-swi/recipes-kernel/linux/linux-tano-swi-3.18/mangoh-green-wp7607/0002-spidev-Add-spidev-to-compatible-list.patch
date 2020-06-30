@@ -1,0 +1,25 @@
+From 0318bc54ae63b155f83991b31bbde1ca9f40609c Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 30 Jun 2020 18:19:04 +0300
+Subject: [PATCH] spidev: Add 'spidev' to compatible list
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 1a981ef27fa..8f4db4c4213 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -709,6 +709,7 @@ static int spidev_remove(struct spi_device *spi)
+ static const struct of_device_id spidev_dt_ids[] = {
+ 	{ .compatible = "rohm,dh2228fv", },
+ 	{ .compatible = "qcom,spi-msm-codec-slave", },
++	{ .compatible = "spidev", },
+ 	{},
+ };
+ 
+-- 
+2.17.1
+
