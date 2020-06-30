@@ -1,10 +1,12 @@
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://wireguard_watchdog \
 	file://wireguard.sh \
 "
+
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 do_install_append () {
 	install -dm 0755 ${D}${bindir}
