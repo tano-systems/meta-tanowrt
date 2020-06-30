@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano37"
+PR = "tano38"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -100,3 +100,5 @@ ALTERNATIVE_TARGET[init] = "${base_sbindir}/init"
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/hotplug.json \
 "
+
+BBCLASSEXTEND = "native nativesdk"

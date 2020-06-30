@@ -10,6 +10,8 @@ CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
 
 inherit distro_features_check
 
+RDEPENDS_${PN}_append = " procd "
+
 python __anonymous() {
     # Check for deprecated OPENWRT_* variables
     owrt_packages = d.getVar('OPENWRT_SERVICE_PACKAGES', True)
