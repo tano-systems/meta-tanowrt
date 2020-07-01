@@ -12,7 +12,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-3.18:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/features:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tn-1"
+MACHINE_KERNEL_PR_append = "tn-2"
 PR = "${MACHINE_KERNEL_PR}"
 
 # TAG = SWI9X07Y_02.28.03.05
@@ -45,6 +45,8 @@ KERNEL_FEATURES_append = " netfilter.scc "
 
 SRC_URI_append = " file://coresight.scc "
 KERNEL_FEATURES_append = " coresight.scc "
+
+SRC_URI_append = " file://0002-i2c-mux-pca954x-Backport-from-kernel-4.9.228.patch "
 
 # Already applied
 KERNEL_FEATURES_remove = "patches/openwrt/generic-${LINUX_VERSION_FULL}/613.scc"
