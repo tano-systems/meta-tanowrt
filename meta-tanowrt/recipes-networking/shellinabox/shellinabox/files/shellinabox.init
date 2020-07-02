@@ -33,6 +33,11 @@ start_service() {
 	[ "${opt_no_beep}" -ne 0 ] && procd_append_param command --no-beep
 
 	if [ "${opt_ssl}" -eq "1" ]; then
+		if [ -f "${opt_ssl_cert}" ]; then
+			CERT_FILE_SIZE=$(stat -c%s ${opt_ssl_cert})
+			[ "${CERT_FILE_SIZE}" = "0" ] && rm -f ${opt_ssl_cert}
+		fi
+
 		mkdir -p $(dirname $opt_ssl_cert)
 		procd_append_param command --cert-file=${opt_ssl_cert}
 		procd_append_param command --disable-ssl-menu
