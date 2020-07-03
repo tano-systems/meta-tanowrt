@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano52.${INC_PR}"
+PR_append = ".tano53.${INC_PR}"
 
 DEPENDS += "os-release"
 RDEPENDS_${PN} += "os-release"
@@ -33,6 +33,7 @@ SRC_URI += "\
 "
 
 SRC_URI_append = "\
+    file://shells \
     file://sysctl.conf \
     file://issue \
     file://hostname \
@@ -185,6 +186,7 @@ do_install_append () {
 	install -m 0755 ${WORKDIR}/boot.init ${D}${sysconfdir}/init.d/boot
 	install -m 0755 ${WORKDIR}/sysfixtime.init ${D}${sysconfdir}/init.d/sysfixtime
 	install -m 0755 ${WORKDIR}/hotplug-call ${D}${base_sbindir}/hotplug-call
+	install -m 0644 ${WORKDIR}/shells ${D}${sysconfdir}/shells
 
 	install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
 
