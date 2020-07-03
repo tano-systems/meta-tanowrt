@@ -7,7 +7,7 @@ COMPATIBLE_MACHINE = "^rpi$"
 
 PE = "1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
-PR_append = ".0"
+PR_append = ".1"
 
 inherit kernel siteinfo
 
@@ -39,6 +39,7 @@ CMDLINE_DEBUG ?= ""
 CMDLINE_append = " ${CMDLINE_DEBUG}"
 
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
+KERNEL_MODULE_AUTOLOAD += "${@oe.utils.conditional("ENABLE_I2C", "1", "i2c-dev i2c-bcm2708", "", d)}"
 
 # A LOADADDR is needed when building a uImage format kernel. This value is not
 # set by default in rpi-4.8.y and later branches so we need to provide it
