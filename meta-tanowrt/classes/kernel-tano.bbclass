@@ -2,6 +2,7 @@
 
 do_install_append() {
 	install -d ${D}${sysconfdir}/modules-boot.d
+	install -d ${D}${sysconfdir}/modules.d
 }
 
 #
@@ -107,7 +108,7 @@ python split_kernel_module_packages () {
             d.setVar('pkg_postinst_%s' % pkg, postinst)
 
         files = d.getVar('FILES_%s' % pkg)
-        files = "%s /etc/modules-boot.d/%s.conf /etc/modules-load.d/%s.conf /etc/modprobe.d/%s.conf" % (files, basename, basename, basename)
+        files = "%s /etc/modules-boot.d/%s.conf /etc/modules.d/%s.conf /etc/modules-load.d/%s.conf /etc/modprobe.d/%s.conf" % (files, basename, basename, basename, basename)
         d.setVar('FILES_%s' % pkg, files)
 
         if "description" in vals:
@@ -156,7 +157,7 @@ python split_kernel_module_packages () {
     # remove them to avoid warnings. removedirs only raises an OSError
     # if an empty directory cannot be removed.
     dvar = d.getVar('PKGD')
-    for dir in ["%s/etc/modules-boot.d" % (dvar), "%s/etc/modprobe.d" % (dvar), "%s/etc/modules-load.d" % (dvar), "%s/etc" % (dvar)]:
+    for dir in ["%s/etc/modules-boot.d" % (dvar), "%s/etc/modules.d" % (dvar), "%s/etc/modprobe.d" % (dvar), "%s/etc/modules-load.d" % (dvar), "%s/etc" % (dvar)]:
         if len(os.listdir(dir)) == 0:
             os.rmdir(dir)
 }
