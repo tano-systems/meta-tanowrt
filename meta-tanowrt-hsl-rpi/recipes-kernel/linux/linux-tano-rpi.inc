@@ -7,7 +7,7 @@ COMPATIBLE_MACHINE = "^rpi$"
 
 PE = "1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
-PR_append = ".1"
+PR_append = ".2"
 
 inherit kernel siteinfo
 
@@ -24,8 +24,8 @@ KCONFIG_MODE = "--alldefconfig"
 #KBUILD_DEFCONFIG_raspberrypi4-64 ?= "bcm2711_defconfig"
 
 # CMDLINE for raspberrypi
-SERIAL = "${@oe.utils.conditional("ENABLE_UART", "1", "console=serial0,115200", "", d)}"
-CMDLINE ?= "dwc_otg.lpm_enable=0 ${SERIAL} root=/dev/mmcblk0p2 rootfstype=squashfs rootwait"
+KERNEL_SERIAL ?= "${@oe.utils.conditional("ENABLE_UART", "1", "console=serial0,115200", "", d)}"
+CMDLINE ?= "dwc_otg.lpm_enable=0 ${KERNEL_SERIAL} root=/dev/mmcblk0p2 rootfstype=squashfs rootwait"
 
 # Add the kernel debugger over console kernel command line option if enabled
 CMDLINE_append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
