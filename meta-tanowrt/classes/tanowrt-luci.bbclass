@@ -28,9 +28,14 @@ LUCI_DO_RM_LUADOC ?= "1"
 
 DEPENDS += "\
 	${@oe.utils.conditional('LUCI_DO_MINIFY_JS', '1', 'jsmin-native', '', d)} \
-	${@oe.utils.conditional('LUCI_DO_MINIFY_LUA', '1', 'luasrcdiet-native', '', d)} \
 	${@oe.utils.conditional('LUCI_DO_MINIFY_CSS', '1', 'csstidy-native', '', d)} \
 "
+
+EXT_CLASSES = "${@oe.utils.conditional('LUCI_DO_MINIFY_LUA', '1', 'luasrcdiet', '', d)}"
+inherit ${EXT_CLASSES}
+
+LUASRCDIET_ENABLE = "${LUCI_DO_POST_INSTALL_ACTIONS}"
+LUASRCDIET_PATHS = "${D}"
 
 post_install_actions() {
 	if [ "${LUCI_DO_POST_INSTALL_ACTIONS}" = "0" ]; then
@@ -87,16 +92,6 @@ post_install_actions() {
 			if jsmin < "$src" > "$src.o"; then
 				mv "$src.o" "$src"
 			fi
-		done
-	fi
-
-	if [ "${LUCI_DO_MINIFY_LUA}" = "1" ]; then
-		for p in "${ACTIONS_DIR}"; do
-			find "$p" -type f -name '*.lua' | while read src; do
-				if LUA_PATH=${STAGING_DIR_NATIVE}/usr/lib/lua/5.1/?.lua luasrcdiet --noopt-binequiv -o "$src.o" "$src"; then
-					mv "$src.o" "$src"
-				fi
-			done
 		done
 	fi
 }
