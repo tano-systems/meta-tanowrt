@@ -1,9 +1,10 @@
-PR_append = ".9"
+PR_append = ".10"
 
 KERNEL_CACHE_DIR = "kmeta-tano"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
+	features/kernel-4.14+/fs/overlayfs-extra.scc \
 "
 
 #	patches/openwrt/generic-${LINUX_VERSION_FULL}/550.scc \
