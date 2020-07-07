@@ -41,7 +41,7 @@ KERNEL_FEATURES_append = " netfilter.scc "
 SRC_URI_append = " file://coresight.scc "
 KERNEL_FEATURES_append = " coresight.scc "
 
-SRC_URI_append = " file://0002-i2c-mux-pca954x-Backport-from-kernel-4.9.228.patch "
+#SRC_URI_append = " file://0002-i2c-mux-pca954x-Backport-from-kernel-4.9.228.patch "
 
 # Already applied
 SRC_URI_remove = "file://613-netfilter_optional_tcp_window_check.patch"
