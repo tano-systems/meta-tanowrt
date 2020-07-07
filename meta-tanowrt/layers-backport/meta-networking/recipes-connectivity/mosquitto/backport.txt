@@ -1,0 +1,5 @@
+﻿Recipe for mosquitto 1.6.10 backported from meta-openembedded layer:
+  repository: git://git.openembedded.org/meta-openembedded
+  subdirectory: meta-networking
+  branch: dunfell
+  revision: cc6fc6b1641ab23089c1e3bba11e0c6394f0867c
