@@ -5,9 +5,17 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 COMPATIBLE_MACHINE = "^rpi$"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/features:"
+SRC_URI += "file://gpio-sysfs.scc \
+            file://gpio-gpiolib.scc \
+           "
+
+KERNEL_FEATURES_append = " gpio-sysfs.scc "
+KERNEL_FEATURES_append = " gpio-gpiolib.scc "
+
 PE = "1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
-PR_append = ".2"
+PR_append = ".3"
 
 inherit kernel siteinfo
 
