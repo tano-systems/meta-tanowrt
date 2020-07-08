@@ -8,7 +8,7 @@ SECTION = "kernel"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PR = "tano0"
+PR = "tano1"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -18,7 +18,6 @@ SRC_URI += "file://sysctl-br-netfilter.conf"
 do_install_append() {
 	install -dm 0755 ${D}${sysconfdir}/sysctl.d
 	install -m 0644 ${WORKDIR}/sysctl-br-netfilter.conf ${D}${sysconfdir}/sysctl.d/11-br-netfilter.conf
-	chown -R root:root ${D}${sysconfdir}
 }
 
 FILES_${PN} += "${sysconfdir}"
