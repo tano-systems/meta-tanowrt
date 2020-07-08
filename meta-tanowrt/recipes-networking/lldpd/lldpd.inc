@@ -4,9 +4,9 @@ SECTION = "net/misc"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/ISC;md5=f3b90e78ea0cffb20bf5cca7947a896d"
 
-INC_PR = "3"
+INC_PR = "4"
 
-DEPENDS = "libbsd libevent os-release"
+DEPENDS = "libbsd libevent"
 
 inherit autotools pkgconfig bash-completion useradd
 
@@ -38,7 +38,7 @@ PACKAGECONFIG[custom] = "--enable-custom,--disable-custom"
 PACKAGES =+ "${PN}-zsh-completion"
 
 FILES_${PN} += "${libdir}/sysusers.d"
-RDEPENDS_${PN} += "os-release"
+RDEPENDS_${PN} += "tano-version"
 
 FILES_${PN}-zsh-completion += "${datadir}/zsh/"
 # FIXME: zsh is broken in meta-oe so this cannot be enabled for now
