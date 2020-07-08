@@ -4,10 +4,9 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano53.${INC_PR}"
+PR_append = ".tano54.${INC_PR}"
 
-DEPENDS += "os-release"
-RDEPENDS_${PN} += "os-release"
+RDEPENDS_${PN} += "tano-version"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
