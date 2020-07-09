@@ -2,7 +2,7 @@
 # Tano Systems LuCI Theme bitbake recipe
 # Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
 #
-PR = "tano26"
+PR = "tano27"
 PV = "0.0.9+git${SRCPV}"
 
 SUMMARY = "LuCI Theme by Tano Systems"
@@ -29,6 +29,8 @@ SRC_URI += "file://package-lock.json"
 
 S = "${WORKDIR}/git"
 LUCI_PKG_SRC = "${S}/bundle/build"
+
+export HOME = "${WORKDIR}"
 
 do_npm_configure() {
 	cd ${B}
