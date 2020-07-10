@@ -1,0 +1,40 @@
+From d09dceb39fe1cf525137625530c55c2921a9c00b Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 14 Jul 2020 02:20:48 +0300
+Subject: [PATCH] Add debug output
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ net/mac80211/main.c | 2 ++
+ net/wireless/core.c | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 64955e3..e4dba7b 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1432,6 +1432,8 @@ static int __init ieee80211_init(void)
+ 	struct sk_buff *skb;
+ 	int ret;
+ 
++	printk("mac80211 from linux-backports " CPTCFG_VERSION "\n");
++
+ 	BUILD_BUG_ON(sizeof(struct ieee80211_tx_info) > sizeof(skb->cb));
+ 	BUILD_BUG_ON(offsetof(struct ieee80211_tx_info, driver_data) +
+ 		     IEEE80211_TX_INFO_DRIVER_DATA_SIZE > sizeof(skb->cb));
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index ccc08a7..6151b97 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1454,6 +1454,8 @@ static int __init cfg80211_init(void)
+ {
+ 	int err;
+ 
++	printk("cfg80211 from linux-backports " CPTCFG_VERSION "\n");
++
+ 	err = register_pernet_device(&cfg80211_pernet_ops);
+ 	if (err)
+ 		goto out_fail_pernet;
+-- 
+2.17.1
+
