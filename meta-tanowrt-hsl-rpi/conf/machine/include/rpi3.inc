@@ -11,6 +11,19 @@ WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rpi"
 PREFERRED_VERSION_linux-tano-rpi = "4.19.%"
 
+# Switch from linux-firmware-rpidistro to cypress-firmware
+MACHINE_EXTRA_RRECOMMENDS_remove = "\
+    linux-firmware-rpidistro-bcm43430 \
+    linux-firmware-rpidistro-bcm43455 \
+"
+
+MACHINE_EXTRA_RRECOMMENDS_append = "\
+    cypress-firmware-43430-sdio \
+    cypress-firmware-43455-sdio \
+    cypress-nvram-43430-sdio-rpi-3b \
+    cypress-nvram-43455-sdio-rpi-3b-plus \
+"
+
 RPI_KERNEL_DEVICETREE_OVERLAYS = " \
     overlays/at86rf233.dtbo \
     overlays/dwc2.dtbo \
