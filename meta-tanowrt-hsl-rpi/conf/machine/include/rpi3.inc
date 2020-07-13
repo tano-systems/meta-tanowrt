@@ -27,6 +27,9 @@ MACHINE_EXTRA_RRECOMMENDS_append = "\
     cypress-nvram-43455-sdio-rpi-3b-plus \
 "
 
+MACHINE_EXTRA_RDEPENDS += "linux-backports"
+LINUX_BACKPORTS_CONFIGS = "brcmfmac brcmsmac"
+
 RPI_KERNEL_DEVICETREE_OVERLAYS = " \
     overlays/at86rf233.dtbo \
     overlays/disable-bt.dtbo \
