@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano8"
+INC_PR = "tano9"
 
 inherit pkgconfig
 
@@ -12,8 +12,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/hostapd:${THISDIR}/hostapd/patches:${THIS
 
 SRC_URI = "git://w1.fi/hostap.git"
 
-# 2020-05-20
-SRCREV = "dd2daf0848ed8854065cc5cfca07a0538cd380af"
+# 2020-06-08
+SRCREV = "5a8b366233f5585e68a4ffbb604fbb4a848eb325"
 
 PV = "2.9+git${SRCPV}"
 
@@ -27,7 +27,6 @@ SRC_URI += "\
 	file://wpa_supplicant-mini.config \
 	file://wpa_supplicant-p2p.config \
 	file://hostapd.sh \
-	file://hostapd.hotplug \
 	file://wps-hotplug.sh \
 	file://multicall.c \
 	file://wpad.init \
