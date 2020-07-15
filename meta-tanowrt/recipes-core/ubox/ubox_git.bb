@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano9"
+PR = "tano10"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -43,16 +43,21 @@ do_install_append () {
 	fi
 
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', '1', '0', d)}" = "1" ]; then
-		install -dm 0755 ${D}/usr/sbin
-		ln -s /sbin/kmodloader ${D}/usr/sbin/rmmod
-		ln -s /sbin/kmodloader ${D}/usr/sbin/insmod
-		ln -s /sbin/kmodloader ${D}/usr/sbin/lsmod
-		ln -s /sbin/kmodloader ${D}/usr/sbin/modinfo
-		ln -s /sbin/kmodloader ${D}/usr/sbin/modprobe
-
 		install -dm 0755 ${D}/sbin
+		install -dm 0755 ${D}/usr/sbin
+
+		ln -s /sbin/rmmod    ${D}/usr/sbin/rmmod
+		ln -s /sbin/insmod   ${D}/usr/sbin/insmod
+		ln -s /sbin/lsmod    ${D}/usr/sbin/lsmod
+		ln -s /sbin/modinfo  ${D}/usr/sbin/modinfo
+		ln -s /sbin/modprobe ${D}/usr/sbin/modprobe
+
 		ln -s /usr/sbin/kmodloader ${D}/sbin/kmodloader
-		ln -s /sbin/kmodloader ${D}/sbin/modprobe
+		ln -s /sbin/kmodloader ${D}/sbin/rmmod
+		ln -s /sbin/kmodloader ${D}/sbin/insmod
+		ln -s /sbin/kmodloader ${D}/sbin/lsmod
+#		ln -s /sbin/kmodloader ${D}/sbin/modinfo
+#		ln -s /sbin/kmodloader ${D}/sbin/modprobe
 	fi
 }
 
