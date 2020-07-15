@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano9"
+INC_PR = "tano10"
 
 inherit pkgconfig
 
@@ -148,3 +148,8 @@ do_configure() {
 }
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
+
+inherit tanowrt-services
+TANOWRT_SERVICE_PACKAGES = "hostapd"
+TANOWRT_SERVICE_SCRIPTS_hostapd += "wpad"
+TANOWRT_SERVICE_STATE_hostapd-wpad ?= "enabled"
