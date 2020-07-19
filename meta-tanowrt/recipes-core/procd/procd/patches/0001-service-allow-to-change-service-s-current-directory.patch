@@ -1,35 +1,36 @@
-From 1552a756e52412b5ef94226276baa9e7287842bd Mon Sep 17 00:00:00 2001
+From a7342743741aef2919c077b4cf7057e8666cbb9e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
 Subject: [PATCH 01/13] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- service/instance.c | 19 +++++++++++++++++++
+ service/instance.c | 20 +++++++++++++++++++-
  service/instance.h |  1 +
- 2 files changed, 20 insertions(+)
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index 142208a..0f8f5e1 100644
+index c83e227..749a758 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -65,6 +65,7 @@ enum {
- 	INSTANCE_ATTR_EXTROOT,
- 	INSTANCE_ATTR_OVERLAYDIR,
+@@ -67,6 +67,7 @@ enum {
  	INSTANCE_ATTR_TMPOVERLAYSIZE,
+ 	INSTANCE_ATTR_BUNDLE,
+ 	INSTANCE_ATTR_WATCHDOG,
 +	INSTANCE_ATTR_CHDIR,
  	__INSTANCE_ATTR_MAX
  };
  
-@@ -95,6 +96,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
- 	[INSTANCE_ATTR_EXTROOT] = { "extroot", BLOBMSG_TYPE_STRING },
- 	[INSTANCE_ATTR_OVERLAYDIR] = { "overlaydir", BLOBMSG_TYPE_STRING },
+@@ -99,7 +100,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_TMPOVERLAYSIZE] = { "tmpoverlaysize", BLOBMSG_TYPE_STRING },
-+	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
- };
+ 	[INSTANCE_ATTR_BUNDLE] = { "bundle", BLOBMSG_TYPE_STRING },
+ 	[INSTANCE_ATTR_WATCHDOG] = { "watchdog", BLOBMSG_TYPE_ARRAY },
+-};
++	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },};
  
  enum {
-@@ -439,6 +441,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+ 	JAIL_ATTR_NAME,
+@@ -448,6 +449,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		ERROR("failed to set user id %d: %m\n", in->uid);
  		exit(127);
  	}
@@ -40,8 +41,8 @@ index 142208a..0f8f5e1 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -817,6 +823,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
- 	if (!blobmsg_list_equal(&in->errors, &in_new->errors))
+@@ -852,6 +857,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+ 	if (in->watchdog.freq != in_new->watchdog.freq)
  		return true;
  
 +	if (string_changed(in->chdir, in_new->chdir))
@@ -50,7 +51,7 @@ index 142208a..0f8f5e1 100644
  	return false;
  }
  
-@@ -1144,6 +1153,12 @@ instance_config_parse(struct service_instance *in)
+@@ -1185,6 +1193,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -63,7 +64,7 @@ index 142208a..0f8f5e1 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1220,6 +1235,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1290,6 +1304,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->trace = in_src->trace;
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
@@ -71,9 +72,9 @@ index 142208a..0f8f5e1 100644
  
  	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
  	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
-@@ -1425,5 +1441,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
- 	if (verbose && in->trigger)
- 		blobmsg_add_blob(b, in->trigger);
+@@ -1511,5 +1526,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+ 		blobmsg_close_table(b, r);
+ 	}
  
 +	if (in->chdir)
 +		blobmsg_add_string(b, "chdir", in->chdir);
@@ -81,13 +82,13 @@ index 142208a..0f8f5e1 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index 4400cd4..987b6b8 100644
+index bb8a0c4..c7764b1 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -70,6 +70,7 @@ struct service_instance {
- 	char *extroot;
+@@ -84,6 +84,7 @@ struct service_instance {
  	char *overlaydir;
  	char *tmpoverlaysize;
+ 	char *bundle;
 +	char *chdir;
  	int syslog_facility;
  	int exit_code;

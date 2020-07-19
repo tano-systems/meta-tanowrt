@@ -1,17 +1,17 @@
-From 9055266916fa7f9e18ed8a21e3d90f1d8c7ebd18 Mon Sep 17 00:00:00 2001
+From a4251bfbcfede4517ece04cff60f2ec134d77e05 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 9 Feb 2019 01:18:40 +0300
 Subject: [PATCH 02/13] service: Add initial cgroup support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt     |   5 ++
- service/instance.c | 259 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- service/instance.h |   5 ++
- 3 files changed, 269 insertions(+)
+ CMakeLists.txt     |   5 +
+ service/instance.c | 262 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ service/instance.h |   5 +
+ 3 files changed, 271 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3eb79f9..ebca992 100644
+index 1f77662..725a8b5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -33,6 +33,11 @@ FIND_LIBRARY(json NAMES json-c json)
@@ -27,7 +27,7 @@ index 3eb79f9..ebca992 100644
    ADD_DEFINITIONS(-DUDEV_DEBUG -g3)
  ENDIF()
 diff --git a/service/instance.c b/service/instance.c
-index 0f8f5e1..e692173 100644
+index 749a758..46f809e 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -1,6 +1,7 @@
@@ -60,9 +60,9 @@ index 0f8f5e1..e692173 100644
  #include <libubox/md5.h>
  
  #include "../procd.h"
-@@ -66,6 +82,10 @@ enum {
- 	INSTANCE_ATTR_OVERLAYDIR,
- 	INSTANCE_ATTR_TMPOVERLAYSIZE,
+@@ -68,6 +84,10 @@ enum {
+ 	INSTANCE_ATTR_BUNDLE,
+ 	INSTANCE_ATTR_WATCHDOG,
  	INSTANCE_ATTR_CHDIR,
 +#ifdef CGROUP_SUPPORT
 +	INSTANCE_ATTR_CG_GROUP,
@@ -71,18 +71,21 @@ index 0f8f5e1..e692173 100644
  	__INSTANCE_ATTR_MAX
  };
  
-@@ -97,6 +117,10 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
- 	[INSTANCE_ATTR_OVERLAYDIR] = { "overlaydir", BLOBMSG_TYPE_STRING },
+@@ -100,7 +120,12 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_TMPOVERLAYSIZE] = { "tmpoverlaysize", BLOBMSG_TYPE_STRING },
- 	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
+ 	[INSTANCE_ATTR_BUNDLE] = { "bundle", BLOBMSG_TYPE_STRING },
+ 	[INSTANCE_ATTR_WATCHDOG] = { "watchdog", BLOBMSG_TYPE_ARRAY },
+-	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },};
++	[INSTANCE_ATTR_CHDIR] = { "chdir", BLOBMSG_TYPE_STRING },
 +#ifdef CGROUP_SUPPORT
 +	[INSTANCE_ATTR_CG_STICKY] = { "cg_sticky", BLOBMSG_TYPE_BOOL },
 +	[INSTANCE_ATTR_CG_GROUP] = { "cg_group", BLOBMSG_TYPE_ARRAY },
 +#endif
- };
++};
  
  enum {
-@@ -351,6 +375,206 @@ instance_writepid(struct service_instance *in)
+ 	JAIL_ATTR_NAME,
+@@ -359,6 +384,206 @@ instance_writepid(struct service_instance *in)
  	return 0;
  }
  
@@ -289,7 +292,7 @@ index 0f8f5e1..e692173 100644
  static void
  instance_run(struct service_instance *in, int _stdout, int _stderr)
  {
-@@ -429,6 +653,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -437,6 +662,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		closefd(_stderr);
  	}
  
@@ -300,7 +303,7 @@ index 0f8f5e1..e692173 100644
  	if (!in->has_jail && in->user && in->pw_gid && initgroups(in->user, in->pw_gid)) {
  		ERROR("failed to initgroups() for user %s: %m\n", in->user);
  		exit(127);
-@@ -826,6 +1054,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -860,6 +1089,14 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (string_changed(in->chdir, in_new->chdir))
  		return true;
  
@@ -315,7 +318,7 @@ index 0f8f5e1..e692173 100644
  	return false;
  }
  
-@@ -1159,6 +1395,14 @@ instance_config_parse(struct service_instance *in)
+@@ -1199,6 +1436,14 @@ instance_config_parse(struct service_instance *in)
  			in->chdir = chdir;
  	}
  
@@ -330,7 +333,7 @@ index 0f8f5e1..e692173 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1236,6 +1480,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1305,6 +1550,10 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
  	in->chdir = in_src->chdir;
@@ -341,7 +344,7 @@ index 0f8f5e1..e692173 100644
  
  	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
  	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
-@@ -1301,6 +1549,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
+@@ -1372,6 +1621,10 @@ instance_init(struct service_instance *in, struct service *s, struct blob_attr *
  	in->exit_code = 0;
  	in->require_jail = false;
  
@@ -352,7 +355,7 @@ index 0f8f5e1..e692173 100644
  	in->_stdout.fd.fd = -2;
  	in->_stdout.stream.string_data = true;
  	in->_stdout.stream.notify_read = instance_stdout;
-@@ -1444,5 +1696,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1529,5 +1782,12 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  	if (in->chdir)
  		blobmsg_add_string(b, "chdir", in->chdir);
  
@@ -366,10 +369,10 @@ index 0f8f5e1..e692173 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index 987b6b8..5167f13 100644
+index c7764b1..854bbc0 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -74,6 +74,11 @@ struct service_instance {
+@@ -88,6 +88,11 @@ struct service_instance {
  	int syslog_facility;
  	int exit_code;
  
