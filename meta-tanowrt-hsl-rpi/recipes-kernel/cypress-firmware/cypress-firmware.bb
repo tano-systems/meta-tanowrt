@@ -24,7 +24,7 @@ do_compile[noexec] = "1"
 S = "${WORKDIR}/${PN}-${PV}"
 
 do_unpack() {
-	unzip -q -p ${WORKDIR}/cypress-fmac-${PKG_VERSION}.zip cypress-firmware-${PKG_VERSION}.tar.gz \
+	unzip -q -p ${DL_DIR}/cypress-fmac-${PKG_VERSION}.zip cypress-firmware-${PKG_VERSION}.tar.gz \
 		| gzip -dc \
 		| tar -C ${S} -xf -
 }
