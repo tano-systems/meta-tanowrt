@@ -8,6 +8,8 @@ PR_append = ".1"
 python __anonymous() {
     if not d.getVar("KERNEL_CACHE_DIR"):
         bb.error("You need to set properly value for KERNEL_CACHE_DIR")
+    if not d.getVar("LINUX_VERSION"):
+        bb.error("You need to set properly value for LINUX_VERSION")
 }
 
 # LEVELS:
@@ -46,8 +48,18 @@ SRCREV_machine = "${KERNEL_SRC_SRCREV}"
 SRCREV_FORMAT = "machine"
 
 require recipes-kernel/linux/linux-yocto.inc
-
 inherit kernel-tano
+
+LINUX_VERSION_FULL = "${@kernel_full_version("${LINUX_VERSION}")}"
+LINUX_VERSION_SHORT = "${@oe.utils.trim_version("${LINUX_VERSION}", 2)}"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_SHORT}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_FULL}:"
+
+KERNEL_CACHE_DIR = "kmeta-tano"
+
+require recipes-kernel/linux/tano-kernel-cache-${LINUX_VERSION_SHORT}.inc
+require recipes-kernel/linux/tano-kernel-cache.inc
 
 LINUX_VERSION_EXTENSION ??= "-tano-${LINUX_KERNEL_TYPE}"
 

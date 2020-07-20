@@ -23,8 +23,4 @@ KERNEL_IMAGETYPE ?= "Image"
 KERNEL_MACHINE_INCLUDE_ls1028ardb ?= "recipes-kernel/linux/linux-tano-qoriq-ls1028ardb.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
-# Failed to patch original
-KERNEL_FEATURES_remove = "patches/openwrt/generic-${LINUX_VERSION_FULL}/662.scc"
-SRC_URI_append = "file://662.patch"
-
 LINUX_VERSION_EXTENSION = "-tano-qoriq-${LINUX_KERNEL_TYPE}"

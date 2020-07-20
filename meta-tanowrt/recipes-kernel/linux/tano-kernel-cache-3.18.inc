@@ -1,21 +1,17 @@
-PR_append = ".4"
+PR_append = ".5"
 
-KERNEL_CACHE_DIR = "kmeta-tano"
-
-KERNEL_FEATURES_append = "\
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/600.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/610.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/611.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/612.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/613.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/630.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/640.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/655.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/660.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/661.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/662.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/663.scc \
-	patches/openwrt/generic-${LINUX_VERSION_FULL}/681.scc \
+SRC_URI_append = "\
+	file://600-netfilter_conntrack_flush.patch \
+	file://610-netfilter_match_bypass_default_checks.patch \
+	file://611-netfilter_match_bypass_default_table.patch \
+	file://612-netfilter_match_reduce_memory_access.patch \
+	file://613-netfilter_optional_tcp_window_check.patch \
+	file://630-packet_socket_type.patch \
+	file://640-bridge_no_eap_forward.patch \
+	file://655-increase_skb_pad.patch \
+	file://660-fq_codel_defaults.patch \
+	file://661-fq_codel_keep_dropped_stats.patch \
+	file://662-use_fq_codel_by_default.patch \
+	file://663-remove_pfifo_fast.patch \
+	file://681-NET-add-of_get_mac_address_mtd.patch \
 "
-
-require recipes-kernel/linux/tano-kernel-cache.inc
