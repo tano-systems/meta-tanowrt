@@ -9,16 +9,16 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-4.19:"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano2"
+MACHINE_KERNEL_PR_append = "tano0"
 PR = "${MACHINE_KERNEL_PR}"
 
 LINUX_RPI_BRANCH ?= "rpi-4.19.y"
 
 KERNEL_SRC_URI ?= "git://github.com/raspberrypi/linux.git;protocol=git"
 KERNEL_SRC_BRANCH ?= "${LINUX_RPI_BRANCH}"
-KERNEL_SRC_SRCREV ?= "55b89745a4782db50e86291bd1adee8fb44b84ad"
+KERNEL_SRC_SRCREV ?= "106fa147d3daa58d2c1ae5f41a29d07036fe7d0a"
 
-LINUX_VERSION ?= "4.19.57"
+LINUX_VERSION ?= "4.19.127"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
