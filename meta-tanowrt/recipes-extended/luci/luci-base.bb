@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -21,6 +21,7 @@ RDEPENDS_${PN} += "\
 	luci-lib-nixio \
 	luci-lib-ip \
 	luci-lib-jsonc \
+	luci-lib-base \
 	libubus-lua \
 	rpcd \
 	rpcd-mod-rrdns \
