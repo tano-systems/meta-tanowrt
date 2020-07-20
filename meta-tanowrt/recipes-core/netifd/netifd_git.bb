@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano29"
+PR = "tano30"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -35,9 +35,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 11.03.2020
-# system-linux: improve handling of device rename
-SRCREV_netifd = "51e9fb8151e8f2c16ac1400bf4d64147ee7e8f5a"
+# 18.07.2020
+# config: enable bridge vlan filtering by default for bridges that define VLANs
+SRCREV_netifd = "6086b63b4ca24ce4f23774d5ad49b5791f0b1705"
 
 S = "${WORKDIR}/git"
 
