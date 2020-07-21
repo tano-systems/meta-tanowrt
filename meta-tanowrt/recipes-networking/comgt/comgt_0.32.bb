@@ -4,7 +4,7 @@ DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
-PR = "tano11"
+PR = "tano12"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -29,6 +29,7 @@ SRC_URI = "\
 	file://runcommand.gcom \
 	file://setpin.gcom \
 	file://setmode.gcom \
+	file://ussd.gcom \
 "
 
 SRC_URI[md5sum] = "db2452680c3d953631299e331daf49ef"
@@ -68,6 +69,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/getcarrier.gcom ${D}${sysconfdir}/gcom/getcarrier.gcom
     install -m 0644 ${WORKDIR}/getcnum.gcom ${D}${sysconfdir}/gcom/getcnum.gcom
     install -m 0644 ${WORKDIR}/getimsi.gcom ${D}${sysconfdir}/gcom/getimsi.gcom
+    install -m 0644 ${WORKDIR}/ussd.gcom ${D}${sysconfdir}/gcom/ussd.gcom
 
     # scripts
     install -m 0644 ${B}/scripts/command ${D}${sysconfdir}/gcom/command
@@ -103,6 +105,7 @@ FILES_${PN} = "\
 	${sysconfdir}/gcom/getcarrier.gcom \
 	${sysconfdir}/gcom/getcnum.gcom \
 	${sysconfdir}/gcom/getimsi.gcom \
+	${sysconfdir}/gcom/ussd.gcom \
 	${sysconfdir}/gcom/command \
 	${sysconfdir}/gcom/dump \
 	${sysconfdir}/gcom/info \
