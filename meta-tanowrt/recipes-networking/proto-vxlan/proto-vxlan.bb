@@ -4,7 +4,7 @@
 # Virtual eXtensible LAN config support
 #
 PV = "0.0.2"
-PR = "tano1"
+PR = "tano2"
 
 inherit allarch
 
