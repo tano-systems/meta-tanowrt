@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano30"
+PR = "tano31"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -26,6 +26,7 @@ SRC_URI += "\
 	file://rootfs/etc/hotplug.d/iface/00-netstate \
 	file://rootfs/etc/hotplug.d/net/20-smp-packet-steering \
 	file://rootfs/etc/init.d/network \
+	file://rootfs/etc/uci-defaults/14_migrate-dhcp-release \
 	file://rootfs/lib/netifd/proto/dhcp.sh \
 	file://rootfs/lib/netifd/dhcp.script \
 	file://rootfs/lib/network/config.sh \
@@ -64,6 +65,9 @@ do_install_append() {
 
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/rootfs/etc/init.d/network ${D}${sysconfdir}/init.d/
+
+	install -d ${D}${sysconfdir}/uci-defaults
+	install -m 0755 ${WORKDIR}/rootfs/etc/uci-defaults/14_migrate-dhcp-release ${D}${sysconfdir}/uci-defaults/
 
 	install -d ${D}${sysconfdir}/hotplug.d/iface
 	install -d ${D}${sysconfdir}/hotplug.d/net
