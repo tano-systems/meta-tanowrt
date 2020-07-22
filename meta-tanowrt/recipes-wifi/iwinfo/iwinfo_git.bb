@@ -8,7 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano14"
+PR = "tano15"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
@@ -33,6 +33,7 @@ SRC_URI += "\
 	file://0001-fix-order-of-linker-cmdline-to-help-linking-when-usi.patch \
 	file://0001-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \
 	file://0002-use-libnl3-instead-of-libnl-tiny.patch \
+	file://1001-iwinfo-add-device-id-for-Intel-Dual-Band-Wireless-AC.patch \
 "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
