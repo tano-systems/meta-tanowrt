@@ -10,6 +10,7 @@ EXTRA_OECONF += "\
 	--disable-gtk-doc-html \
 	--disable-gtk-doc-pdf \
 	--disable-silent-rules \
+	--enable-introspection=no \
 "
 
 #

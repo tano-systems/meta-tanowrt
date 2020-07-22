@@ -1,5 +1,7 @@
-﻿Recipe for libmbim 1.22.0 backported from meta-openembedded layer:
+﻿Original recipe for libmbim 1.22.0 backported from meta-openembedded layer:
   repository: https://github.com/openembedded/meta-openembedded.git
   subdirectory: meta-oe
   branch: master
   revision: 72e77866bfcc708a53c9cdbcadc0b1ea97c8368c
+
+Recipe manually upgraded to version 1.24.2
