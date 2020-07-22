@@ -6,10 +6,6 @@ PR_append = ".0"
 
 COMPATIBLE_MACHINE =. "ls1028ardb|"
 
-DT_DIR = "${MACHINE}"
-DT_DIR_ls1028ardb = "ls1028ardb"
-FILESEXTRAPATHS_prepend := "${TANOWRT_HSL_BASE}/devicetree/${LINUX_VERSION_SHORT}/${DT_DIR}:"
-
 # Config
 SRC_URI_append_ls1028ardb = " file://defconfig "
 
