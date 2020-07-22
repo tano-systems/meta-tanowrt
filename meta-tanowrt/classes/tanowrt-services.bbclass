@@ -5,12 +5,12 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-REQUIRED_DISTRO_FEATURES = "procd"
+REQUIRED_DISTRO_FEATURES_class-target = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
 
 inherit distro_features_check
 
-RDEPENDS_${PN}_append = " procd "
+RDEPENDS_${PN}_append_class-target = " procd "
 
 python __anonymous() {
     # Check for deprecated OPENWRT_* variables
