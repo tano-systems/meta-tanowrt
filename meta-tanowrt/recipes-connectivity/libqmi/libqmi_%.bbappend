@@ -11,7 +11,7 @@ EXTRA_OECONF += "\
 	--disable-gtk-doc-pdf \
 	--disable-silent-rules \
 	--enable-firmware-update \
-	--enable-more-warnings=yes \
+	--enable-introspection=no \
 "
 
 #

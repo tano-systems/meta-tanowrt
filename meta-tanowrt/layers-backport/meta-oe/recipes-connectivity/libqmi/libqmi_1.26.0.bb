@@ -14,8 +14,8 @@ inherit autotools pkgconfig bash-completion
 SRC_URI = "http://www.freedesktop.org/software/${BPN}/${BPN}-${PV}.tar.xz \
            "
 
-SRC_URI[md5sum] = "be6539fde54fec1fc9d852db201c8560"
-SRC_URI[sha256sum] = "0316badec92ff32f51fe6278e6046968d2272a26608995deedd8e4afb563918a"
+SRC_URI[md5sum] = "8da95a97e893311878f8ce12dcf8fad0"
+SRC_URI[sha256sum] = "7f0429e0ae58792e21512d09ca2412537840ea42696762795af1284a65fd6e40"
 
 PACKAGECONFIG ??= "udev mbim"
 PACKAGECONFIG[udev] = ",--without-udev,libgudev"
