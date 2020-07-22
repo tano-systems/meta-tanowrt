@@ -11,12 +11,8 @@ inherit gnomebase gettext systemd vala gobject-introspection bash-completion
 
 DEPENDS = "glib-2.0 libgudev intltool-native libxslt-native"
 
-SRC_URI = "http://www.freedesktop.org/software/ModemManager/ModemManager-${PV}.tar.xz \
-           "
-
-SRC_URI[md5sum] = "796bf7bfc156c4229cef1a9cb8c79f37"
-SRC_URI[sha256sum] = "2eb3353ee5518005c51d429308695c69d8c38cf2fd9102b04f785c03a0cc624c"
-
+SRC_URI = "http://www.freedesktop.org/software/ModemManager/ModemManager-${PV}.tar.xz"
+SRC_URI[sha256sum] = "8976e2f890380d35144d4d9146bc225d926ae72c9b48d7e50c1dd9674d2bd079"
 S = "${WORKDIR}/ModemManager-${PV}"
 
 PACKAGECONFIG ??= "mbim qmi \

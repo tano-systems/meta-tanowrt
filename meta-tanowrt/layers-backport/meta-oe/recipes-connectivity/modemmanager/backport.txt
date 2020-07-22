@@ -1,5 +1,7 @@
-﻿Recipe for modemmanager 1.12.6 backported from meta-openembedded layer:
+﻿Original recipe for modemmanager 1.12.12 backported from meta-openembedded layer:
   repository: https://github.com/openembedded/meta-openembedded.git
   subdirectory: meta-oe
   branch: master
-  revision: 72e77866bfcc708a53c9cdbcadc0b1ea97c8368c
+  revision: 70e7be04979a9346518b66656053be48b74040af
+
+Recipe manually upgraded for modemmanager 1.14.0
