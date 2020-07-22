@@ -158,7 +158,7 @@ By default, network ports SWP0, SWP1, SWP2 and SWP3 are joined into a bridge (`b
 
 The web-configuration interface can be accessed via any of the SWP0–3 ports through HTTP(s) protocol. You must see something like this in browser:
 
-<img src="docs/ls1028ardb-luci-overview.jpg?raw=true" width="100%">
+<img src="docs/ls1028ardb-luci-overview.png?raw=true" width="100%">
 
 The network port MAC0 (interface `eno0`) is a separate network interface included in the WAN firewall zone with enabled translation (NAT) from LAN zone. The IP address of the `eno0` interface is also configured with a DHCP client. A firewall with blocking rules for incoming traffic is enabled on the `eno0` interface. Therefore, there is no access to the web configuration interface through this interface.
 
