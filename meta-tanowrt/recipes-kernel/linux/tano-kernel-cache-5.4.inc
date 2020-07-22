@@ -1,4 +1,4 @@
-PR_append = ".2"
+PR_append = ".3"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
@@ -6,6 +6,7 @@ KERNEL_FEATURES_append = "\
 "
 
 SRC_URI_append = "\
+	file://550-loop-Report-EOPNOTSUPP-properly.patch \
 	file://600-netfilter_conntrack_flush.patch \
 	file://610-netfilter_match_bypass_default_checks.patch \
 	file://611-netfilter_match_bypass_default_table.patch \
