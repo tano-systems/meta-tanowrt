@@ -2,11 +2,11 @@
 # Open source VPN solution using SSL
 # OpenWrt recipe
 #
-# Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "4"
+INC_PR = "5"
 
 inherit tanowrt-services
 
@@ -17,7 +17,9 @@ SRC_URI += " \
     file://openvpn.upgrade \
     file://etc/openvpn.user \
     file://etc/hotplug.d/openvpn/01-user \
-    file://usr/libexec/openvpn-hotplug"
+    file://usr/libexec/openvpn-hotplug \
+    file://lib/functions/openvpn.sh \
+"
 
 # Patches
 SRC_URI += " \
@@ -72,7 +74,7 @@ EXTRA_OE_CONF += "\
 inherit kmod/tun
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILES_${PN} += "/lib/upgrade/keep.d"
+FILES_${PN} += "/lib/upgrade/keep.d /lib/functions/openvpn.sh"
 
 do_install_append() {
 	# OpenWrt files
@@ -99,6 +101,10 @@ do_install_append() {
 	# Install OpenVPN options
 	install -d ${D}${datadir}/openvpn
 	install -m 644 ${WORKDIR}/openvpn.options ${D}${datadir}/openvpn/openvpn.options
+
+	# Install OpenVPN functions lib
+	install -d ${D}/lib/functions
+	install -m 644 ${WORKDIR}/lib/functions/openvpn.sh ${D}/lib/functions/openvpn.sh
 
 	# Hotplug functionality
 	install -d ${D}/usr/libexec
