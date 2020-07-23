@@ -1,11 +1,11 @@
 #
-# This file Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Hotplug script which makes configuration of multiple WAN interfaces simple
 # and manageable. With loadbalancing/failover support for up to 250 wan
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
-PV = "2.7.13"
+PV = "2.8.11"
 PR = "tano0"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
@@ -37,6 +37,7 @@ SRC_URI = "\
 	file://mwan3 \
 	file://mwan3track \
 	file://mwan3rtmon \
+	file://mwan3-migrate-flush_conntrack \
 "
 
 inherit tanowrt-services
@@ -78,6 +79,9 @@ do_install() {
 	install -m 0755 ${WORKDIR}/mwan3 ${D}${sbindir}/mwan3
 	install -m 0755 ${WORKDIR}/mwan3track ${D}${sbindir}/mwan3track
 	install -m 0755 ${WORKDIR}/mwan3rtmon ${D}${sbindir}/mwan3rtmon
+
+	install -dm 0755 ${D}${sysconfdir}/uci-defaults
+	install -m 0755 ${WORKDIR}/mwan3-migrate-flush_conntrack ${D}${sysconfdir}/uci-defaults/
 }
 
 pkg_postinst_${PN}() {
