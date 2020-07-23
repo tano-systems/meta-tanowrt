@@ -72,6 +72,9 @@ MACHINE_FEATURES += "opengl"
 MACHINE_FEATURES += "crypto"
 MACHINE_FEATURES += "hwrng"
 
+PACKAGECONFIG_append_pn-collectd = " cpufreq "
+PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+
 # No qemu support, yet
 MACHINE_FEATURES_remove = "qemu-usermode"
 
