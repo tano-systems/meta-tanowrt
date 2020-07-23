@@ -45,13 +45,15 @@ SRC_URI += "\
 	file://usr/share/collectd/plugin/ping.json \
 	file://usr/share/collectd/plugin/processes.json \
 	file://usr/share/collectd/plugin/rrdtool.json \
-	file://usr/share/collectd/plugin/syslog.json \
 	file://usr/share/collectd/plugin/sensors.json \
+	file://usr/share/collectd/plugin/syslog.json \
 	file://usr/share/collectd/plugin/tcpconns.json \
 	file://usr/share/collectd/plugin/thermal.json \
+	file://usr/share/collectd/plugin/ubi.json \
 	file://usr/share/collectd/plugin/unixsock.json \
 	file://usr/share/collectd/plugin/uptime.json \
 	file://usr/share/collectd/plugin/vmem.json \
+	file://exec-scripts/sqm_collectd.sh \
 "
 
 inherit autotools pkgconfig tanowrt-services
@@ -91,15 +93,21 @@ PACKAGECONFIG[apache] = "--enable-apache,--disable-apache,libcurl"
 PACKAGECONFIG[apcups] = "--enable-apcups,--disable-apcups,"
 PACKAGECONFIG[ascent] = "--enable-ascent,--disable-ascent,libcurl libxml2"
 PACKAGECONFIG[bind]   = "--enable-bind,--disable-bind,libcurl libxml2"
+PACKAGECONFIG[buddyinfo] = "--enable-buddyinfo,--disable-buddyinfo,"
+PACKAGECONFIG[capabilities] = "--enable-capabilities,--disable-capabilities,"
+PACKAGECONFIG[check_uptime] = "--enable-check_uptime,--disable-check_uptime,"
 PACKAGECONFIG[chrony] = "--enable-chrony,--disable-chrony,"
 PACKAGECONFIG[conntrack] = "--enable-conntrack,--disable-conntrack,"
 PACKAGECONFIG[contextswitch] = "--enable-contextswitch,--disable-contextswitch,"
 PACKAGECONFIG[cpu] = "--enable-cpu,--disable-cpu,"
+PACKAGECONFIG[cpufreq] = "--enable-cpufreq,--disable-cpufreq,"
 PACKAGECONFIG[csv] = "--enable-csv,--disable-csv,"
 PACKAGECONFIG[curl] = "--enable-curl,--disable-curl,libcurl"
+PACKAGECONFIG[dcpmm] = "--enable-dcpmm,--disable-dcpmm,"
 PACKAGECONFIG[df] = "--enable-df,--disable-df,"
 PACKAGECONFIG[disk] = "--enable-disk,--disable-disk,"
 PACKAGECONFIG[dns] = "--enable-dns,--disable-dns,libpcap"
+PACKAGECONFIG[dpdk_telemetry] = "--enable-dpdk_telemetry,--disable-dpdk_telemetry,"
 PACKAGECONFIG[email] = "--enable-email,--disable-email,"
 PACKAGECONFIG[entropy] = "--enable-entropy,--disable-entropy,"
 PACKAGECONFIG[exec] = "--enable-exec,--disable-exec,"
@@ -107,11 +115,13 @@ PACKAGECONFIG[filecount] = "--enable-filecount,--disable-filecount,"
 PACKAGECONFIG[fhcount] = "--enable-fhcount,--disable-fhcount,"
 PACKAGECONFIG[fscache] = "--enable-fscache,--disable-fscache,"
 PACKAGECONFIG[interface] = "--enable-interface,--disable-interface,"
+PACKAGECONFIG[ipstats] = "--enable-ipstats,--disable-ipstats,"
 PACKAGECONFIG[iptables] = "--enable-iptables,--disable-iptables,iptables"
 PACKAGECONFIG[irq] = "--enable-irq,--disable-irq,"
 PACKAGECONFIG[iwinfo] = "--enable-iwinfo,--disable-iwinfo,iwinfo"
 PACKAGECONFIG[load] = "--enable-load,--disable-load,"
 PACKAGECONFIG[logfile] = "--enable-logfile,--disable-logfile,"
+PACKAGECONFIG[logparser] = "--enable-logparser,--disable-logparser,"
 PACKAGECONFIG[match_empty_counter] = "--enable-match_empty_counter,--disable-match_empty_counter,"
 PACKAGECONFIG[match_hashed] = "--enable-match_hashed,--disable-match_hashed,"
 PACKAGECONFIG[match_regex] = "--enable-match_regex,--disable-match_regex,"
@@ -127,14 +137,18 @@ PACKAGECONFIG[nginx] = "--enable-nginx,--disable-nginx,libcurl"
 PACKAGECONFIG[ntpd] = "--enable-ntpd,--disable-ntpd,"
 PACKAGECONFIG[olsrd] = "--enable-olsrd,--disable-olsrd,"
 PACKAGECONFIG[openvpn] = "--enable-openvpn,--disable-openvpn,"
+PACKAGECONFIG[pcie_errors] = "--enable-pcie_errors,--disable-pcie_errors,"
 PACKAGECONFIG[ping] = "--enable-ping,--disable-ping,liboping"
 PACKAGECONFIG[postgresql] = "--enable-postgresql --with-libpq=yes, --disable-postgresql --with-libpq=no,postgresql"
 PACKAGECONFIG[powerdns] = "--enable-powerdns,--disable-powerdns,"
 PACKAGECONFIG[processes] = "--enable-processes,--disable-processes,"
 PACKAGECONFIG[protocols] = "--enable-protocols,--disable-protocols,"
+PACKAGECONFIG[redfish] = "--enable-redfish,--disable-redfish,"
 PACKAGECONFIG[rrdtool] = "--enable-rrdtool,--disable-rrdtool,rrdtool"
 PACKAGECONFIG[sensors] = "--enable-sensors --with-libsensors=yes, --disable-sensors --with-libsensors=no,lmsensors"
+PACKAGECONFIG[slurm] = "--enable-slurm,--disable-slurm,"
 PACKAGECONFIG[snmp] = "--enable-snmp,--disable-snmp --with-libnetsnmp=no,net-snmp"
+PACKAGECONFIG[sqm] = ",,"
 PACKAGECONFIG[syslog] = "--enable-syslog,--disable-syslog,"
 PACKAGECONFIG[table] = "--enable-table,--disable-table,"
 PACKAGECONFIG[tail] = "--enable-tail,--disable-tail,"
@@ -148,6 +162,7 @@ PACKAGECONFIG[tcpconns] = "--enable-tcpconns,--disable-tcpconns,"
 PACKAGECONFIG[teamspeak2] = "--enable-teamspeak2,--disable-teamspeak2,"
 PACKAGECONFIG[thermal] = "--enable-thermal,--disable-thermal,"
 PACKAGECONFIG[threshold] = "--enable-threshold,--disable-threshold,"
+PACKAGECONFIG[ubi] = "--enable-ubi,--disable-ubi,"
 PACKAGECONFIG[unixsock] = "--enable-unixsock,--disable-unixsock,"
 PACKAGECONFIG[uptime] = "--enable-uptime,--disable-uptime,"
 PACKAGECONFIG[users] = "--enable-users,--disable-users,"
@@ -155,6 +170,8 @@ PACKAGECONFIG[vmem] = "--enable-vmem,--disable-vmem,"
 PACKAGECONFIG[wireless] = "--enable-wireless,--disable-wireless,"
 PACKAGECONFIG[write_graphite] = "--enable-write_graphite,--disable-write_graphite,"
 PACKAGECONFIG[write_http] = "--enable-write_http,--disable-write_http,libcurl"
+PACKAGECONFIG[write_influxdb_udp] = "--enable-write_influxdb_udp,--disable-write_influxdb_udp,"
+PACKAGECONFIG[write_syslog] = "--enable-write_syslog,--disable-write_syslog,"
 
 EXTRA_OECONF = " \
     ${FPLAYOUT} \
@@ -205,7 +222,6 @@ EXTRA_OECONF = " \
     --disable-java \
     --disable-log_logstash \
     --disable-lua \
-    --disable-lvm \
     --disable-lpar \
     --disable-madwifi \
     --disable-mbmon \
@@ -259,7 +275,6 @@ EXTRA_OECONF = " \
     --disable-zfs_arc \
     --disable-zone \
     --disable-zookeeper \
-    --disable-cpufreq \
     --disable-nut \
     --disable-onewire \
     --disable-ted \
@@ -290,6 +305,12 @@ do_install_append() {
             bbwarn "No JSON configuration template for plugin ${PLUGIN_FILE}"
         fi
     done
+
+    if [ "${@bb.utils.contains('PACKAGECONFIG', 'sqm', '1', '0', d)}" = "1" ]; then
+        # Install SQM script
+        install -d ${D}/usr/libexec/collectd
+        install -m 0755 ${WORKDIR}/exec-scripts/sqm_collectd.sh ${D}/usr/libexec/collectd/
+    fi
 
     rm -rf "${D}${localstatedir}"
 }
