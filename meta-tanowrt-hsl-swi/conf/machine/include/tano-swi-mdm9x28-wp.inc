@@ -15,6 +15,9 @@ EXTRA_IMAGEDEPENDS += "lk"
 UBI_USERAPP_PATH ?= "${IMGDEPLOYDIR}/${IMAGE_NAME}.userapp"
 UBI_USERAPP_SIZE ?= "124MiB"
 
+PACKAGECONFIG_append_pn-collectd = " cpufreq "
+PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+
 #
 # Kernel
 #
