@@ -6,7 +6,7 @@
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
 PV = "2.8.11"
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
@@ -25,19 +25,19 @@ RDEPENDS_${PN} += "\
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	file://mwan3.user \
-	file://mwan3.config \
-	file://mwan3.init \
-	file://mwan3.15-hotplug \
-	file://mwan3.16-hotplug \
-	file://mwan3-user.16-hotplug \
-	file://common.sh \
-	file://mwan3.sh \
-	file://mwan3.rpcd \
-	file://mwan3 \
-	file://mwan3track \
-	file://mwan3rtmon \
-	file://mwan3-migrate-flush_conntrack \
+	file://etc/mwan3.user \
+	file://etc/config/mwan3 \
+	file://etc/init.d/mwan3 \
+	file://etc/hotplug.d/iface/15-mwan3 \
+	file://etc/hotplug.d/iface/16-mwan3 \
+	file://etc/hotplug.d/iface/16-mwan3-user \
+	file://etc/uci-defaults/mwan3-migrate-flush_conntrack \
+	file://lib/mwan3/common.sh \
+	file://lib/mwan3/mwan3.sh \
+	file://usr/libexec/rpcd/mwan3 \
+	file://usr/sbin/mwan3 \
+	file://usr/sbin/mwan3track \
+	file://usr/sbin/mwan3rtmon \
 "
 
 inherit tanowrt-services
@@ -55,33 +55,33 @@ do_configure[noexec] = "1"
 
 do_install() {
 	install -dm 0755 ${D}${sysconfdir}
-	install -m 0644 ${WORKDIR}/mwan3.user ${D}${sysconfdir}/mwan3.user
+	install -m 0644 ${WORKDIR}/etc/mwan3.user ${D}${sysconfdir}/
 
 	install -dm 0755 ${D}${sysconfdir}/config
-	install -m 0644 ${WORKDIR}/mwan3.config ${D}${sysconfdir}/config/mwan3
+	install -m 0644 ${WORKDIR}/etc/config/mwan3 ${D}${sysconfdir}/config/
 
 	install -dm 0755 ${D}${sysconfdir}/init.d
-	install -m 0755 ${WORKDIR}/mwan3.init ${D}${sysconfdir}/init.d/mwan3
+	install -m 0755 ${WORKDIR}/etc/init.d/mwan3 ${D}${sysconfdir}/init.d/
 
 	install -dm 0755 ${D}${sysconfdir}/hotplug.d/iface
-	install -m 0755 ${WORKDIR}/mwan3.15-hotplug ${D}${sysconfdir}/hotplug.d/iface/15-mwan3
-	install -m 0755 ${WORKDIR}/mwan3.16-hotplug ${D}${sysconfdir}/hotplug.d/iface/16-mwan3
-	install -m 0755 ${WORKDIR}/mwan3-user.16-hotplug ${D}${sysconfdir}/hotplug.d/iface/16-mwan3-user
+	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/15-mwan3 ${D}${sysconfdir}/hotplug.d/iface/
+	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/16-mwan3 ${D}${sysconfdir}/hotplug.d/iface/
+	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/16-mwan3-user ${D}${sysconfdir}/hotplug.d/iface/
 
 	install -dm 0755 ${D}${base_libdir}/mwan3
-	install -m 0755 ${WORKDIR}/common.sh ${D}${base_libdir}/mwan3/common.sh
-	install -m 0755 ${WORKDIR}/mwan3.sh ${D}${base_libdir}/mwan3/mwan3.sh
+	install -m 0755 ${WORKDIR}/lib/mwan3/common.sh ${D}${base_libdir}/mwan3/
+	install -m 0755 ${WORKDIR}/lib/mwan3/mwan3.sh ${D}${base_libdir}/mwan3/
 
 	install -dm 0755 ${D}/usr/libexec/rpcd
-	install -m 0755 ${WORKDIR}/mwan3.rpcd ${D}/usr/libexec/rpcd/mwan3
+	install -m 0755 ${WORKDIR}/usr/libexec/rpcd/mwan3 ${D}/usr/libexec/rpcd/
 
 	install -dm 0755 ${D}${sbindir}
-	install -m 0755 ${WORKDIR}/mwan3 ${D}${sbindir}/mwan3
-	install -m 0755 ${WORKDIR}/mwan3track ${D}${sbindir}/mwan3track
-	install -m 0755 ${WORKDIR}/mwan3rtmon ${D}${sbindir}/mwan3rtmon
+	install -m 0755 ${WORKDIR}/usr/sbin/mwan3 ${D}${sbindir}/
+	install -m 0755 ${WORKDIR}/usr/sbin/mwan3track ${D}${sbindir}/
+	install -m 0755 ${WORKDIR}/usr/sbin/mwan3rtmon ${D}${sbindir}/
 
 	install -dm 0755 ${D}${sysconfdir}/uci-defaults
-	install -m 0755 ${WORKDIR}/mwan3-migrate-flush_conntrack ${D}${sysconfdir}/uci-defaults/
+	install -m 0755 ${WORKDIR}/etc/uci-defaults/mwan3-migrate-flush_conntrack ${D}${sysconfdir}/uci-defaults/
 }
 
 pkg_postinst_${PN}() {
