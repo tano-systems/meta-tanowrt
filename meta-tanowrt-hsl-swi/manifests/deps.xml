@@ -7,7 +7,7 @@
 	         name="meta-swi.git"
 	         remote="legato-io"
 	         upstream="yocto-3.0-ref"
-	         revision="890b91b3f5627e79e1c51b837abb5d74118dd407" />
+	         revision="46f432737b26e73f891e99c2bd54b5ffa88203cc" />
 </manifest>
 
 
