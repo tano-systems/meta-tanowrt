@@ -2,7 +2,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "4"
+INC_PR = "5"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -145,7 +145,7 @@ PACKAGECONFIG[processes] = "--enable-processes,--disable-processes,"
 PACKAGECONFIG[protocols] = "--enable-protocols,--disable-protocols,"
 PACKAGECONFIG[redfish] = "--enable-redfish,--disable-redfish,"
 PACKAGECONFIG[rrdtool] = "--enable-rrdtool,--disable-rrdtool,rrdtool"
-PACKAGECONFIG[sensors] = "--enable-sensors --with-libsensors=yes, --disable-sensors --with-libsensors=no,lmsensors"
+PACKAGECONFIG[sensors] = "--enable-sensors --with-libsensors=yes, --disable-sensors --with-libsensors=no,lmsensors,lmsensors-sensors"
 PACKAGECONFIG[slurm] = "--enable-slurm,--disable-slurm,"
 PACKAGECONFIG[snmp] = "--enable-snmp,--disable-snmp --with-libnetsnmp=no,net-snmp"
 PACKAGECONFIG[sqm] = ",,"
