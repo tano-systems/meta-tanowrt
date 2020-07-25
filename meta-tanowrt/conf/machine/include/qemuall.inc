@@ -13,3 +13,5 @@ QEMU_X86_TARGETS = "i586 x86-64"
 
 # Enable tty1
 PROCD_ENABLED_TTYS ?= "1"
+
+MACHINE_FEATURES_append = " hwrng "
