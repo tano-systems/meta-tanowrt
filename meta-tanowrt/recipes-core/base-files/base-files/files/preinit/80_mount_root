@@ -14,9 +14,9 @@ pw_restore() {
 	if [ -f "/rom/${PW_PART}" ]; then
 		cp -f "/rom/${PW_PART}" "${PW_PART}"
 		sync
-		echo -e "${CLR_GREEN}${PW_PART}: Restored from ROM storage${CLR_RESET}"
+		echo -e "${CLR_GREEN}${PW_PART}: Restored from ROM storage${CLR_RESET}" > /dev/kmsg
 	else
-		echo -e "${CLR_RED}${PW_PART}: Can't restore from ROM storage${CLR_RESET}"
+		echo -e "${CLR_RED}${PW_PART}: Can't restore from ROM storage${CLR_RESET}" > /dev/kmsg
 	fi
 }
 
@@ -37,7 +37,7 @@ pw_validate() {
 	elif [ "${PW_PART}" = "/etc/shadow" ]; then
 		REGEX="^${REGEX_LOGIN}:${REGEX_PASSWORD}:[0-9]*:[0-9]*:[0-9]*:[0-9]*:[0-9]*:[0-9]*:$"
 	else
-		echo -e "${CLR_RED}${PW_PART}: Don't know how to verify that"
+		echo -e "${CLR_RED}${PW_PART}: Don't know how to verify that" > /dev/kmsg
 		COUNT_VALID=1
 		return
 	fi
@@ -58,7 +58,7 @@ pw_check_and_fix() {
 
 	[ ! -f "${PW_PART}" ] && (
 		# /etc/<part> is not exists. Restore it from ROM
-		echo -e "${CLR_RED}${PW_PART}: Not exists${CLR_RESET}"
+		echo -e "${CLR_RED}${PW_PART}: Not exists${CLR_RESET}" > /dev/kmsg
 		pw_restore "${PW_PART}"
 	)
 
@@ -68,7 +68,7 @@ pw_check_and_fix() {
 		# Remove any of these files and perform extra checks.
 		rm -f "${PW_PART}.lock" "${PW_PART}+" "${PW_PART}-"
 
-		echo -e "${CLR_RED}${PW_PART}: Incomplete password change operation${CLR_RESET}"
+		echo -e "${CLR_RED}${PW_PART}: Incomplete password change operation${CLR_RESET}" > /dev/kmsg
 	)
 
 	# validate the /etc/<part> file
@@ -76,11 +76,11 @@ pw_check_and_fix() {
 
 	if [ "${COUNT_VALID}" = "0" -a "${COUNT_INVALID}" = "0" ]; then
 		# /etc/<part> seems to be empty or corrupted. Restoring from ROM
-		echo -e "${CLR_RED}${PW_PART}: Corrupted or empty${CLR_RESET}"
+		echo -e "${CLR_RED}${PW_PART}: Corrupted or empty${CLR_RESET}" > /dev/kmsg
 		pw_restore "${PW_PART}"
 	elif [ "${COUNT_INVALID}" != "0" ]; then
 		# /etc/<part> has invalid lines. Restoring from ROM
-		echo -e "${CLR_RED}${PW_PART}: Invalid data${CLR_RESET}"
+		echo -e "${CLR_RED}${PW_PART}: Invalid data${CLR_RESET}" > /dev/kmsg
 		pw_restore "${PW_PART}"
 	fi
 }
@@ -110,7 +110,7 @@ do_mount_root() {
 	# Reset (cleanup) overlay filesystem
 	[ -f /etc/overlay-reset -o -f /etc/factory-reset ] && {
 		mount_root done
-		echo -e "${CLR_RED}Cleaning the overlay filesystem...${CLR_RESET}"
+		echo -e "${CLR_RED}Cleaning the overlay filesystem...${CLR_RESET}" > /dev/kmsg
 		firstboot -r -y
 	}
 
@@ -122,7 +122,7 @@ do_mount_root() {
 		sync
 	}
 
-	echo -e "${CLR_GREEN}Root filesystem mounted${CLR_RESET}"
+	echo -e "${CLR_GREEN}Root filesystem mounted${CLR_RESET}" > /dev/kmsg
 }
 
 [ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_mount_root
