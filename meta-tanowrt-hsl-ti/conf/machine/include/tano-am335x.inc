@@ -15,3 +15,5 @@ PREFERRED_PROVIDER_libgbm = "libgbm"
 PREFERRED_PROVIDER_libgbm-dev = "libgbm-dev"
 
 PREFERRED_PROVIDER_virtual/libgl = "mesa-gl"
+
+MACHINE_FEATURES_append = " hwrng "
