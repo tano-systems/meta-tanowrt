@@ -1,5 +1,5 @@
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
@@ -13,6 +13,9 @@ SRC_URI += "\
 "
 
 do_install_append() {
+	rm -f ${D}${sysconfdir}/init.d/rng-tools
+	rm -rf ${D}${sysconfdir}/default
+
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/rngd.init ${D}${sysconfdir}/init.d/rngd
 
