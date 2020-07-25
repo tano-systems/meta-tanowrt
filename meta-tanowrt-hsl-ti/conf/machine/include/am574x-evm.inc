@@ -3,7 +3,7 @@
 #
 require conf/machine/include/tano-am574x.inc
 
-MACHINEFEATURES += "touchscreen"
+MACHINE_FEATURES += "touchscreen"
 
 #
 # Graphics
