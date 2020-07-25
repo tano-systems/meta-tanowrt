@@ -2,7 +2,7 @@
 # This file Copyright (c) 2020, Tano Systems LLC. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_ls1028ardb = ".nxp0"
+PR_append_ls1028ardb = ".nxp1"
 
 inherit uci-config
 
@@ -26,6 +26,16 @@ ${UCI} batch <<-EOF
 	del luci_statistics.collectd_interface.Interfaces
 	add_list luci_statistics.collectd_interface.Interfaces='eno0'
 	add_list luci_statistics.collectd_interface.Interfaces='br-lan'
+
+	# Enable sensors
+	set luci_statistics.collectd_sensors=statistics
+	set luci_statistics.collectd_sensors.enable='1'
+	del luci_statistics.collectd_sensors.Sensor
+	add_list luci_statistics.collectd_sensors.Sensor='ina220-i2c-3-40/voltage-in1'
+	add_list luci_statistics.collectd_sensors.Sensor='ina220-i2c-3-40/current-curr1'
+	add_list luci_statistics.collectd_sensors.Sensor='ina220-i2c-3-40/power-power1'
+	add_list luci_statistics.collectd_sensors.Sensor='sa56004-i2c-4-4c/temperature-temp1'
+	add_list luci_statistics.collectd_sensors.Sensor='sa56004-i2c-4-4c/temperature-temp2'
 
 	commit luci_statistics
 EOF
