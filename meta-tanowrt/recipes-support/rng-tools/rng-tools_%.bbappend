@@ -1,11 +1,15 @@
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
+inherit uci-config
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[rngtest] = ",,"
+
+HWRNG_DEV ?= "/dev/hwrng"
+HWRNG_ENABLE ?= "1"
 
 SRC_URI += "\
 	file://rngd.init \
@@ -33,3 +37,9 @@ CONFFILES_${PN} = "${sysconfdir}/config/rngd"
 TANOWRT_SERVICE_PACKAGES = "rng-tools"
 TANOWRT_SERVICE_SCRIPTS_rng-tools += "rngd"
 TANOWRT_SERVICE_STATE_rng-tools-rngd ?= "enabled"
+
+do_uci_config_append() {
+	${UCI} set rngd.@rngd[0].in_device="${HWRNG_DEV}"
+	${UCI} set rngd.@rngd[0].enabled="${HWRNG_ENABLE}"
+	${UCI} commit rngd
+}
