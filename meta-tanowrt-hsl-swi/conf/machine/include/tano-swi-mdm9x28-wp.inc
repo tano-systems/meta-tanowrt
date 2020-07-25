@@ -46,3 +46,5 @@ KERNEL_BOOT_OPTIONS = "earlyprintk=serial,ttyHSL1,115200 loglevel=7 \
   overlay_partition=userapp_vol0 \
   console=ttyHSL1,115200 ima_ready=${ENABLE_IMA} \
 "
+
+MACHINE_FEATURES_append = " hwrng "
