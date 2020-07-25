@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -74,7 +74,7 @@ RDEPENDS_${PN}-core = "\
 	tzdata-europe \
 	tzdata-asia \
 	urandom-seed \
-	rng-tools \
+	${@bb.utils.contains('MACHINE_FEATURES', 'hwrng', 'rng-tools', 'haveged',d)} \
 	rpcd \
 	rpcd-mod-file \
 	ubox \
