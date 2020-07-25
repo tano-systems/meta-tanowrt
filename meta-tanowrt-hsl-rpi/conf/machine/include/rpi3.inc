@@ -70,6 +70,7 @@ MACHINE_FEATURES += "lldp"
 MACHINE_FEATURES += "watchdog"
 MACHINE_FEATURES += "opengl"
 MACHINE_FEATURES += "crypto"
+MACHINE_FEATURES += "hwrng"
 
 # No qemu support, yet
 MACHINE_FEATURES_remove = "qemu-usermode"
