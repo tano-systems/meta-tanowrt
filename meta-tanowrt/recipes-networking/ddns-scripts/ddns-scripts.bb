@@ -4,8 +4,10 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano9"
+PR = "tano10"
 PV = "2.7.8"
+
+inherit allarch
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
 SECTION = "net/misc"
