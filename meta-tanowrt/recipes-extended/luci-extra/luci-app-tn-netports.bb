@@ -5,8 +5,9 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.2+git${SRCPV}"
-PR = "tano5"
+PR = "tano6"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

@@ -1,11 +1,10 @@
 #
 # Legacy opkg interface class
 #
-# This file Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Legacy opkg interface class"
 LICENSE = "Apache-2.0"
@@ -13,14 +12,9 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 DEPENDS += "lua5.1-native lua5.1"
 
-inherit cmake
+inherit allarch
 inherit tanowrt-luci-lib
 inherit tanowrt-lua
-
-python __anonymous() {
-    d.delVarFlag('do_configure', 'noexec')
-    d.delVarFlag('do_compile', 'noexec')
-}
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

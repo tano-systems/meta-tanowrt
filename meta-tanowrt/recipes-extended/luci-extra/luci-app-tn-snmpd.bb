@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 PV = "2.1.0+git${SRCPV}"
 
 SUMMARY = "LuCI support for SNMP daemon"
@@ -14,6 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1fd756df4d1f5f2e8c17e9d2d4eaa503"
 RDEPENDS_${PN} += "net-snmp-server-snmpd"
 RCONFLICTS_${PN} = "luci-app-snmpd"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "LuCI support for VSFTP server"
 LICENSE = "MIT"
@@ -22,5 +22,6 @@ RDEPENDS_${PN} += "vsftpd"
 
 S = "${WORKDIR}/git"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n

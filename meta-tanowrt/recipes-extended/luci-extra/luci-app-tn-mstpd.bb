@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.1+git${SRCPV}"
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "LuCI support for MSTP daemon"
 LICENSE = "MIT"
@@ -24,6 +24,7 @@ RDEPENDS_${PN} += "mstpd"
 
 S = "${WORKDIR}/git"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

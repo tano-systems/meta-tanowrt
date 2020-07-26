@@ -1,7 +1,9 @@
-# Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano0"
+PR = "tano1"
+
+inherit allarch
 
 DESCRIPTION = "OpenWrt LuCI web user interface"
 HOMEPAGE = "https://github.com/tano-systems/luci"

@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "LuCI support for LLDP daemon"
 LICENSE = "MIT"
@@ -24,6 +24,7 @@ RDEPENDS_${PN} += "lldpd"
 
 S = "${WORKDIR}/git"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

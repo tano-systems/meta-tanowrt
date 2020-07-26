@@ -1,11 +1,10 @@
 #
 # Support for WireGuard VPN
 #
-# This file Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "Support for WireGuard VPN"
 LICENSE = "Apache-2.0"
@@ -15,6 +14,7 @@ inherit kmod/wireguard
 
 RDEPENDS_${PN} += "wireguard-tools"
 
+inherit allarch
 inherit tanowrt-luci-proto
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=protocols/luci-proto-wireguard;destsuffix=git/"

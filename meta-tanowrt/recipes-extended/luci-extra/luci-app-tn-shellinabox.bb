@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "LuCI Support for shellinabox"
 LICENSE = "Apache-2.0"
@@ -16,6 +16,7 @@ PV = "git${SRCPV}"
 
 RDEPENDS_${PN} += "shellinabox"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

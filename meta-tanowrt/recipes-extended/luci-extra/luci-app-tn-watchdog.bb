@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "0.9.0+git${SRCPV}"
-PR = "tano7"
+PR = "tano8"
 
 SUMMARY = "LuCI support for watchdog configuration"
 LICENSE = "Apache-2.0"
@@ -20,5 +20,6 @@ SRCREV = "${GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n

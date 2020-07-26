@@ -1,10 +1,10 @@
 #
 # Net-SNMP LuCI interface
 #
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018, 2020 Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano4"
+PR = "tano5"
 
 SUMMARY = "Net-SNMP LuCI interface"
 LICENSE = "Apache-2.0"
@@ -13,6 +13,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 RDEPENDS_${PN} += "net-snmp-server-snmpd luci-compat"
 RCONFLICTS_${PN} = "luci-app-tn-snmpd"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

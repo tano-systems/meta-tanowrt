@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano14"
+PR = "tano15"
 
 SUMMARY = "LuCI Support for ttyd"
 LICENSE = "MIT"
@@ -18,6 +18,7 @@ PV = "git${SRCPV}"
 
 RDEPENDS_${PN} += "ttyd (>= 1.5.2) luci-compat"
 
+inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 

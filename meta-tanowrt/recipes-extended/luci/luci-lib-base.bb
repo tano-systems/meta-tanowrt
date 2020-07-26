@@ -4,8 +4,7 @@
 # This file Copyright (c) 2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Basic libraries for luci"
 LICENSE = "Apache-2.0"
@@ -21,6 +20,7 @@ RDEPENDS_${PN} += "\
 	lucihttp \
 "
 
+inherit allarch
 inherit tanowrt-luci-lib
 inherit tanowrt-lua
 
