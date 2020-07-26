@@ -6,7 +6,9 @@
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
 PV = "2.8.11"
-PR = "tano1"
+PR = "tano2"
+
+inherit allarch
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
