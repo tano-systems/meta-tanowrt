@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "3"
+INC_PR = "4"
 
 # OpenWrt files
 SRC_URI_append = "\
@@ -40,6 +40,11 @@ SRC_URI_append = "\
 	file://600-allow-blank-root-password.patch \
 	file://900-configure-hardening.patch \
 	file://901-bundled-libs-cflags.patch \
+"
+
+# Tano patches
+SRC_URI_append = "\
+	file://0001-Add-PasswordAuthentication-option-to-client-CLI.patch \
 "
 
 FILES_${PN} += "/root /lib/preinit"
