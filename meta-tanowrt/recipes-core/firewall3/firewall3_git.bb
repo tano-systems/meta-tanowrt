@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano24"
+PR = "tano25"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -25,7 +25,9 @@ SRC_URI += "file://0002-options.c-Fix-compilation-with-GCC-9.3.0.patch"
 
 # Kernel dependencies and module autoloading
 inherit kmod/ipt-core
-inherit kmod/ipt-conntrack ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kmod/nf-conntrack6', '', d)}
+inherit kmod/ipt-conntrack \
+        ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kmod/nf-conntrack6', '', d)} \
+        ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kmod/ip6tables', '', d)}
 inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
