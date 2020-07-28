@@ -1,4 +1,4 @@
-From 9bdde9634075ef07d9e8234e47245ecce526cfbf Mon Sep 17 00:00:00 2001
+From e2da4743793e03c0a3eb536fa65f706ccbb99318 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
 Subject: [PATCH 10/13] inittab: Handle multiple consoles in /proc/cmdline

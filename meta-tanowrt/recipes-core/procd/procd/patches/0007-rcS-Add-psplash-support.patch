@@ -1,4 +1,4 @@
-From c081144a2694d0f21cb5fb5eb240889cf00a5851 Mon Sep 17 00:00:00 2001
+From d3a8f0b1d88340f50131c077f002276d897ba1a9 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
 Subject: [PATCH 07/13] rcS: Add psplash support
@@ -28,10 +28,10 @@ index 2197fff..0488c7d 100644
  	ADD_DEFINITIONS(-DCGROUP_SUPPORT)
  	SET(LIBS ${LIBS} cgroup)
 diff --git a/rcS.c b/rcS.c
-index c2e1abb..f4d61d4 100644
+index 2851fae..60cc4e7 100644
 --- a/rcS.c
 +++ b/rcS.c
-@@ -40,8 +40,62 @@ struct initd {
+@@ -41,8 +41,62 @@ struct initd {
  	struct timespec ts_start;
  	char *file;
  	char *param;
@@ -94,7 +94,7 @@ index c2e1abb..f4d61d4 100644
  static void pipe_cb(struct ustream *s, int bytes)
  {
  	struct initd *initd = container_of(s, struct initd, fd.stream);
-@@ -71,6 +125,11 @@ static void q_initd_run(struct runqueue *q, struct runqueue_task *t)
+@@ -72,6 +126,11 @@ static void q_initd_run(struct runqueue *q, struct runqueue_task *t)
  	int pipefd[2];
  	pid_t pid;
  
@@ -106,7 +106,7 @@ index c2e1abb..f4d61d4 100644
  	clock_gettime(CLOCK_MONOTONIC_RAW, &s->ts_start);
  	DEBUG(2, "start %s %s \n", s->file, s->param);
  	if (pipe(pipefd) == -1) {
-@@ -118,6 +177,13 @@ static void q_initd_complete(struct runqueue *q, struct runqueue_task *p)
+@@ -119,6 +178,13 @@ static void q_initd_complete(struct runqueue *q, struct runqueue_task *p)
  		ts_res.tv_nsec += 1000000000;
  	}
  
@@ -117,10 +117,10 @@ index c2e1abb..f4d61d4 100644
 +	}
 +#endif
 +
- 	DEBUG(2, "stop %s %s - took %lu.%09lus\n", s->file, s->param, ts_res.tv_sec, ts_res.tv_nsec);
+ 	DEBUG(2, "stop %s %s - took %" PRId64 ".%09" PRId64 "s\n", s->file, s->param, (int64_t)ts_res.tv_sec, (int64_t)ts_res.tv_nsec);
  	ustream_free(&s->fd.stream);
  	close(s->fd.fd.fd);
-@@ -147,6 +213,11 @@ static void add_initd(struct runqueue *q, char *file, char *param)
+@@ -148,6 +214,11 @@ static void add_initd(struct runqueue *q, char *file, char *param)
  	}
  	s->param = p;
  	s->file = f;
@@ -132,7 +132,7 @@ index c2e1abb..f4d61d4 100644
  	strcpy(s->param, param);
  	strcpy(s->file, file);
  	runqueue_task_add(q, &s->proc.task, false);
-@@ -170,6 +241,13 @@ static int _rc(struct runqueue *q, char *path, const char *file, char *pattern,
+@@ -171,6 +242,13 @@ static int _rc(struct runqueue *q, char *path, const char *file, char *pattern,
  		return -1;
  	}
  

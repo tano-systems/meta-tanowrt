@@ -1,4 +1,4 @@
-From a7342743741aef2919c077b4cf7057e8666cbb9e Mon Sep 17 00:00:00 2001
+From f7c59ad24d9ea0559bc4a2bb8ff6b9a5ddd9a8d4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
 Subject: [PATCH 01/13] service: allow to change service's current directory
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index c83e227..749a758 100644
+index 790cec4..deb5507 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -67,6 +67,7 @@ enum {
@@ -30,7 +30,7 @@ index c83e227..749a758 100644
  
  enum {
  	JAIL_ATTR_NAME,
-@@ -448,6 +449,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -453,6 +454,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		ERROR("failed to set user id %d: %m\n", in->uid);
  		exit(127);
  	}
@@ -41,7 +41,7 @@ index c83e227..749a758 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -852,6 +857,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -857,6 +862,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (in->watchdog.freq != in_new->watchdog.freq)
  		return true;
  
@@ -51,7 +51,7 @@ index c83e227..749a758 100644
  	return false;
  }
  
-@@ -1185,6 +1193,12 @@ instance_config_parse(struct service_instance *in)
+@@ -1194,6 +1202,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -64,7 +64,7 @@ index c83e227..749a758 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1290,6 +1304,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1299,6 +1313,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->trace = in_src->trace;
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
@@ -72,7 +72,7 @@ index c83e227..749a758 100644
  
  	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
  	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
-@@ -1511,5 +1526,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1521,5 +1536,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  		blobmsg_close_table(b, r);
  	}
  
@@ -82,10 +82,10 @@ index c83e227..749a758 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index bb8a0c4..c7764b1 100644
+index 6f38d4f..047969a 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -84,6 +84,7 @@ struct service_instance {
+@@ -85,6 +85,7 @@ struct service_instance {
  	char *overlaydir;
  	char *tmpoverlaysize;
  	char *bundle;

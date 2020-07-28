@@ -1,4 +1,4 @@
-From e802c8121d54a73370679980a2c38b86556ae37a Mon Sep 17 00:00:00 2001
+From 3fb8cab40e47563813ba39a2f7b30b8b344d7b26 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 20:05:05 +0300
 Subject: [PATCH 09/13] instance: Improve error messages
@@ -11,10 +11,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index f58072b..15278f6 100644
+index b91db44..a80beaa 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -768,19 +768,23 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -773,19 +773,23 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  #endif
  
  	if (!in->has_jail && in->user && in->pw_gid && initgroups(in->user, in->pw_gid)) {

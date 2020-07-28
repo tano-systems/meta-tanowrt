@@ -1,4 +1,4 @@
-From 4a9ecc134551a7fb0cbff02a7affcaeeb862bac7 Mon Sep 17 00:00:00 2001
+From 383a4c5fac9b65b538f79b9eca6a60b63fcf3ab8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 05/13] hotplug: Completely remove hotplug functionality

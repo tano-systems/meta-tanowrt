@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano39"
+PR = "tano40"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -49,9 +49,9 @@ PACKAGECONFIG[cgroup] = "-DCGROUP_SUPPORT=1,,libcgroup"
 PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 
-# 19.07.2020
-# jail: /proc/$pid/oom_score_adj to OCI defined oomScoreAdj
-SRCREV = "76adac5ef4a0b5078a813d1a470a5408cf618d5f"
+# 28.07.2020
+# uxc: behave more like a compliant OCI run-time
+SRCREV = "9d5fa0ae9962959d5088043fec281e96824ab46a"
 
 S = "${WORKDIR}/git"
 
