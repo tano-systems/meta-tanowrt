@@ -5,8 +5,8 @@
 # and manageable. With loadbalancing/failover support for up to 250 wan
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
-PV = "2.8.11"
-PR = "tano2"
+PV = "2.8.12"
+PR = "tano0"
 
 inherit allarch
 
