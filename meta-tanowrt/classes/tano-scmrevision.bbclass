@@ -20,6 +20,8 @@ def get_git_revision(p):
         return subprocess.Popen("git rev-parse HEAD 2>/dev/null ", cwd=p, shell=True, stdout=subprocess.PIPE, universal_newlines=True).communicate()[0].rstrip()
     except OSError:
         return None
+    except bb.process.ExecutionError:
+        return "none"
 
 def get_git_branch(p):
     import subprocess
@@ -30,6 +32,8 @@ def get_git_branch(p):
         return ref
     except OSError:
         return None
+    except bb.process.ExecutionError:
+        return "none"
 
 def mark_recipe_dependencies(path, d):
     from bb.parse import mark_dependency
