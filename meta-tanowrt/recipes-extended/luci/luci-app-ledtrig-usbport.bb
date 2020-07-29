@@ -4,7 +4,7 @@
 # This file Copyright (c) 2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "LuCI Support for ledtrigger usbport"
 LICENSE = "Apache-2.0"
@@ -12,8 +12,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit kernel-config
 
-# Wait for kernel modules ready
-do_package[depends] += "virtual/kernel:do_deploy"
+# Wait for kernel shared work directory ready
+do_package[depends] += "virtual/kernel:do_shared_workdir"
 python populate_packages_prepend() {
     result = kernel_version_compare('4.14', d)
     if result < 0:
