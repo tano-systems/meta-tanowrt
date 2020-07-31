@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano11"
+INC_PR = "tano12"
 
 inherit pkgconfig
 
@@ -43,15 +43,26 @@ SRC_URI += "\
 
 # Patches
 SRC_URI += "\
-	file://004-mesh-use-setup-completion-callback-to-complete-mesh-.patch \
-	file://005-mesh-update-ssid-frequency-as-pri-sec-channel-switch.patch \
-	file://006-mesh-inform-kernel-driver-DFS-handler-in-userspace.patch \
-	file://007-mesh-apply-channel-attributes-before-running-Mesh.patch \
-	file://011-mesh-Allow-DFS-channels-to-be-selected-if-dfs-is-ena.patch \
-	file://013-mesh-do-not-allow-pri-sec-channel-switch.patch \
-	file://015-mesh-do-not-use-offchan-mgmt-tx-on-DFS.patch \
-	file://016-mesh-fix-channel-switch-error-during-CAC.patch \
-	file://018-mesh-make-forwarding-configurable.patch \
+	file://001-HE-VHT-fix-frequency-setup-with-HE-enabled.patch \
+	file://002-mesh-fix-channel-init-order-disable-pri-sec-channel-.patch \
+	file://003-wpa_supplicant-handle-HT40-and-mode-downgrade-in-AP-.patch \
+	file://004-wpa_supplicant-fix-frequency-config-for-non-p2p-vht-.patch \
+	file://005-wpa_supplicant-enable-vht-and-he-in-default-config-p.patch \
+	file://006-hw_features-better-debug-messages-for-some-error-cas.patch \
+	file://007-dfs-use-helper-functions-for-vht-he-parameters.patch \
+	file://008-mesh-use-setup-completion-callback-to-complete-mesh-.patch \
+	file://009-mesh-update-ssid-frequency-as-pri-sec-channel-switch.patch \
+	file://010-mesh-Allow-DFS-channels-to-be-selected-if-dfs-is-ena.patch \
+	file://011-mesh-do-not-set-offchanok-on-DFS-channels-in-non-ETS.patch \
+	file://012-mesh-fix-channel-switch-error-during-CAC.patch \
+	file://013-mesh-inform-kernel-driver-DFS-handler-in-userspace.patch \
+	file://014-mesh-fixes-for-mesh-init-deinit.patch \
+	file://015-mesh-fix-DFS-deinit-init.patch \
+	file://016-tests-DFS-test-for-wpa_supplicant-mesh.patch \
+	file://017-mesh-fix-mesh_oom-test.patch \
+	file://018-mesh-move-mesh-freq-setting-to-own-function.patch \
+	file://019-mesh-use-deterministic-channel-on-channel-switch.patch \
+	file://050-mesh-make-forwarding-configurable.patch \
 	file://100-daemonize_fix.patch \
 	file://200-multicall.patch \
 	file://300-noscan.patch \
@@ -83,6 +94,7 @@ SRC_URI += "\
 	file://599-wpa_supplicant-fix-warnings.patch \
 	file://600-ubus_support.patch \
 	file://700-wifi-reload.patch \
+	file://800-dfs-enter-DFS-state-if-no-available-channel-is-found.patch \
 "
 
 S = "${WORKDIR}/git"
