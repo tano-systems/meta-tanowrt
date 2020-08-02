@@ -3,11 +3,11 @@
 # ttyd is a simple command-line tool for sharing terminal over the web, inspired by GoTTY.
 # https://github.com/tsl0922/ttyd
 #
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018, 2020 Tano Systems LLC. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
-PV = "1.5.2+git${SRCPV}"
+PR = "tano0"
+PV = "1.6.1+git${SRCPV}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -22,12 +22,17 @@ RDEPENDS_${PN} += "openssl-bin"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tsl0922/ttyd.git;protocol=${GIT_PROTOCOL}"
-SRCREV = "e979d82f2dd86dc3c46f53bc714ed793d7ee2b37"
+SRCREV = "079aa6864921a0aff31686012125b0ebbc41d5a8"
 
 # Files
 SRC_URI += "\
 	file://ttyd.init \
 	file://ttyd.config \
+"
+
+# Patches
+SRC_URI += "\
+	file://100-log-to-syslog.patch \
 "
 
 inherit tanowrt-services
