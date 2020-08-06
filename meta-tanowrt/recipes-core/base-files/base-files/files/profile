@@ -1,10 +1,31 @@
 [ -e /tmp/.failsafe ] && export FAILSAFE=1
 
-[ -f /etc/banner ] && cat /etc/banner
+if [ -f /etc/banner ]; then
+	if [ -f /rom/etc/openwrt_release -a -f /rom/etc/device_info -a -x /bin/sed ]; then
+		. /rom/etc/openwrt_release
+		. /rom/etc/device_info
+		sed -e "s/\${DISTRIB_ID}/${DISTRIB_ID//\//\\\/}/" \
+		    -e "s/\${DISTRIB_RELEASE}/${DISTRIB_RELEASE//\//\\\/}/" \
+		    -e "s/\${DISTRIB_REVISION}/${DISTRIB_REVISION//\//\\\/}/" \
+		    -e "s/\${DISTRIB_TARGET}/${DISTRIB_TARGET//\//\\\/}/" \
+		    -e "s/\${DISTRIB_ARCH}/${DISTRIB_ARCH//\//\\\/}/" \
+		    -e "s/\${DISTRIB_DESCRIPTION}/${DISTRIB_DESCRIPTION//\//\\\/}/" \
+		    -e "s/\${DISTRIB_TAINTS}/${DISTRIB_TAINTS//\//\\\/}/" \
+		    -e "s/\${DISTRIB_TIMESTAMP}/${DISTRIB_TIMESTAMP//\//\\\/}/" \
+		    -e "s/\${DEVICE_PRODUCT}/${DEVICE_PRODUCT//\//\\\/}/" \
+		    -e "s/\${DEVICE_REVISION}/${DEVICE_REVISION//\//\\\/}/" \
+		    -e "s/\${DEVICE_MANUFACTURER}/${DEVICE_MANUFACTURER//\//\\\/}/" \
+		    -e "s/\${DEVICE_MANUFACTURER_URL}/${DEVICE_MANUFACTURER_URL//\//\\\/}/" \
+		    /etc/banner
+	else
+		cat /etc/banner
+	fi
+fi
+
 [ -n "$FAILSAFE" ] && cat /etc/banner.failsafe
 
 fgrep -sq '/ overlay ro,' /proc/mounts && {
-	echo 'Your JFFS2-partition seems full and overlayfs is mounted read-only.'
+	echo 'Your overlay partition seems full and overlayfs is mounted read-only.'
 	echo 'Please try to remove files from /overlay/upper/... and reboot!'
 }
 
