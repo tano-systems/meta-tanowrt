@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano4"
+PR = "tano5"
 
 DEPENDS += "perl-native"
 
@@ -42,7 +42,7 @@ S = "${WORKDIR}/git"
 
 do_fetch[cleandirs] += "${WORKDIR}/data"
 
-inherit cmake pkgconfig tanowrt tanowrt-services
+inherit cmake pkgconfig tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "usbmode"
 TANOWRT_SERVICE_SCRIPTS_usbmode += "usbmode"
@@ -74,5 +74,4 @@ do_install_append() {
 	     > ${D}${sysconfdir}/usb-mode.json
 }
 
-FILES_${PN}  += "${libdir}/*"
-FILES_${PN}-dbg  += "${libdir}/lua/5.*/.debug"
+FILES_${PN} += "${libdir}/*"

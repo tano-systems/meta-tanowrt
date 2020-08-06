@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "2"
+INC_PR = "3"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 EXTRA_OEMAKE += "\
@@ -31,7 +31,7 @@ SRC_URI += "\
 	file://50-dnsmasq-migrate-resolv-conf-auto.sh \
 "
 
-inherit tanowrt tanowrt-services useradd
+inherit tanowrt-services useradd
 
 TANOWRT_SERVICE_PACKAGES = "dnsmasq"
 TANOWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"

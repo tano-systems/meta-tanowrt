@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano5"
+PR = "tano6"
 SUMMARY = "Small stream SSL library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ustream-ssl.git;a=summary"
 LICENSE = "BSD"
@@ -19,7 +19,7 @@ SRCREV = "5e1bc3429cbf9c3be4db65ef5dbf21ea99cf5b95"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+inherit cmake pkgconfig
 
 do_install_append() {
 	install -d ${D}${includedir}/libubox
@@ -30,7 +30,7 @@ do_install_append() {
 	rmdir --ignore-fail-on-non-empty ${D}${libdir}
 }
 
-FILES_${PN}  += "${base_libdir}/*"
-FILES_${PN}-dbg  += "${libdir}/lua/5.*/.debug"
+FILES_${PN} += "${base_libdir}/*"
+FILES_SOLIBSDEV = ""
 
 RDEPENDS_${PN} += "libcrypto libssl"

@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano29"
+PR = "tano30"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -54,7 +54,9 @@ SRCREV = "84269037b75de93bdd4ea75b7f50ba77ba976377"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+FILES_SOLIBSDEV = ""
+
+inherit cmake pkgconfig
 
 inherit tanowrt-services
 

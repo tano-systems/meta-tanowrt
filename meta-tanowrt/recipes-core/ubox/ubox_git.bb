@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano10"
+PR = "tano11"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -26,7 +26,9 @@ SRCREV = "0e34af143373126fc62b43612233a158694ec643"
 
 S = "${WORKDIR}/git"
 
-inherit cmake tanowrt-services tanowrt
+inherit cmake tanowrt-services
+
+FILES_SOLIBSDEV = ""
 
 TANOWRT_SERVICE_PACKAGES = "ubox"
 TANOWRT_SERVICE_SCRIPTS_ubox += "log"

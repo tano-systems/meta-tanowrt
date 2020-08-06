@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -9,7 +9,9 @@ DEPENDS = "lua5.1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-inherit cmake tanowrt pkgconfig
+inherit cmake tanowrt-lua pkgconfig
+
+FILES_SOLIBSDEV = ""
 
 SRC_URI = "\
 	git://github.com/jow-/lucihttp.git;protocol=https \

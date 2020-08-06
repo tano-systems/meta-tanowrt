@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 
 DESCRIPTION = "OpenWrt IPv4 pseudo-bridge routing daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/relayd.git;a=summary"
@@ -20,7 +20,7 @@ SRCREV = "ad0b25ad74345d367c62311e14b279f5ccb8ef13"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+inherit cmake pkgconfig
 
 FILES_${PN}  += "${libdir}/*"
 

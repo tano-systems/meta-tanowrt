@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
 LICENSE = "BSD"
@@ -21,6 +21,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+inherit cmake pkgconfig
+
+FILES_SOLIBSDEV = ""
+
+FILES_${PN} += "${libdir}/*"
 
 OECMAKE_C_FLAGS += "-Wno-error=discarded-qualifiers"

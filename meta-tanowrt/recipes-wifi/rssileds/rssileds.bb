@@ -2,7 +2,7 @@
 # RSSI real-time LED indicator bitbake recipe
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "A small process written in C to update the signal-strength indicator LEDs"
 SUMMARY = "RSSI real-time LED indicator"
@@ -22,7 +22,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-inherit tanowrt tanowrt-services
+inherit tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "rssileds"
 TANOWRT_SERVICE_SCRIPTS_rssileds += "rssileds"

@@ -14,10 +14,9 @@ OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/lua5.1"
 CFLAGS += "-I${STAGING_INCDIR}/lua5.1"
 
 do_configure_prepend () {
-    if [ -e "${S}/CMakeLists.txt" ] ; then
-        sed -i -e \
-	"s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
-	-e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
-	${S}/CMakeLists.txt
-    fi
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
 }

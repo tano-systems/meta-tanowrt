@@ -3,7 +3,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano1"
+PR_append = ".tano2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -11,7 +11,7 @@ SRC_URI += "\
 	file://modutils.init \
 	"
 
-inherit tanowrt tanowrt-services
+inherit tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "modutils-initscripts"
 TANOWRT_SERVICE_SCRIPTS_modutils-initscripts += "modutils"

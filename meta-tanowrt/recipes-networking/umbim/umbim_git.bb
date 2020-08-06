@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -32,7 +32,7 @@ SRC_URI += "\
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+inherit cmake pkgconfig
 
 FILES_${PN} += "\
 	${base_libdir}/netifd/proto/mbim.sh \

@@ -8,7 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano15"
+PR = "tano16"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
@@ -18,7 +18,9 @@ PROVIDES += "libiwinfo libiwinfo-lua"
 # iwinfo: add device id for Mikrotik R11e-5HacD miniPCIe card
 SRCREV = "2faa20e5e9d107b97e393a4eb458370e80b4d720"
 
-inherit tanowrt pkgconfig
+FILES_SOLIBSDEV = ""
+
+inherit tanowrt-lua pkgconfig
 
 PACKAGECONFIG ??= "backend-nl80211"
 PACKAGECONFIG[backend-nl80211] = ",,libnl,"
@@ -68,4 +70,6 @@ do_install() {
 	install -D -m 0644 ${S}/hardware.txt ${D}${datadir}/libiwinfo/hardware.txt
 }
 
-FILES_${PN} += "${datadir}"
+FILES_${PN} += "${datadir} ${libdir}"
+
+LEAD_SONAME = "libiwinfo.so"

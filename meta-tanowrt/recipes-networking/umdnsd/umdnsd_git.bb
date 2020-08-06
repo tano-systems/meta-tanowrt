@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano3"
+PR = "tano4"
 
 DESCRIPTION = "OpenWrt MDNS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/mdnsd.git;a=summary"
@@ -26,7 +26,7 @@ SRCREV = "78974417e182a3de8f78b7d73366ec0c98396b6c"
 
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt
+inherit cmake pkgconfig
 
 inherit tanowrt-services
 

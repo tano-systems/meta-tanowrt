@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano23"
+PR = "tano24"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -31,7 +31,7 @@ RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 SRCREV = "939c281c70ef82929ffcb3cb383fd6fdc40f341b"
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt-services tanowrt
+inherit cmake pkgconfig tanowrt-services tanowrt-lua
 
 TANOWRT_SERVICE_PACKAGES = "uhttpd"
 TANOWRT_SERVICE_SCRIPTS_uhttpd += "uhttpd"

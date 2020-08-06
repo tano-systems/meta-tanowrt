@@ -1,6 +1,5 @@
 #
 inherit core-image
-inherit tanowrt
 inherit tanowrt-image-buildinfo
 inherit tanowrt-kmods
 

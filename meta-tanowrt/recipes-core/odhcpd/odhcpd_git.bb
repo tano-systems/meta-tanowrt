@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -26,7 +26,7 @@ SRC_URI = "\
 SRCREV = "5ce077026b991f49d96464587386f93d92f56385"
 S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig tanowrt tanowrt-services
+inherit cmake pkgconfig tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "odhcpd"
 TANOWRT_SERVICE_SCRIPTS_odhcpd += "odhcpd"

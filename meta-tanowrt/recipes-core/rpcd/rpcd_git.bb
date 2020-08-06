@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano20"
+PR = "tano21"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -24,7 +24,7 @@ SRCREV_rpcd = "078bb57e0769c987c05244abe1f7d8d53e0e323e"
 
 S = "${WORKDIR}/git"
 
-inherit cmake tanowrt-services tanowrt
+inherit cmake tanowrt-services
 
 PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
 
@@ -40,6 +40,14 @@ TANOWRT_SERVICE_SCRIPTS_rpcd += "rpcd"
 TANOWRT_SERVICE_STATE_rpcd-rpcd ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}
 
 do_install_append() {
     install -d ${D}${includedir}/rpcd
