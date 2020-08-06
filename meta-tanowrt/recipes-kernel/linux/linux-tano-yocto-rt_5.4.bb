@@ -6,9 +6,9 @@
 #
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
 KERNEL_SRC_BRANCH ?= "v5.4/standard/preempt-rt/base"
-KERNEL_SRC_SRCREV ?= "e6cb812b5532630b6fc6dfd7778d57a4907d3180"
+KERNEL_SRC_SRCREV ?= "508b4e6ada7f78b3ef5a9dbdd182d13dffe00123"
 
-LINUX_VERSION ?= "5.4.40"
+LINUX_VERSION ?= "5.4.51"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
@@ -23,7 +23,7 @@ require recipes-kernel/linux/linux-tano-yocto.inc
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.4:"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-5.4"
-YOCTO_KERNEL_CACHE_SRCREV = "4ed477131e6e508d335d70c070eb84a5c3d673e5"
+YOCTO_KERNEL_CACHE_SRCREV = "caafbdfe382bf22a4786d871af097acd49d0867a"
 
 SECTION = "kernel"
 DESCRIPTION = "Yocto Linux kernel"
