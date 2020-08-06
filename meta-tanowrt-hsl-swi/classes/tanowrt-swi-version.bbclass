@@ -1,6 +1,4 @@
 #
-inherit tano-scmrevision
-
 do_create_rootfs_version() {
     EXT_VERSION=`cat "${IMAGE_ROOTFS}${sysconfdir}/openwrt_version"`
     echo "${DISTRO_NAME} ${DISTRO_VERSION} ${EXT_VERSION}" > ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.version
