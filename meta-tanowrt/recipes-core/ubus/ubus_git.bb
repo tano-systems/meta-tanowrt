@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano12"
+PR = "tano13"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 03.02.2020
-# lua: avoid truncation of large numeric values
-SRCREV = "171469e3138cce191892e20b6fd35b52c9368064"
+# 05.08.2020
+# tests: cram: fix usage test
+SRCREV = "13efd05c1bb611a3b30f53858fcd3a13589e08be"
 
 S = "${WORKDIR}/git"
 
