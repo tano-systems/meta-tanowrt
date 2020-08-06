@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano55.${INC_PR}"
+PR_append = ".tano56.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -39,8 +39,6 @@ SRC_URI_append = "\
     file://boot.init \
     file://system.init \
     file://system.config \
-    file://openwrt_release \
-    file://openwrt_version \
     file://sysfixtime.init \
     file://preinit/50_overlay_setup \
     file://preinit/80_mount_root \
@@ -63,7 +61,6 @@ SRC_URI_append = "\
 SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
 
-inherit tanowrt-version
 inherit tanowrt-services
 
 TANOWRT_SERVICE_PACKAGES = "base-files"
@@ -176,8 +173,11 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/sysctl.d/10-default.conf ${D}${sysconfdir}/sysctl.d/10-default.conf
 	install -m 0644 ${WORKDIR}/sysctl.d/20-noswap.conf ${D}${sysconfdir}/sysctl.d/20-noswap.conf
 
-	install -m 0644 ${WORKDIR}/openwrt_release ${D}${sysconfdir}/openwrt_release
-	install -m 0644 ${WORKDIR}/openwrt_version ${D}${sysconfdir}/openwrt_version
+	# these files generated in tanowrt-image-buildinfo.bbclass
+	rm -f ${D}${sysconfdir}/device_info
+	rm -f ${D}${sysconfdir}/openwrt_release
+	rm -f ${D}${sysconfdir}/openwrt_version
+
 	install -m 0644 ${WORKDIR}/issue ${D}${sysconfdir}/issue
 	install -m 0644 ${WORKDIR}/hostname ${D}${sysconfdir}/hostname
 	install -m 0755 ${WORKDIR}/system.init ${D}${sysconfdir}/init.d/system
@@ -195,13 +195,6 @@ do_install_append () {
 
 	rm ${D}${sysconfdir}/issue.net
 	rm ${D}${sysconfdir}/TZ
-
-	# Run VERSION_SED script
-	${OPENWRT_VERSION_SED} \
-		${D}${sysconfdir}/device_info \
-		${D}${sysconfdir}/openwrt_version \
-		${D}${sysconfdir}/openwrt_release \
-		${D}${sysconfdir}/issue
 
 	# Setup timezone and zonename in /etc/config/system
 	OPENWRT_TIMEZONE_ESCAPED="${@d.getVar('OPENWRT_TIMEZONE', True).replace('/', '\/')}"
