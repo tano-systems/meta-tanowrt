@@ -1,14 +1,9 @@
 #
 # TanoWrt version variables
 #
-# Copyright (c) 2018-2019, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-
-inherit tano-scmrevision
-
-OPENWRT_VERSION_SRCREV = "${TANOWRT_SCM_REVISION}"
-OPENWRT_VERSION_SRCREV_SHORT = "${TANOWRT_SCM_REVISION_SHORT}"
 
 #
 # These options allow to override the version information embedded in
@@ -35,16 +30,6 @@ OPENWRT_VERSION_DIST ?= "TanoWrt"
 OPENWRT_VERSION_NUMBER ?= "${DISTRO_VERSION}"
 
 #
-# Release version code
-#
-# This is the release version code embedded in the image.
-# If unspecified, it defaults to a revision number describing the
-# repository version of the source, e.g. the number of commits
-# since a branch point or a short Git commit ID.
-#
-OPENWRT_VERSION_CODE ?= "${MACHINE} git-${OPENWRT_VERSION_SRCREV_SHORT} #ROOTFS_GEN_TIMESTAMP#"
-
-#
 # Release repository
 #
 # This is the repository address embedded in the image, it defaults
@@ -65,7 +50,7 @@ OPENWRT_VERSION_HOME_URL ?= "https://github.com/tano-systems/meta-tanowrt"
 # This is the manufacturer name embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER ?= "Tano Systems"
+OPENWRT_VERSION_MANUFACTURER ?= "Tano Systems LLC"
 
 #
 # Manufacturer URL
@@ -73,7 +58,7 @@ OPENWRT_VERSION_MANUFACTURER ?= "Tano Systems"
 # This is an URL to the manufacturer's website embedded in /etc/device_info
 # Useful for OEMs building OpenWrt based firmware
 #
-OPENWRT_VERSION_MANUFACTURER_URL ?= "https://tano-systems.com/"
+OPENWRT_VERSION_MANUFACTURER_URL ?= "https://tano-systems.com"
 
 #
 # Bug reporting URL
@@ -110,18 +95,13 @@ OPENWRT_VERSION_HWREV ?= "v0"
 #   "LEDE 17.01-SNAPSHOT" => "lede_17.01-snapshot"
 #
 OPENWRT_VERSION_NUMBER_LU="${@d.getVar('OPENWRT_VERSION_NUMBER', True).replace(' ', '_').lower()}"
-OPENWRT_VERSION_CODE_LU="${@d.getVar('OPENWRT_VERSION_CODE', True).replace(' ', '_').lower()}"
 OPENWRT_VERSION_DIST_LU="${@d.getVar('OPENWRT_VERSION_DIST', True).replace(' ', '_').lower()}"
 
 #
 # VERSION_SED script
 #
-# %R .. Repository revision ID
-# %r .. Repository revision ID (short)
 # %V .. Configured release version number or "SNAPSHOT", uppercase
 # %v .. Configured release version number or "snapshot", lowercase
-# %C .. Configured release revision code or value of %R, uppercase
-# %c .. Configured release revision code or value of %R, lowercase
 # %D .. Distribution name or "Lede", uppercase
 # %d .. Distribution name or "lede", lowercase
 # %T .. Target name
@@ -137,12 +117,8 @@ OPENWRT_VERSION_SED = "sed -i \
 	-e 's,%U,${OPENWRT_VERSION_REPO},g' \
 	-e 's,%V,${OPENWRT_VERSION_NUMBER},g' \
 	-e 's,%v,${OPENWRT_VERSION_NUMBER_LU},g' \
-	-e 's,%C,${OPENWRT_VERSION_CODE},g' \
-	-e 's,%c,${OPENWRT_VERSION_CODE_LU},g' \
 	-e 's,%D,${OPENWRT_VERSION_DIST},g' \
 	-e 's,%d,${OPENWRT_VERSION_DIST_LU},g' \
-	-e 's,%R,${OPENWRT_VERSION_SRCREV},g' \
-	-e 's,%r,${OPENWRT_VERSION_SRCREV_SHORT},g' \
 	-e 's,%T,${MACHINE},g' \
 	-e 's,%S,${MACHINE},g' \
 	-e 's,%A,${TARGET_ARCH},g' \
@@ -159,11 +135,7 @@ OPENWRT_VERSION_SED = "sed -i \
 do_unpack[vardeps] += "\
 	OPENWRT_VERSION_REPO \
 	OPENWRT_VERSION_NUMBER \
-	OPENWRT_VERSION_SRCREV \
-	OPENWRT_VERSION_CODE \
 	OPENWRT_VERSION_DIST \
-	OPENWRT_VERSION_SRCREV \
-	OPENWRT_VERSION_SRCREV_SHORT \
 	OPENWRT_VERSION_MANUFACTURER \
 	OPENWRT_VERSION_MANUFACTURER_URL \
 	OPENWRT_VERSION_BUG_URL \
