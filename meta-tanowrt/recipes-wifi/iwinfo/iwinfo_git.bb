@@ -8,7 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano16"
+PR = "tano17"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
@@ -73,3 +73,4 @@ do_install() {
 FILES_${PN} += "${datadir} ${libdir}"
 
 LEAD_SONAME = "libiwinfo.so"
+BBCLASSEXTEND = "native nativesdk"
