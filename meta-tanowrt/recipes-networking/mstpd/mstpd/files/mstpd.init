@@ -26,7 +26,7 @@ start_service() {
 	local mstpd_loglevel
 
 	# Migrate old configuration structure to new
-	/usr/lib/mstpctl-utils/mstpd-config-migrate.sh
+	/usr/libexec/mstpctl-utils/mstpd-config-migrate.sh
 
 	config_load "${NAME}"
 	config_get_bool mstpd_enabled 'global' 'enabled' 0

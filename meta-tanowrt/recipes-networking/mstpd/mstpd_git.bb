@@ -1,7 +1,7 @@
 #
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
-PR = "tano5"
+PR = "tano6"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
@@ -54,7 +54,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/mstpd.sh ${D}/lib/functions/mstpd.sh
 
 	# Install config migration script
-	install -m 0755 ${WORKDIR}/mstpd-config-migrate.sh \
+	install -D -m 0755 ${WORKDIR}/mstpd-config-migrate.sh \
 		${D}/usr/libexec/mstpctl-utils/mstpd-config-migrate.sh
 }
 
