@@ -1,4 +1,4 @@
-PR_append = ".7"
+PR_append = ".8"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
