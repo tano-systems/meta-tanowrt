@@ -3,7 +3,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".2"
+PR_append = ".3"
 
 COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
 

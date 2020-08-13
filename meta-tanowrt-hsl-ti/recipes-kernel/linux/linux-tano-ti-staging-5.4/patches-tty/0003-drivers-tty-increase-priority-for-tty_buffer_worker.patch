@@ -1,8 +1,13 @@
-From c778ba9d040562854ed5b1989e6c19c8128b32cb Mon Sep 17 00:00:00 2001
-From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Wed, 3 Jun 2020 07:28:00 +0300
-Subject: [PATCH 3/3] drivers/tty: increase priority for tty_buffer_worker
+From a9ca715a9fdb9c9cca0043087d725fb02ce59b3e Mon Sep 17 00:00:00 2001
+From: Oleksij Rempel <o.rempel@pengutronix.de>
+Date: Thu, 10 Jan 2019 11:12:32 +0100
+Subject: [PATCH v1 3/3] drivers/tty: increase priority for tty_buffer_worker
 
+sched_priority = 1 is enough to dramatically reduce latency
+on have system load produced by tasks with default user space prio.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 ---
  drivers/tty/tty_buffer.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
@@ -24,7 +29,7 @@ index 631a52e6c720..135eff2f3022 100644
  
  void tty_buffer_init_kthread(void)
  {
-+	struct sched_param param = { .sched_priority = 71 };
++	struct sched_param param = { .sched_priority = 1 };
 +
  	tty_buffer_worker = kthread_create_worker(0, "tty");
  	if (IS_ERR(tty_buffer_worker)) {

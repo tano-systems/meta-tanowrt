@@ -1,9 +1,19 @@
-From 6e1f94fb79c3d4f481d87d65b5f0a4b2da982942 Mon Sep 17 00:00:00 2001
-From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Wed, 3 Jun 2020 07:26:36 +0300
-Subject: [PATCH 2/3] drivers/tty: convert tty_port to use kthread_worker
+From a27ec05c32b828d9c518c70e3c58577fde9414bd Mon Sep 17 00:00:00 2001
+From: Steven Walter <stevenrwalter@gmail.com>
+Date: Thu, 10 Jan 2019 11:12:31 +0100
+Subject: [PATCH v1 2/3] drivers/tty: convert tty_port to use kthread_worker
 
-Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+Use kthread_worker instead of workqueues.  For now there is only a
+single workqueue, but the intention is to bring back the "low_latency"
+tty option, along with a second high-priority kthread worker.
+
+Even without a second worker this patch allows to give a higher priority
+to tty processing by modifying the priority of the corresponding
+kthread.
+
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 ---
  drivers/tty/tty_buffer.c | 25 ++++++++++++++++++-------
  drivers/tty/tty_io.c     |  1 +

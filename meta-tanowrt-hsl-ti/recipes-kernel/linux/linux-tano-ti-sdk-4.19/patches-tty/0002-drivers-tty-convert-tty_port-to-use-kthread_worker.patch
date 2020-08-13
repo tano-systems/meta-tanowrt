@@ -1,5 +1,27 @@
+From c8ab0eb590ec6f13eb841e9b17624673596d30af Mon Sep 17 00:00:00 2001
+From: Steven Walter <stevenrwalter@gmail.com>
+Date: Thu, 10 Jan 2019 11:12:31 +0100
+Subject: [PATCH v1 2/3] drivers/tty: convert tty_port to use kthread_worker
+
+Use kthread_worker instead of workqueues.  For now there is only a
+single workqueue, but the intention is to bring back the "low_latency"
+tty option, along with a second high-priority kthread worker.
+
+Even without a second worker this patch allows to give a higher priority
+to tty processing by modifying the priority of the corresponding
+kthread.
+
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+---
+ drivers/tty/tty_buffer.c | 25 ++++++++++++++++++-------
+ drivers/tty/tty_io.c     |  1 +
+ include/linux/tty.h      |  7 ++++---
+ 3 files changed, 23 insertions(+), 10 deletions(-)
+
 diff --git a/drivers/tty/tty_buffer.c b/drivers/tty/tty_buffer.c
-index e0090e65d83a..18bd7f48a319 100644
+index 80c9324c23ae..3b041aa9b72a 100644
 --- a/drivers/tty/tty_buffer.c
 +++ b/drivers/tty/tty_buffer.c
 @@ -4,6 +4,7 @@
@@ -68,7 +90,7 @@ index e0090e65d83a..18bd7f48a319 100644
 +	kthread_flush_work(&port->buf.work);
  }
 diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index bfe9ad85b362..5fd7cecbe4e7 100644
+index ac8025cd4a1f..decd8e0812c7 100644
 --- a/drivers/tty/tty_io.c
 +++ b/drivers/tty/tty_io.c
 @@ -3342,6 +3342,7 @@ void console_sysfs_notify(void)
@@ -80,7 +102,7 @@ index bfe9ad85b362..5fd7cecbe4e7 100644
  	cdev_init(&tty_cdev, &tty_fops);
  	if (cdev_add(&tty_cdev, MKDEV(TTYAUX_MAJOR, 0), 1) ||
 diff --git a/include/linux/tty.h b/include/linux/tty.h
-index 226a9eff0766..924c1093967e 100644
+index 621889ab454f..a23fd7b3b92d 100644
 --- a/include/linux/tty.h
 +++ b/include/linux/tty.h
 @@ -3,9 +3,9 @@
