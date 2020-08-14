@@ -4,16 +4,16 @@
 #
 require linux-backports.inc
 
-PV = "5.8-rc2-1"
+PV = "5.8-1"
 PR = "tano0.${INC_PR}"
 
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/files:"
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/configs:"
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/patches:"
 
-SRC_URI += "http://www.kernel.org/pub/linux/kernel/projects/backports/stable/v5.8-rc2/backports-${PV}.tar.gz"
-SRC_URI[md5sum] = "0eff99f1f23da6dfd9105faa2eec52b3"
-SRC_URI[sha256sum] = "868de52b40c5569f036d03c44e9ce9adba1dc7923462f29dc511f06a76db2cbe"
+SRC_URI += "http://www.kernel.org/pub/linux/kernel/projects/backports/stable/v5.8/backports-${PV}.tar.gz"
+SRC_URI[md5sum] = "00e9f98162c48e362236995406d4fd20"
+SRC_URI[sha256sum] = "44ae3025d76f6747a0dfe559948dc5f0f0d84a5238fd3bf64e934cb43fcd63ff"
 
 S = "${WORKDIR}/backports-${PV}"
 
@@ -49,13 +49,15 @@ SRC_URI += "\
 	file://patches-openwrt/subsys/300-mac80211-optimize-skb-resizing.patch \
 	file://patches-openwrt/subsys/304-mac80211-sta-randomize-BA-session-dialog-token-alloc.patch \
 	file://patches-openwrt/subsys/305-mac80211-improve-AQL-tx-airtime-estimation.patch \
-	file://patches-openwrt/subsys/306-mac80211-remove-STA-txq-pending-airtime-underflow-wa.patch \
 	file://patches-openwrt/subsys/307-mac80211-add-a-function-for-running-rx-without-passi.patch \
 	file://patches-openwrt/subsys/308-net-fq_impl-use-skb_get_hash-instead-of-skb_get_hash.patch \
 	file://patches-openwrt/subsys/309-mac80211-calculcate-skb-hash-early-when-using-itxq.patch \
+	file://patches-openwrt/subsys/310-mac80211-reduce-packet-loss-event-false-positives.patch \
+	file://patches-openwrt/subsys/311-mac80211-use-rate-provided-via-status-rate-on-ieee80.patch \
+	file://patches-openwrt/subsys/312-mac80211-factor-out-code-to-look-up-the-average-pack.patch \
+	file://patches-openwrt/subsys/313-mac80211-improve-AQL-aggregation-estimation-for-low-.patch \
 	file://patches-openwrt/subsys/400-allow-ibss-mixed.patch \
 	file://patches-openwrt/subsys/500-mac80211_configure_antenna_gain.patch \
-	file://patches-openwrt/subsys/600-mac80211-util-don-t-warn-on-missing-sband-iftype-dat.patch \
 "
 
 # Patches from OpenWrt (ath)
@@ -104,7 +106,6 @@ SRC_URI += "\
 	file://patches-openwrt/ath/551-ath9k_ubnt_uap_plus_hsr.patch \
 	file://patches-openwrt/ath/552-ahb_of.patch \
 	file://patches-openwrt/ath/553-ath9k_of_gpio_mask.patch \
-	file://patches-openwrt/ath/910-ath10k-Fix-NULL-pointer-dereference-in-AHB-device-pr.patch \
 	file://patches-openwrt/ath/921-ath10k_init_devices_synchronously.patch \
 	file://patches-openwrt/ath/922-ath10k-increase-rx-buffer-size-to-2048.patch \
 	file://patches-openwrt/ath/930-ath10k_add_tpt_led_trigger.patch \
