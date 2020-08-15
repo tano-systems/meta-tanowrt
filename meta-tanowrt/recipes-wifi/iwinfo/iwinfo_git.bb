@@ -8,7 +8,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano17"
+PR = "tano18"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
@@ -36,6 +36,8 @@ SRC_URI += "\
 	file://0001-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \
 	file://0002-use-libnl3-instead-of-libnl-tiny.patch \
 	file://1001-iwinfo-add-device-id-for-Intel-Dual-Band-Wireless-AC.patch \
+	file://1002-iwinfo-add-device-id-for-Realtek-RTL8821CE.patch \
+	file://1003-iwinfo-add-device-id-for-Broadcom-BCM4350.patch \
 "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"

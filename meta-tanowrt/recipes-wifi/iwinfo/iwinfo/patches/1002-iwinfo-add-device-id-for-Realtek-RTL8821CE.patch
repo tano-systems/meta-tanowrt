@@ -1,0 +1,22 @@
+From 184ad652797e1cdad211c15248edb5ea8cd0dfde Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 15 Aug 2020 03:46:49 +0300
+Subject: [PATCH] iwinfo: add device id for Realtek RTL8821CE
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ hardware.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hardware.txt b/hardware.txt
+index b9f767b..2a2aefa 100644
+--- a/hardware.txt
++++ b/hardware.txt
+@@ -188,3 +188,4 @@
+ 0x14e4 0xaa52 0x14e4 0xaa52    0      0  "Broadcom" "BCM43602"
+ 0x1ae9 0x0310 0x1ae9 0x0000    0      0  "Wilocity" "Wil6210"
+ 0x8086 0x08b3 0x8086 0x8070    0      0  "Intel"    "Dual Band Wireless AC 3160"
++0x10ec 0xc821 0x10ec 0xc821    0      0  "Realtek"  "RTL8821CE PCIe"
+-- 
+2.16.2.windows.1
+
