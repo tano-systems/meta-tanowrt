@@ -31,6 +31,7 @@ SRC_URI += "\
 	file://config-mt76 \
 	file://config-ralink \
 	file://config-rtlwifi \
+	file://config-rtl8821ce \
 	file://config-b43 \
 	file://config-brcmfmac \
 	file://config-brcmsmac \

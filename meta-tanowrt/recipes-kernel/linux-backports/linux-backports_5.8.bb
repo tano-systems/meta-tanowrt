@@ -167,5 +167,6 @@ SRC_URI += "\
 
 # Patches from Tano
 SRC_URI += "\
+	file://patches-tano/0001-rtl8821ce-Add-driver-for-Realtek-RTL8821CE.patch \
 	file://patches-tano/0002-Add-debug-output.patch \
 "
