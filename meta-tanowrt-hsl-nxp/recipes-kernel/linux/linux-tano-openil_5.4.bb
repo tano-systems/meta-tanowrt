@@ -13,7 +13,7 @@ KERNEL_SRC_SRCREV ?= "OpenIL-v1.8-linux-202005"
 
 LINUX_VERSION ?= "5.4.3-rt"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
-PV = "${LINUX_VERSION}+git${SRCPV}"
+PV = "${LINUX_VERSION}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
 MACHINE_KERNEL_PR_append = "tano0"
