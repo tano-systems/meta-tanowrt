@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano25"
+PR = "tano26"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -32,9 +32,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 07.05.2020
-# redirects: fix segmentation fault
-SRCREV = "050816af322f0a8ed8dd04d620f42cb3d0a1ac06"
+# 15.08.2020
+# options: fix parsing of boolean attributes
+SRCREV = "78d52a28c66ad0fd2af250038fdcf4239ad37bf2"
 
 S = "${WORKDIR}/git"
 
