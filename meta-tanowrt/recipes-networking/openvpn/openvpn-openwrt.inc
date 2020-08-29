@@ -6,7 +6,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "7"
+INC_PR = "8"
 
 inherit tanowrt-services
 
