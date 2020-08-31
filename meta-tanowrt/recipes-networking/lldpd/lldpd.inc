@@ -4,7 +4,7 @@ SECTION = "net/misc"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/ISC;md5=f3b90e78ea0cffb20bf5cca7947a896d"
 
-INC_PR = "4"
+INC_PR = "5"
 
 DEPENDS = "libbsd libevent"
 
