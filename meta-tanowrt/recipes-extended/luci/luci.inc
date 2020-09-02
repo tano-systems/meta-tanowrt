@@ -3,10 +3,10 @@ LUCI_GIT_URI      ?= "git://github.com/tano-systems/luci.git"
 LUCI_GIT_BRANCH   ?= "tano/master"
 LUCI_GIT_PROTOCOL ?= "git"
 
-# 01.09.2020
-LUCI_GIT_SRCREV ?= "c75797620b3157baa0d448737918642484d4c53a"
+# 07.09.2020
+LUCI_GIT_SRCREV ?= "48724862ae09a9ac2904f14e412f8a5d23afc008"
 
-PR_append = ".84"
+PR_append = ".86"
 
 libdir = "/usr/lib"
 
