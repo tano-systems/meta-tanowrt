@@ -18,7 +18,7 @@ LIC_FILES_CHKSUM = " \
 "
 
 PV = "3.0.3"
-PR = "tano4"
+PR = "tano5"
 
 DEPENDS = "libcap openssl libuci virtual/crypt"
 
@@ -52,6 +52,11 @@ SRC_URI += "\
 "
 
 inherit tanowrt-services
+inherit useradd
+
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM_${PN} = "--system --home-dir /home/ftp --no-create-home -g ftp --shell /bin/false ftp "
+GROUPADD_PARAM_${PN} = "-r ftp"
 
 TANOWRT_SERVICE_PACKAGES = "vsftpd"
 TANOWRT_SERVICE_SCRIPTS_vsftpd += "vsftpd"
