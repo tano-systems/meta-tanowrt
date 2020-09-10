@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano21"
+PR = "tano22"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI = "\
 	file://rpcd.config \
 "
 
-# 26.05.2020
-# uci: reset uci_ptr flags when merging options during section add
-SRCREV_rpcd = "078bb57e0769c987c05244abe1f7d8d53e0e323e"
+# 23.06.2020
+# rc: new ubus object for handling /etc/init.d/ scripts
+SRCREV_rpcd = "646daa0bec742e4c0af010ca85eda9021d95e4cf"
 
 S = "${WORKDIR}/git"
 
