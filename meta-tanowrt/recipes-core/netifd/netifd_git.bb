@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano33"
+PR = "tano34"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 27.07.2020
-# device: look up full device name before traversing vlan chain
-SRCREV_netifd = "ac0710b7a3c6fc3b7b90d5ddc9a57b437e8e3ac5"
+# 04.09.2020
+# netifd: vxlan: add aging and maxaddress options
+SRCREV_netifd = "55a7b6b7f2f773c06a79cb7359ffdab54ba32450"
 
 S = "${WORKDIR}/git"
 
