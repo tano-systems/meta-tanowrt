@@ -1,0 +1,55 @@
+From 81dfb323aa7ef4392b18cfa165e80e7bca72f5a4 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 20 Sep 2020 03:27:34 +0300
+Subject: [PATCH] ubus: fix format for empty responses
+
+After commit 1172357, empty responses are formatted as an empty object
+after result status in result array:
+
+    [{"jsonrpc":"2.0","id":25,"result":[0,{}]}]
+
+Previously, only the status value was written to result array
+for empty responses:
+
+    [{"jsonrpc":"2.0","id":25,"result":[0]}]
+
+This commit reverts behavior to what it was before commit 1172357
+for legacy ubus requests. The reason is that LuCI code for some ubus
+requests (e.g. uci.apply) does not expect to find an empty object in
+the 'result' array for successful responses. In LuCI code, if the
+result array has more than one argument, it returns the second element
+as a response to the user code (see handleCallReply method in rpc.js
+from luci-base module). While the user code expects to see the status
+code as a response, it gets an empty object.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ ubus.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/ubus.c b/ubus.c
+index 1cf5c5f..3a52bc6 100644
+--- a/ubus.c
++++ b/ubus.c
+@@ -465,10 +465,14 @@ uh_ubus_request_cb(struct ubus_request *req, int ret)
+ 		uh_ubus_init_json_rpc_response(cl, &buf);
+ 		r = blobmsg_open_array(&buf, "result");
+ 		blobmsg_add_u32(&buf, "", ret);
+-		c = blobmsg_open_table(&buf, NULL);
+-		blob_for_each_attr(cur, du->buf.head, rem)
+-			blobmsg_add_blob(&buf, cur);
+-		blobmsg_close_table(&buf, c);
++
++		if (blob_len(du->buf.head)) {
++			c = blobmsg_open_table(&buf, NULL);
++			blob_for_each_attr(cur, du->buf.head, rem)
++				blobmsg_add_blob(&buf, cur);
++			blobmsg_close_table(&buf, c);
++		}
++
+ 		blobmsg_close_array(&buf, r);
+ 		uh_ubus_send_response(cl, &buf);
+ 		return;
+-- 
+2.16.2.windows.1
+
