@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano25"
+PR = "tano26"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -26,9 +26,9 @@ SRC_URI = "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 14.09.2020
-# ubus: fix blob_buf initialization
-SRCREV = "fe1888f19e7f8ee4237409b8616c82926190c2f8"
+# 18.09.2020
+# ubus: add ACL support for "subscribe" request
+SRCREV = "47c34bd6ad49cae408b8d7c150c6f9f324aaddf5"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services tanowrt-lua
