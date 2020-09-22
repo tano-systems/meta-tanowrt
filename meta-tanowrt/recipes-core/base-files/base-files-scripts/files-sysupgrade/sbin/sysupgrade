@@ -25,6 +25,7 @@ export HELP=0
 export FORCE=0
 export TEST=0
 export UMOUNT_ETCBACKUP_DIR=0
+export NO_SCRIPTS=0
 
 # parse options
 while [ -n "$1" ]; do
@@ -42,6 +43,7 @@ while [ -n "$1" ]; do
 		-b|--create-backup) export CONF_BACKUP="$2" NEED_IMAGE=1; shift;;
 		-r|--restore-backup) export CONF_RESTORE="$2" NEED_IMAGE=1; shift;;
 		-l|--list-backup) export CONF_BACKUP_LIST=1;;
+		-N|--no-scripts) export NO_SCRIPTS=1;;
 		-f) export CONF_IMAGE="$2"; shift;;
 		-F|--force) export FORCE=1;;
 		-T|--test) export TEST=1;;
@@ -101,6 +103,10 @@ backup-command:
 	-l | --list-backup
 	             list the files that would be backed up when calling
 	             sysupgrade -b. Does not create a backup file.
+	-N | --no-scripts
+	             do not execute pre-create and post-restore scripts
+	             from /lib/upgrade/backup-scripts.d for --create-backup and
+	             --restore-backup commands respectively.
 
 EOF
 	exit 1
@@ -278,6 +284,27 @@ do_save_conffiles() {
 	rm -f "$CONFFILES"
 }
 
+do_run_scripts() {
+	local action="$1"
+	local scripts
+
+	v "Running scripts from /lib/upgrade/backup-scripts.d with $action action..."
+	(
+		cd /lib/upgrade/backup-scripts.d 2>/dev/null || return 0
+		scripts="$(ls)"
+		[ -z "$scripts" ] && return 0
+		for script in $scripts; do
+			if [ -x "$script" ]; then
+				v "running ${script}..."
+				./${script} "${action}" >/dev/null 2>/dev/null
+				v "${script} returned $?"
+			else
+				v "skipped ${script} (no executable permission)"
+			fi
+		done
+	)
+}
+
 if [ $CONF_BACKUP_LIST -eq 1 ]; then
 	run_hooks "$CONFFILES" $sysupgrade_init_conffiles
 	[ "$SAVE_INSTALLED_PKGS" -eq 1 ] && echo ${INSTALLED_PACKAGES} >> "$CONFFILES"
@@ -287,6 +314,9 @@ if [ $CONF_BACKUP_LIST -eq 1 ]; then
 fi
 
 if [ -n "$CONF_BACKUP" ]; then
+	if [ "$NO_SCRIPTS" != "1" ]; then
+		do_run_scripts "pre-create"
+	fi
 	do_save_conffiles "$CONF_BACKUP"
 	exit $?
 fi
@@ -299,6 +329,9 @@ if [ -n "$CONF_RESTORE" ]; then
 
 	[ "$VERBOSE" -gt 1 ] && TAR_V="v" || TAR_V=""
 	tar -C / -x${TAR_V}zf "$CONF_RESTORE"
+	if [ "$NO_SCRIPTS" != "1" ]; then
+		do_run_scripts "post-restore"
+	fi
 	exit $?
 fi
 

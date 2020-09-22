@@ -4,7 +4,7 @@
 
 require base-files.inc
 
-PR = "tano6.${INC_PR}"
+PR = "tano7.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
