@@ -3,7 +3,7 @@
 #
 # Wireless configuration API
 #
-PR = "tano9"
+PR = "tano10"
 
 DESCRIPTION = "cfg80211 is the Linux wireless LAN (802.11) configuration API"
 SUMMARY = "Wireless configuration API"
