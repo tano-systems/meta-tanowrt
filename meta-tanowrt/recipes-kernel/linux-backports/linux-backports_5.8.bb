@@ -5,7 +5,7 @@
 require linux-backports.inc
 
 PV = "5.8-1"
-PR = "tano0.${INC_PR}"
+PR = "tano1.${INC_PR}"
 
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/files:"
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/configs:"
@@ -37,13 +37,14 @@ SRC_URI += "\
 
 # Patches from OpenWrt (subsystem)
 SRC_URI += "\
+	file://patches-openwrt/subsys/070-backports-add-netif_receive_skb_list.patch \
+	file://patches-openwrt/subsys/071-backports-add-skb_list_del_init.patch \
 	file://patches-openwrt/subsys/100-remove-cryptoapi-dependencies.patch \
 	file://patches-openwrt/subsys/110-mac80211_keep_keys_on_stop_ap.patch \
 	file://patches-openwrt/subsys/120-cfg80211_allow_perm_addr_change.patch \
 	file://patches-openwrt/subsys/130-disable-fils.patch \
 	file://patches-openwrt/subsys/131-Revert-mac80211-aes-cmac-switch-to-shash-CMAC-driver.patch \
 	file://patches-openwrt/subsys/132-mac80211-remove-cmac-dependency.patch \
-	file://patches-openwrt/subsys/140-tweak-TSQ-setting.patch \
 	file://patches-openwrt/subsys/150-disable_addr_notifier.patch \
 	file://patches-openwrt/subsys/210-ap_scan.patch \
 	file://patches-openwrt/subsys/300-mac80211-optimize-skb-resizing.patch \
@@ -56,6 +57,26 @@ SRC_URI += "\
 	file://patches-openwrt/subsys/311-mac80211-use-rate-provided-via-status-rate-on-ieee80.patch \
 	file://patches-openwrt/subsys/312-mac80211-factor-out-code-to-look-up-the-average-pack.patch \
 	file://patches-openwrt/subsys/313-mac80211-improve-AQL-aggregation-estimation-for-low-.patch \
+	file://patches-openwrt/subsys/314-mac80211-add-missing-queue-hash-initialization-to-80.patch \
+	file://patches-openwrt/subsys/315-mac80211-check-and-refresh-aggregation-session-in-en.patch \
+	file://patches-openwrt/subsys/316-mac80211-skip-encap-offload-for-tx-multicast-control.patch \
+	file://patches-openwrt/subsys/317-mac80211-set-info-control.hw_key-for-encap-offload-p.patch \
+	file://patches-openwrt/subsys/318-mac80211-rework-tx-encapsulation-offload-API.patch \
+	file://patches-openwrt/subsys/319-mac80211-reduce-duplication-in-tx-status-functions.patch \
+	file://patches-openwrt/subsys/320-mac80211-remove-tx-status-call-to-ieee80211_sta_regi.patch \
+	file://patches-openwrt/subsys/321-mac80211-optimize-station-connection-monitor.patch \
+	file://patches-openwrt/subsys/322-mac80211-swap-NEED_TXPROCESSING-and-HW_80211_ENCAP-t.patch \
+	file://patches-openwrt/subsys/323-mac80211-unify-802.3-offload-and-802.11-tx-status-co.patch \
+	file://patches-openwrt/subsys/324-mac80211-support-using-ieee80211_tx_status_ext-to-fr.patch \
+	file://patches-openwrt/subsys/325-mac80211-extend-ieee80211_tx_status_ext-to-support-b.patch \
+	file://patches-openwrt/subsys/326-mac80211-notify-the-driver-when-a-sta-uses-4-address.patch \
+	file://patches-openwrt/subsys/327-mac80211-reorganize-code-to-remove-a-forward-declara.patch \
+	file://patches-openwrt/subsys/328-mac80211-extend-AQL-aggregation-estimation-to-HE-and.patch \
+	file://patches-openwrt/subsys/329-mac80211-add-AQL-support-for-VHT160-tx-rates.patch \
+	file://patches-openwrt/subsys/330-mac80211-allow-bigger-A-MSDU-sizes-in-VHT-even-if-HT.patch \
+	file://patches-openwrt/subsys/331-mac80211-do-not-allow-bigger-VHT-MPDUs-than-the-hard.patch \
+	file://patches-openwrt/subsys/332-mac80211-fix-regression-in-sta-connection-monitor.patch \
+	file://patches-openwrt/subsys/370-mac80211-fix-misplaced-while-instead-of-if.patch \
 	file://patches-openwrt/subsys/400-allow-ibss-mixed.patch \
 	file://patches-openwrt/subsys/500-mac80211_configure_antenna_gain.patch \
 "
