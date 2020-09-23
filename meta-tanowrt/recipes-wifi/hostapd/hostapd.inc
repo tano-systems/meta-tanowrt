@@ -4,7 +4,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano13"
+INC_PR = "tano14"
 
 inherit pkgconfig
 
@@ -64,6 +64,7 @@ SRC_URI += "\
 	file://019-mesh-use-deterministic-channel-on-channel-switch.patch \
 	file://050-mesh-make-forwarding-configurable.patch \
 	file://100-daemonize_fix.patch \
+	file://110-wolfssl-compile-fix.patch \
 	file://200-multicall.patch \
 	file://300-noscan.patch \
 	file://301-mesh-noscan.patch \
