@@ -35,7 +35,7 @@ PSPLASH_TN_GIT_SRCREV   ?= "e01771b4ba016c83bb3790836356f6e28c7cc18f"
 
 SRCREV = "${PSPLASH_TN_GIT_SRCREV}"
 PV = "0.1+git${SRCPV}"
-PR = "tano7"
+PR = "tano8"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -65,7 +65,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/psplash.init ${D}${sysconfdir}/init.d/psplash
 
 	install -d ${D}${sysconfdir}/config/
-	install -m 0755 ${WORKDIR}/psplash.config ${D}${sysconfdir}/config/psplash
+	install -m 0644 ${WORKDIR}/psplash.config ${D}${sysconfdir}/config/psplash
 
 	install -d ${D}${datadir}/psplash
 	install -m 0644 ${WORKDIR}/psplash-tano.png ${D}${datadir}/psplash/
