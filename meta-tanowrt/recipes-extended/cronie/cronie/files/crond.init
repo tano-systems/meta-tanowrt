@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2020 Tano Systems LLC
+
+START=50
+
+USE_PROCD=1
+PROG=/usr/sbin/crond
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_append_param command -n
+	procd_append_param command -s
+	procd_append_param command -m off
+
+	procd_set_param file "/etc/crontab"
+
+	for crontab in /etc/cron.d/*; do
+		procd_set_param file "$crontab"
+	done
+
+	for crontab in /etc/crontabs/*; do
+		procd_set_param file "$crontab"
+	done
+
+	procd_close_instance
+}
