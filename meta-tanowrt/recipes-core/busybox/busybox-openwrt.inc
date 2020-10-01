@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "25"
+INC_PR = "26"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
@@ -25,7 +25,6 @@ SRC_URI_append = "\
 
 # Files
 SRC_URI_append = "\
-	file://cron \
 	file://sysntpd \
 	file://ntpd-hotplug \
 	file://systohc.hotplug \
@@ -38,11 +37,9 @@ inherit tanowrt-services
 TANOWRT_SERVICE_PACKAGES = "busybox"
 
 TANOWRT_SERVICE_SCRIPTS_busybox += "\
-	cron \
 	sysntpd \
 	${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', 'watchdog', '', d)} \
 "
-TANOWRT_SERVICE_STATE_busybox-cron ?= "enabled"
 TANOWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
 TANOWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
 
@@ -66,11 +63,6 @@ do_install_append() {
 	if [ "${@bb.utils.contains('COMBINED_FEATURES', 'watchdog', '1', '0', d)}" == "1" ]; then
 		install -m 0755 ${WORKDIR}/watchdog.init ${D}${sysconfdir}/init.d/watchdog
 		install -m 0644 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
-	fi
-
-	if grep "CONFIG_CROND=y" ${B}/.config; then
-		install -m 0755 ${WORKDIR}/cron ${D}${sysconfdir}/init.d/cron
-		rm -f ${D}${sysconfdir}/init.d/busybox-cron
 	fi
 }
 

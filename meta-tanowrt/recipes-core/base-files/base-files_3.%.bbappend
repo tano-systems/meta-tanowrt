@@ -153,9 +153,6 @@ do_install_append () {
 
 	mkdir -p ${D}${sysconfdir}/rc.d
 
-	# FIXME: Should be OE's busybox crontabs dir
-	mkdir -p ${D}${sysconfdir}/crontabs
-
 	# FIXME: Should this change for OE?
 	mkdir -p ${D}/overlay
 

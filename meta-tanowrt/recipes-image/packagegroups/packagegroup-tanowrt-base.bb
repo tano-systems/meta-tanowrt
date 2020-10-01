@@ -83,6 +83,7 @@ RDEPENDS_${PN}-core = "\
 	libubox \
 	libubox-lua \
 	fstools \
+	cronie \
 	${VIRTUAL-RUNTIME_syslog} \
 "
 
