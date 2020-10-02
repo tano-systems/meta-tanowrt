@@ -5,7 +5,7 @@
 	         name="meta-arm"
 	         remote="yoctoproject"
 	         upstream="dunfell"
-	         revision="0465b4c1e332c15d6cb6d948ee8ec562bfc7d2b1" />
+	         revision="c4f04f3fb66f8f4365b08b553af8206372e90a63" />
 
 	<!-- meta-ti -->
 	<project path="meta-ti"

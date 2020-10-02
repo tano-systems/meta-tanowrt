@@ -10,6 +10,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-tanowrt/meta-tanowrt \
   ##OEROOT##/meta-ti \
   ##OEROOT##/meta-arm/meta-arm \
+  ##OEROOT##/meta-arm/meta-arm-toolchain \
   ##OEROOT##/meta-openembedded/meta-oe \
   ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-openembedded/meta-networking \
