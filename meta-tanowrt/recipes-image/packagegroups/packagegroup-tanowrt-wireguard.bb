@@ -1,6 +1,6 @@
 # Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano1"
+PR = "tano2"
 SUMMARY = "WireGuard VPN support packages"
 DESCRIPTION = "The set of packages required for a WireGuard VPN support"
 LICENSE = "MIT"
@@ -13,6 +13,6 @@ do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
 RDEPENDS_${PN} = "\
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'luci-proto-wireguard', '', d)} \
-	wireguard-module \
 	wireguard-tools \
+	kernel-module-wireguard \
 "

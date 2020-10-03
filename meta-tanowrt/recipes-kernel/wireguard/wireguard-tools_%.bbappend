@@ -1,4 +1,4 @@
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
@@ -22,4 +22,5 @@ FILES_${PN} += " \
 	${base_libdir} \
 "
 
-RDEPENDS_${PN} += "ubus jsonpath"
+RDEPENDS_${PN} += "ubus jsonpath kernel-module-wireguard"
+RDEPENDS_${PN}_remove = "wireguard-module"
