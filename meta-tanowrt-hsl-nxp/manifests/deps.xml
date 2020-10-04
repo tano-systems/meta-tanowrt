@@ -5,5 +5,5 @@
 	         name="meta-freescale"
 	         remote="yoctoproject"
 	         upstream="dunfell"
-	         revision="be4bd4650170a5e9c38875809be440daa65aa0aa" />
+	         revision="87527af8335550beda59d8b587bf97fec97f0dd4" />
 </manifest>
