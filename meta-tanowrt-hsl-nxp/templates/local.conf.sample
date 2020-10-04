@@ -9,11 +9,11 @@ CONF_VERSION = "1"
 # You need to select a specific machine to target the build with. There are a selection
 # of emulated machines available which can boot and run in the QEMU emulator:
 #
-#MACHINE ?= "nxp-ls1028ardb"
+#MACHINE ?= "ls1028ardb-sd"
 #
 
 # This sets the default machine:
-MACHINE ??= "nxp-ls1028ardb"
+MACHINE ??= "ls1028ardb-sd"
 
 # Where to place downloads
 #DL_DIR ?= "${TOPDIR}/downloads"
