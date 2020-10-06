@@ -12,5 +12,5 @@
 	         name="meta-ti"
 	         remote="yoctoproject"
 	         upstream="dunfell"
-	         revision="f2b2b2095f1a9d3ef705f7518d9db1e3141da2fb" />
+	         revision="76cafa23d9d7b2c815ec9b6fe895f7c0dd23c45a" />
 </manifest>
