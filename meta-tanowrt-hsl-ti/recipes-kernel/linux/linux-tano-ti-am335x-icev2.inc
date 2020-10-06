@@ -3,7 +3,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".8"
+PR_append = ".9"
 
 KCONFIG_MODE = "--alldefconfig"
 
@@ -11,3 +11,6 @@ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_ti33x = " prueth-fw"
 
 # Config
 SRC_URI_append_am335x-icev2 = " file://defconfig"
+
+# Patches
+SRC_URI_append_am335x-icev2 = " file://0001-am335x-icev2.dts-Enable-UART4.patch "

@@ -1,0 +1,44 @@
+From 9a94269973034d6556bb763b28dd55b9961b5fce Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 6 Oct 2020 17:30:43 +0300
+Subject: [PATCH] am335x-icev2.dts: Enable UART4
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ arch/arm/boot/dts/am335x-icev2.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm/boot/dts/am335x-icev2.dts b/arch/arm/boot/dts/am335x-icev2.dts
+index 83b4bd91a44c..ae453dddf40e 100644
+--- a/arch/arm/boot/dts/am335x-icev2.dts
++++ b/arch/arm/boot/dts/am335x-icev2.dts
+@@ -199,6 +199,13 @@
+ 		>;
+ 	};
+ 
++	uart4_pins_default: uart4_pins_default {
++		pinctrl-single,pins = <
++			AM33XX_PADCONF(AM335X_PIN_UART0_CTSN, PIN_INPUT_PULLUP, MUX_MODE1) /* (E18) uart0_ctsn.uart4_rxd */
++			AM33XX_PADCONF(AM335X_PIN_UART0_RTSN, PIN_OUTPUT_PULLUP, MUX_MODE1) /* (E17) uart0_rtsn.uart4_txd */
++		>;
++	};
++
+ 	cpsw_default: cpsw_default {
+ 		pinctrl-single,pins = <
+ 			/* Slave 1, RMII mode */
+@@ -457,6 +464,12 @@
+ 	status = "okay";
+ };
+ 
++&uart4 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart4_pins_default>;
++	status = "okay";
++};
++
+ &gpio3 {
+ 	p4 {
+ 		gpio-hog;
+-- 
+2.25.1
+
