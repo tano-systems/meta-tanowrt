@@ -26,6 +26,14 @@ This layer contains various parts (recipes, files, etc.) from the [meta-arago](h
 
 Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
+### 3.1 Install Additional Packages
+
+To build some packages from the meta-ti layer, you may need to install additional packages on the host system:
+
+```shell
+sudo apt-get install dos2unix doxygen libc6:i386 libncurses5:i386 libstdc++6:i386 libz1:i386
+```
+
 ## 4 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
