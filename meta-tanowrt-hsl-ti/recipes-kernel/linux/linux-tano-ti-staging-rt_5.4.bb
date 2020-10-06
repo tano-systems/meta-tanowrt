@@ -12,9 +12,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 KERNEL_SRC_URI ?= "git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git"
 KERNEL_SRC_BRANCH ?= "ti-rt-linux-5.4.y"
 KERNEL_SRC_PROTOCOL ?= "git"
-KERNEL_SRC_SRCREV ?= "8591cbda22d3b1a85bb8fae1195ce06323949bd3"
+KERNEL_SRC_SRCREV ?= "fe1ab63ac9248a6fecb8572a0ad5dc51a79ac280"
 
-LINUX_VERSION ?= "5.4.40"
+LINUX_VERSION ?= "5.4.66"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 

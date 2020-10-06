@@ -5,7 +5,7 @@ PR = "tano0"
 DEPENDS += "bison-native flex-native rsync-native"
 
 BRANCH = "ti-linux-5.4.y"
-SRCREV = "bf0b43568bb5b401970127e59bbbc7921cebe6d2"
+SRCREV = "eb0f4e6c05153446b62028ac84452101b8280253"
 
 KERNEL_GIT_URI = "git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git"
 KERNEL_GIT_PROTOCOL = "git"
