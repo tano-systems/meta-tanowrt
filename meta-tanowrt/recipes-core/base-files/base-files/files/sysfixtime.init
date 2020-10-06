@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2013-2014 OpenWrt.org
-# Copyright (C) 2018-2020 Tano Systems
+# Copyright (C) 2018-2020 Tano Systems LLC
 
 START=00
 STOP=90
@@ -14,12 +14,17 @@ Extra commands:
 	hctosys	Load system time from hardware RTC\
 "
 
-boot() {
-	start && exit 0
+LOG="logger -t sysfixtime -p"
 
-	local maxtime="$(maxtime)"
+boot() {
+	hwclock_call restore
+
+	local maxtime="$(get_maxtime)"
 	local curtime="$(date +%s)"
-	[ $curtime -lt $maxtime ] && date -s @$maxtime
+	if [ $curtime -lt $maxtime ]; then
+		date -s @$maxtime
+		hwclock_call save
+	fi
 }
 
 apply_timezone() {
@@ -32,7 +37,7 @@ apply_timezone() {
 		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
 
 	# apply timezone to kernel
-	date -k
+	busybox date -k
 }
 
 hwclock_call() {
@@ -67,12 +72,28 @@ hwclock_call() {
 		append args "-s" " "
 	fi
 
-	[ -e "$rtc_dev" ] && [ -e "$HWCLOCK" ] && $HWCLOCK $args || exit 0
+	RET="0"
+	if [ ! -e "$rtc_dev" ]; then
+		RET="no $rtc_dev device"
+	elif [ ! -e "$HWCLOCK" ]; then
+		RET="no $HWCLOCK"
+	else
+		$HWCLOCK $args
+		RET="$?"
+	fi
 
 	if [ "$1" = "save" ]; then
-		logger -t sysfixtime -p daemon.info "saved '$(date)' to $rtc_dev"
+		if [ "$RET" = "0" ]; then
+			$LOG daemon.info "saved localtime ($(date)) to $rtc_dev"
+		else
+			$LOG daemon.error "failed to save localtime to $rtc_dev ($RET)"
+		fi
 	else
-		logger -t sysfixtime -p daemon.info "restored '$(date)' from $rtc_dev"
+		if [ "$RET" = "0" ]; then
+			$LOG daemon.info "set localtime ($(date)) from $rtc_dev"
+		else
+			$LOG daemon.error "failed to set localtime from $rtc_dev ($RET)"
+		fi
 	fi
 }
 
@@ -92,7 +113,7 @@ stop() {
 	hwclock_call save
 }
 
-maxtime() {
+get_maxtime() {
 	local file newest
 
 	for file in $( find /etc -type f ) ; do
