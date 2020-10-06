@@ -1,7 +1,7 @@
 # This file Copyright (C) 2020 Tano Systems LLC
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano1"
+PR = "tano2"
 PV = "1.5.2"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
@@ -79,3 +79,5 @@ inherit tanowrt-services
 TANOWRT_SERVICE_PACKAGES = "igh-ethercat"
 TANOWRT_SERVICE_SCRIPTS_igh-ethercat += "ethercat"
 TANOWRT_SERVICE_STATE_igh-ethercat-ethercat ?= "disabled"
+
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
