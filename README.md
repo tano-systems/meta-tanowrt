@@ -7,6 +7,8 @@ This repository contains OpenEmbedded layers of TanoWrt Linux distribution by Ta
 
 ## 1 Prerequisites
 
+The recommended Linux distribution is Ubuntu 18.04 or Ubuntu 20.04.
+
 ### 1.1 Install Required Packages
 
 Install the required packages by executing the following commands depending on your distribution:
