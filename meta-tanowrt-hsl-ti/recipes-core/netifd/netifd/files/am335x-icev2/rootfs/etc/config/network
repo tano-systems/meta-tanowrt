@@ -13,5 +13,10 @@ config interface lan
 	option stp           '1'
 	option igmp_snooping '1'
 
+config interface uart4
+	option device        '/dev/ttyS4'
+	option proto         'ppp'
+	option pppd_options  'local noauth passive lock persist nocrtscts 115200'
+
 config globals globals
 	option ula_prefix     auto
