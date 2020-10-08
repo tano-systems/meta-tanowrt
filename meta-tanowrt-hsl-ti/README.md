@@ -21,12 +21,31 @@ This layer contains various parts (recipes, files, etc.) from the [meta-arago](h
 | `tanowrt-image-base` | TanoWrt base image                          |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
 
+## 3 Supported Linux Kernels
 
-## 3 Prerequisites
+Each of the supported machines can be built with one of the following kernels:
+- 5.4.x (TI staging kernel);
+- 4.19.94-rt39 (from [TI Processor SDK Linux 06.03.00.106](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/index.html)).
+
+By default, the following kernels are built, depending on the machine:
+
+| Machine           | Kernel, used by default |
+| ------------------| ----------------------- |
+| `am335x-bbb-sd`   | Staging (5.4.x)         |
+| `am335x-icev2-sd` | Staging (5.4.x)         |
+| `am574x-idk-sd`   | Processor SDK (4.19.x)  |
+
+### 3.1 Choosing a Kernel Version to Build
+
+To choose the kernel version, you can use the variable `TANOWRT_HSL_TI_SDK_KERNEL` in the `local.conf` (see "[Initialize Build Environment](#6-initialize-build-environment)" section) file to determine which kernel should be used for the build. The variable `TANOWRT_HSL_TI_SDK_KERNEL` can be assigned one of the following values:
+- `0` — use TI staging kernel;
+- `1` — use kernel from TI Processor SDK Linux.
+
+## 4 Prerequisites
 
 Follow the instructions outlined in "[Prerequisites](../README.md#1-Prerequisites)" section of the root README.md.
 
-### 3.1 Install Additional Packages
+### 4.1 Install Additional Packages
 
 To build some packages from the meta-ti layer, you may need to install additional packages on the host system:
 
@@ -34,7 +53,7 @@ To build some packages from the meta-ti layer, you may need to install additiona
 sudo apt-get install dos2unix doxygen libc6:i386 libncurses5:i386 libstdc++6:i386 libz1:i386
 ```
 
-## 4 Initialize Repositories
+## 5 Initialize Repositories
 
 Create a working directory (this document uses `~/tanowrt` for example):
 ```shell
@@ -54,7 +73,7 @@ Synchronize all repositories by executing a command:
 repo sync
 ```
 
-## 5 Initialize Build Environment
+## 6 Initialize Build Environment
 
 Go to the working directory (`~/tanowrt`):
 ```shell
@@ -100,7 +119,7 @@ BB_NUMBER_THREADS = "8"
 PARALLEL_MAKE = "-j 8"
 ```
 
-## 6 Building
+## 7 Building
 
 Build SD card image for BeagleBone Black board as an example:
 
@@ -117,28 +136,28 @@ All images supported by this layer are listed in the "[Supported Images](#2-Supp
 
 Other available machines are listed in the "[Supported Hardware](#1-Supported-Hardware)" section.
 
-## 7 Running on Hardware
+## 8 Running on Hardware
 
-### 7.1 BeagleBone Black (`am335x-bbb-sd`)
+### 8.1 BeagleBone Black (`am335x-bbb-sd`)
 
 ![BeagleBone Black](docs/am335x-bbb-board.jpg)
 
 ![BeagleBone Black](docs/am335x-bbb-board-exp.jpg)
 
-#### 7.1.1 Writing Image to SD Card
+#### 8.1.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 7.1.2 Booting
+#### 8.1.2 Booting
 
 1. Insert the SD card into the slot on the BeagleBone Black board (power is off).
 2. Press and hold the S2 button.
 3. Power on board.
 4. Wait 1–3 seconds and release S2 button.
 5. System from SD card will be booting.
-6. For login use credentials specified in "[Access](#8-Access)" section.
+6. For login use credentials specified in "[Access](#9-Access)" section.
 
-#### 7.1.3 Default Network Configuration
+#### 8.1.3 Default Network Configuration
 
 By default Ethernet port (`eth0` interface) are joined into a bridge (`br-lan` interface). Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -150,19 +169,19 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 The Ethernet port (`eth0`) has LLDP enabled by default.
 
-### 7.2 TI AM3359 ICEv2 EVM (`am335x-icev2-sd`)
+### 8.2 TI AM3359 ICEv2 EVM (`am335x-icev2-sd`)
 
 ![AM3359 ICEv2 EVM](docs/am335x-icev2-board.jpg)
 
 ![AM3359 ICEv2 EVM](docs/am335x-icev2-board-exp.jpg)
 
-#### 7.2.1 Writing Image to SD Card
+#### 8.2.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 7.2.2 Preparing Hardware
+#### 8.2.2 Preparing Hardware
 
-##### 7.2.2.1 Erasing SPI NOR Flash
+##### 8.2.2.1 Erasing SPI NOR Flash
 
 Note that booting from an SD card is only possible when there is no bootloader in the SPI NOR flash. If you have an bootloader in the SPI NOR flash you must erase SPI NOR flash contents. Follow these [instructions](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/How_to_Guides/Host/AM335x_ICEv2_flash_erase.html#am335x-icev2-flash-erase) to erase flash contents:
 
@@ -200,22 +219,22 @@ Note that booting from an SD card is only possible when there is no bootloader i
       Enter size to be erased in Kilo bytes: 64
       ```
 
-##### 7.2.2.2 Choosing Boot Mode
+##### 8.2.2.2 Choosing Boot Mode
 
 Short pin 2 and 3 on J5 (sysboot) for choosing MMC/SD boot mode.
 
-##### 7.2.2.3 Choosing Ethernet Mode
+##### 8.2.2.3 Choosing Ethernet Mode
 
 Jumpers J18 and J19 must be set to control the Ethernet ports using CPSW (gigabit switch) or PRU-ICSS mode. For PRU-ICSS mode, short pins 2 and 3. For CPSW mode, short pins 1 and 2.
 
-#### 7.2.3 Booting
+#### 8.2.3 Booting
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
-4. For login use credentials specified in "[Access](#8-Access)" section.
+4. For login use credentials specified in "[Access](#9-Access)" section.
 
-#### 7.2.4 Default Network Configuration
+#### 8.2.4 Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -225,7 +244,7 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
 
-#### 7.2.5 PPP Connection over UART4
+#### 8.2.5 PPP Connection over UART4
 
 By default, the pppd service is running on the UART4 port ready for connection via null-modem cable with PC. UART4 signals are routed to J3 connector (Host Expansion Connector 2) of ICEv2 board. To connect the null-modem cable you need to use the following pins of the J3 connector:
 - pin 2 — Ground;
@@ -279,26 +298,26 @@ PING 172.16.0.1 (172.16.0.1): 56 data bytes
 round-trip min/avg/max = 20.161/21.590/22.233 ms
 ```
 
-### 7.3 TI AM574x IDK EVM (`am574x-idk-sd`)
+### 8.3 TI AM574x IDK EVM (`am574x-idk-sd`)
 
 ![AM574x IDK EVM](docs/am574x-idk-board.jpg)
 
-#### 7.2.1 Writing Image to SD Card
+#### 8.2.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 7.2.2 Preparing Hardware
+#### 8.2.2 Preparing Hardware
 
 No special things to do.
 
-#### 7.2.3 Booting
+#### 8.2.3 Booting
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
-4. For login use credentials specified in "[Access](#8-Access)" section.
+4. For login use credentials specified in "[Access](#9-Access)" section.
 
-#### 7.2.4 Default Network Configuration
+#### 8.2.4 Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -310,22 +329,22 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
 
-## 8 Access
+## 9 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## 9 Issues
+## 10 Issues
 
-### 9.1 Known issues
+### 10.1 Known issues
 
 | ID       | Machine(s)      | Description                                                                                          |
 | -------- | --------------- | ---------------------------------------------------------------------------------------------------- |
 | HSL-TI-1 | `am574x-idk-sd` | USB RNDIS is not working (`usb0` interface)                                                          |
 | HSL-TI-2 | `am574x-idk-sd` | kernel 5.4: When trying to bridge PRU ethernet interfaces (`eth2` or/and `eth3`), the kernel crashes |
 
-## 10 Dependencies
+## 11 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -337,10 +356,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## 11 License
+## 12 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 12 Maintainers
+## 13 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
