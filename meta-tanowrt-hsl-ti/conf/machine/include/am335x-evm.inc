@@ -32,12 +32,12 @@ IMAGE_INSTALL_append = " kernel-devicetree "
 #
 # Kernel
 #
-PREFERRED_PROVIDER_virtual/kernel = "linux-tano-ti-staging-rt"
-PREFERRED_VERSION_xtables-addons = "3.9%"
-
+PREFERRED_PROVIDER_virtual/kernel = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'linux-tano-ti-sdk-rt', 'linux-tano-ti-staging-rt', d)}"
 PREFERRED_VERSION_linux-tano-ti-staging-rt = "5.4%"
-LINUXLIBCVERSION = "ti-5.4%"
-SDKLINUXLIBCVERSION = "ti-5.4%"
+PREFERRED_VERSION_linux-tano-ti-sdk-rt = "4.19%"
+LINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
+SDKLINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
+PREFERRED_VERSION_xtables-addons = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', '3.3', '3.9', d)}"
 
 #
 # Bootloader
