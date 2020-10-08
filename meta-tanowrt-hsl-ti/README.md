@@ -8,11 +8,11 @@ This layer contains various parts (recipes, files, etc.) from the [meta-arago](h
 
 ## 1 Supported Hardware
 
-| `MACHINE`         | Board(s)                                                                              |
-| ----------------- | ------------------------------------------------------------------------------------- |
-| `am335x-bbb-sd`   | [BeagleBone Black](https://beagleboard.org/black) SD card image                       |
-| `am335x-icev2-sd` | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (TMDSICE3359) SD card image |
-| `am574x-idk-sd`   | [TI AM574x IDK EVM](https://www.ti.com/tool/TMDSIDK574) (TMDSIDK574) SD card image    |
+| `MACHINE`                                                    | Board(s)                                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| [`am335x-bbb-sd`](#81-beaglebone-black-am335x-bbb-sd)        | [BeagleBone Black](https://beagleboard.org/black) SD card image                       |
+| [`am335x-icev2-sd`](#82-ti-am3359-icev2-evm-am335x-icev2-sd) | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (TMDSICE3359) SD card image |
+| [`am574x-idk-sd`](#83-ti-am574x-idk-evm-am574x-idk-sd)       | [TI AM574x IDK EVM](https://www.ti.com/tool/TMDSIDK574) (TMDSIDK574) SD card image    |
 
 ## 2 Supported Images
 
