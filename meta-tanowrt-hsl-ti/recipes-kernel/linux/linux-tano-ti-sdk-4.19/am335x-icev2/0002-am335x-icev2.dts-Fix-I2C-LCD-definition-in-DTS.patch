@@ -1,0 +1,97 @@
+From 26fbad822a7a5825060c1eec9b7b2a75b82ddec5 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 9 Oct 2020 14:10:53 +0300
+Subject: [PATCH] am335x-icev2.dts: Fix I2C LCD definition in DTS
+
+I2C LCD is defined in DTS for dual CPSW mode (am335x-icev2.dts) only.
+In the DTS for the dual PRUETH mode (am335x-icev2-prueth.dts), the I2C
+LCD definition is missing.
+
+Move I2C LCD definition to common (am335x-icev2.dtsi) include file
+to fix this. Also removed duplicate definitions for other I2C devices
+from am335x-icev2.dts file, which were already defined in common
+am335x-icev2.dtsi file.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ arch/arm/boot/dts/am335x-icev2-common.dtsi | 13 ++++++++
+ arch/arm/boot/dts/am335x-icev2.dts         | 39 ----------------------
+ 2 files changed, 13 insertions(+), 39 deletions(-)
+
+diff --git a/arch/arm/boot/dts/am335x-icev2-common.dtsi b/arch/arm/boot/dts/am335x-icev2-common.dtsi
+index 8efd265d9afe..c6f46ff43d40 100644
+--- a/arch/arm/boot/dts/am335x-icev2-common.dtsi
++++ b/arch/arm/boot/dts/am335x-icev2-common.dtsi
+@@ -223,6 +223,19 @@
+ 		gpio-controller;
+ 		#gpio-cells = <2>;
+ 	};
++
++	/* osd9616p0899-10 */
++	display@3c {
++		compatible = "solomon,ssd1306fb-i2c";
++		reg = <0x3c>;
++		solomon,height = <16>;
++		solomon,width = <96>;
++		solomon,com-seq;
++		solomon,com-invdir;
++		solomon,page-offset = <0>;
++		solomon,prechargep1 = <2>;
++		solomon,prechargep2 = <13>;
++	};
+ };
+ 
+ &spi0 {
+diff --git a/arch/arm/boot/dts/am335x-icev2.dts b/arch/arm/boot/dts/am335x-icev2.dts
+index cbc4bf319819..a5086a2ca05e 100644
+--- a/arch/arm/boot/dts/am335x-icev2.dts
++++ b/arch/arm/boot/dts/am335x-icev2.dts
+@@ -82,45 +82,6 @@
+ 	};
+ };
+ 
+-&i2c0 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2c0_pins_default>;
+-
+-	status = "okay";
+-	clock-frequency = <400000>;
+-
+-	tps: power-controller@2d {
+-		reg = <0x2d>;
+-	};
+-
+-	tpic2810: gpio@60 {
+-		compatible = "ti,tpic2810";
+-		reg = <0x60>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-	};
+-
+-	pca9536: gpio@41 {
+-		compatible = "ti,pca9536";
+-		reg = <0x41>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-	};
+-
+-	/* osd9616p0899-10 */
+-	display@3c {
+-		compatible = "solomon,ssd1306fb-i2c";
+-		reg = <0x3c>;
+-		solomon,height = <16>;
+-		solomon,width = <96>;
+-		solomon,com-seq;
+-		solomon,com-invdir;
+-		solomon,page-offset = <0>;
+-		solomon,prechargep1 = <2>;
+-		solomon,prechargep2 = <13>;
+-	};
+-};
+-
+ &spi0 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+-- 
+2.25.1
+
