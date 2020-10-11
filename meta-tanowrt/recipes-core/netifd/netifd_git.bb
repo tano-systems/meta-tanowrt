@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano34"
+PR = "tano35"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 04.09.2020
-# netifd: vxlan: add aging and maxaddress options
-SRCREV_netifd = "55a7b6b7f2f773c06a79cb7359ffdab54ba32450"
+# 08.10.2020
+# system-linux: initialize ifreq struct before using it
+SRCREV_netifd = "64ff909328c095749ef6eaed7302b3e024409d2f"
 
 S = "${WORKDIR}/git"
 
