@@ -92,11 +92,6 @@ RDEPENDS_${PN} += "\
 
 FILES_${PN} = "/"
 
-ALTERNATIVE_${PN} = "init"
-
-ALTERNATIVE_PRIORITY = "40"
-ALTERNATIVE_TARGET[init] = "${base_sbindir}/init"
-
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/hotplug.json \
 "
