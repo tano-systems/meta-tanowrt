@@ -5,7 +5,7 @@ PR_append_omap-a15 = ".tano1"
 # Look in the generic major.minor directory for files
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_append = " file://${UBOOT_MACHINE}"
+inherit uboot-defconfig-copy
 
 # Patches
 SRC_URI_append_ti33x = "\
@@ -17,7 +17,3 @@ SRC_URI_append_ti33x = "\
 SRC_URI_append_omap-a15 = "\
 	file://0004-ti-am574x-Customize-default-environment.patch \
 "
-
-do_configure_prepend() {
-	cp ${WORKDIR}/${UBOOT_MACHINE} ${S}/configs/${UBOOT_MACHINE}
-}
