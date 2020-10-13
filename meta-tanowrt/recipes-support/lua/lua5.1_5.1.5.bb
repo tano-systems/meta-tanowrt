@@ -9,7 +9,12 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYRIGHT;md5=59bdd99bb82238f238cf5c65c21604fd"
 HOMEPAGE = "http://www.lua.org/"
 
-PR = "tano3"
+PR = "tano4"
+
+PROVIDES += "lua"
+RPROVIDES_${PN} = "lua"
+RREPLACES_${PN} = "lua"
+RCONFLICTS_${PN} = "lua"
 
 V = "5.1"
 
@@ -76,6 +81,7 @@ do_install () {
         'TO_INC=lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp lnum_config.h' \
         install
     install -D -m 0644 ${WORKDIR}/${BPN}.pc ${D}${libdir}/pkgconfig/${BPN}.pc
+    install -D -m 0644 ${WORKDIR}/${BPN}.pc ${D}${libdir}/pkgconfig/lua.pc
     mv ${D}${libdir}/liblua.a ${D}${libdir}/lib${BPN}.a
     rmdir ${D}${datadir}/lua/${V}
     rmdir ${D}${datadir}/lua
