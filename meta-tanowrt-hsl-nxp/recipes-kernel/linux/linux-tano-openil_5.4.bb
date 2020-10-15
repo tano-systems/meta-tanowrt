@@ -9,14 +9,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 KERNEL_SRC_URI ?= "git://github.com/openil/linux.git;nobranch=1"
 KERNEL_SRC_BRANCH ?= ""
-KERNEL_SRC_SRCREV ?= "OpenIL-v1.8-linux-202005"
+KERNEL_SRC_SRCREV ?= "OpenIL-v1.8.2-linux-202009"
 
 LINUX_VERSION ?= "5.4.3-rt"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 require recipes-kernel/linux/linux-tano.inc

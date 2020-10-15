@@ -1,13 +1,13 @@
 require recipes-kernel/linux-libc-headers/linux-libc-headers.inc
 
-PR = "tano0"
+PR = "tano1"
 
 DEPENDS += "bison-native flex-native"
 
 KERNEL_GIT_URI = "git://github.com/openil/linux.git;nobranch=1"
 KERNEL_GIT_PROTOCOL = "git"
 SRC_URI = "${KERNEL_GIT_URI};protocol=${KERNEL_GIT_PROTOCOL}"
-SRCREV = "OpenIL-v1.8-linux-202005"
+SRCREV = "OpenIL-v1.8.2-linux-202009"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
