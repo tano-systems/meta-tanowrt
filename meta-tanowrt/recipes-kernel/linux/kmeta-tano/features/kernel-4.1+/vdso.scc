@@ -1,0 +1,3 @@
+define KFEATURE_DESCRIPTION "Enable VDSO for acceleration of some system calls"
+
+kconf non-hardware vdso.cfg

@@ -1,8 +1,9 @@
-PR_append = ".3"
+PR_append = ".4"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 	features/kernel-4.14+/fs/overlayfs-extra.scc \
+	features/kernel-4.1+/vdso.scc \
 "
 
 SRC_URI_append = "\
