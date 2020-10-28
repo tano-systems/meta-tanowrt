@@ -58,8 +58,9 @@ def get_vardeps(d):
             owrt_scripts = d.getVar('TANOWRT_SERVICE_SCRIPTS_%s' % pkg, True) or ""
             vars.extend(['TANOWRT_SERVICE_SCRIPTS_%s' % pkg])
 
-            for script in owrt_scripts.split():
-                vars.extend(['TANOWRT_SERVICE_STATE_%s-%s' % (pkg, script)])
+            if owrt_scripts:
+                for script in owrt_scripts.split():
+                    vars.extend(['TANOWRT_SERVICE_STATE_%s-%s' % (pkg, script)])
 
     return " ".join(vars)
 
@@ -86,59 +87,60 @@ python populate_packages_prepend() {
     owrt_packages = d.getVar('TANOWRT_SERVICE_PACKAGES', True)
     packages      = d.getVar('PACKAGES', True)
 
-    bb.debug(1, "TanoWrt: Recipe '%s' packages: %s" % (d.expand('${PN}'), owrt_packages))
+    if owrt_packages:
+        bb.debug(1, "TanoWrt: Recipe '%s' packages: %s" % (d.expand('${PN}'), owrt_packages))
 
-    for pkg in owrt_packages.split():
+        for pkg in owrt_packages.split():
 
-        if not pkg in packages:
-            bb.warn("TanoWrt: [%s] Package is not listed in PACKAGES [skipping]" % pkg)
-            continue
-
-        owrt_scripts = d.getVar('TANOWRT_SERVICE_SCRIPTS_%s' % pkg, True) or ""
-        scripts = owrt_scripts.split()
-
-        if len(scripts) == 0:
-            bb.warn("TanoWrt: [%s] Package has no init scripts [skipping]" % (pkg))
-            continue
-        else:
-            bb.debug(1, "TanoWrt: [%s] Package init scripts: %s" % (pkg, " ".join(scripts)))
-
-        for script in scripts:
-            state = d.getVar('TANOWRT_SERVICE_STATE_%s-%s' % (pkg, script), True)
-            
-            if not state:
-                bb.warn("TanoWrt: [%s] Can't read initial variable TANOWRT_SERVICE_STATE_%s-%s [skipping]" % (pkg, pkg, script))
+            if not pkg in packages:
+                bb.warn("TanoWrt: [%s] Package is not listed in PACKAGES [skipping]" % pkg)
                 continue
 
-            if state.lower() == 'enabled' or state.lower() == 'enable':
-                state = 'enable';
-            elif state.lower() == 'disabled' or state.lower() == 'disable':
-                state = 'disable';
+            owrt_scripts = d.getVar('TANOWRT_SERVICE_SCRIPTS_%s' % pkg, True) or ""
+            scripts = owrt_scripts.split()
+
+            if len(scripts) == 0:
+                bb.warn("TanoWrt: [%s] Package has no init scripts [skipping]" % (pkg))
+                continue
             else:
-                bb.warn("TanoWrt: [%s] Invalid/unknown state '%s' for script '%s' [skipping]" % (pkg, state, script))
-                continue
+                bb.debug(1, "TanoWrt: [%s] Package init scripts: %s" % (pkg, " ".join(scripts)))
 
-            check_cmd = [
-                'grep',
-                '-R',
-                '#!/bin/sh /etc/rc.common',
-                D + sysconfdir + '/init.d/' + script
-            ]
+            for script in scripts:
+                state = d.getVar('TANOWRT_SERVICE_STATE_%s-%s' % (pkg, script), True)
 
-            ret = subprocess.call(check_cmd)
-            if ret != 0:
-                bb.warn("TanoWrt: [%s] Invalid init script '%s'" % (pkg, script))
-                continue
+                if not state:
+                    bb.warn("TanoWrt: [%s] Can't read initial variable TANOWRT_SERVICE_STATE_%s-%s [skipping]" % (pkg, pkg, script))
+                    continue
 
-            postinst  = d.getVar('pkg_postinst_%s' % pkg, True) or ""
+                if state.lower() == 'enabled' or state.lower() == 'enable':
+                    state = 'enable';
+                elif state.lower() == 'disabled' or state.lower() == 'disable':
+                    state = 'disable';
+                else:
+                    bb.warn("TanoWrt: [%s] Invalid/unknown state '%s' for script '%s' [skipping]" % (pkg, state, script))
+                    continue
 
-            postinst += "#!/bin/sh\n"
-            postinst += "if [ \"$PKG_UPGRADE\" != 1 ]; then\n"
-            postinst += "\tmkdir -p $D${sysconfdir}/rc.d\n"
-            postinst += "\tIPKG_INSTROOT=$D /bin/sh $D${sysconfdir}/rc.common $D${sysconfdir}/init.d/" + script + " " + state + "\n"
-            postinst += "fi\n"
+                check_cmd = [
+                    'grep',
+                    '-R',
+                    '#!/bin/sh /etc/rc.common',
+                    D + sysconfdir + '/init.d/' + script
+                ]
 
-            bb.debug(1, "TanoWrt: [%s] Service '%s' default state is '%s'" % (pkg, script, state))
+                ret = subprocess.call(check_cmd)
+                if ret != 0:
+                    bb.warn("TanoWrt: [%s] Invalid init script '%s'" % (pkg, script))
+                    continue
 
-            d.setVar('pkg_postinst_%s' % pkg, postinst)
+                postinst  = d.getVar('pkg_postinst_%s' % pkg, True) or ""
+
+                postinst += "#!/bin/sh\n"
+                postinst += "if [ \"$PKG_UPGRADE\" != 1 ]; then\n"
+                postinst += "\tmkdir -p $D${sysconfdir}/rc.d\n"
+                postinst += "\tIPKG_INSTROOT=$D /bin/sh $D${sysconfdir}/rc.common $D${sysconfdir}/init.d/" + script + " " + state + "\n"
+                postinst += "fi\n"
+
+                bb.debug(1, "TanoWrt: [%s] Service '%s' default state is '%s'" % (pkg, script, state))
+
+                d.setVar('pkg_postinst_%s' % pkg, postinst)
 }
