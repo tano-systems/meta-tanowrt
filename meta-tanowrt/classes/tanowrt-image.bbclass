@@ -8,6 +8,7 @@ inherit rootfs-rm-boot-dir
 inherit rootfs-rm-opkg-lists
 inherit rootfs-var-in-tmpfs
 inherit rootfs-locale
+inherit rootfs-misc-fixups
 inherit set-root-password
 
 IMAGE_FEATURES += "package-management ssh-server-dropbear"
