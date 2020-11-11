@@ -1,9 +1,9 @@
 # Copyright (C) 2015, MentorGraphics
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
-# Copyright (C) 2018-2019, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano11"
+PR = "tano13"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -20,9 +20,9 @@ SRC_URI = "\
 	file://log.init \
 "
 
-# 31.12.2019
-# kmodloader: added -a arg to modprobe
-SRCREV = "0e34af143373126fc62b43612233a158694ec643"
+# 19.10.2020
+# logd: self-degrade to 'logd' user after opening pipes
+SRCREV = "9ef886819dd48303d8ced4cdbc9afbf32682535c"
 
 S = "${WORKDIR}/git"
 
@@ -79,3 +79,17 @@ PACKAGES += "getrandom"
 SUMMARY_getrandom = "OpenWrt getrandom system helper"
 SECTION_getrandom = "base"
 FILES_getrandom = "${bindir}/getrandom"
+
+inherit useradd
+
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM_${PN} = "\
+	--system \
+	-d /var/run/logd \
+	--no-create-home \
+	--shell /bin/false \
+	-g logd \
+	  logd \
+"
+
+GROUPADD_PARAM_${PN} = "--system logd"
