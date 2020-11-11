@@ -5,10 +5,8 @@
 # and manageable. With loadbalancing/failover support for up to 250 wan
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
-PV = "2.8.12"
+PV = "2.10.2"
 PR = "tano0"
-
-inherit allarch
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
@@ -31,7 +29,6 @@ SRC_URI = "\
 	file://etc/config/mwan3 \
 	file://etc/init.d/mwan3 \
 	file://etc/hotplug.d/iface/15-mwan3 \
-	file://etc/hotplug.d/iface/16-mwan3 \
 	file://etc/hotplug.d/iface/16-mwan3-user \
 	file://etc/uci-defaults/mwan3-migrate-flush_conntrack \
 	file://lib/mwan3/common.sh \
@@ -40,6 +37,7 @@ SRC_URI = "\
 	file://usr/sbin/mwan3 \
 	file://usr/sbin/mwan3track \
 	file://usr/sbin/mwan3rtmon \
+	file://src/sockopt_wrap.c \
 "
 
 inherit tanowrt-services
@@ -50,10 +48,14 @@ TANOWRT_SERVICE_STATE_mwan3-mwan3 ?= "disabled"
 
 FILES_${PN} += "${libdir}/ ${base_libdir}/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/src"
 
-do_compile[noexec] = "1"
-do_configure[noexec] = "1"
+CFLAGS += "-fPIC -shared ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', '-DCONFIG_IPv6', '', d)}"
+LDFLAGS += "-ldl"
+
+do_compile() {
+	${CC} ${CFLAGS} ${LDFLAGS} ${S}/sockopt_wrap.c -o ${B}/libwrap_mwan3_sockopt.so.1.0
+}
 
 do_install() {
 	install -dm 0755 ${D}${sysconfdir}
@@ -67,7 +69,6 @@ do_install() {
 
 	install -dm 0755 ${D}${sysconfdir}/hotplug.d/iface
 	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/15-mwan3 ${D}${sysconfdir}/hotplug.d/iface/
-	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/16-mwan3 ${D}${sysconfdir}/hotplug.d/iface/
 	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/16-mwan3-user ${D}${sysconfdir}/hotplug.d/iface/
 
 	install -dm 0755 ${D}${base_libdir}/mwan3
@@ -84,6 +85,9 @@ do_install() {
 
 	install -dm 0755 ${D}${sysconfdir}/uci-defaults
 	install -m 0755 ${WORKDIR}/etc/uci-defaults/mwan3-migrate-flush_conntrack ${D}${sysconfdir}/uci-defaults/
+
+	install -dm 0755 ${D}${base_libdir}/mwan3
+	install -m 0755 ${B}/libwrap_mwan3_sockopt.so.1.0 ${D}${base_libdir}/mwan3/
 }
 
 pkg_postinst_${PN}() {
