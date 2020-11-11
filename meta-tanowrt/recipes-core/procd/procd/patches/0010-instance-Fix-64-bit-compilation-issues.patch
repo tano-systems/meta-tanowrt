@@ -1,7 +1,7 @@
-From 9eb033805b1a1d28d285aa2c4268d4a9295c4a4a Mon Sep 17 00:00:00 2001
+From 168c788affd4bbd5627d4cf669aa65d80d8c881a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:14:48 +0300
-Subject: [PATCH 11/13] instance: Fix 64-bit compilation issues
+Subject: [PATCH 10/15] instance: Fix 64-bit compilation issues
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index a80beaa..5ddabdf 100644
+index 838f80e..01556c2 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -28,6 +28,7 @@
+@@ -27,6 +27,7 @@
  #include <libgen.h>
  #include <unistd.h>
  #include <sched.h>
@@ -20,7 +20,7 @@ index a80beaa..5ddabdf 100644
  
  #define SYSLOG_NAMES
  #include <syslog.h>
-@@ -683,11 +684,11 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -473,11 +474,11 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  			attr.sched_runtime = in->runtime;
  			attr.sched_deadline = in->deadline;
  			attr.sched_period = in->period;
@@ -36,5 +36,5 @@ index a80beaa..5ddabdf 100644
  			break;
  
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

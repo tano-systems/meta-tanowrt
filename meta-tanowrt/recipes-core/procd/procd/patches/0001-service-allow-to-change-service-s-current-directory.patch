@@ -1,7 +1,7 @@
-From f7c59ad24d9ea0559bc4a2bb8ff6b9a5ddd9a8d4 Mon Sep 17 00:00:00 2001
+From d87101ad4d438d132d911d6433ce9acfa69b0abc Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
-Subject: [PATCH 01/13] service: allow to change service's current directory
+Subject: [PATCH 01/15] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index 790cec4..deb5507 100644
+index f1242d6..822eb6c 100644
 --- a/service/instance.c
 +++ b/service/instance.c
-@@ -67,6 +67,7 @@ enum {
+@@ -69,6 +69,7 @@ enum {
  	INSTANCE_ATTR_TMPOVERLAYSIZE,
  	INSTANCE_ATTR_BUNDLE,
  	INSTANCE_ATTR_WATCHDOG,
@@ -21,7 +21,7 @@ index 790cec4..deb5507 100644
  	__INSTANCE_ATTR_MAX
  };
  
-@@ -99,7 +100,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
+@@ -102,7 +103,7 @@ static const struct blobmsg_policy instance_attr[__INSTANCE_ATTR_MAX] = {
  	[INSTANCE_ATTR_TMPOVERLAYSIZE] = { "tmpoverlaysize", BLOBMSG_TYPE_STRING },
  	[INSTANCE_ATTR_BUNDLE] = { "bundle", BLOBMSG_TYPE_STRING },
  	[INSTANCE_ATTR_WATCHDOG] = { "watchdog", BLOBMSG_TYPE_ARRAY },
@@ -30,7 +30,7 @@ index 790cec4..deb5507 100644
  
  enum {
  	JAIL_ATTR_NAME,
-@@ -453,6 +454,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
+@@ -468,6 +469,10 @@ instance_run(struct service_instance *in, int _stdout, int _stderr)
  		ERROR("failed to set user id %d: %m\n", in->uid);
  		exit(127);
  	}
@@ -41,7 +41,7 @@ index 790cec4..deb5507 100644
  
  	execvp(argv[0], argv);
  	exit(127);
-@@ -857,6 +862,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
+@@ -974,6 +979,9 @@ instance_config_changed(struct service_instance *in, struct service_instance *in
  	if (in->watchdog.freq != in_new->watchdog.freq)
  		return true;
  
@@ -51,7 +51,7 @@ index 790cec4..deb5507 100644
  	return false;
  }
  
-@@ -1194,6 +1202,12 @@ instance_config_parse(struct service_instance *in)
+@@ -1321,6 +1329,12 @@ instance_config_parse(struct service_instance *in)
  	if (tb[INSTANCE_ATTR_STDERR] && blobmsg_get_bool(tb[INSTANCE_ATTR_STDERR]))
  		in->_stderr.fd.fd = -1;
  
@@ -64,15 +64,15 @@ index 790cec4..deb5507 100644
  	instance_fill_any(&in->data, tb[INSTANCE_ATTR_DATA]);
  
  	if (!instance_fill_array(&in->env, tb[INSTANCE_ATTR_ENV], NULL, false))
-@@ -1299,6 +1313,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
+@@ -1432,6 +1446,7 @@ instance_config_move(struct service_instance *in, struct service_instance *in_sr
  	in->trace = in_src->trace;
  	in->node.avl.key = in_src->node.avl.key;
  	in->syslog_facility = in_src->syslog_facility;
 +	in->chdir = in_src->chdir;
- 
- 	instance_config_move_strdup(&in->pidfile, in_src->pidfile);
- 	instance_config_move_strdup(&in->seccomp, in_src->seccomp);
-@@ -1521,5 +1536,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+ 	in->require_jail = in_src->require_jail;
+ 	in->no_new_privs = in_src->no_new_privs;
+ 	in->immediately = in_src->immediately;
+@@ -1689,5 +1704,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  		blobmsg_close_table(b, r);
  	}
  
@@ -82,10 +82,10 @@ index 790cec4..deb5507 100644
  	blobmsg_close_table(b, i);
  }
 diff --git a/service/instance.h b/service/instance.h
-index 6f38d4f..047969a 100644
+index bbd943c..b2a5aea 100644
 --- a/service/instance.h
 +++ b/service/instance.h
-@@ -85,6 +85,7 @@ struct service_instance {
+@@ -87,6 +87,7 @@ struct service_instance {
  	char *overlaydir;
  	char *tmpoverlaysize;
  	char *bundle;
@@ -94,5 +94,5 @@ index 6f38d4f..047969a 100644
  	int exit_code;
  
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

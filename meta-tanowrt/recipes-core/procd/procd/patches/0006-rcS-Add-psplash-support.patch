@@ -1,16 +1,16 @@
-From d3a8f0b1d88340f50131c077f002276d897ba1a9 Mon Sep 17 00:00:00 2001
+From b870717ed16e1b5ce646cf3f4df8f42c8809b6ed Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
-Subject: [PATCH 07/13] rcS: Add psplash support
+Subject: [PATCH 06/15] rcS: Add psplash support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt |  7 ++++++
- rcS.c          | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ CMakeLists.txt |  7 +++++
+ rcS.c          | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2197fff..0488c7d 100644
+index 6472867..e98da63 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -33,6 +33,13 @@ FIND_LIBRARY(json NAMES json-c json)
@@ -24,9 +24,9 @@ index 2197fff..0488c7d 100644
 +	ENDIF()
 +ENDIF()
 +
- IF(CGROUP_SUPPORT)
- 	ADD_DEFINITIONS(-DCGROUP_SUPPORT)
- 	SET(LIBS ${LIBS} cgroup)
+ IF(DEBUG)
+   ADD_DEFINITIONS(-DUDEV_DEBUG -g3)
+ ENDIF()
 diff --git a/rcS.c b/rcS.c
 index 2851fae..60cc4e7 100644
 --- a/rcS.c
@@ -147,5 +147,5 @@ index 2851fae..60cc4e7 100644
  		add_initd(q, gl.gl_pathv[j], param);
  
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

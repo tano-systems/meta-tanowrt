@@ -13,34 +13,6 @@ procd_set_param chdir "/path/to/workdir"
 ...
 ```
 
-## Cgroups
-
-The required cgroup and controllers (if needed) must be specified in the procd script with the `cg_group` parameter. Parameter `cg_group` has `<controllers>:<path>` format. For selecting all available controllers `<controllers>` must be set to `*` or completely omit the `<controller>:` part (with the colon). Parameter `cg_group` is array and can be set multiple times with `procd_append_param` command.
-
-All groups listed in the `cg_group` parameter must be already created by other software. Procd does not create these groups.
-
-Also you can set `cg_sticky` (boolean) parameter in order to cgred daemon does not change pidlist and children tasks of the service.
-
-Example:
-```shell
-...
-procd_open_instance
-procd_set_param command "$BIN"
-procd_set_param cg_group "*:openwrt/high/"
-procd_set_param cg_sticky "1"
-procd_close_instance
-...
-```
-
-Different cgroups for different controllers can be set as follows:
-
-```shell
-...
-procd_set_param cg_group "cpu:openwrt/cpu-high/"
-procd_append_param cg_group "memory:openwrt/mem-low/"
-...
-```
-
 ## Scheduler attributes
 
 With parameter `policy` you can select scheduling policy for procd service. Suppported policies are:

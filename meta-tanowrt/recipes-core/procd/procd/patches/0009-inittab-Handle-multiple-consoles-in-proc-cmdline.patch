@@ -1,7 +1,7 @@
-From e2da4743793e03c0a3eb536fa65f706ccbb99318 Mon Sep 17 00:00:00 2001
+From deeec47e1d0c2d787b508568c93a545eec4fca0e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
-Subject: [PATCH 10/13] inittab: Handle multiple consoles in /proc/cmdline
+Subject: [PATCH 09/15] inittab: Handle multiple consoles in /proc/cmdline
 
 If askconsole (or askconsolelate) specified without id, then process
 will be executed for all tty's defined in the kernel command line
@@ -29,7 +29,7 @@ askconsolelate action.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- inittab.c | 116 +++++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ inittab.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++--------
  1 file changed, 99 insertions(+), 17 deletions(-)
 
 diff --git a/inittab.c b/inittab.c
@@ -213,5 +213,5 @@ index 45118f4..559d6f5 100644
  	line = malloc(LINE_LEN);
  	a = calloc(1, sizeof(struct init_action));
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 
