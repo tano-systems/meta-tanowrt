@@ -46,9 +46,9 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 26.05.2020
-# blobmsg: drop old comment about json formatting functions
-SRCREV = "e85cb739766d00977a08cce98f161976da5fbefc"
+# 04.08.2020
+# blobmsg: introduce BLOBMSG_CAST_INT64
+SRCREV = "9e52171d70def760a6949676800d0b73f85ee22d"
 PV = "2.0.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
