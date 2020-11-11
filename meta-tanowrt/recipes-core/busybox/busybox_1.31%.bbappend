@@ -1,6 +1,6 @@
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR_append = ".tano0.${INC_PR}"
+PR_append = ".tano1.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Patches
@@ -22,6 +22,7 @@ SRC_URI_append = "\
 	file://500-move-traceroute-applets-to-bin.patch \
 	file://510-move-passwd-applet-to-bin.patch \
 	file://520-loginutils-handle-crypt-failures.patch \
+	file://600-allow-ntpd-non-root.patch \
 "
 
 require busybox-openwrt.inc
