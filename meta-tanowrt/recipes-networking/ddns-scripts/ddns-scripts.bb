@@ -4,8 +4,8 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano10"
-PV = "2.7.8"
+PR = "tano0"
+PV = "2.8.2"
 
 inherit allarch
 
@@ -23,21 +23,106 @@ S = "${WORKDIR}"
 B = "${WORKDIR}/build"
 
 SRC_URI = "\
-	file://services \
-	file://services_ipv6 \
 	file://ddns.config \
 	file://ddns.hotplug \
 	file://ddns.init \
-	file://ddns.defaults \
+	file://ddns.sh \
 	file://update_godaddy_com_v1.sh \
 	file://update_freedns_42_pl.sh \
 	file://update_cloudflare_com_v4.sh \
 	file://update_nsupdate.sh \
 	file://update_no-ip_com.sh \
 	file://update_route53_v1.sh \
+	file://update_cnkuai_cn.sh \
+	file://update_digitalocean_com_v2.sh \
 	file://dynamic_dns_updater.sh \
 	file://dynamic_dns_lucihelper.sh \
 	file://dynamic_dns_functions.sh \
+"
+
+SRC_URI += "\
+	file://list \
+	file://default/3322.org.json \
+	file://default/able.or.kr.json \
+	file://default/afraid.org-basicauth.json \
+	file://default/afraid.org-keyauth.json \
+	file://default/afraid.org-v2-basic.json \
+	file://default/afraid.org-v2-token.json \
+	file://default/all-inkl.com.json \
+	file://default/bind-nsupdate.json \
+	file://default/changeip.com.json \
+	file://default/cloudflare.com-v4.json \
+	file://default/cnkuai.cn.json \
+	file://default/core-networks.de.json \
+	file://default/ddns.com.br.json \
+	file://default/ddnss.de.json \
+	file://default/ddo.jp.json \
+	file://default/desec.io.json \
+	file://default/dhis.org.json \
+	file://default/digitalocean.com-v2.json \
+	file://default/dnsdynamic.org.json \
+	file://default/dnsever.com.json \
+	file://default/dnsexit.com.json \
+	file://default/dnshome.de.json \
+	file://default/dnsmadeeasy.com.json \
+	file://default/dnsmax.com.json \
+	file://default/dnsomatic.com.json \
+	file://default/dnspark.com.json \
+	file://default/do.de.json \
+	file://default/domopoli.de.json \
+	file://default/dtdns.com.json \
+	file://default/duckdns.org.json \
+	file://default/duiadns.net.json \
+	file://default/dy.fi.json \
+	file://default/dyn.com.json \
+	file://default/dyndns.it.json \
+	file://default/dyndns.org.json \
+	file://default/dyndnss.net.json \
+	file://default/dyns.net.json \
+	file://default/dynsip.org.json \
+	file://default/dynu.com.json \
+	file://default/dynv6.com.json \
+	file://default/easydns.com.json \
+	file://default/editdns.net.json \
+	file://default/freedns.42.pl.json \
+	file://default/godaddy.com-v1.json \
+	file://default/goip.de.json \
+	file://default/google.com.json \
+	file://default/he.net.json \
+	file://default/inwx.de.json \
+	file://default/joker.com.json \
+	file://default/loopia.se.json \
+	file://default/moniker.com.json \
+	file://default/mydns.ip.json \
+	file://default/myip.co.ua.json \
+	file://default/myonlineportal.net.json \
+	file://default/mythic-beasts.com.json \
+	file://default/namecheap.com.json \
+	file://default/nettica.com.json \
+	file://default/no-ip.com.json \
+	file://default/no-ip.pl.json \
+	file://default/now-dns.com.json \
+	file://default/nsupdate.info.json \
+	file://default/nubem.com.json \
+	file://default/opendns.com.json \
+	file://default/oray.com.json \
+	file://default/ovh.com.json \
+	file://default/regfish.de.json \
+	file://default/route53-v1.json \
+	file://default/schokokeks.org.json \
+	file://default/selfhost.de.json \
+	file://default/sitelutions.com.json \
+	file://default/spdyn.de.json \
+	file://default/strato.com.json \
+	file://default/system-ns.com.json \
+	file://default/thatip.com.json \
+	file://default/twodns.de.json \
+	file://default/udmedia.de.json \
+	file://default/variomedia.de.json \
+	file://default/xlhost.de.json \
+	file://default/zerigo.com.json \
+	file://default/zoneedit.com.json \
+	file://default/zzzz.io.json \
 "
 
 inherit tanowrt-services
@@ -51,62 +136,52 @@ RDEPENDS_${PN} += "openssl-bin"
 # bind-client
 
 PACKAGES += "\
-	${PN}-cloudflare-v4 \
-	${PN}-godaddy-com-v1 \
-	${PN}-no-ip-com \
+	${PN}-cloudflare \
+	${PN}-godaddy \
+	${PN}-digitalocean \
+	${PN}-freedns \
+	${PN}-noip \
 	${PN}-nsupdate \
-	${PN}-route53-v1 \
-	${PN}-freedns-42-pl \
+	${PN}-route53 \
+	${PN}-cnkuai \
 "
 
-do_compile() {
-	cp ${S}/services* ${B}/
-	cp ${S}/dynamic_dns_*.sh ${B}/
-	cp ${S}/update_*.sh ${B}/
-	cp ${S}/ddns.* ${B}/
-
-	# ensure that VERSION inside dynamic_dns_functions.sh reflect package version
-	sed -i '/^VERSION=*/s/.*/VERSION="${PV}-${PR}"/' ${B}/dynamic_dns_functions.sh
-}
+do_compile[noexec] = "1"
 
 do_install() {
-	install -d ${D}${sysconfdir}/uci-defaults
 	install -d ${D}${sysconfdir}/hotplug.d/iface
 	install -d ${D}${sysconfdir}/init.d
 	install -d ${D}${sysconfdir}/config
 
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns
-	install -m 0755 ${B}/ddns.hotplug ${D}${sysconfdir}/hotplug.d/iface/95-ddns
-	install -m 0755 ${B}/ddns.init ${D}${sysconfdir}/init.d/ddns
-	install -m 0644 ${B}/ddns.config ${D}${sysconfdir}/config/ddns
+	install -m 0755 ${WORKDIR}/ddns.hotplug ${D}${sysconfdir}/hotplug.d/iface/95-ddns
+	install -m 0755 ${WORKDIR}/ddns.init ${D}${sysconfdir}/init.d/ddns
+	install -m 0644 ${WORKDIR}/ddns.config ${D}${sysconfdir}/config/ddns
 
 	install -d ${D}${sysconfdir}/ddns
 	install -d ${D}${libdir}/ddns
 
-	install -m 0644 ${B}/services ${D}${sysconfdir}/ddns/services
-	install -m 0644 ${B}/services_ipv6 ${D}${sysconfdir}/ddns/services_ipv6
+	install -d ${D}${datadir}/ddns
+	install -d ${D}${datadir}/ddns/default
+	install -m 0644 ${WORKDIR}/list ${D}${datadir}/ddns/list
+	install -m 0644 ${WORKDIR}/default/*.json ${D}${datadir}/ddns/default
 
-	install -m 0755 ${B}/dynamic_dns_functions.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/dynamic_dns_updater.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/dynamic_dns_lucihelper.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/dynamic_dns_functions.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/dynamic_dns_updater.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/dynamic_dns_lucihelper.sh ${D}${libdir}/ddns/
 
-	install -m 0755 ${B}/update_cloudflare_com_v4.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_cloudflare_com_v4
+	install -m 0755 ${WORKDIR}/update_cloudflare_com_v4.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_godaddy_com_v1.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_no-ip_com.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_nsupdate.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_route53_v1.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_freedns_42_pl.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_digitalocean_com_v2.sh ${D}${libdir}/ddns/
+	install -m 0755 ${WORKDIR}/update_cnkuai_cn.sh ${D}${libdir}/ddns/
 
-	install -m 0755 ${B}/update_godaddy_com_v1.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_godaddy_com_v1
+	install -d ${D}${bindir}
+	install -m 0755 ${WORKDIR}/ddns.sh ${D}${bindir}/ddns
 
-	install -m 0755 ${B}/update_no-ip_com.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_no-ip_com
-
-	install -m 0755 ${B}/update_nsupdate.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_nsupdate
-
-	install -m 0755 ${B}/update_route53_v1.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_route53_v1
-
-	install -m 0755 ${B}/update_freedns_42_pl.sh ${D}${libdir}/ddns/
-	install -m 0755 ${B}/ddns.defaults ${D}${sysconfdir}/uci-defaults/ddns_freedns_42_pl
+	echo "${PV}-${PR}" > ${D}${datadir}/ddns/version
 }
 
 FILES_${PN} = "\
@@ -114,10 +189,11 @@ FILES_${PN} = "\
 	${sysconfdir}/ddns \
 	${sysconfdir}/hotplug.d \
 	${sysconfdir}/init.d \
-	${sysconfdir}/uci-defaults/ddns \
 	${libdir}/ddns/dynamic_dns_functions.sh \
 	${libdir}/ddns/dynamic_dns_updater.sh \
 	${libdir}/ddns/dynamic_dns_lucihelper.sh \
+	${datadir}/ddns \
+	${bindir} \
 "
 
 CONFFILES_${PN}_append = "\
@@ -125,300 +201,178 @@ CONFFILES_${PN}_append = "\
 "
 
 RRECOMMENDS_${PN} += "\
-	${PN}-cloudflare-v4 \
-	${PN}-godaddy-com-v1 \
-	${PN}-no-ip-com \
-	${PN}-route53-v1 \
-	${PN}-freedns-42-pl \
+	${PN}-cloudflare \
+	${PN}-freedns \
+	${PN}-godaddy \
+	${PN}-digitalocean \
+	${PN}-noip \
+	${PN}-route53 \
 "
 
 pkg_postinst_${PN}() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot and PKG_UPGRADE then (re)start service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns ] && \
-			/etc/uci-defaults/ddns && \
-				rm -f /etc/uci-defaults/ddns >/dev/null 2>&1
-		/etc/init.d/ddns enabled && \
-			/etc/init.d/ddns start >/dev/null 2>&1
-	}
+	if [ -z "${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns enabled
+		/etc/init.d/ddns start
+	fi
+	exit 0
 }
 
 pkg_prerm_${PN}() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if run within buildroot exit
-	[ -n "${IPKG_INSTROOT}" ] && exit 0
-	# stop running scripts
-	/etc/init.d/ddns stop
-	/etc/init.d/ddns disable
-	# clear LuCI indexcache
-	rm -f /tmp/luci-indexcache >/dev/null 2>&1
+	if [ -z "${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+		/etc/init.d/ddns disable
+	fi
+	exit 0
 }
 
 ####
 
-SUMMARY_${PN}-cloudflare-v4 = "Dynamic DNS Client scripts extension for CloudFlare.com API-v4"
-RDEPENDS_${PN}-cloudflare-v4 = "${PN} curl"
-FILES_${PN}-cloudflare-v4 = "${libdir}/ddns/update_cloudflare_com_v4.sh ${sysconfdir}/uci-defaults/ddns_cloudflare_com_v4"
+SUMMARY_${PN}-cloudflare = "Dynamic DNS Client scripts extension for CloudFlare.com API-v4"
+RDEPENDS_${PN}-cloudflare = "${PN} curl"
+FILES_${PN}-cloudflare = "\
+	${libdir}/ddns/update_cloudflare_com_v4.sh \
+	${datadir}/ddns/default/cloudflare.com-v4.json \
+"
 
-pkg_preinst_${PN}-cloudflare-v4() {
+pkg_prerm_${PN}-cloudflare() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
-}
-
-pkg_postinst_${PN}-cloudflare-v4() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/cloudflare\.com-v4/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i '/cloudflare\.com-v4/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"cloudflare.com-v4"' '"update_cloudflare_com_v4.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	printf "%s\\t%s\\n" '"cloudflare.com-v4"' '"update_cloudflare_com_v4.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services_ipv6
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_cloudflare_com_v4 ] && \
-			/etc/uci-defaults/ddns_cloudflare_com_v4 && \
-				rm -f /etc/uci-defaults/ddns_cloudflare_com_v4 >/dev/null 2>&1
-		/etc/init.d/ddns enabled && \
-			/etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
-}
-
-pkg_prerm_${PN}-cloudflare-v4() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop				>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i '/cloudflare\.com-v4/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i '/cloudflare\.com-v4/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
 ####
 
-SUMMARY_${PN}-godaddy-com-v1 = "Dynamic DNS Client scripts extension for GoDaddy.com"
-RDEPENDS_${PN}-godaddy-com-v1 = "${PN} curl"
-FILES_${PN}-godaddy-com-v1 = "${libdir}/ddns/update_godaddy_com_v1.sh ${sysconfdir}/uci-defaults/ddns_godaddy_com_v1"
+SUMMARY_${PN}-freedns = "DDNS extension for FreeDNS.42.pl"
+RDEPENDS_${PN}-freedns = "${PN} curl"
+FILES_${PN}-freedns = "\
+	${libdir}/ddns/update_freedns_42_pl.sh \
+	${datadir}/ddns/default/freedns.42.pl.json \
+"
 
-pkg_preinst_${PN}-godaddy-com-v1() {
+pkg_prerm_${PN}-freedns() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
-}
-
-pkg_postinst_${PN}-godaddy-com-v1() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/godaddy\.com-v1/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i '/godaddy\.com-v1/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"godaddy.com-v1"' '"update_godaddy_com_v1.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	printf "%s\\t%s\\n" '"godaddy.com-v1"' '"update_godaddy_com_v1.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services_ipv6
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_godaddy_com_v1 ] && \
-			/etc/uci-defaults/ddns_godaddy_com_v1 && \
-				rm -f /etc/uci-defaults/ddns_godaddy_com_v1 >/dev/null 2>&1
-		/etc/init.d/ddns enabled \
-			&& /etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
-}
-
-pkg_prerm_${PN}-godaddy-com-v1() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop				>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i '/godaddy\.com-v1/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i '/godaddy\.com-v1/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
 ####
 
-SUMMARY_${PN}-no-ip-com = "Dynamic DNS Client scripts extension for No-IP.com"
-RDEPENDS_${PN}-no-ip-com = "${PN}"
-FILES_${PN}-no-ip-com = "${libdir}/ddns/update_no-ip_com.sh ${sysconfdir}/uci-defaults/ddns_no-ip_com"
+SUMMARY_${PN}-godaddy = "Dynamic DNS Client scripts extension for GoDaddy.com"
+RDEPENDS_${PN}-godaddy = "${PN} curl"
+FILES_${PN}-godaddy = "\
+	${libdir}/ddns/update_godaddy_com_v1.sh \
+	${datadir}/ddns/default/godaddy.com-v1.json \
+"
 
-pkg_preinst_${PN}-no-ip-com() {
+pkg_prerm_${PN}-godaddy() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
-pkg_postinst_${PN}-no-ip-com() {
+####
+
+SUMMARY_${PN}-digitalocean = "Dynamic DNS Client scripts extention for digitalocean.com API v2"
+RDEPENDS_${PN}-digitalocean = "${PN} curl"
+FILES_${PN}-digitalocean = "\
+	${libdir}/ddns/update_digitalocean_com_v2.sh \
+	${datadir}/ddns/default/digitalocean.com-v2.json \
+"
+
+pkg_prerm_${PN}-digitalocean() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/no-ip\.com/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"no-ip.com"' '"update_no-ip_com.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_no-ip_com ] && \
-			/etc/uci-defaults/ddns_no-ip_com && \
-				rm -f /etc/uci-defaults/ddns_no-ip_com >/dev/null 2>&1
-		/etc/init.d/ddns enabled && \
-			/etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
-pkg_prerm_${PN}-no-ip-com() {
+####
+
+SUMMARY_${PN}-noip = "Dynamic DNS Client scripts extension for No-IP.com"
+RDEPENDS_${PN}-noip = "${PN}"
+FILES_${PN}-noip = "\
+	${libdir}/ddns/update_no-ip_com.sh \
+	${datadir}/ddns/default/no-ip.com.json \
+"
+
+pkg_prerm_${PN}-noip() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop		>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i '/no-ip\.com/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
 ####
 
 SUMMARY_${PN}-nsupdate = "Dynamic DNS Client scripts extension for direct updates using Bind nsupdate"
 RDEPENDS_${PN}-nsupdate = "${PN}"
-# bind-client"
-FILES_${PN}-nsupdate = "${libdir}/ddns/update_nsupdate.sh ${sysconfdir}/uci-defaults/ddns_nsupdate"
-
-pkg_preinst_${PN}-nsupdate() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
-}
-
-pkg_postinst_${PN}-nsupdate() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/bind-nsupdate/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	/bin/sed -i '/bind-nsupdate/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"bind-nsupdate"' '"update_nsupdate.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	printf "%s\\t%s\\n" '"bind-nsupdate"' '"update_nsupdate.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services_ipv6
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_nsupdate ] && \
-			/etc/uci-defaults/ddns_nsupdate && \
-				rm -f /etc/uci-defaults/ddns_nsupdate >/dev/null 2>&1
-		/etc/init.d/ddns enabled && \
-			/etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
-}
+# TODO: depends on bind-client"
+FILES_${PN}-nsupdate = "\
+	${libdir}/ddns/update_nsupdate.sh \
+	${datadir}/ddns/default/bind-nsupdate.json \
+"
 
 pkg_prerm_${PN}-nsupdate() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop			>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i '/bind-nsupdate/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	/bin/sed -i '/bind-nsupdate/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
 ####
 
-SUMMARY_${PN}-route53-v1 = "Amazon AWS Route 53 API v1"
-RDEPENDS_${PN}-route53-v1 = "${PN} curl openssl openssl-bin"
-FILES_${PN}-route53-v1 = "${libdir}/ddns/update_route53_v1.sh ${sysconfdir}/uci-defaults/ddns_route53_v1"
+SUMMARY_${PN}-route53 = "Dynamic DNS Client scripts extension for Amazon AWS Route 53 API v1"
+RDEPENDS_${PN}-route53 = "${PN} curl openssl openssl-bin"
+FILES_${PN}-route53 = "\
+	${libdir}/ddns/update_route53_v1.sh \
+	${datadir}/ddns/default/route53-v1.json \
+"
 
-pkg_preinst_${PN}-route53-v1() {
+pkg_prerm_${PN}-route53() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
-}
-
-pkg_postinst_${PN}-route53-v1() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/route53-v1/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i '/route53-v1/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"route53-v1"' '"update_route53_v1.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	printf "%s\\t%s\\n" '"route53-v1"' '"update_route53_v1.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services_ipv6
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_route53_v1 ] && \
-			/etc/uci-defaults/ddns_route53_v1 && \
-				rm -f /etc/uci-defaults/ddns_route53_v1 >/dev/null 2>&1
-		/etc/init.d/ddns enabled \
-			&& /etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
-}
-
-pkg_prerm_${PN}-route53-v1() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop				>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i 'route53-v1/d' ${IPKG_INSTROOT}/etc/ddns/services		>/dev/null 2>&1
-	/bin/sed -i 'route53-v1/d' ${IPKG_INSTROOT}/etc/ddns/services_ipv6	>/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
 ####
 
-SUMMARY_${PN}-freedns-42-pl = "DDNS extension for FreeDNS.42.pl"
-RDEPENDS_${PN}-freedns-42-pl = "${PN} curl"
-FILES_${PN}-freedns-42-pl = "${libdir}/ddns/update_freedns_42_pl.sh ${sysconfdir}/uci-defaults/ddns_freedns_42_pl"
+SUMMARY_${PN}-cnkuai = "Dynamic DNS Client scripts extension for CnKuai API"
+RDEPENDS_${PN}-cnkuai = "${PN} curl"
+# TODO: depends on giflib-utils
+FILES_${PN}-cnkuai = "\
+	${libdir}/ddns/update_cnkuai_cn.sh \
+	${datadir}/ddns/default/cnkuai.cn.json \
+"
 
-pkg_preinst_${PN}-freedns-42-pl() {
+pkg_prerm_${PN}-cnkuai() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop >/dev/null 2>&1
-	exit 0	# suppress errors
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		/etc/init.d/ddns stop
+	fi
+	exit 0
 }
 
-pkg_postinst_${PN}-freedns-42-pl() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# remove old services file entries
-	/bin/sed -i '/freedns\.42\.pl/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	/bin/sed -i '/FreeDNS\.42\.pl/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	# and create new
-	printf "%s\\t%s\\n" '"freedns.42.pl"' '"update_freedns_42_pl.sh"' >> ${IPKG_INSTROOT}/etc/ddns/services
-	# on real system restart service if enabled
-	[ -z "${IPKG_INSTROOT}" ] && {
-		[ -x /etc/uci-defaults/ddns_freedns_42_pl ] && \
-			/etc/uci-defaults/ddns_freedns_42_pl && \
-				rm -f /etc/uci-defaults/ddns_freedns_42_pl >/dev/null 2>&1
-		/etc/init.d/ddns enabled && \
-			/etc/init.d/ddns start >/dev/null 2>&1
-	}
-	exit 0	# suppress errors
-}
-
-pkg_prerm_${PN}-freedns-42-pl() {
-	#!/bin/sh
-	IPKG_INSTROOT=$D
-	# if NOT run buildroot then stop service
-	[ -z "${IPKG_INSTROOT}" ] && /etc/init.d/ddns stop		>/dev/null 2>&1
-	# remove services file entries
-	/bin/sed -i '/freedns\.42\.pl/d' ${IPKG_INSTROOT}/etc/ddns/services	>/dev/null 2>&1
-	exit 0	# suppress errors
-}
+####
