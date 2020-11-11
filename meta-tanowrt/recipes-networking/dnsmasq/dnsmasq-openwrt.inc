@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "4"
+INC_PR = "5"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -87,7 +87,7 @@ do_install_append() {
 
 USERADD_PACKAGES = "${PN}"
 
-USERADD_PARAM_${PN} = "--system -d /var/lib/dnsmasq --no-create-home \
+USERADD_PARAM_${PN} = "--system -d /var/run/dnsmasq --no-create-home \
   --shell /bin/false --user-group dnsmasq"
 
 RDEPENDS_${PN} += "jsonpath"
