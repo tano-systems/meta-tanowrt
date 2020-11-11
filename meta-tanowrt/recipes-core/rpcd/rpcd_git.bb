@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano23"
+PR = "tano24"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -16,6 +16,7 @@ SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
 	file://rpcd.init \
 	file://rpcd.config \
+	file://50-migrate-rpcd-ubus-sock.sh \
 "
 
 # 18.09.2020
@@ -56,6 +57,9 @@ do_install_append() {
     install -Dm 0755 ${WORKDIR}/rpcd.init ${D}${sysconfdir}/init.d/rpcd
 
     install -Dm 0644 ${S}/unauthenticated.json ${D}${datadir}/rpcd/acl.d/unauthenticated.json
+
+    install -d ${D}${sysconfdir}/uci-defaults
+    install -m 0755 ${WORKDIR}/50-migrate-rpcd-ubus-sock.sh ${D}${sysconfdir}/uci-defaults/
 
     mkdir -p ${D}/sbin
     ln -s /usr/sbin/rpcd ${D}/sbin/rpcd
