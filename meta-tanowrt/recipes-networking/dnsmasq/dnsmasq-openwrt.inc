@@ -7,11 +7,16 @@
 INC_PR = "4"
 
 PACKAGECONFIG[ubus] = ",,libubus"
+PACKAGECONFIG[broken-rtc] = ",,"
+PACKAGECONFIG[no-id] = ",,"
+
 EXTRA_OEMAKE += "\
     'COPTS+=${@bb.utils.contains('PACKAGECONFIG', 'ubus', '-DHAVE_UBUS', '', d)}' \
+    'COPTS+=${@bb.utils.contains('PACKAGECONFIG', 'no-id', '-DNO_ID', '', d)}' \
+    'COPTS+=${@bb.utils.contains('PACKAGECONFIG', 'broken-rtc', '-DHAVE_BROKEN_RTC', '', d)}' \
 "
 
-PACKAGECONFIG += "ubus"
+PACKAGECONFIG += "ubus conntrack no-id"
 
 # Patches
 SRC_URI += "\
