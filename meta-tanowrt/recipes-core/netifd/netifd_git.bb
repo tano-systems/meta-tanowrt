@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano35"
+PR = "tano36"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -36,9 +36,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 08.10.2020
-# system-linux: initialize ifreq struct before using it
-SRCREV_netifd = "64ff909328c095749ef6eaed7302b3e024409d2f"
+# 05.11.2020
+# bridge: only overwrite implicit vlan assignment if vlans are configured
+SRCREV_netifd = "ed11f0c0ffe4fdacfe3f8223049ef8a61d9c53e9"
 
 S = "${WORKDIR}/git"
 
