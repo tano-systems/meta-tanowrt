@@ -5,7 +5,7 @@
 require linux-backports.inc
 
 PV = "5.8-1"
-PR = "tano1.${INC_PR}"
+PR = "tano2.${INC_PR}"
 
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/files:"
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/configs:"
@@ -39,6 +39,7 @@ SRC_URI += "\
 SRC_URI += "\
 	file://patches-openwrt/subsys/070-backports-add-netif_receive_skb_list.patch \
 	file://patches-openwrt/subsys/071-backports-add-skb_list_del_init.patch \
+	file://patches-openwrt/subsys/072-backports-add-sched_set_fifo_low.patch \
 	file://patches-openwrt/subsys/100-remove-cryptoapi-dependencies.patch \
 	file://patches-openwrt/subsys/110-mac80211_keep_keys_on_stop_ap.patch \
 	file://patches-openwrt/subsys/120-cfg80211_allow_perm_addr_change.patch \
@@ -76,6 +77,7 @@ SRC_URI += "\
 	file://patches-openwrt/subsys/330-mac80211-allow-bigger-A-MSDU-sizes-in-VHT-even-if-HT.patch \
 	file://patches-openwrt/subsys/331-mac80211-do-not-allow-bigger-VHT-MPDUs-than-the-hard.patch \
 	file://patches-openwrt/subsys/332-mac80211-fix-regression-in-sta-connection-monitor.patch \
+	file://patches-openwrt/subsys/333-mac80211-fix-memory-leak-on-filtered-powersave-frame.patch \
 	file://patches-openwrt/subsys/370-mac80211-fix-misplaced-while-instead-of-if.patch \
 	file://patches-openwrt/subsys/400-allow-ibss-mixed.patch \
 	file://patches-openwrt/subsys/500-mac80211_configure_antenna_gain.patch \
@@ -184,6 +186,9 @@ SRC_URI += "\
 	file://patches-openwrt/rt2x00/984-rt2x00-add-rxdcoc-calibration.patch \
 	file://patches-openwrt/rt2x00/985-rt2x00-add-rxiq-calibration.patch \
 	file://patches-openwrt/rt2x00/986-rt2x00-add-TX-LOFT-calibration.patch \
+	file://patches-openwrt/rt2x00/990-rt2x00-mt7620-introduce-accessors-for-CHIP_VER-register.patch \
+	file://patches-openwrt/rt2x00/991-rt2x00-mt7620-differentiate-based-on-SoC-CHIP_VER.patch \
+	file://patches-openwrt/rt2x00/992-rt2x00-save-survey-for-every-channel-visited.patch \
 "
 
 # Patches from Tano
