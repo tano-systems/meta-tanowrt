@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano30"
+PR = "tano31"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
