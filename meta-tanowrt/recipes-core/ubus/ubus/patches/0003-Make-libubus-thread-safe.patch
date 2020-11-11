@@ -1,4 +1,4 @@
-From 40e14b16a166c72e8556a317cd35fa3de41d2ef7 Mon Sep 17 00:00:00 2001
+From 12f9821d899ac5f475daa5bc00b78aac3f620827 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 8 Jan 2020 03:27:21 +0300
 Subject: [PATCH 3/3] Make libubus thread safe

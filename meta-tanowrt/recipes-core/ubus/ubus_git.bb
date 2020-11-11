@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano13"
+PR = "tano14"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 05.08.2020
-# tests: cram: fix usage test
-SRCREV = "13efd05c1bb611a3b30f53858fcd3a13589e08be"
+# 23.10.2020
+# ubusd_acl: add support for wildcard in methods
+SRCREV = "ad0cd117db74934385d81605514e041b1a9cdda9"
 
 S = "${WORKDIR}/git"
 
@@ -41,3 +41,17 @@ do_install_append () {
     install -dm 0755 ${D}/sbin
     ln -s /usr/sbin/ubusd ${D}/sbin/ubusd
 }
+
+inherit useradd
+
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM_${PN} = "\
+	--system \
+	-d /var/run/ubus \
+	--no-create-home \
+	--shell /bin/false \
+	-g ubus \
+	  ubus \
+"
+
+GROUPADD_PARAM_${PN} = "--system ubus"
