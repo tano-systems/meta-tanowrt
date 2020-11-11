@@ -1,0 +1,83 @@
+From 648d1f1a452d982eba31efd3d16e56dcb63b587d Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 11 Nov 2020 21:16:30 +0300
+Subject: [PATCH 16/17] jail: Fixes for 64-bit systems
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ jail/elf.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/jail/elf.c b/jail/elf.c
+index ede85a6..8d6e981 100644
+--- a/jail/elf.c
++++ b/jail/elf.c
+@@ -13,6 +13,7 @@
+ 
+ #define _GNU_SOURCE
+ 
++#include <stdint.h>
+ #include <string.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
+@@ -102,7 +103,7 @@ const char* find_lib(const char *file)
+ 	return l->path;
+ }
+ 
+-static int elf64_find_section(const char *map, unsigned int type, unsigned int *offset, unsigned int *size, unsigned int *vaddr)
++static int elf64_find_section(const char *map, unsigned int type, uint64_t *offset, uint64_t *size, uint64_t *vaddr)
+ {
+ 	Elf64_Ehdr *e;
+ 	Elf64_Phdr *ph;
+@@ -125,7 +126,7 @@ static int elf64_find_section(const char *map, unsigned int type, unsigned int *
+ 	return -1;
+ }
+ 
+-static int elf32_find_section(const char *map, unsigned int type, unsigned int *offset, unsigned int *size, unsigned int *vaddr)
++static int elf32_find_section(const char *map, unsigned int type, uint64_t *offset, uint64_t *size, uint64_t *vaddr)
+ {
+ 	Elf32_Ehdr *e;
+ 	Elf32_Phdr *ph;
+@@ -148,7 +149,7 @@ static int elf32_find_section(const char *map, unsigned int type, unsigned int *
+ 	return -1;
+ }
+ 
+-static int elf_find_section(const char *map, unsigned int type, unsigned int *offset, unsigned int *size, unsigned int *vaddr)
++static int elf_find_section(const char *map, unsigned int type, uint64_t *offset, uint64_t *size, uint64_t *vaddr)
+ {
+ 	int clazz = map[EI_CLASS];
+ 
+@@ -162,7 +163,7 @@ static int elf_find_section(const char *map, unsigned int type, unsigned int *of
+ 	return -1;
+ }
+ 
+-static int elf32_scan_dynamic(const char *map, int dyn_offset, int dyn_size, int load_offset)
++static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size, uint64_t load_offset)
+ {
+ 	Elf32_Dyn *dynamic = (Elf32_Dyn *) (map + dyn_offset);
+ 	const char *strtab = NULL;
+@@ -196,7 +197,7 @@ static int elf32_scan_dynamic(const char *map, int dyn_offset, int dyn_size, int
+ 	return 0;
+ }
+ 
+-static int elf64_scan_dynamic(const char *map, int dyn_offset, int dyn_size, int load_offset)
++static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size, uint64_t load_offset)
+ {
+ 	Elf64_Dyn *dynamic = (Elf64_Dyn *) (map + dyn_offset);
+ 	const char *strtab = NULL;
+@@ -232,9 +233,9 @@ static int elf64_scan_dynamic(const char *map, int dyn_offset, int dyn_size, int
+ 
+ int elf_load_deps(const char *path, const char *map)
+ {
+-	unsigned int dyn_offset, dyn_size;
+-	unsigned int load_offset, load_vaddr;
+-	unsigned int interp_offset;
++	uint64_t dyn_offset, dyn_size;
++	uint64_t load_offset, load_vaddr;
++	uint64_t interp_offset;
+ #if defined(__mips__) && (__mips == 64)
+ 	static int gcc_mips64_bug_work_around;
+ 
+-- 
+2.16.2.windows.1
+

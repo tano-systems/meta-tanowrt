@@ -1,7 +1,7 @@
-From 3a41100f2d15b060d602d71a4d5fa481d4fd0687 Mon Sep 17 00:00:00 2001
+From 708ec5cc1833e3f747a2cbc9fbcf404423241d33 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 20:05:05 +0300
-Subject: [PATCH 08/15] instance: Improve error messages
+Subject: [PATCH 08/17] instance: Improve error messages
 
 Add service and instance names to error messages.
 
@@ -43,5 +43,5 @@ index 4c10972..838f80e 100644
  	}
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

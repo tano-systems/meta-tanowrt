@@ -1,7 +1,7 @@
-From 40e52847c8a5bf2712bfdabd5e96fedb04249d53 Mon Sep 17 00:00:00 2001
+From 7138147a04c2881057f1c344d1e991e8675ccd26 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 07:19:01 +0300
-Subject: [PATCH 15/15] jail: Fix compiler warnings
+Subject: [PATCH 15/17] jail: Fix compiler warnings
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -22,5 +22,5 @@ index 740997e..0e14782 100644
  	blobmsg_parse(oci_linux_cgroups_memory_policy, __OCI_LINUX_CGROUPS_MEMORY_MAX, tb, blobmsg_data(msg), blobmsg_len(msg));
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

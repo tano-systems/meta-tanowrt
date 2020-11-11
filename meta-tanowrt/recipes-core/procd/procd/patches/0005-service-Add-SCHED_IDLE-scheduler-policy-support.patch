@@ -1,7 +1,7 @@
-From 2237c51227e60a7fe91c6a28b19a14d1236cc74c Mon Sep 17 00:00:00 2001
+From 2e4570476d105b545b827f3db1597d9405017d73 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 22 Jun 2019 06:02:50 +0300
-Subject: [PATCH 05/15] service: Add SCHED_IDLE scheduler policy support
+Subject: [PATCH 05/17] service: Add SCHED_IDLE scheduler policy support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -41,5 +41,5 @@ index 5676ebe..4c10972 100644
  			break;
  	}
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

@@ -1,7 +1,7 @@
-From b50c6319430cc3e358f8994e379611f1f7b6565c Mon Sep 17 00:00:00 2001
+From f45983ba01db207be9afb43aeb1d1016d01fcbf7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 07:08:10 +0300
-Subject: [PATCH 14/15] build: Fix building in OE environment
+Subject: [PATCH 14/17] build: Fix building in OE environment
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -65,5 +65,5 @@ index 18d9131..b745e6d 100755
  cat <<EOF
  static inline const char *syscall_name(unsigned i) {
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

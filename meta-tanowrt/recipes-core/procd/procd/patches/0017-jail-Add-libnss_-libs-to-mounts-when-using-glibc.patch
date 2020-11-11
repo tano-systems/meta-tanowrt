@@ -1,0 +1,64 @@
+From 70819892439fbcf8026be503bff03b5ad0d44fe4 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 12 Nov 2020 05:00:34 +0300
+Subject: [PATCH 17/17] jail: Add libnss_* libs to mounts when using glibc
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ jail/jail.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/jail/jail.c b/jail/jail.c
+index f09e1a4..789900a 100644
+--- a/jail/jail.c
++++ b/jail/jail.c
+@@ -62,6 +62,10 @@
+ #include <libubox/uloop.h>
+ #include <libubus.h>
+ 
++#if defined(__GLIBC__)
++#include <glob.h>
++#endif
++
+ #ifndef CLONE_NEWCGROUP
+ #define CLONE_NEWCGROUP 0x02000000
+ #endif
+@@ -2635,6 +2639,24 @@ int main(int argc, char **argv)
+ 	return 0;
+ }
+ 
++#if defined(__GLIBC__)
++static void add_glibc_nss_libs(void)
++{
++	glob_t gl;
++	int i;
++
++	if (glob("/lib/libnss_*.so*", GLOB_NOESCAPE, NULL, &gl)) {
++		ERROR("%s: glob failed\n", __func__);
++		return;
++	}
++
++	for (i = 0; i < gl.gl_pathc; i++)
++		add_mount_bind(gl.gl_pathv[i], 1, -1);
++
++	globfree(&gl);
++}
++#endif
++
+ static void post_main(struct uloop_timeout *t)
+ {
+ 	if (apply_rlimits()) {
+@@ -2657,7 +2679,10 @@ static void post_main(struct uloop_timeout *t)
+ 
+ #if defined(__GLIBC__)
+ 			if (!opts.extroot)
++			{
+ 				add_mount_bind("/etc/nsswitch.conf", 1, -1);
++				add_glibc_nss_libs();
++			}
+ #endif
+ 
+ 			if (!(opts.namespace & CLONE_NEWNET)) {
+-- 
+2.16.2.windows.1
+
