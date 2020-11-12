@@ -1,7 +1,7 @@
-From 2f85c6363ca5fd8e769462516f6b047c21a75ca9 Mon Sep 17 00:00:00 2001
+From c38eeb0ed0bc5e2fc0c06a8fb96facf1992088b0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:03:57 +0300
-Subject: [PATCH 07/11] block: Add log message for unmounted device
+Subject: [PATCH 06/10] block: Add log message for unmounted device
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -40,5 +40,5 @@ index 4e348a0..0417ab4 100644
  	}
  
 -- 
-2.25.0.windows.1
+2.28.0.windows.1
 

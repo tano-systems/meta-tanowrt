@@ -1,7 +1,7 @@
-From 1b2e47effab8cc5844049f03789938cb8cfadf2f Mon Sep 17 00:00:00 2001
+From df1cc870e3de030760ab7c8913f38c961ed41007 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
-Subject: [PATCH 10/11] fstools: Configurable overlay partition name
+Subject: [PATCH 09/10] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -150,7 +150,7 @@ index dbe0498..64a26f4 100644
  	}
  
 diff --git a/libfstools/overlay.c b/libfstools/overlay.c
-index 9b79bb7..c52e336 100644
+index eadafcf..0bfe8ef 100644
 --- a/libfstools/overlay.c
 +++ b/libfstools/overlay.c
 @@ -27,6 +27,7 @@
@@ -161,7 +161,7 @@ index 9b79bb7..c52e336 100644
  #include "libfstools.h"
  #include "volume.h"
  
-@@ -293,7 +294,7 @@ jffs2_switch(struct volume *v)
+@@ -295,7 +296,7 @@ jffs2_switch(struct volume *v)
  	volume_init(v);
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -170,7 +170,7 @@ index 9b79bb7..c52e336 100644
  		return -1;
  	}
  
-@@ -414,7 +415,7 @@ int mount_overlay(struct volume *v)
+@@ -416,7 +417,7 @@ int mount_overlay(struct volume *v)
  
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -180,7 +180,7 @@ index 9b79bb7..c52e336 100644
  	}
  
 diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
-index 37defc3..4b8ffee 100644
+index 7ccf2cc..e40d711 100644
 --- a/libfstools/rootdisk.c
 +++ b/libfstools/rootdisk.c
 @@ -25,6 +25,7 @@
@@ -218,7 +218,7 @@ index 37defc3..4b8ffee 100644
  			if (!ovl_partition)
  				ret = rootdisk_volume_find_partition(name, p);
  			else if (ovl_partition == rootdisk_info.rootpart)
-@@ -743,14 +744,14 @@ static int rootdisk_volume_init(struct volume *v)
+@@ -750,14 +751,14 @@ static int rootdisk_volume_init(struct volume *v)
  		if (rootdisk_use_f2fs(p)) {
  			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %llu)...\n",
  				v->blk, p->offset);
@@ -462,5 +462,5 @@ index 0688d03..cc58f9e 100644
  	} else if (!strcmp(argv[1], "detach")) {
  		return main_detach(argv[2]);
 -- 
-2.25.0.windows.1
+2.28.0.windows.1
 

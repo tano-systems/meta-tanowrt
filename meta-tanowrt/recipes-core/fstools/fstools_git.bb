@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano30"
+PR = "tano31"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -29,17 +29,16 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
-	file://0001-Define-GLOB_ONLYDIR-if-not-available.patch \
-	file://0002-block-Validate-libubi_open-return-value.patch \
-	file://0003-ubi-Add-forgotten-newlines-to-error-messages.patch \
-	file://0004-Fix-UUID-reading-from-vfat.patch \
-	file://0005-block-Fix-some-memory-leaks-and-unnecessary-duplicat.patch \
-	file://0006-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
-	file://0007-block-Add-log-message-for-unmounted-device.patch \
-	file://0008-block-Fix-device-path-creation.patch \
-	file://0009-libfstools-Support-for-f2fs-ext4-overlay-on-a-separa.patch \
-	file://0010-fstools-Configurable-overlay-partition-name.patch \
-	file://0011-libfstools-Fix-64-bit-compilation-issues.patch \
+	file://0001-block-Validate-libubi_open-return-value.patch \
+	file://0002-ubi-Add-forgotten-newlines-to-error-messages.patch \
+	file://0003-Fix-UUID-reading-from-vfat.patch \
+	file://0004-block-Fix-some-memory-leaks-and-unnecessary-duplicat.patch \
+	file://0005-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
+	file://0006-block-Add-log-message-for-unmounted-device.patch \
+	file://0007-block-Fix-device-path-creation.patch \
+	file://0008-libfstools-Support-for-f2fs-ext4-overlay-on-a-separa.patch \
+	file://0009-fstools-Configurable-overlay-partition-name.patch \
+	file://0010-libfstools-Fix-64-bit-compilation-issues.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
@@ -48,9 +47,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 12.05.2020
-# blockd: fix segfault triggered by non-autofs mounts
-SRCREV = "84269037b75de93bdd4ea75b7f50ba77ba976377"
+# 11.10.2020
+# mount: apply SELinux labels before overlayfs mount
+SRCREV = "f25ab8a8484215e5fc88c952f25db9a06de311f7"
 
 S = "${WORKDIR}/git"
 
