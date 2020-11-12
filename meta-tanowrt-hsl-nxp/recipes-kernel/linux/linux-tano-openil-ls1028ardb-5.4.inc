@@ -2,7 +2,7 @@
 # Copyright (C) 2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".2"
+PR_append = ".3"
 
 COMPATIBLE_MACHINE =. "ls1028ardb|"
 
