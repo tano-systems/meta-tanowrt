@@ -1,0 +1,513 @@
+From 554390e35be168c28518dd344e47d5152a4645a4 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 13 Nov 2020 13:49:08 +0300
+Subject: [PATCH] Import changes from meta-tanowrt layer
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ CMakeLists.txt |  16 +++
+ main.c         | 271 +++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 232 insertions(+), 55 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index acf6808..f437acd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 2.6)
+ 
+ PROJECT(cgi-io C)
+ 
++OPTION(ENABLE_UPLOAD_CHKSUM_OPTIONS "Enable uploaded file checksum calculation options" OFF)
++OPTION(ENABLE_DIRECT_WRITE_MODE "Enable direct write mode (without temporary file)" OFF)
++OPTION(ENABLE_APPEND_MODE "Enable append write mode (works only in combination with direct mode)" OFF)
++
+ INCLUDE(CheckFunctionExists)
+ 
+ FIND_PATH(ubus_include_dir libubus.h)
+@@ -12,6 +16,18 @@ INCLUDE_DIRECTORIES(${ubus_include_dir})
+ ADD_DEFINITIONS(-Os -Wall -Werror -Wextra --std=gnu99 -g3)
+ ADD_DEFINITIONS(-Wno-unused-parameter -Wmissing-declarations)
+ 
++IF(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++  ADD_DEFINITIONS(-DENABLE_UPLOAD_CHKSUM_OPTIONS)
++ENDIF()
++
++IF(ENABLE_DIRECT_WRITE_MODE)
++  ADD_DEFINITIONS(-DENABLE_DIRECT_WRITE_MODE)
++ENDIF()
++
++IF(ENABLE_APPEND_MODE)
++  ADD_DEFINITIONS(-DENABLE_APPEND_MODE)
++ENDIF()
++
+ SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+ 
+ IF(APPLE)
+diff --git a/main.c b/main.c
+index 95a62b8..16f6a63 100644
+--- a/main.c
++++ b/main.c
+@@ -49,7 +49,17 @@ enum part {
+ 	PART_SESSIONID,
+ 	PART_FILENAME,
+ 	PART_FILEMODE,
+-	PART_FILEDATA
++	PART_FILEDATA,
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++	PART_DO_MD5SUM,
++	PART_DO_SHA256SUM,
++#endif
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	PART_DIRECT_WRITE,
++#endif
++#if defined(ENABLE_APPEND_MODE)
++	PART_APPEND,
++#endif
+ };
+ 
+ const char *parts[] = {
+@@ -58,6 +68,16 @@ const char *parts[] = {
+ 	"filename",
+ 	"filemode",
+ 	"filedata",
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++	"do_md5sum",
++	"do_sha256sum",
++#endif
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	"direct_write",
++#endif
++#if defined(ENABLE_APPEND_MODE)
++	"append",
++#endif
+ };
+ 
+ struct state
+@@ -70,6 +90,16 @@ struct state
+ 	int filemode;
+ 	int filefd;
+ 	int tempfd;
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++	int do_md5sum;
++	int do_sha256sum;
++#endif
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	int direct_write;
++#endif
++#if defined(ENABLE_APPEND_MODE)
++	int append;
++#endif
+ };
+ 
+ static struct state st;
+@@ -102,13 +132,14 @@ session_access_cb(struct ubus_request *req, int type, struct blob_attr *msg)
+ #endif
+ 
+ static bool
+-session_access(const char *sid, const char *scope, const char *obj, const char *func)
++session_access(const char *sid, const char *scope, const char *obj, const char *func, bool *expired)
+ {
+ #ifdef UNIT_TESTING
+ 	return true;
+ #else
+ 	uint32_t id;
+ 	bool allow = false;
++	int res;
+ 	struct ubus_context *ctx;
+ 	static struct blob_buf req;
+ 
+@@ -123,7 +154,13 @@ session_access(const char *sid, const char *scope, const char *obj, const char *
+ 	blobmsg_add_string(&req, "object", obj);
+ 	blobmsg_add_string(&req, "function", func);
+ 
+-	ubus_invoke(ctx, id, "access", req.head, session_access_cb, &allow, 500);
++	res = ubus_invoke(ctx, id, "access", req.head, session_access_cb, &allow, 500);
++	if (expired) {
++		if (res == UBUS_STATUS_NOT_FOUND)
++			*expired = true;
++		else
++			*expired = false;
++	}
+ 
+ out:
+ 	if (ctx)
+@@ -167,7 +204,6 @@ checksum(const char *applet, size_t sumlen, const char *file)
+ 	default:
+ 		memset(chksum, 0, sizeof(chksum));
+ 		r = read(fds[0], chksum, sumlen);
+-
+ 		waitpid(pid, NULL, 0);
+ 		close(fds[0]);
+ 		close(fds[1]);
+@@ -195,13 +231,33 @@ response(bool success, const char *message)
+ 		else
+ 			printf("\t\"size\": null,\n");
+ 
+-		chksum = checksum("md5sum", 32, st.filename);
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++		if (st.do_md5sum)
++		{
++#endif
++			chksum = checksum("md5sum", 32, st.filename);
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++		}
++		else
++			chksum = 0;
++#endif
++			
+ 		printf("\t\"checksum\": %s%s%s,\n",
+ 			chksum ? "\"" : "",
+ 			chksum ? chksum : "null",
+ 			chksum ? "\"" : "");
+ 
+-		chksum = checksum("sha256sum", 64, st.filename);
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++		if (st.do_sha256sum)
++		{
++#endif
++			chksum = checksum("sha256sum", 64, st.filename);
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++		}
++		else
++			chksum = 0;
++#endif
++
+ 		printf("\t\"sha256sum\": %s%s%s\n",
+ 			chksum ? "\"" : "",
+ 			chksum ? chksum : "null",
+@@ -239,11 +295,20 @@ failure(int code, int e, const char *message)
+ }
+ 
+ static int
+-filecopy(void)
++response_session_expired(void)
+ {
+-	int len;
+-	char buf[READ_BLOCK];
++	return response(false, "Session expired");
++}
++
++static int
++failure_session_expired(void)
++{
++	return failure(403, 0, "Session expired");
++}
+ 
++static int
++filecopy(void)
++{
+ 	if (!st.filedata)
+ 	{
+ 		close(st.tempfd);
+@@ -251,41 +316,51 @@ filecopy(void)
+ 		return response(false, "No file data received");
+ 	}
+ 
+-	snprintf(buf, sizeof(buf), "/proc/self/fd/%d", st.tempfd);
+-
+-	if (unlink(st.filename) < 0 && errno != ENOENT)
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	if (!st.direct_write)
++#else
++	if (1)
++#endif
+ 	{
+-		close(st.tempfd);
+-		return response(false, "Failed to unlink existing file");
+-	}
++		int len;
++		char buf[READ_BLOCK];
+ 
+-	if (linkat(AT_FDCWD, buf, AT_FDCWD, st.filename, AT_SYMLINK_FOLLOW) < 0)
+-	{
+-		if (lseek(st.tempfd, 0, SEEK_SET) < 0)
+-		{
+-			close(st.tempfd);
+-			return response(false, "Failed to rewind temp file");
+-		}
+-
+-		st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++		snprintf(buf, sizeof(buf), "/proc/self/fd/%d", st.tempfd);
+ 
+-		if (st.filefd < 0)
++		if (unlink(st.filename) < 0 && errno != ENOENT)
+ 		{
+ 			close(st.tempfd);
+-			return response(false, "Failed to open target file");
++			return response(false, "Failed to unlink existing file");
+ 		}
+ 
+-		while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
++		if (linkat(AT_FDCWD, buf, AT_FDCWD, st.filename, AT_SYMLINK_FOLLOW) < 0)
+ 		{
+-			if (write(st.filefd, buf, len) != len)
++			if (lseek(st.tempfd, 0, SEEK_SET) < 0)
+ 			{
+ 				close(st.tempfd);
+-				close(st.filefd);
+-				return response(false, "I/O failure while writing target file");
++				return response(false, "Failed to rewind temp file");
+ 			}
+-		}
+ 
+-		close(st.filefd);
++			st.filefd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++
++			if (st.filefd < 0)
++			{
++				close(st.tempfd);
++				return response(false, "Failed to open target file");
++			}
++
++			while ((len = read(st.tempfd, buf, sizeof(buf))) > 0)
++			{
++				if (write(st.filefd, buf, len) != len)
++				{
++					close(st.tempfd);
++					close(st.filefd);
++					return response(false, "I/O failure while writing target file");
++				}
++			}
++
++			close(st.filefd);
++		}
+ 	}
+ 
+ 	close(st.tempfd);
+@@ -339,19 +414,43 @@ data_begin_cb(multipart_parser *p)
+ {
+ 	if (st.parttype == PART_FILEDATA)
+ 	{
++		bool session_expired = false;
+ 		if (!st.sessionid)
+ 			return response(false, "File data without session");
+ 
+ 		if (!st.filename)
+ 			return response(false, "File data without name");
+ 
+-		if (!session_access(st.sessionid, "file", st.filename, "write"))
+-			return response(false, "Access to path denied by ACL");
++		if (!session_access(st.sessionid, "file", st.filename, "write", &session_expired)) {
++			return session_expired
++				? response_session_expired()
++				: response(false, "Access to path denied by ACL");
++		}
+ 
+-		st.tempfd = open("/tmp", O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++		if (st.direct_write)
++		{
++#if defined(ENABLE_APPEND_MODE)
++			if (st.append) {
++				st.tempfd = open(st.filename, O_APPEND | O_WRONLY, 0600);
++			} else {
++				st.tempfd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++			}
++#else
++			st.tempfd = open(st.filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++#endif
+ 
+-		if (st.tempfd < 0)
+-			return response(false, "Failed to create temporary file");
++			if (st.tempfd < 0)
++				return response(false, "Failed to open target file");
++		}
++		else
++#endif
++		{
++			st.tempfd = open("/tmp", O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
++
++			if (st.tempfd < 0)
++				return response(false, "Failed to create temporary file");
++		}
+ 	}
+ 
+ 	return 0;
+@@ -388,6 +487,28 @@ data_cb(multipart_parser *p, const char *data, size_t len)
+ 
+ 		break;
+ 
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++	case PART_DO_MD5SUM:
++		st.do_md5sum = !!strtoul(data, NULL, 10);
++		break;
++
++	case PART_DO_SHA256SUM:
++		st.do_sha256sum = !!strtoul(data, NULL, 10);
++		break;
++#endif
++
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	case PART_DIRECT_WRITE:
++		st.direct_write = !!strtoul(data, NULL, 10);
++		break;
++#endif
++
++#if defined(ENABLE_APPEND_MODE)
++	case PART_APPEND:
++		st.append = !!strtoul(data, NULL, 10);
++		break;
++#endif
++
+ 	default:
+ 		break;
+ 	}
+@@ -400,16 +521,29 @@ data_end_cb(multipart_parser *p)
+ {
+ 	if (st.parttype == PART_SESSIONID)
+ 	{
+-		if (!session_access(st.sessionid, "cgi-io", "upload", "write"))
+-		{
+-			errno = EPERM;
+-			return response(false, "Upload permission denied");
++		bool session_expired = false;
++		if (!session_access(st.sessionid, "cgi-io", "upload", "write", &session_expired)) {
++			if (session_expired) {
++				errno = EACCES;
++				return response_session_expired();
++			}
++			else {
++				errno = EPERM;
++				return response(false, "Upload permission denied");
++			}
+ 		}
+ 	}
+ 	else if (st.parttype == PART_FILEDATA)
+ 	{
+-		if (st.tempfd < 0)
+-			return response(false, "Internal program failure");
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++		if (!st.direct_write)
++#else
++		if (1)
++#endif
++		{
++			if (st.tempfd < 0)
++				return response(false, "Internal program failure");
++		}
+ 
+ #if 0
+ 		/* prepare directory */
+@@ -476,6 +610,16 @@ init_parser(void)
+ 	st.tempfd = -1;
+ 	st.filefd = -1;
+ 	st.filemode = 0600;
++#if defined(ENABLE_UPLOAD_CHKSUM_OPTIONS)
++	st.do_md5sum = 1;
++	st.do_sha256sum = 1;
++#endif
++#if defined(ENABLE_DIRECT_WRITE_MODE)
++	st.direct_write = 0;
++#endif
++#if defined(ENABLE_APPEND_MODE)
++	st.append = 0;
++#endif
+ 
+ 	p = multipart_parser_init(boundary, &s);
+ 
+@@ -530,15 +674,22 @@ main_download(int argc, char **argv)
+ 	ssize_t len = 0;
+ 	struct stat s;
+ 	int rfd;
++	bool session_expired = false;
+ 
+ 	autochar *post = postdecode(fields, 4);
+ 	(void) post;
+ 
+-	if (!fields[1] || !session_access(fields[1], "cgi-io", "download", "read"))
+-		return failure(403, 0, "Download permission denied");
++	if (!fields[1] || !session_access(fields[1], "cgi-io", "download", "read", &session_expired)) {
++		return session_expired
++			? failure_session_expired()
++			: failure(403, 0, "Download permission denied");
++	}
+ 
+-	if (!fields[3] || !session_access(fields[1], "file", fields[3], "read"))
+-		return failure(403, 0, "Access to path denied by ACL");
++	if (!fields[3] || !session_access(fields[1], "file", fields[3], "read", &session_expired)) {
++		return session_expired
++			? failure_session_expired()
++			: failure(403, 0, "Access to path denied by ACL");
++	}
+ 
+ 	if (stat(fields[3], &s))
+ 		return failure(404, errno, "Failed to stat requested path");
+@@ -619,6 +770,7 @@ main_backup(int argc, char **argv)
+ 	int len;
+ 	int status;
+ 	int fds[2];
++	bool session_expired = false;
+ 	char datestr[16] = { 0 };
+ 	char hostname[64] = { 0 };
+ 	char *fields[] = { "sessionid", NULL };
+@@ -626,8 +778,11 @@ main_backup(int argc, char **argv)
+ 	autochar *post = postdecode(fields, 1);
+ 	(void) post;
+ 
+-	if (!fields[1] || !session_access(fields[1], "cgi-io", "backup", "read"))
+-		return failure(403, 0, "Backup permission denied");
++	if (!fields[1] || !session_access(fields[1], "cgi-io", "backup", "read", &session_expired)) {
++		return session_expired
++			? failure_session_expired()
++			: failure(403, 0, "Backup permission denied");
++	}
+ 
+ 	if (pipe(fds))
+ 		return failure(500, errno, "Failed to spawn pipe");
+@@ -650,7 +805,7 @@ main_backup(int argc, char **argv)
+ 			return failure(500, errno, "Failed chdir('/')");
+ 
+ 		execl("/sbin/sysupgrade", "/sbin/sysupgrade",
+-		      "--create-backup", "-", NULL);
++		      "--empty-dirs", "--create-backup", "-", NULL);
+ 
+ 		return -1;
+ 
+@@ -733,6 +888,7 @@ main_exec(int argc, char **argv)
+ 	char *fields[] = { "sessionid", NULL, "command", NULL, "filename", NULL, "mimetype", NULL };
+ 	int i, devnull, status, fds[2];
+ 	bool allowed = false;
++	bool session_expired = false;
+ 	ssize_t len = 0;
+ 	const char *exe;
+ 	char *p, **args;
+@@ -741,8 +897,11 @@ main_exec(int argc, char **argv)
+ 	autochar *post = postdecode(fields, 4);
+ 	(void) post;
+ 
+-	if (!fields[1] || !session_access(fields[1], "cgi-io", "exec", "read"))
+-		return failure(403, 0, "Exec permission denied");
++	if (!fields[1] || !session_access(fields[1], "cgi-io", "exec", "read", &session_expired)) {
++		return session_expired
++			? failure_session_expired()
++			: failure(403, 0, "Exec permission denied");
++	}
+ 
+ 	for (p = fields[5]; p && *p; p++)
+ 		if (!isalnum(*p) && !strchr(" ()<>@,;:[]?.=%-", *p))
+@@ -758,7 +917,7 @@ main_exec(int argc, char **argv)
+ 		return failure(400, 0, "Invalid command parameter");
+ 
+ 	/* First check if we find an ACL match for the whole cmdline ... */
+-	allowed = session_access(fields[1], "file", args[0], "exec");
++	allowed = session_access(fields[1], "file", args[0], "exec", &session_expired);
+ 
+ 	/* Now split the command vector... */
+ 	for (i = 1; args[i]; i++)
+@@ -773,9 +932,11 @@ main_exec(int argc, char **argv)
+ 	}
+ 
+ 	/* If there was no ACL match, check for a match on the executable */
+-	if (!allowed && !session_access(fields[1], "file", exe, "exec")) {
++	if (!allowed && !session_access(fields[1], "file", exe, "exec", &session_expired)) {
+ 		free(args);
+-		return failure(403, 0, "Access to command denied by ACL");
++		return session_expired
++			? failure_session_expired()
++			: failure(403, 0, "Access to command denied by ACL");
+ 	}
+ 
+ 	if (pipe(fds)) {
+-- 
+2.28.0.windows.1
+

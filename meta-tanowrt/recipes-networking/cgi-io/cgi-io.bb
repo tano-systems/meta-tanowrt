@@ -1,6 +1,6 @@
 # This file Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano13"
+PR = "tano14"
 
 DESCRIPTION = "This package contains an cgi utility that is useful for up/downloading files"
 SUMMARY = "CGI utility for handling up/downloading of files"
@@ -12,18 +12,19 @@ LIC_FILES_CHKSUM = "\
 	file://multipart_parser.c;beginline=1;endline=4;md5=5300a1f2ef0420d64635f8e81858c30f \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/src:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI = "\
-	file://main.c \
-	file://multipart_parser.c \
-	file://multipart_parser.h \
-	file://CMakeLists.txt \
+	git://${GIT_OPENWRT_ORG}/project/cgi-io.git \
+	file://0001-Import-changes-from-meta-tanowrt-layer.patch \
 "
 
-S = "${WORKDIR}"
+# 12.10.2020
+# tests: add cram based unit tests
+SRCREV = "ab4c3471b26179b6e1decfb6ca27c4a87df9a0a4"
+S = "${WORKDIR}/git"
 
-inherit cmake pkgconfig
+inherit cmake
 
 PACKAGECONFIG ??= "enable-chksum-options enable-direct-write-mode enable-append-mode"
 PACKAGECONFIG[enable-chksum-options] = ""
