@@ -7,6 +7,9 @@ PACKAGECONFIG_pn-libwebsockets = "\
 	${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)} \
 "
 
+# Remove ICU dependency for xerces-c
+PACKAGECONFIG_remove_pn-xerces-c = "icu"
+
 # Prefer OpenSSL over GnuTLS for curl due to TSU exemptions
 PACKAGECONFIG_pn-curl = "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'ipv6', '', d)} ssl zlib"
 
