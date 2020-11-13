@@ -9,7 +9,7 @@
 . /lib/functions.sh
 
 DDNS_PACKAGE_DIR="/usr/share/ddns"
-URL="https://raw.githubusercontent.com/openwrt/packages/master/net/ddns-scripts/files"
+URL="https://raw.githubusercontent.com/tano-systems/meta-tanowrt/master/meta-tanowrt/recipes-networking/ddns-scripts/ddns-scripts/files"
 
 usage() {
 	local code="$1"
