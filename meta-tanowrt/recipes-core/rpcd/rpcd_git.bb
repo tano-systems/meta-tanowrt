@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano24"
+PR = "tano25"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
