@@ -1,7 +1,7 @@
 From 9537f3ff1e356381a744eb45149f99d574718bbc Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 15 Nov 2018 16:23:23 +0300
-Subject: [PATCH 04/10] block: Fix some memory leaks and unnecessary duplicate
+Subject: [PATCH 04/11] block: Fix some memory leaks and unnecessary duplicate
  mounts
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>

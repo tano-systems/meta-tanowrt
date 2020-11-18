@@ -1,7 +1,7 @@
 From df1cc870e3de030760ab7c8913f38c961ed41007 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
-Subject: [PATCH 09/10] fstools: Configurable overlay partition name
+Subject: [PATCH 09/11] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
