@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano32"
+PR = "tano33"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -47,6 +47,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://fstab.default \
 	file://snapshot \
 	file://mount.hotplug \
+	file://media-change.hotplug \
 	file://blockd.init \
 "
 
@@ -102,6 +103,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/blockd.init ${D}${sysconfdir}/init.d/blockd
 	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
 	install -m 0644 ${WORKDIR}/mount.hotplug ${D}${sysconfdir}/hotplug.d/block/10-mount
+	install -m 0644 ${WORKDIR}/media-change.hotplug ${D}${sysconfdir}/hotplug.d/block/00-media-change
 }
 
 FILES_${PN} += "${libdir}/*"
