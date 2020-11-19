@@ -1,0 +1,102 @@
+#!/bin/sh
+# Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+
+do_overlay_resize() {
+	local OVERLAY_INFO=$(block info | grep "LABEL=\"rootfs_data\"")
+	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
+	local PARTITION="${OVERLAY_DEVICE#/dev/}"
+	local DISK="${PARTITION%p?}"
+	local RET
+
+	if [ "${PARTITION}" = "" ]; then
+		echo "overlay-resize: Cannot find overlay partition" > /dev/kmsg
+		return
+	fi
+
+	if [ "${DISK}" = "" ]; then
+		echo "overlay-resize: Cannot find overlay disk" > /dev/kmsg
+		return
+	fi
+
+	echo "overlay-resize: Overlay partition /dev/${PARTITION} (disk /dev/${DISK})" > /dev/kmsg
+
+	local PARTITION_NUMBER=$(cat /sys/block/${DISK}/${PARTITION}/partition)
+	local PARTITION_START_S=$(cat /sys/block/${DISK}/${PARTITION}/start)
+	local PARTITION_SIZE_S=$(cat /sys/block/${DISK}/${PARTITION}/size)
+	local PARTITION_END_S=$(expr ${PARTITION_START_S} + ${PARTITION_SIZE_S} - 1)
+
+	# Disk total size
+	local DISK_SIZE_S=$(cat /sys/block/${DISK}/size)
+
+	#
+	# Detect filesystem
+	#
+	local PARTITION_FSTYPE=$(echo "${OVERLAY_INFO}" | grep -o "TYPE=\".*\"" | sed 's/.*"\(.*\)"/\1/g')
+	local CMD_FSCK=""
+	local CMD_RESIZEFS=""
+
+	if [ "${PARTITION_FSTYPE}" = "ext4" ]; then
+		echo "overlay-resize: EXT4 filesystem" > /dev/kmsg
+		CMD_FSCK="fsck.ext4 -y -v /dev/${PARTITION}"
+		CMD_RESIZEFS="resize2fs /dev/${PARTITION}"
+	elif [ "${PARTITION_FSTYPE}" = "f2fs" ]; then
+		echo "overlay-resize: F2FS filesystem" > /dev/kmsg
+		CMD_FSCK="fsck.f2fs -y -v /dev/${PARTITION}"
+		CMD_RESIZEFS="resize.f2fs /dev/${PARTITION}"
+	else
+		# For unknown/unsupported filesystem
+		# we perform only partition resize
+		echo "overlay-resize: Unknown/unsupported filesystem (${PARTITION_FSTYPE})" > /dev/kmsg
+	fi
+
+	if [ "${CMD_FSCK}" != "" ]; then
+		#
+		# Check filesystem
+		#
+		${CMD_FSCK} > /dev/null 2>&1
+		RET=$?
+		if [ "${RET}" != "0" ]; then
+			echo "overlay-resize: Filesystem on /dev/${PARTITION} has unrecoverable errors (${RET})"
+			return
+		fi
+
+		echo "overlay-resize: Filesystem successfully checked" > /dev/kmsg
+	fi
+
+	local NEW_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 1)
+
+	if [ "${NEW_PARTITION_END_S}" = "${PARTITION_END_S}" ]; then
+		echo "overlay-resize: Partition /dev/${PARTITION} already resized" > /dev/kmsg
+	else
+		#
+		# Resize partition
+		#
+		parted -s /dev/${DISK} --script resizepart \
+			${PARTITION_NUMBER} ${NEW_PARTITION_END_S}s > /dev/null
+
+		RET=$?
+		if [ "${RET}" != "0" ]; then
+			echo "overlay-resize: Failed to resize partition /dev/${PARTITION} (${RET})" > /dev/kmsg
+			return
+		fi
+
+		echo "overlay-resize: Partition /dev/${PARTITION} resized to fill its full disk size" > /dev/kmsg
+		echo "overlay-resize: Partition /dev/${PARTITION} end sector ${PARTITION_END_S} -> ${NEW_PARTITION_END_S}" > /dev/kmsg
+	fi
+
+	if [ "${CMD_RESIZEFS}" != "" ]; then
+		#
+		# Resize filesystem
+		#
+		${CMD_RESIZEFS} > /dev/null 2>&1
+		RET=$?
+		if [ "${RET}" != "0" ]; then
+			echo "overlay-resize: Failed to resize filesystem on /dev/${PARTITION} (${RET})" > /dev/kmsg
+			return
+		fi
+
+		echo "overlay-resize: Filesystem resized" > /dev/kmsg
+	fi
+}
+
+boot_hook_add preinit_main do_overlay_resize

@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano59.${INC_PR}"
+PR_append = ".tano60.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -19,6 +19,9 @@ OPENWRT_HOSTNAME ?= "tanowrt"
 OPENWRT_HWCLOCK_DEV       ?= "/dev/rtc0"
 OPENWRT_HWCLOCK_LOCALTIME ?= "1"
 
+# Enable/disable overlay partition resize at preinit stage
+TANOWRT_ENABLE_OVERLAY_RESIZE ?= "0"
+
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
 RDEPENDS_${PN} += "tzdata getrandom"
@@ -30,7 +33,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI += "\
 	file://0001-use-sh-not-ash.patch \
 "
-
 SRC_URI_append = "\
     file://shells \
     file://sysctl.conf \
@@ -41,6 +43,7 @@ SRC_URI_append = "\
     file://system.config \
     file://sysfixtime.init \
     file://preinit/50_overlay_setup \
+    file://preinit/51_overlay_resize \
     file://preinit/80_mount_root \
     file://hotplug-call \
     file://sysctl.d/10-default.conf \
@@ -193,6 +196,10 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
 	install -m 0644 ${WORKDIR}/preinit/50_overlay_setup ${D}/lib/preinit/50_overlay_setup
 
+	if [ "${TANOWRT_ENABLE_OVERLAY_RESIZE}" = "1" ]; then
+		install -m 0644 ${WORKDIR}/preinit/51_overlay_resize ${D}/lib/preinit/51_overlay_resize
+	fi
+
 	rm ${D}${sysconfdir}/issue.net
 	rm ${D}${sysconfdir}/TZ
 
@@ -279,6 +286,7 @@ FILES_${PN} = "/"
 RDEPENDS_${PN} += "\
 	${PN}-scripts-openwrt \
 	${PN}-scripts-sysupgrade \
+	parted \
 "
 
 RSUGGESTS_${PN} += "\
