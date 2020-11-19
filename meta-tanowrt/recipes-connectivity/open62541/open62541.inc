@@ -9,25 +9,16 @@ SUMMARY = "Open source implementation of OPC UA"
 HOMEPAGE = "http://open62541.org/"
 LICENSE = "MPL-2.0"
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=815ca599c9df247a0c7f619bab123dad"
-
 SRC_URI = "git://github.com/open62541/open62541.git;protocol=https;branch=${BRANCH} \
            git://github.com/OPCFoundation/UA-Nodeset.git;protocol=https;branch=v1.04;destsuffix=deps/ua-nodeset;name=ua-nodeset \
            git://github.com/Pro/mdnsd.git;protocol=https;branch=master;destsuffix=deps/mdnsd;name=mdnsd \
-           file://0001-examples-client-allow-configurable-server.patch \
-           file://0002-examples-don-t-build-some-examples-when-BUILD_SHARED_LIBS-is-ON.patch \
 "
-
-BRANCH = "1.0"
-SRCREV = "eb56179e2c01e2b75589b370015414686b9270b2"
-
-SRCREV_ua-nodeset = "0777abd1bc407b4dbd79abc515864f8c3ce6812b"
-SRCREV_mdnsd = "4bd993e0fdd06d54c8fd0b8f416cda6a8db18585"
 
 SRCREV_FORMAT = "default"
 
-PV = "1.0.3+git${SRCPV}"
-PR = "tano0"
+INC_PR = "0"
+
+LIC_FILES_CHKSUM = "file://LICENSE;md5=815ca599c9df247a0c7f619bab123dad"
 
 inherit cmake python3native
 
