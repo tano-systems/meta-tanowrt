@@ -18,16 +18,15 @@ SRC_URI = "git://github.com/open62541/open62541.git;protocol=https;branch=${BRAN
            file://0002-examples-don-t-build-some-examples-when-BUILD_SHARED_LIBS-is-ON.patch \
 "
 
-BRANCH = "master"
-SRCREV = "c09da0b76dbe81657a428ae132b93ccfe940b4b6"
+BRANCH = "1.0"
+SRCREV = "eb56179e2c01e2b75589b370015414686b9270b2"
 
-#SRCREV_ua-nodeset = "0777abd1bc407b4dbd79abc515864f8c3ce6812b"
-SRCREV_ua-nodeset = "bd41df43a8c48495bc7316227aa2ffbefe336c05"
+SRCREV_ua-nodeset = "0777abd1bc407b4dbd79abc515864f8c3ce6812b"
 SRCREV_mdnsd = "4bd993e0fdd06d54c8fd0b8f416cda6a8db18585"
 
 SRCREV_FORMAT = "default"
 
-PV = "1.0.1-dev+git${SRCPV}"
+PV = "1.0.3+git${SRCPV}"
 PR = "tano0"
 
 inherit cmake python3native

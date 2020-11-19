@@ -1,8 +1,8 @@
 diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
-index 9601a6af..43223f68 100644
+index d46f853e..0025e0f9 100644
 --- a/examples/CMakeLists.txt
 +++ b/examples/CMakeLists.txt
-@@ -200,8 +200,10 @@ if(UA_ENABLE_PUBSUB)
+@@ -186,7 +186,9 @@ if(UA_ENABLE_PUBSUB)
      if(UA_ENABLE_AMALGAMATION)
          message(WARNING "PubSub subscriber tutorial (preview) can not be used with AMALGAMATION. Skipping tutorial_pubsub_subscribe.")
      else(NOT UA_ENABLE_AMALGAMATION)
@@ -13,5 +13,4 @@ index 9601a6af..43223f68 100644
 +            add_example(pubsub_subscribe_standalone pubsub/pubsub_subscribe_standalone.c)
 +        endif()
      endif()
-     if(UA_ENABLE_PUBSUB_MQTT)
-         if(NOT WIN32)
+ endif()
