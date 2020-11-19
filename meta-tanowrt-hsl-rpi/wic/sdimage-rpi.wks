@@ -9,3 +9,4 @@
 #
 part --source bootimg-partition --fstype=vfat --label boot --ondisk mmcblk0 --active --align 4096 --size 20
 part / --source rootfs --ondisk mmcblk0 --fstype=squashfs --align 4096
+part /overlay --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
