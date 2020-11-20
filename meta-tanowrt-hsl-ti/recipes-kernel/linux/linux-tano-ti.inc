@@ -18,6 +18,10 @@ SRC_URI_append = "\
 	file://patches-tty/0003-drivers-tty-increase-priority-for-tty_buffer_worker.patch \
 "
 
+SRC_URI_append = "\
+	${@oe.utils.conditional('LINUX_VERSION_SHORT', '4.19', 'file://patches-rt/0001-hrtimer-fix-logic-for-when-grabbing-softirq_expiry_l.patch', '', d)} \
+"
+
 KERNEL_MACHINE_INCLUDE_am335x-icev2 ?= "recipes-kernel/linux/linux-tano-ti-am335x-icev2.inc"
 KERNEL_MACHINE_INCLUDE_am335x-bbb ?= "recipes-kernel/linux/linux-tano-ti-am335x-bbb.inc"
 KERNEL_MACHINE_INCLUDE_am574x-idk ?= "recipes-kernel/linux/linux-tano-ti-am574x-idk.inc"
