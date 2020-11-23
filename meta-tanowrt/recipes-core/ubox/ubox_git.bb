@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2020, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano13"
+PR = "tano14"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -30,37 +30,41 @@ inherit cmake tanowrt-services
 
 FILES_SOLIBSDEV = ""
 
-TANOWRT_SERVICE_PACKAGES = "ubox"
+TANOWRT_SERVICE_PACKAGES = "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', 'ubox', '', d)}"
 TANOWRT_SERVICE_SCRIPTS_ubox += "log"
 TANOWRT_SERVICE_STATE_ubox-log ?= "enabled"
+
+inherit update-alternatives
+
+ALTERNATIVE_${PN} = "logread"
+ALTERNATIVE_PRIORITY = "10"
+ALTERNATIVE_LINK_NAME[logread] = "${sbindir}/logread"
 
 do_install_append () {
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then
 		install -Dm 0755 ${WORKDIR}/log.init ${D}${sysconfdir}/init.d/log
-
-		install -dm 0755 ${D}/sbin
-		ln -s /usr/sbin/logd ${D}/sbin/logd
-		ln -s /usr/sbin/logread ${D}/sbin/logread
-		ln -s /usr/sbin/validate_data ${D}/sbin/validate_data
+		install -dm 0755 ${D}/${base_sbindir}
+		ln -s ${sbindir}/logd ${D}${base_sbindir}/logd
+		ln -s ${sbindir}/logread ${D}${base_sbindir}/logread
 	fi
 
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_kmod_manager', 'ubox', '1', '0', d)}" = "1" ]; then
-		install -dm 0755 ${D}/sbin
-		install -dm 0755 ${D}/usr/sbin
+		install -dm 0755 ${D}${base_sbindir}
+		install -dm 0755 ${D}${sbindir}
 
-		ln -s /sbin/rmmod    ${D}/usr/sbin/rmmod
-		ln -s /sbin/insmod   ${D}/usr/sbin/insmod
-		ln -s /sbin/lsmod    ${D}/usr/sbin/lsmod
-		ln -s /sbin/modinfo  ${D}/usr/sbin/modinfo
-		ln -s /sbin/modprobe ${D}/usr/sbin/modprobe
+		ln -s ${base_sbindir}/rmmod    ${D}${sbindir}/rmmod
+		ln -s ${base_sbindir}/insmod   ${D}${sbindir}/insmod
+		ln -s ${base_sbindir}/lsmod    ${D}${sbindir}/lsmod
+		ln -s ${base_sbindir}/modinfo  ${D}${sbindir}/modinfo
+		ln -s ${base_sbindir}/modprobe ${D}${sbindir}/modprobe
 
-		ln -s /usr/sbin/kmodloader ${D}/sbin/kmodloader
-		ln -s /sbin/kmodloader ${D}/sbin/rmmod
-		ln -s /sbin/kmodloader ${D}/sbin/insmod
-		ln -s /sbin/kmodloader ${D}/sbin/lsmod
-#		ln -s /sbin/kmodloader ${D}/sbin/modinfo
-#		ln -s /sbin/kmodloader ${D}/sbin/modprobe
+		ln -s ${sbindir}/kmodloader ${D}${base_sbindir}/kmodloader
+		ln -s ${base_sbindir}/kmodloader ${D}${base_sbindir}/rmmod
+		ln -s ${base_sbindir}/kmodloader ${D}${base_sbindir}/insmod
+		ln -s ${base_sbindir}/kmodloader ${D}${base_sbindir}/lsmod
 	fi
+
+	ln -s ${sbindir}/validate_data ${D}${base_sbindir}/validate_data
 }
 
 RDEPENDS_${PN} += "\
