@@ -71,7 +71,7 @@ def update_owrt_after_parse(d):
     owrt_packages = d.getVar('TANOWRT_SERVICE_PACKAGES', True)
 
     if not owrt_packages:
-        bb.fatal("%s inherits tanowrt-services but doesn't set TANOWRT_SERVICE_PACKAGES" % d.getVar('FILE', True))
+        return
 
     for pkg in owrt_packages.split():
         if not d.getVar('TANOWRT_SERVICE_SCRIPTS_%s' % pkg, True):
