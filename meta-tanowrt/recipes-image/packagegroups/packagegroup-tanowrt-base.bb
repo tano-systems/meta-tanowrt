@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano8"
+PR = "tano9"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -83,6 +83,7 @@ RDEPENDS_${PN}-core = "\
 	libubox \
 	libubox-lua \
 	fstools \
+	${VIRTUAL-RUNTIME_syslog} \
 "
 
 # packagegroup-tanowrt-base-network
