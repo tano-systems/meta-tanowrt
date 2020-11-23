@@ -1,0 +1,91 @@
+From 38464397e15f778cdc85b5c4e88f03dfdcb032e0 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 20 Nov 2020 17:58:31 +0300
+Subject: [PATCH] Add support for 'monthname' timestamp format
+
+The logd service writes in logs the date and time in the format
+"Mon Jun 24 18:12:50 2020" (month name, not a number). In rsyslog
+it is not possible to output the month name. In order to be able
+to bring the format of the logs exactly in accordance with the
+logd logs, we have added the format "monthname", which allows us
+to output the name of the month.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ runtime/msg.c | 6 ++++++
+ template.c    | 7 +++++++
+ template.h    | 2 +-
+ 3 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/runtime/msg.c b/runtime/msg.c
+index 6468a0d..5556866 100644
+--- a/runtime/msg.c
++++ b/runtime/msg.c
+@@ -103,6 +103,10 @@ static const char *two_digits[100] = {
+ 
+ static const char *wdayNames[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+ 
++static const char* monthNames[12] = {
++	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
++};
++
+ /* Table of days in a year, needed for getYearDay */
+ static const char *daysInYear[366] = {
+ 	       "001", "002", "003", "004", "005", "006", "007", "008", "009",
+@@ -1851,6 +1855,8 @@ getTimeReported(smsg_t * const pM, enum tplFormatTypes eFmt)
+ 		return one_digit[getWeekdayNbr(&pM->tTIMESTAMP)];
+ 	case tplFmtMonth:
+ 		return two_digits[(int)pM->tTIMESTAMP.month];
++	case tplFmtMonthName:
++		return monthNames[(int)pM->tTIMESTAMP.month - 1];
+ 	case tplFmtYear:
+ 		if(pM->tTIMESTAMP.year >= 1967 && pM->tTIMESTAMP.year <= 2099)
+ 			return years[pM->tTIMESTAMP.year - 1967];
+diff --git a/template.c b/template.c
+index 7f5f56b..32ac31f 100644
+--- a/template.c
++++ b/template.c
+@@ -706,6 +706,8 @@ static void doOptions(unsigned char **pp, struct templateEntry *pTpe)
+ 			pTpe->data.field.eDateFormat = tplFmtYear;
+ 		} else if(!strcmp((char*)Buf, "date-month")) {
+ 			pTpe->data.field.eDateFormat = tplFmtMonth;
++		} else if(!strcmp((char*)Buf, "date-monthname")) {
++			pTpe->data.field.eDateFormat = tplFmtMonthName;
+ 		} else if(!strcmp((char*)Buf, "date-day")) {
+ 			pTpe->data.field.eDateFormat = tplFmtDay;
+ 		} else if(!strcmp((char*)Buf, "date-hour")) {
+@@ -1679,6 +1681,8 @@ createPropertyTpe(struct template *pTpl, struct cnfobj *o)
+ 				datefmt = tplFmtYear;
+ 			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"month", sizeof("month")-1)) {
+ 				datefmt = tplFmtMonth;
++			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"monthname", sizeof("monthname")-1)) {
++				datefmt = tplFmtMonthName;
+ 			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"day", sizeof("day")-1)) {
+ 				datefmt = tplFmtDay;
+ 			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"hour", sizeof("hour")-1)) {
+@@ -2314,6 +2318,9 @@ void tplPrintList(rsconf_t *conf)
+ 				case tplFmtMonth:
+ 					dbgprintf("[Format as month] ");
+ 					break;
++				case tplFmtMonthName:
++					dbgprintf("[Format as month name] ");
++					break;
+ 				case tplFmtDay:
+ 					dbgprintf("[Format as day] ");
+ 					break;
+diff --git a/template.h b/template.h
+index b387b16..ddb24b0 100644
+--- a/template.h
++++ b/template.h
+@@ -65,7 +65,7 @@ enum tplFormatTypes { tplFmtDefault = 0, tplFmtMySQLDate = 1,
+ 			tplFmtWDayName = 8, tplFmtYear = 9, tplFmtMonth = 10, tplFmtDay = 11,
+ 			tplFmtHour = 12, tplFmtMinute = 13, tplFmtSecond = 14,
+ 			tplFmtTZOffsHour = 15, tplFmtTZOffsMin = 16, tplFmtTZOffsDirection = 17,
+-			tplFmtWDay = 18, tplFmtOrdinal = 19, tplFmtWeek = 20};
++			tplFmtWDay = 18, tplFmtOrdinal = 19, tplFmtWeek = 20, tplFmtMonthName = 21};
+ enum tplFormatCaseConvTypes { tplCaseConvNo = 0, tplCaseConvUpper = 1, tplCaseConvLower = 2 };
+ enum tplRegexType { TPL_REGEX_BRE = 0, /* posix BRE */
+ 		    TPL_REGEX_ERE = 1  /* posix ERE */
+-- 
+2.25.1
+

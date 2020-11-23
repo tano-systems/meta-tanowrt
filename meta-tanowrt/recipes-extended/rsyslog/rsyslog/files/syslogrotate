@@ -1,0 +1,8 @@
+#!/bin/sh
+# Copyright (C) 2020 Tano Systems LLC
+
+log_file="$1"
+
+if [ -n "${log_file}" -a -f "${log_file}" ]; then
+	mv -f ${log_file} ${log_file}.1 2>/dev/null
+fi

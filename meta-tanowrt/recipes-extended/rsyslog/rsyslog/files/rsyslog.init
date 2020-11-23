@@ -1,0 +1,131 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2014 OpenWrt.org
+# Copyright (C) 2020 Tano Systems LLC
+
+START=12
+STOP=89
+
+USE_PROCD=1
+
+RSYSLOG_GEN_CONF="/var/run/rsyslog/rsyslog-uci.conf"
+
+RSYSLOG_REMOTE_WORK_DIR="/var/run/rsyslog"
+RSYSLOG_REMOTE_FILENAME="rsyslog-remote"
+RSYSLOG_REMOTE_MAX_DISK_SPACE="16m"
+
+EXTRA_COMMANDS="close"
+EXTRA_HELP="	close	Close all open files"
+
+SYSLOG_ROTATE_BIN="/usr/libexec/syslogrotate"
+
+validate_log_section()
+{
+	uci_load_validate system system "$1" "$2" \
+		'hostname:string' \
+		'log_file:string' \
+		'log_size:uinteger:0' \
+		'log_hostname:string' \
+		'log_ip:ipaddr' \
+		'log_remote:bool:1' \
+		'log_port:port:514' \
+		'log_proto:or("tcp", "udp"):udp' \
+		'cronlog_file:string' \
+		'cronlog_size:uinteger:0'
+}
+
+generate_remote_config() {
+	[ "${log_remote}" -ne 0 ] || return
+	[ -z "${log_ip}" ] && return
+
+	echo "action("
+	echo -e "\ttype=\"omfwd\""
+	echo -e "\tTarget=\"${log_ip}\""
+	echo -e "\tPort=\"${log_port}\""
+	echo -e "\tProtocol=\"${log_proto}\""
+	echo -e "\tqueue.type=\"LinkedList\""
+	echo -e "\tqueue.size=\"10000\""
+	echo -e "\tqueue.filename=\"${RSYSLOG_REMOTE_FILENAME}\""
+	echo -e "\tqueue.highwatermark=\"9000\""
+	echo -e "\tqueue.lowwatermark=\"50\""
+	echo -e "\tqueue.maxdiskspace=\"${RSYSLOG_REMOTE_MAX_DISK_SPACE}\""
+	echo -e "\tqueue.saveonshutdown=\"on\""
+	echo -e "\taction.reportSuspension=\"on\""
+	echo -e "\taction.reportSuspensionContinuation=\"on\""
+	echo -e "\taction.resumeRetryCount=\"-1\""
+	echo -e "\taction.resumeInterval=\"30\""
+	echo ")"
+	echo ""
+}
+
+generate_config() {
+	[ -z "${log_hostname}" ] && log_hostname=$hostname
+	[ -z "${log_hostname}" ] && log_hostname=$(cat /proc/sys/kernel/hostname)
+
+	echo "# THIS IS AN AUTO-GENERATED FILE"
+	echo "# DO NOT MODIFY AS CHANGES MIGHT BE OVERWRITTEN!"
+	echo ""
+	echo "\$LocalHostName ${log_hostname}"
+	echo "\$PreserveFQDN on"
+	echo "\$WorkDirectory ${RSYSLOG_REMOTE_WORK_DIR}"
+	echo ""
+
+	generate_remote_config
+
+	echo "# Include all custom config files in /etc/rsyslog.d/"
+	echo "\$IncludeConfig /etc/rsyslog.d/*.conf"
+	echo ""
+
+	if [ -n "${log_file}" ]; then
+		local syslog_target="${log_file}"
+
+		if [ "${log_size}" != "0" ]; then
+			local log_size_b=$((${log_size} * 1024))
+			echo "\$outchannel syslogchannel,${log_file},${log_size_b},${SYSLOG_ROTATE_BIN} ${log_file}"
+			echo ""
+			syslog_target=":omfile:\$syslogchannel"
+		fi
+
+		echo "*.*;cron.none ${syslog_target}"
+	fi
+
+	if [ -n "${cronlog_file}" ]; then
+		local cronlog_target="${cronlog_file}"
+
+		if [ "${cronlog_size}" != "0" ]; then
+			local cronlog_size_b=$((${cronlog_size} * 1024))
+			echo "\$outchannel cronlogchannel,${cronlog_file},${cronlog_size_b},${SYSLOG_ROTATE_BIN} ${cronlog_file}"
+			echo ""
+			cronlog_target=":omfile:\$cronlogchannel"
+		fi
+
+		echo "cron.* ${cronlog_target}"
+	fi
+}
+
+start_service_rsyslog() {
+	[ -n "${log_file}" ] && mkdir -p "$(dirname "${log_file}")"
+
+	mkdir -p "$(dirname "${RSYSLOG_GEN_CONF}")"
+	generate_config > ${RSYSLOG_GEN_CONF}
+
+	procd_open_instance
+	procd_set_param command /usr/sbin/rsyslogd -n
+	procd_set_param file /etc/rsyslog.conf
+	procd_set_param respawn
+	procd_close_instance
+}
+
+start_service() {
+	config_load system
+	config_foreach validate_log_section system start_service_rsyslog
+}
+
+service_triggers() {
+	procd_add_config_trigger "config.change" "system" /etc/init.d/rsyslog restart
+	procd_add_validation validate_log_section
+}
+
+close() {
+	# Lets rsyslogd perform close all open files
+	procd_send_signal rsyslog "*" HUP
+}
