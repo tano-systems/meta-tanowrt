@@ -1,0 +1,2 @@
+# Make /dev/rtcX readable and writeable for rtc group
+KERNEL=="rtc|rtc[0-9]*", GROUP="rtc", MODE="660"

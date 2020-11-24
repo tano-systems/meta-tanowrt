@@ -3,11 +3,12 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano11"
+PR_append = ".tano12"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://udev.init file://local.rules file://openwrt-hotplug.rules"
+SRC_URI += "file://rtc.rules"
 SRC_URI += "file://reduce-tty-count.rules"
 
 inherit tanowrt-services
@@ -27,7 +28,8 @@ GROUPADD_PARAM_${PN} = "\
     -f -r cdrom; \
     -f -r tape; \
     -f -r floppy; \
-    -f -r kvm;"
+    -f -r kvm; \
+    -f -r rtc;"
 
 TANOWRT_SERVICE_PACKAGES = "eudev"
 TANOWRT_SERVICE_SCRIPTS_eudev += "udev"
@@ -43,6 +45,7 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/local.rules ${D}${sysconfdir}/udev/rules.d
 	install -m 0644 ${WORKDIR}/openwrt-hotplug.rules ${D}${sysconfdir}/udev/rules.d
 	install -m 0644 ${WORKDIR}/reduce-tty-count.rules ${D}${sysconfdir}/udev/rules.d
+	install -m 0644 ${WORKDIR}/rtc.rules ${D}${sysconfdir}/udev/rules.d
 
 	# Remove rules for joystick
 	rm -rf ${D}${base_libdir}/udev/rules.d/70-joystick.rules
