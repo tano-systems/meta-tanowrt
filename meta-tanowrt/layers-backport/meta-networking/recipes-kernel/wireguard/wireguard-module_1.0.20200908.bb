@@ -1,6 +1,6 @@
 require wireguard.inc
 
-SRCREV = "43f57dac7b8305024f83addc533c9eede6509129"
+SRCREV = "d97b575a47fb26f27965bdc9e537c85f86165e42"
 
 SRC_URI = "git://git.zx2c4.com/wireguard-linux-compat"
 
@@ -33,3 +33,8 @@ module_do_install() {
     install -m 0644 ${MODULE_NAME}.ko \
     ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/${MODULE_NAME}/${MODULE_NAME}.ko
 }
+
+# WireGuard has been merged into Linux kernel >= 5.6 and therefore this compatibility module is no longer required.
+# OE-core post dunfell has moved to use kernel 5.8 which now means we cant build this module in world builds
+# for reference machines e.g. qemu
+EXCLUDE_FROM_WORLD = "1"
