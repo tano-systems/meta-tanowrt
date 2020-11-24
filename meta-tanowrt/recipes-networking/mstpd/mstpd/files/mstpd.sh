@@ -364,7 +364,7 @@ mstpd_configure()
 	fi
 
 	# Migrate old configuration structure to new
-	/usr/lib/mstpctl-utils/mstpd-config-migrate.sh
+	/usr/libexec/mstpctl-utils/mstpd-config-migrate.sh
 
 	# Read the mstpd config
 	config_load 'mstpd'
