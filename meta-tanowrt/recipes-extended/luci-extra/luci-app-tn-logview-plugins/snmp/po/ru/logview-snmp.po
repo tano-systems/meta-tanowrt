@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: luci-app-tn-logview-snmp\n"
+"POT-Creation-Date: 2020-11-24 20:05+0300\n"
+"PO-Revision-Date: 2020-11-24 20:05+0300\n"
+"Last-Translator: Anton Kikin <a.kikin@tano-systems.com>\n"
+"Language-Team: Tano Systems LLC\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Poedit 2.2\n"
+
+#: root/usr/share/rpcd/acl.d/luci-app-tn-logview-snmp.json:3
+msgid "Grant access to view SNMP log"
+msgstr "Предоставить доступ к просмотру журнала SNMP"
+
+#: htdocs/luci-static/resources/logview/plugins/snmp.js:27
+msgid "Message"
+msgstr "Сообщение"
+
+#: htdocs/luci-static/resources/logview/plugins/snmp.js:4
+msgid "SNMP"
+msgstr "SNMP"

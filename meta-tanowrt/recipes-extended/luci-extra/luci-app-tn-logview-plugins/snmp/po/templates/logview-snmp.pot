@@ -1,0 +1,14 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: root/usr/share/rpcd/acl.d/luci-app-tn-logview-snmp.json:3
+msgid "Grant access to view SNMP log"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/snmp.js:27
+msgid "Message"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/snmp.js:4
+msgid "SNMP"
+msgstr ""

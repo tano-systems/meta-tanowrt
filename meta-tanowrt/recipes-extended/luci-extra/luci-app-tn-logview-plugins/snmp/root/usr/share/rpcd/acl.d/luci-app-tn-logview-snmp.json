@@ -1,0 +1,9 @@
+{
+	"luci-app-tn-logview-snmpd" : {
+		"description": "Grant access to view SNMP log",
+		"read": {
+			"file": { "/usr/libexec/luci-logview/logview-snmpd *": [ "exec" ] },
+			"ubus": { "file": [ "exec" ] }
+		}
+	}
+}
