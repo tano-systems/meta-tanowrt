@@ -21,6 +21,9 @@ DISTRO_FEATURES_append = " procd "
 # Enable cgroups support
 DISTRO_FEATURES_append = " cgroup "
 
+# Seccomp support
+DISTRO_FEATURES_append = " seccomp "
+
 # Enable wifi support
 DISTRO_FEATURES_append = " wifi "
 
