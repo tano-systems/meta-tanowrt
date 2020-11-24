@@ -50,17 +50,17 @@ else
 			-l)
 				shift
 				count="${1//[^0-9]/}"
+				count_fixed="${count:-50}"
 				if [ -f "${logfile}.1" ]; then
-					COUNT=${count:-50}
-					TAIL=$(tail -n "${count}" "${logfile}")
-					TAIL_COUNT=$(echo "${TAIL}" | wc -l)
-					if [ ${TAIL_COUNT} -lt ${COUNT} ]; then
-						REM_COUNT=$(($COUNT - $TAIL_COUNT))
-						tail -n "${REM_COUNT}" "${logfile}.1"
+					tail_data=$(tail -n "${count_fixed}" "${logfile}")
+					tail_count=$(echo "${tail_data}" | wc -l)
+					if [ ${tail_count} -lt ${count_fixed} ]; then
+						rem_count=$((${count_fixed} - ${tail_count}))
+						tail -n "${rem_count}" "${logfile}.1"
 					fi
-					echo "${TAIL}"
+					echo "${tail_data}"
 				else
-					tail -n "${count:-50}" "${logfile}"
+					tail -n "${count_fixed}" "${logfile}"
 				fi
 				exit 0
 				;;
