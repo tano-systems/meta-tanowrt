@@ -1,7 +1,7 @@
 # This file Copyright (C) 2020 Tano Systems LLC
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano2"
+PR = "tano3"
 PV = "1.5.2"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
