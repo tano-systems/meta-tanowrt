@@ -7,12 +7,8 @@ STOP=90
 
 HWCLOCK=/sbin/hwclock
 
-EXTRA_COMMANDS="systohc hctosys"
-EXTRA_HELP="
-Extra commands:
-	systohc	Save system time to hardware RTC
-	hctosys	Load system time from hardware RTC\
-"
+extra_command "systohc" "Save system time to hardware RTC"
+extra_command "hctosys" "Load system time from hardware RTC"
 
 LOG="logger -t sysfixtime -p"
 
