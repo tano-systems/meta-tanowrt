@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-INC_PR = "4"
+INC_PR = "5"
 
 # OpenWrt files
 SRC_URI_append = "\
