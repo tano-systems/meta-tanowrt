@@ -13,8 +13,7 @@ RSYSLOG_REMOTE_WORK_DIR="/var/run/rsyslog"
 RSYSLOG_REMOTE_FILENAME="rsyslog-remote"
 RSYSLOG_REMOTE_MAX_DISK_SPACE="16m"
 
-EXTRA_COMMANDS="close"
-EXTRA_HELP="	close	Close all open files"
+extra_command "close" "Close all open files"
 
 SYSLOG_ROTATE_BIN="/usr/libexec/syslogrotate"
 
