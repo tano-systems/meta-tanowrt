@@ -14,12 +14,6 @@ NAME=mstpd
 
 USE_PROCD=1
 
-EXTRA_COMMANDS="running"
-EXTRA_HELP="\
-Extra commands:
-	running Checks if the service is running \
-"
-
 . "$IPKG_INSTROOT/lib/functions/mstpd.sh"
 
 start_service() {
