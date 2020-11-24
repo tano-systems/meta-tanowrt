@@ -319,5 +319,5 @@ reload_service() {
 }
 
 stop_service() {
-	rm -rf ${LLDPD_RUN} $LLDPSOCKET
+	rm -rf ${LLDPD_RUN} 2>/dev/null
 }
