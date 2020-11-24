@@ -4,7 +4,7 @@
 # This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 PV = "2.1.0+git${SRCPV}"
 
 SUMMARY = "LuCI support for SNMP daemon"
@@ -26,6 +26,8 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-snmpd.git;branch=${GIT_BRAN
 SRCREV = "${GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
+
+RRECOMMENDS_${PN} += "luci-app-tn-logview-plugin-snmp"
 
 LUCI_APP_TN_SNMPD_HIDE_FOOTER ?= "1"
 
