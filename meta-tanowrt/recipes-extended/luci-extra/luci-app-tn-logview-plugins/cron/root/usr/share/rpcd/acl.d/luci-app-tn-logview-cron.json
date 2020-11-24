@@ -1,0 +1,9 @@
+{
+	"luci-app-tn-logview-cron" : {
+		"description": "Grant access to view scheduled tasks log (cron)",
+		"read": {
+			"file": { "/usr/libexec/luci-logview/logview-cron *": [ "exec" ] },
+			"ubus": { "file": [ "exec" ] }
+		}
+	}
+}

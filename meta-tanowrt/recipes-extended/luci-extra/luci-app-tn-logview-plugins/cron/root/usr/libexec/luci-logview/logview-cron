@@ -1,0 +1,31 @@
+#!/bin/sh
+
+FORMAT=${1:-plain}
+
+if [ ! -x /usr/sbin/logread ]; then
+	echo "/usr/sbin/logread not exists"
+	exit 1
+fi
+
+if [ ! -x /usr/bin/syslog_fc ]; then
+	echo "/usr/bin/syslog_fc not exists"
+	exit 1
+fi
+
+cronlog_file=$(uci -q get system.@system[-1].cronlog_file)
+[ -n "${cronlog_file}" -a -f "${cronlog_file}" ] || exit 0
+
+dump_cronlog() {
+	[ -f "${cronlog_file}.1" ] && cat "${cronlog_file}.1"
+	[ -f "${cronlog_file}"   ] && cat "${cronlog_file}"
+}
+
+case "$FORMAT" in
+	json|csv)
+		dump_cronlog | /usr/bin/syslog_fc -f ${FORMAT} -s
+		;;
+
+	*)
+		dump_cronlog
+		;;
+esac

@@ -1,0 +1,30 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:39
+msgid "Facility"
+msgstr ""
+
+#: root/usr/share/rpcd/acl.d/luci-app-tn-logview-cron.json:3
+msgid "Grant access to view scheduled tasks log (cron)"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:40
+msgid "Message"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:38
+msgid "Priority"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:4
+msgid "Scheduled Tasks (cron)"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:37
+msgid "Tag"
+msgstr ""
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:36
+msgid "Timestamp"
+msgstr ""

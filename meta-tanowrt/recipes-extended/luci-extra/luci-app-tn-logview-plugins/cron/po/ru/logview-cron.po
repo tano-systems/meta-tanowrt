@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: luci-app-tn-logview-cron\n"
+"POT-Creation-Date: 2020-11-24 18:45+0300\n"
+"PO-Revision-Date: 2020-11-24 18:45+0300\n"
+"Last-Translator: Anton Kikin <a.kikin@tano-systems.com>\n"
+"Language-Team: Tano Systems LLC\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Poedit 2.2\n"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:39
+msgid "Facility"
+msgstr "Категория"
+
+#: root/usr/share/rpcd/acl.d/luci-app-tn-logview-cron.json:3
+msgid "Grant access to view scheduled tasks log (cron)"
+msgstr "Предоставить доступ к просмотру журнала запланированных заданий (cron)"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:40
+msgid "Message"
+msgstr "Сообщение"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:38
+msgid "Priority"
+msgstr "Приоритет"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:4
+msgid "Scheduled Tasks (cron)"
+msgstr "Запланированные задания (cron)"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:37
+msgid "Tag"
+msgstr "Тег"
+
+#: htdocs/luci-static/resources/logview/plugins/cron.js:36
+msgid "Timestamp"
+msgstr "Временная метка"
