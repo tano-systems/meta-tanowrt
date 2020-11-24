@@ -1,4 +1,4 @@
-PR_append = ".8"
+PR_append = ".9"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
@@ -6,6 +6,7 @@ KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/general/cgroups/cgroups.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "wifi usbhost", " features/general/wifi/wifi-usb.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "wifi pci", " features/general/wifi/wifi-pci.scc", "" ,d)} \
+	${@bb.utils.contains("COMBINED_FEATURES", "seccomp", " features/general/secutiry/seccomp.scc", "" ,d)} \
 	features/general/general/ikconfig.scc \
 	features/general/net_sched/net_sched.scc \
 	features/general/netfilter/netfilter.scc \
