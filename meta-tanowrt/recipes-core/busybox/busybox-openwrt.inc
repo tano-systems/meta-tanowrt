@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-INC_PR = "27"
+INC_PR = "28"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
@@ -80,11 +80,12 @@ USERADD_PACKAGES = "${PN}"
 
 USERADD_PARAM_${PN} = "\
 	--system \
-	-d /var/run/ntp \
+	--home-dir /var/run/ntp \
 	--no-create-home \
 	--shell /bin/false \
-	-g ntp \
+	--gid ntp \
+	--groups rtc \
 	  ntp \
 "
 
-GROUPADD_PARAM_${PN} = "--system ntp"
+GROUPADD_PARAM_${PN} = "--system ntp; --system rtc"
