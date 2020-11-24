@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano22"
+PR = "tano23"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 03.05.2020
-# router: fix Lan host reachibility due to identical RIO and PIO prefixes (FS#3056)
-SRCREV = "5ce077026b991f49d96464587386f93d92f56385"
+# 21.11.2020
+# config: add option to indicate dns service presence
+SRCREV = "694148a87fa5a0c964286fdaac1fa490a2fb530b"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services
