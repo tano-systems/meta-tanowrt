@@ -2,12 +2,12 @@
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
 
-# 12.08.2020
-# treewide: replace `which` with `command -v`
-OPENWRT_SRCREV = "1fdf6b745cc3d85be3743837817a360121554134"
+# 19.11.2020
+# base-files: generated named bridge-vlan sections
+OPENWRT_SRCREV = "8134c542e2e41d1156efe2a43d81304554a90540"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "17"
+INC_PR = "18"
 
 LICENSE = "GPL-2.0+"
 LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
