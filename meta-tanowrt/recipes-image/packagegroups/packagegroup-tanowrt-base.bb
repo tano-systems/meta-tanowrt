@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano9"
+PR = "tano10"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -54,6 +54,8 @@ RDEPENDS_${PN}-luci = "\
 	luci-app-uhttpd \
 	luci-app-tn-netports \
 	luci-app-tn-netports-hotplug \
+	luci-app-tn-logview \
+	luci-app-tn-logview-plugin-cron \
 	luci-theme-tano \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'luci-proto-ipv6', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'luci-app-ledtrig-usbport', '',d)} \
