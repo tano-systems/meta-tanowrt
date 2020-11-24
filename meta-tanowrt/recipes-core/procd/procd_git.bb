@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano44"
+PR = "tano45"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -48,6 +48,7 @@ SRC_URI += "\
 
 PACKAGECONFIG ??= "\
 	${@bb.utils.contains('MACHINE_FEATURES', 'screen', 'psplash psplash-script-msg', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'seccomp', 'seccomp', '' , d)} \
 	ujail \
 "
 
@@ -55,6 +56,7 @@ PACKAGECONFIG[psplash] = "-DPSPLASH_SUPPORT=1,,"
 PACKAGECONFIG[psplash-script-msg] = "-DPSPLASH_SCRIPT_MSG=1,,"
 PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
+PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
 # 06.11.2020
 # jail: fix capabilities
@@ -82,7 +84,6 @@ do_install_append() {
 	install -d ${D}${base_libdir}/functions
 	install -m 0755 ${WORKDIR}/procd.sh ${D}${base_libdir}/functions/
 
-
 	# Make sure things are where they are expected to be
 	install -dm 0755 ${D}/sbin ${D}/lib
 	ln -s /usr/sbin/procd ${D}/sbin/procd
@@ -90,8 +91,18 @@ do_install_append() {
 	ln -s /usr/sbin/askfirst ${D}/sbin/askfirst
 	ln -s /usr/sbin/udevtrigger ${D}/sbin/udevtrigger
 	ln -s /usr/sbin/upgraded ${D}/sbin/upgraded
-	ln -s /usr/sbin/ujail ${D}/sbin/ujail
-	ln -s /usr/sbin/ujail-console ${D}/sbin/ujail-console
+
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'ujail', '1', '0', d)}" = "1" ]; then
+		ln -s /usr/sbin/ujail ${D}/sbin/ujail
+		ln -s /usr/sbin/ujail-console ${D}/sbin/ujail-console
+	fi
+
+	if [ "${@bb.utils.contains('PACKAGECONFIG', 'seccomp', '1', '0', d)}" = "1" ]; then
+		mv ${D}${libdir}/libpreload-seccomp.so ${D}${base_libdir}/libpreload-seccomp.so
+		mv ${D}${libdir}/libpreload-trace.so ${D}${base_libdir}/libpreload-trace.so
+		ln -s /usr/sbin/utrace ${D}/sbin/utrace
+		ln -s utrace ${D}/sbin/seccomp-trace
+	fi
 
 	mv ${D}${libdir}/libsetlbf.so ${D}${base_libdir}/libsetlbf.so
 	rmdir ${D}/usr/lib
