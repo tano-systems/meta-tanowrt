@@ -3,10 +3,10 @@
 # Partially taken from meta-openembedded layer
 #
 SRC_URI = "http://collectd.org/files/collectd-${PV}.tar.bz2"
-SRC_URI[md5sum] = "13b1c946f6684abe453e24b5cd80ec45"
-SRC_URI[sha256sum] = "37b10a806e34aa8570c1cafa6006c604796fae13cc2e1b3e630d33dcba9e5db2"
+SRC_URI[md5sum] = "2b23a65960bc323d065234776a542e04"
+SRC_URI[sha256sum] = "5bae043042c19c31f77eb8464e56a01a5454e0b39fa07cf7ad0f1bfc9c3a09d6"
 
-PV = "5.11.0"
+PV = "5.12.0"
 PR = "tano0.${INC_PR}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
@@ -14,7 +14,12 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches_${PV}:"
 
 # Patches (from OE)
 SRC_URI += "\
+	file://0001-configure-Check-for-Wno-error-format-truncation-comp.patch \
+	file://0001-fix-to-build-with-glibc-2.25.patch \
+	file://0001-Remove-including-sys-sysctl.h-on-glibc-based-systems.patch \
+	file://0005-Disable-new-gcc8-warnings.patch \
 	file://0006-libcollectdclient-Fix-string-overflow-errors.patch \
+	file://no-gcrypt-badpath.patch \
 "
 
 # Patches (from OpenWrt)
@@ -29,7 +34,7 @@ SRC_URI += "\
 	file://1700-disable-sys-capability-check.patch \
 	file://1900-add-iwinfo-plugin.patch \
 	file://1910-add-cake-qdisc-types.patch \
-	file://1920-fix-ubi-data-source-type.patch \
+	file://1920-backport-netlink-reg-noerror.patch \
 "
 
 # Patches (Tano)

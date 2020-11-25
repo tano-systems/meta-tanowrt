@@ -2,7 +2,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "5"
+INC_PR = "6"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -115,6 +115,7 @@ PACKAGECONFIG[filecount] = "--enable-filecount,--disable-filecount,"
 PACKAGECONFIG[fhcount] = "--enable-fhcount,--disable-fhcount,"
 PACKAGECONFIG[fscache] = "--enable-fscache,--disable-fscache,"
 PACKAGECONFIG[interface] = "--enable-interface,--disable-interface,"
+PACKAGECONFIG[infiniband] = "--enable-infiniband,--disable-infiniband,"
 PACKAGECONFIG[ipstats] = "--enable-ipstats,--disable-ipstats,"
 PACKAGECONFIG[iptables] = "--enable-iptables,--disable-iptables,iptables"
 PACKAGECONFIG[irq] = "--enable-irq,--disable-irq,"
@@ -127,6 +128,7 @@ PACKAGECONFIG[match_hashed] = "--enable-match_hashed,--disable-match_hashed,"
 PACKAGECONFIG[match_regex] = "--enable-match_regex,--disable-match_regex,"
 PACKAGECONFIG[match_timediff] = "--enable-match_timediff,--disable-match_timediff,"
 PACKAGECONFIG[match_value] = "--enable-match_value,--disable-match_value,"
+PACKAGECONFIG[mdevents] = "--enable-mdevents,--disable-mdevents,"
 PACKAGECONFIG[memory] = "--enable-memory,--disable-memory,"
 PACKAGECONFIG[modbus] = "--enable-modbus,--disable-modbus,libmodbus"
 PACKAGECONFIG[mqtt] = "--enable-mqtt,--disable-mqtt,libmosquitto"

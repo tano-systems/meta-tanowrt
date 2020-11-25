@@ -7,7 +7,7 @@ PREFERRED_VERSION_usbutils = "007"
 PREFERRED_VERSION_libwebsockets = "3.2%"
 PREFERRED_VERSION_qrencode = "4.1.1"
 PREFERRED_VERSION_rrdtool = "1.0.50"
-PREFERRED_VERSION_collectd = "5.11.0"
+PREFERRED_VERSION_collectd = "5.12.0"
 
 # Providers
 PREFERRED_PROVIDER_psplash = "psplash-tn"
