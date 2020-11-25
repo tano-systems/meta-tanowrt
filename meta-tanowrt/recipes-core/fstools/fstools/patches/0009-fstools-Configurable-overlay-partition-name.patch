@@ -1,19 +1,19 @@
-From df1cc870e3de030760ab7c8913f38c961ed41007 Mon Sep 17 00:00:00 2001
+From bb281af26fe9874993636083c09afcd0a8a31508 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
-Subject: [PATCH 09/11] fstools: Configurable overlay partition name
+Subject: [PATCH 09/12] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt        | 13 ++++++-----
- block.c               | 10 +++++---
- jffs2reset.c          |  8 +++----
- libfstools/overlay.c  |  5 ++--
- libfstools/rootdisk.c | 11 +++++----
- mount_root.c          | 11 +++++----
- overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
- overlay_partition.h   | 19 +++++++++++++++
- snapshot.c            | 15 ++++++------
+ CMakeLists.txt        | 13 +++++++------
+ block.c               | 10 +++++++---
+ jffs2reset.c          |  8 ++++----
+ libfstools/overlay.c  |  5 +++--
+ libfstools/rootdisk.c | 11 ++++++-----
+ mount_root.c          | 11 ++++++-----
+ overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ overlay_partition.h   | 19 ++++++++++++++++++
+ snapshot.c            | 15 +++++++-------
  ubi.c                 |  3 ++-
  10 files changed, 116 insertions(+), 33 deletions(-)
  create mode 100644 overlay_partition.c
@@ -462,5 +462,5 @@ index 0688d03..cc58f9e 100644
  	} else if (!strcmp(argv[1], "detach")) {
  		return main_detach(argv[2]);
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

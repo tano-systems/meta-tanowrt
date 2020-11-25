@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano34"
+PR = "tano35"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -43,6 +43,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0009-fstools-Configurable-overlay-partition-name.patch \
 	file://0010-libfstools-Fix-64-bit-compilation-issues.patch \
 	file://0011-fstools-Support-extroot-for-non-MTD-rootfs_data.patch \
+	file://0012-block-config_try_load-Log-warning-instead-of-error-o.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \

@@ -1,7 +1,7 @@
-From 1f1d3123c91ecae4fc4d6a5c9299e53b57e809f1 Mon Sep 17 00:00:00 2001
+From f78f0c7bb8b53f91568e3544dc4a34c5fd5dcb68 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:17:30 +0300
-Subject: [PATCH 01/11] block: Validate libubi_open() return value
+Subject: [PATCH 01/12] block: Validate libubi_open() return value
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -52,5 +52,5 @@ index 569bf56..e2ab381 100644
  
  	/* As a last resort look for /etc/config/fstab on "rootfs" partition */
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 
