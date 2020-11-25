@@ -94,3 +94,10 @@ RPROVIDES_${PN}-libs             += "libnetsnmp"
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/snmpd \
 "
+
+#
+# As do_configure (OE-recipe) changes files that will
+# be patched when SRCDATE is changed, we must do_unpack
+# when SRCDATE is changed before do_patch.
+#
+do_unpack[vardeps] += "SRCDATE"
