@@ -22,8 +22,7 @@ inherit tanowrt-lua
 inherit luasrcdiet
 
 RDEPENDS_${PN} += "lua5.1"
-
-SRC_URI = "git://github.com/LuaDist/dkjson.git"
+SRC_URI = "git://github.com/tano-systems/luadkjson.git"
 SRCREV = "e72ba0c9f5d8b8746fc306f6189a819dbb5cd0be"
 
 S = "${WORKDIR}/git"
