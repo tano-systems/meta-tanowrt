@@ -14,7 +14,7 @@ inherit tanowrt-lua
 
 RDEPENDS_${PN} += "lua5.1 lualogging"
 
-SRC_URI = "git://github.com/LuaDist2/luasyslog.git"
+SRC_URI = "git://github.com/tano-systems/luasyslog.git"
 SRCREV = "4b95dd20b15cdc36b748055eedfe23dfed77deae"
 
 SRC_URI += "file://0001-Fix-Makefile.patch \
