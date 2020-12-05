@@ -21,12 +21,12 @@ This layer supports the following machines designed to run in QEMU:
 
 | `MACHINE`           | Description                                      | Rootfs   | Overlayfs      |
 | ------------------- | ------------------------------------------------ | -------- | -------------- |
-| `qemux86`           | Common x86 (32-bit) machine                      | squashfs | ext4 (64 MiB)  |
-| `qemux86-screen`    | Common x86 (32-bit) machine with screen support  | squashfs | ext4 (64 MiB)  |
-| `qemux86-64`        | Common x86 (64-bit) machine                      | squashfs | ext4 (64 MiB)  |
-| `qemux86-64-screen` | Common x86 (64-bit) machine with screen support  | squashfs | ext4 (64 MiB)  |
-| `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (64 MiB)  |
-| `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (64 MiB)  |
+| `qemux86`           | Common x86 (32-bit) machine                      | squashfs | ext4 (256 MiB) |
+| `qemux86-screen`    | Common x86 (32-bit) machine with screen support  | squashfs | ext4 (256 MiB) |
+| `qemux86-64`        | Common x86 (64-bit) machine                      | squashfs | ext4 (256 MiB) |
+| `qemux86-64-screen` | Common x86 (64-bit) machine with screen support  | squashfs | ext4 (256 MiB) |
+| `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (256 MiB) |
+| `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (256 MiB) |
 
 ## 2 Supported Images
 
