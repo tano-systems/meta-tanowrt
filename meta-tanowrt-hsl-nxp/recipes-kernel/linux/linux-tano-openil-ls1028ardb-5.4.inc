@@ -2,7 +2,7 @@
 # Copyright (C) 2020, Tano Systems, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".3"
+PR_append = ".4"
 
 COMPATIBLE_MACHINE =. "ls1028ardb|"
 
@@ -11,6 +11,7 @@ SRC_URI_append_ls1028ardb = " file://defconfig "
 
 SRC_URI_append_ls1028ardb = "\
 	file://551-loop-Better-discard-support-for-block-devices.patch \
+	file://0001-arm64-fpsimd-Backport-changes.patch \
 "
 
 # Devicetree
