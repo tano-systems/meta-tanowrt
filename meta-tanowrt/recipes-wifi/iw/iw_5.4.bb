@@ -8,7 +8,10 @@ SECTION = "base"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=878618a5c4af25e9b93ef0be1a93f774"
 
-PR = "tano1"
+PR = "tano2"
+
+# Compile always with gcc
+TOOLCHAIN = "gcc"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "libnl"
