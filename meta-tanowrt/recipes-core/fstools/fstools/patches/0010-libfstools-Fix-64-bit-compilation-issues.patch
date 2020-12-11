@@ -1,7 +1,7 @@
 From 951d9e2c1925e8c299493d339b6901cd7601c0c9 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:06:44 +0300
-Subject: [PATCH 10/12] libfstools: Fix 64-bit compilation issues
+Subject: [PATCH 10/13] libfstools: Fix 64-bit compilation issues
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

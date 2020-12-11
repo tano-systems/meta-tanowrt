@@ -1,0 +1,89 @@
+From f752d8c662dfa68d4351b841dffd5549f70c9ed5 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 11 Dec 2020 23:04:11 +0300
+Subject: [PATCH 13/13] libubi: Fix self-assign warning (clang)
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ libubi/libubi.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/libubi/libubi.c b/libubi/libubi.c
+index 3328ac8..103d260 100644
+--- a/libubi/libubi.c
++++ b/libubi/libubi.c
+@@ -855,7 +855,7 @@ int ubi_remove_dev(libubi_t desc, const char *node, int ubi_dev)
+ {
+ 	int fd, ret;
+ 
+-	desc = desc;
++	(void)desc;
+ 
+ 	fd = open(node, O_RDONLY);
+ 	if (fd == -1) {
+@@ -1023,7 +1023,7 @@ int ubi_mkvol(libubi_t desc, const char *node, struct ubi_mkvol_request *req)
+ 
+ 	memset(&r, 0, sizeof(struct ubi_mkvol_req));
+ 
+-	desc = desc;
++	(void)desc;
+ 	r.vol_id = req->vol_id;
+ 	r.alignment = req->alignment;
+ 	r.bytes = req->bytes;
+@@ -1036,7 +1036,7 @@ int ubi_mkvol(libubi_t desc, const char *node, struct ubi_mkvol_request *req)
+ 	strncpy(r.name, req->name, UBI_MAX_VOLUME_NAME + 1);
+ 	r.name_len = n;
+ 
+-	desc = desc;
++	(void)desc;
+ 	fd = open(node, O_RDONLY);
+ 	if (fd == -1) {
+ 		sys_errmsg("cannot open \"%s\"", node);
+@@ -1064,7 +1064,7 @@ int ubi_rmvol(libubi_t desc, const char *node, int vol_id)
+ {
+ 	int fd, ret;
+ 
+-	desc = desc;
++	(void)desc;
+ 	fd = open(node, O_RDONLY);
+ 	if (fd == -1) {
+ 		sys_errmsg("cannot open \"%s\"", node);
+@@ -1092,7 +1092,7 @@ int ubi_rnvols(libubi_t desc, const char *node, struct ubi_rnvol_req *rnvol)
+ {
+ 	int fd, ret;
+ 
+-	desc = desc;
++	(void)desc;
+ 	fd = open(node, O_RDONLY);
+ 	if (fd == -1)
+ 		return -1;
+@@ -1119,7 +1119,7 @@ int ubi_rsvol(libubi_t desc, const char *node, int vol_id, long long bytes)
+ 	int fd, ret;
+ 	struct ubi_rsvol_req req;
+ 
+-	desc = desc;
++	(void)desc;
+ 	fd = open(node, O_RDONLY);
+ 	if (fd == -1) {
+ 		sys_errmsg("cannot open \"%s\"", node);
+@@ -1135,7 +1135,7 @@ int ubi_rsvol(libubi_t desc, const char *node, int vol_id, long long bytes)
+ 
+ int ubi_update_start(libubi_t desc, int fd, long long bytes)
+ {
+-	desc = desc;
++	(void)desc;
+ 	if (ioctl(fd, UBI_IOCVOLUP, &bytes))
+ 		return -1;
+ 	return 0;
+@@ -1145,7 +1145,7 @@ int ubi_leb_change_start(libubi_t desc, int fd, int lnum, int bytes)
+ {
+ 	struct ubi_leb_change_req req;
+ 
+-	desc = desc;
++	(void)desc;
+ 	memset(&req, 0, sizeof(struct ubi_leb_change_req));
+ 	req.lnum = lnum;
+ 	req.bytes = bytes;
+-- 
+2.16.2.windows.1
+

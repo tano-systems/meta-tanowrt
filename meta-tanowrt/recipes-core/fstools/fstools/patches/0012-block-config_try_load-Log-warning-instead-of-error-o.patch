@@ -1,7 +1,7 @@
 From 2132affd64cb687e7c120337c9dfa251a937728a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 25 Nov 2020 03:26:44 +0300
-Subject: [PATCH 12/12] block: config_try_load: Log warning instead of error on
+Subject: [PATCH 12/13] block: config_try_load: Log warning instead of error on
  failed attempt
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
