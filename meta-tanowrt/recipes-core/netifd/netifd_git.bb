@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano36"
+PR = "tano37"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -17,6 +17,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/netifd.git;name=netifd;branch=master \
 	file://100-Fix-IFF_LOWER_UP-define.patch \
+	file://0001-Fix-errors-for-clang.patch \
 "
 
 # rootfs files
@@ -127,3 +128,5 @@ RDEPENDS_${PN} += "\
 inherit kmod/bridge
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
+
+#OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-implicit-fallthrough', '', d)}"
