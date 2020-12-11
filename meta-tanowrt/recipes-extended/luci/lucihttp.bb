@@ -1,6 +1,6 @@
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano5"
+PR = "tano6"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -24,6 +24,7 @@ PACKAGECONFIG ??= "build-lua"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
 
 OECMAKE_C_FLAGS += "-DBUILD_TESTS=OFF -DLUAPATH=/usr/lib/lua/5.1"
+OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-unknown-warning-option', '', d)}"
 
 S = "${WORKDIR}/git/"
 
