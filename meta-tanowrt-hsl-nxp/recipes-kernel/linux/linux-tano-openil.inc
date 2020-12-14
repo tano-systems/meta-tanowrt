@@ -4,7 +4,6 @@
 #
 inherit qoriq_build_64bit_kernel
 inherit siteinfo
-inherit fsl-kernel-localversion
 
 PR_append = ".0"
 
