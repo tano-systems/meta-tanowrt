@@ -1,0 +1,45 @@
+From 7758fe2d60afef9383d9efeab0264ff9a231e03e Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 23 Nov 2020 21:17:29 +0300
+Subject: [PATCH] Fix QtTestBrowser build without OpenGL
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Tools/QtTestBrowser/launcherwindow.cpp | 2 +-
+ Tools/QtTestBrowser/launcherwindow.h   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Tools/QtTestBrowser/launcherwindow.cpp b/Tools/QtTestBrowser/launcherwindow.cpp
+index 6e9d388e9..1343123b6 100644
+--- a/Tools/QtTestBrowser/launcherwindow.cpp
++++ b/Tools/QtTestBrowser/launcherwindow.cpp
+@@ -170,9 +170,9 @@ void LauncherWindow::initializeView()
+     } else {
+         WebViewGraphicsBased* view = new WebViewGraphicsBased(splitter);
+         m_view = view;
++#ifndef QT_NO_OPENGL
+         if (!m_windowOptions.useQOpenGLWidgetViewport)
+             toggleQGLWidgetViewport(m_windowOptions.useQGLWidgetViewport);
+-#ifdef QT_OPENGL_LIB
+         if (!m_windowOptions.useQGLWidgetViewport)
+             toggleQOpenGLWidgetViewport(m_windowOptions.useQOpenGLWidgetViewport);
+ #endif
+diff --git a/Tools/QtTestBrowser/launcherwindow.h b/Tools/QtTestBrowser/launcherwindow.h
+index 8a8baeeda..92d54b55b 100644
+--- a/Tools/QtTestBrowser/launcherwindow.h
++++ b/Tools/QtTestBrowser/launcherwindow.h
+@@ -37,10 +37,10 @@
+ 
+ #ifndef QT_NO_OPENGL
+ #include <QtOpenGL/QGLWidget>
+-#endif
+ #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+ #include <QOpenGLWidget>
+ #endif
++#endif
+ 
+ #include <QDebug>
+ 
+-- 
+2.25.1
+
