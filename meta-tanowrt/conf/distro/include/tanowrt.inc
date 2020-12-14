@@ -34,7 +34,7 @@ DISTRO_FEATURES_append = " wifi "
 DISTRO_FEATURES_append = " watchdog "
 
 # Graphics
-DISTRO_FEATURES_append = " graphics screen splash opengl "
+DISTRO_FEATURES_append = " graphics screen splash opengl wayland "
 
 # IPv6
 DISTRO_FEATURES_append = " ipv6"
@@ -44,7 +44,6 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
 
 # Clean DISTRO_FEATURES
 DISTRO_FEATURES_remove = "\
-    wayland \
     3g \
     nfc \
     pulseaudio \
