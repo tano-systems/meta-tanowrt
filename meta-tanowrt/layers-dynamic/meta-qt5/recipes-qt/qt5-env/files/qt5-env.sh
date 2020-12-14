@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export QT_QPA_PLATFORM=linuxfb
+export QT_QPA_FONTDIR=/usr/share/fonts/truetype
 
 # to use tslib for input (no multi-touch)
 #export QT_QPA_FB_TSLIB=1
