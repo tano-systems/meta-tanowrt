@@ -34,6 +34,7 @@ This layer supports the following machines designed to run in QEMU:
 | -------------------- | ------------------------------------------- |
 | `tanowrt-image-base` | TanoWrt base image                          |
 | `tanowrt-image-full` | TanoWrt full featured image (recommended)   |
+| `tanowrt-image-qt5`  | TanoWrt full featured image with Qt5        |
 
 ## 3 Prerequisites
 
@@ -89,6 +90,11 @@ You should see the following working directory tree:
 The first time you need to add layers and create `local.conf` from the template. To do this, run the command:
 ```shell
 TEMPLATECONF=meta-tanowrt/meta-tanowrt/templates . ./oe-init-build-env
+```
+
+If you want to build image with Qt5 support (e.g. `tanowrt-image-qt5`) you need to use `meta-tanowrt/meta-tanowrt/templates/qt5` path in `TEMPLATECONF`:
+```shell
+TEMPLATECONF=meta-tanowrt/meta-tanowrt/templates/qt5 . ./oe-init-build-env
 ```
 
 This command automatically creates a `build` subdirectory with the required configuration (`local.conf` and `bblayers.conf`) based on the specified template.
@@ -151,6 +157,9 @@ This layer depends on:
 * meta-filesystems  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-filesystems  
+  Branch: dunfell  
+* meta-qt5  
+  URI: <git://github.com/meta-qt5/meta-qt5.git>  
   Branch: dunfell  
 * bitbake  
   URI: <git://git.openembedded.org/bitbake>  
