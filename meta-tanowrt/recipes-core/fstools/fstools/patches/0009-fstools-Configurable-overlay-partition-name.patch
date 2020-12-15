@@ -1,19 +1,19 @@
-From bb281af26fe9874993636083c09afcd0a8a31508 Mon Sep 17 00:00:00 2001
+From bcda0ddeee282a9e6622b5b7362462d3ef7824e1 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
 Subject: [PATCH 09/13] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt        | 13 +++++++------
- block.c               | 10 +++++++---
- jffs2reset.c          |  8 ++++----
- libfstools/overlay.c  |  5 +++--
- libfstools/rootdisk.c | 11 ++++++-----
- mount_root.c          | 11 ++++++-----
- overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++
- overlay_partition.h   | 19 ++++++++++++++++++
- snapshot.c            | 15 +++++++-------
+ CMakeLists.txt        | 13 ++++++-----
+ block.c               | 10 +++++---
+ jffs2reset.c          |  8 +++----
+ libfstools/overlay.c  |  5 ++--
+ libfstools/rootdisk.c | 11 +++++----
+ mount_root.c          | 11 +++++----
+ overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
+ overlay_partition.h   | 19 +++++++++++++++
+ snapshot.c            | 15 ++++++------
  ubi.c                 |  3 ++-
  10 files changed, 116 insertions(+), 33 deletions(-)
  create mode 100644 overlay_partition.c
@@ -70,18 +70,18 @@ index cf55d89..2735bdd 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index 4ea2363..fe96828 100644
+index 5099c5c..8b5c52d 100644
 --- a/block.c
 +++ b/block.c
-@@ -45,6 +45,7 @@
- #include <libubox/avl-cmp.h>
+@@ -46,6 +46,7 @@
+ #include <libubox/vlist.h>
  #include <libubus.h>
  
 +#include "overlay_partition.h"
  #include "probe.h"
  
  #define AUTOFS_MOUNT_PATH       "/tmp/run/blockd/"
-@@ -1529,6 +1530,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1518,6 +1519,7 @@ static int main_extroot(int argc, char **argv)
  {
  	struct probe_info *pr;
  	char blkdev_path[32] = { 0 };
@@ -89,7 +89,7 @@ index 4ea2363..fe96828 100644
  	int err = -1;
  #ifdef UBIFS_EXTROOT
  	libubi_t libubi;
-@@ -1549,12 +1551,14 @@ static int main_extroot(int argc, char **argv)
+@@ -1538,12 +1540,14 @@ static int main_extroot(int argc, char **argv)
  	ulog_threshold(LOG_INFO);
  
  	/*
@@ -106,7 +106,7 @@ index 4ea2363..fe96828 100644
  	if (blkdev_path[0]) {
  		pr = find_block_info(NULL, NULL, blkdev_path);
  		if (pr && !strcmp(pr->type, "jffs2")) {
-@@ -1581,7 +1585,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1570,7 +1574,7 @@ static int main_extroot(int argc, char **argv)
  	memset(blkdev_path, 0, sizeof(blkdev_path));
  	libubi = libubi_open();
  	if (libubi) {
@@ -116,7 +116,7 @@ index 4ea2363..fe96828 100644
  		if (blkdev_path[0]) {
  			char cfg[] = "/tmp/ubifs_cfg";
 diff --git a/jffs2reset.c b/jffs2reset.c
-index dbe0498..64a26f4 100644
+index 2236e38..3667193 100644
 --- a/jffs2reset.c
 +++ b/jffs2reset.c
 @@ -25,7 +25,7 @@
@@ -128,7 +128,7 @@ index dbe0498..64a26f4 100644
  #include "libfstools/libfstools.h"
  #include "libfstools/volume.h"
  
-@@ -111,7 +111,7 @@ int main(int argc, char **argv)
+@@ -114,7 +114,7 @@ int main(int argc, char **argv)
  
  	/*
  	 * TODO: Currently this only checks if kernel supports OverlayFS. We
@@ -137,7 +137,7 @@ index dbe0498..64a26f4 100644
  	 * as upperdir.
  	 */
  	if (find_filesystem("overlay")) {
-@@ -119,9 +119,9 @@ int main(int argc, char **argv)
+@@ -122,9 +122,9 @@ int main(int argc, char **argv)
  		return -1;
  	}
  
@@ -462,5 +462,5 @@ index 0688d03..cc58f9e 100644
  	} else if (!strcmp(argv[1], "detach")) {
  		return main_detach(argv[2]);
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

@@ -1,4 +1,4 @@
-From 2132affd64cb687e7c120337c9dfa251a937728a Mon Sep 17 00:00:00 2001
+From 14846fcc518bf7ab30a51d339d888bf03df9871c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 25 Nov 2020 03:26:44 +0300
 Subject: [PATCH 12/13] block: config_try_load: Log warning instead of error on
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block.c b/block.c
-index c8a9cea..bb046e2 100644
+index d7dc23a..88efdcb 100644
 --- a/block.c
 +++ b/block.c
-@@ -421,7 +421,7 @@ static struct uci_package * config_try_load(struct uci_context *ctx, char *path)
+@@ -422,7 +422,7 @@ static struct uci_package * config_try_load(struct uci_context *ctx, char *path)
  
  	if (uci_load(ctx, file, &pkg)) {
  		uci_get_errorstr(ctx, &err, file);
@@ -23,5 +23,5 @@ index c8a9cea..bb046e2 100644
  		free(err);
  		return NULL;
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

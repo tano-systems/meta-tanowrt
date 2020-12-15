@@ -1,4 +1,4 @@
-From 059a0e1efb6a8a4f16b5308b68874bb4f3b267b5 Mon Sep 17 00:00:00 2001
+From d65a209a14e9ead08d5c35af021623fb0b179599 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 16 Aug 2019 19:50:29 +0300
 Subject: [PATCH 08/13] libfstools: Support for f2fs/ext4 overlay on a separate
@@ -10,7 +10,7 @@ same disk that is used for the root filesystem.
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt        |   8 +
- libfstools/rootdisk.c | 519 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ libfstools/rootdisk.c | 519 ++++++++++++++++++++++++++++++++++++++++--
  mount_root.c          |   4 +
  3 files changed, 512 insertions(+), 19 deletions(-)
 
@@ -702,5 +702,5 @@ index dffb0a6..f8aa5e1 100644
  	case FS_UBIFS:
  		fs_state_set("/overlay", FS_STATE_READY);
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

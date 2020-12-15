@@ -1,4 +1,4 @@
-From 4bf4155a1b628fb7e1d23f3852700b2c0338ea7b Mon Sep 17 00:00:00 2001
+From 7ba68e41f5895d69a8ca14e11ba0b8b7a233cb2b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 19 Nov 2020 06:29:41 +0300
 Subject: [PATCH 11/13] fstools: Support extroot for non-MTD rootfs_data
@@ -43,10 +43,10 @@ index 2735bdd..acbc8b9 100644
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
 diff --git a/block.c b/block.c
-index fe96828..c8a9cea 100644
+index 8b5c52d..d7dc23a 100644
 --- a/block.c
 +++ b/block.c
-@@ -46,6 +46,8 @@
+@@ -47,6 +47,8 @@
  #include <libubus.h>
  
  #include "overlay_partition.h"
@@ -55,7 +55,7 @@ index fe96828..c8a9cea 100644
  #include "probe.h"
  
  #define AUTOFS_MOUNT_PATH       "/tmp/run/blockd/"
-@@ -1604,6 +1606,44 @@ static int main_extroot(int argc, char **argv)
+@@ -1593,6 +1595,44 @@ static int main_extroot(int argc, char **argv)
  	}
  #endif
  
@@ -69,7 +69,7 @@ index fe96828..c8a9cea 100644
 +				char cfg[] = "/tmp/ext4_cfg";
 +
 +				/* Mount volume and try extroot (using fstab from that vol) */
-+				mkdir_p(cfg);
++				mkdir_p(cfg, 0755);
 +				if (!mount(data->blk, cfg, "ext4", MS_NOATIME, NULL)) {
 +					err = mount_extroot(cfg);
 +					umount2(cfg, MNT_DETACH);
@@ -84,7 +84,7 @@ index fe96828..c8a9cea 100644
 +				char cfg[] = "/tmp/f2fs_cfg";
 +
 +				/* Mount volume and try extroot (using fstab from that vol) */
-+				mkdir_p(cfg);
++				mkdir_p(cfg, 0755);
 +				if (!mount(data->blk, cfg, "f2fs", MS_NOATIME, NULL)) {
 +					err = mount_extroot(cfg);
 +					umount2(cfg, MNT_DETACH);
@@ -159,5 +159,5 @@ index 3da151d..b93724d 100644
  	FS_STATE_UNKNOWN,
  	FS_STATE_PENDING,
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 
