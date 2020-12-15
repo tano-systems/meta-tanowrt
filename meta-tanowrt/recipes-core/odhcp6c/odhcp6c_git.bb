@@ -8,13 +8,13 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano4"
+PR = "tano5"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-# 13.07.2018
-# odhcp6c: add option to ignore Server Unicast option
-SRCREV = "67ae6a71b5762292e114b281d0e329cc24209ae6"
+# 08.12.2020
+# dhcpv6: harden reconfigure logic
+SRCREV = "0ffa3a31f7146d320214f431291c1196070a010f"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/odhcp6c.git;name=odhcp6c \
