@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano27"
+PR = "tano28"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -20,7 +20,6 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git \
            file://firewall.user \
 "
 
-SRC_URI += "file://0001-Fix-compilation-error.patch"
 SRC_URI += "file://0002-options.c-Fix-compilation-with-GCC-9.3.0.patch"
 
 # Kernel dependencies and module autoloading
@@ -32,9 +31,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 15.08.2020
-# options: fix parsing of boolean attributes
-SRCREV = "78d52a28c66ad0fd2af250038fdcf4239ad37bf2"
+# 06.12.2020
+# iptables: fix serializing multiple weekdays
+SRCREV = "12f6f143106257e0921c6ebbca2fe329cbeb3de6"
 
 S = "${WORKDIR}/git"
 
