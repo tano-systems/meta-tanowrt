@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano15"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -18,9 +18,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 23.10.2020
-# ubusd_acl: add support for wildcard in methods
-SRCREV = "ad0cd117db74934385d81605514e041b1a9cdda9"
+# 04.12.2020
+# ubusd: attempt to create socket folder
+SRCREV = "d1d9ddf98d39b0bdc055060fb962335439445690"
 
 S = "${WORKDIR}/git"
 
