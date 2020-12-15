@@ -12,7 +12,7 @@ USE_PROCD=1
 #PROCD_DEBUG=1
 NAME=cgrulesengd
 
-CGBASEDIR=/sys/fs/cgroup
+CGBASEDIR=/tmp/cgroup-v1
 CGCONFIG="cgroups"
 #CGCONFIGDIR="/etc/config/cgroups.d"
 
@@ -107,6 +107,7 @@ cgroupinit_generate_config() {
 	# mounting without any controllers listed means mount all available.
 	#
 	if ! grep -q " $CGBASEDIR cgroup " /proc/mounts; then
+		[ ! -d $CGBASEDIR ] && mkdir -p $CGBASEDIR
 		mount -t cgroup -o nodev,noexec,nosuid cgroup $CGBASEDIR
 		if [ $? -ne 0 ]; then
 			log_failure_msg "Failed to mount cgroup filesystem to '$CGBASEDIR'"
