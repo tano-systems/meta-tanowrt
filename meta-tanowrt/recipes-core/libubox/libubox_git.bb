@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano14"
+PR = "tano0"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -46,10 +46,10 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 04.08.2020
-# blobmsg: introduce BLOBMSG_CAST_INT64
-SRCREV = "9e52171d70def760a6949676800d0b73f85ee22d"
-PV = "2.0.0+git${SRCPV}"
+# 13.12.2020
+# utils: simplify mkdir_p boolean conditions
+SRCREV = "5bc0146a1d6474d339c4ade9a227f32cc27a8b93"
+PV = "20201212"
 
 S = "${WORKDIR}/git"
 
