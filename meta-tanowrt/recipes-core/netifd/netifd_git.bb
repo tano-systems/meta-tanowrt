@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano37"
+PR = "tano38"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -37,9 +37,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 05.11.2020
-# bridge: only overwrite implicit vlan assignment if vlans are configured
-SRCREV_netifd = "ed11f0c0ffe4fdacfe3f8223049ef8a61d9c53e9"
+# 14.12.2020
+# netifd: fix a typo in vlandev hotplug support
+SRCREV_netifd = "88c6003e2b4fdc0c990045ff140bf19b37ba745a"
 
 S = "${WORKDIR}/git"
 
