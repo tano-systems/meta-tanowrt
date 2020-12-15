@@ -1,38 +1,27 @@
-From 12fdc6f92173d844a598bedf2bfe5c7ce7bf2c81 Mon Sep 17 00:00:00 2001
+From c152a18e8be6edfa307e262040237063374d59ac Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 06:58:50 +0300
-Subject: [PATCH 13/17] uxc: Fix compiler warnings
+Subject: [PATCH 13/19] uxc: Fix compiler warnings
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- uxc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ uxc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/uxc.c b/uxc.c
-index 3c6942a..e9d23e5 100644
+index eb40eb2..54dd7c3 100644
 --- a/uxc.c
 +++ b/uxc.c
-@@ -690,8 +690,8 @@ int main(int argc, char **argv)
- 	char *bundle = NULL;
+@@ -724,7 +724,7 @@ int main(int argc, char **argv)
  	char *pidfile = NULL;
  	bool autostart = false;
--	bool force = false;
+ 	bool force = false;
 -	bool verbose = false;
-+//	bool force = false;
 +//	bool verbose = false;
  	int signal = SIGTERM;
  	int c;
  
-@@ -734,7 +734,7 @@ int main(int argc, char **argv)
- 				break;
- 
- 			case 'f':
--				force = true;
-+//				force = true;
- 				break;
- 
- 			case 'p':
-@@ -742,7 +742,7 @@ int main(int argc, char **argv)
+@@ -775,7 +775,7 @@ int main(int argc, char **argv)
  				break;
  
  			case 'v':
@@ -42,5 +31,5 @@ index 3c6942a..e9d23e5 100644
  
  			case 'V':
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

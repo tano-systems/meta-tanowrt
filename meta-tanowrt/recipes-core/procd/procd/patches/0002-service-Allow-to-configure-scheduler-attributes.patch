@@ -1,13 +1,13 @@
-From 7d0130c0dbd7f31784aac4b0ba2b247b30ed4352 Mon Sep 17 00:00:00 2001
+From 258ddf80b64e4bd0734f129452e31be8eababc5b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 19 Feb 2019 02:41:23 +0300
-Subject: [PATCH 02/17] service: Allow to configure scheduler attributes
+Subject: [PATCH 02/19] service: Allow to configure scheduler attributes
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- service/instance.c       | 177 ++++++++++++++++++++++++++++++++++++++++++++++-
+ service/instance.c       | 177 ++++++++++++++++++++++++++++++++++++++-
  service/instance.h       |   5 ++
- service/instance_sched.h |  92 ++++++++++++++++++++++++
+ service/instance_sched.h |  92 ++++++++++++++++++++
  3 files changed, 271 insertions(+), 3 deletions(-)
  create mode 100644 service/instance_sched.h
 
@@ -404,5 +404,5 @@ index 0000000..f9c865b
 +#define sched_setattr(pid, attr, flags) \
 +	syscall(__NR_sched_setattr, pid, attr,flags)
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

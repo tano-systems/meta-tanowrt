@@ -1,24 +1,24 @@
-From 7be752ab812896929af07139e614d99d1afec2b4 Mon Sep 17 00:00:00 2001
+From 1c3c7f4fe28e6f661da08272a4da99474a0474ad Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
-Subject: [PATCH 04/17] hotplug: Completely remove hotplug functionality
+Subject: [PATCH 04/19] hotplug: Completely remove hotplug functionality
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt  |   2 +-
  initd/preinit.c |  24 --
- plug/coldplug.c |  74 -------
- plug/hotplug.c  | 662 --------------------------------------------------------
- plug/hotplug.h  |  49 -----
+ plug/coldplug.c |  74 ------
+ plug/hotplug.c  | 651 ------------------------------------------------
+ plug/hotplug.h  |  49 ----
  procd.c         |   6 +-
  state.c         |  10 -
- 7 files changed, 2 insertions(+), 825 deletions(-)
+ 7 files changed, 2 insertions(+), 814 deletions(-)
  delete mode 100644 plug/coldplug.c
  delete mode 100644 plug/hotplug.c
  delete mode 100644 plug/hotplug.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d20e57b..6472867 100644
+index 4d323ea..6028978 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c inittab.c rcS.c ubus.c system.c sysupgrade.
@@ -169,10 +169,10 @@ index b185083..0000000
 -}
 diff --git a/plug/hotplug.c b/plug/hotplug.c
 deleted file mode 100644
-index f6ef318..0000000
+index 292f73f..0000000
 --- a/plug/hotplug.c
 +++ /dev/null
-@@ -1,662 +0,0 @@
+@@ -1,651 +0,0 @@
 -/*
 - * Copyright (C) 2013 Felix Fietkau <nbd@openwrt.org>
 - * Copyright (C) 2013 John Crispin <blogic@openwrt.org>
@@ -198,6 +198,7 @@ index f6ef318..0000000
 -#include <libubox/blobmsg_json.h>
 -#include <libubox/json_script.h>
 -#include <libubox/uloop.h>
+-#include <libubox/utils.h>
 -#include <json-c/json.h>
 -
 -#include <errno.h>
@@ -283,18 +284,6 @@ index f6ef318..0000000
 -	return NULL;
 -}
 -
--static void mkdir_p(char *dir)
--{
--	char *l = strrchr(dir, '/');
--
--	if (l) {
--		*l = '\0';
--		mkdir_p(dir);
--		*l = '/';
--		mkdir(dir, 0755);
--	}
--}
--
 -static void chgrp_error(const char *group, const char *target, const char *failed)
 -{
 -	ERROR("cannot set group %s for %s (%s: %d)\n",
@@ -338,7 +327,7 @@ index f6ef318..0000000
 -		char *d = strdup(blobmsg_get_string(tb[0]));
 -
 -		d = dirname(d);
--		mkdir_p(d);
+-		mkdir_p(d, 0755);
 -		free(d);
 -
 -		if (!strcmp(subsystem, "block"))
@@ -923,7 +912,7 @@ index 3de6208..e9fef1e 100644
  			ubus_socket = optarg;
  			break;
 diff --git a/state.c b/state.c
-index 6ca1d5e..9ac1827 100644
+index 44f56c6..13cc986 100644
 --- a/state.c
 +++ b/state.c
 @@ -24,14 +24,12 @@
@@ -956,7 +945,7 @@ index 6ca1d5e..9ac1827 100644
 -		// try to reopen incase the wdt was not available before coldplug
  		watchdog_init(0);
  		set_stdio("console");
- 		LOG("- ubus -\n");
+ 		p = getpwnam("ubus");
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

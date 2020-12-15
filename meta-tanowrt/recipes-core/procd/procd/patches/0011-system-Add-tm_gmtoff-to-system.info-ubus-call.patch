@@ -1,7 +1,7 @@
-From 50d2f1c9441706031488ac22312411306906287e Mon Sep 17 00:00:00 2001
+From f6fa4d1836c7b49dd20ce8e47424cbc30d7413e6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 6 Mar 2020 03:13:10 +0300
-Subject: [PATCH 11/17] system: Add tm_gmtoff to system.info ubus call
+Subject: [PATCH 11/19] system: Add tm_gmtoff to system.info ubus call
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -21,5 +21,5 @@ index 0fb98f1..94fb995 100644
  #ifdef linux
  	blobmsg_add_u32(&b, "uptime",    info.uptime);
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 
