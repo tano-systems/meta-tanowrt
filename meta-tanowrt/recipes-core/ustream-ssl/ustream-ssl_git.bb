@@ -2,7 +2,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano6"
+PR = "tano7"
 SUMMARY = "Small stream SSL library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ustream-ssl.git;a=summary"
 LICENSE = "BSD"
@@ -13,9 +13,9 @@ DEPENDS = "libubox openssl"
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ustream-ssl.git \
           "
 
-# 13.03.2020
-# ustream-openssl: clear error stack before SSL_read/SSL_write
-SRCREV = "5e1bc3429cbf9c3be4db65ef5dbf21ea99cf5b95"
+# 08.12.2020
+# Add initial GitLab CI support
+SRCREV = "68d09243b6fd4473004b27ff6483352e76e6af1a"
 
 S = "${WORKDIR}/git"
 
