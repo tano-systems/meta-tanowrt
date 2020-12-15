@@ -1,0 +1,30 @@
+From f0bb6fdf18a729c2a5dd7ead4c65f4142da070d0 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 15 Dec 2020 06:04:40 +0300
+Subject: [PATCH 19/19] early: Mount CGv1 to /tmp/cgroup-v1
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ initd/early.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/initd/early.c b/initd/early.c
+index 8983beb..fdc6583 100644
+--- a/initd/early.c
++++ b/initd/early.c
+@@ -78,6 +78,12 @@ early_mounts(void)
+ 		mount("tmpfs", "/tmp/shm", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOATIME,
+ 				"mode=01777");
+ 	}
++
++	if (!is_container()) {
++		mkdir("/tmp/cgroup-v1", 0755);
++		mount("cgroup", "/tmp/cgroup-v1", "cgroup", MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
++	}
++
+ 	mkdir("/tmp/run", 0755);
+ 	mkdir("/tmp/lock", 0755);
+ 	mkdir("/tmp/state", 0755);
+-- 
+2.16.2.windows.1
+
