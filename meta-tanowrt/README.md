@@ -136,7 +136,9 @@ You can run builded images for x86 machines (32 or 64-bit) in Oracle VirtualBox 
 
 ## 8 Dependencies
 
-This layer depends on:
+The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
+
+### 8.1 Mandatory
 
 * openembedded-core  
   URI: <git://git.openembedded.org/openembedded-core.git>  
@@ -158,14 +160,15 @@ This layer depends on:
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-filesystems  
   Branch: dunfell  
-* meta-qt5  
-  URI: <git://github.com/meta-qt5/meta-qt5.git>  
-  Branch: dunfell  
 * bitbake  
   URI: <git://git.openembedded.org/bitbake>  
   Branch: 1.46  
 
-The current exact revisions of all listed dependencies are given in [manifests/tanowrt.xml](manifests/tanowrt.xml).
+### 8.2 Optional (depending on the image)
+
+* meta-qt5  
+  URI: <git://github.com/meta-qt5/meta-qt5.git>  
+  Branch: dunfell  
 
 ## 9 License
 
