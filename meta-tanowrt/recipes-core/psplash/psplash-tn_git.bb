@@ -35,7 +35,7 @@ PSPLASH_TN_GIT_SRCREV   ?= "f5dc7aea76b22299e0ff8fec59397c6f42c96f44"
 
 SRCREV = "${PSPLASH_TN_GIT_SRCREV}"
 PV = "0.1+git${SRCPV}"
-PR = "tano9"
+PR = "tano10"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
