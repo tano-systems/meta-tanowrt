@@ -17,10 +17,11 @@ LIC_FILES_CHKSUM = "file://psplash.h;beginline=1;endline=16;md5=8228f7969c37755b
 
 DEPENDS += "libuci libubox"
 
-PACKAGECONFIG ??= "png jpeg"
+PACKAGECONFIG ??= "png jpeg alive-gif"
 
 PACKAGECONFIG[png] = "-DENABLE_PNG=ON,,libpng,"
 PACKAGECONFIG[jpeg] = "-DENABLE_JPEG=ON,,jpeg,"
+PACKAGECONFIG[alive-gif] = "-DENABLE_ALIVE_GIF=ON,,,"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -28,14 +29,14 @@ RPROVIDES_${PN} = "psplash"
 RREPLACES_${PN} = "psplash"
 RCONFLICTS_${PN} = "psplash"
 
-PSPLASH_TN_GIT_URI      ?= "git://github.com/tano-systems/psplash-tn"
+PSPLASH_TN_GIT_URI      ?= "gitsm://github.com/tano-systems/psplash-tn"
 PSPLASH_TN_GIT_BRANCH   ?= "tano/master"
 PSPLASH_TN_GIT_PROTOCOL ?= "https"
-PSPLASH_TN_GIT_SRCREV   ?= "f5dc7aea76b22299e0ff8fec59397c6f42c96f44"
+PSPLASH_TN_GIT_SRCREV   ?= "67394ea39573a5f84672b78ffe32ee47f21be410"
 
 SRCREV = "${PSPLASH_TN_GIT_SRCREV}"
 PV = "0.1+git${SRCPV}"
-PR = "tano10"
+PR = "tano11"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
