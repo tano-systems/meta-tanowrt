@@ -36,7 +36,7 @@ PSPLASH_TN_GIT_SRCREV   ?= "67394ea39573a5f84672b78ffe32ee47f21be410"
 
 SRCREV = "${PSPLASH_TN_GIT_SRCREV}"
 PV = "0.1+git${SRCPV}"
-PR = "tano11"
+PR = "tano12"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -44,6 +44,7 @@ SRC_URI = "${PSPLASH_TN_GIT_URI};branch=${PSPLASH_TN_GIT_BRANCH};protocol=${PSPL
            file://psplash.init \
            file://psplash.config \
            file://psplash-tano.png \
+           file://psplash-tano-alive.gif \
 "
 
 UPSTREAM_CHECK_COMMITS = "1"
@@ -70,6 +71,7 @@ do_install_append() {
 
 	install -d ${D}${datadir}/psplash
 	install -m 0644 ${WORKDIR}/psplash-tano.png ${D}${datadir}/psplash/
+	install -m 0644 ${WORKDIR}/psplash-tano-alive.gif ${D}${datadir}/psplash/
 }
 
 ################################################################################
