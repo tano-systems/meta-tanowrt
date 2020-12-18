@@ -11,6 +11,8 @@ CONF_VERSION = "1"
 #
 #MACHINE ?= "qemuarm"
 #MACHINE ?= "qemuarm-screen"
+#MACHINE ?= "qemuarm64"
+#MACHINE ?= "qemuarm64-screen"
 #MACHINE ?= "qemux86"
 #MACHINE ?= "qemux86-screen"
 #MACHINE ?= "qemux86-64"

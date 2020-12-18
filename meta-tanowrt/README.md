@@ -27,6 +27,8 @@ This layer supports the following machines designed to run in QEMU:
 | `qemux86-64-screen` | Common x86 (64-bit) machine with screen support  | squashfs | ext4 (256 MiB) |
 | `qemuarm`           | ARMv5 (ARM926EJ-S) machine                       | squashfs | ext4 (256 MiB) |
 | `qemuarm-screen`    | ARMv5 (ARM926EJ-S) machine with screen support   | squashfs | ext4 (256 MiB) |
+| `qemuarm64`         | ARMv8 (aarch64) machine                          | squashfs | ext4 (256 MiB) |
+| `qemuarm64-screen`  | ARMv8 (aarch64) machine with screen support      | squashfs | ext4 (256 MiB) |
 
 ## 2 Supported Images
 

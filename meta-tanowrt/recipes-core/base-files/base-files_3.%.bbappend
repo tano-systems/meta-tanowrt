@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano65.${INC_PR}"
+PR_append = ".tano66.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -64,6 +64,7 @@ X86_SRC_URI_FILES = "\
 	file://preinit/79_move_config \
 "
 
+SRC_URI_append_qemuarm64 = "file://preinit/01_sysinfo"
 SRC_URI_append_qemux86 = "${X86_SRC_URI_FILES}"
 SRC_URI_append_qemux86-64 = "${X86_SRC_URI_FILES}"
 
@@ -273,6 +274,11 @@ do_install_append () {
 		${D}${base_sbindir}/hotplug-call
 
 	sed -i 's#:/root:#:${ROOT_HOME}:#' ${D}${sysconfdir}/passwd
+}
+
+do_install_append_qemuarm64() {
+	install -dm 0755 ${D}/lib/preinit
+	install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
 }
 
 pkg_preinst_${PN} () {

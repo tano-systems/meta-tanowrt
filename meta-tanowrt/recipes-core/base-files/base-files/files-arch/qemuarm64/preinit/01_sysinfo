@@ -1,0 +1,6 @@
+do_sysinfo_qemuarm64() {
+	mkdir -p /tmp/sysinfo
+	echo "QEMU Virtual Machine (ARMv8)" > /tmp/sysinfo/model
+}
+
+boot_hook_add preinit_main do_sysinfo_qemuarm64

@@ -1,0 +1,2 @@
+part / --source rootfs --ondisk=sda --fstype=squashfs --align=1024
+part /overlay --size=64M --ondisk=sda --fstype=ext4 --label=rootfs_data --align=1024

@@ -45,6 +45,8 @@ QB_OPT_APPEND_append = "\
 	-serial null \
 "
 
+QB_OPT_APPEND_append_qemuall = " -device VGA,edid=on"
+
 QB_OPT_APPEND_ALLX86 = "\
 	-vga vmware \
 "

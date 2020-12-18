@@ -7,11 +7,13 @@
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
 
 KERNEL_SRC_BRANCH_qemuarm ?= "v4.19/standard/arm-versatile-926ejs"
+KERNEL_SRC_BRANCH_qemuarm64 ?= "v4.19/standard/qemuarm64"
 KERNEL_SRC_BRANCH_qemux86 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH_qemux86-64 ?= "v4.19/standard/base"
 KERNEL_SRC_BRANCH ?= "v4.19/standard/base"
 
 KERNEL_SRC_SRCREV_machine_qemuarm ?= "4d9d89763cde098e4a8b879e8c831e35a5f39ae6"
+KERNEL_SRC_SRCREV_machine_qemuarm64 ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
 KERNEL_SRC_SRCREV_machine_qemux86 ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
 KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
 KERNEL_SRC_SRCREV ?= "2ba1fa4d5068982e785527ef8ad1a8b658f0add1"
