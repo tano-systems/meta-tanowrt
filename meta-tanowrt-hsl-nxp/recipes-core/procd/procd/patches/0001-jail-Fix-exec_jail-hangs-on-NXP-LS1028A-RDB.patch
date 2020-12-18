@@ -1,0 +1,37 @@
+From bfcf3b6d4cd6fb9fda9e88d8530992a21720c3c7 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 18 Dec 2020 15:30:21 +0300
+Subject: [PATCH] jail: Fix exec_jail hangs on NXP LS1028A RDB
+
+Added call to usleep(0) at start of exec_jail function.
+This call fixes an obscure hang of this function when starting some
+services (e.g. dnsmasq) with ujail on the NXP LS1028A RDB board with
+the Linux 5.4.3-rt kernel (OpenIL-v1.9-linux-202009).
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ jail/jail.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/jail/jail.c b/jail/jail.c
+index 22f3f36..98630ea 100644
+--- a/jail/jail.c
++++ b/jail/jail.c
+@@ -1100,6 +1100,14 @@ static int exec_jail(void *arg)
+ {
+ 	char buf[1];
+ 
++	/*
++	 * This call fixes an obscure hang of this function when
++	 * starting some services (e.g. dnsmasq) with ujail on the
++	 * NXP LS1028A RDB board with the Linux 5.4.3-rt kernel
++	 * (OpenIL-v1.9-linux-202009).
++	 */
++	usleep(0);
++
+ 	exit_from_child = true;
+ 	prctl(PR_SET_SECUREBITS, 0);
+ 
+-- 
+2.28.0.windows.1
+
