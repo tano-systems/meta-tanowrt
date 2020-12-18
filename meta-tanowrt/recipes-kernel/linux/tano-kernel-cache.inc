@@ -1,4 +1,4 @@
-PR_append = ".10"
+PR_append = ".11"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
@@ -36,3 +36,5 @@ KERNEL_FEATURES_append = " \
 	features/general/leds/ledtrig_heartbeat.scc \
 	features/general/leds/ledtrig_timer.scc \
 "
+
+KERNEL_FEATURES_append_qemuall = " features/general/virtio/virtio.scc"
