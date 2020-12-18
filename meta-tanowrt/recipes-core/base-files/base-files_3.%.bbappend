@@ -4,7 +4,7 @@
 
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano64.${INC_PR}"
+PR_append = ".tano65.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -28,6 +28,7 @@ RDEPENDS_${PN} += "tzdata getrandom"
 
 require base-files.inc
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-arch:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
@@ -51,15 +52,20 @@ SRC_URI_append = "\
 "
 
 # Only for x86 and x86-64 architectures
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-x86:"
+FILESEXTRAPATHS_prepend_qemux86 := "${THISDIR}/${PN}/files-arch/x86:"
+FILESEXTRAPATHS_prepend_qemux86-64 := "${THISDIR}/${PN}/files-arch/x86:"
+
 ARCH_X86 = "i586 x86_64"
-SRC_URI_append = "\
-	file://01_sysinfo \
-	file://02_load_x86_ucode \
-	file://15_essential_fs_x86 \
-	file://20_check_iso \
-	file://79_move_config \
+X86_SRC_URI_FILES = "\
+	file://preinit/01_sysinfo \
+	file://preinit/02_load_x86_ucode \
+	file://preinit/15_essential_fs_x86 \
+	file://preinit/20_check_iso \
+	file://preinit/79_move_config \
 "
+
+SRC_URI_append_qemux86 = "${X86_SRC_URI_FILES}"
+SRC_URI_append_qemux86-64 = "${X86_SRC_URI_FILES}"
 
 SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
@@ -230,11 +236,11 @@ do_install_append () {
 
 	if [ "${@bb.utils.contains('ARCH_X86', '${TARGET_ARCH}', 'true', 'false', d)}" = "true" ]; then
 		install -dm 0755 ${D}/lib/preinit
-		install -m 0644 ${WORKDIR}/01_sysinfo ${D}/lib/preinit/01_sysinfo
-		install -m 0644 ${WORKDIR}/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
-		install -m 0644 ${WORKDIR}/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
-		install -m 0644 ${WORKDIR}/20_check_iso ${D}/lib/preinit/20_check_iso
-		install -m 0644 ${WORKDIR}/79_move_config ${D}/lib/preinit/79_move_config
+		install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
+		install -m 0644 ${WORKDIR}/preinit/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
+		install -m 0644 ${WORKDIR}/preinit/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
+		install -m 0644 ${WORKDIR}/preinit/20_check_iso ${D}/lib/preinit/20_check_iso
+		install -m 0644 ${WORKDIR}/preinit/79_move_config ${D}/lib/preinit/79_move_config
 	fi
 
 	if [ "${ROOT_HOME}" != "/home/root" ]; then
