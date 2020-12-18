@@ -85,6 +85,11 @@ DISTRO_EXTRA_RRECOMMENDS += "openssh-sftp-server"
 PACKAGECONFIG_append_pn-openssl = " cryptodev-linux"
 
 #
+# QEMU
+#
+QEMU_TARGETS = "arm aarch64 i386 x86_64"
+
+#
 # Dynamic includes
 #
 include conf/distro/include/tanowrt-hw.inc
