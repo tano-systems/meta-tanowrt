@@ -79,13 +79,13 @@ Support for real hardware is provided by additional hardware support layers (HSL
 
 Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers:
 
-| Layer                      | Hardware                                   |
-| -------------------------- | ------------------------------------------ |
-| [meta-tanowrt]             | QEMU for x86 (32-bit and 64-bit) and ARMv5 |
-| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                     |
-| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                        |
-| [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                |
-| [meta-tanowrt-hsl-ti]      | Texas Instruments SoC based devices        |
+| Layer                      | Hardware                                          |
+| -------------------------- | ------------------------------------------------- |
+| [meta-tanowrt]             | QEMU for x86 (32-bit and 64-bit), ARMv5 and ARMv8 |
+| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                            |
+| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                               |
+| [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                       |
+| [meta-tanowrt-hsl-ti]      | Texas Instruments SoC based devices               |
 
 [meta-tanowrt]: meta-tanowrt/README.md
 [meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
