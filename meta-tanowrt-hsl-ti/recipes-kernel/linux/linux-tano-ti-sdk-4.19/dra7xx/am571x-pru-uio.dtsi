@@ -1,0 +1,284 @@
+&pruss_soc_bus1 {
+                uio_pruss1_mdio {
+                        status = "okay";
+
+                        compatible = "ti,davinci_mdio";
+                        #address-cells = <1>;
+                        #size-cells = <0>;
+                        clocks = <&dpll_gmac_h13x2_ck>;
+                        clock-names = "fck";
+                        bus_freq = <1000000>;
+                        reg = <0x4a332400 0x90>;
+
+                        reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+                        reset-delay-us = <2>;   /* PHY datasheet states 1uS min */
+                        uio_pruss1_eth0_phy: uio_ethernet-phy@0 {
+                            reg = <0>;
+                        };
+
+                        uio_pruss1_eth1_phy: uio_ethernet-phy@1 {
+                            reg = <1>;
+                         };
+                };
+
+		uio_pruss1_mem: uio_pruss1_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b200000 0x2000>,
+			      <0x4b202000 0x2000>,
+			      <0x4b210000 0x8000>,
+			      <0x4b220000 0x5404>,
+			      <0x4b226000 0x474>,
+			      <0x4b22e000 0xc04>,
+			      <0x4b232000 0x154>;
+			mem-names = "dram0", "dram1", "shrdram2", "intc", "cfg",
+				    "iep", "mii_rt";
+			status = "okay";
+		};
+		uio_pruss1_mem2: uio_pruss1_mem2 {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b228000 0xd4>,
+			      <0x4b230000 0x174>,
+			      <0x4b232400 0x234>,
+			      <0x40300000 0x40000>;
+			mem-names = "uart", "ecap", "mdio", "ocmc";
+			status = "okay";
+		};
+		uio_pruss1_evt0: uio_pruss1_evt0 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt1: uio_pruss1_evt1 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt2: uio_pruss1_evt2 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt3: uio_pruss1_evt3 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt4: uio_pruss1_evt4 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt5: uio_pruss1_evt5 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt6: uio_pruss1_evt6 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss1_evt7: uio_pruss1_evt7 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 193 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+
+		uio_pruss1_0_mem: uio_pruss1_0_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b234000 0x3000>,
+			      <0x4b222000 0xb4>,
+			      <0x4b222400 0x3f4>;
+			mem-names = "iram", "control", "debug";
+			status = "okay";
+		};
+
+		uio_pruss1_1_mem: uio_pruss1_1_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b238000 0x3000>,
+			      <0x4b224000 0xb4>,
+			      <0x4b224400 0x3f4>;
+			mem-names = "iram", "control", "debug";
+			status = "okay";
+		};
+};
+
+&pruss_soc_bus2 {
+                uio_pruss2_mdio {
+                        compatible = "ti,davinci_mdio";
+                        #address-cells = <1>;
+                        #size-cells = <0>;
+                        clocks = <&dpll_gmac_h13x2_ck>;
+                        clock-names = "fck";
+                        bus_freq = <1000000>;
+                        reg = <0x4a332400 0x90>;
+                        status = "okay";
+
+                        reset-gpios = <&gpio5 9 GPIO_ACTIVE_LOW>;
+                        reset-delay-us = <2>;   /* PHY datasheet states 1uS min */
+
+                        uio_pruss2_eth0_phy: ethernet-phy@0 {
+                           reg = <0>;
+                        };
+
+                        uio_pruss2_eth1_phy: ethernet-phy@1 {
+                            reg = <1>;
+                         };
+                };
+
+		uio_pruss2_mem: uio_pruss2_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b280000 0x2000>,
+			      <0x4b282000 0x2000>,
+			      <0x4b290000 0x8000>,
+			      <0x4b2a0000 0x5404>,
+			      <0x4b2a6000 0x474>,
+			      <0x4b2ae000 0xc04>,
+			      <0x4b2b2000 0x154>;
+			mem-names = "dram0", "dram1", "shrdram2", "intc", "cfg",
+				    "iep", "mii_rt";
+			status = "okay";
+		};
+		uio_pruss2_mem2: uio_pruss2_mem2 {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b2a8000 0xd4>,
+			      <0x4b2b0000 0x174>,
+			      <0x4b2b2400 0x234>,
+			      <0x40340000 0x40000>;
+			mem-names = "uart", "ecap", "mdio", "ocmc";
+			status = "okay";
+		};
+		uio_pruss2_evt0: uio_pruss2_evt0 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 196 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt1: uio_pruss2_evt1 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 197 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt2: uio_pruss2_evt2 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt3: uio_pruss2_evt3 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 199 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt4: uio_pruss2_evt4 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt5: uio_pruss2_evt5 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 201 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt6: uio_pruss2_evt6 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 202 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+		uio_pruss2_evt7: uio_pruss2_evt7 {
+			compatible = "ti,uio-module-drv";
+			interrupts = <GIC_SPI 203 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-mode = <1>;
+			status = "okay";
+		};
+
+		uio_pruss2_0_mem: uio_pruss2_0_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b2b4000 0x3000>,
+			      <0x4b2a2000 0xb4>,
+			      <0x4b2a2400 0x3f4>;
+			mem-names = "iram", "control", "debug";
+			status = "okay";
+		};
+		uio_pruss2_1_mem: uio_pruss2_1_mem {
+			compatible = "ti,uio-module-drv";
+			mem = <0x4b2b8000 0x3000>,
+			      <0x4b2a4000 0xb4>,
+			      <0x4b2a4400 0x3f4>;
+			mem-names = "iram", "control", "debug";
+			status = "okay";
+		};
+	};
+
+&pruss1_eth {
+        status = "disabled";
+};
+
+&pruss1_emac0 {
+        status = "disabled";
+};
+
+&pruss1_emac1 {
+        status = "disabled";
+};
+
+&pruss2_emac0 {
+        status = "disabled";
+};
+
+&pruss2_emac1 {
+        status = "disabled";
+};
+
+&pruss1 {
+	status = "disabled";
+};
+
+&pru1_0 {
+        status = "disabled";
+};
+
+&pru1_1 {
+        status = "disabled";
+};
+
+&pruss1_intc {
+        status = "disabled";
+};
+
+&pruss1_mdio {
+        status = "disabled";
+};
+
+&pruss2 {
+	status = "disabled";
+};
+
+&pru2_0 {
+        status = "disabled";
+};
+
+&pru2_1 {
+        status = "disabled";
+};
+
+&pruss2_intc {
+        status = "disabled";
+};
+
+&pruss2_mdio {
+        status = "disabled";
+};

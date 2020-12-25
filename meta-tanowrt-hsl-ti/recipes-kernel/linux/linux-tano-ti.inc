@@ -5,9 +5,11 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".4"
+PR_append = ".5"
 
 COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
+
+FILESEXTRAPATHS_prepend = "${THISDIR}/features:"
 
 SRC_URI_append = "\
 	file://patches-cpsw/0001-cpsw-increase-default-desc-pool-size.patch \
@@ -18,6 +20,8 @@ SRC_URI_append = "\
 	file://patches-tty/0001-drivers-tty-refactor-functions-for-flushing-queuing.patch \
 	file://patches-tty/0002-drivers-tty-convert-tty_port-to-use-kthread_worker.patch \
 	file://patches-tty/0003-drivers-tty-increase-priority-for-tty_buffer_worker.patch \
+	file://uio.scc \
+	file://uio-pruss.scc \
 "
 
 SRC_URI_append = "\
@@ -29,6 +33,10 @@ KERNEL_MACHINE_INCLUDE_am335x-bbb ?= "recipes-kernel/linux/linux-tano-ti-am335x-
 KERNEL_MACHINE_INCLUDE_am574x-idk ?= "recipes-kernel/linux/linux-tano-ti-am574x-idk.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-ti-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
+require recipes-kernel/linux/ti-uio.inc
+
+KERNEL_FEATURES_append = "${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', ' uio.scc uio-pruss.scc ', '', d)}"
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append = "${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', ' uio-module-drv uio-module-drv-test ', '', d)}"
 
 # Add a run-time dependency for the PM firmware to be installed
 # on the target file system.

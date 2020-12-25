@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Enable UIO"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware uio.cfg

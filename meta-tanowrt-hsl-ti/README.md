@@ -10,9 +10,9 @@ This layer contains various parts (recipes, files, etc.) from the [meta-arago](h
 
 | `MACHINE`                                                    | Board(s)                                                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| [`am335x-bbb-sd`](#81-beaglebone-black-am335x-bbb-sd)        | [BeagleBone Black](https://beagleboard.org/black) SD card image                       |
-| [`am335x-icev2-sd`](#82-ti-am3359-icev2-evm-am335x-icev2-sd) | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (TMDSICE3359) SD card image |
-| [`am574x-idk-sd`](#83-ti-am574x-idk-evm-am574x-idk-sd)       | [TI AM574x IDK EVM](https://www.ti.com/tool/TMDSIDK574) (TMDSIDK574) SD card image    |
+| [`am335x-bbb-sd`](#91-beaglebone-black-am335x-bbb-sd)        | [BeagleBone Black](https://beagleboard.org/black) SD card image                       |
+| [`am335x-icev2-sd`](#92-ti-am3359-icev2-evm-am335x-icev2-sd) | [TI AM3359 ICEv2 EVM](http://www.ti.com/tool/TMDSICE3359) (TMDSICE3359) SD card image |
+| [`am574x-idk-sd`](#93-ti-am574x-idk-evm-am574x-idk-sd)       | [TI AM574x IDK EVM](https://www.ti.com/tool/TMDSIDK574) (TMDSIDK574) SD card image    |
 
 ## 2 Supported Images
 
@@ -35,11 +35,7 @@ By default, the following kernels are built, depending on the machine:
 | `am335x-icev2-sd` | Staging (5.4.x)         |
 | `am574x-idk-sd`   | Processor SDK (4.19.x)  |
 
-### 3.1 Choosing a Kernel Version to Build
-
-To choose the kernel version, you can use the variable `TANOWRT_HSL_TI_SDK_KERNEL` in the `local.conf` (see "[Initialize Build Environment](#6-initialize-build-environment)" section) file to determine which kernel should be used for the build. The variable `TANOWRT_HSL_TI_SDK_KERNEL` can be assigned one of the following values:
-- `0` — use TI staging kernel;
-- `1` — use kernel from TI Processor SDK Linux.
+See "[Choosing a Kernel Version to Build](#71-choosing-a-kernel-version-to-build)" section for details about choosing kernel version to build.
 
 ## 4 Prerequisites
 
@@ -121,7 +117,30 @@ BB_NUMBER_THREADS = "8"
 PARALLEL_MAKE = "-j 8"
 ```
 
-## 7 Building
+## 7 Build Customization
+
+Optionally you can customize some build options in `local.conf configuration file.
+
+### 7.1 Choosing a Kernel Version to Build
+
+To choose the kernel version, you can use the variable `TANOWRT_HSL_TI_SDK_KERNEL` in the `local.conf` (see "[Initialize Build Environment](#6-initialize-build-environment)" section) file to determine which kernel should be used for the build. The variable `TANOWRT_HSL_TI_SDK_KERNEL` can be assigned one of the following values:
+- `0` — use TI staging kernel;
+- `1` — use kernel from TI Processor SDK Linux.
+
+See "[Supported Linux Kernels](#3-supported-linux-kernels)" section for list of available kernel version for specific supported targets.
+
+### 7.2 TI UIO Support
+
+By default TI UIO support is disabled. To enable TI UIO support to build add this to your `local.conf`:
+
+```
+ENABLE_TI_UIO_DEVICES = "1"
+TANOWRT_HSL_TI_SDK_KERNEL = "1"
+```
+
+**Note:** Currently this feature is supported only for kernel from TI Processor SDK (4.19). So you must also set `TANOWRT_HSL_TI_SDK_KERNEL` to `1` in the `local.conf` file.
+
+## 8 Building
 
 Build SD card image for BeagleBone Black board as an example:
 
@@ -138,28 +157,28 @@ All images supported by this layer are listed in the "[Supported Images](#2-Supp
 
 Other available machines are listed in the "[Supported Hardware](#1-Supported-Hardware)" section.
 
-## 8 Running on Hardware
+## 9 Running on Hardware
 
-### 8.1 BeagleBone Black (`am335x-bbb-sd`)
+### 9.1 BeagleBone Black (`am335x-bbb-sd`)
 
 ![BeagleBone Black](docs/am335x-bbb-board.jpg)
 
 ![BeagleBone Black](docs/am335x-bbb-board-exp.jpg)
 
-#### 8.1.1 Writing Image to SD Card
+#### 9.1.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 8.1.2 Booting
+#### 9.1.2 Booting
 
 1. Insert the SD card into the slot on the BeagleBone Black board (power is off).
 2. Press and hold the S2 button.
 3. Power on board.
 4. Wait 1–3 seconds and release S2 button.
 5. System from SD card will be booting.
-6. For login use credentials specified in "[Access](#9-Access)" section.
+6. For login use credentials specified in "[Access](#10-Access)" section.
 
-#### 8.1.3 Default Network Configuration
+#### 9.1.3 Default Network Configuration
 
 By default Ethernet port (`eth0` interface) are joined into a bridge (`br-lan` interface). Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -171,19 +190,19 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 The Ethernet port (`eth0`) has LLDP enabled by default.
 
-### 8.2 TI AM3359 ICEv2 EVM (`am335x-icev2-sd`)
+### 9.2 TI AM3359 ICEv2 EVM (`am335x-icev2-sd`)
 
 ![AM3359 ICEv2 EVM](docs/am335x-icev2-board.jpg)
 
 ![AM3359 ICEv2 EVM](docs/am335x-icev2-board-exp.jpg)
 
-#### 8.2.1 Writing Image to SD Card
+#### 9.2.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 8.2.2 Preparing Hardware
+#### 9.2.2 Preparing Hardware
 
-##### 8.2.2.1 Erasing SPI NOR Flash
+##### 9.2.2.1 Erasing SPI NOR Flash
 
 Note that booting from an SD card is only possible when there is no bootloader in the SPI NOR flash. If you have an bootloader in the SPI NOR flash you must erase SPI NOR flash contents. Follow these [instructions](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/How_to_Guides/Host/AM335x_ICEv2_flash_erase.html#am335x-icev2-flash-erase) to erase flash contents:
 
@@ -221,22 +240,22 @@ Note that booting from an SD card is only possible when there is no bootloader i
       Enter size to be erased in Kilo bytes: 64
       ```
 
-##### 8.2.2.2 Choosing Boot Mode
+##### 9.2.2.2 Choosing Boot Mode
 
 Short pin 2 and 3 on J5 (sysboot) for choosing MMC/SD boot mode.
 
-##### 8.2.2.3 Choosing Ethernet Mode
+##### 9.2.2.3 Choosing Ethernet Mode
 
 Jumpers J18 and J19 must be set to control the Ethernet ports using CPSW (gigabit switch) or PRU-ICSS mode. For PRU-ICSS mode, short pins 2 and 3. For CPSW mode, short pins 1 and 2.
 
-#### 8.2.3 Booting
+#### 9.2.3 Booting
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
-4. For login use credentials specified in "[Access](#9-Access)" section.
+4. For login use credentials specified in "[Access](#10-Access)" section.
 
-#### 8.2.4 Default Network Configuration
+#### 9.2.4 Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -246,7 +265,7 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
 
-#### 8.2.5 PPP Connection over UART4
+#### 9.2.5 PPP Connection over UART4
 
 By default, the pppd service is running on the UART4 port ready for connection via null-modem cable with PC. UART4 signals are routed to J3 connector (Host Expansion Connector 2) of ICEv2 board. To connect the null-modem cable you need to use the following pins of the J3 connector:
 - pin 2 — Ground;
@@ -300,26 +319,57 @@ PING 172.16.0.1 (172.16.0.1): 56 data bytes
 round-trip min/avg/max = 20.161/21.590/22.233 ms
 ```
 
-### 8.3 TI AM574x IDK EVM (`am574x-idk-sd`)
+#### 9.2.6 Enabling TI UIO
+
+First of all, you must enable TI UIO build feature (see "[TI UIO Support](#72-ti-uio-support)" section) and do a complete image build (see "[Building](#8-building)" section).
+
+When an image with TI UIO support is built, it is necessary to enable this feature by loading the required devicetree (`.dtb`) file at startup. To do this, you need to stop booting u-boot (press any key) when the message `Hit any key to stop autoboot` is displayed in the UART and enter following commands:
+
+```
+setenv findfdt "setenv fdtfile am335x-icev2-pru-excl-uio.dtb"
+setenv extrabootargs "modprobe.blacklist=pruss,pru_rproc,ti_prueth"
+saveenv
+boot
+```
+
+When Linux boots with the TI UIO feature enabled, you should see `uio*` devices in the `/dev` directory:
+
+```
+[root@tanowrt ~]# ls /dev/uio*
+/dev/uio0             /dev/uio4             /dev/uio_pruss_0_mem
+/dev/uio1             /dev/uio5             /dev/uio_pruss_1_mem
+/dev/uio2             /dev/uio6             /dev/uio_pruss_mem
+/dev/uio3             /dev/uio7             /dev/uio_pruss_mem2
+```
+
+If you later want to boot without the TI UIO feature enabled, you need to restore the original values of the environment variables, that have been changed by the commands above. To do this, run the following commands in u-boot prompt:
+
+```
+env default -f -a
+saveenv
+reset
+```
+
+### 9.3 TI AM574x IDK EVM (`am574x-idk-sd`)
 
 ![AM574x IDK EVM](docs/am574x-idk-board.jpg)
 
-#### 8.2.1 Writing Image to SD Card
+#### 9.3.1 Writing Image to SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
-#### 8.2.2 Preparing Hardware
+#### 9.3.2 Preparing Hardware
 
 No special things to do.
 
-#### 8.2.3 Booting
+#### 9.3.3 Booting
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
-4. For login use credentials specified in "[Access](#9-Access)" section.
+4. For login use credentials specified in "[Access](#10-Access)" section.
 
-#### 8.2.4 Default Network Configuration
+#### 9.3.4 Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -331,22 +381,22 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 Ethernet ports 1 and 2 (`eth0` and `eth1`) have LLDP enabled by default.
 
-## 9 Access
+## 10 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## 10 Issues
+## 11 Issues
 
-### 10.1 Known issues
+### 11.1 Known issues
 
 | ID       | Machine(s)      | Description                                                                                          |
 | -------- | --------------- | ---------------------------------------------------------------------------------------------------- |
 | HSL-TI-1 | `am574x-idk-sd` | USB RNDIS is not working (`usb0` interface)                                                          |
 | HSL-TI-2 | `am574x-idk-sd` | kernel 5.4: When trying to bridge PRU ethernet interfaces (`eth2` or/and `eth3`), the kernel crashes |
 
-## 11 Dependencies
+## 12 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -358,10 +408,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## 12 License
+## 13 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 13 Maintainers
+## 14 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
