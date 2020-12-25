@@ -2,7 +2,7 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Texas Instruments (TI) SoC based boards.
 
-![Sitara](docs/ti_sitara.jpg)
+![Sitara](docs/ti_sitara.webp)
 
 This layer contains various parts (recipes, files, etc.) from the [meta-arago](http://arago-project.org/git/meta-arago.git) and [meta-processor-sdk](http://arago-project.org/git/projects/meta-processor-sdk.git) layers.
 
