@@ -1,12 +1,12 @@
 #!/bin/sh /etc/rc.common
 
-. /lib/functions.sh
-. /lib/mwan3/common.sh
-. /lib/functions/network.sh
-. /lib/mwan3/mwan3.sh
+. "${IPKG_INSTROOT}/lib/mwan3/common.sh"
+. "${IPKG_INSTROOT}/lib/functions/network.sh"
+. "${IPKG_INSTROOT}/lib/mwan3/mwan3.sh"
 
 START=19
 USE_PROCD=1
+SCRIPTNAME="mwan3-init"
 
 service_running() {
 	[ -d "$MWAN3_STATUS_DIR" ]
@@ -73,7 +73,7 @@ stop_service() {
 			IP="$IP6"
 		fi
 
-		for tid in $(ip route list table all | sed -ne 's/.*table \([0-9]\+\).*/\1/p' | sort -u); do
+		for tid in $($IP route list table all | sed -ne 's/.*table \([0-9]\+\).*/\1/p' | sort -u); do
 			[ $tid -gt $MWAN3_INTERFACE_MAX ] && continue
 			$IP route flush table $tid &> /dev/null
 		done

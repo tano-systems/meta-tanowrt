@@ -1,10 +1,5 @@
 #!/bin/sh
 
-get_uptime() {
-	local uptime=$(cat /proc/uptime)
-	echo "${uptime%%.*}"
-}
-
 IP4="ip -4"
 IP6="ip -6"
 SCRIPTNAME="$(basename "$0")"
@@ -134,6 +129,9 @@ mwan3_init()
 		LOG debug "Max interface count is ${MWAN3_INTERFACE_MAX}"
 	fi
 
+	# remove "linkdown", expiry and source based routing modifiers from route lines
+	MWAN3_ROUTE_LINE_EXP="s/linkdown //; s/expires [0-9]\+sec//;s/error [0-9]\+//; ${source_routing:+s/default\(.*\) from [^ ]*/default\1/;} p"
+
 	# mark mask constants
 	bitcnt=$(mwan3_count_one_bits MMX_MASK)
 	mmdefault=$(((1<<bitcnt)-1))
@@ -179,4 +177,19 @@ mwan3_count_one_bits()
 		count=$((count+1))
 	done
 	echo $count
+}
+
+get_uptime() {
+	local uptime=$(cat /proc/uptime)
+	echo "${uptime%%.*}"
+}
+
+get_online_time() {
+	local time_n time_u iface
+	iface="$1"
+	time_u="$(cat "$MWAN3TRACK_STATUS_DIR/${iface}/ONLINE" 2>/dev/null)"
+	[ -z "${time_u}" ] || [ "${time_u}" = "0" ] || {
+		time_n="$(get_uptime)"
+		echo $((time_n-time_u))
+	}
 }
