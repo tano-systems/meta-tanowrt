@@ -8,7 +8,7 @@ SECTION = "base"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=878618a5c4af25e9b93ef0be1a93f774"
 
-PR = "tano2"
+PR = "tano0"
 
 # Compile always with gcc
 TOOLCHAIN = "gcc"
@@ -16,7 +16,7 @@ TOOLCHAIN = "gcc"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "libnl"
 
-SRC_URI = "http://www.kernel.org/pub/software/network/iw/${BP}.tar.gz"
+SRC_URI = "http://www.kernel.org/pub/software/network/iw/${BP}.tar.xz"
 
 # Patches
 SRC_URI += "\
@@ -26,8 +26,7 @@ SRC_URI += "\
 	file://200-reduce_size.patch \
 "
 
-SRC_URI[md5sum] = "08a4f581a39dc62fa85d3af796d844b6"
-SRC_URI[sha256sum] = "943cd2446a6c7242fded3766d054ab2a214a3514b9a8b7e942fed8fb13c1370c"
+SRC_URI[sha256sum] = "b59c4bacb0b6675cc09f2f30ebdceb91174cb65443d0a062fba2c09fad772db4"
 
 inherit pkgconfig
 
