@@ -1,7 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2015 Khem Raj <raj.kem@gmail.com> and
 #
-# It is released under the MIT license.  See COPYING.MIT
-# for the terms.
 
 OECMAKE_C_FLAGS += "-DLUA_COMPAT_5_1"
 EXTRA_OECMAKE += "-DLUAPATH=${libdir}/lua/5.1"

@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 
 do_install_append() {
 	install -d ${D}${sysconfdir}/modules-boot.d

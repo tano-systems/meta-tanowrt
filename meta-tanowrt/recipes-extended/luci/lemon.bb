@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LEMON LALR(1) parser generator
 # (from LuCI sources at modules/luci-base/src/contrib)
 #

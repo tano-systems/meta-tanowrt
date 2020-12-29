@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "A 802.1ab implementation (LLDP) to help you locate neighbors of all your equipments"
 SECTION = "net/misc"
 LICENSE = "ISC"

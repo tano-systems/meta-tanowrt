@@ -1,5 +1,7 @@
 #
-# This file Copyright (c) 2020, Tano Systems LLC. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+#
+# This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR_append_ls1028ardb = ".nxp2"

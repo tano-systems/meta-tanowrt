@@ -1,4 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # This file Copyright (c) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 require hostapd.inc
 

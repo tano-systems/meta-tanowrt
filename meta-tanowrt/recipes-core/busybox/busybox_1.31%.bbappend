@@ -1,4 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 PR_append = ".tano1.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"

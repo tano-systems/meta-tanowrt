@@ -1,5 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
-# Released under the MIT license (see COPYING.MIT for the terms)
+#
 
 SUMMARY = "Inittab configuration for procd"
 LICENSE = "GPLv2"

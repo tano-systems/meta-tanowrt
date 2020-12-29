@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 inherit core-image
 inherit tanowrt-image-buildinfo
 inherit tanowrt-kmods

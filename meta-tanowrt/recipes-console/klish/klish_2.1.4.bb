@@ -1,5 +1,7 @@
 #
-# This file Copyright (c) 2018, Tano Systems
+# SPDX-License-Identifier: MIT
+#
+# This file Copyright (c) 2018 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 DESCRIPTION = "Kommand Line Interface Shell"

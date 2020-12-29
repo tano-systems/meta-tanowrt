@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
+
 PR = "tano1"
 
 SUMMARY = "Host side USB console utilities"

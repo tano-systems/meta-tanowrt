@@ -1,8 +1,12 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018, 2020 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Kernel modules support for a netlink-based connection tracking
 # userspace interface
+#
 
 inherit kernel-kmod
 

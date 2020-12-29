@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
 DESCRIPTION = "Library for parsing configuration files."
 HOMEPAGE = "http://www.nongnu.org/confuse/"
 SECTION = "libs"

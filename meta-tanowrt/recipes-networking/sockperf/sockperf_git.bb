@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # sockperf - network benchmarking utility over socket API that was designed
 # for testing performance (latency and throughput) of high-performance systems.
 #

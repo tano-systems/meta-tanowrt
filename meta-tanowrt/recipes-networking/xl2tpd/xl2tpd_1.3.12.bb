@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "Xelerance version of the Layer 2 Tunneling Protocol (L2TP) daemon"
 HOMEPAGE = "http://www.xelerance.com/software/xl2tpd/"
 SECTION = "net"

@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 
 # Toolchain should be selected by setting TOOLCHAIN_BRAND in local.conf
 # Set some sane defaults, in case someone forgets to set them in local.conf

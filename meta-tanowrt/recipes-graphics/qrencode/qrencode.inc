@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
+
 SUMMARY = "C library for encoding data in a QR Code symbol"
 AUTHOR = "Kentaro Fukuchi"
 HOMEPAGE = "http://fukuchi.org/works/qrencode/"

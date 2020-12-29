@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Modbus RTU to Modbus TCP gateway LuCI application
 #
-# Copyright (c) 2020 Tano Systems LLC. All Rights Reserved.
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0+git${SRCPV}"

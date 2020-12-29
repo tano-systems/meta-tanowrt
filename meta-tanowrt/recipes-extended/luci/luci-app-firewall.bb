@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI
 # Firewall and Portforwarding application
 #

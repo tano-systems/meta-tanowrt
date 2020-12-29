@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuaSrcDiet - Compresses Lua source code by removing unnecessary characters.
 #
 # This file Copyright (C) 2018 Tano Systems

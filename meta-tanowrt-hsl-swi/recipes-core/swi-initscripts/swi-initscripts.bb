@@ -1,5 +1,7 @@
 #
-# This file (C) Copyright 2020, Tano Systems LLC
+# SPDX-License-Identifier: MIT
+#
+# This file (C) Copyright 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Recipe based on original recipe from meta-swi layer

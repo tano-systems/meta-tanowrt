@@ -1,7 +1,11 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018, 2020 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Kernel support for IPWireless 3G devices
+#
 
 inherit kernel-kmod
 

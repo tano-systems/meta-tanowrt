@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Make /var in tmpfs
 #
 IMAGE_PREPROCESS_COMMAND += "rootfs_var_in_tmpfs; "

@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # The JavaScript Minifier
 #
 # This file Copyright (C) 2019 Tano Systems

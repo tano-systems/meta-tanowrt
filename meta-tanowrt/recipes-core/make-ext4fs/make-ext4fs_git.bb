@@ -1,6 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
-# Released under the MIT license (see COPYING.MIT for the terms)
+#
 
 DESCRIPTION = "Standalone fork of Android's make_ext4fs utility"
 HOMEPAGE = "https://git.openwrt.org/?p=project/make_ext4fs.git;a=summary"

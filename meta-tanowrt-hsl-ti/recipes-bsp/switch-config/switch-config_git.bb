@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 DESCRIPTION = "Ethernet Switch configuration management"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://switch-config.c;beginline=1;endline=14;md5=659ff9658cbaba3110b81804af60de75"

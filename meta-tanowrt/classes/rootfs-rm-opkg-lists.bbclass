@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Remove from rootfs files from /usr/lib/opkg/lists/
 #
 ROOTFS_POSTPROCESS_COMMAND += "rootfs_rm_opkg_lists; "

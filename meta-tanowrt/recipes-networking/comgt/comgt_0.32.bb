@@ -1,4 +1,6 @@
-# This file Copyright (C) 2018, 2020 Anton Kikin <a.kikin@tano-systems.com>
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018, 2020 Tano Systems LLC. All rights reserved.
 #
 DESCRIPTION = "3G/GPRS datacard management utility"
 LICENSE = "GPLv2"

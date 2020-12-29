@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Kernel configuration dependencies
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #

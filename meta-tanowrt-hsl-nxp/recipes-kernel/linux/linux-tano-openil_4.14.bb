@@ -1,5 +1,7 @@
 #
-# This file Copyright (C) 2020, Tano Systems, All rights reserved
+# SPDX-License-Identifier: MIT
+#
+# This file Copyright (C) 2020 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 SECTION = "kernel"

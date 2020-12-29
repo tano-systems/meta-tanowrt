@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 ROOTFS_POSTPROCESS_COMMAND += "rootfs_misc_fixups; "
 
 rootfs_misc_fixups() {

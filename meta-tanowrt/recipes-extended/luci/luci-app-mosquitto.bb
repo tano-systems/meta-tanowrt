@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI Support for Mosquitto
 #
 # This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.

@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "Universal Boot Loader for embedded devices"
 PROVIDES = "virtual/bootloader"
 

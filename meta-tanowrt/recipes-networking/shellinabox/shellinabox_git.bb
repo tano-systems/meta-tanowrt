@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Shell In A Box implements a web server that 
 # can export arbitrary command line tools to 
 # a web based terminal emulator. This emulator 
@@ -6,7 +8,7 @@
 # enabled web browser and does not require any additional browser plugins.
 # https://github.com/shellinabox/shellinabox
 #
-# This file Copyright (c) 2018, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano2"

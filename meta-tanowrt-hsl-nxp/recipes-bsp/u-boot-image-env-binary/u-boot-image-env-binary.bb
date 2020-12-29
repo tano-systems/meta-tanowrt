@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR = "tano1"
 SUMMARY = "U-boot environment binary"
 LICENSE = "MIT"

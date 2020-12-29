@@ -1,7 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
-# Released under the MIT license (see COPYING.MIT for the terms)
-
+#
 require recipes-image/images/tanowrt-image-base.bb
 
 PR_append = ".5"

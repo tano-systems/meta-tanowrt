@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 require lldpd.inc
 
 PR = "tano0.${INC_PR}"

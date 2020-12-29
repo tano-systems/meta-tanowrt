@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Distributed, real-time, performance and health monitoring for systems and applications.
 #
 # This file Copyright (c) 2019, Anton Kikin <a.kikin@tano-systems.com>

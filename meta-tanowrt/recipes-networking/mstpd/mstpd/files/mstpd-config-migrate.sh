@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# SPDX-License-Identifier: MIT
+#
 # MSTPD UCI config migration script.
 # 
 # Copyright (C) 2020 Tano Systems LLC

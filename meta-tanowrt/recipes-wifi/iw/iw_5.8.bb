@@ -1,4 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 # nl80211 based CLI configuration utility for wireless devices
+#
 SUMMARY = "nl80211 based CLI configuration utility for wireless devices"
 DESCRIPTION = "iw is a new nl80211 based CLI configuration utility for \
 wireless devices. It supports almost all new drivers that have been added \

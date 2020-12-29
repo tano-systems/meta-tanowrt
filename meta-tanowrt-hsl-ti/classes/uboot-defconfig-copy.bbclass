@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 UBOOT_DEFCONFIG_COPY ?= "1"
 
 python __anonymous () {

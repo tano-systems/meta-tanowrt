@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2015 Wind River Systems, Inc.
 # Copyright (C) 2019 Tano Systems, Ltd.
 #

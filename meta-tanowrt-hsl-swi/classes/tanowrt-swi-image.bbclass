@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 LEGATO_IMG_NAME = "${PN}-${MACHINE}-leimage"
 
 create_deploy_dir_image() {

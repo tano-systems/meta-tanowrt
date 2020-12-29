@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI Administration - Global System Settings
 #
 # This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.

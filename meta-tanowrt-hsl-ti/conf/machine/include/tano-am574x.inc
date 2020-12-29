@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 require conf/machine/include/ti-soc.inc
 SOC_FAMILY_append = ":omap-a15"
 

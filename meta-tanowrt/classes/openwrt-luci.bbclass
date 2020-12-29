@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 python __anonymous() {
     bb.warn("Class openwrt-luci is deprecated, please use tanowrt-luci instead")
 }

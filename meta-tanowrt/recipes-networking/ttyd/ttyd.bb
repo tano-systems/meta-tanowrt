@@ -1,9 +1,11 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Share your terminal over the web
 # ttyd is a simple command-line tool for sharing terminal over the web, inspired by GoTTY.
 # https://github.com/tsl0922/ttyd
 #
-# This file Copyright (c) 2018, 2020 Tano Systems LLC. All Rights Reserved.
+# This file Copyright (c) 2018, 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano0"

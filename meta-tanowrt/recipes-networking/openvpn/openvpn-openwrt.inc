@@ -1,8 +1,10 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Open source VPN solution using SSL
 # OpenWrt recipe
 #
-# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 

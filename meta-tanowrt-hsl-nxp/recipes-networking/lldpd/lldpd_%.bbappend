@@ -1,4 +1,6 @@
-# This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
-
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append = ".nxp0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"

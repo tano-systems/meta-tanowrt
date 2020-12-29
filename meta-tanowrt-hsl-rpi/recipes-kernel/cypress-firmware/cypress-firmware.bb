@@ -1,8 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2020 Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-
 PKG_VERSION = "v5.4.18-2020_0402"
 PV = "5.4.18"
 PR = "tano0"

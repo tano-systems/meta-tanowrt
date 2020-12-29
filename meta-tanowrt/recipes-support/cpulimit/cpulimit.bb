@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "Cpulimit"
 DESCRIPTION = "Cpulimit is a tool which limits the CPU usage \
 of a process (expressed in percentage, not in CPU time)."

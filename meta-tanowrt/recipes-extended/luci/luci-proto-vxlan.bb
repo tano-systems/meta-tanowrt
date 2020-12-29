@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Support for Virtual eXtensible Local Area Network (VXLAN, RFC7348)
 #
-# This file Copyright (c) 2020, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano1"

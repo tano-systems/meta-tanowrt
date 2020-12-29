@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Support for 3G
 #
 # This file Copyright (c) 2018, 2020 Tano Systems. All Rights Reserved.

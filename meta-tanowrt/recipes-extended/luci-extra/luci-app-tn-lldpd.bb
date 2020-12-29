@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI support for LLDP daemon
 #
-# Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "2.0.1"

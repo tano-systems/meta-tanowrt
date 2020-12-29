@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Very simple bandwidth collector cache for LuCI realtime graphs
 #
 # This file Copyright (C) 2019 Tano Systems

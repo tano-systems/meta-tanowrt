@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
 require qrencode.inc
 
 PV = "4.0.2"

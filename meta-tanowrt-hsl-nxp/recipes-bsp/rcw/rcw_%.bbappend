@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append = ".nxp4"
 M_ls1028ardb = "ls1028ardb"
 

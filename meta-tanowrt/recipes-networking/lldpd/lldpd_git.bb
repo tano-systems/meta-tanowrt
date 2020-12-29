@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
 require lldpd.inc
 
 PV = "1.0.7+git${SRCPV}"

@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 

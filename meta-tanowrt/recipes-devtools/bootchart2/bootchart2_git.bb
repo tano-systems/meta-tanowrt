@@ -1,5 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (c) 2013-2017 LG Electronics, Inc.
 # Copyright (c) 2018 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 SUMMARY = "Booting sequence and CPU,I/O usage monitor"
 DESCRIPTION = "Monitors where the system spends its time at start, creating a graph of all processes, disk utilization, and wait time."

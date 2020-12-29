@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Octo's ping library
 #
 # This file Copyright (C) 2018-2019 Tano Systems

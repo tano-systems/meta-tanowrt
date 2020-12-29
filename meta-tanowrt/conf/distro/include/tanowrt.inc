@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
+
 require conf/distro/include/tanowrt-toolchain.inc
 require conf/distro/include/tanowrt-sdk.inc
 

@@ -1,7 +1,11 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018, 2020 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Kernel support for USB CDC Ethernet devices
+#
 
 inherit kernel-kmod
 inherit kmod/usb-net

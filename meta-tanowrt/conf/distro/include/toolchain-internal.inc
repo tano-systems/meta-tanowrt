@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
+
 # Original file from meta-arago-distro
 
 # No special handling is required for locating the internal toolchain, just re-use existing vars

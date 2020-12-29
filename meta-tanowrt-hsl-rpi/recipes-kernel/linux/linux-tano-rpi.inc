@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 DESCRIPTION = "Linux Kernel for Raspberry Pi"
 SECTION = "kernel"
 LICENSE = "GPLv2"

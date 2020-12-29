@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
+
 DESCRIPTION = "SPI testing utility (using spidev driver)"
 SECTION = "applications"
 LICENSE = "GPLv2"

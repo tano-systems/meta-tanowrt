@@ -1,5 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2017 Aaron Brice <aaron.brice@datasoft.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
+#
 
 PR = "tano2"
 

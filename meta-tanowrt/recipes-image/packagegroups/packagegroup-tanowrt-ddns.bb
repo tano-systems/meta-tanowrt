@@ -1,4 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 PR = "tano1"
 SUMMARY = "DDNS support packages"

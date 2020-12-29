@@ -1,4 +1,6 @@
-# Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
-# Released under the MIT license (see COPYING.MIT for the terms)
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append = ".swi0"
 inherit tanowrt-swi-image

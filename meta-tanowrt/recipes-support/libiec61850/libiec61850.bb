@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Open source library for IEC 61850
 # http://libiec61850.com/libiec61850/
 # https://github.com/mz-automation/libiec61850

@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 # short-description: Create SD card image with a boot partition
 #
 # long-description: Creates a partitioned SD card image:

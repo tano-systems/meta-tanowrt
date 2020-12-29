@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 # open62541_git.bb
 #
 # open62541 is an open source and free implementation of OPC UA

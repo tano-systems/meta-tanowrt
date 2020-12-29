@@ -1,5 +1,7 @@
-# This file Copyright (C) 2020 Tano Systems LLC
-# Released under the MIT license (see COPYING.MIT for the terms)
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 
 PR = "tano3"
 PV = "1.5.2"

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 def parse_dtbs(d):
     import re
     kdt=re.sub(r'\b[\w-]+\/', '', d.getVar('KERNEL_DEVICETREE', ''))

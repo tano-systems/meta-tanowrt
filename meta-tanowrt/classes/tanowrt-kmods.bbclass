@@ -1,8 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 #
-# It is released under the MIT license.  See COPYING.MIT
-# for the terms.
 
 ROOTFS_POSTUNINSTALL_COMMAND_append = ' rootfs_flatten_modules_hook; '
 
@@ -33,7 +34,7 @@ rootfs_flatten_modules_hook() {
 }
 
 #
-# Copyright (c) 2018, Tano Systems
+# Copyright (c) 2018 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 # Move modules autoloading config files from /etc/modules-load.d

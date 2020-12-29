@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
 
 SUMMARY = "/etc/urandom.seed handling for OpenWrt"

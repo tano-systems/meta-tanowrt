@@ -1,4 +1,7 @@
-
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 def parse_dtbs(d):
     import re
     kdt=re.sub(r'\b[\w-]+\/', '', d.getVar('KERNEL_DEVICETREE', ''))

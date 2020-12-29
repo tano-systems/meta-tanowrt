@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Based on original psplash_git.bb from OE core layer.
 #
 # This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.

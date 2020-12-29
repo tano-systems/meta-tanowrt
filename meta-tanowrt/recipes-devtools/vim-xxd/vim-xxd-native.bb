@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # XXD utility
 # A hexdump utility by Juergen Weigert, v1.11 by Vadim Vygonets
 #

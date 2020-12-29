@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Recipe for alternate VSFTPd with UCI support
 # This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
 #

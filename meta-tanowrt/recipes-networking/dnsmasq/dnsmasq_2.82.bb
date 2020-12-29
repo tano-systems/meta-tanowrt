@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 require recipes-support/dnsmasq/dnsmasq.inc
 
 SRC_URI[dnsmasq-2.82.md5sum] = "3c710dee3edba510ed11a6e3d9e0d9cb"

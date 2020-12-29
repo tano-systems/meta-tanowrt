@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
+
 # meta-swi/meta-swi-mdm9x28/
 require conf/machine/swi-mdm9x28-wp.conf
 

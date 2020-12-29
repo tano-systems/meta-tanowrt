@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI Statistics Application
 #
-# This file Copyright (c) 2018-2020, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano13"

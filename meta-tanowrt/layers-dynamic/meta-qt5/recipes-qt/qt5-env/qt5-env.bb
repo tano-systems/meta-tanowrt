@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 # Based on original recipe taken from meta-bbb layer
 # (https://github.com/jumpnow/meta-bbb.git)
 #

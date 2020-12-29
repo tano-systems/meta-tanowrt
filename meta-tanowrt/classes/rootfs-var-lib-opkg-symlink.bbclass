@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Make symlink /var/lib/opkg -> /usr/lib/opkg
 # It's only build time fix
 #

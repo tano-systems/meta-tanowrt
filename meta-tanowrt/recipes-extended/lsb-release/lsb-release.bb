@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "lsb_release script implementation for OpenWrt"
 SECTION = "console/utils"
 LICENSE = "GPLv2+"

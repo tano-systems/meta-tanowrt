@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Cron plugin for Log viewer LuCI application
 #
-# Copyright (c) 2020, Tano Systems. All Rights Reserved.
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "0.9.0"

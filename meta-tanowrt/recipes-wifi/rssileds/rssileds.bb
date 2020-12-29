@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # RSSI real-time LED indicator bitbake recipe
 # This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
 #

@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 require u-boot-openil-common_${PV}.inc
 
 SUMMARY = "OpenIL U-Boot bootloader fw_printenv/setenv utilities"

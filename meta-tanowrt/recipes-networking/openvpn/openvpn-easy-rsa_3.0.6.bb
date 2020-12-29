@@ -1,8 +1,10 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # CLI utility to build and manage a PKI CA
 # OpenWrt recipe
 #
-# Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# Copyright (c) 2019 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano0.${INC_PR}"

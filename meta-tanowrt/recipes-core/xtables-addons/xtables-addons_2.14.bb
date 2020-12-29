@@ -1,4 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+#
+
 PV = "2.14"
 PR = "tano4.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches-2.14:${THISDIR}/${PN}/files:"

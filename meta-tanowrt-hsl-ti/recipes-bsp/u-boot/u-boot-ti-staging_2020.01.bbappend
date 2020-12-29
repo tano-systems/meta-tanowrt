@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append_ti33x = ".tano0"
 PR_append_omap-a15 = ".tano1"
 

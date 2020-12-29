@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # modpoll is a command line based Modbus master simulator and test utility.
 # modpoll is using the FieldTalk Modbus driver.
 #

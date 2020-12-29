@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "Diagnostic tool for TI OMAP processors"
 HOMEPAGE = "https://github.com/omapconf/omapconf"
 

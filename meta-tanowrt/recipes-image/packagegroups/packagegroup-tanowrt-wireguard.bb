@@ -1,4 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 PR = "tano2"
 SUMMARY = "WireGuard VPN support packages"

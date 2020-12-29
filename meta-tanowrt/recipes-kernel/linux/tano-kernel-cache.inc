@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
+
 PR_append = ".12"
 
 KERNEL_FEATURES_append = " \

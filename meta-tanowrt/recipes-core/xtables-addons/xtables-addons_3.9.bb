@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
+
 PV = "3.9"
 PR = "tano0.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches-3.9:${THISDIR}/${PN}/files:"

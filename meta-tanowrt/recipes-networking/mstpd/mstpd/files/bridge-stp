@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT
 #
 # Configuration is in /etc/config/mstpd
 #

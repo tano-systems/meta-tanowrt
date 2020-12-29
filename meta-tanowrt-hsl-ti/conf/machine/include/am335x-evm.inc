@@ -1,4 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
+
+#
 # CPU
 #
 require conf/machine/include/tano-am335x.inc

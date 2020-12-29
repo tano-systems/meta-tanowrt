@@ -1,6 +1,10 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2015 Khem Raj <raj.khem@gmail.com> and
 #           Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 #           Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 # 19.11.2020
 # base-files: generated named bridge-vlan sections

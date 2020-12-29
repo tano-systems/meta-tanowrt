@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # This file Copyright (C) 2019 Tano Systems
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #

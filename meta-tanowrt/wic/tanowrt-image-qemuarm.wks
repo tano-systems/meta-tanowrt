@@ -1,2 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
+
 part / --source rootfs --ondisk=mmcblk0 --fstype=squashfs --align=1024
 part /overlay --size=64M --ondisk=mmcblk0 --fstype=ext4 --label=rootfs_data --align=1024

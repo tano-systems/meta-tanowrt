@@ -1,5 +1,7 @@
-# This file Copyright (C) 2020 Tano Systems LLC
-
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 PR_append_am335x-icev2 = ".ti0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

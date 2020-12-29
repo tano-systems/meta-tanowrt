@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
 DESCRIPTION = "High performance data logging and graphing system for time series data."
 HOMEPAGE = "http://oss.oetiker.ch/rrdtool/"
 SECTION = "utils"

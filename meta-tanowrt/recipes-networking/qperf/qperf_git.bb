@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # qperf - Measure socket and RDMA performance
 # This file Copyright (c) 2019, Anton Kikin <a.kikin@tano-systems.com>
 #

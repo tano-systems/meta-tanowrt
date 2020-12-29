@@ -1,4 +1,7 @@
-# Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 
 PR = "tano0"
 SUMMARY = "Crypto support packages"

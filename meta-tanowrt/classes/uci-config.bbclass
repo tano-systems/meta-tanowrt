@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # UCI configuration
 #
 # Copyright (c) 2020 Tano Systems. All Rights Reserved.

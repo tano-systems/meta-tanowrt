@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "PPA firmware for NXP layerscape platforms"
 DESCRIPTION = "PPA firmware for NXP layerscape platforms"
 LICENSE = "BSD"

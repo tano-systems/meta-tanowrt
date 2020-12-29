@@ -1,6 +1,6 @@
 #
-# Copyright (C) 2019-2020, Tano Systems, All rights reserved
-# Authors: Anton Kikin <a.kikin@tano-systems.com>
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
 SECTION = "kernel"
 DESCRIPTION = "Linux kernel for SWI"

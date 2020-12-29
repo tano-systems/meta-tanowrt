@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 MACHINEOVERRIDES =. "imxgpu:imxgpu2d:imxgpu3d:imxdrm:"
 
 PREFERRED_PROVIDER_virtual/xserver = "xserver-xorg"

@@ -1,4 +1,7 @@
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "Multiple Spanning Tree Protocol Daemon"
 
 PR = "tano9"

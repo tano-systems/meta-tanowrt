@@ -1,5 +1,7 @@
 #
-# This file Copyright (c) 2020, Tano Systems
+# SPDX-License-Identifier: MIT
+#
+# This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 PR_append = ".tano0"

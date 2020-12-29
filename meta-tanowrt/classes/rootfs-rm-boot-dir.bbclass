@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Remove from rootfs /boot folder
 #
 ROOTFS_POSTPROCESS_COMMAND += "rootfs_rm_boot_dir; "

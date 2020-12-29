@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # JSON Module for Lua
 # http://dkolf.de/src/dkjson-lua.fsl/home
 # dkjson is free software released under the same conditions

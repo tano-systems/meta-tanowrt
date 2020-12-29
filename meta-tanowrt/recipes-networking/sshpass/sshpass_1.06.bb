@@ -1,4 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # Recipe taken from meta-odroid layer
+#
 
 DESCRIPTION = "Non-interactive ssh password auth"
 HOMEPAGE = "http://sshpass.sourceforge.net/"

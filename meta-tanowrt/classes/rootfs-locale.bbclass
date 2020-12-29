@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Generate /usr/share/locale/locale.alias
 #
 ROOTFS_POSTPROCESS_COMMAND += "rootfs_gen_locale_alias; "

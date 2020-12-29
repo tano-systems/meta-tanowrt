@@ -1,5 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2020 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
+#
 
 DESCRIPTION = "Sysctl configuration for nf-conntrack kernel module"
 LICENSE = "MIT"

@@ -1,5 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
-
+#
 PR = "tano6"
 
 DESCRIPTION = "LuCI HTTP utility library"

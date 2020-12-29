@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # diagslave is a simple command line based Modbus slave
 # simulator and test utility. diagslave is using the FieldTalk Modbus driver.
 #

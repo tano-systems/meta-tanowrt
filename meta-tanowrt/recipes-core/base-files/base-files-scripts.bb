@@ -1,6 +1,9 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
 # Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
-# Released under the MIT license.  See COPYING.MIT for terms
+#
 
 require base-files.inc
 

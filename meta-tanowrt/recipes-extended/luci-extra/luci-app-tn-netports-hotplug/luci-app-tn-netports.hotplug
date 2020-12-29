@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT
 #
 # Hotplug script for the Network ports status LuCI application
 # (luci-app-tn-netports)
@@ -7,7 +8,7 @@
 #
 # Place this script to '/etc/hotplug.d/net' folder
 #
-# Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 

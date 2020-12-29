@@ -1,7 +1,11 @@
+#
+# SPDX-License-Identifier: MIT
+#
 # Copyright (C) 2018, 2020 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Traffic shaper conntrack mark support
+#
 
 inherit kernel-kmod
 

@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
+
 DESCRIPTION = "schedtool-dl (scheduler test tool) for deadline scheduler"
 SECTION = "devel"
 LICENSE = "GPLv2"

@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+#
+
 # Select external binary prebuilt Linaro toolchain
 TCMODE = "external-linaro"
 TCLIBC = "external-linaro-toolchain"

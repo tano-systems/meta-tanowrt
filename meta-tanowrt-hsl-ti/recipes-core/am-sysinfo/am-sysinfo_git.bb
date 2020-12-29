@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 SUMMARY = "AM SysInfo"
 HOMEPAGE = "https://gforge.ti.com/gf/project/am_sysinfo/"
 LICENSE = "BSD"

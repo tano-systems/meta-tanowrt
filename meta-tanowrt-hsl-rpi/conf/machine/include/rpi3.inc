@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 MACHINEOVERRIDES =. "rpi3:raspberrypi3:"
 require conf/machine/raspberrypi3.conf
 

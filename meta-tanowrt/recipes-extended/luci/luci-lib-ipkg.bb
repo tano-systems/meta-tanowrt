@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Legacy opkg interface class
 #
 # This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.

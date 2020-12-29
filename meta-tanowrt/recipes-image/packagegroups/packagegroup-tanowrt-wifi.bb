@@ -1,4 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+#
 
 PR = "tano4"
 SUMMARY = "WiFi support packages"

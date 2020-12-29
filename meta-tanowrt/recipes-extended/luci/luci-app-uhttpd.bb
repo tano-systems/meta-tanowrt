@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI uHTTPd Webserver Configuration
 #
 # This file Copyright (c) 2018, 2020 Tano Systems. All Rights Reserved.

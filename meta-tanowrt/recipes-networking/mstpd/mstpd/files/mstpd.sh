@@ -1,6 +1,8 @@
 ##########################################################################
 #
-# Copyright (C) 2018-2020, Tano Systems,
+# SPDX-License-Identifier: MIT
+#
+# Copyright (C) 2018-2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################

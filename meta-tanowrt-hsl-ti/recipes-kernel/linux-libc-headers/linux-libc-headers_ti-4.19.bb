@@ -1,3 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+#
 require recipes-kernel/linux-libc-headers/linux-libc-headers.inc
 
 PR = "tano2"

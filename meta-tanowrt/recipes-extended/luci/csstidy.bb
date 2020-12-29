@@ -1,4 +1,6 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # CSSTidy parser and optimiser
 #
 # This file Copyright (C) 2020 Tano Systems

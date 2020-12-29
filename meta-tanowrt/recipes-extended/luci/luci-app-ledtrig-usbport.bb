@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI Support for ledtrigger usbport
 #
-# This file Copyright (c) 2020, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano2"

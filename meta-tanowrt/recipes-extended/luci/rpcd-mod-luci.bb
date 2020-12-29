@@ -1,7 +1,9 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # LuCI rpcd module
 #
-# This file Copyright (c) 2019, Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano0"

@@ -1,6 +1,8 @@
 #
+# SPDX-License-Identifier: MIT
+#
 # Tano Systems LuCI Theme bitbake recipe
-# Copyright (c) 2019-2020, Tano Systems. All Rights Reserved.
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
 #
 PR = "tano37"
 PV = "0.0.9+git${SRCPV}"

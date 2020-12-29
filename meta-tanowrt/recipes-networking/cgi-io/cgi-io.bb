@@ -1,4 +1,7 @@
-# This file Copyright (C) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+#
 
 PR = "tano14"
 
