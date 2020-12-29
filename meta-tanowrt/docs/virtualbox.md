@@ -41,11 +41,12 @@ Hard disk:
 2. Select "Create", then "Continue"
 
 From the Oracle VM VirtualBox Manager, change VM settings:
-1. Under Storage > Add new storage controller > Add SATA Controller
-2. Under Storage > Controller: SATA > Add Hard Disk
-3. Select: Choose existing disk
-4. Virtual hard disk file: .../tanowrt-image-full-qemux86-64.wic.vmdk
-5. Click "OK"
+1. Select System on the left pane, then tick on Enable EFI option
+2. Under Storage > Add new storage controller > Add SATA Controller
+3. Under Storage > Controller: SATA > Add Hard Disk
+4. Select: Choose existing disk
+5. Virtual hard disk file: .../tanowrt-image-full-qemux86-64.wic.vmdk
+6. Click "OK"
 
 From the Oracle VM VirtualBox Manager, start the VM.
 

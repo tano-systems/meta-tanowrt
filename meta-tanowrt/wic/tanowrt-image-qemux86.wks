@@ -1,5 +1,10 @@
-part /boot --source bootimg-pcbios --ondisk=sda --label=boot --active --align=1024
-part / --source rootfs --use-uuid --fstype=squashfs --align=1024
+#
+# +------------+-----------------+--------------+
+# | Bootloader | rootfs + kernel | Overlay data |
+# +------------+-----------------+--------------+
+#
+part /boot    --source=rootfs --rootfs-dir=${IMAGE_ROOTFS}/boot --fstype=vfat --ondisk=sda --label=boot --active --align=1024 --overhead-factor=1.0
+part /        --source=rootfs --use-uuid --fstype=squashfs --align=1024 --exclude-path=boot/
 part /overlay --size=256M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
 
-bootloader --timeout=0 --append="rootwait rootfstype=squashfs console=tty1 console=ttyS0,115200n8"
+bootloader --ptable gpt --append=" rootwait rootfstype=squashfs console=tty1 console=ttyS0,115200n8 "

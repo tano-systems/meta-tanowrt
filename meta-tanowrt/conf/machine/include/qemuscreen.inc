@@ -21,18 +21,6 @@ XSERVER_append_qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
 #
 # Kernel modules
 #
-UVESA_MODE_ALLX86 = "1280x720-32"
-UVESA_MODE_qemux86 = "${UVESA_MODE_ALLX86}"
-UVESA_MODE_qemux86-64 = "${UVESA_MODE_ALLX86}"
-
-KERNEL_MODULE_AUTOLOAD_append_qemux86          = " uvesafb"
-KERNEL_MODULE_AUTOLOAD_append_qemux86-64       = " uvesafb"
-KERNEL_MODULE_AUTOLOAD_EARLY_append_qemux86    = " uvesafb"
-KERNEL_MODULE_AUTOLOAD_EARLY_append_qemux86-64 = " uvesafb"
-KERNEL_MODULE_PROBECONF_append_qemux86         = " uvesafb"
-KERNEL_MODULE_PROBECONF_append_qemux86-64      = " uvesafb"
-
-module_conf_uvesafb = "options uvesafb mode_option=${UVESA_MODE}"
 
 #
 # QEMU options (runqemu)
@@ -45,14 +33,10 @@ QB_OPT_APPEND_append = "\
 	-serial null \
 "
 
-QB_OPT_APPEND_append_qemuall = " -device VGA,edid=on"
-
-QB_OPT_APPEND_ALLX86 = "\
-	-vga vmware \
-"
-
-QB_OPT_APPEND_append_qemux86 = " ${QB_OPT_APPEND_ALLX86}"
-QB_OPT_APPEND_append_qemux86-64 = " ${QB_OPT_APPEND_ALLX86}"
+QB_OPT_APPEND_append_qemux86 = " -vga std "
+QB_OPT_APPEND_append_qemux86-64 = " -vga std "
+QB_OPT_APPEND_append_qemuarm = " -device VGA,edid=on "
+QB_OPT_APPEND_append_qemuarm64 = " -device VGA,edid=on "
 
 #
 # Enable SDL display in QEMU
