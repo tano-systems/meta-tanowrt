@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR = "tano38"
+PR = "tano39"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -37,9 +37,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 14.12.2020
-# netifd: fix a typo in vlandev hotplug support
-SRCREV_netifd = "88c6003e2b4fdc0c990045ff140bf19b37ba745a"
+# 28.12.2020
+# wireless: add support for not killing processes on teardown
+SRCREV_netifd = "39fb8c3edc74a7e419d95e2946a0b5a1206edc25"
 
 S = "${WORKDIR}/git"
 
