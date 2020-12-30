@@ -13,10 +13,13 @@ WKS_FILE = "sdimage-rpi.wks"
 WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rpi"
-PREFERRED_VERSION_linux-tano-rpi = "5.4.%"
+PREFERRED_VERSION_linux-tano-rpi = "5.10.%"
 LINUXLIBCVERSION = "5.4%"
 SDKLINUXLIBCVERSION = "5.4%"
 WIREGUARD_PATCH_RPI_4_19 = "0"
+
+# Set to "1" for kernels 5.6+
+TANOWRT_WIREGUARD_IN_KERNEL = "1"
 
 # Switch from linux-firmware-rpidistro to cypress-firmware
 MACHINE_EXTRA_RRECOMMENDS_remove = "\
