@@ -10,9 +10,9 @@ LINUX_RPI_BRANCH ?= "rpi-5.4.y"
 
 KERNEL_SRC_URI ?= "git://github.com/raspberrypi/linux.git;protocol=git"
 KERNEL_SRC_BRANCH ?= "${LINUX_RPI_BRANCH}"
-KERNEL_SRC_SRCREV ?= "423495b33efd681dc1c8be10b1303e679216be4c"
+KERNEL_SRC_SRCREV ?= "154de7bbd5844a824a635d4f9e3f773c15c6ce11"
 
-LINUX_VERSION ?= "5.4.59"
+LINUX_VERSION ?= "5.4.72"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
