@@ -1,0 +1,507 @@
+From 2deb16c9ae465bea35ff1d9a198906f30e21b3e2 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 28 Dec 2020 15:04:20 +0300
+Subject: [PATCH] Use kfree_sensitive instead of kzfree for kernels 5.10+
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c  |  4 ++
+ .../net/wireless/intel/iwlwifi/pcie/tx-gen2.c | 12 ++++-
+ drivers/net/wireless/intel/iwlwifi/pcie/tx.c  | 12 ++++-
+ drivers/net/wireless/intersil/orinoco/wext.c  |  5 ++
+ drivers/staging/rtl8723bs/core/rtw_security.c |  4 ++
+ net/mac80211/aes_gcm.c                        |  8 +++
+ net/mac80211/aes_gmac.c                       |  4 ++
+ net/mac80211/key.c                            |  4 ++
+ net/wireless/core.c                           |  4 ++
+ net/wireless/ibss.c                           | 10 ++++
+ net/wireless/lib80211_crypt_tkip.c            |  4 ++
+ net/wireless/lib80211_crypt_wep.c             |  4 ++
+ net/wireless/nl80211.c                        | 54 ++++++++++++++++++-
+ net/wireless/sme.c                            | 12 +++++
+ net/wireless/util.c                           |  4 ++
+ net/wireless/wext-sme.c                       |  7 ++-
+ 16 files changed, 147 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index 2ed31b6..4f78df4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -1369,7 +1369,11 @@ static void iwl_pcie_rx_handle_rb(struct iwl_trans *trans,
+ 					   &rxcb, rxq->id);
+ 
+ 		if (reclaim) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(txq->entries[cmd_index].free_buf);
++#else
+ 			kzfree(txq->entries[cmd_index].free_buf);
++#endif
+ 			txq->entries[cmd_index].free_buf = NULL;
+ 		}
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/tx-gen2.c b/drivers/net/wireless/intel/iwlwifi/pcie/tx-gen2.c
+index 7fc7542..15c4446 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/tx-gen2.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/tx-gen2.c
+@@ -1025,8 +1025,13 @@ static int iwl_pcie_gen2_enqueue_hcmd(struct iwl_trans *trans,
+ 
+ 	BUILD_BUG_ON(IWL_TFH_NUM_TBS > sizeof(out_meta->tbs) * BITS_PER_BYTE);
+ 	out_meta->flags = cmd->flags;
+-	if (WARN_ON_ONCE(txq->entries[idx].free_buf))
++	if (WARN_ON_ONCE(txq->entries[idx].free_buf)) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(txq->entries[idx].free_buf);
++#else
+ 		kzfree(txq->entries[idx].free_buf);
++#endif
++	}
+ 	txq->entries[idx].free_buf = dup_buf;
+ 
+ 	trace_iwlwifi_dev_hcmd(trans->dev, cmd, cmd_size, &out_cmd->hdr_wide);
+@@ -1257,8 +1262,13 @@ static void iwl_pcie_gen2_txq_free(struct iwl_trans *trans, int txq_id)
+ 	/* De-alloc array of command/tx buffers */
+ 	if (txq_id == trans->txqs.cmd.q_id)
+ 		for (i = 0; i < txq->n_window; i++) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(txq->entries[i].cmd);
++			kfree_sensitive(txq->entries[i].free_buf);
++#else
+ 			kzfree(txq->entries[i].cmd);
+ 			kzfree(txq->entries[i].free_buf);
++#endif
+ 		}
+ 	del_timer_sync(&txq->stuck_timer);
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+index 5c6c3fa..5347431 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+@@ -721,8 +721,13 @@ static void iwl_pcie_txq_free(struct iwl_trans *trans, int txq_id)
+ 	/* De-alloc array of command/tx buffers */
+ 	if (txq_id == trans->txqs.cmd.q_id)
+ 		for (i = 0; i < txq->n_window; i++) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(txq->entries[i].cmd);
++			kfree_sensitive(txq->entries[i].free_buf);
++#else
+ 			kzfree(txq->entries[i].cmd);
+ 			kzfree(txq->entries[i].free_buf);
++#endif
+ 		}
+ 
+ 	/* De-alloc circular buffer of TFDs */
+@@ -1764,8 +1769,13 @@ static int iwl_pcie_enqueue_hcmd(struct iwl_trans *trans,
+ 
+ 	BUILD_BUG_ON(IWL_TFH_NUM_TBS > sizeof(out_meta->tbs) * BITS_PER_BYTE);
+ 	out_meta->flags = cmd->flags;
+-	if (WARN_ON_ONCE(txq->entries[idx].free_buf))
++	if (WARN_ON_ONCE(txq->entries[idx].free_buf)) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(txq->entries[idx].free_buf);
++#else
+ 		kzfree(txq->entries[idx].free_buf);
++#endif
++	}
+ 	txq->entries[idx].free_buf = dup_buf;
+ 
+ 	trace_iwlwifi_dev_hcmd(trans->dev, cmd, cmd_size, &out_cmd->hdr_wide);
+diff --git a/drivers/net/wireless/intersil/orinoco/wext.c b/drivers/net/wireless/intersil/orinoco/wext.c
+index 1d4dae4..b438784 100644
+--- a/drivers/net/wireless/intersil/orinoco/wext.c
++++ b/drivers/net/wireless/intersil/orinoco/wext.c
+@@ -31,8 +31,13 @@ static int orinoco_set_key(struct orinoco_private *priv, int index,
+ 			   enum orinoco_alg alg, const u8 *key, int key_len,
+ 			   const u8 *seq, int seq_len)
+ {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(priv->keys[index].key);
++	kfree_sensitive(priv->keys[index].seq);
++#else
+ 	kzfree(priv->keys[index].key);
+ 	kzfree(priv->keys[index].seq);
++#endif
+ 
+ 	if (key_len) {
+ 		priv->keys[index].key = kzalloc(key_len, GFP_ATOMIC);
+diff --git a/drivers/staging/rtl8723bs/core/rtw_security.c b/drivers/staging/rtl8723bs/core/rtw_security.c
+index 0f95009..85727c9 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -2251,7 +2251,11 @@ static void gf_mulx(u8 *pad)
+ 
+ static void aes_encrypt_deinit(void *ctx)
+ {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(ctx);
++#else
+ 	kzfree(ctx);
++#endif
+ }
+ 
+ 
+diff --git a/net/mac80211/aes_gcm.c b/net/mac80211/aes_gcm.c
+index 8a4397c..6dac74f 100644
+--- a/net/mac80211/aes_gcm.c
++++ b/net/mac80211/aes_gcm.c
+@@ -40,7 +40,11 @@ int ieee80211_aes_gcm_encrypt(struct crypto_aead *tfm, u8 *j_0, u8 *aad,
+ 	aead_request_set_ad(aead_req, sg[0].length);
+ 
+ 	crypto_aead_encrypt(aead_req);
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(aead_req);
++#else
+ 	kzfree(aead_req);
++#endif
+ 	return 0;
+ }
+ 
+@@ -74,7 +78,11 @@ int ieee80211_aes_gcm_decrypt(struct crypto_aead *tfm, u8 *j_0, u8 *aad,
+ 	aead_request_set_ad(aead_req, sg[0].length);
+ 
+ 	err = crypto_aead_decrypt(aead_req);
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(aead_req);
++#else
+ 	kzfree(aead_req);
++#endif
+ 
+ 	return err;
+ }
+diff --git a/net/mac80211/aes_gmac.c b/net/mac80211/aes_gmac.c
+index 16ba09c..451e39e 100644
+--- a/net/mac80211/aes_gmac.c
++++ b/net/mac80211/aes_gmac.c
+@@ -60,7 +60,11 @@ int ieee80211_aes_gmac(struct crypto_aead *tfm, const u8 *aad, u8 *nonce,
+ 	aead_request_set_ad(aead_req, GMAC_AAD_LEN + data_len);
+ 
+ 	crypto_aead_encrypt(aead_req);
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(aead_req);
++#else
+ 	kzfree(aead_req);
++#endif
+ 
+ 	return 0;
+ }
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index 3d896e6..f665d8b 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -717,7 +717,11 @@ static void ieee80211_key_free_common(struct ieee80211_key *key)
+ 		ieee80211_aes_gcm_key_free(key->u.gcmp.tfm);
+ 		break;
+ 	}
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(key);
++#else
+ 	kzfree(key);
++#endif
+ }
+ 
+ static void __ieee80211_key_destroy(struct ieee80211_key *key,
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 2850955..afc6d0a 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1116,7 +1116,11 @@ static void __cfg80211_unregister_wdev(struct wireless_dev *wdev, bool sync)
+ 	}
+ 
+ #ifdef CPTCFG_CFG80211_WEXT
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(wdev->wext.keys);
++#else
+ 	kzfree(wdev->wext.keys);
++#endif
+ 	wdev->wext.keys = NULL;
+ #endif
+ 	/* only initialized if we have a netdev */
+diff --git a/net/wireless/ibss.c b/net/wireless/ibss.c
+index b3b79d4..773f8f7 100644
+--- a/net/wireless/ibss.c
++++ b/net/wireless/ibss.c
+@@ -127,7 +127,13 @@ int __cfg80211_join_ibss(struct cfg80211_registered_device *rdev,
+ 		return -EINVAL;
+ 
+ 	if (WARN_ON(wdev->connect_keys))
++	{
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(wdev->connect_keys);
++#else
+ 		kzfree(wdev->connect_keys);
++#endif
++	}
+ 	wdev->connect_keys = connkeys;
+ 
+ 	wdev->ibss_fixed = params->channel_fixed;
+@@ -161,7 +167,11 @@ static void __cfg80211_clear_ibss(struct net_device *dev, bool nowext)
+ 
+ 	ASSERT_WDEV_LOCK(wdev);
+ 
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(wdev->connect_keys);
++#else
+ 	kzfree(wdev->connect_keys);
++#endif
+ 	wdev->connect_keys = NULL;
+ 
+ 	rdev_set_qos_map(rdev, dev, NULL);
+diff --git a/net/wireless/lib80211_crypt_tkip.c b/net/wireless/lib80211_crypt_tkip.c
+index fe0d744..94d5256 100644
+--- a/net/wireless/lib80211_crypt_tkip.c
++++ b/net/wireless/lib80211_crypt_tkip.c
+@@ -131,7 +131,11 @@ static void lib80211_tkip_deinit(void *priv)
+ 		crypto_free_shash(_priv->tx_tfm_michael);
+ 		crypto_free_shash(_priv->rx_tfm_michael);
+ 	}
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(priv);
++#else
+ 	kzfree(priv);
++#endif
+ }
+ 
+ static inline u16 RotR1(u16 val)
+diff --git a/net/wireless/lib80211_crypt_wep.c b/net/wireless/lib80211_crypt_wep.c
+index dafc6f3..41c91f4 100644
+--- a/net/wireless/lib80211_crypt_wep.c
++++ b/net/wireless/lib80211_crypt_wep.c
+@@ -56,7 +56,11 @@ static void *lib80211_wep_init(int keyidx)
+ 
+ static void lib80211_wep_deinit(void *priv)
+ {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(priv);
++#else
+ 	kzfree(priv);
++#endif
+ }
+ 
+ /* Add WEP IV/key info to a frame that has at least 4 bytes of headroom */
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 7f6f75e..e823ae2 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -9854,7 +9854,11 @@ static int nl80211_join_ibss(struct sk_buff *skb, struct genl_info *info)
+ 
+ 		if ((ibss.chandef.width != NL80211_CHAN_WIDTH_20_NOHT) &&
+ 		    no_ht) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return -EINVAL;
+ 		}
+ 	}
+@@ -9866,7 +9870,11 @@ static int nl80211_join_ibss(struct sk_buff *skb, struct genl_info *info)
+ 		int r = validate_pae_over_nl80211(rdev, info);
+ 
+ 		if (r < 0) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return r;
+ 		}
+ 
+@@ -9878,8 +9886,13 @@ static int nl80211_join_ibss(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	wdev_lock(dev->ieee80211_ptr);
+ 	err = __cfg80211_join_ibss(rdev, dev, &ibss, connkeys);
+-	if (err)
++	if (err) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(connkeys);
++#else
+ 		kzfree(connkeys);
++#endif
++	}
+ 	else if (info->attrs[NL80211_ATTR_SOCKET_OWNER])
+ 		dev->ieee80211_ptr->conn_owner_nlportid = genl_info_snd_portid(info);
+ 	wdev_unlock(dev->ieee80211_ptr);
+@@ -10307,7 +10320,11 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (info->attrs[NL80211_ATTR_HT_CAPABILITY]) {
+ 		if (!info->attrs[NL80211_ATTR_HT_CAPABILITY_MASK]) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return -EINVAL;
+ 		}
+ 		memcpy(&connect.ht_capa,
+@@ -10325,7 +10342,11 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (info->attrs[NL80211_ATTR_VHT_CAPABILITY]) {
+ 		if (!info->attrs[NL80211_ATTR_VHT_CAPABILITY_MASK]) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return -EINVAL;
+ 		}
+ 		memcpy(&connect.vht_capa,
+@@ -10339,7 +10360,11 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 		       (rdev->wiphy.features & NL80211_FEATURE_QUIET)) &&
+ 		    !wiphy_ext_feature_isset(&rdev->wiphy,
+ 					     NL80211_EXT_FEATURE_RRM)) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return -EINVAL;
+ 		}
+ 		connect.flags |= ASSOC_REQ_USE_RRM;
+@@ -10347,21 +10372,33 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	connect.pbss = nla_get_flag(info->attrs[NL80211_ATTR_PBSS]);
+ 	if (connect.pbss && !rdev->wiphy.bands[NL80211_BAND_60GHZ]) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(connkeys);
++#else
+ 		kzfree(connkeys);
++#endif
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_BSS_SELECT]) {
+ 		/* bss selection makes no sense if bssid is set */
+ 		if (connect.bssid) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return -EINVAL;
+ 		}
+ 
+ 		err = parse_bss_select(info->attrs[NL80211_ATTR_BSS_SELECT],
+ 				       wiphy, &connect.bss_select);
+ 		if (err) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			return err;
+ 		}
+ 	}
+@@ -10391,13 +10428,21 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 		   info->attrs[NL80211_ATTR_FILS_ERP_REALM] ||
+ 		   info->attrs[NL80211_ATTR_FILS_ERP_NEXT_SEQ_NUM] ||
+ 		   info->attrs[NL80211_ATTR_FILS_ERP_RRK]) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(connkeys);
++#else
+ 		kzfree(connkeys);
++#endif
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (nla_get_flag(info->attrs[NL80211_ATTR_EXTERNAL_AUTH_SUPPORT])) {
+ 		if (!info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++			kfree_sensitive(connkeys);
++#else
+ 			kzfree(connkeys);
++#endif
+ 			GENL_SET_ERR_MSG(info,
+ 					 "external auth requires connection ownership");
+ 			return -EINVAL;
+@@ -10409,8 +10454,13 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	err = cfg80211_connect(rdev, dev, &connect, connkeys,
+ 			       connect.prev_bssid);
+-	if (err)
++	if (err) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(connkeys);
++#else
+ 		kzfree(connkeys);
++#endif
++	}
+ 
+ 	if (!err && info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
+ 		dev->ieee80211_ptr->conn_owner_nlportid = genl_info_snd_portid(info);
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 97fe45c..781359d 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -742,7 +742,11 @@ void __cfg80211_connect_result(struct net_device *dev,
+ 	}
+ 
+ 	if (cr->status != WLAN_STATUS_SUCCESS) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(wdev->connect_keys);
++#else
+ 		kzfree(wdev->connect_keys);
++#endif
+ 		wdev->connect_keys = NULL;
+ 		wdev->ssid_len = 0;
+ 		wdev->conn_owner_nlportid = 0;
+@@ -1098,7 +1102,11 @@ void __cfg80211_disconnected(struct net_device *dev, const u8 *ie,
+ 	wdev->current_bss = NULL;
+ 	wdev->ssid_len = 0;
+ 	wdev->conn_owner_nlportid = 0;
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(wdev->connect_keys);
++#else
+ 	kzfree(wdev->connect_keys);
++#endif
+ 	wdev->connect_keys = NULL;
+ 
+ 	nl80211_send_disconnected(rdev, dev, reason, ie, ie_len, from_ap);
+@@ -1281,7 +1289,11 @@ int cfg80211_disconnect(struct cfg80211_registered_device *rdev,
+ 
+ 	ASSERT_WDEV_LOCK(wdev);
+ 
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(wdev->connect_keys);
++#else
+ 	kzfree(wdev->connect_keys);
++#endif
+ 	wdev->connect_keys = NULL;
+ 
+ 	wdev->conn_owner_nlportid = 0;
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index e249e13..c9313d3 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -867,7 +867,11 @@ void cfg80211_upload_connect_keys(struct wireless_dev *wdev)
+ 		}
+ 	}
+ 
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++	kfree_sensitive(wdev->connect_keys);
++#else
+ 	kzfree(wdev->connect_keys);
++#endif
+ 	wdev->connect_keys = NULL;
+ }
+ 
+diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
+index 73fd0ea..27ecedc 100644
+--- a/net/wireless/wext-sme.c
++++ b/net/wireless/wext-sme.c
+@@ -56,8 +56,13 @@ int cfg80211_mgd_wext_connect(struct cfg80211_registered_device *rdev,
+ 
+ 	err = cfg80211_connect(rdev, wdev->netdev,
+ 			       &wdev->wext.connect, ck, prev_bssid);
+-	if (err)
++	if (err) {
++#if LINUX_VERSION_IS_GEQ(5,10,0)
++		kfree_sensitive(ck);
++#else
+ 		kzfree(ck);
++#endif
++	}
+ 
+ 	return err;
+ }
+-- 
+2.25.1
+

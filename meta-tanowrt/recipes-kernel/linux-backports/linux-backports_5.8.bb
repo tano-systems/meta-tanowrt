@@ -7,7 +7,7 @@
 require linux-backports.inc
 
 PV = "5.8-1"
-PR = "tano2.${INC_PR}"
+PR = "tano3.${INC_PR}"
 
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/files:"
 FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/configs:"
@@ -197,4 +197,6 @@ SRC_URI += "\
 SRC_URI += "\
 	file://patches-tano/0001-rtl8821ce-Add-driver-for-Realtek-RTL8821CE.patch \
 	file://patches-tano/0002-Add-debug-output.patch \
+	file://patches-tano/0003-Use-kfree_sensitive-instead-of-kzfree-for-kernels-5..patch \
+	file://patches-tano/0004-nl80211-Fix-compilation-with-kernel-5.10.patch \
 "
