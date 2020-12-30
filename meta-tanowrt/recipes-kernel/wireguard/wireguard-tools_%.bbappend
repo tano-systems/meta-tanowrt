@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano3"
+PR_append = ".tano4"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
@@ -26,6 +26,6 @@ FILES_${PN} += " \
 	${base_libdir} \
 "
 
-DEPENDS += "wireguard-module"
+DEPENDS += "${@oe.utils.conditional('TANOWRT_WIREGUARD_IN_KERNEL', '1', '', 'wireguard-module', d)}"
 RDEPENDS_${PN} += "ubus jsonpath kernel-module-wireguard"
 RDEPENDS_${PN}_remove = "wireguard-module"

@@ -10,7 +10,7 @@ inherit kernel-kmod
 inherit kmod/udptunnel4
 inherit ${@bb.utils.contains('COMBINED_FEATURES', 'ipv6', 'kmod/udptunnel6', '', d)}
 
-DEPENDS += "wireguard-module"
+DEPENDS += "${@oe.utils.conditional('TANOWRT_WIREGUARD_IN_KERNEL', '1', '', 'wireguard-module', d)}"
 RDEPENDS_${PN} += "kernel-module-wireguard"
 
 #
