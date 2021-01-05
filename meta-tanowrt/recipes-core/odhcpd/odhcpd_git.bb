@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano24"
+PR = "tano25"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -24,9 +24,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 13.12.2020
-# config: remove local mkdir_p implementation
-SRCREV = "2cf6232fd170a24b801d71d497947d7aabd12015"
+# 02.01.2021
+# odhcpd: add option for setting preferred lifetime
+SRCREV = "3bda90079ec5574ef469e2a7804808302f17769d"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services
