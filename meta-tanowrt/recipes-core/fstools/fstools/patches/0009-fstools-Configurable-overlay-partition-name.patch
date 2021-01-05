@@ -1,4 +1,4 @@
-From bcda0ddeee282a9e6622b5b7362462d3ef7824e1 Mon Sep 17 00:00:00 2001
+From e2c92a66ecc42f8e70231dd40f36bf3b331daaa7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
 Subject: [PATCH 09/13] fstools: Configurable overlay partition name
@@ -7,7 +7,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt        | 13 ++++++-----
  block.c               | 10 +++++---
- jffs2reset.c          |  8 +++----
+ jffs2reset.c          |  7 +++---
  libfstools/overlay.c  |  5 ++--
  libfstools/rootdisk.c | 11 +++++----
  mount_root.c          | 11 +++++----
@@ -15,7 +15,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  overlay_partition.h   | 19 +++++++++++++++
  snapshot.c            | 15 ++++++------
  ubi.c                 |  3 ++-
- 10 files changed, 116 insertions(+), 33 deletions(-)
+ 10 files changed, 116 insertions(+), 32 deletions(-)
  create mode 100644 overlay_partition.c
  create mode 100644 overlay_partition.h
 
@@ -116,19 +116,18 @@ index 5099c5c..8b5c52d 100644
  		if (blkdev_path[0]) {
  			char cfg[] = "/tmp/ubifs_cfg";
 diff --git a/jffs2reset.c b/jffs2reset.c
-index 2236e38..3667193 100644
+index acff913..87788e3 100644
 --- a/jffs2reset.c
 +++ b/jffs2reset.c
-@@ -25,7 +25,7 @@
- #include <unistd.h>
- #include <getopt.h>
+@@ -28,6 +28,7 @@
  
--
+ #include <mtd/ubi-user.h>
+ 
 +#include "overlay_partition.h"
  #include "libfstools/libfstools.h"
  #include "libfstools/volume.h"
  
-@@ -114,7 +114,7 @@ int main(int argc, char **argv)
+@@ -123,7 +124,7 @@ int main(int argc, char **argv)
  
  	/*
  	 * TODO: Currently this only checks if kernel supports OverlayFS. We
@@ -137,7 +136,7 @@ index 2236e38..3667193 100644
  	 * as upperdir.
  	 */
  	if (find_filesystem("overlay")) {
-@@ -122,9 +122,9 @@ int main(int argc, char **argv)
+@@ -131,9 +132,9 @@ int main(int argc, char **argv)
  		return -1;
  	}
  

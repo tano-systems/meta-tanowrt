@@ -1,4 +1,4 @@
-From d65a209a14e9ead08d5c35af021623fb0b179599 Mon Sep 17 00:00:00 2001
+From 16e27bfff0d176d5c9ce4d1776253590f0b05c6d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 16 Aug 2019 19:50:29 +0300
 Subject: [PATCH 08/13] libfstools: Support for f2fs/ext4 overlay on a separate

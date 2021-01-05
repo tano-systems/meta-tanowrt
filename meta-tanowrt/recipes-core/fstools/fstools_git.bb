@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano37"
+PR = "tano38"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -57,9 +57,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 12.12.2020
-# block: replace local mkdir_p implementation
-SRCREV = "f415323b7c87d66ab11d89325937d5dae5eb65c9"
+# 04.01.2021
+# jffs2reset: support fristboot on unmounted UBI overlay
+SRCREV = "c53b18820756f6f32ad0782d3bf489422b7c4ad3"
 
 S = "${WORKDIR}/git"
 
