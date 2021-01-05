@@ -7,7 +7,7 @@
 # and manageable. With loadbalancing/failover support for up to 250 wan
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
-PV = "2.10.5"
+PV = "2.10.6"
 PR = "tano0"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
