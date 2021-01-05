@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano39"
+PR = "tano40"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -40,9 +40,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 28.12.2020
-# wireless: add support for not killing processes on teardown
-SRCREV_netifd = "39fb8c3edc74a7e419d95e2946a0b5a1206edc25"
+# 05.01.2021
+# netifd: wireless: default to GCMP WPA cipher on 802.11ad
+SRCREV_netifd = "0c8343968108f960b4eaafe4713453c5453bc6a0"
 
 S = "${WORKDIR}/git"
 
