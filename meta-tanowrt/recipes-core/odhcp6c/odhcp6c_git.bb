@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 SUMMARY = "OpenWrt DHCPv6 client"
@@ -11,13 +11,13 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano5"
+PR = "tano6"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-# 08.12.2020
-# dhcpv6: harden reconfigure logic
-SRCREV = "0ffa3a31f7146d320214f431291c1196070a010f"
+# 26.12.2020
+# dhcpv6: fix displaying IA info
+SRCREV = "eac1961983b8e7a74c494feedcb878170b135072"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/odhcp6c.git;name=odhcp6c \
