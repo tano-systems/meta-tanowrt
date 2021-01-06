@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano25"
+PR = "tano26"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -22,9 +22,9 @@ SRC_URI = "\
 	file://50-migrate-rpcd-ubus-sock.sh \
 "
 
-# 18.09.2020
-# rc: support init.d scripts with START=0
-SRCREV_rpcd = "3fea6559817a22de1b8375b9b1f3d818e6534591"
+# 05.01.2021
+# iwinfo: return hwmode 'ad' on 802.11ad-only hardware
+SRCREV_rpcd = "5c15f5736de0c329bccd1a39264a7bd00299f728"
 
 S = "${WORKDIR}/git"
 
