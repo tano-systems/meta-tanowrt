@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano31"
+PR = "tano32"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -24,6 +24,7 @@ SRC_URI = "\
 	file://uhttpd.init \
 	file://ubus.default \
 	file://0001-Fix-building-for-GCC-8.2.patch \
+	file://0101-ubus-allow-passing-sid-with-url.patch \
 "
 
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
