@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 DESCRIPTION = "Library for accessing wireless device drivers"
@@ -11,15 +11,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano18"
+PR = "tano19"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 06.04.2020
-# iwinfo: add device id for Mikrotik R11e-5HacD miniPCIe card
-SRCREV = "2faa20e5e9d107b97e393a4eb458370e80b4d720"
+# 05.01.2021
+# iwinfo: add support for GCMP cipher
+SRCREV = "8bfd8d88001e0d239d741c954c2421052b858fc1"
 
 FILES_SOLIBSDEV = ""
 
