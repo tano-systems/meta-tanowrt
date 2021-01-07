@@ -83,17 +83,19 @@ You should see the following working directory tree:
 ```
 .
 ├── bitbake
+├── contrib
 ├── LICENSE
 ├── LICENSE.GPL-2.0-only
 ├── LICENSE.MIT
+├── MEMORIAM
 ├── meta
+├── meta-arm
 ├── meta-openembedded
-├── meta-ti
 ├── meta-selftest
 ├── meta-skeleton
 ├── meta-tanowrt
+├── meta-ti
 ├── oe-init-build-env
-├── README.LSB
 ├── README.OE-Core
 ├── README.qemu
 └── scripts
