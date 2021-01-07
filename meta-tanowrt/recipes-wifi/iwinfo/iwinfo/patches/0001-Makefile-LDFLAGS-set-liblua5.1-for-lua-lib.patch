@@ -13,7 +13,7 @@ diff --git a/Makefile b/Makefile
 index 60341f7..6e89573 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -7,7 +7,7 @@ IWINFO_LIB_LDFLAGS = $(LDFLAGS) -shared
+@@ -9,7 +9,7 @@ IWINFO_LIB_LDFLAGS = $(LDFLAGS) -shared
  IWINFO_LIB_OBJ     = iwinfo_utils.o iwinfo_wext.o iwinfo_wext_scan.o iwinfo_lib.o
  
  IWINFO_LUA         = iwinfo.so

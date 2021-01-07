@@ -11,15 +11,17 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano19"
+PR = "tano20"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 05.01.2021
-# iwinfo: add support for GCMP cipher
-SRCREV = "8bfd8d88001e0d239d741c954c2421052b858fc1"
+# 06.01.2021
+# build: add ability to specify shared object version
+SRCREV = "23d2722b1251f1aba9355bba23e17596f93adb65"
+
+IWINFO_ABI_VERSION = "20210106"
 
 FILES_SOLIBSDEV = ""
 
@@ -61,6 +63,7 @@ IWINFO_BACKENDS = "\
 
 EXTRA_OEMAKE = "\
 	'BACKENDS=${IWINFO_BACKENDS}' \
+	'SOVERSION=${IWINFO_ABI_VERSION}' \
 "
 
 # iwinfo breaks with parallel make
@@ -68,6 +71,7 @@ PARALLEL_MAKE = ""
 
 do_install() {
 	install -D -m 0755 ${B}/libiwinfo.so ${D}${libdir}/libiwinfo.so
+	install -D -m 0755 ${B}/libiwinfo.so.${IWINFO_ABI_VERSION} ${D}${libdir}/libiwinfo.so.${IWINFO_ABI_VERSION}
 	install -D -m 0755 ${B}/iwinfo.so ${D}${libdir}/lua/5.1/iwinfo.so
 	install -D -m 0755 ${B}/iwinfo ${D}${bindir}/iwinfo
 	install -D -m 0644 ${S}/include/iwinfo.h ${D}${includedir}/iwinfo.h
