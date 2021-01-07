@@ -50,10 +50,11 @@ You should see the following working directory tree:
 ```
 .
 ├── bitbake
-├── build
+├── contrib
 ├── LICENSE
 ├── LICENSE.GPL-2.0-only
 ├── LICENSE.MIT
+├── MEMORIAM
 ├── meta
 ├── meta-openembedded
 ├── meta-raspberrypi
@@ -61,7 +62,6 @@ You should see the following working directory tree:
 ├── meta-skeleton
 ├── meta-tanowrt
 ├── oe-init-build-env
-├── README.LSB
 ├── README.OE-Core
 ├── README.qemu
 └── scripts
