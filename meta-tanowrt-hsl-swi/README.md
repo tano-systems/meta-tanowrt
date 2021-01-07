@@ -86,9 +86,11 @@ You should see the following working directory tree:
 ```
 .
 ├── bitbake
+├── contrib
 ├── LICENSE
 ├── LICENSE.GPL-2.0-only
 ├── LICENSE.MIT
+├── MEMORIAM
 ├── meta
 ├── meta-openembedded
 ├── meta-selftest
@@ -96,7 +98,6 @@ You should see the following working directory tree:
 ├── meta-swi
 ├── meta-tanowrt
 ├── oe-init-build-env
-├── README.LSB
 ├── README.OE-Core
 ├── README.qemu
 └── scripts
