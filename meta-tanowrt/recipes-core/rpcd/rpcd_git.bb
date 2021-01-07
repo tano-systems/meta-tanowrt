@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano26"
+PR = "tano27"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -22,9 +22,9 @@ SRC_URI = "\
 	file://50-migrate-rpcd-ubus-sock.sh \
 "
 
-# 05.01.2021
-# iwinfo: return hwmode 'ad' on 802.11ad-only hardware
-SRCREV_rpcd = "5c15f5736de0c329bccd1a39264a7bd00299f728"
+# 06.01.2021
+# iwinfo: include ht_operation data only if available
+SRCREV_rpcd = "ea7f4717f8b210a8fa491d288ff99ef74409dbff"
 
 S = "${WORKDIR}/git"
 
