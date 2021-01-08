@@ -1,11 +1,12 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2019-2021 Tano Systems LLC
+# Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Wireless configuration API
 #
-PR = "tano11"
+PR = "tano12"
 
 DESCRIPTION = "cfg80211 is the Linux wireless LAN (802.11) configuration API"
 SUMMARY = "Wireless configuration API"
