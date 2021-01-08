@@ -1,13 +1,13 @@
 #
 # SPDX-License-Identifier: MIT
-# This file Copyright (c) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (c) 2019-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano15"
+INC_PR = "tano16"
 
 inherit pkgconfig
 
