@@ -25,6 +25,7 @@ SRC_URI = "\
 	file://ubus.default \
 	file://0001-Fix-building-for-GCC-8.2.patch \
 	file://0101-ubus-allow-passing-sid-with-url.patch \
+	file://1001-ubus-Unsubscribe-on-client-request-network-timeout.patch \
 "
 
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"

@@ -1,0 +1,73 @@
+From 65dfa9e665902709a514789f1a489af14dec620a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 8 Jan 2021 15:45:47 +0300
+Subject: [PATCH] ubus: Unsubscribe on client request network timeout
+
+If the client has an active subscription and the client connection
+is closed after network_timeout, any notification sent by the ubus object
+to which the client was subscribed will cause uhttpd to crash.
+
+To avoid this, when the connection is closed we forcefully unsubscribe
+from the object using the client dispatcher callback function free().
+The free() callback function is called from uh_dispach_done() as follows:
+
+1. client_timeout()
+2. uh_request_done(cl)
+3. uh_dispatch_done(cl)
+4. cl->dispatch.free(cl)
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ ubus.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/ubus.c b/ubus.c
+index 619135c..6c2ffb1 100644
+--- a/ubus.c
++++ b/ubus.c
+@@ -349,6 +349,15 @@ static int uh_ubus_subscription_notification_cb(struct ubus_context *ctx,
+ 	return 0;
+ }
+ 
++static void uh_ubus_subscription_remove(struct client *cl)
++{
++	struct dispatch *d = &cl->dispatch;
++	struct dispatch_ubus *du = &d->ubus;
++
++	ubus_unregister_subscriber(ctx, &du->sub);
++	d->free = NULL;
++}
++
+ static void uh_ubus_subscription_notification_remove_cb(struct ubus_context *ctx, struct ubus_subscriber *s, uint32_t id)
+ {
+ 	struct dispatch_ubus *du;
+@@ -357,14 +366,15 @@ static void uh_ubus_subscription_notification_remove_cb(struct ubus_context *ctx
+ 	du = container_of(s, struct dispatch_ubus, sub);
+ 	cl = container_of(du, struct client, dispatch.ubus);
+ 
+-	ubus_unregister_subscriber(ctx, &du->sub);
++	uh_ubus_subscription_remove(cl);
+ 
+ 	ops->request_done(cl);
+ }
+ 
+ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
+ {
+-	struct dispatch_ubus *du = &cl->dispatch.ubus;
++	struct dispatch *d = &cl->dispatch;
++	struct dispatch_ubus *du = &d->ubus;
+ 	const char *sid;
+ 	uint32_t id;
+ 	int err;
+@@ -394,6 +404,8 @@ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
+ 	if (err)
+ 		goto err_unregister;
+ 
++	d->free = uh_ubus_subscription_remove;
++
+ 	uh_ubus_send_header(cl, 200, "OK", "text/event-stream");
+ 
+ 	if (conf.events_retry)
+-- 
+2.28.0.windows.1
+
