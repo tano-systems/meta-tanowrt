@@ -17,15 +17,19 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/uhttpd.git \
-	file://0100-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
-	file://0200-add-gz-support.patch \
-	file://0201-fix-uh_file_mime_lookup.patch \
 	file://uhttpd.config \
 	file://uhttpd.init \
 	file://ubus.default \
-	file://0001-Fix-building-for-GCC-8.2.patch \
-	file://0101-ubus-allow-passing-sid-with-url.patch \
-	file://1001-ubus-Unsubscribe-on-client-request-network-timeout.patch \
+"
+
+# Patches
+SRC_URI += "\
+	file://0001-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
+	file://0002-add-gz-support.patch \
+	file://0003-ubus-allow-passing-sid-with-url.patch \
+	file://1001-fix-uh_file_mime_lookup.patch \
+	file://1002-Fix-building-for-GCC-8.2.patch \
+	file://1003-ubus-Unsubscribe-on-client-request-network-timeout.patch \
 "
 
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
