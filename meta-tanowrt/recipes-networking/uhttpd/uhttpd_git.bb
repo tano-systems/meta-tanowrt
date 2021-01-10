@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano32"
+PR = "tano33"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -30,6 +30,8 @@ SRC_URI += "\
 	file://1001-fix-uh_file_mime_lookup.patch \
 	file://1002-Fix-building-for-GCC-8.2.patch \
 	file://1003-ubus-Unsubscribe-on-client-request-network-timeout.patch \
+	file://1004-main-Fix-formatting-in-usage-help-text.patch \
+	file://1005-ubus-Disable-timeout-for-ubus-subscription-connectio.patch \
 "
 
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"

@@ -1,0 +1,213 @@
+From 2af37620549d596afb93f4a37099e39d52d08b58 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 10 Jan 2021 16:23:21 +0300
+Subject: [PATCH] ubus: Disable timeout for ubus subscription connections
+
+Optionally, the timeout value for ubus object subscription connections
+can be set using the new '-v' command line parameter.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ client.c | 22 +++++++++++++++++++++-
+ main.c   |  9 ++++++++-
+ ubus.c   |  4 ++++
+ uhttpd.h | 26 ++++++++++++++++++++++++++
+ utils.c  |  6 ++++--
+ 5 files changed, 63 insertions(+), 4 deletions(-)
+
+diff --git a/client.c b/client.c
+index 6233d01..7fe4b87 100644
+--- a/client.c
++++ b/client.c
+@@ -105,12 +105,31 @@ static void uh_set_client_timeout(struct client *cl, int timeout)
+ 	uloop_timeout_set(&cl->timeout, timeout * 1000);
+ }
+ 
++void uh_set_client_network_timeout(struct client *cl)
++{
++	int sec = conf.network_timeout;
++
++	if (uh_client_test_flag(cl, UH_CLIENT_FLAG_EVENTS))
++		sec = conf.events_timeout;
++
++	if (sec)
++		uh_set_client_timeout(cl, sec);
++	else
++		uloop_timeout_cancel(&cl->timeout);
++}
++
+ static void uh_keepalive_poll_cb(struct uloop_timeout *timeout)
+ {
+ 	struct client *cl = container_of(timeout, struct client, timeout);
+ 	int sec = cl->requests > 0 ? conf.http_keepalive : conf.network_timeout;
+ 
+-	uh_set_client_timeout(cl, sec);
++	if (uh_client_test_flag(cl, UH_CLIENT_FLAG_EVENTS))
++		uh_set_client_network_timeout(cl);
++	else {
++		/* do not change logic for clients without EVENTS flag */
++		uh_set_client_timeout(cl, sec);
++	}
++
+ 	cl->us->notify_read(cl->us, 0);
+ }
+ 
+@@ -216,6 +235,7 @@ static bool client_init_cb(struct client *cl, char *buf, int len)
+ 
+ 	*newline = 0;
+ 	blob_buf_init(&cl->hdr, 0);
++	uh_client_init_flags(cl);
+ 	cl->state = client_parse_request(cl, buf);
+ 	ustream_consume(cl->us, newline + 2 - buf);
+ 	if (cl->state == CLIENT_STATE_DONE)
+diff --git a/main.c b/main.c
+index 3aa2319..c453b3a 100644
+--- a/main.c
++++ b/main.c
+@@ -160,6 +160,7 @@ static int usage(const char *name)
+ 		"	-a              Do not authenticate JSON-RPC requests against UBUS session api\n"
+ 		"	-X              Enable CORS HTTP headers on JSON-RPC api\n"
+ 		"	-e milliseconds Events subscription reconnection time (retry value)\n"
++		"	-v seconds      Event subscription connection timeout (seconds)\n"
+ #endif
+ 		"	-x string       URL prefix for CGI handler, default is '/cgi-bin'\n"
+ 		"	-y alias[=path]	URL alias handle\n"
+@@ -179,6 +180,7 @@ static int usage(const char *name)
+ static void init_defaults_pre(void)
+ {
+ 	conf.script_timeout = 60;
++	conf.events_timeout = 0; /* no timeout */
+ 	conf.network_timeout = 30;
+ 	conf.http_keepalive = 20;
+ 	conf.max_script_requests = 3;
+@@ -264,7 +266,7 @@ int main(int argc, char **argv)
+ 	init_defaults_pre();
+ 	signal(SIGPIPE, SIG_IGN);
+ 
+-	while ((ch = getopt(argc, argv, "A:aC:c:Dd:E:e:fh:H:I:i:K:k:L:l:m:N:n:P:p:qRr:Ss:T:t:U:u:Xx:y:")) != -1) {
++	while ((ch = getopt(argc, argv, "A:aC:c:Dd:E:e:v:fh:H:I:i:K:k:L:l:m:N:n:P:p:qRr:Ss:T:t:U:u:Xx:y:")) != -1) {
+ 		switch(ch) {
+ #ifdef HAVE_TLS
+ 		case 'C':
+@@ -496,12 +498,17 @@ int main(int argc, char **argv)
+ 		case 'e':
+ 			conf.events_retry = atoi(optarg);
+ 			break;
++
++		case 'v':
++			conf.events_timeout = atoi(optarg);
++			break;
+ #else
+ 		case 'a':
+ 		case 'u':
+ 		case 'U':
+ 		case 'X':
+ 		case 'e':
++		case 'v':
+ 			fprintf(stderr, "uhttpd: UBUS support not compiled, "
+ 			                "ignoring -%c\n", ch);
+ 			break;
+diff --git a/ubus.c b/ubus.c
+index 38741e4..28ad48a 100644
+--- a/ubus.c
++++ b/ubus.c
+@@ -354,6 +354,8 @@ static void uh_ubus_subscription_remove(struct client *cl)
+ 	struct dispatch *d = &cl->dispatch;
+ 	struct dispatch_ubus *du = &d->ubus;
+ 
++	uh_client_clear_flag(cl, UH_CLIENT_FLAG_EVENTS);
++
+ 	ubus_unregister_subscriber(ctx, &du->sub);
+ 	d->free = NULL;
+ }
+@@ -410,6 +412,8 @@ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
+ 
+ 	d->free = uh_ubus_subscription_remove;
+ 
++	uh_client_set_flag(cl, UH_CLIENT_FLAG_EVENTS);
++
+ 	uh_ubus_send_header(cl, 200, "OK", "text/event-stream");
+ 
+ 	if (conf.events_retry)
+diff --git a/uhttpd.h b/uhttpd.h
+index 99372be..dda2b88 100644
+--- a/uhttpd.h
++++ b/uhttpd.h
+@@ -83,6 +83,7 @@ struct config {
+ 	int ubus_cors;
+ 	int cgi_prefix_len;
+ 	int events_retry;
++	int events_timeout;
+ 	struct list_head cgi_alias;
+ 	struct list_head lua_prefix;
+ };
+@@ -252,10 +253,13 @@ struct dispatch {
+ 	};
+ };
+ 
++#define UH_CLIENT_FLAG_EVENTS 0x01
++
+ struct client {
+ 	struct list_head list;
+ 	int refcount;
+ 	int id;
++	uint32_t flags;
+ 
+ 	struct ustream *us;
+ 	struct ustream_fd sfd;
+@@ -277,6 +281,28 @@ struct client {
+ 	struct dispatch dispatch;
+ };
+ 
++void uh_set_client_network_timeout(struct client *cl);
++
++static inline void uh_client_init_flags(struct client *cl)
++{
++	cl->flags = 0;
++}
++
++static inline void uh_client_set_flag(struct client *cl, uint32_t flag)
++{
++	cl->flags |= flag;
++}
++
++static inline void uh_client_clear_flag(struct client *cl, uint32_t flag)
++{
++	cl->flags &= (~flag);
++}
++
++static inline int uh_client_test_flag(struct client *cl, uint32_t flag)
++{
++	return ((cl->flags & flag) == flag);
++}
++
+ extern char uh_buf[4096];
+ extern int n_clients;
+ extern struct config conf;
+diff --git a/utils.c b/utils.c
+index 142a410..fc6413a 100644
+--- a/utils.c
++++ b/utils.c
+@@ -42,7 +42,8 @@ void uh_chunk_write(struct client *cl, const void *data, int len)
+ 	if (cl->state == CLIENT_STATE_CLEANUP)
+ 		return;
+ 
+-	uloop_timeout_set(&cl->timeout, conf.network_timeout * 1000);
++	uh_set_client_network_timeout(cl);
++
+ 	if (chunked)
+ 		ustream_printf(cl->us, "%X\r\n", len);
+ 	ustream_write(cl->us, data, len, true);
+@@ -59,7 +60,8 @@ void uh_chunk_vprintf(struct client *cl, const char *format, va_list arg)
+ 	if (cl->state == CLIENT_STATE_CLEANUP)
+ 		return;
+ 
+-	uloop_timeout_set(&cl->timeout, conf.network_timeout * 1000);
++	uh_set_client_network_timeout(cl);
++
+ 	if (!uh_use_chunked(cl)) {
+ 		ustream_vprintf(cl->us, format, arg);
+ 		return;
+-- 
+2.28.0.windows.1
+
