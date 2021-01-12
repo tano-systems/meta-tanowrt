@@ -1,0 +1,52 @@
+From e4202df0918e13130bb511a4ce372cbbe089068d Mon Sep 17 00:00:00 2001
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Tue, 3 Nov 2020 17:32:12 +0200
+Subject: [PATCH] modprobe: Add support for
+ modprobe.blacklist=module1,module2,...
+
+function                                             old     new   delta
+parse_and_add_kcmdline_module_options                  -     186    +186
+modprobe_main                                        713     798     +85
+do_modprobe                                          648     451    -197
+------------------------------------------------------------------------------
+(add/remove: 1/0 grow/shrink: 1/1 up/down: 271/-197)           Total: 74 bytes
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Denys Vlasenko <vda.linux@googlemail.com>
+---
+ modutils/modprobe.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/modutils/modprobe.c b/modutils/modprobe.c
+index eeeff7609..c334186b8 100644
+--- a/modutils/modprobe.c
++++ b/modutils/modprobe.c
+@@ -663,6 +663,25 @@ int modprobe_main(int argc UNUSED_PARAM, char **argv)
+ 		load_modules_dep();
+ 	}
+ 
++	/* Handle modprobe.blacklist=module1,module2,... */
++	if (ENABLE_FEATURE_MODPROBE_BLACKLIST) {
++		char *options;
++		char *substr;
++
++		options = parse_and_add_kcmdline_module_options(NULL, "modprobe");
++		while ((substr = strsep(&options, " ")) != NULL) {
++			char *fn = is_prefixed_with(substr, "blacklist=");
++			if (!fn)
++				continue;
++			while ((substr = strsep(&fn, ",")) != NULL) {
++				/* blacklist <modulename> */
++				get_or_add_modentry(substr)->flags |= MODULE_FLAG_BLACKLISTED;
++				DBG("blacklist: %s", substr);
++			}
++		}
++		/*free(options); - WRONG, strsep may have advanced it */
++	}
++
+ 	rc = 0;
+ 	while ((me = llist_pop(&G.probes)) != NULL) {
+ 		if (me->realnames == NULL) {
+-- 
+2.16.2.windows.1
+

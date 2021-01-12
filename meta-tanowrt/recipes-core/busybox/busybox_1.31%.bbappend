@@ -1,10 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2020-2021 Tano Systems LLC. All Rights Reserved.
+# Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano1.${INC_PR}"
+PR_append = ".tano2.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Patches
@@ -27,6 +28,11 @@ SRC_URI_append = "\
 	file://510-move-passwd-applet-to-bin.patch \
 	file://520-loginutils-handle-crypt-failures.patch \
 	file://600-allow-ntpd-non-root.patch \
+"
+
+# Backports from 1.32
+SRC_URI_append = "\
+	file://0001-modprobe-Add-support-for-modprobe.blacklist-module1-.patch \
 "
 
 require busybox-openwrt.inc
