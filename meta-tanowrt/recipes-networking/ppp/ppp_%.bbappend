@@ -16,7 +16,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano5"
+PR_append = ".tano6"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
