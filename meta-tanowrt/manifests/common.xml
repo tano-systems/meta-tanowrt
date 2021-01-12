@@ -5,7 +5,7 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="fcd335e2a721d8db6e2fdac483798ced0ff3e1ad" />
+	         revision="72431ee8de5e3a53d259cebf420a7713ac9e1f14" />
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
