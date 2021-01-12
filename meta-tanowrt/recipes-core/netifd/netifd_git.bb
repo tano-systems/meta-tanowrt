@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano40"
+PR = "tano41"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -40,9 +40,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 05.01.2021
-# netifd: wireless: default to GCMP WPA cipher on 802.11ad
-SRCREV_netifd = "0c8343968108f960b4eaafe4713453c5453bc6a0"
+# 09.01.2021
+# interface-ip: add unreachable route if address is offlink
+SRCREV_netifd = "c00c8335d6188daa326ecfe5a62da15a9b9987e1"
 
 S = "${WORKDIR}/git"
 
