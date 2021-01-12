@@ -1,12 +1,12 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Virtual eXtensible LAN config support
 #
-PV = "0.0.2"
-PR = "tano2"
+PV = "0.0.7"
+PR = "tano0"
 
 inherit allarch
 
