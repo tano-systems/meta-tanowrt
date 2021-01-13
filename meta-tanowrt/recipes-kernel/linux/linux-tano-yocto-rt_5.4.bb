@@ -1,16 +1,16 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2020-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Yocto Linux kernel 5.4 (preempt-rt)
 #
 KERNEL_SRC_URI ?= "git://git.yoctoproject.org/linux-yocto.git"
 KERNEL_SRC_BRANCH ?= "v5.4/standard/preempt-rt/base"
-KERNEL_SRC_SRCREV ?= "7bc8ae3fc04fdc06192d39d725cb18d4c0b78d9f"
+KERNEL_SRC_SRCREV ?= "baf3ccf7c7cfaf9515d8c8b3b639d7bbb0564594"
 
-LINUX_VERSION ?= "5.4.83"
+LINUX_VERSION ?= "5.4.85"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
@@ -25,7 +25,7 @@ require recipes-kernel/linux/linux-tano-yocto.inc
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.4:"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-5.4"
-YOCTO_KERNEL_CACHE_SRCREV = "a1b2d188bdfc855ff9dff770480a24cecf66285d"
+YOCTO_KERNEL_CACHE_SRCREV = "1c358e19696827b594de26a221f110fc2647dfa8"
 
 SECTION = "kernel"
 DESCRIPTION = "Yocto Linux kernel"
