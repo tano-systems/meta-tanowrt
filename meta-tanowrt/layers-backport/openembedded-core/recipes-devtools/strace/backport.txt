@@ -1,0 +1,4 @@
+Recipe for strace 5.10 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: ea6f27e35b6cac4db9e1ab0d9a888d15daba6c09
