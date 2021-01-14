@@ -1,0 +1,1 @@
+kconf non-hardware disable-CONFIG_SERIAL_OF_PLATFORM.cfg

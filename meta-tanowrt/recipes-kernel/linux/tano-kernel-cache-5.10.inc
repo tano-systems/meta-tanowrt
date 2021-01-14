@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".0"
+PR_append = ".1"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
@@ -14,6 +14,13 @@ KERNEL_FEATURES_append = "\
 
 KERNEL_FEATURES_append_qemuall = " features/drm-bochs/drm-bochs.scc "
 
+#
+# Disable CONFIG_SERIAL_OF_PLATFORM for x86 machines
+# See https://lists.yoctoproject.org/g/linux-yocto/message/9207 and
+# https://lists.yoctoproject.org/g/linux-yocto/message/9183
+#
+KERNEL_FEATURES_append_qemux86 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
+KERNEL_FEATURES_append_qemux86-64 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
 
 SRC_URI_append = "\
 	file://600-netfilter_conntrack_flush.patch \
