@@ -9,7 +9,7 @@
 KERNEL_IMAGETYPE = "bzImage"
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-yocto"
 PREFERRED_VERSION_linux-tano-yocto = "5.10%"
-PREFERRED_VERSION_xtables-addons = "3.9%"
+PREFERRED_VERSION_xtables-addons = "3.13%"
 
 LINUXLIBCVERSION = "5.10%"
 SDKLINUXLIBCVERSION = "5.10%"
