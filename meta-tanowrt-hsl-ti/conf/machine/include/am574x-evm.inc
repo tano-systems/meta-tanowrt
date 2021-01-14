@@ -44,7 +44,7 @@ PREFERRED_VERSION_linux-tano-ti-staging-rt = "5.4%"
 PREFERRED_VERSION_linux-tano-ti-sdk-rt = "4.19%"
 LINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
 SDKLINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
-PREFERRED_VERSION_xtables-addons = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', '3.3', '3.9', d)}"
+PREFERRED_VERSION_xtables-addons = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', '3.3', '3.13', d)}"
 
 #
 # Bootloader
