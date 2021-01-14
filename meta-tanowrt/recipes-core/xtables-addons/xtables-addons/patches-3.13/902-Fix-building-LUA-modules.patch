@@ -1,0 +1,34 @@
+From 03669e158657ae26a8f1902d6fa1e0190d2a28ed Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 28 May 2020 17:20:23 +0300
+Subject: [PATCH] Fix building LUA modules
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ configure.ac               | 2 +-
+ extensions/LUA/Makefile.am | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index bfdb4a0..48d0937 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -75,5 +75,5 @@ AC_SUBST([kbuilddir])
+ AC_SUBST([xtlibdir])
+ AC_CONFIG_FILES([Makefile Makefile.iptrules Makefile.mans geoip/Makefile
+ 	extensions/Makefile extensions/ACCOUNT/Makefile
+-	extensions/pknock/Makefile])
++	extensions/pknock/Makefile extensions/LUA/Makefile])
+ AC_OUTPUT
+diff --git a/extensions/LUA/Makefile.am b/extensions/LUA/Makefile.am
+index d35a2eb..3db79f8 100644
+--- a/extensions/LUA/Makefile.am
++++ b/extensions/LUA/Makefile.am
+@@ -1 +1,4 @@
++AM_CPPFLAGS = ${regular_CPPFLAGS} -I${abs_top_srcdir}/extensions
++AM_CFLAGS   = ${regular_CFLAGS} ${libxtables_CFLAGS}
++
+ include ../../Makefile.extra
+-- 
+2.16.2.windows.1
+
