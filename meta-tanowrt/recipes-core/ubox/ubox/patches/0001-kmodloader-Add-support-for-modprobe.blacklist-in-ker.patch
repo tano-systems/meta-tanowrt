@@ -1,0 +1,323 @@
+From 769bb53cec51c71363cca26e4cb17059e0c84d0f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 15 Jan 2021 17:31:35 +0300
+Subject: [PATCH] kmodloader: Add support for modprobe.blacklist in kernel
+ cmdline
+
+When calling kmodloader or modprobe do not load modules specified
+in "modprobe.blacklist=m1,m2,..." kernel command line parameter.
+
+Some parts of code in patch are taken from BusyBox 1.32 sources.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ kmodloader.c | 258 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 256 insertions(+), 2 deletions(-)
+
+diff --git a/kmodloader.c b/kmodloader.c
+index 6f06ee3..762eefb 100644
+--- a/kmodloader.c
++++ b/kmodloader.c
+@@ -44,6 +44,7 @@ enum {
+ 	SCANNED,
+ 	PROBE,
+ 	LOADED,
++	BLACKLISTED,
+ };
+ 
+ struct module {
+@@ -451,6 +452,255 @@ static int scan_module_folder(const char *dir)
+ 	return rv;
+ }
+ 
++/*
++ * Function are partially taken from busybox 1.32 sources
++ *
++ * Return NULL if string is not prefixed with key. Return pointer to the
++ * first character in string after the prefix key. If key is an empty string,
++ * return pointer to the beginning of string.
++ */
++static char *is_prefixed_with(const char *string, const char *key)
++{
++	while (*key != '\0') {
++		if (*key != *string)
++			return NULL;
++		key++;
++		string++;
++	}
++	return (char *)string;
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ *
++ * Like strsep(&stringp, "\n\t ") but quoted text goes to single token
++ * even if it contains whitespace.
++ */
++static char *strsep_quotes(char **stringp)
++{
++	char *s, *start = *stringp;
++
++	if (!start)
++		return NULL;
++
++	for (s = start; ; s++) {
++		switch (*s) {
++		case '"':
++			s = strchrnul(s + 1, '"'); /* find trailing quote */
++			if (*s != '\0')
++				s++; /* skip trailing quote */
++			/* fall through */
++		case '\0':
++		case '\n':
++		case '\t':
++		case ' ':
++			if (*s != '\0') {
++				*s = '\0';
++				*stringp = s + 1;
++			} else {
++				*stringp = NULL;
++			}
++			return start;
++		}
++	}
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ */
++static ssize_t safe_read(int fd, void *buf, size_t count)
++{
++	ssize_t n;
++
++	do {
++		n = read(fd, buf, count);
++	} while (n < 0 && errno == EINTR);
++
++	return n;
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ *
++ * Read all of the supplied buffer from a file.
++ * This does multiple reads as necessary.
++ * Returns the amount read, or -1 on an error.
++ * A short read is returned on an end of file.
++ */
++static ssize_t full_read(int fd, void *buf, size_t len)
++{
++	ssize_t cc;
++	ssize_t total;
++
++	total = 0;
++
++	while (len) {
++		cc = safe_read(fd, buf, len);
++
++		if (cc < 0) {
++			if (total) {
++				/* we already have some! */
++				/* user can do another read to know the error code */
++				return total;
++			}
++			return cc; /* read() returns -1 on failure. */
++		}
++		if (cc == 0)
++			break;
++		buf = ((char *)buf) + cc;
++		total += cc;
++		len -= cc;
++	}
++
++	return total;
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ */
++static ssize_t read_close(int fd, void *buf, size_t size)
++{
++	size = full_read(fd, buf, size);
++	close(fd);
++	return size;
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ */
++static char *malloc_open_read_close(const char *filename, size_t *maxsz_p)
++{
++	char *buf;
++	char *buf_new;
++	size_t size;
++	int fd;
++	off_t len;
++
++	fd = open(filename, O_RDONLY);
++	if (fd < 0)
++		return NULL;
++
++	/* /proc/N/stat files report len 0 here */
++	/* In order to make such files readable, we add small const */
++	size = 0x3ff; /* read only 1k on unseekable files */
++	len = lseek(fd, 0, SEEK_END) | 0x3ff; /* + up to 1k */
++	if (len != (off_t)-1) {
++		lseek(fd, 0, SEEK_SET);
++		size = maxsz_p ? *maxsz_p : (INT_MAX - 4095);
++		if (len < size)
++			size = len;
++	}
++
++	buf = malloc(size + 1);
++	if (!buf)
++		return NULL;
++
++	size = read_close(fd, buf, size);
++	if ((ssize_t)size < 0) {
++		free(buf);
++		return NULL;
++	}
++
++	buf_new = realloc(buf, size + 1);
++	if (!buf_new)
++		return NULL;
++
++	buf = buf_new;
++	buf[size] = '\0';
++
++	if (maxsz_p)
++		*maxsz_p = size;
++
++	return buf;
++}
++
++/*
++ * Function are partially taken from busybox 1.32 sources
++ */
++static char *gather_options_str(char *opts, const char *append)
++{
++	/* Speed-optimized. We call gather_options_str many times. */
++	if (append) {
++		if (opts == NULL) {
++			opts = strdup(append);
++		} else {
++			char *opts_new;
++			int optlen = strlen(opts);
++
++			opts_new = realloc(opts, optlen + strlen(append) + 2);
++			if (!opts_new)
++				return NULL;
++
++			opts = opts_new;
++			sprintf(opts + optlen, " %s", append);
++		}
++	}
++
++	return opts;
++}
++
++static char *get_blacklisted_modules(void)
++{
++	char *kcmdline_buf;
++	char *kcmdline;
++	char *kptr;
++	char *blacklisted_modules = NULL;
++
++	kcmdline_buf = malloc_open_read_close("/proc/cmdline", NULL);
++	if (!kcmdline_buf) {
++		ULOG_ERR("Failed to read /proc/cmdline\n");
++		return NULL;
++	}
++
++	kcmdline = kcmdline_buf;
++	while ((kptr = strsep_quotes(&kcmdline)) != NULL) {
++		char *after_modulename = is_prefixed_with(kptr, "modprobe.blacklist");
++
++		if (!after_modulename || *after_modulename != '=')
++			continue;
++
++		blacklisted_modules = gather_options_str(
++			blacklisted_modules, after_modulename + 1);
++		
++		if (!blacklisted_modules) {
++			free(kcmdline_buf);
++			ULOG_ERR("Failed to gather modprobe options from /proc/cmdline\n");
++			return NULL;
++		}
++	}
++
++	free(kcmdline_buf);
++	return blacklisted_modules;
++}
++
++static void scan_module_blacklists(void)
++{
++	char *blacklisted_modules = NULL;
++	char *substr;
++	char *modules;
++
++	blacklisted_modules = get_blacklisted_modules();
++	if (!blacklisted_modules)
++		return;
++
++	modules = blacklisted_modules;
++	while ((substr = strsep(&modules, " ")) != NULL) {
++		char *fn = substr;
++
++		while ((substr = strsep(&fn, ",")) != NULL) {
++			/* blacklist <modulename> */
++			struct module *m = find_module(substr);
++			if (m) {
++				m->state = BLACKLISTED;
++				ULOG_INFO("blacklist: %s", substr);
++			}
++		}
++	}
++
++	if (blacklisted_modules)
++		free(blacklisted_modules);
++}
++
+ static int scan_module_folders(void)
+ {
+ 	int rv = 0;
+@@ -610,7 +860,7 @@ static void load_moddeps(struct module *_m)
+ 
+ 		if (!m)
+ 			ULOG_ERR("failed to find dependency %s\n", dep);
+-		if (m && (m->state != LOADED)) {
++		if (m && (m->state != LOADED) && (m->state != BLACKLISTED)) {
+ 			m->state = PROBE;
+ 			load_moddeps(m);
+ 		}
+@@ -895,6 +1145,8 @@ static int main_modprobe(int argc, char **argv)
+ 	if (scan_loaded_modules())
+ 		return -1;
+ 
++	scan_module_blacklists();
++
+ 	do {
+ 		char *name;
+ 
+@@ -968,6 +1220,8 @@ static int main_loader(int argc, char **argv)
+ 		return -1;
+ 	}
+ 
++	scan_module_blacklists();
++
+ 	ULOG_INFO("loading kernel modules from %s\n", path);
+ 
+ 	if (glob(path, gl_flags, NULL, &gl) < 0)
+@@ -996,7 +1250,7 @@ static int main_loader(int argc, char **argv)
+ 				*opts++ = '\0';
+ 
+ 			m = find_module(get_module_name(mod));
+-			if (!m || (m->state == LOADED))
++			if (!m || (m->state == LOADED) || (m->state == BLACKLISTED))
+ 				continue;
+ 
+ 			if (opts)
+-- 
+2.28.0.windows.1
+

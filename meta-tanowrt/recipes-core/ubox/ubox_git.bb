@@ -1,9 +1,9 @@
 # Copyright (C) 2015, MentorGraphics
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
-# Copyright (C) 2018-2020, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano14"
+PR = "tano15"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -18,6 +18,11 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/ubox.git \
 	file://log.init \
+"
+
+# Patches
+SRC_URI += "\
+	file://0001-kmodloader-Add-support-for-modprobe.blacklist-in-ker.patch \
 "
 
 # 19.10.2020
