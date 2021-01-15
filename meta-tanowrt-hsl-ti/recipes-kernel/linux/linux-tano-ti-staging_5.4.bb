@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2020-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # TI staging Linux kernel
@@ -14,9 +14,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 KERNEL_SRC_URI ?= "git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git"
 KERNEL_SRC_BRANCH ?= "ti-linux-5.4.y"
 KERNEL_SRC_PROTOCOL ?= "git"
-KERNEL_SRC_SRCREV ?= "73039d258adb0cac813342cc7e746e22295765fe"
+KERNEL_SRC_SRCREV ?= "c02b2da68c63deb35dc5a7c1b0bbc68e4ee38632"
 
-LINUX_VERSION ?= "5.4.82"
+LINUX_VERSION ?= "5.4.87"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
