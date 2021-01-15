@@ -3,10 +3,10 @@
 #
 # Rapid reverse DNS rpcd module
 #
-# This file Copyright (c) 2019 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019, 2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "Rapid reverse DNS rpcd module"
 
 LICENSE = "Apache-2.0"
@@ -14,6 +14,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 DEPENDS += "libubox libubus rpcd"
 RDEPENDS_${PN} += "rpcd"
+
+do_configure[depends] += "rpcd:do_populate_sysroot"
 
 inherit cmake
 inherit tanowrt-luci
