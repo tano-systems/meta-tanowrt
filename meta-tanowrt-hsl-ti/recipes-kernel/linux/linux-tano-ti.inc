@@ -1,15 +1,15 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2020-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".5"
+PR_append = ".6"
 
 COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
 
-FILESEXTRAPATHS_prepend = "${THISDIR}/features:"
+FILESEXTRAPATHS_prepend = "${TANOWRT_HSL_BASE}/recipes-kernel/linux/features:"
 
 SRC_URI_append = "\
 	file://patches-cpsw/0001-cpsw-increase-default-desc-pool-size.patch \
@@ -20,8 +20,7 @@ SRC_URI_append = "\
 	file://patches-tty/0001-drivers-tty-refactor-functions-for-flushing-queuing.patch \
 	file://patches-tty/0002-drivers-tty-convert-tty_port-to-use-kthread_worker.patch \
 	file://patches-tty/0003-drivers-tty-increase-priority-for-tty_buffer_worker.patch \
-	file://uio.scc \
-	file://uio-pruss.scc \
+	${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', 'file://uio.scc file://uio-pruss.scc', '', d)} \
 "
 
 SRC_URI_append = "\
