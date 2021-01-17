@@ -3,7 +3,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Based on kernel recipes from meta-swi layer
-# (https://gitlab.com/legato.io/meta-swi.git)
+# (https://github.com/legatoproject/meta-swi.git)
 #
 
 PR_append = ".0"

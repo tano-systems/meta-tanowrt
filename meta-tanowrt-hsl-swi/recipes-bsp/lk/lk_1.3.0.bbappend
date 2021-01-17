@@ -8,7 +8,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 LK_DEBUG = "0"
 
-LK_REPO = "git://gitlab.com/legato.io/lk.git;protocol=https;branch=mdm9x28le20-swi"
+LK_REPO = "git://github.com/legatoproject/lk.git;protocol=https;branch=mdm9x28le20-swi"
 SRCREV = "caebd0a5af84b33fefe7856e14f5daadf8189b84"
 
 # Patches
