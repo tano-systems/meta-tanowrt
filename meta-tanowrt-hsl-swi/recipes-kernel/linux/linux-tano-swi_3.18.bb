@@ -8,7 +8,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 # TAG = SWI9X07Y_02.28.03.05
-KERNEL_SRC_URI ?= "git://gitlab.com/legato.io/msm-3.18.git;nobranch=1;tag=SWI9X06Y_02.32.01.00"
+KERNEL_SRC_URI ?= "git://github.com/legatoproject/msm-3.18.git;nobranch=1;tag=SWI9X06Y_02.32.01.00"
 KERNEL_SRC_PROTOCOL ?= "https"
 KERNEL_SRC_BRANCH ?= ""
 KERNEL_SRC_SRCREV ?= "SWI9X06Y_02.32.01.00"

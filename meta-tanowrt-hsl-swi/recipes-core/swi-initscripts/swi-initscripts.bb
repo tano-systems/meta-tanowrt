@@ -5,7 +5,7 @@
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Recipe based on original recipe from meta-swi layer
-# (https://gitlab.com/legato.io/meta-swi.git) and and uses some parts from it
+# (https://github.com/legatoproject/meta-swi.git) and and uses some parts from it
 #
 # Original recipe: meta-swi/common/recipes-core/initscripts/initscripts_1.0.bbappend
 #

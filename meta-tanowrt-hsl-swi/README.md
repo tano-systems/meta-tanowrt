@@ -313,17 +313,17 @@ This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoW
 Additional dependencies are listed here:
 
 * meta-swi/common  
-  URI: <https://gitlab.com/legato.io/meta-swi.git>  
+  URI: <https://github.com/legatoproject/meta-swi.git>  
   Subdirectory: common  
-  Branch: yocto-2.7-ref  
+  Branch: yocto-3.0-ref  
 * meta-swi/meta-swi-mdm9x28  
-  URI: <https://gitlab.com/legato.io/meta-swi.git>  
+  URI: <https://github.com/legatoproject/meta-swi.git>  
   Subdirectory: meta-swi-mdm9x28  
-  Branch: yocto-2.7-ref  
+  Branch: yocto-3.0-ref  
 * meta-swi/meta-swi-mdm9xxx  
-  URI: <https://gitlab.com/legato.io/meta-swi.git>  
+  URI: <https://github.com/legatoproject/meta-swi.git>  
   Subdirectory: meta-swi-mdm9xxx  
-  Branch: yocto-2.7-ref  
+  Branch: yocto-3.0-ref  
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
