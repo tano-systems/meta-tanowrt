@@ -202,7 +202,7 @@ At startup, the bootloader and Linux kernel log messages are outputed to the ser
 - Parity: none
 - Flow control: none
 
-When the system boot is complete, a terminal will be accessible on the UART2 port. For login use credentials described in the "[Access](#12-access)" section.
+When the system boot is complete, a terminal will be accessible on the UART2 port. For login use credentials described in the "[Access](#13-access)" section.
 
 ## 9 Default Network Configuration
 
@@ -217,7 +217,7 @@ Modem data connection interface `3g-modem` disabled by default. You need to manu
 ## 10 Setting Up a Modem Data Connection
 
 1.  Connect the mangOH Green board (connector CN1100) to your PC with ethernet cable (RJ45 connectors at both ends).
-2.  Go to the web interface (default IP is 192.168.10.1) of the mangOH Green board and login using credentials described in the "[Access](#12-access)" section.
+2.  Go to the web interface (default IP is 192.168.10.1) of the mangOH Green board and login using credentials described in the "[Access](#13-access)" section.
 3.  Go to network interfaces configuration page ("Network -> Interfaces" in main menu)
 4.  Click the "Edit" button on the "MODEM" interface line:
 
@@ -265,14 +265,14 @@ Modem data connection interface `3g-modem` disabled by default. You need to manu
 
 Here is a list of used by system MTD partitions and their descriptions.
 
-| MTD   | Name    |     Size | Description                          |
-| ----- | ------- | -------: | ------------------------------------ |
-| mtd11 | aboot   |    1 MiB | Little Kernel (LK) bootloader        |
-| mtd12 | boot    |   15 MiB | Linux kernel                         |
-| mtd13 | system  |   30 MiB | Read-only root filesystem (squashfs) |
-| mtd14 | lefwkro | 8.75 MiB | *Unused*                             |
-| mtd15 | swirw   |   25 MiB | *Unused*                             |
-| mtd16 | userapp |  131 MiB | Overlay filesystem (ubifs)           |
+| MTD   | Name    |      Size | Description                          |
+| ----- | ------- | --------: | ------------------------------------ |
+| mtd11 | aboot   |     1 MiB | Little Kernel (LK) bootloader        |
+| mtd12 | boot    |    14 MiB | Linux kernel                         |
+| mtd13 | system  |    59 MiB | Read-only root filesystem (squashfs) |
+| mtd14 | lefwkro | 17.25 MiB | *Unused*                             |
+| mtd15 | swirw   |  15.5 MiB | *Unused*                             |
+| mtd16 | userapp |   130 MiB | Overlay filesystem (ubifs)           |
 
 All user data are stored in overlayfs in partition mtd16 (userapp). You can clean up this partition manually after system is boots up using the command:
 ```
@@ -280,13 +280,17 @@ jffs2reset -r -y
 ```
 or over web-interface LuCI (see "Restore" section in "System -> Backup").
 
-## 12 Access
+## 12 Modem Firmware
+
+We recommend to upgrade you WP76xx modem firmware to release 16 from [here](https://source.sierrawireless.com/resources/airprime/software/wp76xx/wp76xx-firmware-latest-release-components).
+
+## 13 Access
 
 The following credentials are used to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
 * Password: `root`
 
-## 13 Limitations
+## 14 Limitations
 
 This layer has very little support for the modem hardware. Using this layer you can only set up a PPP connection using the internal modem AT command port. This is all the capabilities of this layer for using modem hardware.
 
@@ -306,7 +310,7 @@ For support more sophisticated features of the modem hardware, an additional `me
 
 Sources of `meta-tanowrt-hsl-swi-extras` layer cannot be published publicly due to Qualcomm Inc. and Sierra Wireless Inc. proprietary licenses restrictions but can be provided commercially. Please contact Tano Systems LLC for details.
 
-## 14 Dependencies
+## 15 Dependencies
 
 This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoWrt Linux distribution core layer) with all its dependencies.
 
@@ -327,10 +331,10 @@ Additional dependencies are listed here:
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 
-## 15 License
+## 16 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 16 Maintainers
+## 17 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
