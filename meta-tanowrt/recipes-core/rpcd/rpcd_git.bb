@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano27"
+PR = "tano28"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -22,9 +22,9 @@ SRC_URI = "\
 	file://50-migrate-rpcd-ubus-sock.sh \
 "
 
-# 06.01.2021
-# iwinfo: include ht_operation data only if available
-SRCREV_rpcd = "ea7f4717f8b210a8fa491d288ff99ef74409dbff"
+# 17.01.2021
+# uci: manually clear uci_ptr flags after uci_delete() operations
+SRCREV_rpcd = "d3f2041f4363e76fda57dd6b581eb71cf1a0e114"
 
 S = "${WORKDIR}/git"
 
