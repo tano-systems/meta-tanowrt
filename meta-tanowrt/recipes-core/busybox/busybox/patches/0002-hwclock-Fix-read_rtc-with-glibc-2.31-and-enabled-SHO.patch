@@ -1,0 +1,32 @@
+From e0f54f64c26ef9b8c0abb4e5bcb8019e034aeecd Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 18 Jan 2021 15:31:42 +0300
+Subject: [PATCH] hwclock: Fix read_rtc with glibc 2.31+ and enabled
+ SHOW_HWCLOCK_DIFF
+
+With glibc 2.31+ function gettimeofday() crashes (segmentation fault)
+if both arguments are NULL. So, we check the sys_tv argument of read_rtc()
+function before calling the gettimeofday() function.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ util-linux/hwclock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/util-linux/hwclock.c b/util-linux/hwclock.c
+index 2efb6ca..2ce4e57 100644
+--- a/util-linux/hwclock.c
++++ b/util-linux/hwclock.c
+@@ -80,7 +80,8 @@ static time_t read_rtc(const char **pp_rtcname, struct timeval *sys_tv, int utc)
+ 		int before = tm_time.tm_sec;
+ 		while (1) {
+ 			rtc_read_tm(&tm_time, fd);
+-			gettimeofday(sys_tv, NULL);
++			if (sys_tv)
++				gettimeofday(sys_tv, NULL);
+ 			if (before != (int)tm_time.tm_sec)
+ 				break;
+ 		}
+-- 
+2.28.0.windows.1
+

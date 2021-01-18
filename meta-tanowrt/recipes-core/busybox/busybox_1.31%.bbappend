@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano2.${INC_PR}"
+PR_append = ".tano3.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Patches
@@ -33,6 +33,11 @@ SRC_URI_append = "\
 # Backports from 1.32
 SRC_URI_append = "\
 	file://0001-modprobe-Add-support-for-modprobe.blacklist-module1-.patch \
+"
+
+# Own patches
+SRC_URI_append = "\
+	file://0002-hwclock-Fix-read_rtc-with-glibc-2.31-and-enabled-SHO.patch \
 "
 
 require busybox-openwrt.inc
