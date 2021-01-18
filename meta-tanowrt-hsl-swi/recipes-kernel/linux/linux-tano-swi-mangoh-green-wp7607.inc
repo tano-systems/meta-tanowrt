@@ -1,15 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2019-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".1"
-
-DT_DIR = "${MACHINE}"
-DT_DIR_mangoh-green-wp7607 = "wp7xxx"
-FILESEXTRAPATHS_prepend := "${TANOWRT_HSL_BASE}/devicetree/${LINUX_VERSION_SHORT}/${DT_DIR}:"
+PR_append = ".2"
 
 # Config
 SRC_URI_append_mangoh-green-wp7607 = "\
@@ -19,35 +15,35 @@ SRC_URI_append_mangoh-green-wp7607 = "\
 "
 
 # Devicetree
-DT_SUBDIR = "dts"
+DT_DIR = "dts"
 
 SRC_URI_append_mangoh-green-wp7607 = "\
-	file://mdm9607-wp76xx-mangoh-green.dts;subdir=${DT_SUBDIR} \
-	file://mdm9206-wp77xx-mangoh-green.dts;subdir=${DT_SUBDIR} \
-	file://mdm9206.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9206-wp77xx.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-bus.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-coresight.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-ion.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-pinctrl.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-pm.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-regulator.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-rpm-regulator.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-sierra-monitor.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-smp2p.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-swi.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-swimcu.dtsi;subdir=${DT_SUBDIR} \
-	file://mdm9607-wp76xx.dtsi;subdir=${DT_SUBDIR} \
-	file://msm-pm8019.dtsi;subdir=${DT_SUBDIR} \
+	file://${DT_DIR}/mdm9607-wp76xx-mangoh-green.dts \
+	file://${DT_DIR}/mdm9206-wp77xx-mangoh-green.dts \
+	file://${DT_DIR}/mdm9206.dtsi \
+	file://${DT_DIR}/mdm9206-wp77xx.dtsi \
+	file://${DT_DIR}/mdm9607.dtsi \
+	file://${DT_DIR}/mdm9607-bus.dtsi \
+	file://${DT_DIR}/mdm9607-coresight.dtsi \
+	file://${DT_DIR}/mdm9607-ion.dtsi \
+	file://${DT_DIR}/mdm9607-pinctrl.dtsi \
+	file://${DT_DIR}/mdm9607-pm.dtsi \
+	file://${DT_DIR}/mdm9607-regulator.dtsi \
+	file://${DT_DIR}/mdm9607-rpm-regulator.dtsi \
+	file://${DT_DIR}/mdm9607-sierra-monitor.dtsi \
+	file://${DT_DIR}/mdm9607-smp2p.dtsi \
+	file://${DT_DIR}/mdm9607-swi.dtsi \
+	file://${DT_DIR}/mdm9607-swimcu.dtsi \
+	file://${DT_DIR}/mdm9607-wp76xx.dtsi \
+	file://${DT_DIR}/msm-pm8019.dtsi \
 "
 
-do_unpack[cleandirs] += "${WORKDIR}/${DT_SUBDIR}"
+do_unpack[cleandirs] += "${WORKDIR}/${DT_DIR}"
 
 do_configure_append_mangoh-green-wp7607() {
 	install -d ${S}/arch/arm/boot/dts/qcom
 
-	for f in ${WORKDIR}/${DT_SUBDIR}/*; do
+	for f in ${WORKDIR}/${DT_DIR}/*; do
 		install -m 0644 $f ${S}/arch/arm/boot/dts/qcom/
 	done
 }
