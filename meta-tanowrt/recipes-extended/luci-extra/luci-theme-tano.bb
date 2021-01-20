@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: MIT
 #
 # Tano Systems LuCI Theme bitbake recipe
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
-PR = "tano37"
+PR = "tano38"
 PV = "0.0.9+git${SRCPV}"
 
 SUMMARY = "LuCI Theme by Tano Systems"
@@ -21,7 +21,7 @@ LUCI_THEME_NAME = "tano"
 LUCI_THEME_TANO_GIT_URI      ?= "git://github.com/tano-systems/luci-theme-tano.git"
 LUCI_THEME_TANO_GIT_BRANCH   ?= "master"
 LUCI_THEME_TANO_GIT_PROTOCOL ?= "https"
-LUCI_THEME_TANO_GIT_SRCREV   ?= "e8d05d281cbba2a8a8e51b3b653d6014042be477"
+LUCI_THEME_TANO_GIT_SRCREV   ?= "d6f1f32394fd070e59195bb2cac3dd5a2de41e71"
 
 SRC_URI = "${LUCI_THEME_TANO_GIT_URI};name=theme;branch=${LUCI_THEME_TANO_GIT_BRANCH};protocol=${LUCI_THEME_TANO_GIT_PROTOCOL}"
 SRCREV_theme = "${LUCI_THEME_TANO_GIT_SRCREV}"
