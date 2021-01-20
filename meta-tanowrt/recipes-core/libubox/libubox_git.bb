@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -46,6 +46,7 @@ DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'lua', 'lua5.1', '', d)}"
 SRC_URI = "\
           git://${GIT_OPENWRT_ORG}/project/libubox.git;branch=master \
           file://0001-version-libraries.patch \
+          file://0002-ustream-Do-not-freeze-uloop-for-large-size-reads.patch \
           file://fix-libdir.patch \
           "
 

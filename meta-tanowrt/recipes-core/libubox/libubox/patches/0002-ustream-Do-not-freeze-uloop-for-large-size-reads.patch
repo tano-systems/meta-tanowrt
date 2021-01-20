@@ -1,0 +1,64 @@
+From f125014e7f3a729b5d08bf62090f6ad67f1e9dbc Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 20 Jan 2021 04:46:27 +0300
+Subject: [PATCH] ustream: Do not freeze uloop for large size reads
+
+Do not freeze uloop in ustream_fd_poll() with large size data reads
+with new data continuously arriving. Return from function when the size
+of readed data exceeds the USTREAM_FD_READ_ONCE_MAX value.
+This allows other uloop events to be processed.
+
+For example, this may happen if we are uploading a large file by POST
+using uhttpd on a high speed network connection and with a quite slow
+CPU/disk/memory.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ ustream-fd.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/ustream-fd.c b/ustream-fd.c
+index b546fa1..732b51f 100644
+--- a/ustream-fd.c
++++ b/ustream-fd.c
+@@ -42,11 +42,14 @@ static void ustream_fd_set_read_blocked(struct ustream *s)
+ 	ustream_fd_set_uloop(s, false);
+ }
+ 
++#define USTREAM_FD_READ_ONCE_MAX  262144
++
+ static void ustream_fd_read_pending(struct ustream_fd *sf, bool *more)
+ {
+ 	struct ustream *s = &sf->stream;
+ 	int buflen = 0;
+ 	ssize_t len;
++	ssize_t total_len = 0;
+ 	char *buf;
+ 
+ 	do {
+@@ -78,6 +81,22 @@ static void ustream_fd_read_pending(struct ustream_fd *sf, bool *more)
+ 
+ 		ustream_fill_read(s, len);
+ 		*more = true;
++
++		total_len += len;
++		if (total_len >= USTREAM_FD_READ_ONCE_MAX) {
++			/*
++			 * Do not freeze uloop with large size data reads with new
++			 * data continuously arriving. Return from function when the
++			 * size of readed data exceeds the USTREAM_FD_READ_ONCE_MAX
++			 * value. This allows other uloop events to be processed.
++			 *
++			 * For example, this may happen if we are uploading a large
++			 * file by POST using uhttpd on a high speed network
++			 * connection and with a quite slow CPU/disk/memory.
++			 */
++			ustream_fd_set_uloop(s, false);
++			break;
++		}
+ 	} while (1);
+ }
+ 
+-- 
+2.28.0.windows.1
+
