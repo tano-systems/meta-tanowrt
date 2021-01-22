@@ -23,3 +23,8 @@ QEMU_X86_TARGETS = "i586 x86-64"
 PROCD_ENABLED_TTYS ?= "1"
 
 MACHINE_FEATURES_append = " hwrng "
+
+#
+# QEMU
+#
+QB_MEM ?= "-m 512"
