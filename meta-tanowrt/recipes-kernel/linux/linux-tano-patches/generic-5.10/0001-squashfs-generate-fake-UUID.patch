@@ -1,0 +1,43 @@
+From 3f5ff27da9ee2d539e6362eb1e40096e3d40f93b Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 22 Jan 2021 02:37:40 +0300
+Subject: [PATCH] squashfs: generate fake UUID
+
+Fixes the following warnings:
+
+overlayfs: invalid origin (<file>, ftype=8000, origin ftype=4000)
+
+These warnings can be displaying when accessing zero sized <file>
+on upperfs (and lowerfs) after changing lowerfs (squashfs rootfs
+upgrading).
+
+Perhaps this fix is not quite right, but it solves the issue.
+After a more detailed investigation of the problem, the current
+fix will probably be replaced by the right fix.
+
+Refs: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1824407/ (comment #15)
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ fs/squashfs/super.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
+index d6c6593ec169..02232d049441 100644
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -191,6 +191,12 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	sb->s_flags |= SB_RDONLY;
+ 	sb->s_op = &squashfs_super_ops;
+ 
++	memcpy(&sb->s_uuid.b[0], &sblk->inodes, 4);
++	memcpy(&sb->s_uuid.b[4], &sblk->mkfs_time, 4);
++	memcpy(&sb->s_uuid.b[8], &sblk->fragments, 4);
++	memcpy(&sb->s_uuid.b[12], &sblk->compression, 2);
++	memcpy(&sb->s_uuid.b[14], &sblk->block_log, 2);
++
+ 	err = -ENOMEM;
+ 
+ 	msblk->block_cache = squashfs_cache_init("metadata",
+-- 
+2.17.1
+

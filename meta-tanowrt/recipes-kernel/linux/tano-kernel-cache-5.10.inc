@@ -3,7 +3,7 @@
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".1"
+PR_append = ".2"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
@@ -22,6 +22,7 @@ KERNEL_FEATURES_append_qemuall = " features/drm-bochs/drm-bochs.scc "
 KERNEL_FEATURES_append_qemux86 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
 KERNEL_FEATURES_append_qemux86-64 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
 
+# OpenWrt patches
 SRC_URI_append = "\
 	file://600-netfilter_conntrack_flush.patch \
 	file://610-netfilter_match_bypass_default_checks.patch \
@@ -36,4 +37,9 @@ SRC_URI_append = "\
 	file://661-use_fq_codel_by_default.patch \
 	file://662-remove_pfifo_fast.patch \
 	file://681-NET-add-of_get_mac_address_mtd.patch \
+"
+
+# Tano patches
+SRC_URI_append = "\
+	file://0001-squashfs-generate-fake-UUID.patch \
 "
