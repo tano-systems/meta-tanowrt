@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano67.${INC_PR}"
+PR_append = ".tano68.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -26,7 +26,10 @@ TANOWRT_ENABLE_OVERLAY_RESIZE ?= "0"
 
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
-RDEPENDS_${PN} += "tzdata getrandom"
+
+RRECOMMENDS_${PN} += "tzdata"
+RRECOMMENDS_${PN} += "${@oe.utils.conditional('TANOWRT_ENABLE_OVERLAY_RESIZE', '1', \
+	'parted e2fsprogs-resize2fs', '', d)}"
 
 require base-files.inc
 
@@ -297,7 +300,7 @@ FILES_${PN} = "/"
 RDEPENDS_${PN} += "\
 	${PN}-scripts-openwrt \
 	${PN}-scripts-sysupgrade \
-	parted \
+	getrandom \
 "
 
 RSUGGESTS_${PN} += "\
