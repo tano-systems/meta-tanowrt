@@ -21,6 +21,8 @@ IMAGE_FSTYPES = "wic wic.vmdk"
 WKS_FILE = "tanowrt-image-qemux86.wks"
 WKS_FILE_DEPENDS = "syslinux syslinux-native e2fsprogs-native dosfstools-native mtools-native squashfs-tools-native"
 WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
+WIC_DO_IMAGE_DEPENDS = "${IMAGE_BASENAME}:do_image_squashfs"
+do_image_wic[depends] += "${WIC_DO_IMAGE_DEPENDS}"
 
 EFI_PROVIDER = "grub-efi"
 
