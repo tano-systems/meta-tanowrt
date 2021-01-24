@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano49"
+PR = "tano50"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -128,10 +128,13 @@ do_install_append() {
 }
 
 RDEPENDS_${PN} += "\
-	udev \
 	fstools \
 	base-files-scripts-openwrt \
 	${PN}-inittab \
+"
+
+RRECOMMENDS_${PN} += "\
+	udev \
 "
 
 FILES_${PN} = "/"
