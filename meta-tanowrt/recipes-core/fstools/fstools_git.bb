@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano38"
+PR = "tano39"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -25,9 +25,7 @@ RDEPENDS_${PN} += "\
 	e2fsprogs \
 	e2fsprogs-mke2fs \
 	e2fsprogs-e2fsck \
-	e2fsprogs-resize2fs \
 	dosfstools \
-	parted \
 "
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
