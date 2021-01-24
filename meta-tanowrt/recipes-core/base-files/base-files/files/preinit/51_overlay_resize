@@ -99,4 +99,4 @@ do_overlay_resize() {
 	fi
 }
 
-boot_hook_add preinit_main do_overlay_resize
+[ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_overlay_resize

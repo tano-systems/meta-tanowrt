@@ -12,4 +12,4 @@ do_overlay_setup() {
 	fi
 }
 
-boot_hook_add preinit_main do_overlay_setup
+[ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_overlay_setup

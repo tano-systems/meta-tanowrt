@@ -141,5 +141,7 @@ do_mount_root() {
 	echo -e "${CLR_GREEN}Root filesystem mounted${CLR_RESET}" > /dev/kmsg
 }
 
-[ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_mount_root
-boot_hook_add preinit_main do_rootfs_checks
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_mount_root
+	boot_hook_add preinit_main do_rootfs_checks
+}

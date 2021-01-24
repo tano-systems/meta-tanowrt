@@ -1,9 +1,15 @@
 [ -e /tmp/.failsafe ] && export FAILSAFE=1
 
 if [ -f /etc/banner ]; then
-	if [ -f /rom/etc/openwrt_release -a -f /rom/etc/device_info -a -x /bin/sed ]; then
-		. /rom/etc/openwrt_release
-		. /rom/etc/device_info
+	RELEASE_INFO_ROOT="/rom"
+
+	if [ ! -d "${RELEASE_INFO_ROOT}/etc" ]; then
+		RELEASE_INFO_ROOT=""
+	fi
+
+	if [ -f "${RELEASE_INFO_ROOT}/etc/openwrt_release" -a -f "${RELEASE_INFO_ROOT}/etc/device_info" -a -x /bin/sed ]; then
+		. "${RELEASE_INFO_ROOT}/etc/openwrt_release"
+		. "${RELEASE_INFO_ROOT}/etc/device_info"
 		sed -e "s/\${DISTRIB_ID}/${DISTRIB_ID//\//\\\/}/" \
 		    -e "s/\${DISTRIB_RELEASE}/${DISTRIB_RELEASE//\//\\\/}/" \
 		    -e "s/\${DISTRIB_REVISION}/${DISTRIB_REVISION//\//\\\/}/" \
