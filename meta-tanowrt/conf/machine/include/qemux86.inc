@@ -31,7 +31,6 @@ ROOTFS_RM_BOOT_DIR_DISABLE = "1"
 EXTRA_IMAGEDEPENDS += "ovmf"
 
 IMAGE_INSTALL_append = "\
-	grub \
 	grub-efi \
 	grub-editenv \
 "
