@@ -5,11 +5,46 @@
 
 This repository contains OpenEmbedded layers of TanoWrt Linux distribution by Tano Systems.
 
-## 1 Prerequisites
+TanoWrt is an operating system (OS) distribution based on the Linux kernel and focused on running in embedded systems, including real-time systems.
+
+## 1 Supported Hardware
+
+TanoWrt Linux distribution [core layer](meta-tanowrt/README.md), located in `meta-tanowrt` subdirectory of this repository, supports only machines for x86 (32-bit and 64-bit), ARMv5 and ARMv8 architectures designed to run in virtual environment (QEMU, Virtual Box, VMWare etc.).
+
+Support for real hardware is provided by additional hardware support layers (HSL) located in the `meta-tanowrt-hsl-*` subdirectories of this repository.
+
+Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers:
+
+| Layer                      | Hardware                                          |
+| -------------------------- | ------------------------------------------------- |
+| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                            |
+| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                               |
+| [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                       |
+| [meta-tanowrt-hsl-ti]      | Texas Instruments SoC based devices               |
+
+[meta-tanowrt]: meta-tanowrt/README.md
+[meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
+[meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
+[meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
+[meta-tanowrt-hsl-ti]: meta-tanowrt-hsl-ti/README.md
+
+### 2 Firmware Upgrade
+
+The TanoWrt distribution uses the [SWUpdate](https://sbabic.github.io/swupdate) project for firmware upgrade implementation. For all devices that supports the firmware upgrade feature, a [double copy with fall-back](https://sbabic.github.io/swupdate/overview.html#double-copy) strategy has been implemented.
+
+| Layer                      | Firmware Upgrade Support                                          |
+| -------------------------- | ----------------------------------------------------------------- |
+| [meta-tanowrt]             | :last_quarter_moon: Partial (only for `qemux86` and `qemux86-64`) |
+| [meta-tanowrt-hsl-nxp]     | :heavy_check_mark: Yes                                            |
+| [meta-tanowrt-hsl-rpi]     | :new_moon: No                                                     |
+| [meta-tanowrt-hsl-swi]     | :new_moon: No (has its own upgrade system)                        |
+| [meta-tanowrt-hsl-ti]      | :heavy_check_mark: Yes                                            |
+
+## 3 Prerequisites
 
 The recommended Linux distribution is Ubuntu 18.04 or Ubuntu 20.04.
 
-### 1.1 Install Required Packages
+### 3.1 Install Required Packages
 
 Install the required packages by executing the following commands depending on your distribution:
 - Ubuntu or Debian
@@ -48,7 +83,7 @@ Install the required packages by executing the following commands depending on y
          which SDL-devel xterm
     ```
 
-### 1.2 Configure Default System Shell
+### 3.2 Configure Default System Shell
 
 *Only for Ubuntu*
 
@@ -60,7 +95,7 @@ sudo dpkg-reconfigure dash
 
 Select `No` when it asks you to install dash as `/bin/sh`.
 
-### 1.3 Install Repo Tool
+### 3.3 Install Repo Tool
 
 ```shell
 mkdir -p ~/bin
@@ -71,29 +106,7 @@ chmod a+x ~/bin/repo
 
 More detailed information about installing repo tool can be founded [here](https://gerrit.googlesource.com/git-repo).
 
-## 2 Supported Hardware
-
-TanoWrt Linux distribution core layer, located in `meta-tanowrt` subdirectory of this repository, supports only machines designed to run in QEMU.
-
-Support for real hardware is provided by additional hardware support layers (HSL) located in the `meta-tanowrt-hsl-*` subdirectories of this repository.
-
-Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers:
-
-| Layer                      | Hardware                                          |
-| -------------------------- | ------------------------------------------------- |
-| [meta-tanowrt]             | QEMU for x86 (32-bit and 64-bit), ARMv5 and ARMv8 |
-| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                            |
-| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                               |
-| [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                       |
-| [meta-tanowrt-hsl-ti]      | Texas Instruments SoC based devices               |
-
-[meta-tanowrt]: meta-tanowrt/README.md
-[meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
-[meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
-[meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
-[meta-tanowrt-hsl-ti]: meta-tanowrt-hsl-ti/README.md
-
-## 3 Access
+## 4 Access
 
 The following credentials are used by default to access the operating system (terminal) and the LuCI web-configuration interface:
 * User name: `root`
