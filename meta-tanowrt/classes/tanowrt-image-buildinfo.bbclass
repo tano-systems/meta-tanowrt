@@ -186,3 +186,14 @@ tanowrt_generate_openwrt_files() {
 }
 
 IMAGE_PREPROCESS_COMMAND += "tanowrt_generate_openwrt_files; "
+
+tanowrt_generate_version_files() {
+	echo "${TANOWRT_RELEASE_DISTRIB_TIMESTAMP}" > \
+		${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.version
+
+	# Generate symlink
+	ln -sf ${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.version \
+	       ${IMGDEPLOYDIR}/${IMAGE_BASENAME}-${MACHINE}.version
+}
+
+IMAGE_POSTPROCESS_COMMAND += "tanowrt_generate_version_files; "
