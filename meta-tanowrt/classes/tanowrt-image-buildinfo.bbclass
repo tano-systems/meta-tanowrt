@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020 Tano Systems LLC
+# Copyright (C) 2020-2021 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Writes build information to target filesystem
@@ -11,6 +11,8 @@
 # core layer.
 #
 # Changes:
+#   - added symlink /etc/tanowrt_version -> /etc/openwrt_version
+#   - added symlink /etc/tanowrt_release -> /etc/openwrt_release
 #   - changed /etc/build output format to JSON
 #     (output to /etc/build.json)
 #   - added variables to default list
@@ -183,6 +185,10 @@ tanowrt_generate_openwrt_files() {
 		echo "DISTRIB_TIMESTAMP='${TANOWRT_RELEASE_DISTRIB_TIMESTAMP}'"
 	
 	} > ${IMAGE_ROOTFS}${sysconfdir}/openwrt_release
+
+	# Make symlinks
+	ln -s openwrt_release ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_release
+	ln -s openwrt_version ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_version
 }
 
 IMAGE_PREPROCESS_COMMAND += "tanowrt_generate_openwrt_files; "
