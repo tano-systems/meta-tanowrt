@@ -5,19 +5,19 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="72431ee8de5e3a53d259cebf420a7713ac9e1f14" />
+	         revision="b286258fc2f6974a88ebd90d3c2f9465437cfcfd" />
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
 	         name="meta-openembedded"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="f2d02cb71eaff8eb285a1997b30be52486c160ae" />
+	         revision="5bba79488b7d393d2258d6e917f7bf7b0d7c4073" />
 
 	<!-- Bitbake -->
 	<project path="bitbake"
 	         name="bitbake"
 	         remote="openembedded"
 	         upstream="1.46"
-	         revision="d171188cf966852326916f726cbd3ca9627b831c" />
+	         revision="418c00c570a60845556204b4f52de047b284dd8e" />
 </manifest>
