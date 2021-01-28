@@ -1,0 +1,74 @@
+From ef7037adb61848a0759f96335d182887fecc7ef4 Mon Sep 17 00:00:00 2001
+From: Steven Walter <stevenrwalter@gmail.com>
+Date: Thu, 10 Jan 2019 11:12:30 +0100
+Subject: [PATCH v1 1/3] drivers/tty: refactor functions for flushing/queuing
+
+Preparation for converting to kthread_worker
+
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+---
+ drivers/tty/tty_buffer.c | 12 +++++++++---
+ include/linux/tty.h      |  1 +
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/tty/tty_buffer.c b/drivers/tty/tty_buffer.c
+index ec145a59f199..6bf69712bf0b 100644
+--- a/drivers/tty/tty_buffer.c
++++ b/drivers/tty/tty_buffer.c
+@@ -72,7 +72,7 @@ void tty_buffer_unlock_exclusive(struct tty_port *port)
+ 	atomic_dec(&buf->priority);
+ 	mutex_unlock(&buf->lock);
+ 	if (restart)
+-		queue_work(system_unbound_wq, &buf->work);
++		tty_buffer_queue_work(port);
+ }
+ EXPORT_SYMBOL_GPL(tty_buffer_unlock_exclusive);
+ 
+@@ -410,7 +410,7 @@ void tty_schedule_flip(struct tty_port *port)
+ 	 * flush_to_ldisc() sees buffer data.
+ 	 */
+ 	smp_store_release(&buf->tail->commit, buf->tail->used);
+-	queue_work(system_unbound_wq, &buf->work);
++	tty_buffer_queue_work(port);
+ }
+ EXPORT_SYMBOL(tty_schedule_flip);
+ 
+@@ -557,6 +557,12 @@ void tty_flip_buffer_push(struct tty_port *port)
+ }
+ EXPORT_SYMBOL(tty_flip_buffer_push);
+ 
++bool tty_buffer_queue_work(struct tty_port *port)
++{
++	struct tty_bufhead *buf = &port->buf;
++	return schedule_work(&buf->work);
++}
++
+ /**
+  *	tty_buffer_init		-	prepare a tty buffer structure
+  *	@tty: tty to initialise
+@@ -605,7 +611,7 @@ void tty_buffer_set_lock_subclass(struct tty_port *port)
+ 
+ bool tty_buffer_restart_work(struct tty_port *port)
+ {
+-	return queue_work(system_unbound_wq, &port->buf.work);
++	return tty_buffer_queue_work(port);
+ }
+ 
+ bool tty_buffer_cancel_work(struct tty_port *port)
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index bd5fe0e907e8..b23fa81aaed1 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -509,6 +509,7 @@ extern void session_clear_tty(struct pid *session);
+ extern void no_tty(void);
+ extern void tty_buffer_free_all(struct tty_port *port);
+ extern void tty_buffer_flush(struct tty_struct *tty, struct tty_ldisc *ld);
++extern bool tty_buffer_queue_work(struct tty_port *port);
+ extern void tty_buffer_init(struct tty_port *port);
+ extern void tty_buffer_set_lock_subclass(struct tty_port *port);
+ extern bool tty_buffer_restart_work(struct tty_port *port);
+-- 
+2.17.1
+

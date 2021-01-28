@@ -1,0 +1,55 @@
+From 462619103a59a10f662069c4ff2cd0e008cc1db7 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 3 Jun 2020 05:54:37 +0300
+Subject: [PATCH 2/8] cpsw: Mark rx/tx irq as IRQF_NO_THREAD
+
+See https://www.spinics.net/lists/netdev/msg389697.html.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/net/ethernet/ti/cpsw.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
+index 8a72c00214f5..664af782c8bc 100644
+--- a/drivers/net/ethernet/ti/cpsw.c
++++ b/drivers/net/ethernet/ti/cpsw.c
+@@ -903,7 +903,7 @@ static irqreturn_t cpsw_tx_interrupt(int irq, void *dev_id)
+ 		cpsw->tx_irq_disabled = true;
+ 	}
+ 
+-	napi_schedule(&cpsw->napi_tx);
++	napi_schedule_irqoff(&cpsw->napi_tx);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -919,7 +919,7 @@ static irqreturn_t cpsw_rx_interrupt(int irq, void *dev_id)
+ 		cpsw->rx_irq_disabled = true;
+ 	}
+ 
+-	napi_schedule(&cpsw->napi_rx);
++	napi_schedule_irqoff(&cpsw->napi_rx);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -2968,7 +2968,7 @@ static int cpsw_probe(struct platform_device *pdev)
+ 	 * first request and append them to irqs_table array.
+ 	 */
+ 	ret = devm_request_irq(dev, cpsw->irqs_table[0], cpsw_rx_interrupt,
+-			       0, dev_name(dev), cpsw);
++			       IRQF_NO_THREAD, dev_name(dev), cpsw);
+ 	if (ret < 0) {
+ 		dev_err(dev, "error attaching irq (%d)\n", ret);
+ 		goto clean_unregister_netdev_ret;
+@@ -2976,7 +2976,7 @@ static int cpsw_probe(struct platform_device *pdev)
+ 
+ 
+ 	ret = devm_request_irq(dev, cpsw->irqs_table[1], cpsw_tx_interrupt,
+-			       0, dev_name(&pdev->dev), cpsw);
++			       IRQF_NO_THREAD, dev_name(&pdev->dev), cpsw);
+ 	if (ret < 0) {
+ 		dev_err(dev, "error attaching irq (%d)\n", ret);
+ 		goto clean_unregister_netdev_ret;
+-- 
+2.17.1
+

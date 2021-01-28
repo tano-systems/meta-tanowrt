@@ -41,12 +41,20 @@ IMAGE_INSTALL_append = " kernel-devicetree "
 #
 # Kernel
 #
+
+# Can be 5.4 or 5.10
+TI_STAGING_KERNEL_VERSION ?= "5.4"
+
+# Set to "1" for kernels 5.6+
+TANOWRT_WIREGUARD_IN_KERNEL = "0"
+
 PREFERRED_PROVIDER_virtual/kernel = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'linux-tano-ti-sdk-rt', 'linux-tano-ti-staging-rt', d)}"
-PREFERRED_VERSION_linux-tano-ti-staging-rt = "5.4%"
+PREFERRED_VERSION_linux-tano-ti-staging-rt = "${TI_STAGING_KERNEL_VERSION}%"
 PREFERRED_VERSION_linux-tano-ti-sdk-rt = "4.19%"
-LINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
-SDKLINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-5.4%', d)}"
+LINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-${TI_STAGING_KERNEL_VERSION}%', d)}"
+SDKLINUXLIBCVERSION = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'ti-4.19%', 'ti-${TI_STAGING_KERNEL_VERSION}%', d)}"
 PREFERRED_VERSION_xtables-addons = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', '3.3', '3.13', d)}"
+
 
 #
 # Bootloader

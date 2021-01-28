@@ -1,0 +1,29 @@
+From 0e30123dd40b6022b6d68e635bd0b275159ba146 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 3 Jun 2020 06:02:15 +0300
+Subject: [PATCH 5/8] musb_cppi41: Flush DMA tx queue when musb is not active
+
+Fix for problem discussed here:
+http://e2e.ti.com/support/processors/f/791/t/675060
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/usb/musb/musb_cppi41.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/musb/musb_cppi41.c b/drivers/usb/musb/musb_cppi41.c
+index 7fbb8a307145..6574451cce86 100644
+--- a/drivers/usb/musb/musb_cppi41.c
++++ b/drivers/usb/musb/musb_cppi41.c
+@@ -201,7 +201,7 @@ static enum hrtimer_restart cppi41_recheck_tx_req(struct hrtimer *timer)
+ 		struct musb_hw_ep *hw_ep = cppi41_channel->hw_ep;
+ 
+ 		empty = musb_is_tx_fifo_empty(hw_ep);
+-		if (empty) {
++		if (empty || !musb->is_active) {
+ 			list_del_init(&cppi41_channel->tx_check);
+ 			cppi41_trans_done(cppi41_channel);
+ 		}
+-- 
+2.17.1
+
