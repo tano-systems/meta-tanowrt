@@ -1,0 +1,35 @@
+#!/bin/sh
+# Copyright (C) 2019-2021 Anton Kikin <a.kikin@tano-systems.com>
+
+do_partitions_setup() {
+	local OVERLAY_PARTITION="rootfs_data"
+	local OVERLAY_VOLUME="rootfs_data"
+	local ROOTFS_PARTITION="rootfs"
+	local ROOTFS_VOLUME="rootfs"
+
+	for opt in $(cat /proc/cmdline); do
+		case "$opt" in
+			overlay_partition=*)
+				OVERLAY_PARTITION=$(echo ${opt#overlay_partition=})
+				;;
+			overlay_volume=*)
+				OVERLAY_VOLUME=$(echo ${opt#overlay_volume=})
+				;;
+			rootfs_partition=*)
+				ROOTFS_PARTITION=$(echo ${opt#rootfs_partition=})
+				;;
+			rootfs_volume=*)
+				ROOTFS_VOLUME=$(echo ${opt#rootfs_volume=})
+				;;
+			*)
+				;;
+		esac
+	done
+
+	echo "${OVERLAY_PARTITION}" > /tmp/overlay_partition
+	echo "${OVERLAY_VOLUME}" > /tmp/overlay_volume
+	echo "${ROOTFS_PARTITION}" > /tmp/rootfs_partition
+	echo "${ROOTFS_VOLUME}" > /tmp/rootfs_volume
+}
+
+[ "$INITRAMFS" = "1" ] || boot_hook_add preinit_main do_partitions_setup

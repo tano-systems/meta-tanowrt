@@ -1,0 +1,544 @@
+From 6af4c4570d1ebedfda34fae13b373ac8573bed37 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 9 Feb 2021 02:28:44 +0300
+Subject: [PATCH] Add support for rootfs partition/volume selection
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ CMakeLists.txt                      |  12 ++--
+ block.c                             |   8 +--
+ jffs2reset.c                        |   6 +-
+ libfstools/overlay.c                |   6 +-
+ libfstools/rootdisk.c               |   8 +--
+ mount_root.c                        |   8 +--
+ overlay_partition.c                 |  54 -----------------
+ partitions.c                        | 113 ++++++++++++++++++++++++++++++++++++
+ overlay_partition.h => partitions.h |  10 +++-
+ snapshot.c                          |  16 ++---
+ ubi.c                               |   4 +-
+ 11 files changed, 154 insertions(+), 91 deletions(-)
+ delete mode 100644 overlay_partition.c
+ create mode 100644 partitions.c
+ rename overlay_partition.h => partitions.h (76%)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index acbc8b9..723b628 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,7 +15,7 @@ ADD_LIBRARY(fstools SHARED
+ 		libfstools/ubi.c
+ 		libfstools/rootdisk.c
+ 		libfstools/find.c
+-		overlay_partition.c)
++		partitions.c)
+ TARGET_LINK_LIBRARIES(fstools ubox)
+ INSTALL(TARGETS fstools LIBRARY DESTINATION lib)
+ 
+@@ -71,7 +71,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
+ 	ADD_DEFINITIONS(-DOVL_MOUNT_FULL_ACCESS_TIME)
+ ENDIF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
+ 
+-ADD_EXECUTABLE(mount_root mount_root.c overlay_partition.c)
++ADD_EXECUTABLE(mount_root mount_root.c partitions.c)
+ TARGET_LINK_LIBRARIES(mount_root fstools)
+ INSTALL(TARGETS mount_root RUNTIME DESTINATION sbin)
+ 
+@@ -81,7 +81,7 @@ ADD_EXECUTABLE(blockd blockd.c)
+ TARGET_LINK_LIBRARIES(blockd fstools ubus blobmsg_json ${json})
+ INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
+ 
+-ADD_EXECUTABLE(block block.c probe.c probe-libblkid.c overlay_partition.c)
++ADD_EXECUTABLE(block block.c probe.c probe-libblkid.c partitions.c)
+ IF(DEFINED CMAKE_UBIFS_EXTROOT)
+ 	ADD_DEFINITIONS(-DUBIFS_EXTROOT)
+ 	TARGET_LINK_LIBRARIES(block fstools blkid-tiny dl uci ubox ubus blobmsg_json ubi-utils ${json})
+@@ -90,14 +90,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
+ ENDIF(DEFINED CMAKE_UBIFS_EXTROOT)
+ INSTALL(TARGETS block RUNTIME DESTINATION sbin)
+ 
+-ADD_EXECUTABLE(jffs2reset jffs2reset.c overlay_partition.c)
++ADD_EXECUTABLE(jffs2reset jffs2reset.c partitions.c)
+ TARGET_LINK_LIBRARIES(jffs2reset fstools)
+ INSTALL(TARGETS jffs2reset RUNTIME DESTINATION sbin)
+ 
+-ADD_EXECUTABLE(snapshot_tool snapshot.c overlay_partition.c)
++ADD_EXECUTABLE(snapshot_tool snapshot.c partitions.c)
+ TARGET_LINK_LIBRARIES(snapshot_tool fstools)
+ INSTALL(TARGETS snapshot_tool RUNTIME DESTINATION sbin)
+ 
+-ADD_EXECUTABLE(ubi ubi.c overlay_partition.c)
++ADD_EXECUTABLE(ubi ubi.c partitions.c)
+ TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
+ INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
+diff --git a/block.c b/block.c
+index bb046e2..bee7115 100644
+--- a/block.c
++++ b/block.c
+@@ -46,7 +46,7 @@
+ #include <libubox/vlist.h>
+ #include <libubus.h>
+ 
+-#include "overlay_partition.h"
++#include "partitions.h"
+ #include "libfstools/fstype.h"
+ #include "libfstools/volume.h"
+ #include "probe.h"
+@@ -1378,7 +1378,7 @@ static int check_extroot(char *path)
+ 		libubi_t libubi;
+ 
+ 		libubi = libubi_open();
+-		err = find_block_ubi_RO(libubi, "rootfs", devpath, sizeof(devpath));
++		err = find_block_ubi_RO(libubi, get_rootfs_volume(), devpath, sizeof(devpath));
+ 		libubi_close(libubi);
+ 	}
+ #endif
+@@ -1587,7 +1587,7 @@ static int main_extroot(int argc, char **argv)
+ 	memset(blkdev_path, 0, sizeof(blkdev_path));
+ 	libubi = libubi_open();
+ 	if (libubi) {
+-		find_block_ubi(libubi, get_overlay_partition(), blkdev_path, sizeof(blkdev_path));
++		find_block_ubi(libubi, get_overlay_volume(), blkdev_path, sizeof(blkdev_path));
+ 		libubi_close(libubi);
+ 		if (blkdev_path[0]) {
+ 			char cfg[] = "/tmp/ubifs_cfg";
+@@ -1644,7 +1644,7 @@ static int main_extroot(int argc, char **argv)
+ 		}
+ 	}
+ 
+-	/* As a last resort look for /etc/config/fstab on "rootfs" partition */
++	/* As a last resort look for /etc/config/fstab on <rootfs> partition */
+ 	return mount_extroot(NULL);
+ }
+ 
+diff --git a/jffs2reset.c b/jffs2reset.c
+index 64a26f4..24db823 100644
+--- a/jffs2reset.c
++++ b/jffs2reset.c
+@@ -28,7 +28,7 @@
+ 
+ #include <mtd/ubi-user.h>
+ 
+-#include "overlay_partition.h"
++#include "partitions.h"
+ #include "libfstools/libfstools.h"
+ #include "libfstools/volume.h"
+ 
+@@ -132,9 +132,9 @@ int main(int argc, char **argv)
+ 		return -1;
+ 	}
+ 
+-	v = volume_find(get_overlay_partition());
++	v = volume_find(get_overlay_volume());
+ 	if (!v) {
+-		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_partition());
++		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_volume());
+ 		return -1;
+ 	}
+ 
+diff --git a/libfstools/overlay.c b/libfstools/overlay.c
+index 0bfe8ef..d27c480 100644
+--- a/libfstools/overlay.c
++++ b/libfstools/overlay.c
+@@ -27,7 +27,7 @@
+ #include <dirent.h>
+ #include <fcntl.h>
+ 
+-#include "../overlay_partition.h"
++#include "../partitions.h"
+ #include "libfstools.h"
+ #include "volume.h"
+ 
+@@ -296,7 +296,7 @@ jffs2_switch(struct volume *v)
+ 	volume_init(v);
+ 	mp = find_mount_point(v->blk, 0);
+ 	if (mp) {
+-		ULOG_ERR("%s:%s is already mounted as %s\n", get_overlay_partition(), v->blk, mp);
++		ULOG_ERR("%s:%s is already mounted as %s\n", get_overlay_volume(), v->blk, mp);
+ 		return -1;
+ 	}
+ 
+@@ -417,7 +417,7 @@ int mount_overlay(struct volume *v)
+ 
+ 	mp = find_mount_point(v->blk, 0);
+ 	if (mp) {
+-		ULOG_ERR("%s:%s is already mounted as %s\n", get_overlay_partition(), v->blk, mp);
++		ULOG_ERR("%s:%s is already mounted as %s\n", get_overlay_volume(), v->blk, mp);
+ 		return -1;
+ 	}
+ 
+diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
+index 5741d80..486dc39 100644
+--- a/libfstools/rootdisk.c
++++ b/libfstools/rootdisk.c
+@@ -26,7 +26,7 @@
+ #include <fnmatch.h>
+ #include <inttypes.h>
+ 
+-#include "../overlay_partition.h"
++#include "../partitions.h"
+ #include "libfstools.h"
+ #include "volume.h"
+ 
+@@ -506,7 +506,7 @@ static struct volume *rootdisk_volume_find(char *name)
+ 
+ 	p = calloc(1, sizeof(*p));
+ 	p->v.drv = &rootdisk_driver;
+-	p->v.name = get_overlay_partition();
++	p->v.name = get_overlay_volume();
+ 
+ #ifdef OVL_ROOTDISK_PART_ENABLE
+ 	parse_cmdline();
+@@ -752,14 +752,14 @@ static int rootdisk_volume_init(struct volume *v)
+ 		if (rootdisk_use_f2fs(p)) {
+ 			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %"PRIu64")...\n",
+ 				v->blk, p->offset);
+-			snprintf(str, sizeof(str), "mkfs.f2fs -q -l %s %s", get_overlay_partition(), v->blk);
++			snprintf(str, sizeof(str), "mkfs.f2fs -q -l %s %s", get_overlay_volume(), v->blk);
+ 		}
+ 		else
+ #endif
+ 		{
+ 			ULOG_INFO("creating ext4 overlay filesystem (%s, offset %"PRIu64")...\n",
+ 				v->blk, p->offset);
+-			snprintf(str, sizeof(str), "mkfs.ext4 -q -L %s %s", get_overlay_partition(), v->blk);
++			snprintf(str, sizeof(str), "mkfs.ext4 -q -L %s %s", get_overlay_volume(), v->blk);
+ 		}
+ 		ret = system(str);
+ 		if (ret)
+diff --git a/mount_root.c b/mount_root.c
+index a143e19..2edd165 100644
+--- a/mount_root.c
++++ b/mount_root.c
+@@ -20,7 +20,7 @@
+ 
+ #include <libubox/ulog.h>
+ 
+-#include "overlay_partition.h"
++#include "partitions.h"
+ #include "libfstools/libfstools.h"
+ #include "libfstools/volume.h"
+ 
+@@ -32,14 +32,14 @@ static int
+ start(int argc, char *argv[1])
+ {
+ 	struct volume *root;
+-	struct volume *data = volume_find(get_overlay_partition());
++	struct volume *data = volume_find(get_overlay_volume());
+ 	struct stat s;
+ 
+ 	if (!getenv("PREINIT") && stat("/tmp/.preinit", &s))
+ 		return -1;
+ 
+ 	if (!data) {
+-		root = volume_find("rootfs");
++		root = volume_find(get_rootfs_volume());
+ 		volume_init(root);
+ 		ULOG_NOTE("mounting /dev/root\n");
+ 		mount("/dev/root", "/", NULL, MS_NOATIME | MS_REMOUNT, 0);
+@@ -104,7 +104,7 @@ stop(int argc, char *argv[1])
+ static int
+ done(int argc, char *argv[1])
+ {
+-	struct volume *v = volume_find(get_overlay_partition());
++	struct volume *v = volume_find(get_overlay_volume());
+ 
+ 	if (!v)
+ 		return -1;
+diff --git a/overlay_partition.c b/overlay_partition.c
+deleted file mode 100644
+index 75a5c62..0000000
+--- a/overlay_partition.c
++++ /dev/null
+@@ -1,54 +0,0 @@
+-/*
+- * Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
+- *
+- * This program is free software; you can redistribute it and/or modify
+- * it under the terms of the GNU Lesser General Public License version 2.1
+- * as published by the Free Software Foundation
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- */
+-
+-#include <stdio.h>
+-#include <string.h>
+-#include <ctype.h>
+-
+-#include "overlay_partition.h"
+-
+-static char overlay_partition[64] = "";
+-
+-static void __get_overlay_partition(void)
+-{
+-	FILE *fp;
+-
+-	fp = fopen("/tmp/overlay_partition", "r");
+-	if (fp)
+-	{
+-		size_t n;
+-		n = fread(overlay_partition, 1, sizeof(overlay_partition) - 1, fp);
+-
+-		if (!ferror(fp) && n)
+-		{
+-			/* trim readed data */
+-			for (--n; isspace(overlay_partition[n]) && (n >= 0); --n)
+-				overlay_partition[n] = 0;
+-
+-			fclose(fp);
+-			return;
+-		}
+-
+-		fclose(fp);
+-	}
+-
+-	strcpy(overlay_partition, "rootfs_data");
+-}
+-
+-char *get_overlay_partition(void)
+-{
+-	if (!overlay_partition[0])
+-		__get_overlay_partition();
+-
+-	return overlay_partition;
+-}
+diff --git a/partitions.c b/partitions.c
+new file mode 100644
+index 0000000..867f85a
+--- /dev/null
++++ b/partitions.c
+@@ -0,0 +1,113 @@
++/*
++ * Copyright (C) 2019 Anton Kikin <a.kikin@tano-systems.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU Lesser General Public License version 2.1
++ * as published by the Free Software Foundation
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ */
++
++#include <stdio.h>
++#include <string.h>
++#include <ctype.h>
++
++#include "partitions.h"
++
++#define OVERLAY_PARTITION_FILE "/tmp/overlay_partition"
++#define OVERLAY_PARTITION_DEFAULT "rootfs_data"
++
++#define OVERLAY_VOLUME_FILE "/tmp/overlay_volume"
++#define OVERLAY_VOLUME_DEFAULT "rootfs_data"
++
++#define ROOTFS_PARTITION_FILE "/tmp/rootfs_partition"
++#define ROOTFS_PARTITION_DEFAULT "rootfs"
++
++#define ROOTFS_VOLUME_FILE "/tmp/rootfs_volume"
++#define ROOTFS_VOLUME_DEFAULT "rootfs"
++
++static char overlay_partition[64] = "";
++static char overlay_volume[64] = "";
++static char rootfs_partition[64] = "";
++static char rootfs_volume[64] = "";
++
++static void __get_val_from_file(
++	const char *filename,
++	char *dst,
++	ssize_t maxsize,
++	const char *fallback)
++{
++	FILE *fp;
++
++	fp = fopen(filename, "r");
++	if (fp)
++	{
++		size_t n;
++		n = fread(dst, 1, maxsize - 1, fp);
++
++		if (!ferror(fp) && n)
++		{
++			/* trim readed data */
++			for (--n; isspace(dst[n]) && (n >= 0); --n)
++				dst[n] = 0;
++
++			fclose(fp);
++			return;
++		}
++
++		fclose(fp);
++	}
++
++	strcpy(dst, fallback);
++}
++
++char *get_overlay_partition(void)
++{
++	if (!overlay_partition[0]) {
++		__get_val_from_file(OVERLAY_PARTITION_FILE,
++			overlay_partition, sizeof(overlay_partition),
++			OVERLAY_PARTITION_DEFAULT
++		);
++	}
++
++	return overlay_partition;
++}
++
++char *get_overlay_volume(void)
++{
++	if (!overlay_volume[0]) {
++		__get_val_from_file(OVERLAY_VOLUME_FILE,
++			overlay_volume, sizeof(overlay_volume),
++			OVERLAY_VOLUME_DEFAULT
++		);
++	}
++
++	return overlay_volume;
++}
++
++char *get_rootfs_partition(void)
++{
++	if (!rootfs_partition[0]) {
++		__get_val_from_file(ROOTFS_PARTITION_FILE,
++			rootfs_partition, sizeof(rootfs_partition),
++			ROOTFS_PARTITION_DEFAULT
++		);
++	}
++
++	return rootfs_partition;
++}
++
++char *get_rootfs_volume(void)
++{
++	if (!rootfs_volume[0]) {
++		__get_val_from_file(ROOTFS_VOLUME_FILE,
++			rootfs_volume, sizeof(rootfs_volume),
++			ROOTFS_VOLUME_DEFAULT
++		);
++	}
++
++	return rootfs_volume;
++}
+diff --git a/overlay_partition.h b/partitions.h
+similarity index 76%
+rename from overlay_partition.h
+rename to partitions.h
+index 8a5df4d..bff55fb 100644
+--- a/overlay_partition.h
++++ b/partitions.h
+@@ -11,9 +11,13 @@
+  * GNU General Public License for more details.
+  */
+ 
+-#ifndef _OVERLAY_PARTITION_H
+-#define _OVERLAY_PARTITION_H
++#ifndef _PARTITIONS_H
++#define _PARTITIONS_H
+ 
+ char *get_overlay_partition(void);
++char *get_overlay_volume(void);
+ 
+-#endif /* _OVERLAY_PARTITION_H */
++char *get_rootfs_partition(void);
++char *get_rootfs_volume(void);
++
++#endif /* _PARTITIONS_H */
+diff --git a/snapshot.c b/snapshot.c
+index 8cac7d2..d49fbd5 100644
+--- a/snapshot.c
++++ b/snapshot.c
+@@ -32,7 +32,7 @@
+ #include <libubox/md5.h>
+ #include <libubox/ulog.h>
+ 
+-#include "overlay_partition.h"
++#include "partitions.h"
+ #include "libfstools/libfstools.h"
+ #include "libfstools/volume.h"
+ #include "libfstools/snapshot.h"
+@@ -40,7 +40,7 @@
+ static int
+ config_write(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_partition());
++	struct volume *v = volume_find(get_overlay_volume());
+ 	int ret;
+ 
+ 	if (!v)
+@@ -57,7 +57,7 @@ config_write(int argc, char **argv)
+ static int
+ config_read(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_partition());
++	struct volume *v = volume_find(get_overlay_volume());
+ 	struct file_header conf, sentinel;
+ 	int next, block, ret = 0;
+ 	uint32_t seq;
+@@ -85,7 +85,7 @@ config_read(int argc, char **argv)
+ static int
+ snapshot_write(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_partition());
++	struct volume *v = volume_find(get_overlay_volume());
+ 	int block, ret;
+ 	uint32_t seq;
+ 
+@@ -118,9 +118,9 @@ snapshot_mark(int argc, char **argv)
+ 	if (getchar() != 'y')
+ 		return -1;
+ 
+-	v = volume_find(get_overlay_partition());
++	v = volume_find(get_overlay_volume());
+ 	if (!v) {
+-		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_partition());
++		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_volume());
+ 		return -1;
+ 	}
+ 
+@@ -147,7 +147,7 @@ snapshot_mark(int argc, char **argv)
+ static int
+ snapshot_read(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_partition());;
++	struct volume *v = volume_find(get_overlay_volume());;
+ 	int block = 0, ret = 0;
+ 	char file[64];
+ 
+@@ -180,7 +180,7 @@ out:
+ static int
+ snapshot_info(void)
+ {
+-	struct volume *v = volume_find(get_overlay_partition());
++	struct volume *v = volume_find(get_overlay_volume());
+ 	struct file_header hdr = { 0 }, conf;
+ 	int block = 0;
+ 
+diff --git a/ubi.c b/ubi.c
+index cc58f9e..7186c45 100644
+--- a/ubi.c
++++ b/ubi.c
+@@ -23,7 +23,7 @@
+ 
+ #include <libubox/ulog.h>
+ 
+-#include "overlay_partition.h"
++#include "partitions.h"
+ #include "libubi/libubi-tiny.h"
+ 
+ static int print_usage(void)
+@@ -315,7 +315,7 @@ int main(int argc, char **argv)
+ 		return main_image("rootfs", argv[2], NULL);
+ 
+ 	} else if (!strcmp(argv[1], "overlay")) {
+-		return main_image("rootfs", argv[2], get_overlay_partition());
++		return main_image("rootfs", argv[2], get_overlay_volume());
+ 
+ 	} else if (!strcmp(argv[1], "detach")) {
+ 		return main_detach(argv[2]);
+-- 
+2.16.2.windows.1
+

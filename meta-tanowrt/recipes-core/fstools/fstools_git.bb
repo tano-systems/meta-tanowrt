@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano40"
+PR = "tano41"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -46,6 +46,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0011-fstools-Support-extroot-for-non-MTD-rootfs_data.patch \
 	file://0012-block-config_try_load-Log-warning-instead-of-error-o.patch \
 	file://0013-libubi-Fix-self-assign-warning-clang.patch \
+	file://0014-Add-support-for-rootfs-partition-volume-selection.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \

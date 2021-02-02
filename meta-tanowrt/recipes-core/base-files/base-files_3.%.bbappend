@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano69.${INC_PR}"
+PR_append = ".tano70.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -48,7 +48,7 @@ SRC_URI_append = "\
     file://system.init \
     file://system.config \
     file://sysfixtime.init \
-    file://preinit/50_overlay_setup \
+    file://preinit/50_partitions_setup \
     file://preinit/51_overlay_resize \
     file://preinit/80_mount_root \
     file://hotplug-call \
@@ -203,7 +203,7 @@ do_install_append () {
 
 	install -dm 0755 ${D}/lib/preinit
 	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
-	install -m 0644 ${WORKDIR}/preinit/50_overlay_setup ${D}/lib/preinit/50_overlay_setup
+	install -m 0644 ${WORKDIR}/preinit/50_partitions_setup ${D}/lib/preinit/50_partitions_setup
 
 	if [ "${TANOWRT_ENABLE_OVERLAY_RESIZE}" = "1" ]; then
 		install -m 0644 ${WORKDIR}/preinit/51_overlay_resize ${D}/lib/preinit/51_overlay_resize
