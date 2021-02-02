@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano39"
+PR = "tano40"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -97,9 +97,10 @@ do_install_append() {
 	ln -s /usr/sbin/block ${D}/sbin/block
 	ln -s /usr/sbin/blockd ${D}/sbin/blockd
 	ln -s /usr/sbin/snapshot_tool ${D}/sbin/snapshot_tool
-	ln -s /usr/sbin/ubi ${D}/sbin/ubi
 	ln -s /sbin/block ${D}/usr/sbin/swapon
 	ln -s /sbin/block ${D}/usr/sbin/swapoff
+
+	rm -f ${D}${sbindir}/ubi
 
 	install -m 0755 ${WORKDIR}/fstab.init ${D}${sysconfdir}/init.d/fstab
 	install -m 0644 ${WORKDIR}/fstab.config ${D}${sysconfdir}/config/fstab
