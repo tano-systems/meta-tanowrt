@@ -3,6 +3,8 @@
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
 
+MACHINEOVERRIDES =. "am335x-evm:"
+
 #
 # CPU
 #
