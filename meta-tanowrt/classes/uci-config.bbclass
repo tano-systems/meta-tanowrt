@@ -9,7 +9,8 @@
 
 DEPENDS_append = " uci-native "
 
-UCI = "uci -c ${D}${sysconfdir}/config"
+UCI_ROOT ?= "${D}"
+UCI = "uci -c ${UCI_ROOT}${sysconfdir}/config"
 
 do_uci_config() {
 	bbnote "Performing UCI configuration"
