@@ -63,7 +63,7 @@ do_overlay_resize() {
 		echo "overlay-resize: Filesystem successfully checked" > /dev/kmsg
 	fi
 
-	local NEW_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 1)
+	local NEW_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 33)
 
 	if [ "${NEW_PARTITION_END_S}" = "${PARTITION_END_S}" ]; then
 		echo "overlay-resize: Partition /dev/${PARTITION} already resized" > /dev/kmsg
