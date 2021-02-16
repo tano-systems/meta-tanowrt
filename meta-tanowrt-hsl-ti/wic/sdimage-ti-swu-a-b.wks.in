@@ -1,0 +1,44 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create SD card image for dual A/B systems
+# based on TI SoC.
+#
+# long-description: Creates a partitioned SD card image:
+#
+# Partitions/data:
+#
+#   - Offset  128 KiB: MLO (not in the partition table)
+#   - Offset  256 KiB: MLO (not in the partition table)
+#   - Offset  384 KiB: MLO (not in the partition table)
+#   - Offset  512 KiB: U-Boot image (not in the partition table)
+#   - Offset 2560 KiB: U-Boot startup script image (not in the partition table)
+#   - Offset 2816 KiB: U-Boot environment #1 image (not in the partition table)
+#   - Offset 2944 KiB: U-Boot environment #2 image (not in the partition table)
+#   - Offset 3072 KiB: GPT Partitions
+#     - Partition 1: Kernel for system A (64 MiB)
+#     - Partition 2: Root file system for system A (384 MiB)
+#     - Partition 3: Kernel for system B (64 MiB)
+#     - Partition 4: Root file system for system B (384 MiB)
+#     - Partition 5: User data (32 MiB, will be expanded to the full
+#                    size of the entire device on the first boot)
+#
+
+bootloader --ptable gpt
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=128  --sourceparams "file=${WKS_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=256  --sourceparams "file=${WKS_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=384  --sourceparams "file=${WKS_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=512  --sourceparams "file=${WKS_IMAGE_UBOOT_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2560 --sourceparams "file=${WKS_IMAGE_STARTUP_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2816 --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2944 --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+
+# GPT partitions
+part /kernel_a --ondisk=mmcblk0 --source=rawcopy --part-name=kernel_a --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_a --ondisk=mmcblk0 --source=rawcopy --part-name=system_a --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /kernel_b --ondisk=mmcblk0 --source=rawcopy --part-name=kernel_b --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_b --ondisk=mmcblk0 --source=rawcopy --part-name=system_b --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /overlay  --ondisk=mmcblk0 --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024

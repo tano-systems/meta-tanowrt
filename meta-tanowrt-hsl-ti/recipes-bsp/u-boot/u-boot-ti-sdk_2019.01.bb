@@ -6,10 +6,14 @@ PR = "ti0"
 require recipes-bsp/u-boot/u-boot-ti.inc
 require u-boot-ti-sdk-common.inc
 
-# Look in the generic major.minor directory for files
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+inherit u-boot-spl-multiple
 
-inherit uboot-defconfig-copy
+# Look in the generic major.minor directory for files
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/u-boot-ti:"
+
+inherit u-boot-defconfig-copy
+
+require u-boot-ti-tano.inc
 
 # Patches
 SRC_URI_append_ti33x = "\

@@ -1,0 +1,42 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved
+#
+# BOARD SPECIFIC CONFIGURATION AND HOOKS
+#
+
+SWU_INSTALL_HEARTBEAT_DELAY="0.1"
+
+SWU_INSTALL_LED1="/sys/class/leds/beaglebone:green:usr2"
+SWU_INSTALL_LED2="/sys/class/leds/beaglebone:green:usr3"
+
+swu_install_hook_preinit_started() {
+	[ -d "${SWU_INSTALL_LED1}" ] && echo "none" > "${SWU_INSTALL_LED1}/trigger"
+	[ -d "${SWU_INSTALL_LED1}" ] && echo "0"    > "${SWU_INSTALL_LED1}/brightness"
+	[ -d "${SWU_INSTALL_LED2}" ] && echo "none" > "${SWU_INSTALL_LED2}/trigger"
+	[ -d "${SWU_INSTALL_LED2}" ] && echo "0"    > "${SWU_INSTALL_LED2}/brightness"
+}
+
+SWU_INSTALL_HEARTBEAT_STATE="0"
+
+swu_install_hook_heartbeat() {
+	if [ "${SWU_INSTALL_HEARTBEAT_STATE}" = "0" ]; then
+		[ -d "${SWU_INSTALL_LED1}" ] && echo "0"   > "${SWU_INSTALL_LED1}/brightness"
+		[ -d "${SWU_INSTALL_LED2}" ] && echo "255" > "${SWU_INSTALL_LED2}/brightness"
+		SWU_INSTALL_HEARTBEAT_STATE="1"
+	else
+		[ -d "${SWU_INSTALL_LED1}" ] && echo "255" > "${SWU_INSTALL_LED1}/brightness"
+		[ -d "${SWU_INSTALL_LED2}" ] && echo "0"   > "${SWU_INSTALL_LED2}/brightness"
+		SWU_INSTALL_HEARTBEAT_STATE="0"
+	fi
+}
+
+swu_install_hook_failure() {
+	[ -d "${SWU_INSTALL_LED1}" ] && echo "0" > "${SWU_INSTALL_LED1}/brightness"
+	[ -d "${SWU_INSTALL_LED2}" ] && echo "0" > "${SWU_INSTALL_LED2}/brightness"
+}
+
+swu_install_hook_done() {
+	[ -d "${SWU_INSTALL_LED1}" ] && echo "255" > "${SWU_INSTALL_LED1}/brightness"
+	[ -d "${SWU_INSTALL_LED2}" ] && echo "255" > "${SWU_INSTALL_LED2}/brightness"
+}

@@ -1,0 +1,101 @@
+From cd4944ae3b49156935071ad59d26c660abf2a4b2 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 16 Feb 2021 18:49:46 +0300
+Subject: [PATCH] ti-am335x: Reduce default environment parameters
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/am335x_evm.h | 77 +-----------------------------------
+ 1 file changed, 2 insertions(+), 75 deletions(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index b885974093..4073292bdc 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -94,81 +94,8 @@
+ #include <environment/ti/mmc.h>
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+-	DEFAULT_LINUX_BOOT_ENV \
+-	DEFAULT_MMC_TI_ARGS \
+-	DEFAULT_FIT_TI_ARGS \
+-	"bootpart=0:2\0" \
+-	"bootdir=/boot\0" \
+-	"bootfile=zImage\0" \
+-	"fdtfile=undefined\0" \
+-	"console=ttyO0,115200n8\0" \
+-	"partitions=" \
+-		"uuid_disk=${uuid_gpt_disk};" \
+-		"name=bootloader,start=384K,size=1792K," \
+-			"uuid=${uuid_gpt_bootloader};" \
+-		"name=rootfs,start=2688K,size=-,uuid=${uuid_gpt_rootfs}\0" \
+-	"optargs=\0" \
+-	"ramroot=/dev/ram0 rw\0" \
+-	"ramrootfstype=ext2\0" \
+-	"spiroot=/dev/mtdblock4 rw\0" \
+-	"spirootfstype=jffs2\0" \
+-	"spisrcaddr=0xe0000\0" \
+-	"spiimgsize=0x362000\0" \
+-	"spibusno=0\0" \
+-	"spiargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=${spiroot} " \
+-		"rootfstype=${spirootfstype}\0" \
+-	"ramargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=${ramroot} " \
+-		"rootfstype=${ramrootfstype}\0" \
+-	"loadramdisk=load mmc ${mmcdev} ${rdaddr} ramdisk.gz\0" \
+-	"spiboot=echo Booting from spi ...; " \
+-		"run spiargs; " \
+-		"sf probe ${spibusno}:0; " \
+-		"sf read ${loadaddr} ${spisrcaddr} ${spiimgsize}; " \
+-		"bootz ${loadaddr}\0" \
+-	"ramboot=echo Booting from ramdisk ...; " \
+-		"run ramargs; " \
+-		"bootz ${loadaddr} ${rdaddr} ${fdtaddr}\0" \
+-	"findfdt="\
+-		"if test $board_name = A335BONE; then " \
+-			"setenv fdtfile am335x-bone.dtb; fi; " \
+-		"if test $board_name = A335BNLT; then " \
+-			"setenv fdtfile am335x-boneblack.dtb; fi; " \
+-		"if test $board_name = A335PBGL; then " \
+-			"setenv fdtfile am335x-pocketbeagle.dtb; fi; " \
+-		"if test $board_name = BBBW; then " \
+-			"setenv fdtfile am335x-boneblack-wireless.dtb; fi; " \
+-		"if test $board_name = BBG1; then " \
+-			"setenv fdtfile am335x-bonegreen.dtb; fi; " \
+-		"if test $board_name = BBGW; then " \
+-			"setenv fdtfile am335x-bonegreen-wireless.dtb; fi; " \
+-		"if test $board_name = BBBL; then " \
+-			"setenv fdtfile am335x-boneblue.dtb; fi; " \
+-		"if test $board_name = BBEN; then " \
+-			"setenv fdtfile am335x-sancloud-bbe.dtb; fi; " \
+-		"if test $board_name = A33515BB; then " \
+-			"setenv fdtfile am335x-evm.dtb; fi; " \
+-		"if test $board_name = A335X_SK; then " \
+-			"setenv fdtfile am335x-evmsk.dtb; fi; " \
+-		"if test $board_name = A335_ICE && test $ice_mii = rmii; then " \
+-			"setenv fdtfile am335x-icev2.dtb; fi; " \
+-		"if test $board_name = A335_ICE && test $ice_mii = mii; then " \
+-			"setenv fdtfile am335x-icev2-prueth.dtb; fi; " \
+-		"if test $fdtfile = undefined; then " \
+-			"echo WARNING: Could not determine device tree to use; fi; \0" \
+-	"init_console=" \
+-		"if test $board_name = A335_ICE; then "\
+-			"setenv console ttyO3,115200n8;" \
+-		"else " \
+-			"setenv console ttyO0,115200n8;" \
+-		"fi;\0" \
+-	NANDARGS \
+-	NETARGS \
+-	DFUARGS \
+-	BOOTENV
++	DEFAULT_LINUX_BOOT_ENV
++
+ #endif
+ 
+ /* NS16550 Configuration */
+-- 
+2.17.1
+

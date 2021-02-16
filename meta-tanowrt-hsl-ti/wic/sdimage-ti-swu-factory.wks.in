@@ -1,0 +1,38 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create image for SWU factory
+# installation SD card for TI SoC based devices.
+#
+# long-description: Creates a partitioned SD card image:
+#
+# Partitions/data:
+#
+#   - Offset  128 KiB: MLO (not in the partition table)
+#   - Offset  256 KiB: MLO (not in the partition table)
+#   - Offset  384 KiB: MLO (not in the partition table)
+#   - Offset  512 KiB: U-Boot image (not in the partition table)
+#   - Offset 2560 KiB: U-Boot startup script image (not in the partition table)
+#   - Offset 2816 KiB: U-Boot environment #1 image (not in the partition table)
+#   - Offset 2944 KiB: U-Boot environment #2 image (not in the partition table)
+#   - Offset 3072 KiB: GPT Partitions
+#     - Partition 1: Kernel with initramfs image
+#     - Partition 2: Data partition (SWU image + artifacts required for installation)
+#
+
+bootloader --ptable gpt
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=128  --sourceparams "file=${WKS_FACTORY_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=256  --sourceparams "file=${WKS_FACTORY_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=384  --sourceparams "file=${WKS_FACTORY_IMAGE_MLO_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=512  --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2560 --sourceparams "file=${WKS_FACTORY_IMAGE_STARTUP_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2816 --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=2944 --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+
+# GPT partitions
+part /install --ondisk=mmcblk0 --source=swu-factory --fstype=vfat --label install --align 4 --overhead-factor 1.0 --extra-space 1
+part /kernel  --ondisk=mmcblk0 --source=rawcopy --part-name=kernel --align=1024 --sourceparams "file=${WKS_FACTORY_IMAGE_KERNEL_BINARY}" --overhead-factor 1.0
+

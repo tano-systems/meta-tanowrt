@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".3"
+PR_append = ".4"
 
 KCONFIG_MODE = "--alldefconfig"
 
@@ -13,6 +13,10 @@ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am574x-idk = " prueth-fw"
 
 # Config
 SRC_URI_append_am574x-idk = " file://defconfig"
+
+SRC_URI_append_am574x-idk = "\
+	file://0001-am57xx-idk-Change-SPI-NOR-flash-partitions-layout.patch \
+"
 
 # TI CMEM (meta-ti)
 require recipes-kernel/linux/cmem.inc

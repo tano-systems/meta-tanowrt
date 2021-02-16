@@ -1,0 +1,29 @@
+From 2f5be9a95cb2431755b42bb20418ba729796c487 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 16 Feb 2021 18:28:06 +0300
+Subject: [PATCH] ti-am335x: Adjust SYS_MMC_ENV_DEV for SD/eMMC boot
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/am335x_evm.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 4eb35e6066..b885974093 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -282,6 +282,11 @@
+ #define CONFIG_SYS_MMC_MAX_DEVICE	2
+ #elif defined(CONFIG_ENV_IS_IN_NAND)
+ #define CONFIG_SYS_ENV_SECT_SIZE	CONFIG_SYS_NAND_BLOCK_SIZE
++#else
++/* SD-card */
++#define CONFIG_SYS_MMC_ENV_DEV		0
++#define CONFIG_SYS_MMC_ENV_PART		0
++#define CONFIG_SYS_MMC_MAX_DEVICE	2
+ #endif
+ 
+ /* SPI flash. */
+-- 
+2.25.1
+

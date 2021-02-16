@@ -1,0 +1,95 @@
+{
+	"global": {
+		"last_action": "poweroff",
+		"last_action_delay": 5
+	},
+	"verify": {
+		"blkdev_required": [
+			"/dev/mmcblk0",
+			"/dev/mmcblk1"
+		],
+		"mtd_required": [
+			"spl",
+			"uboot",
+			"startup",
+			"ubootenv"
+		]
+	},
+	"preinstall": {
+		"mounts": [
+			{
+				"device": "/dev/mmcblk0p1",
+				"target": "/mnt",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"mtd_erase": [
+			"spl",
+			"uboot",
+			"startup",
+			"ubootenv"
+		],
+		"blkdev_write": [
+			{
+				"device": "/dev/mtdblock3",
+				"images": [
+					{
+						"offset": 0,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}, {
+						"offset": 131072,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}
+				]
+			}
+		],
+		"blkdev_erase": [
+			{ "device": "/dev/mmcblk1", "bs": 131072, "count": 1 }
+		],
+		"blkdev_parts": [
+			{
+				"device": "/dev/mmcblk1",
+				"label": "gpt",
+				"partitions": [
+					{ "name": "kernel_a",    "fstype": "ext4", "start": "3MiB",    "end": "131MiB"  },
+					{ "name": "rootfs_a",    "fstype": "",     "start": "131MiB",  "end": "1115MiB" },
+					{ "name": "kernel_b",    "fstype": "ext4", "start": "1115MiB", "end": "1283MiB" },
+					{ "name": "rootfs_b",    "fstype": "",     "start": "1283MiB", "end": "2307MiB" },
+					{ "name": "rootfs_data", "fstype": "ext4", "start": "2307MiB", "end": "100%"    }
+				]
+			}
+		],
+		"blkdev_mkfs": [
+			{
+				"device": "/dev/mmcblk1p5",
+				"fstype": "ext4",
+				"label": "rootfs_data"
+			}
+		]
+	},
+	"install": {
+		"images": [
+			{
+				"type": "swupdate",
+				"image_source": "local",
+				"image_url": "/mnt/swu_install.swu",
+				"extra": "--no-bootloader-env",
+				"dry_run": true,
+				"selections": [
+					"${SWU_SYSTEM_A_SELECTION}",
+					"${SWU_SYSTEM_B_SELECTION}"
+				]
+			}
+		]
+	},
+	"postinstall": {
+		"postexecute": [
+			{ "command": "fw_setenv swu_active 0" },
+			{ "command": "fw_setenv swu_upgrade_available 0" },
+			{ "command": "fw_setenv swu_bootcount 0" }
+		]
+	}
+}

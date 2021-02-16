@@ -1,0 +1,93 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+# SWUPDATE specific files generation
+
+get_uboot_version() {
+	local UBOOT_PATH=${1}
+	local VERSION=$(dd if=${UBOOT_PATH} bs=131072 count=1 2>/dev/null \
+		| strings 2>/dev/null \
+		| grep -m 1 'U-Boot 20' \
+		| awk '{print $2}')
+
+	echo ${VERSION}
+}
+
+get_startup_version() {
+	local STARTUP_PATH=${1}
+	local VERSION=$(dd if=${STARTUP_PATH} bs=65536 count=4 2>/dev/null \
+		| strings 2>/dev/null \
+		| grep -m 1 'version:' \
+		| awk '{print $4}')
+
+	echo ${VERSION}
+}
+
+get_kernel_version() {
+	echo $(uname -r)
+}
+
+get_rootfs_version() {
+	local VERSION=""
+	if [ -f /etc/tanowrt_release ]; then
+		source /etc/tanowrt_release
+		if [ "${DISTRIB_TIMESTAMP}" != "" ]; then
+			VERSION=${DISTRIB_TIMESTAMP//[ :-]/-}
+		fi
+	fi
+
+	echo ${VERSION}
+}
+
+do_swupdate_gen_sw_versions() {
+	. /usr/lib/swupdate/swupdate_config
+
+	local TMPFILE="${SWU_SW_VERSIONS_FILE_TMP}"
+
+	local UBOOT_PATH="/dev/mtdblock1"
+	local STARTUP_PATH="/dev/mtdblock2"
+
+	echo -n > ${TMPFILE}
+
+	# U-Boot version
+	local UBOOT_VERSION=$(get_uboot_version ${UBOOT_PATH})
+	if [ "${UBOOT_VERSION}" != "" ]; then
+		echo "uboot ${UBOOT_VERSION}" >> ${TMPFILE}
+		echo "spl ${UBOOT_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: U-Boot version ${UBOOT_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the U-Boot version from '${UBOOT_PATH}'" > /dev/kmsg
+	fi
+
+	# U-Boot startup script version
+	local STARTUP_VERSION=$(get_startup_version ${STARTUP_PATH})
+	if [ "${STARTUP_VERSION}" != "" ]; then
+		echo "startup ${STARTUP_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: U-Boot startup version ${STARTUP_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the U-Boot startup version from '${STARTUP_PATH}'" > /dev/kmsg
+	fi
+
+	# Kernel version (from uname)
+	local KERNEL_VERSION=$(get_kernel_version)
+	if [ "${KERNEL_VERSION}" != "" ]; then
+		echo "kernel ${KERNEL_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Kernel version ${KERNEL_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the kernel version" > /dev/kmsg
+	fi
+
+	# ROOTFS version
+	local ROOTFS_VERSION=$(get_rootfs_version)
+	if [ "${ROOTFS_VERSION}" != "" ]; then
+		echo "rootfs ${ROOTFS_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Read-only filesystem version ${ROOTFS_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the read-only filesystem version" > /dev/kmsg
+	fi
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_gen_sw_versions
+}
