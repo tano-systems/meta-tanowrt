@@ -95,9 +95,6 @@ BB_GENERATE_MIRROR_TARBALLS = "0"
 # Enable locale generation
 ENABLE_BINARY_LOCALE_GENERATION = "1"
 
-# Keep one set of images by default
-RM_OLD_IMAGE = "1"
-
 #
 # Qemu configuration
 #
