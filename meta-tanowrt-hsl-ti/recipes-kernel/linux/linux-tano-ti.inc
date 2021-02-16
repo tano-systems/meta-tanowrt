@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".6"
+PR_append = ".7"
 
 COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
 
@@ -32,7 +32,9 @@ KERNEL_MACHINE_INCLUDE_am335x-bbb ?= "recipes-kernel/linux/linux-tano-ti-am335x-
 KERNEL_MACHINE_INCLUDE_am574x-idk ?= "recipes-kernel/linux/linux-tano-ti-am574x-idk.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-ti-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
-require recipes-kernel/linux/ti-uio.inc
+
+TI_UIO_REQUIRE ?= "${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', 'recipes-kernel/linux/ti-uio.inc', '', d)}"
+require ${TI_UIO_REQUIRE}
 
 KERNEL_FEATURES_append = "${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', ' uio.scc uio-pruss.scc ', '', d)}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append = "${@oe.utils.conditional('ENABLE_TI_UIO_DEVICES', '1', ' uio-module-drv uio-module-drv-test ', '', d)}"
