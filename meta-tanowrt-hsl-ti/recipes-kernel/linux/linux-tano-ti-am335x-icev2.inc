@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2020-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".10"
+PR_append = ".11"
 
 KCONFIG_MODE = "--alldefconfig"
 
