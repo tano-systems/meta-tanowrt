@@ -1,0 +1,64 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved
+#
+
+SWU_INSTALL="1"
+SWU_ENABLE_LAST_ACTION="1"
+
+swu_wait_keypress() {
+	local pressedkey=""
+	local timeout
+	local start
+
+	echo "Press the [x] key to cancel automatic installation"
+	echo "Press the [r] key to install without last action (reboot/power off)"
+
+	timeout="${1}"
+	start=$(date +%s)
+	while true; do
+		local pressedkey
+		local now
+		local waited
+
+		read -n 1 -t 1 pressedkey
+
+		if [ "${pressedkey}" = "x" ]; then
+			SWU_INSTALL="0"
+			echo
+			echo "Automatic installation cancelled"
+			return 0
+		fi
+
+		if [ "${pressedkey}" = "r" ]; then
+			SWU_ENABLE_LAST_ACTION="0"
+			echo
+			echo "Automatic last action running disabled"
+			return 0
+		fi
+
+		now=$(date +%s)
+		waited=$((now - start))
+		if [ "${waited}" -gt "${timeout}" ]; then
+			return 1
+		fi
+	done
+}
+
+do_swu_install_preinit_done() {
+	swu_wait_keypress 2
+
+	if [ "${SWU_INSTALL}" = "1" ]; then
+		if [ -f "/usr/lib/swupdate/install/swu_install.sh" ]; then
+			DRY_RUN=0 ENABLE_LAST_ACTION=${SWU_ENABLE_LAST_ACTION} \
+				SWU_INSTALL_JSON=/usr/lib/swupdate/install/swu_install.json \
+				SWU_INSTALL_BOARD=/usr/lib/swupdate/install/swu_install.board \
+				sh /usr/lib/swupdate/install/swu_install.sh
+		else
+			echo "ERROR: Cannot find installation script" \
+			     "(/usr/lib/swupdate/install/swu_install.sh)"
+		fi
+	fi
+}
+
+boot_hook_add initramfs do_swu_install_preinit_done

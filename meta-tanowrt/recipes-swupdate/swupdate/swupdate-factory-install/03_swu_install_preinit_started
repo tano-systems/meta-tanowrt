@@ -1,0 +1,16 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved
+#
+
+do_swu_install_preinit_started() {
+	if [ -f "/usr/lib/swupdate/install/swu_install.board" ]; then
+		. "/usr/lib/swupdate/install/swu_install.board"
+
+		if eval "type swu_install_hook_preinit_started" 2>/dev/null >/dev/null; then
+			swu_install_hook_preinit_started
+		fi
+	fi
+}
+
+boot_hook_add preinit_main do_swu_install_preinit_started

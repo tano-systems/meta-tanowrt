@@ -1,0 +1,11 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved
+#
+# BOARD SPECIFIC CONFIGURATION IS REQUIRED
+#
+
+swu_install_hook_preinit_started() { :; }
+swu_install_hook_heartbeat() { :; }
+swu_install_hook_failure() { :; }
+swu_install_hook_done() { :; }
