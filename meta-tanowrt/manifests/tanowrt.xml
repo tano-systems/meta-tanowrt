@@ -4,6 +4,7 @@
 	<include name="meta-tanowrt/manifests/remotes.xml" />
 	<include name="meta-tanowrt/manifests/common.xml" />
 	<include name="meta-tanowrt/manifests/qt5.xml" />
+	<include name="meta-tanowrt/manifests/swupdate.xml" />
 
 	<!-- TanoWrt layers -->
 	<project path="meta-tanowrt"

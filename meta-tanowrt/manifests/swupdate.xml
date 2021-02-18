@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<!-- meta-swupdate -->
+	<project path="meta-swupdate"
+	         name="sbabic/meta-swupdate"
+	         remote="github"
+	         upstream="master"
+	         revision="3f9c381c5ceafb43e73a35eb44045dac0f93a864" />
+</manifest>

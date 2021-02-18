@@ -162,11 +162,14 @@ The current exact revisions of all listed dependencies are given in [manifests/t
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-filesystems  
   Branch: dunfell  
+* meta-swupdate  
+  URI: <git://github.com/sbabic/meta-swupdate.git>  
+  Branch: dunfell  
 * bitbake  
   URI: <git://git.openembedded.org/bitbake>  
   Branch: 1.46  
 
-### 8.2 Optional (depending on the image)
+### 8.2 Optional (depending on the image and/or machine)
 
 * meta-qt5  
   URI: <git://github.com/meta-qt5/meta-qt5.git>  

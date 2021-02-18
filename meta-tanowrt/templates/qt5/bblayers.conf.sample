@@ -7,6 +7,7 @@ BBFILES ?= ""
 
 BBLAYERS ?= " \
   ##OEROOT##/meta-tanowrt/meta-tanowrt \
+  ##OEROOT##/meta-swupdate \
   ##OEROOT##/meta-qt5 \
   ##OEROOT##/meta-openembedded/meta-oe \
   ##OEROOT##/meta-openembedded/meta-python \
