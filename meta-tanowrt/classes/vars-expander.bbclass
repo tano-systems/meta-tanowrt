@@ -10,7 +10,26 @@
 #
 
 EXPAND_IN_FILES_WITH_EXTENSION ?= ".in"
-EXPAND_VARIABLES ?= ""
+
+EXPAND_VARIABLES ?= "\
+	base_prefix \
+	prefix \
+	exec_prefix \
+	sysconfdir \
+	servicedir \
+	sharedstatedir \
+	localstatedir \
+	datadir \
+	infodir \
+	mandir \
+	docdir \
+	nonarch_libdir \
+	bindir \
+	sbindir \
+	libdir \
+	libexecdir \
+	includedir \
+"
 
 def expand_bitbake_variables(d, fileinput, fileoutput):
     write_lines = []
