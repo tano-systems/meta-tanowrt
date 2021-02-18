@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
 #
 
 #
@@ -17,7 +17,9 @@ SERIAL_CONSOLES ?= "115200;ttyS0"
 #
 # Image
 #
-IMAGE_FSTYPES = "wic wic.vmdk"
+ROOTFS_IMAGE_FSTYPE = "squashfs"
+IMAGE_FSTYPES = "wic wic.vmdk ${ROOTFS_IMAGE_FSTYPE}"
+WICVARS_append = " ROOTFS_IMAGE_FSTYPE"
 WKS_FILE = "tanowrt-image-qemux86.wks"
 WKS_FILE_DEPENDS = "syslinux syslinux-native e2fsprogs-native dosfstools-native mtools-native squashfs-tools-native"
 WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"

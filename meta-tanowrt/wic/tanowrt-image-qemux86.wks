@@ -1,15 +1,18 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
 #
-# +------------+-----------------+--------------+
-# | Bootloader | rootfs + kernel | Overlay data |
-# +------------+-----------------+--------------+
+# +------------+----------+----------+--------------+
+# |            | system A | system B |              |
+# | Bootloader | rootfs + | rootfs + | Overlay data |
+# |            | kernel   | kernel   |              |
+# +------------+----------+----------+--------------+
 #
-part /boot    --source=rootfs --rootfs-dir=${IMAGE_ROOTFS}/boot --fstype=vfat --ondisk=sda --label=boot --active --align=1024 --overhead-factor=1.0
-part /        --source=rootfs --use-uuid --fstype=squashfs --align=1024 --exclude-path=boot/
-part /overlay --size=256M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
+part /boot     --source bootimg-efi-ext --sourceparams="loader=grub-efi, no_kernel=1" --ondisk sda --label boot --active --align 1024 --overhead-factor=1.0
+part /system_a --source=rawcopy --ondisk=sda --part-name=system_a --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${IMAGE_BASENAME}-${MACHINE}.${ROOTFS_IMAGE_FSTYPE}"
+part /system_b --source=rawcopy --ondisk=sda --part-name=system_b --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${IMAGE_BASENAME}-${MACHINE}.${ROOTFS_IMAGE_FSTYPE}"
+part /overlay  --size=256M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
 
-bootloader --ptable gpt --append=" rootwait rootfstype=squashfs console=tty1 console=ttyS0,115200n8 "
+bootloader --ptable gpt --configfile ${DEPLOY_DIR_IMAGE}/grub.cfg
