@@ -3,7 +3,7 @@
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano4"
+PR_append = ".tano5"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -23,6 +23,15 @@ do_install_append_class-target() {
 
 FILES_${PN}_remove = "${libdir}/grub/${GRUB_TARGET}-efi"
 FILES_${PN} += "${EFI_PREFIX}/startup.nsh"
+
+do_preconfigure() {
+	# Set version to value with revision (PR) part
+	sed -i -e \
+		"s/\(AC_INIT(\[GRUB\],\[\).*\(\],\[bug-grub@gnu.org\])\)/\1${PV}-${PR}\2/" \
+		${S}/configure.ac
+}
+
+addtask preconfigure after do_patch before do_configure
 
 do_deploy_append() {
 	# Deploy file with version info
