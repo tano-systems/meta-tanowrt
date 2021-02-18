@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 require recipes-image/images/tanowrt-image-base.bb
 
-PR_append = ".5"
+PR_append = ".6"
 SUMMARY = "TanoWrt full featured image"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -22,7 +22,7 @@ IMAGE_FEATURES += "\
 	statistics \
 	webterminal \
 	wireguard \
-	${@bb.utils.filter('MACHINE_FEATURES', 'crypto wifi watchdog cgroup stp lldp', d)} \
+	${@bb.utils.filter('MACHINE_FEATURES', 'crypto wifi watchdog cgroup stp lldp swupdate', d)} \
 "
 
 CORE_IMAGE_EXTRA_INSTALL += "\
