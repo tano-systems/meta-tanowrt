@@ -23,6 +23,8 @@ VIRTUAL-RUNTIME_network_manager = "netifd"
 # Start with default set of distro features
 DISTRO_FEATURES = "${DISTRO_FEATURES_DEFAULT} ${DISTRO_FEATURES_LIBC}"
 
+DISTRO_FEATURES_append = " swupdate "
+
 # Set procd as init manager
 DISTRO_FEATURES_append = " procd "
 
@@ -79,6 +81,7 @@ require conf/distro/include/tanowrt-packageconfig.inc
 require conf/distro/include/tanowrt-prefs.inc
 require conf/distro/include/tanowrt-repairs.inc
 require conf/distro/include/tanowrt-mirrors.inc
+require conf/distro/include/tanowrt-swupdate.inc
 
 # Unbreak multimachine builds
 LICENSE_DIRECTORY = "${DEPLOY_DIR}/licenses/${MACHINE_ARCH}"
