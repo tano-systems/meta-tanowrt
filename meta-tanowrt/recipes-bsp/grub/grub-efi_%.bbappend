@@ -3,7 +3,7 @@
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano3"
+PR_append = ".tano4"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -23,6 +23,11 @@ do_install_append_class-target() {
 
 FILES_${PN}_remove = "${libdir}/grub/${GRUB_TARGET}-efi"
 FILES_${PN} += "${EFI_PREFIX}/startup.nsh"
+
+do_deploy_append() {
+	# Deploy file with version info
+	echo "${PV}-${PR}" > ${DEPLOYDIR}/${GRUB_IMAGE_PREFIX}${GRUB_IMAGE}.version
+}
 
 do_deploy_append_class-target() {
 	install -m 644 ${D}${EFI_PREFIX}/startup.nsh \
