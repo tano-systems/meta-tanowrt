@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano28"
+PR = "tano29"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -20,6 +20,11 @@ SRC_URI = "\
 	file://rpcd.init \
 	file://rpcd.config \
 	file://50-migrate-rpcd-ubus-sock.sh \
+"
+
+# Patches
+SRC_URI += "\
+	file://0001-file-Add-support-for-polled-execution-mode.patch \
 "
 
 # 17.01.2021

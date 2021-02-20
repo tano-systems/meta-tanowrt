@@ -1,0 +1,490 @@
+From 12f9aa6ae6bffef6b828ce08b795a09b10799dec Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 21 Feb 2021 03:50:05 +0300
+Subject: [PATCH] file: Add support for polled execution mode
+
+To 'exec' method, added an additional optional argument 'extraopts', that
+is a table with additional options.
+
+If no 'extraopts' argument is supplied or if value of 'extraopts["mode"]'
+is 'normal', the method executing the command in normal mode (like before
+this commit).
+
+If 'extraopts["mode"]' is 'polled', then the 'exec' method will exit
+immediately after executing the command (without waiting for it to complete).
+The reply will contain two parameters:
+  - 'exec_id' - execution identifier;
+  - 'pid' - system PID of the executed command.
+
+The state of a executed command can be obtained using the new 'exec_poll'
+method, using the 'exec_id' identifier from the 'file.exec' method reply.
+The 'file.exec_poll' method's reply will contain the boolean 'completed'
+field. If 'completed' is 'true', the reply will contain all the reply data
+that is typical for the 'file.exec' methods's reply when called in normal
+mode.
+
+Once a running command has terminated (whether successfully or with an error),
+the data about this command will be kept for a certain amount of time. The
+time for keeping information about completed commands is specified by the
+RPC_FILE_EXEC_POLLED_KEEP_TIMEOUT constant and equals 1 minute. Unless the
+keeping time has expired, the data can be retrieved using the 'exec_poll'
+method. When the keeping time has expired, the information of this process
+will be deleted and the invocation the 'exec_poll' method for the associated
+'exec_id' will fail with a UBUS_STATUS_NOT_FOUND error.
+
+In 'extraopts["timeout"]' option it is possible to specify timeout value for
+command execution in 'polled' mode. If 0 is specified, the command will be
+executed without timeout. When the timeout expires, a SIGKILL signal is sent
+to the command being executed. The default timeout value is defined by the
+RPC_FILE_EXEC_POLLED_DEFAULT_TIMEOUT constant and equals to 5 minutes.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ file.c | 299 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 272 insertions(+), 27 deletions(-)
+
+diff --git a/file.c b/file.c
+index bd7af56..d4a0be2 100644
+--- a/file.c
++++ b/file.c
+@@ -61,6 +61,31 @@
+ 
+ static const struct rpc_daemon_ops *ops;
+ 
++/* Default timeout for executing process in polled mode
++ * (in seconds) */
++#define RPC_FILE_EXEC_POLLED_DEFAULT_TIMEOUT  (300)
++
++/* Time for keeping information about the executed process 
++ * after its completion in polled mode (in seconds) */
++#define RPC_FILE_EXEC_POLLED_KEEP_TIMEOUT  (60)
++
++enum rpc_file_exec_mode {
++	RPC_FILE_EXEC_MODE_NORMAL,
++	RPC_FILE_EXEC_MODE_POLLED
++};
++
++static LIST_HEAD(rpc_file_polled_execs);
++struct rpc_file_exec_context;
++
++struct rpc_file_polled_exec_context {
++	struct list_head list;
++	int exec_id;
++	int completed;
++	char *sid;
++	struct rpc_file_exec_context *c;
++	struct blob_buf buf;
++};
++
+ struct rpc_file_exec_context {
+ 	struct ubus_context *context;
+ 	struct ubus_request_data request;
+@@ -69,8 +94,58 @@ struct rpc_file_exec_context {
+ 	struct ustream_fd opipe;
+ 	struct ustream_fd epipe;
+ 	int stat;
++	enum rpc_file_exec_mode mode;
++	struct rpc_file_polled_exec_context *pc;
+ };
+ 
++static int polled_exec_generate_id(void)
++{
++	static int exec_id = 0;
++
++	/* Generate ID's from 1 to (2^31 - 1) */
++	if (++exec_id >= 2147483647)
++		exec_id = 1;
++
++	return exec_id;
++}
++
++static struct rpc_file_polled_exec_context *polled_exec_new(void) {
++	struct rpc_file_polled_exec_context *pc;
++
++	pc = calloc(1, sizeof(struct rpc_file_polled_exec_context));
++	if (!pc)
++		return NULL;
++
++	pc->exec_id = polled_exec_generate_id();
++	return pc;
++}
++
++static void polled_exec_add(struct rpc_file_polled_exec_context *pc)
++{
++	list_add(&pc->list, &rpc_file_polled_execs);
++}
++
++static void polled_exec_remove(struct rpc_file_polled_exec_context *pc)
++{
++	uloop_timeout_cancel(&pc->c->timeout);
++	blob_buf_free(&pc->buf);
++	list_del(&pc->list);
++	free(pc->c);
++	free(pc->sid);
++	free(pc);
++}
++
++static struct rpc_file_polled_exec_context *polled_exec_find(int polled_exec_id)
++{
++	struct rpc_file_polled_exec_context *pc;
++
++	list_for_each_entry(pc, &rpc_file_polled_execs, list) {
++		if (pc->exec_id == polled_exec_id)
++			return pc;
++	}
++
++	return NULL;
++}
+ 
+ static struct blob_buf buf;
+ static char *canonpath;
+@@ -126,16 +201,30 @@ enum {
+ 	RPC_E_CMD,
+ 	RPC_E_PARM,
+ 	RPC_E_ENV,
++	RPC_E_EXTRAOPTS,
+ 	RPC_E_SESSION,
+ 	__RPC_E_MAX,
+ };
+ 
+ static const struct blobmsg_policy rpc_exec_policy[__RPC_E_MAX] = {
+-	[RPC_E_CMD]     = { .name = "command", .type = BLOBMSG_TYPE_STRING },
+-	[RPC_E_PARM]    = { .name = "params",  .type = BLOBMSG_TYPE_ARRAY  },
+-	[RPC_E_ENV]     = { .name = "env",     .type = BLOBMSG_TYPE_TABLE  },
+-	[RPC_E_SESSION] = { .name = "ubus_rpc_session",
+-	                    .type = BLOBMSG_TYPE_STRING },
++	[RPC_E_CMD]       = { .name = "command",   .type = BLOBMSG_TYPE_STRING },
++	[RPC_E_PARM]      = { .name = "params",    .type = BLOBMSG_TYPE_ARRAY  },
++	[RPC_E_ENV]       = { .name = "env",       .type = BLOBMSG_TYPE_TABLE  },
++	[RPC_E_EXTRAOPTS] = { .name = "extraopts", .type = BLOBMSG_TYPE_TABLE  },
++	[RPC_E_SESSION]   = { .name = "ubus_rpc_session",
++	                      .type = BLOBMSG_TYPE_STRING },
++};
++
++enum {
++	RPC_E_POLL_EXEC_ID,
++	RPC_E_POLL_SESSION,
++	__RPC_E_POLL_MAX,
++};
++
++static const struct blobmsg_policy rpc_exec_poll_policy[__RPC_E_POLL_MAX] = {
++	[RPC_E_POLL_EXEC_ID] = { .name = "exec_id", .type = BLOBMSG_TYPE_INT32 },
++	[RPC_E_POLL_SESSION] = { .name = "ubus_rpc_session",
++	                         .type = BLOBMSG_TYPE_STRING },
+ };
+ 
+ static const char *d_types[] = {
+@@ -668,14 +757,14 @@ rpc_file_exec_lookup(const char *cmd)
+ 
+ 
+ static void
+-rpc_ustream_to_blobmsg(struct ustream *s, const char *name)
++rpc_ustream_to_blobmsg(struct blob_buf *b, struct ustream *s, const char *name)
+ {
+ 	int len;
+ 	char *rbuf, *wbuf;
+ 
+ 	if ((len = ustream_pending_data(s, false)) > 0)
+ 	{
+-		wbuf = blobmsg_alloc_string_buffer(&buf, name, len + 1);
++		wbuf = blobmsg_alloc_string_buffer(b, name, len + 1);
+ 
+ 		if (!wbuf)
+ 			return;
+@@ -687,30 +776,60 @@ rpc_ustream_to_blobmsg(struct ustream *s, const char *name)
+ 		}
+ 
+ 		*wbuf = 0;
+-		blobmsg_add_string_buffer(&buf);
++		blobmsg_add_string_buffer(b);
+ 	}
+ }
+ 
++static void
++rpc_file_exec_polled_keep_timeout_cb(struct uloop_timeout *t)
++{
++	struct rpc_file_exec_context *c =
++		container_of(t, struct rpc_file_exec_context, timeout);
++
++	polled_exec_remove(c->pc);
++}
++
+ static void
+ rpc_file_exec_reply(struct rpc_file_exec_context *c, int rv)
+ {
++	struct blob_buf *b = &buf;
++
+ 	uloop_timeout_cancel(&c->timeout);
+ 	uloop_process_delete(&c->process);
+ 
++	if (c->mode == RPC_FILE_EXEC_MODE_POLLED) {
++		b = &c->pc->buf;
++		c->pc->completed = 1;
++	}
++
+ 	if (rv == UBUS_STATUS_OK)
+ 	{
+-		blob_buf_init(&buf, 0);
++		blob_buf_init(b, 0);
+ 
+-		blobmsg_add_u32(&buf, "code", WEXITSTATUS(c->stat));
++		blobmsg_add_u32(b, "code", WEXITSTATUS(c->stat));
+ 
+-		rpc_ustream_to_blobmsg(&c->opipe.stream, "stdout");
+-		rpc_ustream_to_blobmsg(&c->epipe.stream, "stderr");
++		rpc_ustream_to_blobmsg(b, &c->opipe.stream, "stdout");
++		rpc_ustream_to_blobmsg(b, &c->epipe.stream, "stderr");
+ 
+-		ubus_send_reply(c->context, &c->request, buf.head);
+-		blob_buf_free(&buf);
++		if (c->mode == RPC_FILE_EXEC_MODE_NORMAL) {
++			ubus_send_reply(c->context, &c->request, b->head);
++			blob_buf_free(b);
++		}
++	}
++
++	if (c->mode == RPC_FILE_EXEC_MODE_NORMAL) {
++		ubus_complete_deferred_request(c->context, &c->request, rv);
+ 	}
++	else {
++		if (rv != UBUS_STATUS_OK)
++			blob_buf_init(b, 0);
++
++		blobmsg_add_u32(b, "rv", rv);
+ 
+-	ubus_complete_deferred_request(c->context, &c->request, rv);
++		c->timeout.cb = rpc_file_exec_polled_keep_timeout_cb;
++		uloop_timeout_set(&c->timeout,
++			RPC_FILE_EXEC_POLLED_KEEP_TIMEOUT * 1000);
++	}
+ 
+ 	ustream_free(&c->opipe.stream);
+ 	ustream_free(&c->epipe.stream);
+@@ -718,7 +837,8 @@ rpc_file_exec_reply(struct rpc_file_exec_context *c, int rv)
+ 	close(c->opipe.fd.fd);
+ 	close(c->epipe.fd.fd);
+ 
+-	free(c);
++	if (c->mode == RPC_FILE_EXEC_MODE_NORMAL)
++		free(c);
+ }
+ 
+ static void
+@@ -793,7 +913,8 @@ rpc_fdclose(int fd)
+ static int
+ rpc_file_exec_run(const char *cmd, const struct blob_attr *sid,
+                   const struct blob_attr *arg, const struct blob_attr *env,
+-                  struct ubus_context *ctx, struct ubus_request_data *req)
++                  struct ubus_context *ctx, struct ubus_request_data *req,
++                  enum rpc_file_exec_mode mode, int exec_polled_timeout)
+ {
+ 	pid_t pid;
+ 
+@@ -803,6 +924,7 @@ rpc_file_exec_run(const char *cmd, const struct blob_attr *sid,
+ 
+ 	int rem;
+ 	struct blob_attr *cur;
++	struct rpc_file_polled_exec_context *pc = NULL;
+ 
+ 	uint8_t arglen;
+ 	char *executable, **args, **tmp, *p;
+@@ -849,6 +971,18 @@ rpc_file_exec_run(const char *cmd, const struct blob_attr *sid,
+ 	if (!c)
+ 		return UBUS_STATUS_UNKNOWN_ERROR;
+ 
++	if (mode == RPC_FILE_EXEC_MODE_POLLED) {
++		pc = polled_exec_new();
++		if (!pc)
++			goto fail_polled;
++
++		if (sid) {
++			pc->sid = strdup(blobmsg_get_string((struct blob_attr *)sid));
++			if (!pc->sid)
++				goto fail_polled_sid;
++		}
++	}
++
+ 	if (pipe(opipe))
+ 		goto fail_opipe;
+ 
+@@ -932,6 +1066,8 @@ rpc_file_exec_run(const char *cmd, const struct blob_attr *sid,
+ 	default:
+ 		memset(c, 0, sizeof(*c));
+ 
++		c->mode = mode;
++
+ 		ustream_declare(c->opipe, opipe[0], exec_opipe);
+ 		ustream_declare(c->epipe, epipe[0], exec_epipe);
+ 
+@@ -940,13 +1076,29 @@ rpc_file_exec_run(const char *cmd, const struct blob_attr *sid,
+ 		uloop_process_add(&c->process);
+ 
+ 		c->timeout.cb = rpc_file_exec_timeout_cb;
+-		uloop_timeout_set(&c->timeout, *ops->exec_timeout);
++		uloop_timeout_set(&c->timeout, (mode == RPC_FILE_EXEC_MODE_POLLED)
++			? exec_polled_timeout * 1000
++			: *ops->exec_timeout);
+ 
+ 		close(opipe[1]);
+ 		close(epipe[1]);
+ 
+ 		c->context = ctx;
+-		ubus_defer_request(ctx, req, &c->request);
++		if (mode == RPC_FILE_EXEC_MODE_NORMAL) {
++			ubus_defer_request(ctx, req, &c->request);
++		}
++		else {
++			c->pc = pc;
++			pc->c = c;
++
++			polled_exec_add(pc);
++
++			blob_buf_init(&buf, 0);
++			blobmsg_add_u32(&buf, "exec_id", pc->exec_id);
++			blobmsg_add_u32(&buf, "pid", pc->c->process.pid);
++			ubus_send_reply(ctx, req, buf.head);
++			blob_buf_free(&buf);
++		}
+ 	}
+ 
+ 	return UBUS_STATUS_OK;
+@@ -960,6 +1112,13 @@ fail_epipe:
+ 	close(opipe[1]);
+ 
+ fail_opipe:
++	if (pc)
++		free(pc->sid);
++
++fail_polled_sid:
++	free(pc);
++
++fail_polled:
+ 	free(c);
+ 	return rpc_errno_status();
+ }
+@@ -971,28 +1130,114 @@ rpc_file_exec(struct ubus_context *ctx, struct ubus_object *obj,
+ {
+ 	struct blob_attr *tb[__RPC_E_MAX];
+ 
++	int exec_polled_timeout = RPC_FILE_EXEC_POLLED_DEFAULT_TIMEOUT;
++	enum rpc_file_exec_mode exec_mode = RPC_FILE_EXEC_MODE_NORMAL;
++
+ 	blobmsg_parse(rpc_exec_policy, __RPC_E_MAX, tb,
+ 	              blob_data(msg), blob_len(msg));
+ 
+ 	if (!tb[RPC_E_CMD])
+ 		return UBUS_STATUS_INVALID_ARGUMENT;
+ 
++	if (tb[RPC_E_EXTRAOPTS]) {
++		int rem;
++		struct blob_attr *cur;
++
++		blobmsg_for_each_attr(cur, tb[RPC_E_EXTRAOPTS], rem)
++		{
++			const char *name = blobmsg_name(cur);
++
++			if (!strcmp(name, "mode")) {
++				char *data = blobmsg_get_string(cur);
++
++				/* The "mode" parameter must be a string */
++				if (blobmsg_type(cur) != BLOBMSG_TYPE_STRING)
++					return UBUS_STATUS_INVALID_ARGUMENT;
++
++				if (!strcmp(data, "polled")) {
++					exec_mode = RPC_FILE_EXEC_MODE_POLLED;
++				}
++				else if (!strcmp(data, "normal")) {
++					exec_mode = RPC_FILE_EXEC_MODE_NORMAL;
++				}
++				else {
++					/* Invalid/unknown "mode" value */
++					return UBUS_STATUS_INVALID_ARGUMENT;
++				}
++			}
++			else if (!strcmp(name, "timeout")) {
++				/* The "mode" parameter must be a number */
++				if (blobmsg_type(cur) != BLOBMSG_TYPE_INT32)
++					return UBUS_STATUS_INVALID_ARGUMENT;
++
++				exec_polled_timeout = blobmsg_get_u32(cur);
++			}
++		}
++	}
++
+ 	return rpc_file_exec_run(blobmsg_data(tb[RPC_E_CMD]), tb[RPC_E_SESSION],
+-	                         tb[RPC_E_PARM], tb[RPC_E_ENV], ctx, req);
++	                         tb[RPC_E_PARM], tb[RPC_E_ENV], ctx, req,
++	                         exec_mode, exec_polled_timeout);
+ }
+ 
+ 
++static int
++rpc_file_exec_poll(struct ubus_context *ctx, struct ubus_object *obj,
++                   struct ubus_request_data *req, const char *method,
++                   struct blob_attr *msg)
++{
++	struct blob_attr *tb[__RPC_E_POLL_MAX];
++	int polled_exec_id = 0;
++	char *sid = NULL;
++	struct rpc_file_polled_exec_context *pc;
++
++	blobmsg_parse(rpc_exec_poll_policy, __RPC_E_POLL_MAX, tb,
++	              blob_data(msg), blob_len(msg));
++
++	if (!tb[RPC_E_POLL_EXEC_ID])
++		return UBUS_STATUS_INVALID_ARGUMENT;
++
++	polled_exec_id = blobmsg_get_u32(tb[RPC_E_POLL_EXEC_ID]);
++	if (!polled_exec_id)
++		return UBUS_STATUS_INVALID_ARGUMENT;
++
++	pc = polled_exec_find(polled_exec_id);
++	if (!pc)
++		return UBUS_STATUS_NOT_FOUND;
++
++	if (tb[RPC_E_POLL_SESSION])
++		sid = blobmsg_get_string(tb[RPC_E_POLL_SESSION]);
++
++	if (sid && (!pc->sid || strcmp(pc->sid, sid)))
++		return UBUS_STATUS_PERMISSION_DENIED;
++
++	if (pc->completed) {
++		blobmsg_add_u8(&pc->buf, "completed", 1);
++		ubus_send_reply(ctx, req, pc->buf.head);
++		polled_exec_remove(pc);
++	}
++	else {
++		blob_buf_init(&buf, 0);
++		blobmsg_add_u8(&buf, "completed", 0);
++		ubus_send_reply(ctx, req, buf.head);
++		blob_buf_free(&buf);
++	}
++
++	return UBUS_STATUS_OK;
++}
++
+ static int
+ rpc_file_api_init(const struct rpc_daemon_ops *o, struct ubus_context *ctx)
+ {
+ 	static const struct ubus_method file_methods[] = {
+-		UBUS_METHOD("read",    rpc_file_read,   rpc_file_RB_policy),
+-		UBUS_METHOD("write",   rpc_file_write,  rpc_file_RW_policy),
+-		UBUS_METHOD("list",    rpc_file_list,   rpc_file_R_policy),
+-		UBUS_METHOD("stat",    rpc_file_stat,   rpc_file_R_policy),
+-		UBUS_METHOD("md5",     rpc_file_md5,    rpc_file_R_policy),
+-		UBUS_METHOD("remove",  rpc_file_remove, rpc_file_R_policy),
+-		UBUS_METHOD("exec",    rpc_file_exec,   rpc_exec_policy),
++		UBUS_METHOD("read",      rpc_file_read,      rpc_file_RB_policy),
++		UBUS_METHOD("write",     rpc_file_write,     rpc_file_RW_policy),
++		UBUS_METHOD("list",      rpc_file_list,      rpc_file_R_policy),
++		UBUS_METHOD("stat",      rpc_file_stat,      rpc_file_R_policy),
++		UBUS_METHOD("md5",       rpc_file_md5,       rpc_file_R_policy),
++		UBUS_METHOD("remove",    rpc_file_remove,    rpc_file_R_policy),
++		UBUS_METHOD("exec",      rpc_file_exec,      rpc_exec_policy),
++		UBUS_METHOD("exec_poll", rpc_file_exec_poll, rpc_exec_poll_policy),
+ 	};
+ 
+ 	static struct ubus_object_type file_type =
+-- 
+2.16.2.windows.1
+
