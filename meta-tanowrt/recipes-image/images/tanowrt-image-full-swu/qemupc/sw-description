@@ -1,0 +1,120 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# SWUPDATE sw-description for TanoWrt firmware running
+# on @@SWU_IMAGE_MEDIA_TYPE@@ for @@SWU_IMAGE_BOARD_NAME@@ board.
+#
+
+software =
+{
+	version = "@@SWU_IMAGE_FIRMWARE_VERSION@@";
+	description = "@@SWU_IMAGE_FIRMWARE_DESCRIPTION@@";
+	bootloader_transaction_marker = false;
+
+	@@SWU_IMAGE_BOARD_ID@@ = {
+		hardware-compatibility: [ @@SWU_IMAGE_HW_COMPATIBILITY@@ ];
+
+		tanowrt = {
+			# System A
+			system-a: {
+				images: (
+					# Bootloader images
+					{ ref = "#./../../common/bootloader/images"; },
+
+					# Kernel
+					{
+						name = "@@SWU_IMAGE_ARTIFACT_kernel[name]@@";
+						type = "@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-type]@@";
+						device = "@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-device-a]@@";
+						filename = "@@SWU_IMAGE_ARTIFACT_kernel[file]@@";
+						sha256 = "@@@SWU_IMAGE_ARTIFACT_kernel[file]@@";
+						version = "@@SWU_IMAGE_ARTIFACT_kernel[version]@@";
+						compressed = false;
+						installed-directly = true;
+						@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-extra]@@
+					},
+
+					# Root file system
+					{
+						name = "@@SWU_IMAGE_ARTIFACT_rootfs[name]@@";
+						type = "@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-type]@@";
+						device = "@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-device-a]@@";
+						filename = "@@SWU_IMAGE_ARTIFACT_rootfs[file]@@";
+						sha256 = "@@@SWU_IMAGE_ARTIFACT_rootfs[file]@@";
+						version = "@@SWU_IMAGE_ARTIFACT_rootfs[version]@@";
+						compressed = false;
+						installed-directly = true;
+						@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-extra]@@
+					}
+				);
+
+				bootenv: (
+					{ name = "swu_active";            value = "0"; },
+					{ name = "swu_upgrade_available"; value = "1"; }
+				);
+			}
+
+			# System B
+			system-b: {
+				images: (
+					# Bootloader images
+					{ ref = "#./../../common/bootloader/images"; },
+
+					# Kernel
+					{
+						name = "@@SWU_IMAGE_ARTIFACT_kernel[name]@@";
+						type = "@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-type]@@";
+						device = "@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-device-b]@@";
+						filename = "@@SWU_IMAGE_ARTIFACT_kernel[file]@@";
+						sha256 = "@@@SWU_IMAGE_ARTIFACT_kernel[file]@@";
+						version = "@@SWU_IMAGE_ARTIFACT_kernel[version]@@";
+						compressed = false;
+						installed-directly = true;
+						@@SWU_IMAGE_ARTIFACT_kernel[sw-desc-extra]@@
+					},
+
+					# Root file system
+					{
+						name = "@@SWU_IMAGE_ARTIFACT_rootfs[name]@@";
+						type = "@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-type]@@";
+						device = "@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-device-b]@@";
+						filename = "@@SWU_IMAGE_ARTIFACT_rootfs[file]@@";
+						sha256 = "@@@SWU_IMAGE_ARTIFACT_rootfs[file]@@";
+						version = "@@SWU_IMAGE_ARTIFACT_rootfs[version]@@";
+						compressed = false;
+						installed-directly = true;
+						@@SWU_IMAGE_ARTIFACT_rootfs[sw-desc-extra]@@
+					}
+				);
+
+				bootenv: (
+					{ name = "swu_active";            value = "1"; },
+					{ name = "swu_upgrade_available"; value = "1"; }
+				);
+			}
+		}
+
+		# Common images for systems A and B
+		common = {
+			# Common bootloader images
+			bootloader: {
+				images: (
+					# GRUB image
+					{
+						name = "@@SWU_IMAGE_ARTIFACT_bootloader[name]@@";
+						type = "@@SWU_IMAGE_ARTIFACT_bootloader[sw-desc-type]@@";
+						path = "@@SWU_IMAGE_ARTIFACT_bootloader[sw-desc-path]@@";
+						filename = "@@SWU_IMAGE_ARTIFACT_bootloader[file]@@";
+						sha256 = "@@@SWU_IMAGE_ARTIFACT_bootloader[file]@@";
+						version = "@@SWU_IMAGE_ARTIFACT_bootloader[version]@@";
+						compressed = false;
+						installed-directly = false;
+						install-if-different = true;
+						@@SWU_IMAGE_ARTIFACT_bootloader[sw-desc-extra]@@
+					}
+				)
+			}
+		}
+	}
+}

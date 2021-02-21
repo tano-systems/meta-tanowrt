@@ -1,0 +1,88 @@
+{
+	"global": {
+		"last_action": "poweroff",
+		"last_action_delay": 5
+	},
+	"verify": {
+		"blkdev_required": [
+			"/dev/sda",
+			"/dev/sr0"
+		]
+	},
+	"preinstall": {
+		"mounts": [
+			{
+				"device": "/dev/sr0",
+				"target": "/mnt",
+				"create_target": true,
+				"fstype": "iso9660"
+			}
+		],
+		"blkdev_erase": [
+			{ "device": "/dev/sda", "bs": 131072, "count": 1 }
+		],
+		"blkdev_parts": [
+			{
+				"device": "/dev/sda",
+				"label": "gpt",
+				"partitions": [
+					{ "name": "boot",        "fstype": "fat32", "start": "1MiB",   "end": "10MiB"  },
+					{ "name": "kernel_a",    "fstype": "ext4",  "start": "10MiB",  "end": "74MiB"  },
+					{ "name": "rootfs_a",    "fstype": "",      "start": "74MiB",  "end": "458MiB" },
+					{ "name": "kernel_b",    "fstype": "ext4",  "start": "458MiB", "end": "522MiB" },
+					{ "name": "rootfs_b",    "fstype": "",      "start": "522MiB", "end": "906MiB" },
+					{ "name": "rootfs_data", "fstype": "ext4",  "start": "906MiB", "end": "100%"   }
+				]
+			}
+		],
+		"blkdev_mkfs": [
+			{
+				"device": "/dev/sda1",
+				"fstype": "fat",
+				"label": "boot"
+			}, {
+				"device": "/dev/sda6",
+				"fstype": "ext4",
+				"label": "rootfs_data"
+			}
+		]
+	},
+	"install": {
+		"mounts": [
+			{
+				"device": "/dev/sda1",
+				"target": "/boot",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"images": [
+			{
+				"type": "file",
+				"image_source": "local",
+				"image_url": "/mnt/grub-efi-grubenv",
+				"destination": "/boot/EFI/BOOT/grubenv"
+			}, {
+				"type": "file",
+				"image_source": "local",
+				"image_url": "/mnt/grub-efi-grub.cfg",
+				"destination": "/boot/EFI/BOOT/grub.cfg"
+			}, {
+				"type": "file",
+				"image_source": "local",
+				"image_url": "/mnt/startup.nsh",
+				"destination": "/boot/EFI/BOOT/startup.nsh"
+			}, {
+				"type": "swupdate",
+				"image_source": "local",
+				"image_url": "/mnt/swu_install.swu",
+				"extra": "--no-bootloader-env",
+				"dry_run": true,
+				"selections": [
+					"${SWU_SYSTEM_A_SELECTION}",
+					"${SWU_SYSTEM_B_SELECTION}"
+				]
+			}
+		]
+	}
+}

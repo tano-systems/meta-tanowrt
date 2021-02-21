@@ -1,0 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
+#
+
+part /boot --source swu-factory-iso --sourceparams="loader=grub-efi" --ondisk cd --label TANOWRT
+bootloader --timeout=5 --append="console=tty1 console=/dev/ttyS0,115200n8"
