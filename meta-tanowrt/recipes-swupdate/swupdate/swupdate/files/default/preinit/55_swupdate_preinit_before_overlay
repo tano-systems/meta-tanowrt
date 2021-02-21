@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+do_swupdate_preinit_before_overlay() {
+	if [ -f "/usr/lib/swupdate/swupdate.sh" ]; then
+		. /usr/lib/swupdate/swupdate.sh
+		swupdate_preinit_before_overlay
+	fi
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_preinit_before_overlay
+}

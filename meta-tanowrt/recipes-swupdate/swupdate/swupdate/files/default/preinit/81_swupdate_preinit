@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+do_swupdate_preinit() {
+	if [ -f "/usr/lib/swupdate/swupdate.sh" ]; then
+		. /usr/lib/swupdate/swupdate.sh
+		swupdate_preinit
+	fi
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_mount_root do_swupdate_preinit
+}

@@ -1,0 +1,8 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
+START=99
+boot() {
+	/usr/lib/swupdate/swupdate_done.sh
+}

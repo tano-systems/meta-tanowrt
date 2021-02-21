@@ -1,0 +1,197 @@
+From 9334390e8333db2472fbe5b6bf4e41d1aa1572b0 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 11 Mar 2021 22:41:24 +0300
+Subject: [PATCH] Add relax delays
+
+These delays help to reduce the CPU load on heavy operations
+by allowing other applications (ubus, uhttpd + firmware upgrade
+LuCI application, etc.) to process messages (events) while the
+firmware upgrade is in progress.
+
+This is a temporary solution until a better firmware upgrade
+backend for LuCI is developed.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ core/cpio_utils.c      |  3 +++
+ core/notifier.c        |  2 ++
+ core/progress_thread.c |  7 +++++++
+ core/swupdate.c        | 21 ++++++++++++++++++++-
+ include/swupdate.h     |  5 +++++
+ 5 files changed, 37 insertions(+), 1 deletion(-)
+
+diff --git a/core/cpio_utils.c b/core/cpio_utils.c
+index 84e9c83..389d3f2 100644
+--- a/core/cpio_utils.c
++++ b/core/cpio_utils.c
+@@ -550,6 +550,9 @@ int copyfile(int fdin, void *out, unsigned int nbytes, unsigned long *offs, unsi
+ 
+ 	for (;;) {
+ 		ret = step(state, buffer, sizeof buffer);
++
++		relax();
++
+ 		if (ret < 0) {
+ 			goto copyfile_exit;
+ 		}
+diff --git a/core/notifier.c b/core/notifier.c
+index 68447f2..d5ba417 100644
+--- a/core/notifier.c
++++ b/core/notifier.c
+@@ -234,6 +234,8 @@ void notify(RECOVERY_STATUS status, int error, int level, const char *msg)
+ 	} else { /* Main process */
+ 		STAILQ_FOREACH(elem, &clients, next)
+ 			(elem->client)(status, error, level, msg);
++
++		relax();
+ 	}
+ }
+ 
+diff --git a/core/progress_thread.c b/core/progress_thread.c
+index 44d04fc..7e36951 100644
+--- a/core/progress_thread.c
++++ b/core/progress_thread.c
+@@ -106,6 +106,7 @@ static void _swupdate_download_update(unsigned int perc, unsigned long long tota
+ 		send_progress_msg();
+ 	}
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_progress_init(unsigned int nsteps) {
+@@ -122,6 +123,7 @@ void swupdate_progress_init(unsigned int nsteps) {
+ 	/* Info is just an event, reset it after sending */
+ 	pprog->msg.infolen = 0;
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_progress_update(unsigned int perc)
+@@ -134,6 +136,7 @@ void swupdate_progress_update(unsigned int perc)
+ 		send_progress_msg();
+ 	}
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_download_update(unsigned int perc, unsigned long long totalbytes)
+@@ -171,6 +174,7 @@ void swupdate_progress_inc_step(char *image, char *handler_name)
+ 	pprog->msg.status = RUN;
+ 	send_progress_msg();
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_progress_step_completed(void)
+@@ -196,6 +200,7 @@ void swupdate_progress_end(RECOVERY_STATUS status)
+ 	pprog->msg.dwl_bytes = 0;
+ 
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_progress_info(RECOVERY_STATUS status, int cause, const char *info)
+@@ -210,6 +215,7 @@ void swupdate_progress_info(RECOVERY_STATUS status, int cause, const char *info)
+ 	/* Info is just an event, reset it after sending */
+ 	pprog->msg.infolen = 0;
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ void swupdate_progress_done(const char *info)
+@@ -225,6 +231,7 @@ void swupdate_progress_done(const char *info)
+ 	send_progress_msg();
+ 	pprog->msg.infolen = 0;
+ 	pthread_mutex_unlock(&pprog->lock);
++	relax();
+ }
+ 
+ static void unlink_socket(void)
+diff --git a/core/swupdate.c b/core/swupdate.c
+index c6e6208..a303df6 100644
+--- a/core/swupdate.c
++++ b/core/swupdate.c
+@@ -24,6 +24,7 @@
+ #include <signal.h>
+ #include <sys/wait.h>
+ #include <ftw.h>
++#include <time.h>
+ 
+ #include "bsdqueue.h"
+ #include "cpiohdr.h"
+@@ -117,6 +118,7 @@ static struct option long_options[] = {
+ #ifdef CONFIG_UBUS
+ 	{"ubus", no_argument, NULL, 'U'},
+ #endif
++	{"relax", no_argument, NULL, 'r'},
+ 	{NULL, 0, NULL, 0}
+ };
+ 
+@@ -172,6 +174,7 @@ static void usage(char *programname)
+ #ifdef CONFIG_UBUS
+ 		" -U, --ubus                     : enable ubus service\n"
+ #endif
++		" -r, --relax                    : use relax delays\n"
+ 		" -h, --help                     : print this help and exit\n"
+ 		);
+ #ifdef CONFIG_DOWNLOAD
+@@ -501,7 +504,7 @@ int main(int argc, char **argv)
+ #endif
+ 	memset(main_options, 0, sizeof(main_options));
+ 	memset(image_url, 0, sizeof(image_url));
+-	strcpy(main_options, "vhni:e:q:l:Lcf:p:P:X:o:N:R:MmB");
++	strcpy(main_options, "vhni:e:q:l:Lcf:p:P:X:o:N:R:MmBr");
+ #ifdef CONFIG_MTD
+ 	strcat(main_options, "b:");
+ #endif
+@@ -704,6 +707,9 @@ int main(int argc, char **argv)
+ 			swcfg.globals.ubus_enabled = 1;
+ 			break;
+ #endif
++		case 'r':
++			swcfg.globals.relax++;
++			break;
+ #ifdef CONFIG_DOWNLOAD
+ 		case 'd':
+ 			if (asprintf(&dwloptions,"%s %s", argv[0], optarg) ==
+@@ -963,3 +969,16 @@ int main(int argc, char **argv)
+ 
+ 	return result;
+ }
++
++void relax(void)
++{
++	if (swcfg.globals.relax) {
++		long relax_time = swcfg.globals.relax * RELAX_TIME_USEC;
++		struct timespec req = {
++			.tv_sec  = (relax_time / 1000000L),
++			.tv_nsec = (relax_time % 1000000L) * 1000L
++		};
++
++		nanosleep(&req, NULL);
++	}
++}
+diff --git a/include/swupdate.h b/include/swupdate.h
+index 56687fc..a38dbe2 100644
+--- a/include/swupdate.h
++++ b/include/swupdate.h
+@@ -149,6 +149,7 @@ struct swupdate_global_cfg {
+ #if defined(CONFIG_UBUS)
+ 	int ubus_enabled;
+ #endif
++	int relax;
+ };
+ 
+ struct swupdate_cfg {
+@@ -194,4 +195,8 @@ int cpio_scan(int fd, struct swupdate_cfg *cfg, off_t start);
+ struct swupdate_cfg *get_swupdate_cfg(void);
+ void free_image(struct img_type *img);
+ 
++#define RELAX_TIME_USEC  2000L
++
++void relax(void);
++
+ #endif
+-- 
+2.16.2.windows.1
+

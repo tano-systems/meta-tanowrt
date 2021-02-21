@@ -1,0 +1,63 @@
+#!/bin/sh /etc/rc.common
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+START=95
+USE_PROCD=1
+
+NAME="swupdate"
+DAEMON=/usr/bin/swupdate
+PIDFILE=/var/run/$NAME.pid
+
+NICEPRIO=15
+
+start_service() {
+	# Exit if the package is not installed
+	[ -x "$DAEMON" ] || exit 0
+
+	local SWU_ARGS=""
+
+	if [ -f /usr/lib/swupdate/swupdate_config ]; then
+		. /usr/lib/swupdate/swupdate_config
+	fi
+
+	# source all files from /etc/swupdate/conf.d and /usr/lib/swupdate/conf.d/
+	# A file found in /etc replaces the same file in /usr
+	for f in `(test -d /usr/lib/swupdate/conf.d/ && ls -1 /usr/lib/swupdate/conf.d/; \
+	           test -d /etc/swupdate/conf.d && ls -1 /etc/swupdate/conf.d) \
+	           | sort -u`; do
+		if [ -f /etc/swupdate/conf.d/$f ]; then
+			. /etc/swupdate/conf.d/$f
+		else
+			. /usr/lib/swupdate/conf.d/$f
+		fi
+	done
+
+	procd_open_instance
+	procd_set_param command ${DAEMON}
+	procd_set_param respawn "${respawn_threshold:-3600}" "${respawn_timeout:-5}" "${respawn_retry:-5}"
+	procd_set_param pidfile "${PIDFILE}"
+	procd_set_param nice "$NICEPRIO"
+
+	procd_append_param command ${SWU_ARGS}
+	procd_append_param command -U    # Enable ubus service
+	procd_append_param command -r -r # Add relax delays
+
+	if [ -n ${SWU_CONF} ]; then
+		procd_append_param command -f ${SWU_CONF} # Use configuration file
+	fi
+
+	if [ "${SWU_EXTRA_ARGS}" != "" ]; then
+		procd_append_param command ${SWU_EXTRA_ARGS}
+	fi
+
+	if [ "${SWU_SURICATTA}" = "1" ]; then
+		procd_append_param command -u "${SWU_SURICATTA_ARGS}"
+	fi
+
+	procd_close_instance
+}
+
+reload_service() {
+	procd_send_signal swupdate '*' HUP
+}

@@ -1,0 +1,29 @@
+From e87f645ed8a797095c86b1030af4556c0315f51f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 13 Oct 2020 03:40:22 +0300
+Subject: [PATCH] Fix lua linking
+
+Fixes undefined references to symbols when linking with lua5.1:
+- undefined reference to symbol 'dlclose@@GLIBC_2.2.5' when
+- undefined reference to symbol 'exp@@GLIBC_2.29'
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile.flags | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile.flags b/Makefile.flags
+index dfd7531..d0c4c73 100644
+--- a/Makefile.flags
++++ b/Makefile.flags
+@@ -105,6 +105,7 @@ endif
+ LDLIBS += pthread
+ # lua
+ ifneq ($(CONFIG_LUA),)
++LDLIBS += dl m
+ LDFLAGS_swupdate += -Wl,-E
+ $(eval $(call pkg_check_modules, LUABUILD, ${CONFIG_LUAPKG}))
+ KBUILD_CFLAGS += $(LUABUILD_CFLAGS)
+-- 
+2.17.1
+

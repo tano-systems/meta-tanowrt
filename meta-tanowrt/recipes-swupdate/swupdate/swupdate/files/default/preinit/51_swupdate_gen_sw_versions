@@ -1,0 +1,11 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+do_swupdate_gen_sw_versions() {
+	# Generate here /tmp/sw-versions (SWU_SW_VERSIONS_FILE_TMP)
+	:
+}
+
+boot_hook_add preinit_main do_swupdate_gen_sw_versions
+

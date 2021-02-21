@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+#
+# Default SWUPDATE startup arguments configuration script
+#
+
+. /usr/lib/swupdate/swupdate.sh
+
+#
+# 0 = System A
+# 1 = System B
+#
+if [ "$(swupdate_get_active_system)" = "0" ]; then
+	SW_SELECT="-e ${SWU_SYSTEM_B_SELECTION}"
+else
+	SW_SELECT="-e ${SWU_SYSTEM_A_SELECTION}"
+fi
+
+SWU_ARGS="${SW_SELECT}"
+
+if [ "${SWU_BOOTLOADER_TRANSACTION_MARKER}" != "1" ]; then
+	# -M - Disable bootloader transaction marker
+	SWU_ARGS="${SWU_ARGS} -M"
+fi
+
+if [ "${SWU_SURICATTA}" = "1" ]; then
+	SWU_SURICATTA_ARGS="-e"
+
+	# if ustate == STATE_INSTALLED (1) then
+	#     Confirm update status to server (2 = SUCCESS)
+	# endif
+	if [ "$(swupdate_get_swu_ustate)" = "1" ]; then
+		SWU_SURICATTA_ARGS="${SWU_SURICATTA_ARGS} -c 2"
+	fi
+fi
+
