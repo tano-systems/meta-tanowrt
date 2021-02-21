@@ -3,7 +3,7 @@
 # Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".13"
+PR_append = ".14"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
@@ -11,6 +11,7 @@ KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/general/cgroups/cgroups.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "seccomp", " features/general/secutiry/seccomp.scc", "" ,d)} \
 	features/general/general/ikconfig.scc \
+	features/general/general/localversion-auto.scc \
 	features/general/net_sched/net_sched.scc \
 	features/general/netfilter/netfilter.scc \
 	features/general/nf_tables/nf_tables.scc \
