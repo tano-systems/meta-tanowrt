@@ -3,13 +3,13 @@
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano5"
+PR_append = ".tano6"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 GRUB_BUILDIN = "boot linux fat squash4 ext2 serial part_msdos part_gpt normal \
-                efi_gop iso9660 configfile search loadenv"
+                efi_gop iso9660 configfile search loadenv test echo"
 
 do_install_append_class-target() {
 	# We do not need this in ${libdir}/grub
