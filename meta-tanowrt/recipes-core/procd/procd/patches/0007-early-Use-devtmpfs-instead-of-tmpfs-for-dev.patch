@@ -1,4 +1,4 @@
-From 500c11af02c7c477a37ad4593f7ac145859a7679 Mon Sep 17 00:00:00 2001
+From 0fea62127fbe8ad978654de45303ff3e9292165d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Jul 2019 05:40:01 +0300
 Subject: [PATCH 07/19] early: Use devtmpfs instead of tmpfs for /dev
@@ -22,5 +22,5 @@ index d69495e..8983beb 100644
  		mkdir("/dev/pts", 0755);
  		mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=600");
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

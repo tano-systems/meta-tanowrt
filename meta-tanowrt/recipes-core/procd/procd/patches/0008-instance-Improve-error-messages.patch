@@ -1,4 +1,4 @@
-From 12ff03f42ef68b6936f4b6fb48888262ee1708f3 Mon Sep 17 00:00:00 2001
+From fb8f92222ec8ed4463c885bf78d6d5cc3bb1f983 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 20:05:05 +0300
 Subject: [PATCH 08/19] instance: Improve error messages
@@ -43,5 +43,5 @@ index 4c10972..838f80e 100644
  	}
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

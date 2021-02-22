@@ -1,4 +1,4 @@
-From 1c3c7f4fe28e6f661da08272a4da99474a0474ad Mon Sep 17 00:00:00 2001
+From d574e286cf414684a5ca207ba4c50e7a5414cf72 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 04/19] hotplug: Completely remove hotplug functionality
@@ -6,10 +6,10 @@ Subject: [PATCH 04/19] hotplug: Completely remove hotplug functionality
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt  |   2 +-
- initd/preinit.c |  24 --
- plug/coldplug.c |  74 ------
- plug/hotplug.c  | 651 ------------------------------------------------
- plug/hotplug.h  |  49 ----
+ initd/preinit.c |  24 ---
+ plug/coldplug.c |  74 -------
+ plug/hotplug.c  | 651 --------------------------------------------------------
+ plug/hotplug.h  |  49 -----
  procd.c         |   6 +-
  state.c         |  10 -
  7 files changed, 2 insertions(+), 814 deletions(-)
@@ -18,12 +18,12 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  delete mode 100644 plug/hotplug.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4d323ea..6028978 100644
+index c0770b3..2f9e692 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c inittab.c rcS.c ubus.c system.c sysupgrade.
- 	service/service.c service/instance.c service/validate.c service/trigger.c service/watch.c
- 	utils/utils.c)
+@@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c hotplug-dispatch.c inittab.c rcS.c ubus.c
+ 	system.c sysupgrade.c service/service.c service/instance.c
+ 	service/validate.c service/trigger.c service/watch.c utils/utils.c)
  IF(NOT DISABLE_INIT)
 -  SET(SOURCES ${SOURCES} watchdog.c plug/coldplug.c plug/hotplug.c)
 +  SET(SOURCES ${SOURCES} watchdog.c)
@@ -169,7 +169,7 @@ index b185083..0000000
 -}
 diff --git a/plug/hotplug.c b/plug/hotplug.c
 deleted file mode 100644
-index 292f73f..0000000
+index b1a61b2..0000000
 --- a/plug/hotplug.c
 +++ /dev/null
 @@ -1,651 +0,0 @@
@@ -790,7 +790,7 @@ index 292f73f..0000000
 -
 -	rule_file = strdup(rules);
 -	nls.nl_family = AF_NETLINK;
--	nls.nl_pid = getpid();
+-	nls.nl_pid = 0;
 -	nls.nl_groups = -1;
 -
 -	if ((hotplug_fd.fd = socket(PF_NETLINK, SOCK_DGRAM | SOCK_CLOEXEC, NETLINK_KOBJECT_UEVENT)) == -1) {
@@ -912,7 +912,7 @@ index 3de6208..e9fef1e 100644
  			ubus_socket = optarg;
  			break;
 diff --git a/state.c b/state.c
-index 44f56c6..13cc986 100644
+index fb81248..41f1400 100644
 --- a/state.c
 +++ b/state.c
 @@ -24,14 +24,12 @@
@@ -947,5 +947,5 @@ index 44f56c6..13cc986 100644
  		set_stdio("console");
  		p = getpwnam("ubus");
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

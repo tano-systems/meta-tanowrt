@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano50"
+PR = "tano51"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -43,12 +43,11 @@ SRC_URI += "\
 	file://0012-system-Handle-DISTRIB_TIMESTAMP-in-etc-openwrt_relea.patch \
 	file://0013-uxc-Fix-compiler-warnings.patch \
 	file://0014-build-Fix-building-in-OE-environment.patch \
-	file://0015-jail-Fix-compiler-warnings.patch \
-	file://0016-jail-Fixes-for-64-bit-systems.patch \
-	file://0017-jail-Add-libnss_-libs-to-mounts-when-using-glibc.patch \
-	file://0018-jail-load_ldso_conf-Log-glob-failure-as-info-instead.patch \
-	file://0019-early-Mount-CGv1-to-tmp-cgroup-v1.patch \
-	file://0020-rcS-Display-only-script-name-in-psplash-instead-of-f.patch \
+	file://0015-jail-Fixes-for-64-bit-systems.patch \
+	file://0016-jail-Add-libnss_-libs-to-mounts-when-using-glibc.patch \
+	file://0017-jail-load_ldso_conf-Log-glob-failure-as-info-instead.patch \
+	file://0018-early-Mount-CGv1-to-tmp-cgroup-v1.patch \
+	file://0019-rcS-Display-only-script-name-in-psplash-instead-of-f.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 
@@ -64,9 +63,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 12.12.2020
-# treewide: replace local mkdir_p implementations
-SRCREV = "7f12c89d0b99a2f04e91b2327e74c049f6362b67"
+# 21.12.2020
+# procd: add hotplug-call dispatcher
+SRCREV = "08938fe1cbc06eeaafa39448057368391d165272"
 
 S = "${WORKDIR}/git"
 

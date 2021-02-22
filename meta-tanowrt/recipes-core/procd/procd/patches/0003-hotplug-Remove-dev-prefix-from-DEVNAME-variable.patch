@@ -1,4 +1,4 @@
-From 3b7cdd7ae386f1b0d0ca03215bb30f54e2d2f075 Mon Sep 17 00:00:00 2001
+From ab9af75bae80122580e3f4d385698b40d263bee0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 26 Feb 2019 19:57:49 +0300
 Subject: [PATCH 03/19] hotplug: Remove '/dev/' prefix from DEVNAME variable
@@ -12,7 +12,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/plug/hotplug.c b/plug/hotplug.c
-index 9aeb1c1..292f73f 100644
+index beff38a..b1a61b2 100644
 --- a/plug/hotplug.c
 +++ b/plug/hotplug.c
 @@ -583,7 +583,10 @@ static void hotplug_handler(struct uloop_fd *u, unsigned int ev)
@@ -28,5 +28,5 @@ index 9aeb1c1..292f73f 100644
  		i += l;
  	}
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 
