@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "29"
+INC_PR = "30"
 
 SRC_URI_remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
@@ -36,6 +36,7 @@ SRC_URI_append = "\
 	file://watchdog.init \
 	file://watchdog.config \
 	file://ntpd.capabilities \
+	file://ntpd_acl.json \
 "
 
 inherit tanowrt-services
@@ -58,12 +59,14 @@ do_install_append() {
 	install -d -m 0755 ${D}${sysconfdir}/init.d
 	install -d -m 0755 ${D}${sysconfdir}/hotplug.d/ntp
 	install -d -m 0755 ${D}${sysconfdir}/capabilities
+	install -d -m 0755 ${D}${datadir}/acl.d
 	install -d -m 0755 ${D}${sbindir}
 
 	install -m 0755 ${WORKDIR}/sysntpd ${D}${sysconfdir}/init.d/sysntpd
 	install -m 0755 ${WORKDIR}/ntpd-hotplug ${D}${sbindir}/ntpd-hotplug
 
-	install -m 0644 ${WORKDIR}/ntpd.capabilities ${D}/${sysconfdir}/capabilities/ntpd.json
+	install -m 0644 ${WORKDIR}/ntpd_acl.json ${D}${datadir}/acl.d/ntpd.json
+	install -m 0644 ${WORKDIR}/ntpd.capabilities ${D}${sysconfdir}/capabilities/ntpd.json
 
 	if grep "CONFIG_HWCLOCK=y" ${B}/.config; then
 		install -m 0755 ${WORKDIR}/systohc.hotplug ${D}${sysconfdir}/hotplug.d/ntp/00-systohc
@@ -74,6 +77,8 @@ do_install_append() {
 		install -m 0644 ${WORKDIR}/watchdog.config ${D}${sysconfdir}/config/watchdog
 	fi
 }
+
+FILES_${PN} += "${datadir}/acl.d"
 
 CONFFILES_${PN} += "${sysconfdir}/config/watchdog"
 
