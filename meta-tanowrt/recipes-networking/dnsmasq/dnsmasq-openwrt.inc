@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "7"
+INC_PR = "8"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -33,7 +33,6 @@ SRC_URI += "\
 	file://dnsmasqsec.hotplug \
 	file://dnsmasq.init \
 	file://dnsmasq_acl.json \
-	file://dnsmasqsec_hotplug_acl.json \
 	file://dhcp-script.sh \
 	file://rfc6761.conf \
 	file://50-dnsmasq-migrate-resolv-conf-auto.sh \
@@ -72,7 +71,6 @@ do_install_append() {
 
     install -d ${D}/usr/share/acl.d
     install -m 0644 ${WORKDIR}/dnsmasq_acl.json ${D}/usr/share/acl.d/dnsmasq_acl.json
-    install -m 0644 ${WORKDIR}/dnsmasqsec_hotplug_acl.json ${D}/usr/share/acl.d/dnsmasqsec_hotplug_acl.json
 
     install -d ${D}${sysconfdir}/uci-defaults
     install -m 0755 ${WORKDIR}/50-dnsmasq-migrate-resolv-conf-auto.sh ${D}${sysconfdir}/uci-defaults/
