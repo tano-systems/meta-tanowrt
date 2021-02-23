@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# This file Copyright (c) 2019-2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (c) 2019-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 require hostapd.inc
@@ -9,7 +9,7 @@ SUMMARY = "User space daemon for extended IEEE 802.11 management"
 DEPENDS = "libnl openssl libubus libubox"
 SECTION = "kernel/userland"
 
-PR = "${INC_PR}.4"
+PR = "${INC_PR}.5"
 
 PROVIDES += "wpa-supplicant wpad"
 RPROVIDES_${PN} += "wpa-supplicant wpad"
@@ -34,6 +34,8 @@ do_install() {
 	install -d ${D}${sysconfdir}/rc.button
 	install -d ${D}${sysconfdir}/init.d
 	install -d ${D}${sysconfdir}/hotplug.d/ieee80211
+	install -d ${D}${sysconfdir}/capabilities
+	install -d ${D}${datadir}/acl.d
 
 	# wpad
 	install -m 0755 ${B}/wpad ${D}${sbindir}/wpad
@@ -44,6 +46,9 @@ do_install() {
 	# hostapd-common
 	install -m 0644 ${WORKDIR}/hostapd.sh ${D}${base_libdir}/netifd/hostapd.sh
 	install -m 0755 ${WORKDIR}/wps-hotplug.sh ${D}${sysconfdir}/rc.button/wps
+
+	install -m 0644 ${WORKDIR}/wpad.json ${D}${sysconfdir}/capabilities/
+	install -m 0644 ${WORKDIR}/wpad_acl.json ${D}${datadir}/acl.d/
 }
 
-FILES_${PN} += "${base_libdir}"
+FILES_${PN} += "${base_libdir} ${datadir}/acl.d"

@@ -7,7 +7,7 @@ HOMEPAGE = "http://w1.fi/hostapd/"
 LICENSE = "GPLv2 | BSD"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
-INC_PR = "tano16"
+INC_PR = "tano17"
 
 inherit pkgconfig
 
@@ -33,6 +33,8 @@ SRC_URI += "\
 	file://wps-hotplug.sh \
 	file://multicall.c \
 	file://wpad.init \
+	file://wpad.json \
+	file://wpad_acl.json \
 "
 
 # Sources
@@ -65,9 +67,12 @@ SRC_URI += "\
 	file://017-mesh-fix-mesh_oom-test.patch \
 	file://018-mesh-move-mesh-freq-setting-to-own-function.patch \
 	file://019-mesh-use-deterministic-channel-on-channel-switch.patch \
+	file://020-ignore-4addr-mode-enabling-error.patch \
 	file://050-mesh-make-forwarding-configurable.patch \
 	file://100-daemonize_fix.patch \
+	file://110-notify-mgmt-frames.patch \
 	file://110-wolfssl-compile-fix.patch \
+	file://120-reconfigure-wps-credentials.patch \
 	file://200-multicall.patch \
 	file://300-noscan.patch \
 	file://301-mesh-noscan.patch \
@@ -99,6 +104,7 @@ SRC_URI += "\
 	file://600-ubus_support.patch \
 	file://700-wifi-reload.patch \
 	file://800-dfs-enter-DFS-state-if-no-available-channel-is-found.patch \
+	file://801-P2P-Fix-copying-of-secondary-device-types-for-P2P-gr.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -171,3 +177,18 @@ inherit tanowrt-services
 TANOWRT_SERVICE_PACKAGES = "hostapd"
 TANOWRT_SERVICE_SCRIPTS_hostapd += "wpad"
 TANOWRT_SERVICE_STATE_hostapd-wpad ?= "enabled"
+
+inherit useradd
+
+USERADD_PACKAGES = "${PN}"
+
+USERADD_PARAM_${PN} = "\
+	--system \
+	--home-dir /var/run/network \
+	--no-create-home \
+	--shell /bin/false \
+	--gid network \
+	  network \
+"
+
+GROUPADD_PARAM_${PN} = "--system network"
