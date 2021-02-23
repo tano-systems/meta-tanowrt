@@ -27,7 +27,7 @@ system_config() {
 		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
 
 	# apply timezone to kernel
-	busybox date -k
+	hwclock -u --systz
 
 	# sync localtime to hardware RTC
 	[ -x /etc/init.d/sysfixtime ] && /etc/init.d/sysfixtime systohc
