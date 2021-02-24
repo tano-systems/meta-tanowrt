@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano15"
+PR = "tano16"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -42,7 +42,9 @@ FILES_SOLIBSDEV = ""
 
 do_install_append () {
     install -dm 0755 ${D}/sbin
+    install -dm 0755 ${D}/bin
     ln -s /usr/sbin/ubusd ${D}/sbin/ubusd
+    ln -s /usr/bin/ubus ${D}/bin/ubus
 }
 
 inherit useradd
