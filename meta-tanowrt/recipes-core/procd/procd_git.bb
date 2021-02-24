@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano51"
+PR = "tano52"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -63,9 +63,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 21.12.2020
-# procd: add hotplug-call dispatcher
-SRCREV = "08938fe1cbc06eeaafa39448057368391d165272"
+# 15.02.2021
+# system: expose if system was booted from initramfs
+SRCREV = "37eed131e9967a35f47bacb3437a9d3c8a57b3f4"
 
 S = "${WORKDIR}/git"
 

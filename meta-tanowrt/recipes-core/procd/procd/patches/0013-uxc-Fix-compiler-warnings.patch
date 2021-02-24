@@ -1,4 +1,4 @@
-From 36c308b62d30836c8eaa28320d5d1db8161446b5 Mon Sep 17 00:00:00 2001
+From eda91ea72d0c0e7fc493d5eb7e838e450bad93cb Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 06:58:50 +0300
 Subject: [PATCH 13/19] uxc: Fix compiler warnings
@@ -31,5 +31,5 @@ index eb40eb2..54dd7c3 100644
  
  			case 'V':
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 
