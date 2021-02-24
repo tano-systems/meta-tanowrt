@@ -14,7 +14,7 @@ PREFERRED_VERSION_qrencode = "4.1.1"
 PREFERRED_VERSION_rrdtool = "1.0.50"
 PREFERRED_VERSION_collectd = "5.12.0"
 
-PREFERRED_VERSION_linux-backports = "5.8%"
+PREFERRED_VERSION_linux-backports = "5.10%"
 
 # Providers
 PREFERRED_PROVIDER_psplash = "psplash-tn"
