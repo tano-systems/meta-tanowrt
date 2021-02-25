@@ -187,8 +187,8 @@ tanowrt_generate_openwrt_files() {
 	} > ${IMAGE_ROOTFS}${sysconfdir}/openwrt_release
 
 	# Make symlinks
-	ln -s openwrt_release ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_release
-	ln -s openwrt_version ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_version
+	ln -sf openwrt_release ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_release
+	ln -sf openwrt_version ${IMAGE_ROOTFS}${sysconfdir}/tanowrt_version
 }
 
 IMAGE_PREPROCESS_COMMAND += "tanowrt_generate_openwrt_files; "
