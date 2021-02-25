@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano72.${INC_PR}"
+PR_append = ".tano73.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -301,6 +301,7 @@ RDEPENDS_${PN} += "\
 	${PN}-scripts-openwrt \
 	${PN}-scripts-sysupgrade \
 	getrandom \
+	factory-reset \
 "
 
 RSUGGESTS_${PN} += "\

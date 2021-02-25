@@ -124,7 +124,7 @@ do_mount_root() {
 	[ -f /etc/overlay-reset -o -f /etc/factory-reset ] && {
 		mount_root done
 		echo -e "${CLR_RED}Cleaning the overlay filesystem...${CLR_RESET}" > /dev/kmsg
-		firstboot -r -y
+		/sbin/factory-reset
 	}
 
 	[ -f /sysupgrade.tgz ] && {
