@@ -5,7 +5,7 @@
 # Binary initial environment image generation
 #
 
-DEPENDS += "u-boot-mkenvimage-native"
+DEPENDS_append = " u-boot-mkenvimage-native"
 
 UBOOT_ENV_SIZE      ?= "131072"
 UBOOT_ENV_REDUNDANT ?= "1"
@@ -19,7 +19,7 @@ do_compile_append() {
 				for type in ${UBOOT_CONFIG}; do
 					j=$(expr $j + 1);
 					if [ $j -eq $i ]; then
-						MKENVIMAGE_ARGS="-s ${UBOOT_ENV_SIZE} -o ${B}/${config}/${UBOOT_INITIAL_ENV}.bin ${B}/${config}/${UBOOT_INITIAL_ENV}"
+						MKENVIMAGE_ARGS="-s ${UBOOT_ENV_SIZE} -o ${B}/${config}/${UBOOT_INITIAL_ENV}-${type}.bin ${B}/${config}/${UBOOT_INITIAL_ENV}-${type}"
 						if [ "${UBOOT_ENV_REDUNDANT}" = "1" ]; then
 							MKENVIMAGE_ARGS="-r ${MKENVIMAGE_ARGS}"
 						fi
@@ -50,7 +50,7 @@ do_deploy_append() {
 				for type in ${UBOOT_CONFIG}; do
 					j=$(expr $j + 1);
 					if [ $j -eq $i ]; then
-						install -D -m 644 ${B}/${config}/${UBOOT_INITIAL_ENV}.bin \
+						install -D -m 644 ${B}/${config}/${UBOOT_INITIAL_ENV}-${type}.bin \
 						                  ${DEPLOYDIR}/${UBOOT_INITIAL_ENV}-${MACHINE}-${type}-${PV}-${PR}.bin
 						cd ${DEPLOYDIR}
 						ln -sf ${UBOOT_INITIAL_ENV}-${MACHINE}-${type}-${PV}-${PR}.bin \

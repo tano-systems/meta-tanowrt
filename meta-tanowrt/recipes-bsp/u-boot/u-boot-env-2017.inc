@@ -73,7 +73,7 @@ do_install_append() {
 					j=$(expr $j + 1);
 					if [ $j -eq $i ]; then
 						install -d ${D}${sysconfdir}
-						install -m 0644 ${B}/${UBOOT_INITIAL_ENV}-${type} \
+						install -m 0644 ${B}/${config}/${UBOOT_INITIAL_ENV}-${type} \
 						                ${D}${sysconfdir}/${UBOOT_INITIAL_ENV}-${MACHINE}-${type}-${PV}-${PR}
 
 						ln -sf ${UBOOT_INITIAL_ENV}-${MACHINE}-${type}-${PV}-${PR} \
