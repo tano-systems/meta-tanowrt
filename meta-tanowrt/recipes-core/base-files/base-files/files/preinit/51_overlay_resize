@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 
 do_overlay_resize() {
 	local OVERLAY_INFO=$(block info | grep "LABEL=\"rootfs_data\"")
@@ -31,7 +31,8 @@ do_overlay_resize() {
 	#
 	# Detect filesystem
 	#
-	local PARTITION_FSTYPE=$(echo "${OVERLAY_INFO}" | grep -o "TYPE=\".*\"" | sed 's/.*"\(.*\)"/\1/g')
+	local PARTITION_FSTYPE=$(echo "${OVERLAY_INFO}" | \
+		grep -o "TYPE=\".*\"" | sed 's/.*"\(.*\)"/\1/g')
 	local CMD_FSCK=""
 	local CMD_RESIZEFS=""
 
@@ -56,42 +57,49 @@ do_overlay_resize() {
 		${CMD_FSCK} > /dev/null 2>&1
 		RET=$?
 		if [ "${RET}" != "0" ]; then
-			echo "overlay-resize: Filesystem on /dev/${PARTITION} has unrecoverable errors (${RET})"
+			echo "overlay-resize: Filesystem on /dev/${PARTITION}" \
+			     "has unrecoverable errors (${RET})"
 			return
 		fi
 
 		echo "overlay-resize: Filesystem successfully checked" > /dev/kmsg
 	fi
 
-	local NEW_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 33)
+	local TEST_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 128)
 
-	if [ "${NEW_PARTITION_END_S}" = "${PARTITION_END_S}" ]; then
+	if [ ${PARTITION_END_S} -ge ${TEST_PARTITION_END_S} ]; then
 		echo "overlay-resize: Partition /dev/${PARTITION} already resized" > /dev/kmsg
 	else
 		#
 		# Resize partition
 		#
 		parted -s /dev/${DISK} --script resizepart \
-			${PARTITION_NUMBER} ${NEW_PARTITION_END_S}s > /dev/null
+			${PARTITION_NUMBER} 100% > /dev/null
 
 		RET=$?
 		if [ "${RET}" != "0" ]; then
-			echo "overlay-resize: Failed to resize partition /dev/${PARTITION} (${RET})" > /dev/kmsg
+			echo "overlay-resize: Failed to resize" \
+			     "partition /dev/${PARTITION} (${RET})" > /dev/kmsg
 			return
 		fi
 
-		echo "overlay-resize: Partition /dev/${PARTITION} resized to fill its full disk size" > /dev/kmsg
-		echo "overlay-resize: Partition /dev/${PARTITION} end sector ${PARTITION_END_S} -> ${NEW_PARTITION_END_S}" > /dev/kmsg
+		echo "overlay-resize: Partition /dev/${PARTITION}" \
+		     "resized to fill its full disk size" > /dev/kmsg
+		echo "overlay-resize: Partition /dev/${PARTITION} end" \
+		     "sector ${PARTITION_END_S} -> 100% (${TEST_PARTITION_END_S})" > /dev/kmsg
 	fi
 
 	if [ "${CMD_RESIZEFS}" != "" ]; then
 		#
 		# Resize filesystem
 		#
+		echo "overlay-resize: Resizing filesystem" \
+		     "on partition /dev/${PARTITION}..." > /dev/kmsg
 		${CMD_RESIZEFS} > /dev/null 2>&1
 		RET=$?
 		if [ "${RET}" != "0" ]; then
-			echo "overlay-resize: Failed to resize filesystem on /dev/${PARTITION} (${RET})" > /dev/kmsg
+			echo "overlay-resize: Failed to resize" \
+			     "filesystem on /dev/${PARTITION} (${RET})" > /dev/kmsg
 			return
 		fi
 
