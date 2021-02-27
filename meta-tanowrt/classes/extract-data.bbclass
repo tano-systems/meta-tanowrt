@@ -23,6 +23,8 @@ do_extract_data[vardeps] += "\
 "
 
 def do_extract_data(d):
+    import re
+
     artifacts = d.getVar('EXTRACT_DATA_ARTIFACTS')
     if not artifacts:
         return
@@ -42,10 +44,16 @@ def do_extract_data(d):
     maxwidth = 8 # len('Artifact')
 
     for artifact in artifacts:
-        var = d.getVarFlag('EXTRACT_DATA_VAR', artifact)
         cmd = d.getVarFlag('EXTRACT_DATA_CMD', artifact)
         input = d.getVarFlag('EXTRACT_DATA_INPUT', artifact)
         filter_cmd = d.getVarFlag('EXTRACT_DATA_FILTER_CMD', artifact)
+
+        var = d.getVarFlag('EXTRACT_DATA_VAR', artifact)
+        varflag = None
+        result = re.match(r'(.+)\[(.+)\]', var)
+        if result:
+            var = result.group(1)
+            varflag = result.group(2)
 
         #
         # Calculate maximum width for the artifacts names.
@@ -59,6 +67,11 @@ def do_extract_data(d):
             bb.warn("Skipping data extraction for %s. "
                     "EXTRACT_DATA_VAR[%s] and EXTRACT_DATA_INPUT[%s] have to be set." \
                     % (artifact, artifact, artifact))
+            continue
+
+        if not os.path.isfile(input):
+            bb.error("Cannot extract data for artifact '%s': file '%s' is not exists" % (artifact, input))
+            d.setVarFlag('EXTRACT_DATA_EXTRACTED', artifact, '0')
             continue
 
         if not cmd:
@@ -75,12 +88,17 @@ def do_extract_data(d):
         fd.close()
 
         if not data:
-            bb.warn("Cannot extract data for %s" % artifact)
-            d.setVarFlag(var, 'extracted', '0')
+            bb.error("Cannot extract data for artifact '%s'" % artifact)
+            d.setVarFlag('EXTRACT_DATA_EXTRACTED', artifact, '0')
+            continue
+
+        data = data_process(data, d)
+        bb.debug(1, "Extracted data for %s from %s is '%s'" % (artifact, input, data))
+        d.setVarFlag('EXTRACT_DATA_EXTRACTED', artifact, '1')
+        if varflag:
+            d.setVarFlag(var, varflag, data)
+            bb.debug(1, "Saved '%s' to variable %s[%s]" % (data, var, varflag))
         else:
-            data = data_process(data, d)
-            bb.debug(1, "Extracted data for %s from %s is '%s'" % (artifact, input, data))
-            d.setVarFlag(var, 'extracted', '1')
             d.setVar(var, data)
             bb.debug(1, "Saved '%s' to variable %s" % (data, var))
 
@@ -102,11 +120,20 @@ def do_extract_data(d):
         data_table = data_table + hor_line + '\n'
 
         for artifact in artifacts:
-            var = d.getVarFlag('EXTRACT_DATA_VAR', artifact)
-            extracted = d.getVarFlag(var, 'extracted')
+            extracted = d.getVarFlag('EXTRACT_DATA_EXTRACTED', artifact, True)
+            var = d.getVarFlag('EXTRACT_DATA_VAR', artifact, True)
+            varflag = None
+            result = re.match(r'(.+)\[(.+)\]', var)
+            if result:
+                var = result.group(1)
+                varflag = result.group(2)
 
             if extracted == '1':
-                data = d.getVar(var, True)
+                if varflag:
+                    data = d.getVarFlag(var, varflag, True)
+                else:
+                    data = d.getVar(var, True)
+
                 data_table = data_table + \
                     (" %*s | %s\n" % (maxwidth, artifact, data))
             else:
