@@ -12,10 +12,6 @@ config interface 'wan'
 	option ifname 'eno0'
 	option proto 'dhcp'
 
-config interface 'eno3'
-	option ifname 'eno3'
-	option proto 'none'
-
 config interface 'lan'
 	option ifname 'swp0 swp1 swp2 swp3 swp5'
 	option type 'bridge'
