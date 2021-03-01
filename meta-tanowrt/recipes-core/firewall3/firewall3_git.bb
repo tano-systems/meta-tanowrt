@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano28"
+PR = "tano29"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -34,9 +34,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 06.12.2020
-# iptables: fix serializing multiple weekdays
-SRCREV = "12f6f143106257e0921c6ebbca2fe329cbeb3de6"
+# 19.02.2021
+# firewall3: remove last remaining sprintf()
+SRCREV = "c2c72c6fc29cb895f25759d76e10c00a8faaa148"
 
 S = "${WORKDIR}/git"
 
