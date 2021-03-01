@@ -133,6 +133,7 @@ do_kernel_mkimage_ubi() {
 ext234_assemble_image() {
 	local imageType=${1}
 	local fstype=${2}
+	local targetName=${3}
 
 	local FSDIR="${KERNEL_MKIMAGE_WORKDIR}-${fstype}/fs"
 	local OUTPUT_ARTIFACT="${KERNEL_MKIMAGE_WORKDIR}-${fstype}/${imageType}${KERNEL_MKIMAGE_ARTIFACT_NAME}.${fstype}"
@@ -142,9 +143,15 @@ ext234_assemble_image() {
 
 	rm -rf "${FSDIR}"
 	mkdir -p "${FSDIR}"
-	cp "${B}/arch/${ARCH}/boot/${imageType}" "${FSDIR}/"
+	cp "${B}/arch/${ARCH}/boot/${imageType}" "${FSDIR}/${targetName}"
 
-	local IMAGE_SIZE=$(stat -L -c %s ${FSDIR}/${imageType})
+	local IMAGE_SIZE
+	if [ -z "${targetName}" ]; then
+		IMAGE_SIZE=$(stat -L -c %s ${FSDIR}/${imageType})
+	else
+		IMAGE_SIZE=$(stat -L -c %s ${FSDIR}/${targetName})
+	fi
+
 	IMAGE_SIZE=$(expr ${IMAGE_SIZE} \* ${KERNEL_MKIMAGE_OVERHEAD_FACTOR} / 102400 + ${KERNEL_MKIMAGE_EXTRA_SPACE})
 
 	eval local COUNT=\"0\"
@@ -173,7 +180,7 @@ do_kernel_mkimage_ext234() {
 		ext234_assemble_image "${imageType}" "${fstype}"
 		if [ "${imageType}" = "fitImage" ]; then
 			if [ -n "${INITRAMFS_IMAGE}" ]; then
-				ext234_assemble_image "${imageType}-${INITRAMFS_IMAGE}" "${fstype}"
+				ext234_assemble_image "${imageType}-${INITRAMFS_IMAGE}" "${fstype}" "${imageType}"
 			fi
 		fi
 	done
@@ -257,6 +264,7 @@ build_fat_img() {
 
 vfat_assemble_image() {
 	local imageType=${1}
+	local targetName=${2}
 	local fstype="vfat"
 
 	local FSDIR="${KERNEL_MKIMAGE_WORKDIR}-${fstype}/fs"
@@ -267,7 +275,7 @@ vfat_assemble_image() {
 
 	rm -rf "${FSDIR}"
 	mkdir -p "${FSDIR}"
-	cp "${B}/arch/${ARCH}/boot/${imageType}" "${FSDIR}/"
+	cp "${B}/arch/${ARCH}/boot/${imageType}" "${FSDIR}/${targetName}"
 
 	build_fat_img "${FSDIR}" "${OUTPUT_ARTIFACT}" "kernel"
 	if [ -n "${OUTPUT_LINK}" ]; then
@@ -281,7 +289,7 @@ do_kernel_mkimage_vfat() {
 		vfat_assemble_image "${imageType}"
 		if [ "${imageType}" = "fitImage" ]; then
 			if [ -n "${INITRAMFS_IMAGE}" ]; then
-				vfat_assemble_image "${imageType}-${INITRAMFS_IMAGE}"
+				vfat_assemble_image "${imageType}-${INITRAMFS_IMAGE}" "${imageType}"
 			fi
 		fi
 	done
