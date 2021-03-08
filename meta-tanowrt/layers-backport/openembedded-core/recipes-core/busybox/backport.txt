@@ -1,0 +1,4 @@
+﻿Recipe for busybox 1.33 backported from openembedded-core layer:
+  repository: git://git.openembedded.org/openembedded-core
+  branch: master
+  revision: 8f19fb08b66cd75616345e96fa5718048daae7fe
