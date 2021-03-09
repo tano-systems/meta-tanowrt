@@ -1,15 +1,15 @@
-From f0edf5667b4c1241bd4df389db59df9af9f03fdb Mon Sep 17 00:00:00 2001
+From 4df5428110ec336fac164393ddeaa5f0ff1cd6a5 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 24 Feb 2021 17:13:46 +0300
-Subject: [PATCH 20/20] ujail: Fix loading ELF with multiple LOAD segments
+Subject: [PATCH 20/21] ujail: Fix loading ELF with multiple LOAD segments
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- jail/elf.c | 59 ++++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 39 insertions(+), 20 deletions(-)
+ jail/elf.c | 63 ++++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 43 insertions(+), 20 deletions(-)
 
 diff --git a/jail/elf.c b/jail/elf.c
-index 3b47dbb..87a62ef 100644
+index 3b47dbb..89367a0 100644
 --- a/jail/elf.c
 +++ b/jail/elf.c
 @@ -103,7 +103,7 @@ const char* find_lib(const char *file)
@@ -56,7 +56,7 @@ index 3b47dbb..87a62ef 100644
  			*offset = ph[i].p_offset;
  			if (size)
  				*size = ph[i].p_filesz;
-@@ -149,21 +161,21 @@ static int elf32_find_section(const char *map, unsigned int type, uint64_t *offs
+@@ -149,22 +161,26 @@ static int elf32_find_section(const char *map, unsigned int type, uint64_t *offs
  	return -1;
  }
  
@@ -80,17 +80,20 @@ index 3b47dbb..87a62ef 100644
 -static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size, uint64_t load_offset)
 +static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size)
  {
++	uint64_t search_addr;
++	uint64_t load_offset;
++	uint64_t load_vaddr;
++
  	Elf32_Dyn *dynamic = (Elf32_Dyn *) (map + dyn_offset);
  	const char *strtab = NULL;
-@@ -175,15 +187,21 @@ static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
+ 
+@@ -175,15 +191,19 @@ static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
  		if (curr->d_tag != DT_STRTAB)
  			continue;
  
 -		strtab = map + (curr->d_un.d_ptr - load_offset);
 +		/* Find assicated LOAD section */
-+		uint64_t search_addr = (uint64_t)curr->d_un.d_ptr;
-+		uint64_t load_offset;
-+		uint64_t load_vaddr;
++		search_addr = (uint64_t)curr->d_un.d_ptr;
 +		elf_find_section(map, PT_LOAD, &load_offset, NULL, &load_vaddr, &search_addr);
 +
 +		strtab = map + (curr->d_un.d_ptr - (uintptr_t)(load_vaddr - load_offset));
@@ -107,31 +110,34 @@ index 3b47dbb..87a62ef 100644
  		Elf32_Dyn *curr = dynamic;
  
  		dynamic++;
-@@ -197,7 +215,7 @@ static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
+@@ -197,8 +217,12 @@ static int elf32_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
  	return 0;
  }
  
 -static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size, uint64_t load_offset)
 +static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn_size)
  {
++	uint64_t search_addr;
++	uint64_t load_offset;
++	uint64_t load_vaddr;
++
  	Elf64_Dyn *dynamic = (Elf64_Dyn *) (map + dyn_offset);
  	const char *strtab = NULL;
-@@ -209,7 +227,13 @@ static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
+ 
+@@ -209,7 +233,11 @@ static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
  		if (curr->d_tag != DT_STRTAB)
  			continue;
  
 -		strtab = map + (curr->d_un.d_ptr - load_offset);
 +		/* Find assicated LOAD section */
-+		uint64_t search_addr = (uint64_t)curr->d_un.d_ptr;
-+		uint64_t load_offset;
-+		uint64_t load_vaddr;
++		search_addr = (uint64_t)curr->d_un.d_ptr;
 +		elf_find_section(map, PT_LOAD, &load_offset, NULL, &load_vaddr, &search_addr);
 +
 +		strtab = map + (curr->d_un.d_ptr - (uintptr_t)(load_vaddr - load_offset));
  		break;
  	}
  
-@@ -234,24 +258,19 @@ static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
+@@ -234,24 +262,19 @@ static int elf64_scan_dynamic(const char *map, uint64_t dyn_offset, uint64_t dyn
  int elf_load_deps(const char *path, const char *map)
  {
  	uint64_t dyn_offset, dyn_size;
@@ -158,7 +164,7 @@ index 3b47dbb..87a62ef 100644
  		add_path_and_deps(map+interp_offset, 1, -1, 0);
  	}
  
-@@ -266,9 +285,9 @@ int elf_load_deps(const char *path, const char *map)
+@@ -266,9 +289,9 @@ int elf_load_deps(const char *path, const char *map)
  #endif
  
  	if (clazz == ELFCLASS32)
@@ -171,5 +177,5 @@ index 3b47dbb..87a62ef 100644
  	ERROR("unknown elf format %d\n", clazz);
  	return -1;
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

@@ -1,7 +1,7 @@
-From 9a701d9526792976f38740a6c3e7407a7d2c32a7 Mon Sep 17 00:00:00 2001
+From f2d9efc9e19015886d77db32f3fd27eaf06b9a7c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
-Subject: [PATCH 09/19] inittab: Handle multiple consoles in /proc/cmdline
+Subject: [PATCH 09/21] inittab: Handle multiple consoles in /proc/cmdline
 
 If askconsole (or askconsolelate) specified without id, then process
 will be executed for all tty's defined in the kernel command line
@@ -29,11 +29,11 @@ askconsolelate action.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- inittab.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 99 insertions(+), 17 deletions(-)
+ inittab.c | 146 +++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 121 insertions(+), 25 deletions(-)
 
 diff --git a/inittab.c b/inittab.c
-index 45118f4..559d6f5 100644
+index 2c2270c..fe5ee0d 100644
 --- a/inittab.c
 +++ b/inittab.c
 @@ -43,7 +43,6 @@
@@ -63,7 +63,7 @@ index 45118f4..559d6f5 100644
  
  static int dev_exist(const char *dev)
  {
-@@ -89,6 +96,62 @@ static int dev_exist(const char *dev)
+@@ -89,6 +96,84 @@ static int dev_exist(const char *dev)
  	return 1;
  }
  
@@ -73,6 +73,7 @@ index 45118f4..559d6f5 100644
 +	char buf[256];
 +	char *p, *sptr, *split;
 +	int fd;
++	int count = 0;
 +	ssize_t r;
 +	struct console *c;
 +
@@ -108,10 +109,31 @@ index 45118f4..559d6f5 100644
 +		c->id = strdup(buf);
 +		c->running = 0;
 +		list_add_tail(&c->list, &consoles);
++		count++;
++	}
++
++	/* First, try console= on the kernel command line,
++	 * then fallback to /sys/class/tty/console/active,
++	 * which should work when linux,stdout-path (or equivalent)
++	 * is in the device tree
++	 */
++	if (!count) {
++		p = get_active_console(buf, sizeof(buf));
++		if (p) {
++			split = strchr(p, ',');
++			if (split != NULL)
++				*split = '\0';
++
++			c = calloc(1, sizeof(struct console));
++			c->id = strdup(p);
++			c->running = 0;
++			list_add_tail(&c->list, &consoles);
++			count++;
++		}
 +	}
 +}
 +
-+static struct console *find_tty_in_cmdline(const char *tty)
++static struct console *find_tty(const char *tty)
 +{
 +	struct console *c;
 +
@@ -126,15 +148,15 @@ index 45118f4..559d6f5 100644
  static void fork_worker(struct init_action *a)
  {
  	pid_t p;
-@@ -158,12 +221,18 @@ static void runrc(struct init_action *a)
+@@ -158,12 +243,18 @@ static void runrc(struct init_action *a)
  static void askfirst(struct init_action *a)
  {
  	int i;
 +	struct console *tty;
++
++	tty = find_tty(a->id);
  
 -	if (!dev_exist(a->id) || (console && !strcmp(console, a->id))) {
-+	tty = find_tty_in_cmdline(a->id);
-+
 +	if (!dev_exist(a->id) || (askconsole_run && tty)) {
  		DEBUG(4, "Skipping %s\n", a->id);
  		return;
@@ -146,7 +168,7 @@ index 45118f4..559d6f5 100644
  	a->tout.cb = respawn;
  	/* shift arguments only if not yet done */
  	if (a->argv[0] != ask) {
-@@ -178,30 +247,41 @@ static void askfirst(struct init_action *a)
+@@ -178,38 +269,41 @@ static void askfirst(struct init_action *a)
  		fork_worker(a);
  }
  
@@ -158,7 +180,15 @@ index 45118f4..559d6f5 100644
  	int i;
 +	struct console *tty;
  
+-	/* First, try console= on the kernel command line,
+-	 * then fallback to /sys/class/tty/console/active,
+-	 * which should work when linux,stdout-path (or equivalent)
+-	 * is in the device tree
+-	 */
 -	tty = get_cmdline_val("console", line, sizeof(line));
+-	if (tty == NULL) {
+-		tty = get_active_console(line, sizeof(line));
+-	}
 -	if (tty != NULL) {
 -		split = strchr(tty, ',');
 -		if (split != NULL)
@@ -172,15 +202,15 @@ index 45118f4..559d6f5 100644
 -			return;
 -		}
 +			newa = calloc(1, sizeof(struct init_action));
-+
+ 
+-		console = strdup(tty);
+-		a->id = strdup(tty);
 +			for (i = 0; i < MAX_ARGS; i++)
 +				newa->argv[i] = a->argv[i];
 +
 +			newa->id = tty->id;
 +			newa->line = a->line;
- 
--		console = strdup(tty);
--		a->id = strdup(tty);
++
 +			add_action(newa, a->handler->name);
 +		}
 +		
@@ -190,7 +220,7 @@ index 45118f4..559d6f5 100644
 -		console = NULL;
 -		a->id = NULL;
 +
-+	tty = find_tty_in_cmdline(a->id);
++	tty = find_tty(a->id);
 +
 +	if (!dev_exist(a->id) || !tty || tty->running) {
 +		DEBUG(4, "Skipping %s\n", a->id);
@@ -203,7 +233,7 @@ index 45118f4..559d6f5 100644
  	a->tout.cb = respawn;
  	/* shift arguments only if not yet done */
  	if (a->argv[0] != ask) {
-@@ -296,6 +376,8 @@ void procd_inittab(void)
+@@ -304,6 +398,8 @@ void procd_inittab(void)
  		return;
  	}
  
@@ -213,5 +243,5 @@ index 45118f4..559d6f5 100644
  	line = malloc(LINE_LEN);
  	a = calloc(1, sizeof(struct init_action));
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

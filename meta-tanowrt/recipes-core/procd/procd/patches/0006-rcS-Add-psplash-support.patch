@@ -1,12 +1,12 @@
-From 5cff408d4e2f6cc116c0a53dfffbfa1cbe627cde Mon Sep 17 00:00:00 2001
+From 5c527ded4e1946738c3407d53e5a6bfa3fdfa2b8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
-Subject: [PATCH 06/19] rcS: Add psplash support
+Subject: [PATCH 06/21] rcS: Add psplash support
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- CMakeLists.txt |  7 +++++
- rcS.c          | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ CMakeLists.txt |  7 ++++++
+ rcS.c          | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
@@ -147,5 +147,5 @@ index 2851fae..60cc4e7 100644
  		add_initd(q, gl.gl_pathv[j], param);
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

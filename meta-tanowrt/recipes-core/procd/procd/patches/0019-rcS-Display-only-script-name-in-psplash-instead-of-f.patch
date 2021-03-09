@@ -1,7 +1,7 @@
-From 41d477b0201b617f1dce9ff6ebb641d1864b5787 Mon Sep 17 00:00:00 2001
+From 68c55f8b7f2ad5996c5349edc8a58b6604cf62c6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 17 Dec 2020 21:15:32 +0300
-Subject: [PATCH 19/19] rcS: Display only script name in psplash instead of
+Subject: [PATCH 19/21] rcS: Display only script name in psplash instead of
  full path
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -41,5 +41,5 @@ index 60cc4e7..fd55af3 100644
  
  	clock_gettime(CLOCK_MONOTONIC_RAW, &s->ts_start);
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

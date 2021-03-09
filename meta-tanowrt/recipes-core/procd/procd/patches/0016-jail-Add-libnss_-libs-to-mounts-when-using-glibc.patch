@@ -1,7 +1,7 @@
-From 6e120b2a0f47532c26b21aabe96c3260a35498ec Mon Sep 17 00:00:00 2001
+From 53f73241995548fba58097d28e18dbc03e496e9d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 12 Nov 2020 05:00:34 +0300
-Subject: [PATCH 16/19] jail: Add libnss_* libs to mounts when using glibc
+Subject: [PATCH 16/21] jail: Add libnss_* libs to mounts when using glibc
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 25 insertions(+)
 
 diff --git a/jail/jail.c b/jail/jail.c
-index 378a729..6de4554 100644
+index ce4f50c..f7ce6b4 100644
 --- a/jail/jail.c
 +++ b/jail/jail.c
 @@ -63,6 +63,10 @@
@@ -60,5 +60,5 @@ index 378a729..6de4554 100644
  
  			if (!(opts.namespace & CLONE_NEWNET)) {
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

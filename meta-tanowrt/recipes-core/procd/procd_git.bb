@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano53"
+PR = "tano54"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -49,6 +49,7 @@ SRC_URI += "\
 	file://0018-early-Mount-CGv1-to-tmp-cgroup-v1.patch \
 	file://0019-rcS-Display-only-script-name-in-psplash-instead-of-f.patch \
 	file://0020-ujail-Fix-loading-ELF-with-multiple-LOAD-segments.patch \
+	file://0021-jail-Early-call-to-get_jail_user.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 
@@ -64,9 +65,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 15.02.2021
-# system: expose if system was booted from initramfs
-SRCREV = "37eed131e9967a35f47bacb3437a9d3c8a57b3f4"
+# 05.03.2021
+# inittab: detect active console from kernel if no console= specified
+SRCREV = "2cfc26f8456a4d5ba3836c914a742f3d00bad781"
 
 S = "${WORKDIR}/git"
 

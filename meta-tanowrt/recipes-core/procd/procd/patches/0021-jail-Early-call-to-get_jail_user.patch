@@ -1,0 +1,59 @@
+From 0c49c0f57bda3d7249f92496f6aac71c986556dd Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 9 Mar 2021 03:41:22 +0300
+Subject: [PATCH 21/21] jail: Early call to get_jail_user()
+
+This move of the get_jail_user function call resolves a strange
+problem with a later call:
+
+[81225.809421] Alignment trap: not handling instruction f9430a1f at [<456d8e70>]
+[81225.816739] Unhandled fault: alignment exception (0x801) at 0x0012efdc
+[81225.823298] pgd = de1c3778
+[81225.826153] [0012efdc] *pgd=883bc831, *pte=89f2434f, *ppte=89f2483f
+
+The issue occurs on some 32-bit ARM processors.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ jail/jail.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/jail/jail.c b/jail/jail.c
+index f7ce6b4..4baf4b3 100644
+--- a/jail/jail.c
++++ b/jail/jail.c
+@@ -1188,10 +1188,10 @@ static void post_jail_fs(void)
+ 	run_hooks(opts.hooks.startContainer, post_start_hook);
+ }
+ 
++static int jail_pw_uid, jail_pw_gid, jail_gr_gid;
++
+ static void post_start_hook(void)
+ {
+-	int pw_uid, pw_gid, gr_gid;
+-
+ 	/*
+ 	 * make sure setuid/setgid won't drop capabilities in case capabilities
+ 	 * have been specified explicitely.
+@@ -1208,8 +1208,7 @@ static void post_start_hook(void)
+ 		free_and_exit(EXIT_FAILURE);
+ 
+ 	/* use either cmdline-supplied user/group or uid/gid from OCI spec */
+-	get_jail_user(&pw_uid, &pw_gid, &gr_gid);
+-	set_jail_user(opts.pw_uid?:pw_uid, opts.pw_gid?:pw_gid, opts.gr_gid?:gr_gid);
++	set_jail_user(opts.pw_uid?:jail_pw_uid, opts.pw_gid?:jail_pw_gid, opts.gr_gid?:jail_gr_gid);
+ 
+ 	if (opts.additional_gids &&
+ 	    (setgroups(opts.num_additional_gids, opts.additional_gids) < 0)) {
+@@ -2564,6 +2563,8 @@ int main(int argc, char **argv)
+ 	opts.setns.time = -1;
+ #endif
+ 
++	get_jail_user(&jail_pw_uid, &jail_pw_gid, &jail_gr_gid);
++
+ 	/*
+ 	 * uid in parent user namespace representing root user in new
+ 	 * user namespace, defaults to nobody unless specified in uidMappings
+-- 
+2.16.2.windows.1
+

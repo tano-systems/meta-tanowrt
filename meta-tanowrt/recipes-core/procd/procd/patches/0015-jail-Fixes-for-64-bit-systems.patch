@@ -1,7 +1,7 @@
-From 1172c99178836fce3381efb248aba0097c1c4d26 Mon Sep 17 00:00:00 2001
+From 2352b4ab960c4b652ef4a10e2678c1001c97f83b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 21:16:30 +0300
-Subject: [PATCH 15/19] jail: Fixes for 64-bit systems
+Subject: [PATCH 15/21] jail: Fixes for 64-bit systems
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -79,5 +79,5 @@ index f67515b..380f731 100644
  	static int gcc_mips64_bug_work_around;
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

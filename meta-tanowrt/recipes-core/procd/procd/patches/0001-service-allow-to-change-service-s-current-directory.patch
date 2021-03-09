@@ -1,7 +1,7 @@
-From f07c92968cc1b659c2a878488316cf589646a098 Mon Sep 17 00:00:00 2001
+From 20d3a4903e66e0ee599c56fd39eb16e2f5982597 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
-Subject: [PATCH 01/19] service: allow to change service's current directory
+Subject: [PATCH 01/21] service: allow to change service's current directory
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -94,5 +94,5 @@ index bbd943c..b2a5aea 100644
  	int exit_code;
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

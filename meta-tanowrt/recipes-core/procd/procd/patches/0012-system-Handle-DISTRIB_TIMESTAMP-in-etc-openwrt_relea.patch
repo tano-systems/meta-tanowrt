@@ -1,7 +1,7 @@
-From 8d28a3cef24c3bce146b64b1e0c62d922d2521b7 Mon Sep 17 00:00:00 2001
+From ca2b3c9a7bb2cdafeb75d73e39d6874ddba5d2e4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 6 Apr 2020 06:17:15 +0300
-Subject: [PATCH 12/19] system: Handle DISTRIB_TIMESTAMP in
+Subject: [PATCH 12/21] system: Handle DISTRIB_TIMESTAMP in
  /etc/openwrt_release
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -23,5 +23,5 @@ index edfffbe..d9c632f 100644
  				continue;
  
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 
