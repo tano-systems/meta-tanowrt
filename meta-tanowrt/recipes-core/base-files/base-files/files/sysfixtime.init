@@ -33,7 +33,7 @@ apply_timezone() {
 		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
 
 	# apply timezone to kernel
-	busybox date -k
+	hwclock -u --systz
 }
 
 hwclock_call() {
