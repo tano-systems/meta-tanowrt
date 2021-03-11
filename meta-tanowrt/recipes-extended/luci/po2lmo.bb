@@ -3,7 +3,7 @@
 #
 # LuCI po2lmo utility
 #
-# This file Copyright (C) 2018-2019 Tano Systems
+# This file Copyright (C) 2018-2021 Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano2"
@@ -33,6 +33,8 @@ do_configure() {
 do_compile() {
 	oe_runmake -C ${S}/ po2lmo
 }
+
+do_compile[depends] += "lemon-native:do_populate_sysroot"
 
 do_install() {
 	install -d ${D}${base_bindir}
