@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 	<!-- OpenEmbedded Core -->
-	<project path="."
+	<project path="openembedded-core"
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="a8debddd6cbdd70db74e096d72f97fbee008ee63" />
+	         revision="a8debddd6cbdd70db74e096d72f97fbee008ee63">
+		<linkfile src="meta" dest="meta" />
+		<linkfile src="scripts" dest="scripts" />
+		<linkfile src="oe-init-build-env" dest="oe-init-build-env" />
+		<linkfile src=".gitignore" dest=".gitignore" />
+		<linkfile src=".templateconf" dest=".templateconf" />
+	</project>
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
