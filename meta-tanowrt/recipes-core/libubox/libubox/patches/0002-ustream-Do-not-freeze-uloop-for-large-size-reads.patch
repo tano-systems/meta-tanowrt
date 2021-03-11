@@ -25,7 +25,7 @@ index b546fa1..732b51f 100644
  	ustream_fd_set_uloop(s, false);
  }
  
-+#define USTREAM_FD_READ_ONCE_MAX  262144
++#define USTREAM_FD_READ_ONCE_MAX  32768
 +
  static void ustream_fd_read_pending(struct ustream_fd *sf, bool *more)
  {

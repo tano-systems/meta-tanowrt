@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano1"
+PR = "tano2"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
