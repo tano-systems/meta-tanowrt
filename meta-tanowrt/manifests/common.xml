@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 	<!-- OpenEmbedded Core -->
-	<project path="."
+	<project path="openembedded-core"
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="warrior"
-	         revision="856674d6f75e2b99ae961d5ab869ff071ff5c362" />
+	         revision="856674d6f75e2b99ae961d5ab869ff071ff5c362">
+		<linkfile src="meta" dest="meta" />
+		<linkfile src="scripts" dest="scripts" />
+		<linkfile src="oe-init-build-env" dest="oe-init-build-env" />
+		<linkfile src=".gitignore" dest=".gitignore" />
+		<linkfile src=".templateconf" dest=".templateconf" />
+	</project>
 
 	<!-- OpenEmbedded Layers -->
 	<project path="meta-openembedded"
