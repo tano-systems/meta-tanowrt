@@ -3,8 +3,8 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano0"
-SRCREV = "950f541889063df1043a0227a9715a57080cbd35"
+PR_append = ".tano1"
+SRCREV = "e663439e3d39a4cdbddb7e818245a99c485fa965"
 
 do_install_append() {
 	#
