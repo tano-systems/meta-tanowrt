@@ -1,0 +1,58 @@
+From 251877f6af73352b6a16fa3dd80163fd969b7085 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 13 Mar 2021 03:17:30 +0300
+Subject: [PATCH] libuboot_read_config: Return EBUSY if opening the env device
+ returns this error
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/uboot_env.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/src/uboot_env.c b/src/uboot_env.c
+index 30c39eb..fd2ee9c 100644
+--- a/src/uboot_env.c
++++ b/src/uboot_env.c
+@@ -361,8 +361,11 @@ static int check_env_device(struct uboot_ctx *ctx, struct uboot_flash_env *dev)
+ 	if (ret < 0)
+ 		return -EBADF;
+ 	fd = open(dev->devname, O_RDONLY);
+-	if (fd < 0)
++	if (fd < 0) {
++		if (errno == EBUSY)
++			return -EBUSY;
+ 		return -EBADF;
++	}
+ 
+ 	if (S_ISCHR(st.st_mode)) {
+ 		if (dev->device_type == DEVICE_MTD) {
+@@ -1249,13 +1252,14 @@ int libuboot_read_config(struct uboot_ctx *ctx, const char *config)
+ 			free(tmp);
+ 		}
+ 
+-		if (check_env_device(ctx, dev) < 0) {
+-			retval = -EINVAL;
++		ret = check_env_device(ctx, dev);
++		if (ret < 0) {
++			retval = (ret == -EBUSY) ? -EBUSY : -EINVAL;
+ 			break;
+ 		}
+ 
+ 		ndev++;
+-		dev++; 
++		dev++;
+ 
+ 		if (ndev >= 2) {
+ 			ctx->redundant = true;
+@@ -1264,7 +1268,7 @@ int libuboot_read_config(struct uboot_ctx *ctx, const char *config)
+ 			break;
+ 		}
+ 	}
+-	if (ndev == 0)
++	if ((retval == 0) && (ndev == 0))
+ 		retval = -EINVAL;
+ 
+ 	fclose(fp);
+-- 
+2.16.2.windows.1
+
