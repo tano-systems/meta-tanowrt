@@ -1,0 +1,69 @@
+From c561c1e3c46cf9613ac90a75bd00b4d351cc95bc Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 15 Mar 2021 18:01:05 +0300
+Subject: [PATCH 22/22] system: Add optional delay parameter to system.reboot
+ method
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ system.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
+
+diff --git a/system.c b/system.c
+index d9c632f..a875637 100644
+--- a/system.c
++++ b/system.c
+@@ -327,11 +327,40 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	return UBUS_STATUS_OK;
+ }
+ 
++enum {
++	REBOOT_DELAY,
++	__REBOOT_MAX
++};
++
++static const struct blobmsg_policy reboot_policy[__REBOOT_MAX] = {
++	[REBOOT_DELAY] = { .name = "delay", .type = BLOBMSG_TYPE_INT32 },
++};
++
++static struct uloop_timeout system_reboot_timer;
++
++static void system_reboot_timer_cb(struct uloop_timeout *timeout)
++{
++	procd_shutdown(RB_AUTOBOOT);
++}
++
+ static int system_reboot(struct ubus_context *ctx, struct ubus_object *obj,
+ 			 struct ubus_request_data *req, const char *method,
+ 			 struct blob_attr *msg)
+ {
+-	procd_shutdown(RB_AUTOBOOT);
++	struct blob_attr *tb[__REBOOT_MAX];
++	unsigned delay = 1;
++
++	if (msg) {
++		blobmsg_parse(reboot_policy, __REBOOT_MAX, tb, blob_data(msg), blob_len(msg));
++		if (tb[REBOOT_DELAY])
++			delay = blobmsg_get_u32(tb[REBOOT_DELAY]) * 1000U;
++
++		if (!delay)
++			delay = 1; /* 1 ms */
++	}
++
++	system_reboot_timer.cb = system_reboot_timer_cb;
++	uloop_timeout_set(&system_reboot_timer, delay);
+ 	return 0;
+ }
+ 
+@@ -730,7 +759,7 @@ procd_subscribe_cb(struct ubus_context *ctx, struct ubus_object *obj)
+ static const struct ubus_method system_methods[] = {
+ 	UBUS_METHOD_NOARG("board", system_board),
+ 	UBUS_METHOD_NOARG("info",  system_info),
+-	UBUS_METHOD_NOARG("reboot", system_reboot),
++	UBUS_METHOD("reboot", system_reboot, reboot_policy),
+ 	UBUS_METHOD("watchdog", watchdog_set, watchdog_policy),
+ 	UBUS_METHOD("signal", proc_signal, signal_policy),
+ 	UBUS_METHOD("validate_firmware_image", validate_firmware_image, validate_firmware_image_policy),
+-- 
+2.28.0.windows.1
+

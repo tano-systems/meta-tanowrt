@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano54"
+PR = "tano55"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -50,6 +50,7 @@ SRC_URI += "\
 	file://0019-rcS-Display-only-script-name-in-psplash-instead-of-f.patch \
 	file://0020-ujail-Fix-loading-ELF-with-multiple-LOAD-segments.patch \
 	file://0021-jail-Early-call-to-get_jail_user.patch \
+	file://0022-system-Add-optional-delay-parameter-to-system.reboot.patch \
 	file://0102-procd-Add-shared-and-slab-to-memory-table.patch \
 "
 
