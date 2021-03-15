@@ -3,13 +3,14 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano2"
+PR_append = ".tano3"
 SRCREV = "e663439e3d39a4cdbddb7e818245a99c485fa965"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
 
 SRC_URI += "\
 	file://0001-libuboot_read_config-Return-EBUSY-if-opening-the-env.patch \
+	file://0002-Retry-reading-configuration-on-busy-state.patch \
 "
 
 do_install_append() {

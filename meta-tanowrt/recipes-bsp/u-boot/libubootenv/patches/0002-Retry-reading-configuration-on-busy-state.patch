@@ -1,0 +1,72 @@
+From de5a7d023ea05edf076ed0430fc5ee6220b9c583 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 15 Mar 2021 02:57:56 +0300
+Subject: [PATCH] Retry reading configuration on busy state
+
+If the libuboot_read_config() function indicates that the device
+is busy (EBUSY), we do a short delay and try to read the configuration
+again, and so on a few repetitions.
+
+This issue occurs frequently if the U-Boot environment is stored in
+a UBI volume. Without these changes, calling fw_printenv from scripts
+can sometimes result an error. To avoid changing a bunch of scripts,
+we have added read retries to the libubootenv_read_config() function.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/uboot_env.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/src/uboot_env.c b/src/uboot_env.c
+index fd2ee9c..6ffa28a 100644
+--- a/src/uboot_env.c
++++ b/src/uboot_env.c
+@@ -33,6 +33,7 @@
+ #include <sys/wait.h>
+ #include <sys/ioctl.h>
+ #include <zlib.h>
++#include <time.h>
+ #include <mtd/mtd-user.h>
+ #include <mtd/ubi-user.h>
+ 
+@@ -1192,7 +1193,7 @@ int libuboot_load_file(struct uboot_ctx *ctx, const char *filename)
+ 	return 0;
+ }
+ 
+-int libuboot_read_config(struct uboot_ctx *ctx, const char *config)
++static int libuboot_read_config_(struct uboot_ctx *ctx, const char *config)
+ {
+ 	FILE *fp;
+ 	char *line = NULL;
+@@ -1277,6 +1278,28 @@ int libuboot_read_config(struct uboot_ctx *ctx, const char *config)
+ 	return retval;
+ }
+ 
++int libuboot_read_config(struct uboot_ctx *ctx, const char *config)
++{
++	int busy_attempts = 10;
++	int ret;
++
++	struct timespec req = {
++		.tv_sec  = 0,
++		.tv_nsec = 500000000L
++	};
++
++	while (busy_attempts) {
++		ret = libuboot_read_config_(ctx, config);
++		if (ret != -EBUSY)
++			return ret;
++
++		--busy_attempts;
++		nanosleep(&req, NULL);
++	}
++
++	return ret;
++}
++
+ static bool libuboot_validate_flags(struct var_entry *entry, const char *value)
+ {
+ 	bool ok_type = true, ok_access = true;
+-- 
+2.16.2.windows.1
+
