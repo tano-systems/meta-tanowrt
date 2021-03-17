@@ -1,12 +1,15 @@
+
 #
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano3"
+PR_append = ".tano4"
 SRCREV = "e663439e3d39a4cdbddb7e818245a99c485fa965"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
+
+RDEPENDS_${PN} += "libubootenv-config"
 
 SRC_URI += "\
 	file://0001-libuboot_read_config-Return-EBUSY-if-opening-the-env.patch \
