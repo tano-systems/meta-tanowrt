@@ -212,6 +212,9 @@
 		spi-rx-bus-width = <8>; /* 8 SPI Rx lines */
 		spi-tx-bus-width = <1>; /* 1 SPI Tx line */
 	};
+
+	mt29f4g01: flash@1 {
+	};
 };
 
 &duart0 {

@@ -1,9 +1,10 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 require u-boot-nxp.inc
 require u-boot-openil-common_${PV}.inc
+require u-boot-openil-tano_${PV}.inc
 
 DESCRIPTION = "OpenIL U-Boot"
 PROVIDES += "u-boot"

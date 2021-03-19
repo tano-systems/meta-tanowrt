@@ -1,0 +1,87 @@
+{
+	"global": {
+		"last_action": "poweroff",
+		"last_action_delay": 5
+	},
+	"verify": {
+		"blkdev_required": [
+			"/dev/mmcblk0",
+			"/dev/mmcblk1"
+		]
+	},
+	"preinstall": {
+		"mounts": [
+			{
+				"device": "/dev/mmcblk0p1",
+				"target": "/mnt",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"blkdev_erase": [
+			{ "device": "/dev/mmcblk1", "bs": 524288, "count": 20 }
+		],
+		"blkdev_parts": [
+			{
+				"device": "/dev/mmcblk1",
+				"label": "gpt",
+				"partitions": [
+					{ "name": "kernel_a",    "fstype": "ext4", "start": "10MiB",   "end": "138MiB"  },
+					{ "name": "rootfs_a",    "fstype": "",     "start": "138MiB",  "end": "2058MiB" },
+					{ "name": "kernel_b",    "fstype": "ext4", "start": "2058MiB", "end": "2186MiB" },
+					{ "name": "rootfs_b",    "fstype": "",     "start": "2186MiB", "end": "4106MiB" },
+					{ "name": "rootfs_data", "fstype": "ext4", "start": "4106MiB", "end": "100%"    }
+				]
+			}
+		],
+		"blkdev_mkfs": [
+			{
+				"device": "/dev/mmcblk1p5",
+				"fstype": "ext4",
+				"label": "rootfs_data"
+			}
+		],
+		"blkdev_write": [
+			{
+				"device": "/dev/mmcblk1",
+				"images": [
+					{
+						"offset": 4194304,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}, {
+						"offset": 4325376,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}, {
+						"offset": 8392704,
+						"image_source": "local",
+						"image_url": "/mnt/rcw.bin"
+					}
+				]
+			}
+		]
+	},
+	"install": {
+		"images": [
+			{
+				"type": "swupdate",
+				"image_source": "local",
+				"image_url": "/mnt/swu_install.swu",
+				"extra": "--no-bootloader-env",
+				"dry_run": true,
+				"selections": [
+					"${SWU_SYSTEM_A_SELECTION}",
+					"${SWU_SYSTEM_B_SELECTION}"
+				]
+			}
+		]
+	},
+	"postinstall": {
+		"postexecute": [
+			{ "command": "fw_setenv swu_active 0" },
+			{ "command": "fw_setenv swu_upgrade_available 0" },
+			{ "command": "fw_setenv swu_bootcount 0" }
+		]
+	}
+}

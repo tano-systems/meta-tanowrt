@@ -1,0 +1,57 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create SD card image for dual A/B systems
+# on NXP LS1028A RDB board.
+#
+# long-description: Creates a partitioned SD card image:
+#
+# Partitions/data:
+#
+#   - Offset  1024 KiB: U-Boot image (not in the partition table)
+#   - Offset  3072 KiB: DP firmware (not in the partition table)
+#   - Offset  3328 KiB: PPA image (not in the partition table)
+#   - Offset  3584 KiB: U-Boot startup script image (not in the partition table)
+#   - Offset  4096 KiB: U-Boot environment #1 image (not in the partition table)
+#   - Offset  4224 KiB: U-Boot environment #2 image (not in the partition table)
+#   - Offset  8196 KiB: RCW Binary (not in the partition table)
+#   - Offset 10240 KiB: GPT Partitions
+#     - Partition 1: Kernel for system A (64 MiB)
+#     - Partition 2: Root file system for system A (384 MiB)
+#     - Partition 3: Kernel for system B (64 MiB)
+#     - Partition 4: Root file system for system B (384 MiB)
+#     - Partition 5: User data (32 MiB, will be expanded to the full
+#                    size of the entire device on the first boot)
+#
+# ATTENTION: DO NOT CHANGE RCW Binary location
+#
+# If the Service processor detects that the RCW loading failed, it initiates
+# RCW loading from a second RCW source. If boot fails from the RCW loaded
+# at offset 0 or 0x1000 (in case of SD), the boot ROM searches for RCW at 8 MB
+# (8 MB + 0x1000 for SD) offset on the device.
+#
+# Because we using GPT, we cannot locate the RCW binary at offset 4k.
+# So we put the RCW binary at 8 MB + 4k offset.
+#
+# For additional details see document LS1028ARM (section 4.8.5 "Power-On Reset
+# Sequence Detailed Description", p. 144, tbl. 12, stage 13).
+#
+
+bootloader --ptable gpt
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=1024   --sourceparams "file=${WKS_IMAGE_UBOOT_BINARY}" --size=2 --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=1024   --sourceparams "file=${WKS_IMAGE_DPFW_BINARY}" --size=256k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=256    --sourceparams "file=${WKS_IMAGE_PPAFW_BINARY}" --size=256k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_IMAGE_STARTUP_BINARY}" --size=512k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --size=128k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --size=128k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --offset=8196k --sourceparams "file=${WKS_IMAGE_RCW_BINARY}" --no-table
+
+# GPT partitions
+part /kernel_a --ondisk=mmcblk0 --source=rawcopy --part-name=kernel_a --offset=10240k --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_a --ondisk=mmcblk0 --source=rawcopy --part-name=system_a --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /kernel_b --ondisk=mmcblk0 --source=rawcopy --part-name=kernel_b --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_b --ondisk=mmcblk0 --source=rawcopy --part-name=system_b --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /overlay  --ondisk=mmcblk0 --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024

@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 inherit fsl-u-boot-localversion
 
@@ -17,5 +17,5 @@ SRC_URI = "git://github.com/openil/u-boot.git;nobranch=1"
 SRCREV= "OpenIL-u-boot-201908"
 
 S = "${WORKDIR}/git"
-PV_append = "+nxp0"
+PR_append = "+nxp0"
 LOCALVERSION = "+nxp0"

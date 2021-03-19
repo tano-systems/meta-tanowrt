@@ -1,0 +1,18 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+bootloader --ptable msdos
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=1024   --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_BINARY}" --size=2 --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=1024   --sourceparams "file=${WKS_FACTORY_IMAGE_DPFW_BINARY}" --size=256k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=256    --sourceparams "file=${WKS_FACTORY_IMAGE_PPAFW_BINARY}" --size=256k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_FACTORY_IMAGE_STARTUP_BINARY}" --size=512k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --size=128k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=128    --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --size=128k --no-table
+part --ondisk=mmcblk0 --source=rawcopy --offset=8196k --sourceparams "file=${WKS_FACTORY_IMAGE_RCW_BINARY}" --no-table
+
+# Partitions
+part /install --ondisk=mmcblk0 --source=swu-factory --fstype=vfat --label install --align 4 --overhead-factor 1.0 --extra-space 1
+part /kernel  --ondisk=mmcblk0 --source=rawcopy --align=1024 --sourceparams "file=${WKS_FACTORY_IMAGE_KERNEL_BINARY}" --overhead-factor 1.0

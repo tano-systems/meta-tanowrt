@@ -1,0 +1,69 @@
+From 05afe1e81a5136adb4bfa584e2045bc22355687d Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 26 Feb 2021 17:49:03 +0300
+Subject: [PATCH] ls1028ardb: Add SQPH RCW with eMMC boot
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ .../R_SQPH_0x85be/rcw_1300_emmcboot.rcw       | 49 +++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+ create mode 100644 ls1028ardb/R_SQPH_0x85be/rcw_1300_emmcboot.rcw
+
+diff --git a/ls1028ardb/R_SQPH_0x85be/rcw_1300_emmcboot.rcw b/ls1028ardb/R_SQPH_0x85be/rcw_1300_emmcboot.rcw
+new file mode 100644
+index 0000000..ab03687
+--- /dev/null
++++ b/ls1028ardb/R_SQPH_0x85be/rcw_1300_emmcboot.rcw
+@@ -0,0 +1,49 @@
++/*
++ * SerDes Protocol -  0x85be
++ *
++ * Frequencies:
++ * Core     -- 1300 MHz
++ * Platform -- 400  MHz
++ * DDR      -- 1600 MHz
++ * DDR Data Rate -- 1.600 GT/s
++ */
++
++#include <../ls1028asi/ls1028a.rcwi>
++
++SYS_PLL_RAT=4
++MEM_PLL_RAT=16
++CGA_PLL1_RAT=13
++CGA_PLL2_RAT=12
++HWA_CGA_M1_CLK_SEL=7
++HWA_CGA_M2_CLK_SEL=7
++HWA_CGA_M3_CLK_SEL=2
++HWA_CGA_M4_CLK_SEL=3
++DDR_REFCLK_SEL=2
++DRAM_LAT=1
++BOOT_LOC=21
++FLASH_CFG1=3
++SYSCLK_FREQ=600
++IIC2_PMUX=6
++IIC3_PMUX=2
++IIC4_PMUX=2
++IIC5_PMUX=1
++IIC6_PMUX=2
++CLK_OUT_PMUX=1
++EC1_SAI4_5_PMUX=5
++EC1_SAI3_6_PMUX=5
++USB3_CLK_FSEL=39
++ENETC_RCW=3
++GTX_CLK125_PMUX=2
++SRDS_PRTCL_S1_L0=8
++SRDS_PRTCL_S1_L1=5
++SRDS_PRTCL_S1_L2=11
++SRDS_PRTCL_S1_L3=14
++
++/* Boot Location Pointer */
++#include <../ls1028asi/bootlocptr_sdhc.rcw>
++
++/* Errata for PCIe controller */
++#include <../ls1028asi/pex_gen3_link_ls1028a.rcw>
++
++/* Copy SPL to OCRAM */
++#include <../ls1028asi/block_copy_cmds_emmc.rcw>
+-- 
+2.25.1
+
