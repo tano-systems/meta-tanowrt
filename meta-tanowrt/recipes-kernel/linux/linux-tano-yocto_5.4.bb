@@ -14,13 +14,13 @@ KERNEL_SRC_BRANCH_qemux86 ?= "v5.4/standard/base"
 KERNEL_SRC_BRANCH_qemux86-64 ?= "v5.4/standard/base"
 KERNEL_SRC_BRANCH ?= "v5.4/standard/base"
 
-KERNEL_SRC_SRCREV_machine_qemuarm ?= "28bc6b294bb1e49da671b2848234f9011efcad88"
-KERNEL_SRC_SRCREV_machine_qemuarm64 ?= "2d0a4ea86fe97f13a4bc2a92a097e4edb51d737d"
-KERNEL_SRC_SRCREV_machine_qemux86 ?= "2d0a4ea86fe97f13a4bc2a92a097e4edb51d737d"
-KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "2d0a4ea86fe97f13a4bc2a92a097e4edb51d737d"
-KERNEL_SRC_SRCREV ?= "2d0a4ea86fe97f13a4bc2a92a097e4edb51d737d"
+KERNEL_SRC_SRCREV_machine_qemuarm ?= "31486fc68d8688908700a68b6655fd50c733d882"
+KERNEL_SRC_SRCREV_machine_qemuarm64 ?= "80ade4d43bbcb497d363d44508af69af74a84092"
+KERNEL_SRC_SRCREV_machine_qemux86 ?= "80ade4d43bbcb497d363d44508af69af74a84092"
+KERNEL_SRC_SRCREV_machine_qemux86-64 ?= "80ade4d43bbcb497d363d44508af69af74a84092"
+KERNEL_SRC_SRCREV ?= "80ade4d43bbcb497d363d44508af69af74a84092"
 
-LINUX_VERSION ?= "5.4.98"
+LINUX_VERSION ?= "5.4.103"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
@@ -35,7 +35,7 @@ require recipes-kernel/linux/linux-tano-yocto.inc
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.4:"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-5.4"
-YOCTO_KERNEL_CACHE_SRCREV = "4f6d6c23cc8ca5d9c39b1efc2619b1dfec1ef2bc"
+YOCTO_KERNEL_CACHE_SRCREV = "feeb59687bc0f054af837a5061f8d413ec7c93e9"
 
 SECTION = "kernel"
 DESCRIPTION = "Yocto Linux kernel"
