@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano75.${INC_PR}"
+PR_append = ".tano76.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -29,7 +29,7 @@ HOMEPAGE = "http://wiki.openwrt.org/"
 
 RRECOMMENDS_${PN} += "tzdata"
 RRECOMMENDS_${PN} += "${@oe.utils.conditional('TANOWRT_ENABLE_OVERLAY_RESIZE', '1', \
-	'parted e2fsprogs-resize2fs', '', d)}"
+	'gptfdisk parted e2fsprogs-resize2fs', '', d)}"
 
 require base-files.inc
 

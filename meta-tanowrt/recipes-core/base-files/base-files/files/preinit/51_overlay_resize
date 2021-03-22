@@ -2,7 +2,15 @@
 # Copyright (C) 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 
 do_overlay_resize() {
-	local OVERLAY_INFO=$(block info | grep "LABEL=\"rootfs_data\"")
+	local BIN_BLOCK="/usr/sbin/block"
+	local BIN_SGDISK="/usr/sbin/sgdisk"
+	local BIN_PARTED="/usr/sbin/parted"
+	local BIN_PARTPROBE="/usr/sbin/partprobe"
+	local BIN_FSCK="/sbin/fsck"
+	local BIN_RESIZE2FS="/sbin/resize2fs"
+	local BIN_RESIZEF2FS="/sbin/resize.f2fs"
+
+	local OVERLAY_INFO=$(${BIN_BLOCK} info | grep "LABEL=\"rootfs_data\"")
 	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
 	local PARTITION="${OVERLAY_DEVICE#/dev/}"
 	local DISK="${PARTITION%p?}"
@@ -27,6 +35,7 @@ do_overlay_resize() {
 
 	# Disk total size
 	local DISK_SIZE_S=$(cat /sys/block/${DISK}/size)
+	local TEST_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 128)
 
 	#
 	# Detect filesystem
@@ -38,12 +47,12 @@ do_overlay_resize() {
 
 	if [ "${PARTITION_FSTYPE}" = "ext4" ]; then
 		echo "overlay-resize: EXT4 filesystem" > /dev/kmsg
-		CMD_FSCK="fsck.ext4 -y -v /dev/${PARTITION}"
-		CMD_RESIZEFS="resize2fs /dev/${PARTITION}"
+		CMD_FSCK="${BIN_FSCK}.ext4 -y -v /dev/${PARTITION}"
+		CMD_RESIZEFS="${BIN_RESIZE2FS} /dev/${PARTITION}"
 	elif [ "${PARTITION_FSTYPE}" = "f2fs" ]; then
 		echo "overlay-resize: F2FS filesystem" > /dev/kmsg
-		CMD_FSCK="fsck.f2fs -y -v /dev/${PARTITION}"
-		CMD_RESIZEFS="resize.f2fs /dev/${PARTITION}"
+		CMD_FSCK="${BIN_FSCK}.f2fs -y -v /dev/${PARTITION}"
+		CMD_RESIZEFS="${BIN_RESIZEF2FS} /dev/${PARTITION}"
 	else
 		# For unknown/unsupported filesystem
 		# we perform only partition resize
@@ -65,18 +74,25 @@ do_overlay_resize() {
 		echo "overlay-resize: Filesystem successfully checked" > /dev/kmsg
 	fi
 
-	local TEST_PARTITION_END_S=$(expr ${DISK_SIZE_S} - 128)
-
 	if [ ${PARTITION_END_S} -ge ${TEST_PARTITION_END_S} ]; then
 		echo "overlay-resize: Partition /dev/${PARTITION} already resized" > /dev/kmsg
 	else
+		RET=$(${BIN_SGDISK} -v /dev/${DISK} | \
+			grep -c "Problem: The secondary header's self-pointer indicates that it doesn't reside")
+		if [ "${RET}" != "0" ]; then
+			# Relocate secondary GPT header to end of disk
+			${BIN_SGDISK} -e /dev/${DISK} > /dev/null
+			${BIN_PARTPROBE} > /dev/null
+			echo "overlay-resize: Secondary GPT header relocated to end of disk" > /dev/kmsg
+		fi
+
 		#
 		# Resize partition
 		#
-		parted -s /dev/${DISK} --script resizepart \
+		${BIN_PARTED} --align none --script /dev/${DISK} resizepart \
 			${PARTITION_NUMBER} 100% > /dev/null
-
 		RET=$?
+
 		if [ "${RET}" != "0" ]; then
 			echo "overlay-resize: Failed to resize" \
 			     "partition /dev/${PARTITION} (${RET})" > /dev/kmsg
@@ -97,6 +113,7 @@ do_overlay_resize() {
 		     "on partition /dev/${PARTITION}..." > /dev/kmsg
 		${CMD_RESIZEFS} > /dev/null 2>&1
 		RET=$?
+
 		if [ "${RET}" != "0" ]; then
 			echo "overlay-resize: Failed to resize" \
 			     "filesystem on /dev/${PARTITION} (${RET})" > /dev/kmsg
