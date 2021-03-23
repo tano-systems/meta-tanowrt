@@ -28,7 +28,7 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 [meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
 [meta-tanowrt-hsl-ti]: meta-tanowrt-hsl-ti/README.md
 
-### 2 Firmware Upgrade
+## 2 Firmware Upgrade
 
 The TanoWrt distribution uses the [SWUpdate](https://sbabic.github.io/swupdate) project for firmware upgrade implementation. For all devices that supports the firmware upgrade feature, a [double copy with fall-back](https://sbabic.github.io/swupdate/overview.html#double-copy) strategy has been implemented.
 
