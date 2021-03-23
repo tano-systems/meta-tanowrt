@@ -24,7 +24,7 @@ Official page: https://beagleboard.org/black
 
 ![BeagleBone Black](docs/am335x-bbb/am335x-bbb-board.webp)
 
-### 1.1.1 Machines
+#### 1.1.1 Machines
 
 For BeagleBone Black board there are a few machines available listed in the table below.
 
@@ -33,7 +33,7 @@ For BeagleBone Black board there are a few machines available listed in the tabl
 | `am335x-bbb-emmc` | TanoWrt for running on internal eMMC flash (recommended)   |
 | `am335x-bbb-sd`   | TanoWrt for running on SD card                             |
 
-### 1.1.2 Supported Images
+#### 1.1.2 Supported Images
 
 | Image Recipe                     | Machine(s)             | Description                                                           |
 | -------------------------------- | ---------------------- | --------------------------------------------------------------------- |
@@ -42,11 +42,11 @@ For BeagleBone Black board there are a few machines available listed in the tabl
 | `tanowrt-image-full-swu`         | *All*                  | TanoWrt full featured SWU firmware upgrade image                      |
 | `tanowrt-image-full-swu-factory` | Only `am335x-bbb-emmc` | Factory installation SD card image for the firmware on the eMMC flash |
 
-### 1.1.3 Build and Run
+#### 1.1.3 Build and Run
 
 TanoWrt on BeagleBone Black board can be run from MicroSD card (at least 1 GiB) or from internal eMMC flash (3648 MiB).
 
-#### 1.1.3.1 TanoWrt on eMMC Flash (`am335x-bbb-emmc`)
+##### 1.1.3.1 TanoWrt on eMMC Flash (`am335x-bbb-emmc`)
 
 The partitioning and data layout on the internal eMMC flash for the BeagleBone Black board are shown in the figure below.
 
@@ -56,7 +56,7 @@ The ROM2 (Boot Partition 1, `/dev/mmcblk1boot0`) and ROM3 (Boot Partition 2, `/d
 
 In the future, it is planned to use SPL (MLO) to select the partition depending on the Boot Partition [179] register value from the EXTCSD area. On boot partitions it is planned to store redundant U-Boot and startup script images.
 
-##### 1.1.3.1.1 Build Installation Image
+###### 1.1.3.1.1 Build Installation Image
 
 For the first TanoWrt installation to the eMMC flash memory you need to build an installation image for the SD card. Booting from this SD card will install TanoWrt to the internal eMMC flash memory.
 
@@ -72,11 +72,11 @@ When the build is complete, the eMMC installation SD card image file will be loc
 ./tanowrt-glibc/deploy/images/am335x-bbb-emmc/tanowrt-image-full-swu-factory-am335x-bbb-emmc.img
 ```
 
-##### 1.1.3.1.2 Writing eMMC Installation Image to the SD Card
+###### 1.1.3.1.2 Writing eMMC Installation Image to the SD Card
 
 See section [1.1.2.2.2](#11322-writing-image-to-the-sd-card).
 
-##### 1.1.3.1.3 Running eMMC Installation
+###### 1.1.3.1.3 Running eMMC Installation
 
 Run eMMC installation image from the SD card as described in section [1.1.2.2.3](#11323-running-tanowrt-from-sd-card).
 
@@ -84,7 +84,7 @@ The installation of TanoWrt to the internal eMMC flash memory will be done autom
 
 **Note:** Be aware that during the installation all existing data on the internal eMMC flash memory will be permanently lost.
 
-##### 1.1.3.1.4 Build Firmware Upgrade Image
+###### 1.1.3.1.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -100,13 +100,13 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the BeagleBone Black board running from the eMMC flash.
 
-#### 1.1.3.2 TanoWrt on MicroSD Card (`am335x-bbb-sd`)
+##### 1.1.3.2 TanoWrt on MicroSD Card (`am335x-bbb-sd`)
 
 The partitioning and data layout of the SD card image for the BeagleBone Black board are shown in the figure below.
 
 <img src="./docs/am335x-bbb/am335x-bbb-layout-sd.svg" width="100%" />
 
-##### 1.1.3.2.1 Build SD Card Image
+###### 1.1.3.2.1 Build SD Card Image
 
 To build TanoWrt image for the SD card use the following command:
 
@@ -120,7 +120,7 @@ When the build is complete, the SD card image file will be located in folder (re
 ./tanowrt-glibc/deploy/images/am335x-bbb-sd/tanowrt-image-full-am335x-bbb-sd.sdcard.img
 ```
 
-##### 1.1.3.2.2 Writing Image to the SD Card
+###### 1.1.3.2.2 Writing Image to the SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
@@ -132,7 +132,7 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd/tanowrt-image-fu
    bs=1k
 ```
 
-##### 1.1.3.2.3 Running TanoWrt from SD Card
+###### 1.1.3.2.3 Running TanoWrt from SD Card
 
 1. Insert the SD card into the slot on the BeagleBone Black board (power is off).
 2. Press and hold the S2 button.
@@ -155,7 +155,7 @@ dd if=/dev/zero of=/dev/mmcblk1 bs=1k count=512
 
 **Note:** Be aware that these commands will make the existing firmware on the eMMC flash memory **INOPERABLE**.
 
-##### 1.1.3.2.4 Build Firmware Upgrade Image
+###### 1.1.3.2.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -172,7 +172,7 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 This image can be used for upgrading firmware via the LuCI web interface on the BeagleBone Black board running from the SD card.
 
 
-### 1.1.4 BeagleBone Black Default Network Configuration
+#### 1.1.4 BeagleBone Black Default Network Configuration
 
 By default Ethernet port (`eth0` interface) are joined into a bridge (`br-lan` interface). Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -186,13 +186,13 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 ---------------------------------------------------------------------------------------------------
 
-## 1.2 TI AM3359 ICEv2 EVM (TMDSICE3359)
+### 1.2 TI AM3359 ICEv2 EVM (TMDSICE3359)
 
 Official page: http://www.ti.com/tool/TMDSICE3359
 
 ![TI AM3359 ICEv2 EVM](docs/am335x-icev2/am335x-icev2-board.webp)
 
-### 1.2.1 Machines
+#### 1.2.1 Machines
 
 Only one machine is supported for this board:
 
@@ -200,7 +200,7 @@ Only one machine is supported for this board:
 | ------------------- | ------------------------------------------------------ |
 | `am335x-icev2-sd`   | TanoWrt for running on SD card                         |
 
-### 1.2.2 Supported Images
+#### 1.2.2 Supported Images
 
 | Image Recipe                     | Machine(s)  | Description                                                                               |
 | -------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
@@ -208,7 +208,7 @@ Only one machine is supported for this board:
 | `tanowrt-image-full`             | *All*       | TanoWrt full featured root file system image                                              |
 | `tanowrt-image-full-swu`         | *All*       | TanoWrt full featured SWU firmware upgrade image (recommended)                            |
 
-### 1.2.3 Build and Run (`am335x-icev2-sd`)
+#### 1.2.3 Build and Run (`am335x-icev2-sd`)
 
 TanoWrt can be run only from SD card (at least 1 GiB) on TI AM3359 ICEv2 EVM board.
 
@@ -216,7 +216,7 @@ The partitioning and data layout of the SD card image for the TI AM3359 ICEv2 EV
 
 <img src="./docs/am335x-icev2/am335x-icev2-layout-sd.svg" width="100%" />
 
-#### 1.2.3.1 Build SD Card Image
+##### 1.2.3.1 Build SD Card Image
 
 To build TI AM3359 ICEv2 EVM board TanoWrt image for the SD card use the following command:
 
@@ -230,7 +230,7 @@ When the build is complete, the SD card image file will be located in folder (re
 ./tanowrt-glibc/deploy/images/am335x-icev2-sd/tanowrt-image-full-am335x-icev2-sd.sdcard.img
 ```
 
-#### 1.2.3.2 Writing Image to the SD Card
+##### 1.2.3.2 Writing Image to the SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
@@ -242,9 +242,9 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd/tanowrt-image-
    bs=1k
 ```
 
-#### 1.2.3.3 Hardware Preparation and Configuration
+##### 1.2.3.3 Hardware Preparation and Configuration
 
-##### 1.2.3.3.1 Erasing SPI NOR Flash Contents
+###### 1.2.3.3.1 Erasing SPI NOR Flash Contents
 
 TI AM3359 ICEv2 EVM board has SPI NOR flash. By default this storage contains a demonstration bootloader. Booting from an SD card is only possible when there is no bootloader in the SPI NOR flash. If you have an bootloader in the SPI NOR flash you must erase SPI NOR flash contents. Follow these [instructions](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/How_to_Guides/Host/AM335x_ICEv2_flash_erase.html#am335x-icev2-flash-erase) to erase flash contents:
 
@@ -282,22 +282,22 @@ TI AM3359 ICEv2 EVM board has SPI NOR flash. By default this storage contains a 
       Enter size to be erased in Kilo bytes: 64
       ```
 
-##### 1.2.3.3.2 Choosing Boot Mode
+###### 1.2.3.3.2 Choosing Boot Mode
 
 Short pin 2 and 3 on J5 (sysboot) for choosing MMC/SD boot mode.
 
-##### 1.2.3.3.3 Choosing Ethernet Mode
+###### 1.2.3.3.3 Choosing Ethernet Mode
 
 Jumpers J18 and J19 must be set to control the Ethernet ports using CPSW (gigabit switch) or PRU-ICSS mode. For PRU-ICSS mode, short pins 2 and 3. For CPSW mode, short pins 1 and 2.
 
-#### 1.2.3.4 Running TanoWrt from SD Card on TI AM3359 ICEv2 EVM
+##### 1.2.3.4 Running TanoWrt from SD Card on TI AM3359 ICEv2 EVM
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
 4. For login use credentials specified in "[Access](#7-access-credentials)" section.
 
-#### 1.2.3.5 Build Firmware Upgrade Image
+##### 1.2.3.5 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -314,7 +314,7 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 This image can be used for upgrading firmware via the LuCI web interface on the TI AM3359 ICEv2 EVM board running from the SD card.
 
 
-### 1.2.4 TI AM3359 ICEv2 EVM Default Network Configuration
+#### 1.2.4 TI AM3359 ICEv2 EVM Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
@@ -324,7 +324,7 @@ The web-configuration interface can be accessed via Ethernet port through HTTP(s
 
 ![TI AM3359 ICEv2 EVM Overview](docs/am335x-icev2/am335x-icev2-luci.png)
 
-#### 1.2.5 Configuring PPP Connection over UART4 on TI AM3359 ICEv2 EVM
+##### 1.2.5 Configuring PPP Connection over UART4 on TI AM3359 ICEv2 EVM
 
 By default, the pppd service is running on the UART4 port ready for connection via null-modem cable with PC. UART4 signals are routed to J3 connector (Host Expansion Connector 2) of ICEv2 board. To connect the null-modem cable you need to use the following pins of the J3 connector:
 - pin 2 — Ground;
@@ -378,7 +378,7 @@ PING 172.16.0.1 (172.16.0.1): 56 data bytes
 round-trip min/avg/max = 20.161/21.590/22.233 ms
 ```
 
-#### 1.2.6 Enabling TI UIO on TI AM3359 ICEv2 EVM
+##### 1.2.6 Enabling TI UIO on TI AM3359 ICEv2 EVM
 
 First of all, you must enable TI UIO build feature (see "[TI UIO Support](#62-ti-uio-support)" section) and do a complete image build.
 
@@ -417,13 +417,13 @@ and reboot board.
 
 ---------------------------------------------------------------------------------------------------
 
-## 1.3 TI AM574x IDK EVM (TMDSIDK574)
+### 1.3 TI AM574x IDK EVM (TMDSIDK574)
 
 Official page: https://www.ti.com/tool/TMDSIDK574
 
 ![TI AM574x IDK EVM](docs/am574x-idk/am574x-idk-board.webp)
 
-### 1.3.1 Machines
+#### 1.3.1 Machines
 
 For TI AM574x IDK EVM board there are a few machines available listed in the table below.
 
@@ -432,7 +432,7 @@ For TI AM574x IDK EVM board there are a few machines available listed in the tab
 | `am574x-idk-emmc` | TanoWrt for running on internal eMMC flash (recommended)   |
 | `am574x-idk-sd`   | TanoWrt for running on SD card                             |
 
-### 1.3.2 Supported Images
+#### 1.3.2 Supported Images
 
 | Image Recipe                     | Machine(s)             | Description                                                                               |
 | -------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------- |
@@ -441,11 +441,11 @@ For TI AM574x IDK EVM board there are a few machines available listed in the tab
 | `tanowrt-image-full-swu`         | *All*                  | TanoWrt full featured SWU firmware upgrade image (recommended)                            |
 | `tanowrt-image-full-swu-factory` | Only `am574x-idk-emmc` | Factory installation SD card image for the firmware on the eMMC flash drive (recommended) |
 
-### 1.3.3 Build and Run
+#### 1.3.3 Build and Run
 
 TanoWrt on TI AM574x IDK EVM board can be run from MicroSD card (at least 1 GiB) or from internal eMMC flash (16 GB).
 
-#### 1.3.3.1 TanoWrt on eMMC Flash (`am574x-idk-emmc`)
+##### 1.3.3.1 TanoWrt on eMMC Flash (`am574x-idk-emmc`)
 
 The partitioning and data layout on the internal eMMC flash for the TI AM574x IDK EVM board are shown in the figure below.
 
@@ -453,7 +453,7 @@ The partitioning and data layout on the internal eMMC flash for the TI AM574x ID
 
 The ROM2 (Boot Partition 1, `/dev/mmcblk1boot0`) and ROM3 (Boot Partition 2, `/dev/mmcblk1boot1`) eMMC hardware partitions are currently not used.
 
-##### 1.3.3.1.1 Build Installation Image
+###### 1.3.3.1.1 Build Installation Image
 
 For the first TanoWrt installation to the eMMC flash memory you need to build an installation image for the SD card. Booting from this SD card will install TanoWrt to the internal eMMC flash memory.
 
@@ -469,11 +469,11 @@ When the build is complete, the eMMC installation SD card image file will be loc
 ./tanowrt-glibc/deploy/images/am574x-idk-emmc/tanowrt-image-full-swu-factory-am574x-idk-emmc.img
 ```
 
-##### 1.3.3.1.2 Writing eMMC Installation Image to the SD Card
+###### 1.3.3.1.2 Writing eMMC Installation Image to the SD Card
 
 See section [1.3.2.2.2](#13322-writing-image-to-the-sd-card).
 
-##### 1.3.3.1.3 Running eMMC Installation
+###### 1.3.3.1.3 Running eMMC Installation
 
 Run eMMC installation image from the SD card as described in section [1.3.2.2.3](#13323-running-tanowrt-from-sd-card).
 
@@ -481,7 +481,7 @@ The installation of TanoWrt to the internal eMMC flash memory will be done autom
 
 **Note:** Be aware that during the installation all existing data on the internal eMMC flash memory will be permanently lost.
 
-##### 1.3.3.1.4 Build Firmware Upgrade Image
+###### 1.3.3.1.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -497,13 +497,13 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the TI AM574x IDK EVM board running from the eMMC flash.
 
-#### 1.3.3.2 TanoWrt on SD Card (`am574x-idk-sd`)
+##### 1.3.3.2 TanoWrt on SD Card (`am574x-idk-sd`)
 
 The partitioning and data layout of the SD card image for the TI AM574x IDK EVM board are shown in the figure below.
 
 <img src="./docs/am574x-idk/am574x-idk-layout-sd.svg" width="100%" />
 
-##### 1.3.3.2.1 Build SD Card Image
+###### 1.3.3.2.1 Build SD Card Image
 
 To build TanoWrt image for the SD card use the following command:
 
@@ -517,7 +517,7 @@ When the build is complete, the SD card image file will be located in folder (re
 ./tanowrt-glibc/deploy/images/am574x-idk-sd/tanowrt-image-full-am574x-idk-sd.sdcard.img
 ```
 
-##### 1.3.3.2.2 Writing Image to the SD Card
+###### 1.3.3.2.2 Writing Image to the SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
@@ -529,14 +529,14 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-sd/tanowrt-image-fu
    bs=1k
 ```
 
-##### 1.3.3.2.3 Running TanoWrt from SD Card
+###### 1.3.3.2.3 Running TanoWrt from SD Card
 
 1. Insert the SD card into the slot on the EVM board (power is off).
 2. Power on board.
 3. System from SD card will be booting.
 4. For login use credentials specified in "[Access](#7-access-credentials)" section.
 
-##### 1.3.3.2.4 Build Firmware Upgrade Image
+###### 1.3.3.2.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -552,7 +552,7 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the TI AM574x IDK EVM board running from the SD card.
 
-#### 1.3.4 TI AM574x IDK EVM Default Network Configuration
+##### 1.3.4 TI AM574x IDK EVM Default Network Configuration
 
 By default Ethernet 1 and 2 ports (`eth0` and `eth1` interfaces) are joined into a bridge (`br-lan` interface) with enabled RSTP protocol. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
