@@ -112,14 +112,14 @@ The following credentials are used by default to access the operating system (te
 * User name: `root`
 * Password: `root`
 
-## 4 Limitations
+## 5 Limitations
 
 Works with OE Release 3.1 (Dunfell).
 
-## 5 License
+## 6 License
 
 All metadata is MIT licensed unless otherwise stated. Source code included in tree for individual recipes is under the LICENSE stated in each recipe (.bb file) unless otherwise stated.
 
-## 6 Maintainers
+## 7 Maintainers
 
 Anton Kikin <a.kikin@tano-systems.com>
