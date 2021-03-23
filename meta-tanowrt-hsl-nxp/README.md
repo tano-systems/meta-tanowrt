@@ -20,7 +20,7 @@ Official page: https://www.nxp.com/design/qoriq-developer-resources/ls1028a-deve
 
 <img src="./docs/ls1028ardb/ls1028ardb.png" width="900px" />
 
-### 1.1.1 Machines
+#### 1.1.1 Machines
 
 For LS1028A RDB board there are a few machines available listed in the table below.
 
@@ -29,7 +29,7 @@ For LS1028A RDB board there are a few machines available listed in the table bel
 | `ls1028ardb-emmc` | TanoWrt for running on internal eMMC flash (recommended)   |
 | `ls1028ardb-sd`   | TanoWrt for running on SD card                             |
 
-### 1.1.2 Supported Images
+#### 1.1.2 Supported Images
 
 | Image Recipe                     | Machine(s)             | Description                                                                     |
 | -------------------------------- | ---------------------- | ------------------------------------------------------------------------------- |
@@ -38,7 +38,7 @@ For LS1028A RDB board there are a few machines available listed in the table bel
 | `tanowrt-image-full-swu`         | *All*                  | TanoWrt full featured SWU firmware upgrade image                                |
 | `tanowrt-image-full-swu-factory` | Only `ls1028ardb-emmc` | Factory installation SD card image for the firmware on the internal eMMC flash  |
 
-#### 1.1.2.1 Images with Qt5
+##### 1.1.2.1 Images with Qt5
 
 | Image Recipe                     | Machine(s)             | Description                                                               |
 | -------------------------------- | ---------------------- | ------------------------------------------------------------------------- |
@@ -46,7 +46,7 @@ For LS1028A RDB board there are a few machines available listed in the table bel
 | `tanowrt-image-qt5-swu`          | *All*                  | TanoWrt full featured SWU firmware upgrade image                          |
 | `tanowrt-image-qt5-swu-factory`  | Only `ls1028ardb-emmc` | Factory installation SD card image for the `tanowrt-image-qt5-swu` image  |
 
-### 1.1.3 Boot Source Selection
+#### 1.1.3 Boot Source Selection
 
 DIP switches SW2[1:4] on the LS1028A RDB board are used to select the boot source. The DIP switches settings for all supported boot sources are shown in the figure and table below.
 
@@ -64,17 +64,17 @@ Also you can switch the boot source in runtime from the U-Boot command line usin
 - `qixis_reset emmc` - switch to SDHC2 (eMMC);
 - `qixis_reset` - switch to XSPI (NOR).
 
-### 1.1.4 Build and Run
+#### 1.1.4 Build and Run
 
 TanoWrt on LS1028A RDB board can be run from [SD card](#1141-tanowrt-on-sd-card-ls1028ardb-sd) (at least 1 GiB) or from internal [eMMC flash](#1142-tanowrt-on-emmc-flash-ls1028ardb-emmc) (8 GB). Running from internal [NOR flash](#1143-tanowrt-on-nor-flash-ls1028ardb-nor) and internal [NAND flash](#1143-tanowrt-on-nand-flash-ls1028ardb-nand) currently is not supported in TanoWrt.
 
-#### 1.1.4.1 TanoWrt on SD Card (`ls1028ardb-sd`)
+##### 1.1.4.1 TanoWrt on SD Card (`ls1028ardb-sd`)
 
 The partitioning and data layout of the SD card image for the LS1028A RDB board are shown in the figure below.
 
 <img src="./docs/ls1028ardb/ls1028ardb-layout-sd.svg" width="100%" />
 
-##### 1.1.4.1.1 Build SD Card Image
+###### 1.1.4.1.1 Build SD Card Image
 
 To build TanoWrt image for the SD card use the following command:
 
@@ -88,7 +88,7 @@ When the build is complete, the SD card image file will be located in folder (re
 ./tanowrt-glibc/deploy/images/ls1028ardb-sd/tanowrt-image-full-ls1028ardb-sd.sdcard.img
 ```
 
-##### 1.1.4.1.2 Writing Image to the SD Card
+###### 1.1.4.1.2 Writing Image to the SD Card
 
 Use the `dd` utility to write the generated `.sdcard.img` image to the SD card.
 
@@ -100,7 +100,7 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd/tanowrt-image-fu
    bs=1k
 ```
 
-##### 1.1.4.1.3 Running TanoWrt from SD Card
+###### 1.1.4.1.3 Running TanoWrt from SD Card
 
 1. Power off board.
 2. Refer section [1.1.3](#113-boot-source-selection) to select boot source to SDHC1 (SD Card).
@@ -111,7 +111,7 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd/tanowrt-image-fu
 
 After system is booted you can access to the system console over UART1 port.
 
-##### 1.1.4.1.4 Build Firmware Upgrade Image
+###### 1.1.4.1.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -127,7 +127,7 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the LS1028A RDB board running from the SD card.
 
-#### 1.1.4.2 TanoWrt on eMMC Flash (`ls1028ardb-emmc`)
+##### 1.1.4.2 TanoWrt on eMMC Flash (`ls1028ardb-emmc`)
 
 The partitioning and data layout on the internal eMMC flash for the LS1028A RDB board are shown in the figure below.
 
@@ -135,7 +135,7 @@ The partitioning and data layout on the internal eMMC flash for the LS1028A RDB 
 
 The ROM2 (Boot Partition 1, `/dev/mmcblk1boot0`) and ROM3 (Boot Partition 2, `/dev/mmcblk1boot1`) eMMC hardware partitions are currently not used.
 
-##### 1.1.4.2.1 Build Installation Image
+###### 1.1.4.2.1 Build Installation Image
 
 For the first TanoWrt installation to the eMMC flash memory you need to build an installation image for the SD card. Booting from this SD card will install TanoWrt to the internal eMMC flash memory.
 
@@ -151,11 +151,11 @@ When the build is complete, the eMMC installation SD card image file will be loc
 ./tanowrt-glibc/deploy/images/ls1028ardb-emmc/tanowrt-image-full-swu-factory-ls1028ardb-emmc.img
 ```
 
-##### 1.1.4.2.2 Writing eMMC Installation Image to the SD Card
+###### 1.1.4.2.2 Writing eMMC Installation Image to the SD Card
 
 See section [1.1.4.1.2](#11412-writing-image-to-the-sd-card).
 
-##### 1.1.4.2.3 Running eMMC Installation
+###### 1.1.4.2.3 Running eMMC Installation
 
 Run eMMC installation image from the SD card as described in section [1.1.4.1.3](#11413-running-tanowrt-from-sd-card).
 
@@ -165,7 +165,7 @@ To boot installed system from the internal eMMC flash you need to refer section 
 
 **Note:** Be aware that during the installation all existing data on the internal eMMC flash memory will be permanently lost.
 
-##### 1.1.4.2.4 Build Firmware Upgrade Image
+###### 1.1.4.2.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -181,17 +181,17 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the LS1028A RDB board running from the eMMC flash.
 
-#### 1.1.4.3 TanoWrt on NAND Flash (`ls1028ardb-nand`)
+##### 1.1.4.3 TanoWrt on NAND Flash (`ls1028ardb-nand`)
 
 *Currently is unsupported.*
 
-#### 1.1.4.4 TanoWrt on NOR Flash (`ls1028ardb-nor`)
+##### 1.1.4.4 TanoWrt on NOR Flash (`ls1028ardb-nor`)
 
 *Currently is unsupported.*
 
-### 1.1.5 LS1028A RDB Default Network Configuration
+#### 1.1.5 LS1028A RDB Default Network Configuration
 
-<img src="docs/ls1028ardb/ls1028ardb-net.png?raw=true" width="900px">
+<img src="docs/ls1028ardb/ls1028ardb-net.png?raw=true" width="900px" />
 
 By default, network ports SWP0, SWP1, SWP2 and SWP3 are joined into a bridge (`br-lan` interface) with the RSTP protocol enabled. Bridge `br-lan` is in the LAN firewall zone. By default, the IP address on the `br-lan` bridge is configured using a DHCP client.
 
@@ -201,7 +201,7 @@ Ethernet ports SWP0 (`swp0`), SWP1 (`swp1`), SWP2 (`swp2`), SWP3 (`swp3`) and MA
 
 The web-configuration interface can be accessed via any of the SWP0–3 ports through HTTP(s) protocol. You must see something like this in browser:
 
-<img src="docs/ls1028ardb/luci.png?raw=true" width="100%">
+<img src="docs/ls1028ardb/luci.png?raw=true" width="100%" />
 
 ---------------------------------------------------------------------------------------------------
 
