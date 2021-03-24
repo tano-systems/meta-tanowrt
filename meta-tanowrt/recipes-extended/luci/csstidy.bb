@@ -17,7 +17,7 @@ SECTION = "tools"
 SRC_URI = "git://github.com/jow-/csstidy-cpp.git"
 SRCREV = "1d5620149ae35c0d49fb2014d4e63a23ecfb6f69"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 FILES_${PN} = "\
 	${bindir}/csstidy"
