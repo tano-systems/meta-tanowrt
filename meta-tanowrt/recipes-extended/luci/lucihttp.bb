@@ -28,7 +28,7 @@ PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
 OECMAKE_C_FLAGS += "-DBUILD_TESTS=OFF -DLUAPATH=/usr/lib/lua/5.1"
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-unknown-warning-option', '', d)}"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 do_install_append() {
 	install -dm 0755 ${D}${libdir}
