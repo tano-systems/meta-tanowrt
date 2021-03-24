@@ -240,21 +240,15 @@ You should see the following working directory tree:
 ```
 .
 ├── bitbake
-├── contrib
-├── LICENSE
-├── LICENSE.GPL-2.0-only
-├── LICENSE.MIT
-├── MEMORIAM
-├── meta
+├── meta -> openembedded-core/meta
 ├── meta-freescale
 ├── meta-openembedded
-├── meta-selftest
-├── meta-skeleton
+├── meta-qt5
+├── meta-swupdate
 ├── meta-tanowrt
-├── oe-init-build-env
-├── README.OE-Core
-├── README.qemu
-└── scripts
+├── oe-init-build-env -> openembedded-core/oe-init-build-env
+├── openembedded-core
+└── scripts -> openembedded-core/scripts
 ```
 
 The first time you need to add layers and create `local.conf` from the template. To do this, run the command:
