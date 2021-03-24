@@ -21,7 +21,7 @@ LUCI_DO_POST_INSTALL_ACTIONS = "0"
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=modules/luci-base/src;destsuffix=git/"
 SRCREV  = "${LUCI_GIT_SRCREV}"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 FILES_${PN} = "\
 	${base_bindir}/jsmin"
