@@ -15,7 +15,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RDEPENDS_${PN} += "cgi-swupdate"
 
-SUMMARY = "swupdate LuCI application"
+SUMMARY = "SWUpdate LuCI support application"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=db0fccee3def547e17585ac94447d2fb"
 
