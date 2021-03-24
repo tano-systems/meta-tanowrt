@@ -36,9 +36,12 @@ This layer supports the following machines designed to run in QEMU:
 | -------------------------------- | -----------------| ---------------------------------------------------------- |
 | `tanowrt-image-base`             | *All*            | TanoWrt base root file system image                        |
 | `tanowrt-image-full`             | *All*            | TanoWrt full featured root file system image               |
-| `tanowrt-image-qt5`              | *All*            | TanoWrt full featured image with Qt5                       |
 | `tanowrt-image-full-swu`         | Only `qemux86*`  | TanoWrt full featured SWU firmware upgrade image           |
 | `tanowrt-image-full-swu-factory` | Only `qemux86*`  | Factory installation ISO image                             |
+
+### 2.1 Images with Qt5
+
+| `tanowrt-image-qt5`              | *All*            | TanoWrt full featured image with Qt5                       |
 | `tanowrt-image-qt5-swu`          | Only `qemux86*`  | TanoWrt full featured SWU firmware with Qt5 upgrade image  |
 | `tanowrt-image-qt5-swu-factory`  | Only `qemux86*`  | Factory installation ISO image for firmware with Qt5       |
 
