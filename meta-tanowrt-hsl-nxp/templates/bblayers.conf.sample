@@ -9,6 +9,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-tanowrt/meta-tanowrt-hsl-nxp \
   ##OEROOT##/meta-tanowrt/meta-tanowrt \
   ##OEROOT##/meta-freescale \
+  ##OEROOT##/meta-swupdate \
   ##OEROOT##/meta-openembedded/meta-oe \
   ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-openembedded/meta-networking \

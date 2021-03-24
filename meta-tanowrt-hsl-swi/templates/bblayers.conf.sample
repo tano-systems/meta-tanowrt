@@ -11,6 +11,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-swi/meta-swi-mdm9x28 \
   ##OEROOT##/meta-swi/meta-swi-mdm9xxx \
   ##OEROOT##/meta-swi/common \
+  ##OEROOT##/meta-swupdate \
   ##OEROOT##/meta-openembedded/meta-oe \
   ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-openembedded/meta-networking \
