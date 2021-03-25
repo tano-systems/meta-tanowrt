@@ -1,15 +1,42 @@
 #!/bin/sh
 # Copyright (C) 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 
-do_overlay_resize() {
-	local BIN_BLOCK="/usr/sbin/block"
-	local BIN_SGDISK="/usr/sbin/sgdisk"
-	local BIN_PARTED="/usr/sbin/parted"
-	local BIN_PARTPROBE="/usr/sbin/partprobe"
-	local BIN_FSCK="/sbin/fsck"
-	local BIN_RESIZE2FS="/sbin/resize2fs"
-	local BIN_RESIZEF2FS="/sbin/resize.f2fs"
+BIN_PARTED="/usr/sbin/parted"
+BIN_BLOCK="/usr/sbin/block"
+BIN_SGDISK="/usr/sbin/sgdisk"
+BIN_PARTPROBE="/usr/sbin/partprobe"
+BIN_FSCK="/sbin/fsck"
+BIN_E2FSCK="/sbin/e2fsck"
+BIN_RESIZE2FS="/sbin/resize2fs"
+BIN_RESIZEF2FS="/sbin/resize.f2fs"
 
+#
+# $1 = disk
+# $2 = partition number
+#
+do_resize_partition() {
+	local DISK=$1
+	local PARTITION_NUMBER=$2
+	local RET=0
+
+	# Resize partition
+	${BIN_PARTED} --align none --script /dev/${DISK} resizepart \
+		${PARTITION_NUMBER} 100% > /dev/null
+	RET=$?
+
+	if [ "${RET}" != "0" ]; then
+		echo "overlay-resize: Failed to resize" \
+		     "extended partition ${PARTITION_NUMBER} (${RET})" > /dev/kmsg
+		return ${RET}
+	fi
+
+	echo "overlay-resize: Partition ${PARTITION_NUMBER}" \
+	     "resized to fill its full disk size" > /dev/kmsg
+
+	return 0
+}
+
+do_overlay_resize() {
 	local OVERLAY_INFO=$(${BIN_BLOCK} info | grep "LABEL=\"rootfs_data\"")
 	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
 	local PARTITION="${OVERLAY_DEVICE#/dev/}"
@@ -47,7 +74,7 @@ do_overlay_resize() {
 
 	if [ "${PARTITION_FSTYPE}" = "ext4" ]; then
 		echo "overlay-resize: EXT4 filesystem" > /dev/kmsg
-		CMD_FSCK="${BIN_FSCK}.ext4 -y -v /dev/${PARTITION}"
+		CMD_FSCK="${BIN_E2FSCK} -p -y -f /dev/${PARTITION}"
 		CMD_RESIZEFS="${BIN_RESIZE2FS} /dev/${PARTITION}"
 	elif [ "${PARTITION_FSTYPE}" = "f2fs" ]; then
 		echo "overlay-resize: F2FS filesystem" > /dev/kmsg
@@ -77,7 +104,7 @@ do_overlay_resize() {
 	if [ ${PARTITION_END_S} -ge ${TEST_PARTITION_END_S} ]; then
 		echo "overlay-resize: Partition /dev/${PARTITION} already resized" > /dev/kmsg
 	else
-		RET=$(${BIN_SGDISK} -v /dev/${DISK} | \
+		RET=$(${BIN_SGDISK} -v /dev/${DISK} 2>/dev/null | \
 			grep -c "Problem: The secondary header's self-pointer indicates that it doesn't reside")
 		if [ "${RET}" != "0" ]; then
 			# Relocate secondary GPT header to end of disk
@@ -86,21 +113,17 @@ do_overlay_resize() {
 			echo "overlay-resize: Secondary GPT header relocated to end of disk" > /dev/kmsg
 		fi
 
-		#
-		# Resize partition
-		#
-		${BIN_PARTED} --align none --script /dev/${DISK} resizepart \
-			${PARTITION_NUMBER} 100% > /dev/null
-		RET=$?
-
-		if [ "${RET}" != "0" ]; then
-			echo "overlay-resize: Failed to resize" \
-			     "partition /dev/${PARTITION} (${RET})" > /dev/kmsg
-			return
+		local EXTENDED_PARTITION_NUMBER=$(${BIN_PARTED} /dev/${DISK} print | grep extended | awk '{ print $1 }')
+		if [ -n "${EXTENDED_PARTITION_NUMBER}" ]; then
+			if [ ${PARTITION_NUMBER} -gt ${EXTENDED_PARTITION_NUMBER} ]; then
+				# Resize extended partition
+				do_resize_partition ${DISK} ${EXTENDED_PARTITION_NUMBER} || return
+			fi
 		fi
 
-		echo "overlay-resize: Partition /dev/${PARTITION}" \
-		     "resized to fill its full disk size" > /dev/kmsg
+		# Resize partition
+		do_resize_partition ${DISK} ${PARTITION_NUMBER} || return
+
 		echo "overlay-resize: Partition /dev/${PARTITION} end" \
 		     "sector ${PARTITION_END_S} -> 100% (${TEST_PARTITION_END_S})" > /dev/kmsg
 	fi
