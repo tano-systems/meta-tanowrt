@@ -133,7 +133,17 @@ fitimage_emit_section_kernel() {
 
 	kernel_csum="${FIT_HASH_ALG}"
 
-	ENTRYPOINT="${UBOOT_ENTRYPOINT}"
+	LOADADDRESS="${KERNEL_LOADADDRESS}"
+	ENTRYPOINT="${KERNEL_ENTRYPOINT}"
+
+	if [ -z "${LOADADDRESS}" ]; then
+		LOADADDRESS="${UBOOT_LOADADDRESS}"
+	fi
+
+	if [ -z "${ENTRYPOINT}" ]; then
+		ENTRYPOINT="${UBOOT_ENTRYPOINT}"
+	fi
+
 	if [ -n "${UBOOT_ENTRYSYMBOL}" ]; then
 		ENTRYPOINT=`${HOST_PREFIX}nm vmlinux | \
 			awk '$3=="${UBOOT_ENTRYSYMBOL}" {print "0x"$1;exit}'`
@@ -147,7 +157,7 @@ fitimage_emit_section_kernel() {
                         arch = "${UBOOT_ARCH}";
                         os = "linux";
                         compression = "${4}";
-                        load = <${UBOOT_LOADADDRESS}>;
+                        load = <${LOADADDRESS}>;
                         entry = <${ENTRYPOINT}>;
                         hash@1 {
                                 algo = "${kernel_csum}";
