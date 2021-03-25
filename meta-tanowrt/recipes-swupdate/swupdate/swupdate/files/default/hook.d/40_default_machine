@@ -1,0 +1,5 @@
+#!/bin/sh
+# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
+exit 0

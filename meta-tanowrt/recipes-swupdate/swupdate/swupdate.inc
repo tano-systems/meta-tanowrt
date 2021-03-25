@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-INCPR = "0"
+INCPR = "1"
 
 # Prefer this version
 DEFAULT_PREFERENCE = "1"
@@ -69,6 +69,8 @@ SRC_URI += " \
 	file://preinit/51_swupdate_gen_sw_versions \
 	file://preinit/55_swupdate_preinit_before_overlay \
 	file://preinit/81_swupdate_preinit \
+	file://hook.d/40_default_machine \
+	file://hook.d/90_default \
 	file://swupdate.sh \
 	file://swupdate_done.sh \
 	file://swupdate_hook.sh \
@@ -164,6 +166,11 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/swupdate_config ${D}${libdir}/swupdate/
 	install -m 0755 ${WORKDIR}/swupdate_done.sh ${D}${libdir}/swupdate/
 	install -m 0755 ${WORKDIR}/swupdate_hook.sh ${D}${libdir}/swupdate/
+
+	# Install hook.d scripts
+	install -d ${D}${libdir}/swupdate/hook.d
+	install -m 0755 ${WORKDIR}/hook.d/40_default_machine ${D}${libdir}/swupdate/hook.d/
+	install -m 0755 ${WORKDIR}/hook.d/90_default ${D}${libdir}/swupdate/hook.d/
 
 	if [ "${SWU_BOOTLOADER}" = "grub-efi" ]; then
 		if [ -n "${SWU_GRUBENV}" ]; then
