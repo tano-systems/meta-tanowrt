@@ -220,7 +220,7 @@ swupdate_get_active_system_bootloader() {
 		echo "${swu_active}"; return 0
 	fi
 
-	return 1
+	echo "0"
 }
 
 #
