@@ -1,7 +1,7 @@
-From e87f645ed8a797095c86b1030af4556c0315f51f Mon Sep 17 00:00:00 2001
+From 8b3cfc1f11d0ce203df2cdda3a3ae5f6f4adcca9 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 13 Oct 2020 03:40:22 +0300
-Subject: [PATCH] Fix lua linking
+Subject: [PATCH 1/2] Fix lua linking
 
 Fixes undefined references to symbols when linking with lua5.1:
 - undefined reference to symbol 'dlclose@@GLIBC_2.2.5' when
@@ -13,7 +13,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile.flags b/Makefile.flags
-index dfd7531..d0c4c73 100644
+index 05d4286..62b7095 100644
 --- a/Makefile.flags
 +++ b/Makefile.flags
 @@ -105,6 +105,7 @@ endif
