@@ -50,7 +50,7 @@ From the Oracle VM VirtualBox Manager, change VM settings:
 
 From the Oracle VM VirtualBox Manager, start the VM.
 
-You may then login as user root (there is no default password).
+You may then login as user root with password root.
 
 
 ## Acknowledgments
