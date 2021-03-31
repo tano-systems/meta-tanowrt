@@ -22,6 +22,10 @@ When the build is complete, the VMDK image file will be located in folder
 ./tanowrt-glibc/deploy/images/qemux86-64/tanowrt-image-full-qemux86-64.wic.vmdk
 ```
 
+## Requirements
+
+Required Oracle VirtualBox 6.0 or higher.
+
 ## Running the VMDK image
 
 From the Oracle VM VirtualBox Manager, create a new Virtual Machine
