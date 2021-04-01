@@ -24,7 +24,7 @@ setenv dbg_console 1;
 include(`setup-console.m4')
 
 rootargs="FACTORY_KERNEL_ROOT_ARGS";
-setenv bootargs ${consoleargs} ${rootargs} ${optargs};
+setenv bootargs ${consoleargs} ${rootargs} ${optargs} ${kernelargs};
 
 echo "Booting kernel ${loadaddr}${bootconfigs}...";
 bootm ${loadaddr}${bootconfigs};

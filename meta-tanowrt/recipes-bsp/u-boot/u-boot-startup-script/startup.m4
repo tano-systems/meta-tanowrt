@@ -68,7 +68,7 @@ NORMAL_LOAD_KERNEL
 include(`setup-console.m4')
 
 rootargs="NORMAL_KERNEL_ROOT_ARGS";
-setenv bootargs ${consoleargs} ${rootargs} ${optargs};
+setenv bootargs ${consoleargs} ${rootargs} ${optargs} ${kernelargs};
 
 echo "Booting kernel ${loadaddr}${bootconfigs}...";
 bootm ${loadaddr}${bootconfigs};

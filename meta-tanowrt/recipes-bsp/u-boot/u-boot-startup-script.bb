@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 DEPENDS = "u-boot-mkimage-native m4-native"
 
 PV = "1.0.0"
-PR = "tano0"
+PR = "tano1"
 
 do_compile[noexec] = "1"
 do_install[noexec] = "1"
