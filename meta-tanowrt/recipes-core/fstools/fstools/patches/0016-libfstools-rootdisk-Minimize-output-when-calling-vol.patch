@@ -1,0 +1,301 @@
+From d18463413dd26efb1b4135a1541a775a9460d5c0 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 1 Apr 2021 05:00:14 +0300
+Subject: [PATCH] libfstools: rootdisk: Minimize output when calling
+ volume_find()
+
+Output extra information about partitions in volume_find()
+only for mount_root utility when executing first time in preinit stage.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ block.c               |  2 +-
+ jffs2reset.c          |  2 +-
+ libfstools/rootdisk.c | 57 ++++++++++++++++++++++++++++++++++-----------------
+ libfstools/volume.c   |  4 +++-
+ libfstools/volume.h   |  4 +++-
+ mount_root.c          |  9 +++++---
+ snapshot.c            | 12 +++++------
+ 7 files changed, 58 insertions(+), 32 deletions(-)
+
+diff --git a/block.c b/block.c
+index 7151da4..be85a01 100644
+--- a/block.c
++++ b/block.c
+@@ -1596,7 +1596,7 @@ static int main_extroot(int argc, char **argv)
+ #endif
+ 
+ 	/* Find volume using libfstools */
+-	struct volume *data = volume_find("rootfs_data");
++	struct volume *data = volume_find("rootfs_data", 0);
+ 	if (data) {
+ 		volume_init(data);
+ 
+diff --git a/jffs2reset.c b/jffs2reset.c
+index f7d8192..939e548 100644
+--- a/jffs2reset.c
++++ b/jffs2reset.c
+@@ -132,7 +132,7 @@ int main(int argc, char **argv)
+ 		return -1;
+ 	}
+ 
+-	v = volume_find(get_overlay_volume());
++	v = volume_find(get_overlay_volume(), 0);
+ 	if (!v) {
+ 		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_volume());
+ 		return -1;
+diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
+index d43c365..eb30f91 100644
+--- a/libfstools/rootdisk.c
++++ b/libfstools/rootdisk.c
+@@ -38,6 +38,13 @@
+ #define F2FS_MINSIZE		(100ULL * 1024ULL * 1024ULL)
+ #endif
+ 
++static int log_verbose = 0;
++
++static void rootdisk_set_verbose_level(int level)
++{
++	log_verbose = level;
++}
++
+ static int rootdisk_volume_identify_p(const char *dev, uint64_t offset);
+ 
+ struct squashfs_super_block {
+@@ -221,7 +228,8 @@ static int parse_cmdline()
+ 			ULOG_ERR("wrong 'ovl-partition' value (should be in the range from 1 to %d)\n",
+ 				MAX_PARTITIONS);
+ 		} else {
+-			ULOG_INFO("try to use ovl-partition %d for overlay filesystem\n", ovl_partition);
++			if (log_verbose > 1)
++				ULOG_INFO("try to use ovl-partition %d for overlay filesystem\n", ovl_partition);
+ 		}
+ 	}
+ 
+@@ -396,20 +404,22 @@ static int blkdev_get_disk_info(
+ 		return -1;
+ 
+ 	/* Output partition table */
+-	for (part = 0; part < MAX_PARTITIONS; part++) {
+-		if (info->partition[part].partition != (part + 1))
+-			continue;
++	if (log_verbose > 1) {
++		for (part = 0; part < MAX_PARTITIONS; part++) {
++			if (info->partition[part].partition != (part + 1))
++				continue;
+ 
+-		ULOG_INFO("%s: p%d, %s, start %"PRIu64", size %"PRIu64"%s%s\n",
+-			info->partition[part].dev[0]
+-				? info->partition[part].dev : info->dev,
+-			part + 1,
+-			info->partition[part].ro ? "ro" : "rw",
+-			info->partition[part].start,
+-			info->partition[part].size,
+-			info->partition[part].rootfs ? " [rootfs]" : "",
+-			(ovl_partition == (part + 1)) ? " [overlayfs]" : ""
+-		);
++			ULOG_INFO("%s: p%d, %s, start %"PRIu64", size %"PRIu64"%s%s\n",
++				info->partition[part].dev[0]
++					? info->partition[part].dev : info->dev,
++				part + 1,
++				info->partition[part].ro ? "ro" : "rw",
++				info->partition[part].start,
++				info->partition[part].size,
++				info->partition[part].rootfs ? " [rootfs]" : "",
++				(ovl_partition == (part + 1)) ? " [overlayfs]" : ""
++			);
++		}
+ 	}
+ 
+ 	return 0;
+@@ -469,8 +479,12 @@ static int rootdisk_volume_find_partition(
+ 
+ 		if (rootdisk_volume_cmp_partition_label(
+ 			rootdisk_info.partition[part].dev, 0ULL, name) == 0) {
+-			ULOG_INFO("founded suitable overlay partition %s\n",
+-				rootdisk_info.partition[part].dev);
++
++			if (log_verbose > 0) {
++				ULOG_INFO("founded suitable overlay partition %s\n",
++					rootdisk_info.partition[part].dev);
++			}
++
+ 			strcpy(p->dev_name, rootdisk_info.partition[part].dev);
+ 			p->offset = 0ULL;
+ 			return 0;
+@@ -521,8 +535,10 @@ static struct volume *rootdisk_volume_find(char *name)
+ 	{
+ 		int ret;
+ 
+-		ULOG_INFO("root filesystem on the %s partition of %s (%s) device\n",
+-			rootdev, rootdisk_info.dev, rootdisk_info.ro ? "ro" : "rw");
++		if (log_verbose > 0) {
++			ULOG_INFO("root filesystem on the %s partition of %s (%s) device\n",
++				rootdev, rootdisk_info.dev, rootdisk_info.ro ? "ro" : "rw");
++		}
+ 
+ 		if (ovl_partition) {
+ 			if (rootdisk_info.partition[ovl_partition - 1].partition)
+@@ -598,7 +614,9 @@ static struct volume *rootdisk_volume_find(char *name)
+ 	else
+ 	{
+ #endif
+-		ULOG_INFO("root filesystem on the %s device\n", rootdev);
++		if (log_verbose > 0) {
++			ULOG_INFO("root filesystem on the %s device\n", rootdev);
++		}
+ 
+ 		p->offset = le64_to_cpu(sb.bytes_used);
+ 		p->offset = ((p->offset + (ROOTDEV_OVERLAY_ALIGN - 1)) &
+@@ -779,6 +797,7 @@ static struct driver rootdisk_driver = {
+ 	.find = rootdisk_volume_find,
+ 	.init = rootdisk_volume_init,
+ 	.identify = rootdisk_volume_identify,
++	.set_verbose_level = rootdisk_set_verbose_level,
+ };
+ 
+ DRIVER(rootdisk_driver);
+diff --git a/libfstools/volume.c b/libfstools/volume.c
+index 0d293d5..fb10b77 100644
+--- a/libfstools/volume.c
++++ b/libfstools/volume.c
+@@ -26,13 +26,15 @@ volume_register_driver(struct driver *d)
+ 	list_add(&d->list, &drivers);
+ }
+ 
+-struct volume* volume_find(char *name)
++struct volume* volume_find(char *name, int verbose_level)
+ {
+ 	struct volume *v;
+ 	struct driver *d;
+ 
+ 	list_for_each_entry(d, &drivers, list) {
+ 		if (d->find) {
++			if (d->set_verbose_level)
++				d->set_verbose_level(verbose_level);
+ 			v = d->find(name);
+ 			if (v)
+ 				return v;
+diff --git a/libfstools/volume.h b/libfstools/volume.h
+index 912b711..a3b1e68 100644
+--- a/libfstools/volume.h
++++ b/libfstools/volume.h
+@@ -27,6 +27,7 @@ typedef int (*volume_read_t)(struct volume *v, void *buf, int offset, int length
+ typedef int (*volume_write_t)(struct volume *v, void *buf, int offset, int length);
+ typedef int (*volume_erase_t)(struct volume *v, int start, int len);
+ typedef int (*volume_erase_all_t)(struct volume *v);
++typedef void (*volume_set_verbose_level_t)(int level);
+ 
+ struct driver {
+ 	struct list_head	list;
+@@ -40,6 +41,7 @@ struct driver {
+ 	volume_write_t		write;
+ 	volume_erase_t		erase;
+ 	volume_erase_all_t	erase_all;
++	volume_set_verbose_level_t set_verbose_level;
+ };
+ 
+ enum {
+@@ -60,7 +62,7 @@ struct volume {
+ 	int		type;
+ };
+ 
+-extern struct volume* volume_find(char *name);
++extern struct volume* volume_find(char *name, int verbose_level);
+ extern void volume_register_driver(struct driver *drv);
+ 
+ static inline int volume_init(struct volume *v)
+diff --git a/mount_root.c b/mount_root.c
+index 2edd165..e5d83db 100644
+--- a/mount_root.c
++++ b/mount_root.c
+@@ -32,14 +32,17 @@ static int
+ start(int argc, char *argv[1])
+ {
+ 	struct volume *root;
+-	struct volume *data = volume_find(get_overlay_volume());
++	struct volume *data;
+ 	struct stat s;
+ 
++	/* Use max verbose level (10) for preinit stage */
++	data = volume_find(get_overlay_volume(), getenv("PREINIT") ? 10 : 0);
++
+ 	if (!getenv("PREINIT") && stat("/tmp/.preinit", &s))
+ 		return -1;
+ 
+ 	if (!data) {
+-		root = volume_find(get_rootfs_volume());
++		root = volume_find(get_rootfs_volume(), 0);
+ 		volume_init(root);
+ 		ULOG_NOTE("mounting /dev/root\n");
+ 		mount("/dev/root", "/", NULL, MS_NOATIME | MS_REMOUNT, 0);
+@@ -104,7 +107,7 @@ stop(int argc, char *argv[1])
+ static int
+ done(int argc, char *argv[1])
+ {
+-	struct volume *v = volume_find(get_overlay_volume());
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 
+ 	if (!v)
+ 		return -1;
+diff --git a/snapshot.c b/snapshot.c
+index d49fbd5..881c73f 100644
+--- a/snapshot.c
++++ b/snapshot.c
+@@ -40,7 +40,7 @@
+ static int
+ config_write(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_volume());
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 	int ret;
+ 
+ 	if (!v)
+@@ -57,7 +57,7 @@ config_write(int argc, char **argv)
+ static int
+ config_read(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_volume());
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 	struct file_header conf, sentinel;
+ 	int next, block, ret = 0;
+ 	uint32_t seq;
+@@ -85,7 +85,7 @@ config_read(int argc, char **argv)
+ static int
+ snapshot_write(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_volume());
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 	int block, ret;
+ 	uint32_t seq;
+ 
+@@ -118,7 +118,7 @@ snapshot_mark(int argc, char **argv)
+ 	if (getchar() != 'y')
+ 		return -1;
+ 
+-	v = volume_find(get_overlay_volume());
++	v = volume_find(get_overlay_volume(), 0);
+ 	if (!v) {
+ 		ULOG_ERR("MTD partition '%s' not found\n", get_overlay_volume());
+ 		return -1;
+@@ -147,7 +147,7 @@ snapshot_mark(int argc, char **argv)
+ static int
+ snapshot_read(int argc, char **argv)
+ {
+-	struct volume *v = volume_find(get_overlay_volume());;
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 	int block = 0, ret = 0;
+ 	char file[64];
+ 
+@@ -180,7 +180,7 @@ out:
+ static int
+ snapshot_info(void)
+ {
+-	struct volume *v = volume_find(get_overlay_volume());
++	struct volume *v = volume_find(get_overlay_volume(), 0);
+ 	struct file_header hdr = { 0 }, conf;
+ 	int block = 0;
+ 
+-- 
+2.16.2.windows.1
+
