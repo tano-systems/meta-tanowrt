@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano43"
+PR = "tano44"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -49,6 +49,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0014-Add-support-for-rootfs-partition-volume-selection.patch \
 	file://0015-rootdisk-Increase-maximum-partitions-number-to-16.patch \
 	file://0016-libfstools-rootdisk-Minimize-output-when-calling-vol.patch \
+	file://0017-libubi-Rename-libubi.h-to-libubi-fstools.h.patch \
 	file://fstab.config \
 	file://fstab.init \
 	file://fstab.default \
