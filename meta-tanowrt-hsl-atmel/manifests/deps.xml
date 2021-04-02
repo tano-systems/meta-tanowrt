@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<!-- meta-atmel -->
+	<project path="meta-atmel"
+	         name="linux4sam/meta-atmel"
+	         remote="github"
+	         upstream="dunfell"
+	         revision="f58454f0cffb29c210b0d8bdd474ddcfb656d21d" />
+</manifest>

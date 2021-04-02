@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+	<!ENTITY ns_svg "http://www.w3.org/2000/svg">
+	<!ENTITY ns_xlink "http://www.w3.org/1999/xlink">
+]>
+<svg  version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="&ns_svg;" xmlns:xlink="&ns_xlink;" width="658.7480469" height="335.4614258" viewBox="0 0 658.7480469 335.4614258"
+	 style="overflow:visible;enable-background:new 0 0 658.7480469 335.4614258;" xml:space="preserve">
+<style type="text/css">
+<![CDATA[
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#006FAF;}
+]]>
+</style>
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  x="-30.4960938" y="254.8730469" height="335.4614258" width="658.7480469" bottomLeftOrigin="true">
+			</sliceSourceBounds>
+	</sfw>
+</metadata>
+<g>
+	<polygon class="st0" points="609.0507813,335.4614258 626.2910156,297.4223633 0,297.4223633 0,335.4614258 
+		609.0507813,335.4614258 	"/>
+	<polygon class="st0" points="79.3647461,284.237793 79.3647461,254.3178711 65.1660156,254.3178711 94.5776367,205.8901367 
+		94.5776367,284.237793 149.3442383,284.237793 149.3442383,83.9257813 101.6787109,83.9257813 2.2841797,284.237793 
+		79.3647461,284.237793 	"/>
+	<polygon class="st0" points="165.3222656,284.237793 165.3222656,66.6855469 106.4956055,66.6855469 144.5273438,0 658.2431641,0 
+		658.2431641,66.6855469 214.5141602,66.6855469 214.5141602,284.237793 165.3222656,284.237793 	"/>
+	<path class="st0" d="M232.0073242,284.237793V83.9257813h138.4438477c34.9931641,0,44.3710938,30.4326172,44.3710938,46.402832
+		V284.237793h-50.7109375c0,0,0-169.8793945,0-162.2729492c0,7.3500977,2.03125-12.1748047-6.3398438-12.1748047
+		c-0.5048828,0-9.6347656,0-9.6347656,0V284.237793h-49.1914063V108.0185547h-17.4931641V284.237793H232.0073242
+		L232.0073242,284.237793z"/>
+	<polygon class="st0" points="429.2773438,284.237793 429.2773438,83.9257813 539.0673828,83.9257813 539.0673828,139.9667969 
+		464.7763672,139.9667969 464.7763672,155.1791992 539.5761719,155.1791992 539.5761719,208.9360352 465.28125,208.9360352 
+		465.28125,222.6254883 539.0673828,222.6254883 539.0673828,284.237793 429.2773438,284.237793 	"/>
+	<polygon class="st0" points="554.2802734,284.237793 554.2802734,83.9257813 606.2617188,83.9257813 606.2617188,223.1313477 
+		658.7480469,223.1313477 633.3925781,284.237793 554.2802734,284.237793 	"/>
+</g>
+</svg>

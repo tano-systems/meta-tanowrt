@@ -1,0 +1,97 @@
+From 0350bd3abe7c7300c4195104c60b4bf58b41a8ce Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 30 Mar 2021 01:35:57 +0300
+Subject: [PATCH] macb: Set hwaddr from ethaddr environment variable
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/net/macb.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/macb.c b/drivers/net/macb.c
+index 8359425378..e0e4a106c5 100644
+--- a/drivers/net/macb.c
++++ b/drivers/net/macb.c
+@@ -6,6 +6,7 @@
+ #include <clk.h>
+ #include <cpu_func.h>
+ #include <dm.h>
++#include <env.h>
+ 
+ /*
+  * The u-boot networking stack is a little weird.  It seems like the
+@@ -165,6 +166,11 @@ static int gem_is_gigabit_capable(struct macb_device *macb)
+ 	return macb_is_gem(macb) && !cpu_is_sama5d2() && !cpu_is_sama5d4();
+ }
+ 
++static uchar default_eth_mac[][ETH_ALEN] = {
++	{ 0x00, 0x10, 0xA1, 0x98, 0x97, 0x01 },
++	{ 0x00, 0x10, 0xA1, 0x98, 0x97, 0x02 },
++};
++
+ static void macb_mdio_write(struct macb_device *macb, u8 phy_adr, u8 reg,
+ 			    u16 value)
+ {
+@@ -994,8 +1000,16 @@ static u32 macb_dbw(struct macb_device *macb)
+ 	}
+ }
+ 
++#ifdef CONFIG_DM_ETH
++static void _macb_eth_initialize(struct udevice *dev)
++#else
+ static void _macb_eth_initialize(struct macb_device *macb)
++#endif
+ {
++#ifdef CONFIG_DM_ETH
++	struct macb_device *macb = dev_get_priv(dev);
++#endif
++
+ 	int id = 0;	/* This is not used by functions we call */
+ 	u32 ncfgr;
+ 
+@@ -1027,6 +1041,33 @@ static void _macb_eth_initialize(struct macb_device *macb)
+ 	}
+ 
+ 	macb_writel(macb, NCFGR, ncfgr);
++
++	do {
++		int i;
++		int ret;
++		char envvar[16];
++		uchar enetaddr[ETH_ALEN];
++#ifdef CONFIG_DM_ETH
++		struct eth_pdata *plat = dev_get_platdata(dev);
++#endif
++		for (i = 0; i < sizeof(default_eth_mac) / sizeof(default_eth_mac[0]); i++) {
++			if (i)
++				sprintf(envvar, "eth%daddr", i);
++			else
++				strcpy(envvar, "ethaddr");
++
++			ret = eth_env_get_enetaddr(envvar, enetaddr);
++			if (!ret) {
++				memcpy(enetaddr, default_eth_mac[i], ETH_ALEN);
++				eth_env_set_enetaddr(envvar, enetaddr);
++			}
++		}
++#ifdef CONFIG_DM_ETH
++		memcpy(plat->enetaddr, enetaddr, ETH_ALEN);
++#else
++		memcpy(macb->netdev->enetaddr, enetaddr, ETH_ALEN);
++#endif
++	} while (0);
+ }
+ 
+ #ifndef CONFIG_DM_ETH
+@@ -1250,7 +1291,7 @@ static int macb_eth_probe(struct udevice *dev)
+ 		return ret;
+ #endif
+ 
+-	_macb_eth_initialize(macb);
++	_macb_eth_initialize(dev);
+ 
+ #if defined(CONFIG_CMD_MII) || defined(CONFIG_PHYLIB)
+ 	macb->bus = mdio_alloc();
+-- 
+2.25.1
+

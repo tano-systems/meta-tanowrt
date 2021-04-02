@@ -1,0 +1,58 @@
+From e7753dbd9f3ac55c4f83757e27fdd1c715c30042 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 25 Mar 2021 17:42:53 +0300
+Subject: [PATCH] at91: Allow to specify CONFIG_BOOTCOMMAND in defconfig
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/at91-sama5_common.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/include/configs/at91-sama5_common.h b/include/configs/at91-sama5_common.h
+index d19fd3153c..257e15b091 100644
+--- a/include/configs/at91-sama5_common.h
++++ b/include/configs/at91-sama5_common.h
+@@ -38,32 +38,40 @@
+ #define CONFIG_SYS_MMC_ENV_DEV		0
+ #endif
+ 
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND	"if test ! -n ${dtb_name}; then "	\
+ 				    "setenv dtb_name at91-${board_name}.dtb; " \
+ 				"fi; "					\
+ 				"fatload mmc 0:1 0x21000000 ${dtb_name}; " \
+ 				"fatload mmc 0:1 0x22000000 zImage; "	\
+ 				"bootz 0x22000000 - 0x21000000"
++#endif
+ 
+ #else
+ 
+ #ifdef CONFIG_NAND_BOOT
+ /* u-boot env in nand flash */
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND		"nand read 0x21000000 0x180000 0x80000;"	\
+ 					"nand read 0x22000000 0x200000 0x600000;"	\
+ 					"bootz 0x22000000 - 0x21000000"
++#endif
+ #elif CONFIG_SPI_BOOT
+ /* u-boot env in serial flash, by default is bus 0 and cs 0 */
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND		"sf probe 0; "				\
+ 					"sf read 0x21000000 0x60000 0xc000; "	\
+ 					"sf read 0x22000000 0x6c000 0x394000; "	\
+ 					"bootz 0x22000000 - 0x21000000"
++#endif
+ #elif CONFIG_QSPI_BOOT
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND		"sf probe 0; "					\
+ 					"sf read 0x21000000 0x180000 0x80000; "		\
+ 					"sf read 0x22000000 0x200000 0x600000; "	\
+ 					"bootz 0x22000000 - 0x21000000"
+ #endif
++#endif
+ 
+ #endif
+ 
+-- 
+2.25.1
+

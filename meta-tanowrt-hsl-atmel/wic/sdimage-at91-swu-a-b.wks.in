@@ -1,0 +1,42 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create SD card image for dual A/B systems
+# based on SAMA5D (AT91) SoC.
+#
+# long-description: Creates a partitioned SD card image:
+#
+# Partitions/data:
+#
+#   - Offset 256 KiB: U-Boot startup script image (not in the partition table)
+#   - Offset 512 KiB: U-Boot environment #1 image (not in the partition table)
+#   - Offset 640 KiB: U-Boot environment #2 image (not in the partition table)
+#   - Offset 1024 KiB: Partitions
+#     - Partition 1: Boot partition with:
+#        - AT91Bootstrap (boot.bin)
+#        - U-Boot image (u-boot.bin)
+#     - Partition 2: Kernel for system A (64 MiB)
+#     - Partition 3: Root file system for system A (384 MiB)
+#     - Partition 4: Extended partition
+#        - Partition 5: Kernel for system B (64 MiB)
+#        - Partition 6: Root file system for system B (384 MiB)
+#        - Partition 7: User data (32 MiB, will be expanded to the full
+#                       size of the entire device on the first boot)
+#
+
+# AT91 does not support GPT partition table
+bootloader --ptable msdos
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=256 --sourceparams "file=${WKS_IMAGE_STARTUP_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=512 --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=640 --sourceparams "file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+
+# MSDOS partitions
+part /boot     --ondisk=mmcblk0 --source=bootimg-partition --label=boot --fstype=vfat --active --align=1024 --fixed-size 8192k
+part /kernel_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /kernel_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /overlay  --ondisk=mmcblk0 --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024

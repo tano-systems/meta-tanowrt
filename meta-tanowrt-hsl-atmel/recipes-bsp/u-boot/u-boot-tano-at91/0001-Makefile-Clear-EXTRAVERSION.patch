@@ -1,0 +1,26 @@
+From 602478978cfe36e4215925752dd300b82d5fe4f0 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 27 Mar 2021 05:01:58 +0300
+Subject: [PATCH] Makefile: Clear EXTRAVERSION
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 2dadbb12e5..1766f5ab18 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,7 +3,7 @@
+ VERSION = 2020
+ PATCHLEVEL = 01
+ SUBLEVEL =
+-EXTRAVERSION = -linux4sam-2020.10.1
++EXTRAVERSION =
+ NAME =
+ 
+ # *DOCUMENTATION*
+-- 
+2.17.1
+

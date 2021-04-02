@@ -1,0 +1,28 @@
+From 91bc088d1e35875b05e8734906723c2e0c088065 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 29 Mar 2021 18:39:46 +0300
+Subject: [PATCH] at91-sama5d3_xplained: Enable watchdog
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ arch/arm/dts/at91-sama5d3_xplained.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm/dts/at91-sama5d3_xplained.dts b/arch/arm/dts/at91-sama5d3_xplained.dts
+index 20fba5f067..deeb7887b9 100644
+--- a/arch/arm/dts/at91-sama5d3_xplained.dts
++++ b/arch/arm/dts/at91-sama5d3_xplained.dts
+@@ -262,6 +262,10 @@
+ 					};
+ 				};
+ 			};
++
++			watchdog@fffffe40 {
++				status = "okay";
++			};
+ 		};
+ 
+ 		nand0: nand@60000000 {
+-- 
+2.25.1
+

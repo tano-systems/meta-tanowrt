@@ -1,0 +1,16 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create image for SWU factory
+# installation SD card for AT91 SoC based devices.
+#
+bootloader --ptable msdos
+
+# Not in the partition table data
+part --ondisk=mmcblk0 --source=rawcopy --align=256 --sourceparams "file=${WKS_FACTORY_IMAGE_STARTUP_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=512 --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+part --ondisk=mmcblk0 --source=rawcopy --align=640 --sourceparams "file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}" --no-table
+
+# Partitions
+part /install --ondisk=mmcblk0 --source=swu-factory --fstype=vfat --label install --align 4 --active --overhead-factor 1.0 --extra-space 1

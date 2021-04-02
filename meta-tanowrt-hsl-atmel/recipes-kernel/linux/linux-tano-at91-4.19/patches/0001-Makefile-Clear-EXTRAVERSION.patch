@@ -1,0 +1,26 @@
+From a9827dea4cdfc7ebf8c8de93ab9fec522d5047fe Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 24 Mar 2021 15:35:54 +0300
+Subject: [PATCH] Makefile: Clear EXTRAVERSION
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 082facdfe42a..02d49a47136c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,7 @@
+ VERSION = 4
+ PATCHLEVEL = 19
+ SUBLEVEL = 78
+-EXTRAVERSION = -linux4sam-6.2
++EXTRAVERSION =
+ NAME = "People's Front"
+ 
+ # *DOCUMENTATION*
+-- 
+2.25.1
+
