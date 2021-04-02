@@ -1,0 +1,45 @@
+From c0aae1e4b450822b6d44f2b38e6eb9adde6b5ce8 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 3 Apr 2021 00:54:26 +0300
+Subject: [PATCH] linux: Do not set PACKET_IGNORE_OUTGOING socket option
+
+This option is supported only in Linux kernel version 4.20 and higher.
+The netpacket/packet.h header file contains the PACKET_IGNORE_OUTGOING
+definition starting with glibc version 2.29. Thus, if we build lldpd
+with glibc version 2.29 or higher and run with kernels 4.19 or lower,
+we got a issues with LLDP/CDP/etc packets receiving.
+
+Fixes: 5d9226d ("linux: ignore outgoing packets at the socket level")
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/daemon/priv-linux.c | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/src/daemon/priv-linux.c b/src/daemon/priv-linux.c
+index 3786523..0f5edde 100644
+--- a/src/daemon/priv-linux.c
++++ b/src/daemon/priv-linux.c
+@@ -166,19 +166,6 @@ asroot_iface_init_os(int ifindex, char *name, int *fd)
+ 		}
+ 	}
+ #endif
+-#ifdef PACKET_IGNORE_OUTGOING
+-	int ignore = 1;
+-	if (setsockopt(*fd, SOL_PACKET, PACKET_IGNORE_OUTGOING,
+-	    &ignore, sizeof(ignore)) < 0) {
+-		if (errno != ENOPROTOOPT) {
+-			rc = errno;
+-			log_warn("privsep",
+-			    "unable to set packet direction for BPF filter on %s",
+-			    name);
+-			return rc;
+-		}
+-	}
+-#endif
+ 
+ 	return 0;
+ }
+-- 
+2.16.2.windows.1
+

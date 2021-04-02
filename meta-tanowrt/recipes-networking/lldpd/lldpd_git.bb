@@ -5,7 +5,7 @@
 require lldpd.inc
 
 PV = "1.0.9+git${SRCPV}"
-PR = "tano0.${INC_PR}"
+PR = "tano1.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 EXTRA_AUTORECONF_append = " --exclude=gnu-configize"
@@ -13,3 +13,7 @@ EXTRA_AUTORECONF_append = " --exclude=gnu-configize"
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/vincentbernat/lldpd.git"
 SRCREV = "e4a3cdbdf32e22172a67253dae001becd82e4f60"
+
+SRC_URI += "\
+	file://0002-linux-Do-not-set-PACKET_IGNORE_OUTGOING-socket-optio.patch \
+"
