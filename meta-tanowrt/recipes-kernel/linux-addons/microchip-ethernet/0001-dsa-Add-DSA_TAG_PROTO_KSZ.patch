@@ -1,0 +1,57 @@
+From 7ac3b103e835ad2c5470708c33f4a92a8a2b1d06 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 29 Mar 2021 13:24:57 +0300
+Subject: [PATCH] dsa: Add DSA_TAG_PROTO_KSZ
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/net/dsa.h  | 3 +--
+ net/dsa/dsa.c      | 3 +++
+ net/dsa/dsa_priv.h | 3 +--
+ 3 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/include/net/dsa.h b/include/net/dsa.h
+index 2e1a706c9835..7a03274ea981 100644
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -35,8 +35,7 @@ enum dsa_tag_protocol {
+ 	DSA_TAG_PROTO_BRCM_PREPEND,
+ 	DSA_TAG_PROTO_DSA,
+ 	DSA_TAG_PROTO_EDSA,
+-	DSA_TAG_PROTO_KSZ9477,
+-	DSA_TAG_PROTO_KSZ9893,
++	DSA_TAG_PROTO_KSZ,
+ 	DSA_TAG_PROTO_LAN9303,
+ 	DSA_TAG_PROTO_MTK,
+ 	DSA_TAG_PROTO_QCA,
+diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
+index bdeb109cd21c..4a6273084fde 100644
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -56,6 +56,9 @@ const struct dsa_device_ops *dsa_device_ops[DSA_TAG_LAST] = {
+ 	[DSA_TAG_PROTO_KSZ9477] = &ksz9477_netdev_ops,
+ 	[DSA_TAG_PROTO_KSZ9893] = &ksz9893_netdev_ops,
+ #endif
++#ifdef CONFIG_NET_DSA_TAG_KSZ
++	[DSA_TAG_PROTO_KSZ] = &ksz_netdev_ops,
++#endif
+ #ifdef CONFIG_NET_DSA_TAG_LAN9303
+ 	[DSA_TAG_PROTO_LAN9303] = &lan9303_netdev_ops,
+ #endif
+diff --git a/net/dsa/dsa_priv.h b/net/dsa/dsa_priv.h
+index f8d1f1672f50..3964c6f7a7c0 100644
+--- a/net/dsa/dsa_priv.h
++++ b/net/dsa/dsa_priv.h
+@@ -206,8 +206,7 @@ extern const struct dsa_device_ops dsa_netdev_ops;
+ extern const struct dsa_device_ops edsa_netdev_ops;
+ 
+ /* tag_ksz.c */
+-extern const struct dsa_device_ops ksz9477_netdev_ops;
+-extern const struct dsa_device_ops ksz9893_netdev_ops;
++extern const struct dsa_device_ops ksz_netdev_ops;
+ 
+ /* tag_lan9303.c */
+ extern const struct dsa_device_ops lan9303_netdev_ops;
+-- 
+2.25.1
+
