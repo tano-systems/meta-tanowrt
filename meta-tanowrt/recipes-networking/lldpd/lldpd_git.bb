@@ -4,7 +4,7 @@
 #
 require lldpd.inc
 
-PV = "1.0.8+git${SRCPV}"
+PV = "1.0.9+git${SRCPV}"
 PR = "tano0.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
