@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".0"
+PR_append = ".1"
 
 KCONFIG_MODE = "--alldefconfig"
 
@@ -17,3 +17,5 @@ SRC_URI_append = "\
 	file://at91-evb-ksz9477.dts \
 	file://at91-evb-ksz9477-sfp.dts \
 "
+
+require ${TANOWRT_BASE}/recipes-kernel/linux-addons/microchip-ethernet.inc
