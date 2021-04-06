@@ -3,10 +3,10 @@
 #
 # LuCI support for LLDP daemon
 #
-# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "2.0.1"
+PV = "2.0.2"
 PR = "tano0"
 
 SUMMARY = "LuCI support for LLDP daemon"
@@ -14,7 +14,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 GIT_BRANCH   = "master"
-GIT_SRCREV   = "e853e51bab10e503fc92782923d6f6329845a056"
+GIT_SRCREV   = "f539803438b4ec279a8d6a6f946d554064efd2b5"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tano-systems/luci-app-tn-lldpd.git;branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
