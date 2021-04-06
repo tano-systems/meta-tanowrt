@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano41"
+PR = "tano42"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -40,9 +40,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 09.01.2021
-# interface-ip: add unreachable route if address is offlink
-SRCREV_netifd = "c00c8335d6188daa326ecfe5a62da15a9b9987e1"
+# 03.04.2021
+# netifd: add possibility to switch off route config
+SRCREV_netifd = "327da9895327bc56b23413ee91a6e6b6e0e4329d"
 
 S = "${WORKDIR}/git"
 
