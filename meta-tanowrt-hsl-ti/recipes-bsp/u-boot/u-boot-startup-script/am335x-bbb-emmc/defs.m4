@@ -18,8 +18,8 @@ define(NORMAL_INIT, `
 # Normal boot settings
 define(NORMAL_LOAD, `')
 define(NORMAL_LOAD_KERNEL, `
-	mmc dev 1;
-	ext4load mmc 1:${kernel_part} ${loadaddr} fitImage')
+	mmc dev 1 || exit;
+	ext4load mmc 1:${kernel_part} ${loadaddr} fitImage || exit;')
 define(NORMAL_KERNEL_ROOT_ARGS, `\
 	root=/dev/mmcblk1p${rootfs_part} ro\
 	rootfstype=squashfs\
@@ -34,8 +34,8 @@ define(SWU_SETUP_ACTIVE_SYSTEM_BOTH, `')
 define(FACTORY_INIT, NORMAL_INIT)
 define(FACTORY_LOAD, `')
 define(FACTORY_LOAD_KERNEL, `
-	mmc dev 0;
-	ext4load mmc 0:2 ${loadaddr} fitImage')
+	mmc dev 0 || exit;
+	ext4load mmc 0:2 ${loadaddr} fitImage || exit;')
 define(FACTORY_KERNEL_ROOT_ARGS, `\
 	root=/dev/ram\
 	rootfstype=squashfs\

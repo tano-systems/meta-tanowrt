@@ -18,8 +18,8 @@ define(NORMAL_INIT, `
 # Normal boot settings
 define(NORMAL_LOAD, `')
 define(NORMAL_LOAD_KERNEL, `
-	mmc dev 0;
-	ext4load mmc 0:${kernel_part} ${loadaddr} fitImage')
+	mmc dev 0 || exit;
+	ext4load mmc 0:${kernel_part} ${loadaddr} fitImage || exit;')
 define(NORMAL_KERNEL_ROOT_ARGS, `\
 	root=/dev/mmcblk0p${rootfs_part} ro\
 	rootfstype=squashfs\
