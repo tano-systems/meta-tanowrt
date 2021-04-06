@@ -16,12 +16,12 @@ define(NORMAL_INIT, `
 
 # Load ls1028a-dp-fw.bin
 define(NORMAL_LOAD, `
-	mmc dev 0;
-	mmc read 0x98000000 0x1800 0x200;
-	hdp load 0x98000000 0x2000;')
+	mmc dev 0 || exit;
+	mmc read 0x98000000 0x1800 0x200 || exit;
+	hdp load 0x98000000 0x2000 || exit;')
 define(NORMAL_LOAD_KERNEL, `
-	mmc dev 0;
-	ext4load mmc 0:${kernel_part} ${loadaddr} fitImage')
+	mmc dev 0 || exit;
+	ext4load mmc 0:${kernel_part} ${loadaddr} fitImage || exit;')
 define(NORMAL_KERNEL_ROOT_ARGS, `\
 	root=/dev/mmcblk0p${rootfs_part} ro\
 	rootfstype=squashfs\
