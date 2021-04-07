@@ -148,7 +148,7 @@ MACHINE=ls1028ardb-emmc bitbake tanowrt-image-full-swu-factory
 When the build is complete, the eMMC installation SD card image file will be located in folder (relative to build folder):
 
 ```
-./tanowrt-glibc/deploy/images/ls1028ardb-emmc/tanowrt-image-full-swu-factory-ls1028ardb-emmc.img
+./tanowrt-glibc/deploy/images/ls1028ardb-emmc/tanowrt-image-full-swu-factory-ls1028ardb-emmc.sdcard.img
 ```
 
 ###### 1.1.4.2.2 Writing eMMC Installation Image to the SD Card
