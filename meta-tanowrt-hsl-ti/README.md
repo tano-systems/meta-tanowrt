@@ -69,7 +69,7 @@ MACHINE=am335x-bbb-emmc bitbake tanowrt-image-full-swu-factory
 When the build is complete, the eMMC installation SD card image file will be located in folder (relative to build folder):
 
 ```
-./tanowrt-glibc/deploy/images/am335x-bbb-emmc/tanowrt-image-full-swu-factory-am335x-bbb-emmc.img
+./tanowrt-glibc/deploy/images/am335x-bbb-emmc/tanowrt-image-full-swu-factory-am335x-bbb-emmc.sdcard.img
 ```
 
 ###### 1.1.3.1.2 Writing eMMC Installation Image to the SD Card
@@ -466,7 +466,7 @@ MACHINE=am574x-idk-emmc bitbake tanowrt-image-full-swu-factory
 When the build is complete, the eMMC installation SD card image file will be located in folder (relative to build folder):
 
 ```
-./tanowrt-glibc/deploy/images/am574x-idk-emmc/tanowrt-image-full-swu-factory-am574x-idk-emmc.img
+./tanowrt-glibc/deploy/images/am574x-idk-emmc/tanowrt-image-full-swu-factory-am574x-idk-emmc.sdcard.img
 ```
 
 ###### 1.3.3.1.2 Writing eMMC Installation Image to the SD Card
