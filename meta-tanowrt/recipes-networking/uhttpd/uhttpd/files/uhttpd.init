@@ -123,6 +123,7 @@ start_instance()
 	append_arg "$cfg" error_page "-E"
 	append_arg "$cfg" max_requests "-n" 3
 	append_arg "$cfg" max_connections "-N"
+	append_arg "$cfg" events_retry "-e" 200
 
 	append_bool "$cfg" no_ubusauth "-a" 0
 	append_bool "$cfg" no_symlinks "-S" 0
