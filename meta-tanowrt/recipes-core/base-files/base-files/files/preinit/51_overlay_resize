@@ -36,19 +36,48 @@ do_resize_partition() {
 	return 0
 }
 
+#
+# $1 = target variable
+# $2 = partition device
+#
+get_part_disk() {
+	local var="${1}"
+	local part="${2}"
+
+	part="${part%% *}"
+	part="${part##*/}"
+
+	local uevent="/sys/class/block/${part}/../uevent"
+
+	if [ -e "$uevent" ]; then
+		while read line; do
+			export -n "$line"
+		done < "$uevent"
+
+		export -- ${var}="${DEVNAME}"
+		return 0
+	fi
+
+	return 1
+}
+
 do_overlay_resize() {
 	local OVERLAY_INFO=$(${BIN_BLOCK} info | grep "LABEL=\"rootfs_data\"")
 	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
 	local PARTITION="${OVERLAY_DEVICE#/dev/}"
-	local DISK="${PARTITION%p?}"
+
+	local DISK=""
 	local RET
+
+	get_part_disk DISK "${PARTITION}"
+	RET=$?
 
 	if [ "${PARTITION}" = "" ]; then
 		echo "overlay-resize: Cannot find overlay partition" > /dev/kmsg
 		return
 	fi
 
-	if [ "${DISK}" = "" ]; then
+	if [ "${RET}" != "0" ] || [ "${DISK}" = "" ]; then
 		echo "overlay-resize: Cannot find overlay disk" > /dev/kmsg
 		return
 	fi
@@ -74,11 +103,13 @@ do_overlay_resize() {
 
 	if [ "${PARTITION_FSTYPE}" = "ext4" ]; then
 		echo "overlay-resize: EXT4 filesystem" > /dev/kmsg
-		CMD_FSCK="${BIN_E2FSCK} -p -y -f /dev/${PARTITION}"
+		CMD_FSCK="${BIN_E2FSCK} -p -f /dev/${PARTITION}"
+		CMD_FSCK_RET_CONTINUE="0 1 2 3 4 5 6 7"
 		CMD_RESIZEFS="${BIN_RESIZE2FS} /dev/${PARTITION}"
 	elif [ "${PARTITION_FSTYPE}" = "f2fs" ]; then
 		echo "overlay-resize: F2FS filesystem" > /dev/kmsg
 		CMD_FSCK="${BIN_FSCK}.f2fs -y -v /dev/${PARTITION}"
+		CMD_FSCK_RET_CONTINUE="0"
 		CMD_RESIZEFS="${BIN_RESIZEF2FS} /dev/${PARTITION}"
 	else
 		# For unknown/unsupported filesystem
@@ -92,13 +123,23 @@ do_overlay_resize() {
 		#
 		${CMD_FSCK} > /dev/null 2>&1
 		RET=$?
-		if [ "${RET}" != "0" ]; then
+
+		local code
+		local error="1"
+		for code in ${CMD_FSCK_RET_CONTINUE}; do
+			if [ "${RET}" = "${code}" ]; then
+				error="0"
+				break
+			fi
+		done
+
+		if [ "${error}" = "1" ]; then
 			echo "overlay-resize: Filesystem on /dev/${PARTITION}" \
 			     "has unrecoverable errors (${RET})"
 			return
 		fi
 
-		echo "overlay-resize: Filesystem successfully checked" > /dev/kmsg
+		echo "overlay-resize: Filesystem successfully checked (${RET})" > /dev/kmsg
 	fi
 
 	if [ ${PARTITION_END_S} -ge ${TEST_PARTITION_END_S} ]; then

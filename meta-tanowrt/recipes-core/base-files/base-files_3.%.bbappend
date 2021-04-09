@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano77.${INC_PR}"
+PR_append = ".tano78.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
