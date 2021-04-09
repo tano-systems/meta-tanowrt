@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+  includes:
+    - ../layers/meta-arm.yml
+    - ../layers/meta-arm-toolchain.yml
+
+local_conf_header:
+  cc: |
+    GCCVERSION = "arm-10.2"

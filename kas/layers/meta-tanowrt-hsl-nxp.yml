@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+  includes:
+    - meta-tanowrt.yml
+    - meta-freescale.yml
+
+repos:
+  meta-tanowrt:
+    layers:
+      meta-tanowrt-hsl-nxp:

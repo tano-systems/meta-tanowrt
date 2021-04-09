@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+  includes:
+    - layers/meta-tanowrt.yml
+
+distro: tanowrt
+target: tanowrt-image-full-swu
+
+bblayers_conf_header:
+  10-standard: |
+    LCONF_VERSION = "7"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+
+local_conf_header:
+  10-standard: |
+    CONF_VERSION = "1"
+    TMPDIR = "${TOPDIR}/tanowrt"
+    SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
+    PACKAGE_CLASSES ?= "package_ipk"
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+    USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+    PATCHRESOLVE = "noop"
+    PACKAGECONFIG_append_pn-qemu-native = " sdl"
+    PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+
+  20-extra: |
+    BB_GENERATE_MIRROR_TARBALLS = "0"
+    ENABLE_BINARY_LOCALE_GENERATION = "1"
+
+  30-diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        ABORT,${TMPDIR},100M,1K \
+        ABORT,${DL_DIR},100M,1K \
+        ABORT,${SSTATE_DIR},100M,1K \
+        ABORT,/tmp,10M,1K"
+
+  99-include-local-conf: |
+    include ../local.conf

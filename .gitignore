@@ -1,10 +1,13 @@
+local.conf
 *.pyc
 *.pyo
 *.swp
 *.orig
 *.rej
 *~
+/build/
 /meta-*/
+/openembedded-core/
 !meta-tanowrt
 !meta-tanowrt-hsl-atmel
 !meta-tanowrt-hsl-nxp

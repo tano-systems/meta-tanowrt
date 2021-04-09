@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+
+repos:
+  meta-swi-extras:
+    url: ssh://git@git.tano-systems.com/tano/yocto/3rdparty/meta-swi-extras.git
+    refspec: 284d45d94d31625f566ae7ed4d420dfb4d55a145
+    layers:
+      common:

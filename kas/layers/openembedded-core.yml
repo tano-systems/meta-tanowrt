@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+
+repos:
+  openembedded-core:
+    url: https://github.com/openembedded/openembedded-core.git
+    refspec: 6ca1047e98a1c8bc305a3f40ad1919c5038e1698
+    layers:
+      meta:
