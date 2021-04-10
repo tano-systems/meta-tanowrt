@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020, Tano Systems, All rights reserved
+# Copyright (C) 2020-2021 Tano Systems LLC, All rights reserved
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Raspberry Pi Linux kernel 5.10
@@ -10,9 +10,9 @@ LINUX_RPI_BRANCH ?= "rpi-5.10.y"
 
 KERNEL_SRC_URI ?= "git://github.com/raspberrypi/linux.git;protocol=git"
 KERNEL_SRC_BRANCH ?= "${LINUX_RPI_BRANCH}"
-KERNEL_SRC_SRCREV ?= "31fbc18058672e9e3c5ab3532064d690374152da"
+KERNEL_SRC_SRCREV ?= "d1fd8a5727908bb677c003d2ae977e9d935a6f94"
 
-LINUX_VERSION ?= "5.10.3"
+LINUX_VERSION ?= "5.10.25"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
