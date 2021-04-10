@@ -5,7 +5,7 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="7c88d52eaca62237afcda606a3078ec483992213">
+	         revision="d044d9c0cb672c499059eb273e399ce4aee17e0d">
 		<linkfile src="meta" dest="meta" />
 		<linkfile src="scripts" dest="scripts" />
 		<linkfile src="oe-init-build-env" dest="oe-init-build-env" />
@@ -18,12 +18,12 @@
 	         name="meta-openembedded"
 	         remote="openembedded"
 	         upstream="dunfell"
-	         revision="389757a7494221fea1d8437e9a01c6e4fb4700af" />
+	         revision="430ef96fe65f62d8da995f446d5b9b093544f031" />
 
 	<!-- Bitbake -->
 	<project path="bitbake"
 	         name="bitbake"
 	         remote="openembedded"
 	         upstream="1.46"
-	         revision="e0dd20a006ce6fdc656e6be6ac581e93e2ed4a95" />
+	         revision="017a39ed05d065bf28fd38f91bcde8a098300551" />
 </manifest>
