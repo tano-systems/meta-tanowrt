@@ -1,0 +1,87 @@
+From 64e8cc3f738a7388eced559ae464fef9c4a9663c Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 16 Apr 2021 14:51:33 +0300
+Subject: [PATCH] freescale: Build all .dtbs from overlays subdir
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile                                      |  7 +++++--
+ arch/arm64/boot/dts/freescale/Makefile        |  4 ++++
+ .../boot/dts/freescale/overlays/Makefile      | 21 +++++++++++++++++++
+ 3 files changed, 30 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/freescale/overlays/Makefile
+
+diff --git a/Makefile b/Makefile
+index 07998b60d56c..865f77d5789b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1239,8 +1239,10 @@ endif
+ 
+ ifneq ($(dtstree),)
+ 
+-%.dtb: include/config/kernel.release scripts_dtc
+-	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
++%.dtb %.dtbo: dtbdir=$(patsubst %/,%,$(patsubst %./,%,$(dtstree)/$(dir $@)))
++
++%.dtb %.dtbo: include/config/kernel.release scripts_dtc
++	$(Q)$(MAKE) $(build)=$(dtbdir) $(dtstree)/$@
+ 
+ PHONY += dtbs dtbs_install dt_binding_check
+ dtbs dtbs_check: include/config/kernel.release scripts_dtc
+@@ -1663,6 +1665,7 @@ clean: $(clean-dirs)
+ 		\( -name '*.[aios]' -o -name '*.ko' -o -name '.*.cmd' \
+ 		-o -name '*.ko.*' \
+ 		-o -name '*.dtb' -o -name '*.dtb.S' -o -name '*.dt.yaml' \
++		-o -name '*.dtbo' -o -name '*.dtbo.S' \
+ 		-o -name '*.dwo' -o -name '*.lst' \
+ 		-o -name '*.su' -o -name '*.mod' -o -name '*.ns_deps' \
+ 		-o -name '.*.d' -o -name '.*.tmp' -o -name '*.mod.c' \
+diff --git a/arch/arm64/boot/dts/freescale/Makefile b/arch/arm64/boot/dts/freescale/Makefile
+index 676e66d1674d..21021c88abd4 100644
+--- a/arch/arm64/boot/dts/freescale/Makefile
++++ b/arch/arm64/boot/dts/freescale/Makefile
+@@ -1,6 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ # required for overlay support
++DTC_FLAGS := -@
++
+ DTC_FLAGS_fsl-ls1028a-qds := -@
+ DTC_FLAGS_fsl-ls1028a-qds-13bb := -@
+ DTC_FLAGS_fsl-ls1028a-qds-65bb := -@
+@@ -110,3 +112,5 @@ dtb-$(CONFIG_ARCH_MXC) += imx8qxp-mek-dom0.dtb imx8qxp-mek-root.dtb \
+ 
+ dtb-$(CONFIG_ARCH_S32) += s32v234-evb.dtb \
+ 			  s32v234-sbc.dtb
++
++subdir-y += overlays
+diff --git a/arch/arm64/boot/dts/freescale/overlays/Makefile b/arch/arm64/boot/dts/freescale/overlays/Makefile
+new file mode 100644
+index 000000000000..d689e4d09c9b
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/overlays/Makefile
+@@ -0,0 +1,21 @@
++DTC_FLAGS += -@
++
++dtb-y += $(shell basename -a $(srctree)/$(src)/*.dtso | sed 's/\.dtso/\.dtbo/')
++
++$(obj)/%.dtbo: $(src)/%.dtso FORCE
++	$(call if_changed_dep,dtc,dtb)
++
++ifneq ($(DTC),)
++	DTC_PATH=$(dir $(DTC))
++else
++	DTC_PATH=$(objtree)/scripts/dtc
++endif
++
++$(obj)/%.dtb: $(src)/../%.dts FORCE
++	$(call if_changed_dep,dtc,dtb)
++
++$(obj)/%.dtbo: $(src)/%.dtso FORCE
++	$(call if_changed_dep,dtc,dtb)
++
++clean-files := *.dtb *.dtbo
++always      := $(dtb-y)
+-- 
+2.25.1
+
