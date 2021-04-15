@@ -58,7 +58,11 @@ KERNEL_IMAGETYPES = "fitImage"
 KERNEL_CLASSES = "kernel-tn-fitimage kernel-tn-mkimage"
 KERNEL_MKIMAGE_TYPES = "ext4"
 
-KERNEL_DEVICETREE ?= "freescale/fsl-ls1028a-rdb.dtb"
+KERNEL_DEVICETREE ?= "\
+	freescale/fsl-ls1028a-rdb.dtb \
+	freescale/overlays/tano-mkb004lw.dtbo \
+"
+
 KERNEL_DEFCONFIG ?= "defconfig"
 
 #
