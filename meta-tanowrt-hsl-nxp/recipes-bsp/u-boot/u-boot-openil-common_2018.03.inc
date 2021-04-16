@@ -16,6 +16,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI = "git://github.com/openil/u-boot.git;nobranch=1"
 SRCREV= "OpenIL-u-boot-201908"
 
+LOCALVERSION = "-nxp"
+
 S = "${WORKDIR}/git"
-PR_append = "+nxp1"
-LOCALVERSION = "+nxp1"
+PR_append = ".nxp1"
