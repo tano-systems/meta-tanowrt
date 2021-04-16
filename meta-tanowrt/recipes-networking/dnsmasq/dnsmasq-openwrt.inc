@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "10"
+INC_PR = "11"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -113,7 +113,7 @@ TANOWRT_DHCPS_LAN_ENABLE ?= "1"
 TANOWRT_DHCPS_LAN_INTERFACE ?= "lan"
 TANOWRT_DHCPS_LAN_START ?= "100"
 TANOWRT_DHCPS_LAN_LIMIT ?= "150"
-TANOWRT_DHCPS_LAN_UCI_SECTION ?= "${TANOWRT_DHCPC_LAN_INTERFACE}"
+TANOWRT_DHCPS_LAN_UCI_SECTION ?= "${TANOWRT_DHCPS_LAN_INTERFACE}"
 
 do_uci_config_append() {
 	if [ "${TANOWRT_DHCPS_CONFIGURE}" = "1" ]; then
