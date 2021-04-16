@@ -17,5 +17,5 @@ SRC_URI = "git://github.com/openil/u-boot.git;nobranch=1"
 SRCREV= "OpenIL-u-boot-201908"
 
 S = "${WORKDIR}/git"
-PR_append = "+nxp0"
-LOCALVERSION = "+nxp0"
+PR_append = "+nxp1"
+LOCALVERSION = "+nxp1"
