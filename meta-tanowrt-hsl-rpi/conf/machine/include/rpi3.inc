@@ -76,6 +76,9 @@ KERNEL_SERIAL = ""
 SPLASH = "psplash"
 IMAGE_FEATURES += "splash"
 
+RPI_USE_U_BOOT = "1"
+RPI_CMDLINE = "root=/dev/mmcblk0p2 ro rootfstype=squashfs rootwait"
+
 GPU_MEM ?= "256"
 ENABLE_UART ?= "1"
 ENABLE_SPI_BUS ?= "1"
@@ -97,6 +100,9 @@ PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
 MACHINE_FEATURES_remove = "qemu-usermode"
 
 MACHINE_EXTRA_RDEPENDS += "raspi-gpio"
+
+MACHINE_EXTRA_RDEPENDS += "\
+	${@bb.utils.contains('RPI_USE_U_BOOT', '1', 'libubootenv', '', d)}"
 
 #
 # OpenWrt specific
