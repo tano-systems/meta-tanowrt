@@ -1,13 +1,13 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-RPIFW_DATE ?= "20201227"
-SRCREV ?= "7ecd699b3f54f4985032d774fdab55f98d44ebf6"
+RPIFW_DATE ?= "20210326"
+SRCREV ?= "20081d8e86119e95e516526700be62049850c01a"
 RPIFW_SRC_URI ?= "https://github.com/raspberrypi/firmware/archive/${SRCREV}.tar.gz;downloadfilename=raspberrypi-firmware-${SRCREV}.tar.gz"
 RPIFW_S ?= "${WORKDIR}/firmware-${SRCREV}"
 
 SRC_URI = "${RPIFW_SRC_URI}"
-SRC_URI[sha256sum] = "479a6bbb60f8ef9249fb65529e203b729605762432ca4684d9adc5f103b3c442"
+SRC_URI[sha256sum] = "00bd758a1242f069682e1a98250362b45a8887aed98ee61dd50439e9a78fe463"
 
 PV = "${RPIFW_DATE}"
