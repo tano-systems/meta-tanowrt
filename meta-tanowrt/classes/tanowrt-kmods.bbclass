@@ -17,6 +17,10 @@ MODULES_FLATTEN_PATHS ?= "\
 "
 
 rootfs_flatten_modules_hook() {
+    if [ -z "${KERNEL_VERSION}" ]; then
+        bbfatal "Empty KERNEL_VERSION"
+    fi
+
     for p in ${MODULES_FLATTEN_PATHS}; do
         if [ -d "${IMAGE_ROOTFS}/lib/modules/${KERNEL_VERSION}/$p" ]; then
             cd ${IMAGE_ROOTFS} && find lib/modules/${KERNEL_VERSION}/$p -name '*.ko' -exec sh -c \
