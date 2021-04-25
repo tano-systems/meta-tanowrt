@@ -21,7 +21,7 @@ Official page: https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/
 
 The EVB-KSZ9477 evaluation board features the KSZ9477 seven-port managed gigabit Ethernet switch. It has five 10BASE-Te/100BASE-TX/1000BASE-T physical layer transceivers (PHYs) and associated MAC units, one SGMII and one RGMII interfaces. Ports 1 through 5, with integrated MAC and PHY are connected to RJ45 Ethernet jacks with integrated magnetics. The SGMII interface is connected to a small form-factor pluggable (SFP) transceiver receptacle whereas, the RGMII interface is connected to the SAMA5D36A embedded microprocessor (MPU).
 
-<img src="docs/evb-ksz9477/evb-ksz9477.png" width="80%" />
+<img src="docs/evb-ksz9477/evb-ksz9477.png" width="100%" />
 
 The board provides 2 Gbit (256 MiB) DDR2 SDRAM and 2 Gbit (256 MiB) of NAND flash memory.
 
@@ -212,7 +212,7 @@ Official pages:
 
 The EVB-KSZ9563 Evaluation Board is a plug-in card that interfaces directly with a mating Microchip host processor or controller board, such as the SAMA5D3 Ethernet Development System Board. It features the KSZ9563, a highly integrated networking device that incorporates a layer-2+ managed Gigabit Ethernet switch, two 10BASE-T/100BASE-TX/1000BASE-T physical layer transceivers (PHYs) and associated MAC units, and one MAC port configured as the RGMII interface. The board's two PHY ports are connected to RJ45 Ethernet jacks with integrated magnetics, and the RGMII MAC interface is brought out to a high-speed multi-pin (HS) connector.
 
-<img src="docs/evb-ksz9563/evb-ksz9563.png" width="80%" />
+<img src="docs/evb-ksz9563/evb-ksz9563.png" width="100%" />
 
 Together, the EVB-KSZ9563 and SAMA5D3 Ethernet Development System provide a highly-flexible platform for evaluation of basic PHY/Switch features via static Control-Status Registers (CSR's) and development of firmware for advanced MAC/Switch features that require interaction with upper network layers (e.g., IEEE1588 PTP, AVB, and RSTP/MSTP).
 
