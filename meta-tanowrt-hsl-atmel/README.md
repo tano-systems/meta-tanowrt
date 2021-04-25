@@ -360,7 +360,7 @@ By default, network ports 1 and 2 are joined into a bridge (`br-lan` interface) 
 
 Also you can connect to the board using USB RNDIS connection (`usb0` interface). RNDIS interface configured with static IP address 172.16.0.1/24 with enabled DHCP server.
 
-Default network configuration for the EVB-KSZ9463 has no WAN interface.
+Default network configuration for the EVB-KSZ9563 has no WAN interface.
 
 Ethernet ports 1 and 2 have enabled LLDP for Rx and Tx state by default.
 
