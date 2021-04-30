@@ -22,20 +22,14 @@ system_config() {
 
 	echo "$hostname" > /proc/sys/kernel/hostname
 	[ -z "$conloglevel" -a -z "$buffersize" ] || dmesg ${conloglevel:+-n $conloglevel} ${buffersize:+-s $buffersize}
-
-	[ -n "$zonename" ] && [ -f "/usr/share/zoneinfo/$zonename" ] && \
-		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
-
-	# apply timezone to kernel
-	hwclock -u --systz
-
-	# sync localtime to hardware RTC
-	[ -x /etc/init.d/sysfixtime ] && /etc/init.d/sysfixtime systohc
 }
 
 reload_service() {
 	config_load system
 	config_foreach validate_system_section system system_config
+
+	# sync localtime to hardware RTC and apply timezone to kernel
+	[ -x /etc/init.d/sysfixtime ] && /etc/init.d/sysfixtime systohc
 }
 
 service_triggers()

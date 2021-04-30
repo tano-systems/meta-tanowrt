@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2013-2014 OpenWrt.org
-# Copyright (C) 2018-2020 Tano Systems LLC
+# Copyright (C) 2018-2021 Tano Systems LLC
 
 START=00
 STOP=90
@@ -9,6 +9,7 @@ HWCLOCK=/sbin/hwclock
 
 extra_command "systohc" "Save system time to hardware RTC"
 extra_command "hctosys" "Load system time from hardware RTC"
+extra_command "systz"   "Apply timezone"
 
 LOG="logger -t sysfixtime -p"
 
@@ -26,14 +27,20 @@ boot() {
 apply_timezone() {
 	local config="$1"
 	local zonename
+	local kept_in_localtime
 
 	config_get zonename "$config" 'zonename' ''
+	config_get_bool kept_in_localtime 'rtc' 'hwclock_localtime' 1
 
 	[ -n "$zonename" ] && [ -f "/usr/share/zoneinfo/$zonename" ] && \
 		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
 
 	# apply timezone to kernel
-	hwclock -u --systz
+	if [ "$kept_in_localtime" = "0" ]; then
+		${HWCLOCK} -u --systz
+	else
+		${HWCLOCK} -l --systz
+	fi
 }
 
 hwclock_call() {
@@ -43,6 +50,9 @@ hwclock_call() {
 	config_get rtc_dev 'rtc' 'hwclock_dev' '/dev/rtc0'
 	config_get_bool kept_in_localtime 'rtc' 'hwclock_localtime' 1
 
+	# Early apply timezone from system configuration
+	config_foreach apply_timezone system
+
 	args=""
 
 	if [ "$kept_in_localtime" = "0" ]; then
@@ -51,10 +61,6 @@ hwclock_call() {
 	else
 		# -l|--localtime
 		append args "-l" " "
-
-		# Early apply timezone from system configuration
-		# if we keep time in hardware clock in localtime
-		config_foreach apply_timezone system
 	fi
 
 	# -f|--rtc
@@ -99,6 +105,11 @@ systohc() {
 
 hctosys() {
 	hwclock_call restore
+}
+
+systz() {
+	config_load 'system'
+	config_foreach apply_timezone system
 }
 
 start() {
