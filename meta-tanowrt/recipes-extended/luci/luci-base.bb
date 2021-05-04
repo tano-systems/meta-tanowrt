@@ -3,11 +3,11 @@
 #
 # LuCI core libraries
 #
-# This file Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano8"
+PR = "tano9"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -30,7 +30,6 @@ RDEPENDS_${PN} += "\
 	rpcd-mod-luci \
 	lucihttp \
 	cgi-io \
-	luasyslog \
 "
 
 inherit cmake
