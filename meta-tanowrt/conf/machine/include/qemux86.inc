@@ -25,8 +25,6 @@ IMAGE_FSTYPES = "wic wic.vmdk ${ROOTFS_IMAGE_FSTYPE}"
 
 TANOWRT_ENABLE_OVERLAY_RESIZE = "1"
 
-IMAGE_CLASSES += "rootfs-mv-kernel-to-root"
-
 EFI_PROVIDER = "grub-efi"
 
 WKS_FILE = "tanowrt-image-qemux86.wks.in"
@@ -52,7 +50,6 @@ EXTRA_IMAGEDEPENDS += "ovmf"
 
 IMAGE_INSTALL_append = "\
 	grub-editenv \
-	kernel-image \
 "
 
 #
