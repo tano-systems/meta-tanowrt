@@ -1,7 +1,7 @@
-From 3c73a68192f16eebc42c2d95e448d56630f97e35 Mon Sep 17 00:00:00 2001
+From ea740a4a0f7d6f66e614cbd5861faeb5b8052144 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
-Subject: [PATCH 07/13] block: Fix device path creation
+Subject: [PATCH 06/17] block: Fix device path creation
 
 The device name in the DEVICE environment variable from udev
 comes already with the correct prefix '/dev/'. Not need to add
@@ -13,7 +13,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 16 insertions(+), 21 deletions(-)
 
 diff --git a/block.c b/block.c
-index 742af59..5099c5c 100644
+index 515fb01..c877a43 100644
 --- a/block.c
 +++ b/block.c
 @@ -201,14 +201,6 @@ static char *blobmsg_get_strdup(struct blob_attr *attr)

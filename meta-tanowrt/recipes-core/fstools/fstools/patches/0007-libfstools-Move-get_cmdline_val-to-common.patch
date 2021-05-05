@@ -1,0 +1,106 @@
+From 06aafab908e23cd25dddc02b51f5546017005fbf Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 5 May 2021 02:24:01 +0300
+Subject: [PATCH 07/17] libfstools: Move get_cmdline_val to common
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ libfstools/common.c   | 32 ++++++++++++++++++++++++++++++++
+ libfstools/common.h   |  1 +
+ libfstools/partname.c | 31 -------------------------------
+ 3 files changed, 33 insertions(+), 31 deletions(-)
+
+diff --git a/libfstools/common.c b/libfstools/common.c
+index f2d415d..4a91933 100644
+--- a/libfstools/common.c
++++ b/libfstools/common.c
+@@ -122,3 +122,35 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+ 
+ 	return ret;
+ }
++
++/* from procd/utils.c -> should go to libubox */
++char* get_cmdline_val(const char* name, char* out, int len)
++{
++	char line[1024], *c, *sptr;
++	int fd = open("/proc/cmdline", O_RDONLY);
++	ssize_t r = read(fd, line, sizeof(line) - 1);
++	close(fd);
++
++	if (r <= 0)
++		return NULL;
++
++	line[r] = 0;
++
++	for (c = strtok_r(line, " \t\n", &sptr); c;
++			c = strtok_r(NULL, " \t\n", &sptr)) {
++		char *sep = strchr(c, '=');
++		if (sep == NULL)
++			continue;
++
++		ssize_t klen = sep - c;
++		if (strncmp(name, c, klen) || name[klen] != 0)
++			continue;
++
++		strncpy(out, &sep[1], len);
++		out[len-1] = '\0';
++		return out;
++	}
++
++	return NULL;
++}
++
+diff --git a/libfstools/common.h b/libfstools/common.h
+index b5cc692..b1e1cb4 100644
+--- a/libfstools/common.h
++++ b/libfstools/common.h
+@@ -25,3 +25,4 @@ int read_uint_from_file(char *dirname, char *filename, unsigned int *i);
+ char *read_string_from_file(const char *dirname, const char *filename, char *buf, size_t bufsz);
+ int block_file_identify(FILE *f, uint64_t offset);
+ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev);
++char* get_cmdline_val(const char* name, char* out, int len);
+diff --git a/libfstools/partname.c b/libfstools/partname.c
+index 5d4fde5..9bcc580 100644
+--- a/libfstools/partname.c
++++ b/libfstools/partname.c
+@@ -61,37 +61,6 @@ static int partname_volume_init(struct volume *v)
+ 	return block_volume_format(v, 0, p->parent_dev.devpathstr);
+ }
+ 
+-/* from procd/utils.c -> should go to libubox */
+-static char* get_cmdline_val(const char* name, char* out, int len)
+-{
+-	char line[1024], *c, *sptr;
+-	int fd = open("/proc/cmdline", O_RDONLY);
+-	ssize_t r = read(fd, line, sizeof(line) - 1);
+-	close(fd);
+-
+-	if (r <= 0)
+-		return NULL;
+-
+-	line[r] = 0;
+-
+-	for (c = strtok_r(line, " \t\n", &sptr); c;
+-			c = strtok_r(NULL, " \t\n", &sptr)) {
+-		char *sep = strchr(c, '=');
+-		if (sep == NULL)
+-			continue;
+-
+-		ssize_t klen = sep - c;
+-		if (strncmp(name, c, klen) || name[klen] != 0)
+-			continue;
+-
+-		strncpy(out, &sep[1], len);
+-		out[len-1] = '\0';
+-		return out;
+-	}
+-
+-	return NULL;
+-}
+-
+ static char *rootdevname(char *devpath) {
+ 	int l;
+ 
+-- 
+2.28.0.windows.1
+

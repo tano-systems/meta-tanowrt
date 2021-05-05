@@ -1,18 +1,18 @@
-From 3243f73f3a78649f603fb651888a88864a71f5d4 Mon Sep 17 00:00:00 2001
+From e65aa9e84ff29b94b6ac4699a8a212559ccfa461 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:42:25 +0300
-Subject: [PATCH] rootdisk: Increase maximum partitions number to 16
+Subject: [PATCH 15/17] rootdisk: Increase maximum partitions number to 16
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- libfstools/rootdisk.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ libfstools/rootdisk.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
-index 486dc39..d43c365 100644
+index 4c8d58e..8be91ab 100644
 --- a/libfstools/rootdisk.c
 +++ b/libfstools/rootdisk.c
-@@ -69,16 +69,18 @@ struct blkdev_diskpart_info {
+@@ -52,16 +52,18 @@ struct blkdev_diskpart_info {
  	char dev[64];   /* partition device */
  };
  
@@ -33,12 +33,9 @@ index 486dc39..d43c365 100644
  	int ro;                  /* entire disk has ro flag setted? */
  };
  
-@@ -214,9 +216,10 @@ static int parse_cmdline()
- 	if (p) {
- 		p = strstr(p, "=");
- 		ovl_partition = (int)strtol(p + 1, NULL, 0);
--		if ((ovl_partition < 1) || (ovl_partition > 4)) {
-+		if ((ovl_partition < 1) || (ovl_partition > MAX_PARTITIONS)) {
+@@ -147,7 +149,8 @@ static int parse_cmdline()
+ 		ovl_partition = (int)strtol(buf, NULL, 0);
+ 		if ((ovl_partition < 1) || (ovl_partition > MAX_PARTITIONS)) {
  			ovl_partition = 0;
 -			ULOG_ERR("wrong 'ovl-partition' value (should be in the range from 1 to 4)\n");
 +			ULOG_ERR("wrong 'ovl-partition' value (should be in the range from 1 to %d)\n",
@@ -46,8 +43,8 @@ index 486dc39..d43c365 100644
  		} else {
  			ULOG_INFO("try to use ovl-partition %d for overlay filesystem\n", ovl_partition);
  		}
-@@ -298,7 +301,7 @@ static int rootdisk_scan_partitions(
- 			if (file_read_u64(buf, &partition) != 0)
+@@ -230,7 +233,7 @@ static int rootdisk_scan_partitions(
+ 			if (read_u64_from_file(buf, "partition", &partition) != 0)
  				continue; /* device is not partition */
  
 -			if ((partition < 1) || (partition > 4))
@@ -55,7 +52,7 @@ index 486dc39..d43c365 100644
  				continue; /* invalid partition number */
  
  			part = &info->partition[partition - 1];
-@@ -393,7 +396,7 @@ static int blkdev_get_disk_info(
+@@ -363,7 +366,7 @@ static int blkdev_get_disk_info(
  		return -1;
  
  	/* Output partition table */
@@ -64,7 +61,7 @@ index 486dc39..d43c365 100644
  		if (info->partition[part].partition != (part + 1))
  			continue;
  
-@@ -460,7 +463,7 @@ static int rootdisk_volume_find_partition(
+@@ -396,7 +399,7 @@ static int rootdisk_volume_find_partition(
  {
  	int part;
  
@@ -73,7 +70,7 @@ index 486dc39..d43c365 100644
  		if (!rootdisk_info.partition[part].partition)
  			continue;
  
-@@ -569,7 +572,7 @@ static struct volume *rootdisk_volume_find(char *name)
+@@ -507,7 +510,7 @@ static struct volume *rootdisk_volume_find(char *name)
  					p->no_overlay_create = 1;
  				} else {
  					/* try to put overlayfs at end of the partitions on disk */
@@ -83,5 +80,5 @@ index 486dc39..d43c365 100644
  						if (rootdisk_info.partition[part - 1].partition != part)
  							continue;
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

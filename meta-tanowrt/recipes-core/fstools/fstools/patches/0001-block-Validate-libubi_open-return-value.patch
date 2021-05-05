@@ -1,7 +1,7 @@
-From a9b9e645605f6ed5a399824bb748fb9c0e16aa91 Mon Sep 17 00:00:00 2001
+From 91bc8918e7ac880373540ba3ed6834486c61104b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:17:30 +0300
-Subject: [PATCH 01/13] block: Validate libubi_open() return value
+Subject: [PATCH 01/17] block: Validate libubi_open() return value
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/block.c b/block.c
-index f094216..c8a77f0 100644
+index f094216..4c2de11 100644
 --- a/block.c
 +++ b/block.c
 @@ -1561,22 +1561,24 @@ static int main_extroot(int argc, char **argv)

@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano44"
+PR = "tano45"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -37,9 +37,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0002-ubi-Add-forgotten-newlines-to-error-messages.patch \
 	file://0003-Fix-UUID-reading-from-vfat.patch \
 	file://0004-block-Fix-some-memory-leaks-and-unnecessary-duplicat.patch \
-	file://0005-blockd-Fix-simultaneous-multiple-devices-mounts-hand.patch \
-	file://0006-block-Add-log-message-for-unmounted-device.patch \
-	file://0007-block-Fix-device-path-creation.patch \
+	file://0005-block-Add-log-message-for-unmounted-device.patch \
+	file://0006-block-Fix-device-path-creation.patch \
+	file://0007-libfstools-Move-get_cmdline_val-to-common.patch \
 	file://0008-libfstools-Support-for-f2fs-ext4-overlay-on-a-separa.patch \
 	file://0009-fstools-Configurable-overlay-partition-name.patch \
 	file://0010-libfstools-Fix-64-bit-compilation-issues.patch \
@@ -59,9 +59,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 04.01.2021
-# jffs2reset: support fristboot on unmounted UBI overlay
-SRCREV = "c53b18820756f6f32ad0782d3bf489422b7c4ad3"
+# 07.04.2021
+# overlay: fix syncronizing typo
+SRCREV = "c44b40be0f7547609eeadd39afce4e5db42f75bc"
 
 S = "${WORKDIR}/git"
 

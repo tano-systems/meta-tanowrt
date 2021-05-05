@@ -1,7 +1,7 @@
-From 703daa6da0fe4448bc4ee24381b10a484a545144 Mon Sep 17 00:00:00 2001
+From c72ff4a155dd729600b8054d8c1384cb4f46ee7a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 19 Nov 2020 06:29:41 +0300
-Subject: [PATCH 11/13] fstools: Support extroot for non-MTD rootfs_data
+Subject: [PATCH 11/17] fstools: Support extroot for non-MTD rootfs_data
 
 Original commit [1] message:
 
@@ -21,16 +21,16 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt          |  4 ++--
  block.c                 | 40 ++++++++++++++++++++++++++++++++++++++++
- libfstools/fstype.h     | 27 +++++++++++++++++++++++++++
- libfstools/libfstools.h | 11 +----------
- 4 files changed, 70 insertions(+), 12 deletions(-)
+ libfstools/fstype.h     | 28 ++++++++++++++++++++++++++++
+ libfstools/libfstools.h | 12 +-----------
+ 4 files changed, 71 insertions(+), 13 deletions(-)
  create mode 100644 libfstools/fstype.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2735bdd..acbc8b9 100644
+index cfe5a38..72e471a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -84,9 +84,9 @@ INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
+@@ -86,9 +86,9 @@ INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
  ADD_EXECUTABLE(block block.c probe.c probe-libblkid.c overlay_partition.c)
  IF(DEFINED CMAKE_UBIFS_EXTROOT)
  	ADD_DEFINITIONS(-DUBIFS_EXTROOT)
@@ -43,7 +43,7 @@ index 2735bdd..acbc8b9 100644
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
 diff --git a/block.c b/block.c
-index 8b5c52d..d7dc23a 100644
+index 3cc7b4a..480b229 100644
 --- a/block.c
 +++ b/block.c
 @@ -47,6 +47,8 @@
@@ -102,10 +102,10 @@ index 8b5c52d..d7dc23a 100644
  }
 diff --git a/libfstools/fstype.h b/libfstools/fstype.h
 new file mode 100644
-index 0000000..fdf38e2
+index 0000000..92233f8
 --- /dev/null
 +++ b/libfstools/fstype.h
-@@ -0,0 +1,27 @@
+@@ -0,0 +1,28 @@
 +/*
 + * Copyright (C) 2014 John Crispin <blogic@openwrt.org>
 + *
@@ -130,14 +130,15 @@ index 0000000..fdf38e2
 +	FS_UBIFS,
 +	FS_F2FS,
 +	FS_EXT4,
++	FS_TARGZ,
 +};
 +
 +#endif
 diff --git a/libfstools/libfstools.h b/libfstools/libfstools.h
-index 3da151d..b93724d 100644
+index 6aa0e41..b93724d 100644
 --- a/libfstools/libfstools.h
 +++ b/libfstools/libfstools.h
-@@ -18,19 +18,10 @@
+@@ -18,20 +18,10 @@
  #include <libubox/blob.h>
  #include <libubox/ulog.h>
  #include <libubox/utils.h>
@@ -153,6 +154,7 @@ index 3da151d..b93724d 100644
 -	FS_UBIFS,
 -	FS_F2FS,
 -	FS_EXT4,
+-	FS_TARGZ,
 -};
 -
  enum fs_state {

@@ -1,39 +1,41 @@
-From e2c92a66ecc42f8e70231dd40f36bf3b331daaa7 Mon Sep 17 00:00:00 2001
+From e00003d1b050f2155ed70553a9385cc121637fa0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
-Subject: [PATCH 09/13] fstools: Configurable overlay partition name
+Subject: [PATCH 09/17] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt        | 13 ++++++-----
  block.c               | 10 +++++---
  jffs2reset.c          |  7 +++---
+ libfstools/common.c   |  4 ++--
+ libfstools/common.h   |  2 ++
  libfstools/overlay.c  |  5 ++--
- libfstools/rootdisk.c | 11 +++++----
+ libfstools/rootdisk.c |  6 ++---
  mount_root.c          | 11 +++++----
  overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
  overlay_partition.h   | 19 +++++++++++++++
  snapshot.c            | 15 ++++++------
  ubi.c                 |  3 ++-
- 10 files changed, 116 insertions(+), 32 deletions(-)
+ 12 files changed, 117 insertions(+), 32 deletions(-)
  create mode 100644 overlay_partition.c
  create mode 100644 overlay_partition.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index cf55d89..2735bdd 100644
+index 046aad7..cfe5a38 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -14,7 +14,8 @@ ADD_LIBRARY(fstools SHARED
- 		libfstools/mount.c
+@@ -16,7 +16,8 @@ ADD_LIBRARY(fstools SHARED
  		libfstools/ubi.c
  		libfstools/rootdisk.c
+ 		libfstools/partname.c
 -		libfstools/find.c)
 +		libfstools/find.c
 +		overlay_partition.c)
  TARGET_LINK_LIBRARIES(fstools ubox)
  INSTALL(TARGETS fstools LIBRARY DESTINATION lib)
  
-@@ -70,7 +71,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
+@@ -72,7 +73,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  	ADD_DEFINITIONS(-DOVL_MOUNT_FULL_ACCESS_TIME)
  ENDIF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  
@@ -42,7 +44,7 @@ index cf55d89..2735bdd 100644
  TARGET_LINK_LIBRARIES(mount_root fstools)
  INSTALL(TARGETS mount_root RUNTIME DESTINATION sbin)
  
-@@ -80,7 +81,7 @@ ADD_EXECUTABLE(blockd blockd.c)
+@@ -82,7 +83,7 @@ ADD_EXECUTABLE(blockd blockd.c)
  TARGET_LINK_LIBRARIES(blockd fstools ubus blobmsg_json ${json})
  INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
  
@@ -51,7 +53,7 @@ index cf55d89..2735bdd 100644
  IF(DEFINED CMAKE_UBIFS_EXTROOT)
  	ADD_DEFINITIONS(-DUBIFS_EXTROOT)
  	TARGET_LINK_LIBRARIES(block blkid-tiny dl uci ubox ubus blobmsg_json ubi-utils ${json})
-@@ -89,14 +90,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
+@@ -91,14 +92,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
  ENDIF(DEFINED CMAKE_UBIFS_EXTROOT)
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
@@ -70,7 +72,7 @@ index cf55d89..2735bdd 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index 5099c5c..8b5c52d 100644
+index c877a43..3cc7b4a 100644
 --- a/block.c
 +++ b/block.c
 @@ -46,6 +46,7 @@
@@ -148,8 +150,42 @@ index acff913..87788e3 100644
  		return -1;
  	}
  
+diff --git a/libfstools/common.c b/libfstools/common.c
+index 412e81b..4118c53 100644
+--- a/libfstools/common.c
++++ b/libfstools/common.c
+@@ -139,14 +139,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+ 		if (use_f2fs(v, offset, bdev)) {
+ 			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %llu)...\n",
+ 				v->blk, offset);
+-			snprintf(str, sizeof(str), "mkfs.f2fs -q -l rootfs_data %s", v->blk);
++			snprintf(str, sizeof(str), "mkfs.f2fs -q -l %s %s", get_overlay_partition(), v->blk);
+ 		}
+ 		else
+ #endif
+ 		{
+ 			ULOG_INFO("creating ext4 overlay filesystem (%s, offset %llu)...\n",
+ 				v->blk, offset);
+-			snprintf(str, sizeof(str), "mkfs.ext4 -q -L rootfs_data %s", v->blk);
++			snprintf(str, sizeof(str), "mkfs.ext4 -q -L %s %s", get_overlay_partition(), v->blk);
+ 		}
+ 		ret = system(str);
+ 		if (ret)
+diff --git a/libfstools/common.h b/libfstools/common.h
+index 3674040..cde40eb 100644
+--- a/libfstools/common.h
++++ b/libfstools/common.h
+@@ -20,6 +20,8 @@
+ #include "libfstools.h"
+ #include "volume.h"
+ 
++#include "../overlay_partition.h"
++
+ #define F2FS_MINSIZE		(100ULL * 1024ULL * 1024ULL)
+ 
+ int read_uint_from_file(char *dirname, char *filename, unsigned int *i);
 diff --git a/libfstools/overlay.c b/libfstools/overlay.c
-index eadafcf..0bfe8ef 100644
+index d7d8f48..727d685 100644
 --- a/libfstools/overlay.c
 +++ b/libfstools/overlay.c
 @@ -27,6 +27,7 @@
@@ -179,18 +215,10 @@ index eadafcf..0bfe8ef 100644
  	}
  
 diff --git a/libfstools/rootdisk.c b/libfstools/rootdisk.c
-index 7ccf2cc..e40d711 100644
+index 27641ec..0612a70 100644
 --- a/libfstools/rootdisk.c
 +++ b/libfstools/rootdisk.c
-@@ -25,6 +25,7 @@
- #include <unistd.h>
- #include <fnmatch.h>
- 
-+#include "../overlay_partition.h"
- #include "libfstools.h"
- #include "volume.h"
- 
-@@ -482,7 +483,7 @@ static struct volume *rootdisk_volume_find(char *name)
+@@ -420,7 +420,7 @@ static struct volume *rootdisk_volume_find(char *name)
  	struct squashfs_super_block sb;
  	struct rootdev_volume *p;
  
@@ -199,7 +227,7 @@ index 7ccf2cc..e40d711 100644
  		return NULL;
  
  	if (!rootdev)
-@@ -504,7 +505,7 @@ static struct volume *rootdisk_volume_find(char *name)
+@@ -442,7 +442,7 @@ static struct volume *rootdisk_volume_find(char *name)
  
  	p = calloc(1, sizeof(*p));
  	p->v.drv = &rootdisk_driver;
@@ -208,7 +236,7 @@ index 7ccf2cc..e40d711 100644
  
  #ifdef OVL_ROOTDISK_PART_ENABLE
  	parse_cmdline();
-@@ -530,7 +531,7 @@ static struct volume *rootdisk_volume_find(char *name)
+@@ -470,7 +470,7 @@ static struct volume *rootdisk_volume_find(char *name)
  		}
  
  		if (rootdisk_info.ro == 0) {
@@ -217,23 +245,6 @@ index 7ccf2cc..e40d711 100644
  			if (!ovl_partition)
  				ret = rootdisk_volume_find_partition(name, p);
  			else if (ovl_partition == rootdisk_info.rootpart)
-@@ -750,14 +751,14 @@ static int rootdisk_volume_init(struct volume *v)
- 		if (rootdisk_use_f2fs(p)) {
- 			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %llu)...\n",
- 				v->blk, p->offset);
--			snprintf(str, sizeof(str), "mkfs.f2fs -q -l rootfs_data %s", v->blk);
-+			snprintf(str, sizeof(str), "mkfs.f2fs -q -l %s %s", get_overlay_partition(), v->blk);
- 		}
- 		else
- #endif
- 		{
- 			ULOG_INFO("creating ext4 overlay filesystem (%s, offset %llu)...\n",
- 				v->blk, p->offset);
--			snprintf(str, sizeof(str), "mkfs.ext4 -q -L rootfs_data %s", v->blk);
-+			snprintf(str, sizeof(str), "mkfs.ext4 -q -L %s %s", get_overlay_partition(), v->blk);
- 		}
- 		ret = system(str);
- 		if (ret)
 diff --git a/mount_root.c b/mount_root.c
 index f8aa5e1..a143e19 100644
 --- a/mount_root.c
