@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano45"
+PR = "tano46"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
@@ -100,7 +100,7 @@ do_install_append() {
 
 	ln -s /usr/sbin/block ${D}/sbin/block
 	ln -s /usr/sbin/blockd ${D}/sbin/blockd
-	ln -s /usr/sbin/snapshot_tool ${D}/sbin/snapshot_tool
+#	ln -s /usr/sbin/snapshot_tool ${D}/sbin/snapshot_tool
 	ln -s /sbin/block ${D}/usr/sbin/swapon
 	ln -s /sbin/block ${D}/usr/sbin/swapoff
 
@@ -110,7 +110,7 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/fstab.config ${D}${sysconfdir}/config/fstab
 	install -m 0755 ${WORKDIR}/fstab.default ${D}${sysconfdir}/uci-defaults/10-fstab
 	install -m 0755 ${WORKDIR}/blockd.init ${D}${sysconfdir}/init.d/blockd
-	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
+#	install -m 0755 ${WORKDIR}/snapshot ${D}/sbin/snapshot
 	install -m 0644 ${WORKDIR}/mount.hotplug ${D}${sysconfdir}/hotplug.d/block/10-mount
 	install -m 0644 ${WORKDIR}/media-change.hotplug ${D}${sysconfdir}/hotplug.d/block/00-media-change
 }
