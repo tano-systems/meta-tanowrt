@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano10"
+PR = "tano11"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -21,6 +21,7 @@ PROVIDES = "${PACKAGES}"
 PACKAGES = "\
 	packagegroup-tanowrt-base \
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci', '', d)} \
+	packagegroup-tanowrt-base-alsa \
 	packagegroup-tanowrt-base-core \
 	packagegroup-tanowrt-base-tools \
 	packagegroup-tanowrt-base-network \
@@ -35,6 +36,7 @@ RDEPENDS_${PN} = "\
 	packagegroup-tanowrt-base-tools \
 	packagegroup-tanowrt-base-machine \
 	packagegroup-tanowrt-base-distro \
+	${@bb.utils.contains('MACHINE_FEATURES', 'alsa', 'packagegroup-tanowrt-base-alsa', '', d)} \
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'packagegroup-tanowrt-base-luci ', '', d)} \
 	make-ext4fs \
 	eudev \
@@ -45,6 +47,19 @@ RDEPENDS_${PN} = "\
 	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'usbreset', '',d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'usbmode', '',d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'usbgadget', 'usb-gadget-network', '',d)} \
+"
+
+# packagegroup-tanowrt-base-alsa
+RDEPENDS_${PN}-alsa = "\
+	alsa-utils-alsactl \
+	alsa-utils-alsamixer \
+	alsa-utils-aplay \
+	${VIRTUAL-RUNTIME_alsa-state} \
+"
+
+RRECOMMENDS_${PN}-alsa = "\
+	kernel-module-snd-mixer-oss \
+	kernel-module-snd-pcm-oss \
 "
 
 # packagegroup-tanowrt-base-luci
