@@ -1,0 +1,25 @@
+From 2de4089b7bade21b420fc2c8ad4c8815fe872806 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 11 May 2021 17:26:47 +0300
+Subject: [PATCH 3/3] Allow to specify ALSA device in '-o' option
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ audio.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/audio.c b/audio.c
+index 7d87b8d..2617f90 100644
+--- a/audio.c
++++ b/audio.c
+@@ -54,6 +54,7 @@ audio_ctlfunc_t *audio_output(char const **path)
+   };
+ 
+   struct map const prefixes[] = {
++    { "alsa", audio_alsa },
+     { "cdda", audio_cdda },
+     { "aiff", audio_aiff },
+     { "wave", audio_wave },
+-- 
+2.28.0.windows.1
+
