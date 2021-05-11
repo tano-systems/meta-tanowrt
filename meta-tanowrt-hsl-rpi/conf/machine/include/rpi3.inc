@@ -92,6 +92,7 @@ MACHINE_FEATURES += "watchdog"
 MACHINE_FEATURES += "opengl"
 MACHINE_FEATURES += "crypto"
 MACHINE_FEATURES += "hwrng"
+MACHINE_FEATURES += "alsa"
 
 PACKAGECONFIG_append_pn-collectd = " cpufreq "
 PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
