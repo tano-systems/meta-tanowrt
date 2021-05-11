@@ -1,0 +1,40 @@
+From 027adbd99e974738b101c08b964851010d3004f9 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 11 May 2021 15:51:14 +0300
+Subject: [PATCH] configure: Remove '-fforce-mem' option
+
+Option '-fforce-mem' has been removed in gcc 4.3.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ configure    | 1 -
+ configure.ac | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/configure b/configure
+index ee421cc..5f29d76 100644
+--- a/configure
++++ b/configure
+@@ -19099,7 +19099,6 @@ then
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+ 	    optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"
+diff --git a/configure.ac b/configure.ac
+index 9b79399..7608315 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -140,7 +140,6 @@ then
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+ 	    optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"
+-- 
+2.28.0.windows.1
+
