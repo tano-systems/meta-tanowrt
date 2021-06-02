@@ -1,0 +1,17 @@
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index 70c84560..b9962f8f 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -216,8 +216,10 @@ if(UA_ENABLE_PUBSUB)
+         if(UA_ENABLE_AMALGAMATION)
+             message(WARNING "PubSub subscriber tutorial (preview) can not be used with AMALGAMATION. Skipping tutorial_pubsub_subscribe.")
+         else(NOT UA_ENABLE_AMALGAMATION)
+-            add_example(tutorial_pubsub_subscribe pubsub/tutorial_pubsub_subscribe.c)
+-            add_example(pubsub_subscribe_standalone pubsub/pubsub_subscribe_standalone.c)
++            if(NOT BUILD_SHARED_LIBS)
++                add_example(tutorial_pubsub_subscribe pubsub/tutorial_pubsub_subscribe.c)
++                add_example(pubsub_subscribe_standalone pubsub/pubsub_subscribe_standalone.c)
++            endif()
+             if(CMAKE_SYSTEM MATCHES "Linux")
+                 if(UA_ENABLE_PUBSUB_ETH_UADP_ETF)
+                     add_subdirectory(pubsub_realtime/nodeset)
