@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano17"
+PR = "tano18"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -21,9 +21,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 25.03.2021
-# ubusd: add per-client tx queue limit
-SRCREV = "c736e47f3e2ad8f895306e9917f7bd6143fd29d9"
+# 21.04.2021
+# ubusd: protect against too-short messages
+SRCREV = "a8cf678230ed163ff7a07eb1e2c872f9d655460a"
 
 S = "${WORKDIR}/git"
 
