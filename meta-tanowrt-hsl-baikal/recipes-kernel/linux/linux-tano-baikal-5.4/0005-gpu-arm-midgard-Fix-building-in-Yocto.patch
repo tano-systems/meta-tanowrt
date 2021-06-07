@@ -1,0 +1,40 @@
+From dc0752e444f8f1fcef27f04454c34efd8bda14ca Mon Sep 17 00:00:00 2001
+From: invalid_git config <unknown@unknown>
+Date: Fri, 25 Jun 2021 00:50:14 +0000
+Subject: [PATCH 5/5] gpu/arm/midgard: Fix building in Yocto
+
+Use absolute paths for backend and platform includes
+instead of relative
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/gpu/arm/midgard/Kbuild | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/arm/midgard/Kbuild b/drivers/gpu/arm/midgard/Kbuild
+index 454756f5d..1db7b862a 100644
+--- a/drivers/gpu/arm/midgard/Kbuild
++++ b/drivers/gpu/arm/midgard/Kbuild
+@@ -130,7 +130,7 @@ mali_kbase-y := $(SRC:.c=.o)
+ # Kconfig passes in the name with quotes for in-tree builds - remove them.
+ platform_name := $(shell echo $(CONFIG_MALI_PLATFORM_NAME))
+ MALI_PLATFORM_DIR := platform/$(platform_name)
+-ccflags-y += -I$(src)/$(MALI_PLATFORM_DIR)
++ccflags-y += -I$(srctree)/$(src)/$(MALI_PLATFORM_DIR)
+ include $(src)/$(MALI_PLATFORM_DIR)/Kbuild
+ 
+ ifeq ($(CONFIG_MALI_DEVFREQ),y)
+@@ -163,8 +163,8 @@ include  $(src)/backend/gpu/Kbuild
+ mali_kbase-y += $(BACKEND:.c=.o)
+ 
+ 
+-ccflags-y += -I$(src)/backend/gpu
+-subdir-ccflags-y += -I$(src)/backend/gpu
++ccflags-y += -I$(srctree)/$(src)/backend/gpu
++subdir-ccflags-y += -I$(srctree)/$(src)/backend/gpu
+ 
+ # For kutf and mali_kutf_irq_latency_test
+ obj-$(CONFIG_MALI_KUTF) += tests/
+-- 
+2.17.1
+

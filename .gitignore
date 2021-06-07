@@ -10,6 +10,7 @@ local.conf
 /openembedded-core/
 !meta-tanowrt
 !meta-tanowrt-hsl-atmel
+!meta-tanowrt-hsl-baikal
 !meta-tanowrt-hsl-nxp
 !meta-tanowrt-hsl-rpi
 !meta-tanowrt-hsl-swi

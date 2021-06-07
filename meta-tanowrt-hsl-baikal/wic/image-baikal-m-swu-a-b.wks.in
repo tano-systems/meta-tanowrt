@@ -1,0 +1,20 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+#
+
+#
+# +------------+----------+----------+----------+----------+--------------+
+# |            |          |          |          |          |              |
+# | Bootloader | Kernel A | Rootfs A | Kernel B | Rootfs B | Overlay data |
+# |            |          |          |          |          |              |
+# +------------+----------+----------+----------+----------+--------------+
+#
+part /boot     --source bootimg-efi-ext --sourceparams="loader=grub-efi,no_kernel=1" --ondisk sda --label boot --active --align 1024 --overhead-factor=1.0  --use-uuid
+part /kernel_a --source=rawcopy --ondisk=sda --part-name=kernel_a --align=1024 --size=48M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"  --use-uuid
+part /rootfs_a --source=rawcopy --ondisk=sda --part-name=rootfs_a --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"  --use-uuid
+part /kernel_b --source=rawcopy --ondisk=sda --part-name=kernel_b --align=1024 --size=48M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}" --use-uuid
+part /rootfs_b --source=rawcopy --ondisk=sda --part-name=rootfs_b --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}" --use-uuid
+part /overlay  --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
+
+bootloader --ptable gpt --configfile ${DEPLOY_DIR_IMAGE}/${WKS_IMAGE_GRUB_CONFIG}

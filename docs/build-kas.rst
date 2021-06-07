@@ -91,6 +91,7 @@ Available target files listed in the sections below:
 - `Virtual Machines <meta-tanowrt_>`__
 - `Boards based on Microchip/Atmel SoC's <meta-tanowrt-hsl-atmel_>`__
 - `Boards based on NXP/Freescale SoC's <meta-tanowrt-hsl-nxp_>`__
+- `Boards based on Baikal Electronics SoC's <meta-tanowrt-hsl-baikal_>`__
 - `Raspberry Pi Boards <meta-tanowrt-hsl-rpi_>`__
 - `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi_>`__
 - `Boards based on Texas Instruments SoC's <meta-tanowrt-hsl-ti_>`__
@@ -150,6 +151,19 @@ Boards based on Microchip/Atmel SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-
 |                                                   |                            +--------------------+----------------------------------+
 |                                                   |                            | SD-card            | ``evb-ksz9563-sd.yml``           |
 |                                                   |                            |                    |                                  |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+
+.. _meta-tanowrt-hsl-baikal:
+
+Boards based on Baikal Electronics SoC's (`meta-tanowrt-hsl-baikal <../meta-tanowrt-hsl-baikal/README.md>`__)
+-------------------------------------------------------------------------------------------------------------
+
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+|                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
++===================================================+============================+====================+==================================+
+| Baikal Electronics MBM 1.0 Board                  | Baikal-M BE-M1000          | USB/SATA/NVMe      | ``mbm10.yml``                    |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+| Baikal Electronics MBM 2.0 Board                  | Baikal-M BE-M1000          | USB/SATA/NVMe      | ``mbm20.yml``                    |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
 .. _meta-tanowrt-hsl-nxp:

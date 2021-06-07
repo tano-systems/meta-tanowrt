@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 8
+  includes:
+    - tanowrt-core.yml
+    - layers/meta-tanowrt-hsl-baikal.yml
+
+target: tanowrt-image-full-swu

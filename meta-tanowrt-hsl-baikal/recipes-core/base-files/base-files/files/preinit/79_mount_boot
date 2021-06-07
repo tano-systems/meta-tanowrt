@@ -1,0 +1,20 @@
+#!/bin/sh
+# Copyright (C) 2021 Tano Systems LLC
+
+mount_boot() {
+	local partdev
+
+	. /lib/upgrade/common.sh
+
+	if export_bootdevice && export_partdevice partdev 1; then
+		mkdir -p /boot
+		if mount -t ext4,vfat -o ro,noatime "/dev/$partdev" /boot; then
+			if [ -d /boot/boot ]; then
+				mount --bind /boot/boot /boot
+			fi
+		fi
+	fi
+}
+
+boot_hook_add preinit_mount_root mount_boot
+

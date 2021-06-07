@@ -1,0 +1,25 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All rights reserved.
+
+do_swupdate_make_dev_symlinks() {
+	. /usr/lib/swupdate/swupdate_config
+	. /lib/upgrade/common.sh
+
+	local ROOT_DEVICE=""
+	export_bootdevice
+	export_partdevice ROOT_DEVICE 0
+
+	if [ "${ROOT_DEVICE}" = "" ]; then
+		echo "SWUpdate: Cannot find root device" > /dev/kmsg
+		return
+	fi
+
+	ln -s /dev/${ROOT_DEVICE}1 /dev/swu-boot
+	ln -s /dev/${ROOT_DEVICE}2 /dev/swu-kernel-a
+	ln -s /dev/${ROOT_DEVICE}3 /dev/swu-rootfs-a
+	ln -s /dev/${ROOT_DEVICE}4 /dev/swu-kernel-b
+	ln -s /dev/${ROOT_DEVICE}5 /dev/swu-rootfs-b
+}
+
+boot_hook_add preinit_main do_swupdate_make_dev_symlinks

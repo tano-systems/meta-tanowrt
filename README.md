@@ -18,6 +18,7 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 | Layer                      | Hardware                                          |
 | -------------------------- | ------------------------------------------------- |
 | [meta-tanowrt-hsl-atmel]   | Microchip (Atmel) SoC based devices               |
+| [meta-tanowrt-hsl-baikal]  | Baikal Electronics SoC based devices              |
 | [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                            |
 | [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                               |
 | [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                       |
@@ -25,6 +26,7 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 
 [meta-tanowrt]: meta-tanowrt/README.md
 [meta-tanowrt-hsl-atmel]: meta-tanowrt-hsl-atmel/README.md
+[meta-tanowrt-hsl-baikal]: meta-tanowrt-hsl-baikal/README.md
 [meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
 [meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
 [meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
@@ -38,6 +40,7 @@ The TanoWrt distribution uses the [SWUpdate](https://sbabic.github.io/swupdate) 
 | -------------------------- | ----------------------------------------------------------------- |
 | [meta-tanowrt]             | :last_quarter_moon: Partial (only for `qemux86` and `qemux86-64`) |
 | [meta-tanowrt-hsl-atmel]   | :heavy_check_mark: Yes                                            |
+| [meta-tanowrt-hsl-baikal]  | :heavy_check_mark: Yes                                            |
 | [meta-tanowrt-hsl-nxp]     | :heavy_check_mark: Yes                                            |
 | [meta-tanowrt-hsl-rpi]     | :new_moon: No                                                     |
 | [meta-tanowrt-hsl-swi]     | :new_moon: No (has its own upgrade system)                        |
