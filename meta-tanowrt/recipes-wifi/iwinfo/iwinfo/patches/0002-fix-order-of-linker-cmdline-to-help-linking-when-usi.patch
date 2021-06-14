@@ -1,7 +1,7 @@
-From 648d42e1e1707e218a472168dfe5cc6f283505f8 Mon Sep 17 00:00:00 2001
+From 521fc0711fc5568ad9a2791fc7bf8ccae01df304 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 21 Oct 2015 18:20:08 -0700
-Subject: [PATCH] fix order of linker cmdline to help linking when usin
+Subject: [PATCH 2/7] fix order of linker cmdline to help linking when usin
  -as-needed
 
 These are linker optimizations
@@ -12,7 +12,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 57b6a09..77a89cf 100644
+index 57b6a09..0c329b0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -41,14 +41,14 @@ compile: clean $(IWINFO_LIB) $(IWINFO_LUA) $(IWINFO_CLI)
@@ -34,5 +34,5 @@ index 57b6a09..77a89cf 100644
  clean:
  	rm -f *.o $(IWINFO_LIB) $(IWINFO_LUA) $(IWINFO_CLI)
 -- 
-2.6.1
+2.16.2.windows.1
 

@@ -1,5 +1,14 @@
+From 19da76ac0a1101e1bd4fe8fda14ff2ea1119ec63 Mon Sep 17 00:00:00 2001
+From: Unknown <unknown@unknown.com>
+Date: Tue, 15 Jun 2021 01:29:27 +0300
+Subject: [PATCH 4/7] use-libnl3-instead-of-libnl-tiny
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/Makefile b/Makefile
-index 715c03e..3ae9a13 100644
+index 3a7edb1..835c035 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -29,8 +29,8 @@ endif
@@ -13,3 +22,6 @@ index 715c03e..3ae9a13 100644
  	IWINFO_LIB_OBJ     += iwinfo_nl80211.o
  endif
  
+-- 
+2.16.2.windows.1
+

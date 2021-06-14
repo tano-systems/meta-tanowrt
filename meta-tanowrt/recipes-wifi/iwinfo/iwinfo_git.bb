@@ -11,16 +11,15 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano20"
+PR = "tano21"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 06.01.2021
-# build: add ability to specify shared object version
-SRCREV = "23d2722b1251f1aba9355bba23e17596f93adb65"
-
+# 09.06.2021
+# iwinfo: nl80211: fix typo
+SRCREV = "c0414642fead263a4a6a686ad3cb7e965ec8a23a"
 IWINFO_ABI_VERSION = "20210106"
 
 FILES_SOLIBSDEV = ""
@@ -37,12 +36,12 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/iwinfo.git"
 # Patches
 SRC_URI += "\
 	file://0001-fix-typo-in-spcifying-typename-luaL_Reg.patch \
-	file://0001-fix-order-of-linker-cmdline-to-help-linking-when-usi.patch \
-	file://0001-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \
-	file://0002-use-libnl3-instead-of-libnl-tiny.patch \
-	file://1001-iwinfo-add-device-id-for-Intel-Dual-Band-Wireless-AC.patch \
-	file://1002-iwinfo-add-device-id-for-Realtek-RTL8821CE.patch \
-	file://1003-iwinfo-add-device-id-for-Broadcom-BCM4350.patch \
+	file://0002-fix-order-of-linker-cmdline-to-help-linking-when-usi.patch \
+	file://0003-Makefile-LDFLAGS-set-liblua5.1-for-lua-lib.patch \
+	file://0004-use-libnl3-instead-of-libnl-tiny.patch \
+	file://0005-iwinfo-add-device-id-for-Intel-Dual-Band-Wireless-AC.patch \
+	file://0006-iwinfo-add-device-id-for-Realtek-RTL8821CE.patch \
+	file://0007-iwinfo-add-device-id-for-Broadcom-BCM4350.patch \
 "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
