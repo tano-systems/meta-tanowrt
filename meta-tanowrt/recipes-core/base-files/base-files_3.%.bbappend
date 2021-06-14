@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano80.${INC_PR}"
+PR_append = ".tano81.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -36,9 +36,6 @@ require base-files.inc
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-arch:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI += "\
-	file://0001-use-sh-not-ash.patch \
-"
 SRC_URI_append = "\
     file://shells \
     file://sysctl.conf \

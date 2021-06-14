@@ -6,15 +6,15 @@
 #           Copyright (C) 2019-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-# 04.01.2021
-# base-files: read all 3 bytes in get_magic_vfat() at once
-OPENWRT_SRCREV = "81655e1450a80276db32c8a8e10de73a256bc664"
+# 14.06.2021
+# base-files: fix typo in config_generate MAC check
+OPENWRT_SRCREV = "946019637ec9192450c685a61c589a9cbef7637b"
 OPENWRT_BRANCH = "master"
 
-INC_PR = "19"
+INC_PR = "20"
 
-LICENSE = "GPL-2.0+"
-LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
+LICENSE = "GPL-2.0-only"
+LIC_FILES_CHKSUM = " file://${WORKDIR}/openwrt/LICENSES/GPL-2.0;md5=fbfe04ebfede83e097ba08389d089069"
 
 SRC_URI += "\
 	git://${GIT_OPENWRT_ORG}/openwrt/openwrt.git;name=openwrt;destsuffix=openwrt;branch=${OPENWRT_BRANCH} \
