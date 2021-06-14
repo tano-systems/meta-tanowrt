@@ -1,8 +1,8 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -17,10 +17,9 @@ FILES_SOLIBSDEV = ""
 
 SRC_URI = "\
 	git://github.com/jow-/lucihttp.git;protocol=https \
-	file://0001-test-utils-Use-portable-format-for-size_t-in-printf.patch \
 "
 
-SRCREV = "a34a17d501c0e23f0a91dd9d3e87697347c861ba"
+SRCREV = "3dc89af443410c9eae7a0ff091bd7fb4c5d48f41"
 
 PACKAGECONFIG ??= "build-lua"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
