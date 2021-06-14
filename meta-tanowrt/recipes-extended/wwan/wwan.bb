@@ -1,8 +1,8 @@
 #
 # SPDX-License-Identifier: MIT
-# This file Copyright (C) 2018, 2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018, 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "Generic OpenWrt 3G/4G proto handler"
 LICENSE = "GPLv2"
@@ -15,8 +15,10 @@ SRC_URI += "\
 	file://wwan.sh \
 	file://wwan.usb \
 	file://wwan.usbmisc \
-	file://data/* \
+	file://data/data.zip;name=data;subdir=data \
 "
+
+SRC_URI[data.md5sum] = "477aabf75258536005d58aef9b0d59d8"
 
 inherit allarch
 
