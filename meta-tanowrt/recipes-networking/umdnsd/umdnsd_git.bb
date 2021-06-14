@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano4"
+PR = "tano5"
 
 DESCRIPTION = "OpenWrt MDNS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/mdnsd.git;a=summary"
@@ -23,9 +23,9 @@ SRC_URI = "\
 	file://umdns.config \
 "
 
-# 02.01.2018
-# umdnsd: Replace strerror(errno) with %m.
-SRCREV = "78974417e182a3de8f78b7d73366ec0c98396b6c"
+# 13.05.2021
+# service: fix compilation with GCC 10
+SRCREV = "b777a0b53f7d89ab2a60e3eed7d98036806da9a4"
 
 S = "${WORKDIR}/git"
 
