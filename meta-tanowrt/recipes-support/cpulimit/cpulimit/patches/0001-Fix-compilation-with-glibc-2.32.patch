@@ -1,0 +1,33 @@
+From b4f4e0eb64ecdce5e53979df95b1cf86a5b0c1e8 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 14 Jun 2021 14:10:25 +0300
+Subject: [PATCH] Fix compilation with glibc 2.32+
+
+Fixes including deprecated sys/sysctl.h when compiling with glibc 2.32+:
+
+| cpulimit.c:41:10: fatal error: sys/sysctl.h: No such file or directory
+|    41 | #include <sys/sysctl.h>
+|       |          ^~~~~~~~~~~~~~
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/cpulimit.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/cpulimit.c b/src/cpulimit.c
+index 50eabea..928e6b5 100644
+--- a/src/cpulimit.c
++++ b/src/cpulimit.c
+@@ -38,7 +38,9 @@
+ #include <string.h>
+ #include <sys/stat.h>
+ #include <sys/time.h>
++#ifdef __APPLE__
+ #include <sys/sysctl.h>
++#endif
+ #include <sys/resource.h>
+ #include <sys/types.h>
+ #include <sys/wait.h>
+-- 
+2.16.2.windows.1
+
