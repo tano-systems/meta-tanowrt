@@ -4,7 +4,7 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}_${PV}/patches:${THISDIR}/${PN}_${PV}/files:"
 
 PR_append = ".tano1"
 
@@ -19,11 +19,4 @@ SRC_URI += "\
 	file://800-flowoffload_target.patch \
 "
 
-do_install_append() {
-	install -d ${D}${libdir}
-	install -m 0644 ${B}/extensions/libiptext*.so ${D}${libdir}
-}
-
-FILES_${PN} += "${libdir}/*.so"
-FILES_SOLIBSDEV = ""
-INSANE_SKIP_${PN} = "dev-so"
+require iptables.inc
