@@ -1,7 +1,7 @@
-From 7ae276c377803ae19eba6473d4da2627cc367851 Mon Sep 17 00:00:00 2001
+From 0a8b3fd500a29b246f68b09daa494718e89260e4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 21 Oct 2015 18:05:29 -0700
-Subject: [PATCH] fix typo in spcifying typename luaL_Reg
+Subject: [PATCH 1/7] fix typo in spcifying typename luaL_Reg
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/iwinfo_lua.c b/iwinfo_lua.c
-index 1a91001..d39a16c 100644
+index e49e454..ef3f410 100644
 --- a/iwinfo_lua.c
 +++ b/iwinfo_lua.c
-@@ -755,7 +755,7 @@ LUA_WRAP_STRUCT_OP(wext,hardware_id)
+@@ -799,7 +799,7 @@ LUA_WRAP_STRUCT_OP(wext,hardware_id)
  
  #ifdef USE_WL
  /* Broadcom table */
@@ -21,7 +21,7 @@ index 1a91001..d39a16c 100644
  	LUA_REG(wl,channel),
  	LUA_REG(wl,frequency),
  	LUA_REG(wl,frequency_offset),
-@@ -788,7 +788,7 @@ static const luaL_reg R_wl[] = {
+@@ -832,7 +832,7 @@ static const luaL_reg R_wl[] = {
  
  #ifdef USE_MADWIFI
  /* Madwifi table */
@@ -30,7 +30,7 @@ index 1a91001..d39a16c 100644
  	LUA_REG(madwifi,channel),
  	LUA_REG(madwifi,frequency),
  	LUA_REG(madwifi,frequency_offset),
-@@ -821,7 +821,7 @@ static const luaL_reg R_madwifi[] = {
+@@ -865,7 +865,7 @@ static const luaL_reg R_madwifi[] = {
  
  #ifdef USE_NL80211
  /* NL80211 table */
@@ -39,7 +39,7 @@ index 1a91001..d39a16c 100644
  	LUA_REG(nl80211,channel),
  	LUA_REG(nl80211,frequency),
  	LUA_REG(nl80211,frequency_offset),
-@@ -853,7 +853,7 @@ static const luaL_reg R_nl80211[] = {
+@@ -897,7 +897,7 @@ static const luaL_reg R_nl80211[] = {
  #endif
  
  /* Wext table */
@@ -48,7 +48,7 @@ index 1a91001..d39a16c 100644
  	LUA_REG(wext,channel),
  	LUA_REG(wext,frequency),
  	LUA_REG(wext,frequency_offset),
-@@ -884,7 +884,7 @@ static const luaL_reg R_wext[] = {
+@@ -928,7 +928,7 @@ static const luaL_reg R_wext[] = {
  };
  
  /* Common */
@@ -58,5 +58,5 @@ index 1a91001..d39a16c 100644
  	{ "__gc", iwinfo_L__gc  },
  	{ NULL, NULL }
 -- 
-2.6.1
+2.16.2.windows.1
 
