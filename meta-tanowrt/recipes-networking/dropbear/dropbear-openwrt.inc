@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
 #
 
-INC_PR = "5"
+INC_PR = "6"
 
 # OpenWrt files
 SRC_URI_append = "\
