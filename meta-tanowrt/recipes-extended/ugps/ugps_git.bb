@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano6"
+PR = "tano7"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
 	file://ugps.init \
 "
 
-# 21.07.2020
-# ugps: fix 64-bit time_t
-SRCREV = "511a5b3c84fa715ef0305cf26c98619c12a4867a"
+# 07.06.2021
+# ubus: display only available information
+SRCREV = "5e88403fc0d39ae8a270d2c6c6e9c8a4d5232cf3"
 
 S = "${WORKDIR}/git"
 
