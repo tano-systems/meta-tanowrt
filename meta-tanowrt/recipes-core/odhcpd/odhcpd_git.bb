@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano25"
+PR = "tano26"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -24,9 +24,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 02.01.2021
-# odhcpd: add option for setting preferred lifetime
-SRCREV = "3bda90079ec5574ef469e2a7804808302f17769d"
+# 13.06.2021
+# config: fix ra_flags none setting
+SRCREV = "564d25e53fad925fa3ed56e3004c107d40925fa4"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services
