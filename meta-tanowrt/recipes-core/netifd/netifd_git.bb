@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano43"
+PR = "tano44"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -19,8 +19,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/netifd.git;name=netifd;branch=master \
-	file://100-Fix-IFF_LOWER_UP-define.patch \
-	file://0001-Fix-errors-for-clang.patch \
 "
 
 # rootfs files
@@ -40,9 +38,9 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 "
 
-# 03.04.2021
-# netifd: add possibility to switch off route config
-SRCREV_netifd = "327da9895327bc56b23413ee91a6e6b6e0e4329d"
+# 08.06.2021
+# wireless: add some comments to functions
+SRCREV_netifd = "f12b073c0cc3b1ee8d652a342505ae0b14856c18"
 
 S = "${WORKDIR}/git"
 
