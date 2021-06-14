@@ -11,13 +11,13 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano6"
+PR = "tano7"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-# 26.12.2020
-# dhcpv6: fix displaying IA info
-SRCREV = "eac1961983b8e7a74c494feedcb878170b135072"
+# 03.04.2021
+# cmake: enable extra compiler checks
+SRCREV = "e0d9a4b2c7b177588fa6dc812031840777692740"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/odhcp6c.git;name=odhcp6c \
