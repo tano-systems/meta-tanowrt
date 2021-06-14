@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2018 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 # OE package         OpenWrt packages
 # --------------------------------------------------
@@ -16,7 +16,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano6"
+PR_append = ".tano7"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -28,7 +28,6 @@ SRC_URI_remove = "file://copts.patch"
 EXTRA_OEMAKE_append = " PRECOMPILED_FILTER=1 STAGING_DIR=${STAGING_DIR_TARGET}"
 
 SRC_URI_append = "\
-	file://001-honor-ldflags.patch \
 	file://010-use_target_for_configure.patch \
 	file://100-debian_ip-ip_option.patch \
 	file://101-debian_close_dev_ppp.patch \
@@ -38,23 +37,18 @@ SRC_URI_append = "\
 	file://107-debian_pppoatm_wildcard.patch \
 	file://110-debian_defaultroute.patch \
 	file://120-debian_ipv6_updown_option.patch \
-	file://121-debian_adaptive_lcp_echo.patch \
-	file://131-missing_prototype_macro.patch \
-	file://130-no_cdefs_h.patch \
-	file://132-fix_linux_includes.patch \
 	file://133-fix_sha1_include.patch \
+	file://140-pppoe_compile_fix.patch \
 	file://200-makefile.patch \
 	file://201-mppe_mppc_1.1.patch \
 	file://202-no_strip.patch \
 	file://203-opt_flags.patch \
 	file://204-radius_config.patch \
 	file://205-no_exponential_timeout.patch \
-	file://206-compensate_time_change.patch \
 	file://207-lcp_mtu_max.patch \
 	file://208-fix_status_code.patch \
 	file://300-filter-pcap-includes-lib.patch \
 	file://310-precompile_filter.patch \
-	file://320-custom_iface_names.patch \
 	file://321-multilink_support_custom_iface_names.patch \
 	file://330-retain_foreign_default_routes.patch \
 	file://340-populate_default_gateway.patch \
@@ -65,11 +59,7 @@ SRC_URI_append = "\
 	file://405-no_multilink_option.patch \
 	file://500-add-pptp-plugin.patch \
 	file://510-pptp_compile_fix.patch \
-	file://520-uniq.patch \
-	file://530-pppoe_send_padt.patch \
-	file://531-pppoe_no_disconnect_warning.patch \
-	file://540-save-pppol2tp_fd_str.patch \
-	file://550-fix-printer-args.patch \
+	file://511-pptp_cflags.patch \
 "
 
 SRC_URI_append = "\
