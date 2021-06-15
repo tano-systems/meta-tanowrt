@@ -17,7 +17,7 @@ index ccae915..48e74d4 100644
  		interface_error_flush(iface);
  		adev = iface->l3_dev.dev;
  		/* fall through */
-+		__attribute__((fallthrough));
++		fallthrough;
  	case IFEV_DOWN:
  	case IFEV_UP_FAILED:
  		alias_notify_device(iface->name, adev);
@@ -25,7 +25,7 @@ index ccae915..48e74d4 100644
  	case IFS_DOWN:
  		if (iface->main_dev.dev)
  			device_release(&iface->main_dev);
-+		__attribute__((fallthrough));
++		fallthrough;
  	case IFS_TEARDOWN:
  	default:
  		break;
@@ -37,7 +37,7 @@ index 2662216..f68aebf 100644
  			}
  		/* if no script task is running */
  		/* fall through */
-+			__attribute__((fallthrough));
++			fallthrough;
  		case S_IDLE:
  			action = "teardown";
  			state->renew_pending = false;
@@ -45,7 +45,7 @@ index 2662216..f68aebf 100644
  		if (task == &state->proto_task)
  			state->proto.proto_event(&state->proto, IFPEV_LINK_LOST);
  		/* fall through */
-+		__attribute__((fallthrough));
++		fallthrough;
  	case S_SETUP:
  		if (task == &state->proto_task)
  			proto_shell_handler(&state->proto, PROTO_CMD_TEARDOWN,
@@ -53,7 +53,7 @@ index 2662216..f68aebf 100644
  	case S_IDLE:
  		state->proto.proto_event(&state->proto, IFPEV_LINK_LOST);
  		/* fall through */
-+		__attribute__((fallthrough));
++		fallthrough;
  	case S_SETUP:
  		proto_shell_handler(&state->proto, PROTO_CMD_TEARDOWN, false);
  		break;
