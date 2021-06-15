@@ -700,6 +700,10 @@ This layer depends on the [meta-tanowrt](../meta-tanowrt/README.md) layer (TanoW
 
 Additional dependencies are listed here:
 
+* meta-arm  
+  URI: <git://git.yoctoproject.org/meta-arm>  
+  Branch: dunfell
+
 * meta-ti  
   URI: <git://git.yoctoproject.org/meta-ti>  
   Branch: dunfell
