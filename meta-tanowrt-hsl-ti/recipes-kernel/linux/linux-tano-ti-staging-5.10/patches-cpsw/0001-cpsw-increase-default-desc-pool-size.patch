@@ -12,15 +12,15 @@ diff --git a/drivers/net/ethernet/ti/cpsw_priv.h b/drivers/net/ethernet/ti/cpsw_
 index 77513d42b506..f5cb45cb40e1 100644
 --- a/drivers/net/ethernet/ti/cpsw_priv.h
 +++ b/drivers/net/ethernet/ti/cpsw_priv.h
-@@ -112,7 +112,7 @@ do {								\
+@@ -115,7 +115,7 @@ do {								\
  
  #define IRQ_NUM			2
  #define CPSW_MAX_QUEUES		8
 -#define CPSW_CPDMA_DESCS_POOL_SIZE_DEFAULT 256
 +#define CPSW_CPDMA_DESCS_POOL_SIZE_DEFAULT 2048
+ #define CPSW_ALE_AGEOUT_DEFAULT		10 /* sec */
  #define CPSW_FIFO_QUEUE_TYPE_SHIFT	16
  #define CPSW_FIFO_SHAPE_EN_SHIFT	16
- #define CPSW_FIFO_RATE_EN_SHIFT		20
 -- 
 2.17.1
 

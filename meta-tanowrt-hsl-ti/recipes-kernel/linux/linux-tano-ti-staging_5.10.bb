@@ -9,14 +9,14 @@
 SECTION = "kernel"
 DESCRIPTION = "Linux kernel for TI devices"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 KERNEL_SRC_URI ?= "git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git"
 KERNEL_SRC_BRANCH ?= "ti-linux-5.10.y"
 KERNEL_SRC_PROTOCOL ?= "git"
-KERNEL_SRC_SRCREV ?= "44fb363f878fa80d5b502291954bb83d9cae842b"
+KERNEL_SRC_SRCREV ?= "d85aee3e19aa7403bd157d2ae30917e736096a7f"
 
-LINUX_VERSION ?= "5.10.4"
+LINUX_VERSION ?= "5.10.30"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 

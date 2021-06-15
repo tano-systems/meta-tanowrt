@@ -7,32 +7,15 @@ See https://www.spinics.net/lists/netdev/msg389697.html.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- drivers/net/ethernet/ti/cpsw.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/ti/cpsw.c      | 4 ++--
+ drivers/net/ethernet/ti/cpsw_priv.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index 8a72c00214f5..664af782c8bc 100644
+index 3ae91da24a55..4f33650786b7 100644
 --- a/drivers/net/ethernet/ti/cpsw.c
 +++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -903,7 +903,7 @@ static irqreturn_t cpsw_tx_interrupt(int irq, void *dev_id)
- 		cpsw->tx_irq_disabled = true;
- 	}
- 
--	napi_schedule(&cpsw->napi_tx);
-+	napi_schedule_irqoff(&cpsw->napi_tx);
- 	return IRQ_HANDLED;
- }
- 
-@@ -919,7 +919,7 @@ static irqreturn_t cpsw_rx_interrupt(int irq, void *dev_id)
- 		cpsw->rx_irq_disabled = true;
- 	}
- 
--	napi_schedule(&cpsw->napi_rx);
-+	napi_schedule_irqoff(&cpsw->napi_rx);
- 	return IRQ_HANDLED;
- }
- 
-@@ -2968,7 +2968,7 @@ static int cpsw_probe(struct platform_device *pdev)
+@@ -1692,7 +1692,7 @@ static int cpsw_probe(struct platform_device *pdev)
  	 * first request and append them to irqs_table array.
  	 */
  	ret = devm_request_irq(dev, cpsw->irqs_table[0], cpsw_rx_interrupt,
@@ -41,7 +24,7 @@ index 8a72c00214f5..664af782c8bc 100644
  	if (ret < 0) {
  		dev_err(dev, "error attaching irq (%d)\n", ret);
  		goto clean_unregister_netdev_ret;
-@@ -2976,7 +2976,7 @@ static int cpsw_probe(struct platform_device *pdev)
+@@ -1700,7 +1700,7 @@ static int cpsw_probe(struct platform_device *pdev)
  
  
  	ret = devm_request_irq(dev, cpsw->irqs_table[1], cpsw_tx_interrupt,
@@ -50,6 +33,28 @@ index 8a72c00214f5..664af782c8bc 100644
  	if (ret < 0) {
  		dev_err(dev, "error attaching irq (%d)\n", ret);
  		goto clean_unregister_netdev_ret;
+diff --git a/drivers/net/ethernet/ti/cpsw_priv.c b/drivers/net/ethernet/ti/cpsw_priv.c
+index 9ffbfe833029..e864e2510f67 100644
+--- a/drivers/net/ethernet/ti/cpsw_priv.c
++++ b/drivers/net/ethernet/ti/cpsw_priv.c
+@@ -94,7 +94,7 @@ irqreturn_t cpsw_tx_interrupt(int irq, void *dev_id)
+ 		cpsw->tx_irq_disabled = true;
+ 	}
+ 
+-	napi_schedule(&cpsw->napi_tx);
++	napi_schedule_irqoff(&cpsw->napi_tx);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -110,7 +110,7 @@ irqreturn_t cpsw_rx_interrupt(int irq, void *dev_id)
+ 		cpsw->rx_irq_disabled = true;
+ 	}
+ 
+-	napi_schedule(&cpsw->napi_rx);
++	napi_schedule_irqoff(&cpsw->napi_rx);
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
-2.17.1
+2.25.1
 
