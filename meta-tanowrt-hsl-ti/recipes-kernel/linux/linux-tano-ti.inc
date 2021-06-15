@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".7"
+PR_append = ".8"
 
 COMPATIBLE_MACHINE = "(ti33x|omap-a15)"
 
@@ -51,3 +51,10 @@ KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 KERNEL_IMAGETYPE ?= "uImage"
 
 LINUX_VERSION_EXTENSION = "-tano-ti-${LINUX_KERNEL_TYPE}"
+
+# Special configuration for remoteproc/rpmsg IPC modules
+module_conf_rpmsg_client_sample = "blacklist rpmsg_client_sample"
+module_conf_ti_k3_r5_remoteproc = "softdep ti_k3_r5_remoteproc pre: virtio_rpmsg_bus"
+module_conf_ti_k3_dsp_remoteproc = "softdep ti_k3_dsp_remoteproc pre: virtio_rpmsg_bus"
+KERNEL_MODULE_PROBECONF += "rpmsg_client_sample ti_k3_r5_remoteproc ti_k3_dsp_remoteproc"
+KERNEL_MODULE_AUTOLOAD_append_j7 = " rpmsg_kdrv_switch"
