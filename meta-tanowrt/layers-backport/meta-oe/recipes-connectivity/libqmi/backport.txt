@@ -1,7 +1,5 @@
-﻿Recipe for libqmi 1.24.12 backported from meta-openembedded layer:
+﻿Recipe for libqmi 1.28.6 backported from meta-openembedded layer:
   repository: https://github.com/openembedded/meta-openembedded.git
   subdirectory: meta-oe
   branch: master
-  revision: 70e7be04979a9346518b66656053be48b74040af
-
-Recipe manually upgraded to version 1.26.0
+  revision: 9aabe2b4ee0d496a2f23cdc59221316b3d79107a
