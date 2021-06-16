@@ -9,9 +9,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS = "glib-2.0 glib-2.0-native libgudev"
 
-inherit autotools pkgconfig bash-completion
+inherit autotools pkgconfig bash-completion gobject-introspection
 
 SRC_URI = "http://www.freedesktop.org/software/${BPN}/${BPN}-${PV}.tar.xz"
-
-SRC_URI[md5sum] = "6c2b490af87773c8446f37536e7411ac"
-SRC_URI[sha256sum] = "32198c099987849c5f442d1cbf4b6e43e645cbdbe9cfdc197b19ddd63c6981e4"
+SRC_URI[sha256sum] = "02590736163fff10e5732191fccc1b9920969616ddc59613a003052a116a3c25"
