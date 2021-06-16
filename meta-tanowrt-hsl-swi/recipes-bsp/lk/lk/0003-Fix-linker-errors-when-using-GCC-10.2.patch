@@ -1,0 +1,127 @@
+From 121fb76c81043202d7ceb0c9712f9ff1be6e7089 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 17 Jun 2021 00:26:37 +0300
+Subject: [PATCH 3/3] Fix linker errors when using GCC 10.2
+
+Fixed 'multiple definition of' linker errors for symbols:
+  - scm_arg_type
+  - __stack_chk_guard
+  - tlmm_ebi2_drv_ctrl
+  - tlmm_sdc_drv_ctrl
+  - tlmm_pull_values
+  - tlmm_drive_config
+  - sdhci_resp_type
+  - sdhci_cmd_type
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/debug.h                     | 2 +-
+ kernel/main.c                       | 2 ++
+ platform/msm_shared/include/gpio.h  | 8 ++++----
+ platform/msm_shared/include/scm.h   | 2 +-
+ platform/msm_shared/include/sdhci.h | 4 ++--
+ 5 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/include/debug.h b/include/debug.h
+index 59e7731c..83b62b2e 100644
+--- a/include/debug.h
++++ b/include/debug.h
+@@ -71,7 +71,7 @@ void _panic(void *caller, const char *fmt, ...) __PRINTFLIKE(2, 3);
+ 
+ #define PANIC_UNIMPLEMENTED panic("%s unimplemented\n", __PRETTY_FUNCTION__)
+ 
+-uintptr_t __stack_chk_guard;
++extern uintptr_t __stack_chk_guard;
+ 
+ /*
+ * Initialize the stack protector canary value.
+diff --git a/kernel/main.c b/kernel/main.c
+index a40aa7d8..f348da7b 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -35,6 +35,8 @@
+ #include <kernel/dpc.h>
+ #include <boot_stats.h>
+ 
++uintptr_t __stack_chk_guard;
++
+ extern void *__ctor_list;
+ extern void *__ctor_end;
+ extern int __bss_start;
+diff --git a/platform/msm_shared/include/gpio.h b/platform/msm_shared/include/gpio.h
+index 123f9b07..62cb4972 100755
+--- a/platform/msm_shared/include/gpio.h
++++ b/platform/msm_shared/include/gpio.h
+@@ -33,7 +33,7 @@
+ #define TLMM_HDRV_MASK  0x7
+ 
+ /* Current values for tlmm pins */
+-enum {
++typedef enum {
+ 	TLMM_CUR_VAL_2MA = 0x0,
+ 	TLMM_CUR_VAL_4MA,
+ 	TLMM_CUR_VAL_6MA,
+@@ -44,14 +44,14 @@ enum {
+ 	TLMM_CUR_VAL_16MA,
+ } tlmm_drive_config;
+ 
+-enum {
++typedef enum {
+ 	TLMM_PULL_UP = 0x3,
+ 	TLMM_PULL_DOWN = 0x1,
+ 	TLMM_NO_PULL = 0x0,
+ } tlmm_pull_values;
+ 
+ /* SDC Bit offsets in the TLMM register */
+-enum {
++typedef enum {
+ 	SDC1_DATA_HDRV_CTL_OFF = 0,
+ 	SDC1_CMD_HDRV_CTL_OFF  = 3,
+ 	SDC1_CLK_HDRV_CTL_OFF  = 6,
+@@ -62,7 +62,7 @@ enum {
+ } tlmm_sdc_drv_ctrl;
+ 
+ /* EBI2 Bit offsets in the TLMM register */
+-enum {
++typedef enum {
+ 	EBI2_BUSY_HDRV_CTL_OFF = 29,
+ 	EBI2_WE_HDRV_CTL_OFF   = 24,
+ 	EBI2_OE_HDRV_CTL_OFF   = 9,
+diff --git a/platform/msm_shared/include/scm.h b/platform/msm_shared/include/scm.h
+index b4bc7de6..c4d79546 100644
+--- a/platform/msm_shared/include/scm.h
++++ b/platform/msm_shared/include/scm.h
+@@ -51,7 +51,7 @@
+ #define SCM_MAX_ARG_LEN                        5
+ #define SCM_INDIR_MAX_LEN                      10
+ 
+-enum
++typedef enum
+ {
+ 	SMC_PARAM_TYPE_VALUE = 0,
+ 	SMC_PARAM_TYPE_BUFFER_READ,
+diff --git a/platform/msm_shared/include/sdhci.h b/platform/msm_shared/include/sdhci.h
+index 77096bcb..f715950f 100644
+--- a/platform/msm_shared/include/sdhci.h
++++ b/platform/msm_shared/include/sdhci.h
+@@ -117,7 +117,7 @@ struct desc_entry {
+ /*
+  * Command types for sdhci
+  */
+-enum {
++typedef enum {
+ 	SDHCI_CMD_TYPE_NORMAL = 0,
+ 	SDHCI_CMD_TYPE_SUSPEND,
+ 	SDHCI_CMD_TYPE_RESUME,
+@@ -127,7 +127,7 @@ enum {
+ /*
+  * Response type values for sdhci
+  */
+-enum {
++typedef enum {
+ 	SDHCI_CMD_RESP_NONE = 0,
+ 	SDHCI_CMD_RESP_136,
+ 	SDHCI_CMD_RESP_48,
+-- 
+2.16.2.windows.1
+

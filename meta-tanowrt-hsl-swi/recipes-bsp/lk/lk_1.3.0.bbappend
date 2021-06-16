@@ -4,7 +4,7 @@
 #
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PR_append = ".0"
+PR_append = ".1"
 
 # Use STAGING_KERNEL_DIR for linux headers
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
@@ -18,6 +18,7 @@ SRCREV = "caebd0a5af84b33fefe7856e14f5daadf8189b84"
 SRC_URI += "\
 	file://0001-Disable-kernel-quiet-mode.patch \
 	file://0002-Fix-kernel-cmdline-appending.patch \
+	file://0003-Fix-linker-errors-when-using-GCC-10.2.patch \
 "
 
 INSANE_SKIP_${PN} += "already-stripped"

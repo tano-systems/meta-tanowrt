@@ -5,8 +5,5 @@
 	         name="legatoproject/meta-swi.git"
 	         remote="github"
 	         upstream="yocto-3.0-ref"
-	         revision="5103379d430b1cce80cf84c9f5764603f9b3a1ab" />
+	         revision="33b80a739ed47095f8a89ca0c6fae10346375800" />
 </manifest>
-
-
-

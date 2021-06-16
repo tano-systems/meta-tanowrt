@@ -13,7 +13,7 @@ SUMMARY = "Init scripts for Sierra Wireless devices"
 DESCRIPTION = "Initscripts provide the basic system startup initialization scripts for the Sierra Wireless systems."
 SECTION = "base"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 PR = "swi0"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

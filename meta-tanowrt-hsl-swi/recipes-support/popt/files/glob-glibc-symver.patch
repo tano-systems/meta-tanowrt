@@ -1,0 +1,13 @@
+Index: popt-1.18/poptconfig.c
+===================================================================
+--- popt-1.18.orig/src/poptconfig.c
++++ popt-1.18/src/poptconfig.c
+@@ -21,6 +21,8 @@ extern int fnmatch (const char *__patter
+ #if defined(HAVE_GLOB_H)
+ #include <glob.h>
+ 
++__asm__(".symver glob,glob@GLIBC_2.2.5");
++
+ #if !defined(__GLIBC__)
+ /* Return nonzero if PATTERN contains any metacharacters.
+    Metacharacters can be quoted with backslashes if QUOTE is nonzero.  */
