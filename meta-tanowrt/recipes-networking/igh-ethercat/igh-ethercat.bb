@@ -1,10 +1,10 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR = "tano3"
-PV = "1.5.2"
+PR = "tano4"
+PV = "1.5.2+git${SRCPV}"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
 HOMEPAGE = "http://etherlab.org/download/ethercat"
@@ -14,9 +14,11 @@ SECTION = "net"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "http://etherlab.org/download/ethercat/ethercat-${PV}.tar.bz2"
-SRC_URI[md5sum] = "6b4001f8d975865d74a0b108b3bdda3d"
-SRC_URI[sha256sum] = "5f34ef3a5e1b8666ae77650917d0ec6eb4d7a437b3b66ea667a61158c8f4e8c4"
+SRC_URI = "git://gitlab.com/etherlab.org/ethercat.git;protocol=https;branch=stable-1.5"
+
+# 09.06.2021
+# Ignore cmake output.
+SRCREV = "1fa5565aa0287223c937b7474d9926d08b9582e6"
 
 SRC_URI += "\
 	file://ethercatctl \
@@ -25,17 +27,10 @@ SRC_URI += "\
 "
 
 SRC_URI += "\
-	file://0001-Fixed-compilation-error-for-the-EtherCat-drivers.patch \
-	file://0002-Modify-the-example-code.patch \
-	file://0003-Fixed-error-that-the-EtherCat-can-not-load-the-modul.patch\
-	file://0004-Fixed-compilation-error-for-the-IGH-EtherCAT.patch \
-	file://0005-Replace-the-init_timer-with-timer_setup-function.patch \
-	file://1001-Fix-subdir-objects-configure-warning.patch \
-	file://1002-Add-support-for-5.x-kernels.patch \
 	file://1003-Fix-ethercat-tool-compilation.patch \
 "
 
-S = "${WORKDIR}/ethercat-${PV}"
+S = "${WORKDIR}/git"
 
 PACKAGECONFIG ??= "generic"
 
@@ -52,6 +47,12 @@ inherit autotools-brokensep pkgconfig module-base
 
 EXTRA_OECONF += "--with-linux-dir=${STAGING_KERNEL_BUILDDIR}"
 EXTRA_OECONF += "--with-module-dir=kernel/ethercat"
+
+do_configure_prepend() {
+	# Fixes configure error
+	# | Makefile.am: error: required file './ChangeLog' not found"
+	touch ChangeLog
+}
 
 do_compile_append() {
 	oe_runmake modules

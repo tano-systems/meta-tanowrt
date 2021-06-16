@@ -20,13 +20,12 @@ This is certainly not quite right, but it is a quick fix.
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  tool/Makefile.am  |  2 +-
- tool/Makefile.in  | 20 +++++-----
  tool/soe_errors.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+), 11 deletions(-)
+ 2 files changed, 97 insertions(+), 1 deletion(-)
  create mode 100644 tool/soe_errors.c
 
 diff --git a/tool/Makefile.am b/tool/Makefile.am
-index d2cc32a..80f61fd 100644
+index e13dbf1..ff8a308 100644
 --- a/tool/Makefile.am
 +++ b/tool/Makefile.am
 @@ -36,7 +36,7 @@ EXTRA_DIST =
@@ -37,66 +36,16 @@ index d2cc32a..80f61fd 100644
 +	soe_errors.c \
  	Command.cpp \
  	CommandAlias.cpp \
- 	CommandCStruct.cpp \
-diff --git a/tool/Makefile.in b/tool/Makefile.in
-index 64d551c..d069377 100644
---- a/tool/Makefile.in
-+++ b/tool/Makefile.in
-@@ -88,7 +88,7 @@ CONFIG_CLEAN_FILES =
- CONFIG_CLEAN_VPATH_FILES =
- am__installdirs = "$(DESTDIR)$(bindir)"
- PROGRAMS = $(bin_PROGRAMS)
--am__ethercat_SOURCES_DIST = ../master/soe_errors.c Command.cpp \
-+am__ethercat_SOURCES_DIST = soe_errors.c Command.cpp \
- 	CommandAlias.cpp CommandCStruct.cpp CommandConfig.cpp \
- 	CommandData.cpp CommandDebug.cpp CommandDomains.cpp \
- 	CommandDownload.cpp CommandFoeRead.cpp CommandFoeWrite.cpp \
-@@ -325,7 +325,7 @@ top_build_prefix = @top_build_prefix@
- top_builddir = @top_builddir@
- top_srcdir = @top_srcdir@
- EXTRA_DIST = $(am__append_2)
--ethercat_SOURCES = ../master/soe_errors.c Command.cpp CommandAlias.cpp \
-+ethercat_SOURCES = soe_errors.c Command.cpp CommandAlias.cpp \
- 	CommandCStruct.cpp CommandConfig.cpp CommandData.cpp \
- 	CommandDebug.cpp CommandDomains.cpp CommandDownload.cpp \
- 	CommandFoeRead.cpp CommandFoeWrite.cpp CommandGraph.cpp \
-@@ -505,19 +505,19 @@ distclean-compile:
- @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
- @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
- 
--soe_errors.o: ../master/soe_errors.c
--@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT soe_errors.o -MD -MP -MF $(DEPDIR)/soe_errors.Tpo -c -o soe_errors.o `test -f '../master/soe_errors.c' || echo '$(srcdir)/'`../master/soe_errors.c
-+soe_errors.o: soe_errors.c
-+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT soe_errors.o -MD -MP -MF $(DEPDIR)/soe_errors.Tpo -c -o soe_errors.o `test -f 'soe_errors.c' || echo '$(srcdir)/'`soe_errors.c
- @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/soe_errors.Tpo $(DEPDIR)/soe_errors.Po
--@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../master/soe_errors.c' object='soe_errors.o' libtool=no @AMDEPBACKSLASH@
-+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='soe_errors.c' object='soe_errors.o' libtool=no @AMDEPBACKSLASH@
- @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
--@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o soe_errors.o `test -f '../master/soe_errors.c' || echo '$(srcdir)/'`../master/soe_errors.c
-+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o soe_errors.o `test -f 'soe_errors.c' || echo '$(srcdir)/'`soe_errors.c
- 
--soe_errors.obj: ../master/soe_errors.c
--@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT soe_errors.obj -MD -MP -MF $(DEPDIR)/soe_errors.Tpo -c -o soe_errors.obj `if test -f '../master/soe_errors.c'; then $(CYGPATH_W) '../master/soe_errors.c'; else $(CYGPATH_W) '$(srcdir)/../master/soe_errors.c'; fi`
-+soe_errors.obj: soe_errors.c
-+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT soe_errors.obj -MD -MP -MF $(DEPDIR)/soe_errors.Tpo -c -o soe_errors.obj `if test -f 'soe_errors.c'; then $(CYGPATH_W) 'soe_errors.c'; else $(CYGPATH_W) '$(srcdir)/soe_errors.c'; fi`
- @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/soe_errors.Tpo $(DEPDIR)/soe_errors.Po
--@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../master/soe_errors.c' object='soe_errors.obj' libtool=no @AMDEPBACKSLASH@
-+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='soe_errors.c' object='soe_errors.obj' libtool=no @AMDEPBACKSLASH@
- @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
--@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o soe_errors.obj `if test -f '../master/soe_errors.c'; then $(CYGPATH_W) '../master/soe_errors.c'; else $(CYGPATH_W) '$(srcdir)/../master/soe_errors.c'; fi`
-+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o soe_errors.obj `if test -f 'soe_errors.c'; then $(CYGPATH_W) 'soe_errors.c'; else $(CYGPATH_W) '$(srcdir)/soe_errors.c'; fi`
- 
- .cpp.o:
- @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+ 	CommandCrc.cpp \
 diff --git a/tool/soe_errors.c b/tool/soe_errors.c
 new file mode 100644
-index 0000000..cdc186f
+index 0000000..835e724
 --- /dev/null
 +++ b/tool/soe_errors.c
 @@ -0,0 +1,96 @@
 +/******************************************************************************
 + *
-+ *  $Id: soe_errors.c,v 7b77000f9764 2010/03/19 11:01:32 fp $
++ *  $Id$
 + *
 + *  Copyright (C) 2006-2008  Florian Pose, Ingenieurgemeinschaft IgH
 + *
@@ -191,5 +140,5 @@ index 0000000..cdc186f
 +
 +/*****************************************************************************/
 -- 
-2.25.0.windows.1
+2.25.1
 
