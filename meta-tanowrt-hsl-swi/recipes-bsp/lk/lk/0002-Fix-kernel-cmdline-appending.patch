@@ -1,3 +1,13 @@
+From 277141a9a53a5d0bec10db90575352caf67fe454 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 17 Jun 2021 00:15:20 +0300
+Subject: [PATCH 2/3] Fix kernel cmdline appending
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ target/mdm9607/init.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
 diff --git a/target/mdm9607/init.c b/target/mdm9607/init.c
 index e3df4237..5c8240df 100755
 --- a/target/mdm9607/init.c
@@ -51,3 +61,6 @@ index e3df4237..5c8240df 100755
  		/*in success case buf will be freed in the calling function of this*/
  	return 0;
  }
+-- 
+2.16.2.windows.1
+

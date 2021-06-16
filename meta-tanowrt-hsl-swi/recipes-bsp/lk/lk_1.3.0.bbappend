@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -16,8 +16,8 @@ SRCREV = "caebd0a5af84b33fefe7856e14f5daadf8189b84"
 
 # Patches
 SRC_URI += "\
-	file://0001-disable-kernel-quiet-mode.patch \
-	file://0002-fix-cmdline-appending.patch \
+	file://0001-Disable-kernel-quiet-mode.patch \
+	file://0002-Fix-kernel-cmdline-appending.patch \
 "
 
 INSANE_SKIP_${PN} += "already-stripped"
