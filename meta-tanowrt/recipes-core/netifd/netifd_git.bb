@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano45"
+PR = "tano46"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -29,6 +29,7 @@ SRC_URI += "\
 	file://rootfs/etc/hotplug.d/net/20-smp-packet-steering \
 	file://rootfs/etc/init.d/network \
 	file://rootfs/etc/uci-defaults/14_migrate-dhcp-release \
+	file://rootfs/etc/uci-defaults/15_migrate-network-config \
 	file://rootfs/lib/netifd/proto/dhcp.sh \
 	file://rootfs/lib/netifd/dhcp.script \
 	file://rootfs/lib/network/config.sh \
@@ -36,6 +37,8 @@ SRC_URI += "\
 	file://rootfs/sbin/ifstatus \
 	file://rootfs/sbin/ifup \
 	file://rootfs/usr/share/udhcpc/default.script \
+	file://rootfs/usr/libexec/netifd-utils/netifd-config-migrate.sh \
+	file://rootfs/lib/upgrade/backup-scripts.d/15_migrate-network-config-at-boot \
 "
 
 # 08.06.2021
@@ -70,6 +73,7 @@ do_install_append() {
 
 	install -d ${D}${sysconfdir}/uci-defaults
 	install -m 0755 ${WORKDIR}/rootfs/etc/uci-defaults/14_migrate-dhcp-release ${D}${sysconfdir}/uci-defaults/
+	install -m 0755 ${WORKDIR}/rootfs/etc/uci-defaults/15_migrate-network-config ${D}${sysconfdir}/uci-defaults/
 
 	install -d ${D}${sysconfdir}/hotplug.d/iface
 	install -d ${D}${sysconfdir}/hotplug.d/net
@@ -94,6 +98,14 @@ do_install_append() {
 
 	install -d ${D}${datadir}/udhcpc
 	install -m 0755 ${WORKDIR}/rootfs/usr/share/udhcpc/default.script ${D}${datadir}/udhcpc
+
+	install -d ${D}${libexecdir}/netifd-utils
+	install -m 0755 ${WORKDIR}/rootfs/usr/libexec/netifd-utils/netifd-config-migrate.sh \
+		${D}${libexecdir}/netifd-utils/
+
+	install -d ${D}${base_libdir}/upgrade/backup-scripts.d
+	install -m 0755 ${WORKDIR}/rootfs/lib/upgrade/backup-scripts.d/15_migrate-network-config-at-boot \
+		${D}${base_libdir}/upgrade/backup-scripts.d/
 }
 
 ALTERNATIVE_${PN} = "ifup ifdown default.script"
@@ -112,6 +124,7 @@ FILES_${PN} += "\
 	${base_libdir}/netifd/netifd-proto.sh \
 	${base_libdir}/netifd/proto/dhcp.sh \
 	${base_libdir}/network/config.sh \
+	${base_libdir}/upgrade/backup-scripts.d/ \
 	${sysconfdir}/config/network \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "

@@ -1,0 +1,7 @@
+#
+# SPDX-License-Identifier: MIT
+# 
+# Copyright (C) 2021 Tano Systems LLC
+# Anton Kikin <a.kikin@tano-systems.com>
+#
+/usr/libexec/netifd-utils/netifd-config-migrate.sh
