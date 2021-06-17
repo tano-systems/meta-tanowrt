@@ -92,6 +92,22 @@ migrate_interfaces() {
 
 		MIGRATED_IFS=$((${MIGRATED_IFS} + 1))
 	fi
+
+	#
+	# This part is a from original:
+	# /etc/uci-defaults/14_migrate-dhcp-release
+	#
+	local proto
+	local release
+
+	config_get proto "$config" proto
+	config_get release "$config" release
+
+	[ "$proto" = "dhcp" ] && [ -n "$release" ] && {
+		norelease="$((!$release))"
+		uci_set network "$config" norelease "$norelease"
+		uci_remove network "$config" release
+	}
 }
 
 migrate_devices() {
