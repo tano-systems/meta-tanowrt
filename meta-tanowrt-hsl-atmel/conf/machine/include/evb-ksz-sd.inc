@@ -24,6 +24,7 @@ KERNEL_MKIMAGE_TYPES = "ext4"
 #
 # Image
 #
+IMAGE_CLASSES += "wic-sdcard-img"
 IMAGE_FSTYPES += "wic"
 WKS_FILE = "sdimage-at91-swu-a-b.wks.in"
 WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
