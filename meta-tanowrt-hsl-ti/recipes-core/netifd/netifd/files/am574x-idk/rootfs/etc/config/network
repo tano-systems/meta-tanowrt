@@ -1,20 +1,25 @@
 config interface loopback
-	option ifname        'lo'
+	option device        'lo'
 	option proto         'static'
 	option ipaddr        '127.0.0.1'
 	option netmask       '255.0.0.0'
 
-config interface lan
-	option ifname        'eth0 eth1'
+config device
+	option name          'br-lan'
 	option type          'bridge'
+	option stp           '1'
+	option igmp_snooping '1'
+	list ports           'eth0'
+	list ports           'eth1'
+
+config interface lan
+	option device        'br-lan'
 	option proto         'static'
 	option ipaddr        '192.168.0.1'
 	option netmask       '255.255.255.0'
-	option stp           '1'
-	option igmp_snooping '1'
 
 config interface usb0
-	option ifname        'usb0'
+	option device        'usb0'
 	option proto         'static'
 	option ipaddr        '172.16.0.1'
 	option netmask       '255.255.255.0'
