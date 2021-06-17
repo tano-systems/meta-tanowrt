@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano47"
+PR = "tano48"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -40,9 +40,9 @@ SRC_URI += "\
 	file://rootfs/lib/upgrade/backup-scripts.d/15_migrate-network-config-at-boot \
 "
 
-# 08.06.2021
-# wireless: add some comments to functions
-SRCREV_netifd = "f12b073c0cc3b1ee8d652a342505ae0b14856c18"
+# 17.06.2021
+# bridge: fix setting pvid for updated vlans
+SRCREV_netifd = "b0d0906883021baca9ef6e80ba0480ac3e2a4b7a"
 
 S = "${WORKDIR}/git"
 
