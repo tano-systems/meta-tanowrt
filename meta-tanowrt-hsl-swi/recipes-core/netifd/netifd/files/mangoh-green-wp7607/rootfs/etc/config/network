@@ -3,18 +3,22 @@
 # mangOH Green with Sierra Wireless WP7607
 #
 config interface loopback
-	option ifname        'lo'
+	option device        'lo'
 	option proto         'static'
 	option ipaddr        '127.0.0.1'
 	option netmask       '255.0.0.0'
 
-config interface lan
-	option ifname        'eth0'
+config device
+	option name          'br-lan'
 	option type          'bridge'
+	option stp           '0'
+	list ports           'eth0'
+
+config interface lan
+	option device        'br-lan'
 	option proto         'static'
 	option ipaddr        '192.168.10.1'
 	option netmask       '255.255.255.0'
-	option stp           '0'
 	option metric        '10'
 	option force_link    '0'
 
