@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2018-2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 ##########################################################################
@@ -193,6 +193,35 @@ mstpd_configure_port()
 
 ##########################################################################
 #
+# Find UCI device section for specified bridge interface name
+#
+# Arguments:
+#   $1 - destination variable to store UCI section ID
+#   $2 - bridge system interface name
+#
+##########################################################################
+mstpd_find_br_uci_section()
+{
+	local destvar="$1"
+	local br_sysname="$2"
+
+	section_check()
+	{
+		local cfg="${1}"
+		local device_name
+		config_get device_name "$cfg" "name"
+
+		if [ "${device_name}" = "${br_sysname}" ]; then
+			eval export -- "${destvar}=${cfg}"
+		fi
+	}
+
+	config_load "network"
+	config_foreach section_check "device"
+}
+
+##########################################################################
+#
 # Configure bridge by mstpctl tool
 #
 # Arguments:
@@ -214,7 +243,16 @@ mstpd_configure_bridge()
 		return 1
 	fi
 
-	local if_type="$(uci_get network.${br_ifname}.type)"
+	local br_uci_section
+	mstpd_find_br_uci_section br_uci_section "${br_sysname}"
+
+	if [ -z "${br_uci_section}" ]; then
+		${MSTPCTL_BIN} delbridge "$br_sysname"
+		mstpd_log_info "lib: bridge '$br_sysname' deleted (no UCI device section)"
+		return 1
+	fi
+
+	local if_type="$(uci_get network.${br_uci_section}.type)"
 	if [ "$if_type" != "bridge" ]; then
 		${MSTPCTL_BIN} delbridge "$br_sysname"
 		mstpd_log_info "lib: bridge '$br_sysname' deleted (not a bridge)"
@@ -222,7 +260,7 @@ mstpd_configure_bridge()
 	fi
 
 	# Check that bridge has enabled STP
-	local if_stp="$(uci_get network.${br_ifname}.stp)"
+	local if_stp="$(uci_get network.${br_uci_section}.stp)"
 	if [ "$if_stp" != "1" ] && [ "$if_stp" != "on" ]; then
 		${MSTPCTL_BIN} delbridge "$br_sysname"
 		mstpd_log_info "lib: bridge '$br_sysname' deleted (has no enabled STP)"
@@ -235,6 +273,8 @@ mstpd_configure_bridge()
 
 		return 1
 	fi
+
+	config_load "mstpd"
 
 	config_get mstpctl_forcevers   "$br_ifname" 'forcevers'
 	config_get mstpctl_maxwait     "$br_ifname" 'maxwait'
