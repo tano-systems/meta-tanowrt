@@ -4,4 +4,4 @@
 #
 # EVB-KSZ9477 DTB/DTBO configuration setup
 #
-setenv bootconfigs "#conf@at91-evb-ksz9563.dtb";
+setenv bootconfigs "#conf-at91-evb-ksz9563.dtb";
