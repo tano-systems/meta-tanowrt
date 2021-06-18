@@ -3,7 +3,7 @@
 # Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
 #
 
-INC_PR = "6"
+INC_PR = "7"
 
 # OpenWrt files
 SRC_URI_append = "\
@@ -43,6 +43,7 @@ SRC_URI_append = "\
 	file://600-allow-blank-root-password.patch \
 	file://900-configure-hardening.patch \
 	file://901-bundled-libs-cflags.patch \
+	file://910-signkey-fix-use-of-rsa-sha2-256-pubkeys.patch \
 "
 
 # Tano patches
