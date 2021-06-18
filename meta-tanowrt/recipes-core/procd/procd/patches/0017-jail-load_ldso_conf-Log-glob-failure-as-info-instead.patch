@@ -1,7 +1,7 @@
-From f5d2d0c67e674fe7d975ab4559603bec18012cf0 Mon Sep 17 00:00:00 2001
+From 86fc7ee0c9c97e5765e179b0f9d66ad1f54a1b17 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 20 Nov 2020 20:23:06 +0300
-Subject: [PATCH 17/21] jail: load_ldso_conf: Log glob failure as info instead
+Subject: [PATCH 17/24] jail: load_ldso_conf: Log glob failure as info instead
  of error
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>

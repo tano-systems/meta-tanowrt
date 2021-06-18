@@ -1,0 +1,60 @@
+From 593be9b96d4258af0f2dfb2cf1beaa91ca7938c7 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 14 Jun 2021 14:35:46 +0300
+Subject: [PATCH 24/24] Fix compilation with GCC 10
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ jail/cgroups.c     | 2 +-
+ service/validate.c | 5 ++++-
+ uxc.c              | 3 +++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/jail/cgroups.c b/jail/cgroups.c
+index 68bd189..3a99e88 100644
+--- a/jail/cgroups.c
++++ b/jail/cgroups.c
+@@ -569,7 +569,7 @@ static int parseOCIlinuxcgroups_legacy_cpu(struct blob_attr *msg)
+ 	struct blob_attr *tb[__OCI_LINUX_CGROUPS_CPU_MAX];
+ 	uint64_t shares, period = 0;
+ 	int64_t quota = -2; /* unset */
+-	char tmp[32] = { 0 };
++	char tmp[64] = { 0 };
+ 
+ 	blobmsg_parse(oci_linux_cgroups_cpu_policy, __OCI_LINUX_CGROUPS_CPU_MAX, tb, blobmsg_data(msg), blobmsg_len(msg));
+ 
+diff --git a/service/validate.c b/service/validate.c
+index cf04490..6f262fe 100644
+--- a/service/validate.c
++++ b/service/validate.c
+@@ -149,8 +149,11 @@ service_validate_add(struct service *s, struct blob_attr *msg)
+ 
+ 		vr->avl.key = vr->option = option;
+ 		vr->rule = rule;
+-		strcpy(vr->option, blobmsg_name(cur));
+ 		strcpy(vr->rule, blobmsg_get_string(cur));
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Warray-bounds"
++		strcpy(vr->option, blobmsg_name(cur));
++#pragma GCC diagnostic pop
+ 		if (avl_insert(&v->rules, &vr->avl))
+ 			free(vr);
+ 	}
+diff --git a/uxc.c b/uxc.c
+index 54dd7c3..26501ec 100644
+--- a/uxc.c
++++ b/uxc.c
+@@ -184,7 +184,10 @@ runtime_alloc(const char *container_name)
+ 	struct runtime_state *s;
+ 	char *new_name;
+ 	s = calloc_a(sizeof(*s), &new_name, strlen(container_name) + 1);
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Warray-bounds"
+ 	strcpy(new_name, container_name);
++#pragma GCC diagnostic pop
+ 	s->container_name = new_name;
+ 	s->avl.key = s->container_name;
+ 	return s;
+-- 
+2.16.2.windows.1
+

@@ -1,7 +1,7 @@
-From c561c1e3c46cf9613ac90a75bd00b4d351cc95bc Mon Sep 17 00:00:00 2001
+From f49a142877922b3c33e99e9d3be5b30c662c1532 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Mar 2021 18:01:05 +0300
-Subject: [PATCH 22/22] system: Add optional delay parameter to system.reboot
+Subject: [PATCH 22/24] system: Add optional delay parameter to system.reboot
  method
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -65,5 +65,5 @@ index d9c632f..a875637 100644
  	UBUS_METHOD("signal", proc_signal, signal_policy),
  	UBUS_METHOD("validate_firmware_image", validate_firmware_image, validate_firmware_image_policy),
 -- 
-2.28.0.windows.1
+2.16.2.windows.1
 

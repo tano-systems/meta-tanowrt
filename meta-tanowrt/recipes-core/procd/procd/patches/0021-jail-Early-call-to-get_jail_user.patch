@@ -1,7 +1,7 @@
-From 0c49c0f57bda3d7249f92496f6aac71c986556dd Mon Sep 17 00:00:00 2001
+From fed1c86cd7f1fb8d275d92ecc0ca482a294390bf Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Mar 2021 03:41:22 +0300
-Subject: [PATCH 21/21] jail: Early call to get_jail_user()
+Subject: [PATCH 21/24] jail: Early call to get_jail_user()
 
 This move of the get_jail_user function call resolves a strange
 problem with a later call:

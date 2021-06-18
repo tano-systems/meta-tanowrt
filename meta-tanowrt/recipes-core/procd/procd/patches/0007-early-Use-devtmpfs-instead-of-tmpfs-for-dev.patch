@@ -1,7 +1,7 @@
-From f66b440e54fa044637b9d79eba15a60da24304a6 Mon Sep 17 00:00:00 2001
+From f7d833b3c2996c38c9a19c92a2b99e9c8856835a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Jul 2019 05:40:01 +0300
-Subject: [PATCH 07/21] early: Use devtmpfs instead of tmpfs for /dev
+Subject: [PATCH 07/24] early: Use devtmpfs instead of tmpfs for /dev
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

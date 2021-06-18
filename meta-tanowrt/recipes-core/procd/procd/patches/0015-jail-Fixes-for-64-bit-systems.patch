@@ -1,7 +1,7 @@
-From 2352b4ab960c4b652ef4a10e2678c1001c97f83b Mon Sep 17 00:00:00 2001
+From 3667e9f57781cd5acf10ab0ff056e46ea99e4343 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 21:16:30 +0300
-Subject: [PATCH 15/21] jail: Fixes for 64-bit systems
+Subject: [PATCH 15/24] jail: Fixes for 64-bit systems
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

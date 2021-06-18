@@ -1,7 +1,7 @@
-From 82960277c1126af6f6ae3fc6c0835c07489b8b6a Mon Sep 17 00:00:00 2001
+From 72bbe8f9247bac2ca6a1c87bf9c537ad1e0a6459 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 07:08:10 +0300
-Subject: [PATCH 14/21] build: Fix building in OE environment
+Subject: [PATCH 14/24] build: Fix building in OE environment
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

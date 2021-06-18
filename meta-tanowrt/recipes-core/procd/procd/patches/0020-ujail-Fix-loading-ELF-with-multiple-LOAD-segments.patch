@@ -1,7 +1,7 @@
-From 4df5428110ec336fac164393ddeaa5f0ff1cd6a5 Mon Sep 17 00:00:00 2001
+From a94f06a34391d9f3c843676f2c79fd58f3669a28 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 24 Feb 2021 17:13:46 +0300
-Subject: [PATCH 20/21] ujail: Fix loading ELF with multiple LOAD segments
+Subject: [PATCH 20/24] ujail: Fix loading ELF with multiple LOAD segments
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

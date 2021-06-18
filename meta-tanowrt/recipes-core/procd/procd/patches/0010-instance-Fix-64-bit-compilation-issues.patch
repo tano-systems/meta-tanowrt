@@ -1,7 +1,7 @@
-From fc43ebc423d1e7970b8e1584bf83c040b75280ee Mon Sep 17 00:00:00 2001
+From a2ea93bc88642a029e7fc1bebc893d8a6591d6de Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:14:48 +0300
-Subject: [PATCH 10/21] instance: Fix 64-bit compilation issues
+Subject: [PATCH 10/24] instance: Fix 64-bit compilation issues
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
