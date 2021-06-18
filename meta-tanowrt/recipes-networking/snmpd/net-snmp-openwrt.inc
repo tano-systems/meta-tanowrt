@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "2"
+INC_PR = "3"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
@@ -21,6 +21,8 @@ SRC_URI += "\
 	file://snmpd.config \
 	file://snmpd.init \
 	file://snmptrapd.init \
+	file://000-cross-compile.patch \
+	file://010-HOST-MIB-hr_filesys-fix-compile-error.patch \
 	file://100-debian-statistics.patch \
 	file://110-debian-makefiles.patch \
 	file://120-debian-searchdirs.patch \

@@ -1,0 +1,165 @@
+diff --git a/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c b/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
+index 03f5411..263527d 100644
+--- a/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
++++ b/agent/mibgroup/etherlike-mib/data_access/dot3stats_linux.c
+@@ -129,6 +129,9 @@ dot3stats_interface_ioctl_ifindex_get (int fd, const char *name) {
+     struct ifreq    ifrq;
+     int rc = 0;
+ 
++    if (netsnmp_access_interface_ignore(name))
++        return 0;
++
+     if (!netsnmp_access_interface_include(name))
+         return 0;
+ 
+diff --git a/agent/mibgroup/if-mib/data_access/interface.c b/agent/mibgroup/if-mib/data_access/interface.c
+index 01e771c..d41ce10 100644
+--- a/agent/mibgroup/if-mib/data_access/interface.c
++++ b/agent/mibgroup/if-mib/data_access/interface.c
+@@ -39,6 +39,7 @@ netsnmp_feature_require(interface_arch_set_admin_status);
+ static netsnmp_conf_if_list *conf_list = NULL;
+ static int need_wrap_check = -1;
+ static int _access_interface_init = 0;
++static netsnmp_ignore_if_list *ignore_list;
+ static netsnmp_include_if_list *include_list;
+ static int ifmib_max_num_ifaces = 0;
+ 
+@@ -53,6 +54,8 @@ static void _access_interface_entry_save_name(const char *name, oid index);
+ static void _parse_interface_config(const char *token, char *cptr);
+ static void _parse_ifmib_max_num_ifaces(const char *token, char *cptr);
+ static void _free_interface_config(void);
++static void _parse_ignore_if_config(const char *token, char *cptr);
++static void _free_ignore_if_config(void);
+ static void _parse_include_if_config(const char *token, char *cptr);
+ static void _free_include_if_config(void);
+ 
+@@ -82,6 +85,11 @@ init_interface(void)
+                                   NULL,
+                                   "IF-MIB MAX Number of ifaces");
+ 
++    snmpd_register_config_handler("ignore_if",
++                                  _parse_ignore_if_config,
++                                  _free_ignore_if_config,
++                                  "IF-MIB iface names ignored");
++
+     snmpd_register_config_handler("include_ifmib_iface_prefix",
+                                   _parse_include_if_config,
+                                   _free_include_if_config,
+@@ -828,6 +836,21 @@ int netsnmp_access_interface_max_reached(const char *name)
+     return FALSE;
+ }
+ 
++int netsnmp_access_interface_ignore(const char * name)
++{
++    netsnmp_ignore_if_list * if_ptr;
++
++    netsnmp_assert(1 == _access_interface_init);
++    if(NULL == name)
++        return 0;
++
++    for (if_ptr = ignore_list; if_ptr; if_ptr = if_ptr->next)
++        if (memcmp(name, if_ptr->name, strlen(if_ptr->name)) == 0)
++            return 1;
++
++    return 0;
++}
++
+ /*
+  * include_ifmib_iface_prefix config token
+  *
+@@ -971,6 +994,57 @@ _parse_ifmib_max_num_ifaces(const char *token, char *cptr)
+     ifmib_max_num_ifaces = temp_max;
+ }
+ 
++/*
++ * ignore interface config token
++ */
++static void
++_parse_ignore_if_config(const char *token, char *cptr)
++{
++    netsnmp_ignore_if_list *if_ptr, *if_new;
++    char                   *name, *st;
++
++    name = strtok_r(cptr, " \t", &st);
++    if (!name) {
++        config_perror("Missing NAME parameter");
++        return;
++    }
++    if_ptr = ignore_list;
++    while (if_ptr)
++        if (strcmp(if_ptr->name, name))
++            if_ptr = if_ptr->next;
++        else
++            break;
++    if (if_ptr) {
++        config_pwarn("Duplicate ignore interface specification");
++        return;
++    }
++    if_new = SNMP_MALLOC_TYPEDEF(netsnmp_ignore_if_list);
++    if (!if_new) {
++        config_perror("Out of memory");
++        return;
++    }
++    if_new->name = strdup(name);
++    if (!if_new->name) {
++        config_perror("Out of memory");
++        free(if_new);
++        return;
++    }
++    if_new->next = ignore_list;
++    ignore_list = if_new;
++}
++
++static void
++_free_ignore_if_config(void)
++{
++    netsnmp_ignore_if_list   *if_ptr = ignore_list, *if_next;
++    while (if_ptr) {
++        if_next = if_ptr->next;
++        free(NETSNMP_REMOVE_CONST(char *, if_ptr->name));
++        free(if_ptr);
++        if_ptr = if_next;
++    }
++    ignore_list = NULL;
++}
+ 
+ /*
+  * include interface config token
+diff --git a/agent/mibgroup/if-mib/data_access/interface_linux.c b/agent/mibgroup/if-mib/data_access/interface_linux.c
+index 3abb205..9a05c9a 100644
+--- a/agent/mibgroup/if-mib/data_access/interface_linux.c
++++ b/agent/mibgroup/if-mib/data_access/interface_linux.c
+@@ -721,6 +721,9 @@ netsnmp_arch_interface_container_load(netsnmp_container* container,
+          */
+         *stats++ = 0; /* null terminate name */
+ 
++        if (netsnmp_access_interface_ignore(ifstart))
++            continue;
++
+ 	if (!netsnmp_access_interface_include(ifstart))
+ 		continue;
+ 
+diff --git a/include/net-snmp/data_access/interface.h b/include/net-snmp/data_access/interface.h
+index 233d0d8..ebc5631 100644
+--- a/include/net-snmp/data_access/interface.h
++++ b/include/net-snmp/data_access/interface.h
+@@ -210,6 +210,11 @@ typedef struct _conf_if_list {
+ 
+     typedef netsnmp_conf_if_list conf_if_list; /* backwards compat */
+ 
++typedef struct _ignore_if_list {
++    const char             *name;
++    struct _ignore_if_list *next;
++} netsnmp_ignore_if_list;
++
+ typedef struct _include_if_list {
+ #if HAVE_PCRE_H
+     pcre                    *regex_ptr;
+@@ -300,6 +305,7 @@ netsnmp_conf_if_list *
+ netsnmp_access_interface_entry_overrides_get(const char * name);
+ 
+ int netsnmp_access_interface_include(const char * name);
++int netsnmp_access_interface_ignore(const char * name);
+ int netsnmp_access_interface_max_reached(const char * name);
+ 
+ /**---------------------------------------------------------------------*/
