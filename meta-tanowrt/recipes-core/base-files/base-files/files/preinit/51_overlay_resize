@@ -62,7 +62,21 @@ get_part_disk() {
 }
 
 do_overlay_resize() {
-	local OVERLAY_INFO=$(${BIN_BLOCK} info | grep "LABEL=\"rootfs_data\"")
+	. /lib/functions.sh
+	. /lib/upgrade/common.sh
+
+	local ROOT_DEVICE=""
+	export_bootdevice
+	export_partdevice ROOT_DEVICE 0
+
+	if [ "${ROOT_DEVICE}" = "" ]; then
+		echo "overlay-resize: Cannot find root device" > /dev/kmsg
+		return
+	fi
+
+	echo "overlay-resize: Root device ${ROOT_DEVICE}" > /dev/kmsg
+
+	local OVERLAY_INFO=$(${BIN_BLOCK} info | grep "LABEL=\"rootfs_data\"" | grep "${ROOT_DEVICE}")
 	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
 	local PARTITION="${OVERLAY_DEVICE#/dev/}"
 
@@ -83,6 +97,11 @@ do_overlay_resize() {
 	fi
 
 	echo "overlay-resize: Overlay partition /dev/${PARTITION} (disk /dev/${DISK})" > /dev/kmsg
+
+	if [ ! -d "/sys/block/${DISK}/${PARTITION}" ]; then
+		echo "overlay-resize: Detected invalid disk or/and partition" > /dev/kmsg
+		return
+	fi
 
 	local PARTITION_NUMBER=$(cat /sys/block/${DISK}/${PARTITION}/partition)
 	local PARTITION_START_S=$(cat /sys/block/${DISK}/${PARTITION}/start)
