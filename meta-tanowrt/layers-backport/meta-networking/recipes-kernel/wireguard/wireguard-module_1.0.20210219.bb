@@ -1,6 +1,6 @@
 require wireguard.inc
 
-SRCREV = "fe402261666821514377d06c2c68ed9bc19e7634"
+SRCREV = "122f06bfd8fc7b06a0899fa9adc4ce8e06900d98"
 
 SRC_URI = "git://git.zx2c4.com/wireguard-linux-compat"
 
@@ -21,13 +21,6 @@ MAKE_TARGETS = "module"
 RRECOMMENDS_${PN} = "kernel-module-xt-hashlimit"
 MODULE_NAME = "wireguard"
 
-# Kernel module packages MUST begin with 'kernel-module-', otherwise
-# multilib image generation can fail.
-#
-# The following line is only necessary if the recipe name does not begin
-# with kernel-module-.
-PKG_${PN} = "kernel-module-${MODULE_NAME}"
-
 module_do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/${MODULE_NAME}
     install -m 0644 ${MODULE_NAME}.ko \
@@ -38,3 +31,4 @@ module_do_install() {
 # OE-core post dunfell has moved to use kernel 5.8 which now means we cant build this module in world builds
 # for reference machines e.g. qemu
 EXCLUDE_FROM_WORLD = "1"
+

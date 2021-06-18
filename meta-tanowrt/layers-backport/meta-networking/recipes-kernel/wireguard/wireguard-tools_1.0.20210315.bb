@@ -1,6 +1,6 @@
 require wireguard.inc
 
-SRCREV = "7a321ce808ef9cec1f45cce92befcc9e170d3aa9"
+SRCREV = "622408872fd6f3a58e98e88d39d30e98968314fa"
 SRC_URI = "git://git.zx2c4.com/wireguard-tools"
 
 inherit bash-completion systemd pkgconfig
