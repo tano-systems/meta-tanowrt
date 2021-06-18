@@ -10,6 +10,8 @@ the SV frames and the TLV type is different for different modes.
 So fix this by updating the value at Linux PRP driver as well when
 agent update the MIB variable for duplcate discard mode.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../IEC-62439-3-MIB/lre_config_interface_access.c      | 18 ++++++++++++++----

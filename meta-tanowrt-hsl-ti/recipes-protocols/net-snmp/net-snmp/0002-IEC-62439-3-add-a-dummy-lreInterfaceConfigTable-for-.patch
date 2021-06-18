@@ -6,6 +6,8 @@ Subject: [PATCH 02/12] IEC-62439-3: add a dummy lreInterfaceConfigTable for
 
 For now just return hard coded values.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  agent/mibgroup/iec-62439-3-mib.h                   |   1 +

@@ -3,6 +3,8 @@ From: Murali Karicheri <m-karicheri2@ti.com>
 Date: Wed, 14 Jun 2017 19:11:25 -0400
 Subject: [PATCH 13/14] IEC-62439-3-MIB: Add command to set HSR mode
 
+Upstream-Status: Pending
+
 ---
  agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c | 9 +++++++++
  1 file changed, 9 insertions(+)

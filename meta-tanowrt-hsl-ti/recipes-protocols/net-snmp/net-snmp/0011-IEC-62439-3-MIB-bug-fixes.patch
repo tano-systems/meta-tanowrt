@@ -10,6 +10,8 @@ Following changes added:-
   3. Removed some debug prints.
   4. Added some error handling code.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          | 419 ++++++++++-----------

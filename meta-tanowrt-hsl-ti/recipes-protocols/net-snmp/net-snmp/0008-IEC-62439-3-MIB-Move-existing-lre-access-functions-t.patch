@@ -8,6 +8,8 @@ Add the existing functions to retrieve lre information from Linux kernel
 to the lre_config_interface_access.c library file. Also use access
 functions instead of hardcoded values in the load function().
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          | 389 ++-------------------

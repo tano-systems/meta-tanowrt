@@ -6,6 +6,8 @@ Subject: [PATCH 01/12] IEC-62439-3: add initial support for hsr/prp mib
 
 Add the MIB text file and implement the lreManufacturerName scalar
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  agent/mibgroup/iec-62439-3-mib.h                   |    6 +

@@ -9,6 +9,8 @@ of slave interfaces from linux Ethernet interfaces and using that
 instead of hard coded values. We still have some of the hard coded
 values in place which needs to be updated later.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          | 375 ++++++++++++++-------

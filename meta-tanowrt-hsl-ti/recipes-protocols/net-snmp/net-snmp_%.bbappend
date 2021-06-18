@@ -1,8 +1,8 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".ti0"
+PR_append = ".ti1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -21,9 +21,10 @@ SRC_URI_append = " \
     file://0012-IEC-62439-3-MIB-Fix-index-issue-in-table-implementat.patch \
     file://0013-IEC-62439-3-MIB-Add-command-to-set-HSR-mode.patch \
     file://0014-IEC-62439-3-MIB-add-license-header-to-sources.patch \
-    file://0001-IEC-62439-3-MIB-fix-lreManufacturerName-displaying-d.patch \
-    file://0001-IEC-62439-3-MIB-fix-duplicate-discard-mode-setting-f.patch \
-    file://0001-hsr-prp-update-to-retrieve-mibs-from-main-interface.patch \
+    file://0015-IEC-62439-3-MIB-fix-lreManufacturerName-displaying-d.patch \
+    file://0016-IEC-62439-3-MIB-fix-duplicate-discard-mode-setting-f.patch \
+    file://0017-hsr-prp-update-to-retrieve-mibs-from-main-interface.patch \
+    file://0018-IEC-62439-3-MIB-update-to-work-with-iproute2-changes.patch \
 "
 
 PACKAGECONFIG[iec-62439-3-mib] = "--with-mib-modules=iec-62439-3-mib,,,"

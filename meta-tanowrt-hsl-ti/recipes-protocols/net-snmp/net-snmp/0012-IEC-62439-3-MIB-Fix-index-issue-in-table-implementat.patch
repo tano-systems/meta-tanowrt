@@ -7,6 +7,8 @@ Subject: [PATCH 12/12] IEC-62439-3-MIB: Fix index issue in table
 It is recommended to avoid starting various table indexes from
 zero. So fix this in the table implementations.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable/lreInterfaceConfigTable_data_access.c   | 6 +++---

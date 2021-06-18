@@ -9,6 +9,8 @@ Linux with dots as
 Linux...........................................................
 This patch fixes this issue.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  agent/mibgroup/IEC-62439-3-MIB/lreManufacturerName.c | 2 +-

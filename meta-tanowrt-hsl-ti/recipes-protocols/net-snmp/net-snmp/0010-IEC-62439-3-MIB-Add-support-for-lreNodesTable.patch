@@ -6,6 +6,8 @@ Subject: [PATCH 10/12] IEC-62439-3-MIB: Add support for lreNodesTable
 This add support for lreNodesTable. This is a temporary change
 to allow doing protocol testing.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceStatsTable_data_access.c           | 437 ++++++++-------------

@@ -12,6 +12,8 @@ slave device within kernel and retrieved for offload devices).
 Interface used is changed to procfs instead of debugfs as
 the latter can't be used for production code.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          |  18 ++-

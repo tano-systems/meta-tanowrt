@@ -3,6 +3,8 @@ From: Murali Karicheri <m-karicheri2@ti.com>
 Date: Thu, 11 May 2017 16:14:19 -0400
 Subject: [PATCH 05/12] IEC-62439-3-MIB: refractor code for re-use
 
+Upstream-Status: Pending
+
 ---
  .../lreInterfaceConfigTable_data_access.c          | 270 ++++++++++++---------
  1 file changed, 150 insertions(+), 120 deletions(-)

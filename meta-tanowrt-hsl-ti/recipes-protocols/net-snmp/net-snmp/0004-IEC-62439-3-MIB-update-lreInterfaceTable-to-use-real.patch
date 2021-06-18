@@ -13,6 +13,8 @@ hard coded values for
 The same is retrieved from Linux kernel using ip command and parse the
 output of the command.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          | 282 +++++++++++++++------

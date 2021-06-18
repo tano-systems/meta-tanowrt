@@ -11,6 +11,8 @@ data access methods to implement the table. So switch to MFD based code
 generated mib2c tool using mib2c.mfd.conf. Add dummy values for now
 to test the initial version.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../defaults/node-lreDupListResideMaxTime.m2d      |   35 +
@@ -9228,9 +9230,9 @@ index 0000000..bf42819
 +
 +#include "lreInterfaceConfigTable_interface.h"
 +
-+netsnmp_feature_require(baby_steps)
-+netsnmp_feature_require(row_merge)
-+netsnmp_feature_require(check_all_requests_error)
++netsnmp_feature_require(baby_steps);
++netsnmp_feature_require(row_merge);
++netsnmp_feature_require(check_all_requests_error);
 +
 +#include <ctype.h>
 +

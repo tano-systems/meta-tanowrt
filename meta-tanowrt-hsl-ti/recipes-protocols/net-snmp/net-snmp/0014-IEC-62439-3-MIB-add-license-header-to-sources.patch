@@ -6,6 +6,8 @@ Subject: [PATCH 14/14] IEC-62439-3-MIB:: add license header to sources
 This will add license headers to individual new files created
 to support the agent module for IEC-62439-3
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../defaults/node-lreDupListResideMaxTime.m2d      | 323 +++++++++++

@@ -8,6 +8,8 @@ for the MIBs. Also set cache timeout to zero as we want to see real
 values, not cached ones. Fixed a bug causing SET commands failing due to
 incorrect option checking.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../lreInterfaceConfigTable_data_access.c          |  5 +-

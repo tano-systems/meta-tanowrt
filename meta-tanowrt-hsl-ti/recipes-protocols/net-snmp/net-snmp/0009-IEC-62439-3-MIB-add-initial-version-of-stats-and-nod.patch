@@ -7,6 +7,8 @@ Subject: [PATCH 09/12] IEC-62439-3-MIB: add initial version of stats and
 Using mib2c, generate the template code for lreInterface_statsTable
 and lreNodesTable.
 
+Upstream-Status: Pending
+
 Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 ---
  .../defaults/node-lreCntDuplicateA.m2d             |   35 +
@@ -5555,9 +5557,9 @@ index 0000000..0c25604
 +
 +#include "lreInterfaceStatsTable_interface.h"
 +
-+netsnmp_feature_require(baby_steps)
-+netsnmp_feature_require(row_merge)
-+netsnmp_feature_require(check_all_requests_error)
++netsnmp_feature_require(baby_steps);
++netsnmp_feature_require(row_merge);
++netsnmp_feature_require(check_all_requests_error);
 +
 +#include <ctype.h>
 +
@@ -9369,9 +9371,9 @@ index 0000000..3a61fd7
 +
 +#include "lreNodesTable_interface.h"
 +
-+netsnmp_feature_require(baby_steps)
-+netsnmp_feature_require(row_merge)
-+netsnmp_feature_require(check_all_requests_error)
++netsnmp_feature_require(baby_steps);
++netsnmp_feature_require(row_merge);
++netsnmp_feature_require(check_all_requests_error);
 +
 +#include <ctype.h>
 +

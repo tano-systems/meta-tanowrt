@@ -1,0 +1,71 @@
+From 317969a2da988c35733d3db66d1703a48bc34bba Mon Sep 17 00:00:00 2001
+From: Murali Karicheri <m-karicheri2@ti.com>
+Date: Thu, 6 Aug 2020 15:41:49 -0400
+Subject: [PATCH] IEC-62439-3-MIB: update to work with iproute2 changes for prp
+ interface
+
+The ip -d link command now shows prp interface type as hsr, but an
+additional parameter proto set to 1. So add the logic to detect prp
+interface by checking the value of proto.
+
+Upstream-Status: Pending
+
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
+---
+ .../mibgroup/IEC-62439-3-MIB/lre_config_interface.h |  1 +
+ .../IEC-62439-3-MIB/lre_config_interface_access.c   | 13 +++++++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+index 2f458f4b4674..65496a2b316d 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface.h
+@@ -346,6 +346,7 @@ enum lre_interface_param_index {
+ 	INDEX_HSR_PRP_MAC_ADDRESS,
+ 	INDEX_HSR_PRP_SLAVE1_IF_NAME,
+ 	INDEX_HSR_PRP_SLAVE2_IF_NAME,
++	INDEX_HSR_PRP_PROTO,
+ 	INDEX_HSR_PRP_LAST
+ };
+ 
+diff --git a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+index b4b876df3f4f..9689adf37766 100644
+--- a/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
++++ b/agent/mibgroup/IEC-62439-3-MIB/lre_config_interface_access.c
+@@ -500,6 +500,13 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ 					     strcpy(node->slave2_if_name, token);
+ 					     param_index++;
+ 					     break;
++					case INDEX_HSR_PRP_PROTO:
++					     if (!strcmp(token, "1")) {
++						 /* PRP */
++						 strcpy(node->type, "prp");
++					     }
++					     param_index++;
++					     break;
+ 					default:
+ 					     ;
+ 				};
+@@ -508,8 +515,7 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ 		if (!strcmp(token, "link/ether"))
+ 			marker_index = index + 1;
+ 
+-		if (!strcmp(token, "prp") ||
+-		    !strcmp(token, "hsr")) {
++		if (!strcmp(token, "hsr")) {
+ 			strcpy(node->type, token);
+ 			marker_index = index + 1;
+ 		}
+@@ -517,6 +523,9 @@ static int lre_get_hsr_prp_node_info(char *interface, struct lre_node_s *node)
+ 		if (!strcmp(token, "slave2"))
+ 			marker_index = index + 1;
+ 
++		if (!strcmp(token, "proto"))
++			marker_index = index + 1;
++
+ 	        token = strtok_r(NULL, " ", &save);
+ 		index++;
+ 	}
+-- 
+2.17.1
+
