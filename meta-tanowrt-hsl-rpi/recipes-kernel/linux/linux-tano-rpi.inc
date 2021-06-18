@@ -19,7 +19,7 @@ KERNEL_FEATURES_append = " gpio-gpiolib.scc "
 
 PE = "1"
 PV = "${LINUX_VERSION}"
-PR_append = ".3"
+PR_append = ".4"
 
 inherit kernel siteinfo
 

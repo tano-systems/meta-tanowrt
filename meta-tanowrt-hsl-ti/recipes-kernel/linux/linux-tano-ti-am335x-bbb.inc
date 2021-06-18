@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".1"
+PR_append = ".2"
 
 KCONFIG_MODE = "--alldefconfig"
 
