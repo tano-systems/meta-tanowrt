@@ -1,9 +1,13 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".5"
+PR_append = ".6"
+
+KERNEL_FEATURES_append = "\
+	features/kernel-3.18/nf_tables/nf_tables.scc \
+"
 
 SRC_URI_append = "\
 	file://600-netfilter_conntrack_flush.patch \
