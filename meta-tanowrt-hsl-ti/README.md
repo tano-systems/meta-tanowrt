@@ -606,7 +606,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt-hsl-ti/manifests/tanowrt.xml \
-          -b dunfell
+          -b hardknott
 ```
 
 Synchronize all repositories by executing a command:
@@ -702,11 +702,11 @@ Additional dependencies are listed here:
 
 * meta-arm  
   URI: <git://git.yoctoproject.org/meta-arm>  
-  Branch: dunfell
+  Branch: hardknott
 
 * meta-ti  
   URI: <git://git.yoctoproject.org/meta-ti>  
-  Branch: dunfell
+  Branch: hardknott
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 

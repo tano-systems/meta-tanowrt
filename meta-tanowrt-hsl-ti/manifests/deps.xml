@@ -4,13 +4,13 @@
 	<project path="meta-arm"
 	         name="meta-arm"
 	         remote="yoctoproject"
-	         upstream="dunfell"
-	         revision="f7c5e7d5094f65d105d9d580ba59527c25fb0d0f" />
+	         upstream="hardknott"
+	         revision="9851e5714ab4b7145045d898c8f92849ddabe412" />
 
 	<!-- meta-ti -->
 	<project path="meta-ti"
 	         name="meta-ti"
 	         remote="yoctoproject"
-	         upstream="dunfell"
-	         revision="94bd05eda5baa9c84e97a053292bf32adee7985f" />
+	         upstream="hardknott"
+	         revision="d54da744941ff97f2502bad2d7c51c5387bde929" />
 </manifest>
