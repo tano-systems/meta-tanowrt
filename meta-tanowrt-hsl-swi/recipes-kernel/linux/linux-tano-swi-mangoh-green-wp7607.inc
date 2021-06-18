@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".2"
+PR_append = ".3"
 
 # Config
 SRC_URI_append_mangoh-green-wp7607 = "\
