@@ -3,12 +3,13 @@
 # Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".7"
+PR_append = ".8"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 	features/kernel-4.14+/fs/overlayfs-extra.scc \
 	features/kernel-4.1+/vdso.scc \
+	features/kernel-5.3+/nf_tables/nf_tables.scc \
 "
 
 KERNEL_FEATURES_append_qemuall = " features/drm-bochs/drm-bochs.scc "
