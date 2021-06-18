@@ -11,7 +11,7 @@ PR = "tano13"
 DESCRIPTION = "cfg80211 is the Linux wireless LAN (802.11) configuration API"
 SUMMARY = "Wireless configuration API"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 RDEPENDS_${PN} += "iw wireless-regdb-static"
@@ -24,9 +24,12 @@ SRC_URI = "\
 	file://files/lib/netifd/wireless/mac80211.sh \
 	file://files/lib/netifd/mac80211.sh \
 	file://files/lib/wifi/mac80211.sh \
+	file://LICENSE \
 "
 
 FILES_${PN} = "${sysconfdir}/hotplug.d/ieee80211 ${base_libdir}/"
+
+S = "${WORKDIR}"
 
 do_compile[noexec] = "1"
 do_configure[noexec] = "1"

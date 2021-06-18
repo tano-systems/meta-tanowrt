@@ -4,8 +4,10 @@
 SUMMARY = "/etc/urandom.seed handling for OpenWrt"
 SECTION = "base"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 PR = "tano0"
+
+S = "${WORKDIR}"
 
 RDEPENDS_${PN} += "getrandom"
 
@@ -15,6 +17,7 @@ SRC_URI += "\
 	file://rootfs/etc/init.d/urandom_seed \
 	file://rootfs/lib/preinit/81_urandom_seed \
 	file://rootfs/sbin/urandom_seed \
+	file://LICENSE \
 "
 
 inherit tanowrt-services

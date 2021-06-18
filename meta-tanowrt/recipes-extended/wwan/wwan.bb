@@ -6,7 +6,7 @@ PR = "tano5"
 
 DESCRIPTION = "Generic OpenWrt 3G/4G proto handler"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net/misc"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
@@ -16,7 +16,10 @@ SRC_URI += "\
 	file://wwan.usb \
 	file://wwan.usbmisc \
 	file://data/data.zip;name=data;subdir=data \
+	file://LICENSE \
 "
+
+S = "${WORKDIR}"
 
 SRC_URI[data.md5sum] = "477aabf75258536005d58aef9b0d59d8"
 

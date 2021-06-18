@@ -12,7 +12,7 @@ PR = "tano0"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 DEPENDS += "iptables ipset"
@@ -40,6 +40,7 @@ SRC_URI = "\
 	file://usr/sbin/mwan3track \
 	file://usr/sbin/mwan3rtmon \
 	file://src/sockopt_wrap.c \
+	file://LICENSE \
 "
 
 inherit tanowrt-services

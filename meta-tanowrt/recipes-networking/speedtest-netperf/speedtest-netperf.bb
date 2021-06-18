@@ -11,7 +11,7 @@ PR = "tano0"
 
 DESCRIPTION = "Script to measure the performance of your network and router"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
@@ -22,6 +22,7 @@ RDEPENDS_${PN} += "netperf"
 
 SRC_URI = "\
 	file://speedtest-netperf.sh \
+	file://LICENSE \
 "
 
 S = "${WORKDIR}"

@@ -12,14 +12,14 @@ inherit allarch
 
 DESCRIPTION = "Virtual eXtensible LAN config support"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 inherit kmod/vxlan
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "file://vxlan.sh"
+SRC_URI = "file://vxlan.sh file://LICENSE"
 
 FILES_${PN} += "${base_libdir}/netifd/proto/"
 

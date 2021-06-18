@@ -12,7 +12,7 @@ PR = "tano3"
 
 DESCRIPTION = "QoS scripts"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 RDEPENDS_${PN} += "\
@@ -39,6 +39,7 @@ SRC_URI = "\
 	file://qos-stat \
 	file://tcrules.awk \
 	file://generate.sh \
+	file://LICENSE \
 "
 
 inherit tanowrt-services
