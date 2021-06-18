@@ -19,8 +19,10 @@ COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563"
 
 DEPENDS += "python3-native"
 
-PR_append = ".tano0"
+PR_append = ".tano1"
 AT91BOOTSTRAP_LOCALVERSION = "-git${SRCPV}-${PR}"
+
+SRC_URI += "file://0001-Makefile-Remove-nostartfiles-from-LDFLAGS.patch"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"

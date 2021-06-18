@@ -386,7 +386,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt-hsl-atmel/manifests/tanowrt.xml \
-          -b dunfell
+          -b hardknott
 ```
 
 Synchronize all repositories by executing a command:
@@ -455,7 +455,7 @@ Additional dependencies are listed here:
 
 * meta-atmel  
   URI: <https://github.com/linux4sam/meta-atmel.git>  
-  Branch: dunfell
+  Branch: hardknott
 
 The current exact revisions of all listed dependencies are given in [manifests/deps.xml](manifests/deps.xml).
 

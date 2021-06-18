@@ -4,6 +4,6 @@
 	<project path="meta-atmel"
 	         name="linux4sam/meta-atmel"
 	         remote="github"
-	         upstream="dunfell"
-	         revision="f58454f0cffb29c210b0d8bdd474ddcfb656d21d" />
+	         upstream="master"
+	         revision="4cf59bc866e9a0934bda0cf47c547945f449c800" />
 </manifest>
