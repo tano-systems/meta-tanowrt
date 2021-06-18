@@ -1,6 +1,0 @@
-Recipes for wireguard-module 1.0.20210219 and wireguard-tools 1.0.20210315
-backported from meta-networking layer:
-  repository: https://github.com/openembedded/meta-openembedded.git
-  subdirectory: meta-networking
-  branch: master
-  revision: 9ee0e08ba2395b9cb93f2273bb1018adb3630407

@@ -1,4 +1,0 @@
-Recipe for iproute2 5.11.0 backported from openembedded-core layer:
-  repository: git://git.openembedded.org/openembedded-core
-  branch: master
-  revision: 6ca1047e98a1c8bc305a3f40ad1919c5038e1698

@@ -1,4 +1,0 @@
-Recipe for cryptodev 1.11 backported from openembedded-core layer:
-  repository: git://git.openembedded.org/openembedded-core
-  branch: master
-  revision: c2d9612279fce9cbcb738913b2042949f692c4a5

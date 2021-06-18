@@ -1,4 +1,0 @@
-Recipe for iw 5.9 backported from openembedded-core layer:
-  repository: git://git.openembedded.org/openembedded-core
-  branch: master
-  revision: 65e36f3f95ccc0b0902c7943df3db39917717a1e
