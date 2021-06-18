@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano2"
+PR_append = ".tano3"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -13,7 +13,6 @@ SRC_URI += "\
 
 # Patches
 SRC_URI += "\
-	file://001-devlink-update-include-files.patch \
 	file://100-configure.patch \
 	file://110-darwin_fixes.patch \
 	file://115-add-config-xtlibdir.patch \
@@ -28,6 +27,7 @@ SRC_URI += "\
 	file://175-reduce-dynamic-syms.patch \
 	file://180-drop_FAILED_POLICY.patch \
 	file://200-drop_libbsd_dependency.patch \
+	file://300-selinux-configurable.patch \
 "
 
 do_install_append() {
