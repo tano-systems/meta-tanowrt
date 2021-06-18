@@ -4,6 +4,6 @@
 	<project path="meta-qt5"
 	         name="meta-qt5/meta-qt5"
 	         remote="github"
-	         upstream="dunfell"
-	         revision="0d8eb956015acdea7e77cd6672d08dce18061510" />
+	         upstream="hardknott"
+	         revision="a00af3eae082b772469d9dd21b2371dd4d237684" />
 </manifest>

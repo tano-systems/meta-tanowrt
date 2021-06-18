@@ -8,6 +8,6 @@
 	<project path="meta-tanowrt"
 	         name="meta-tanowrt"
 	         remote="tano-private"
-	         upstream="dunfell-dev"
-	         revision="refs/heads/dunfell-dev" />
+	         upstream="hardknott-dev"
+	         revision="refs/heads/hardknott-dev" />
 </manifest>

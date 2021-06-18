@@ -117,7 +117,7 @@ The following credentials are used by default to access the operating system (te
 
 ## 5 Limitations
 
-Works with OE Release 3.1 (Dunfell).
+Works with OE Release 3.3 (Hardknott).
 
 ## 6 License
 

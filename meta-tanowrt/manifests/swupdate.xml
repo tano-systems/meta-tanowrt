@@ -4,6 +4,6 @@
 	<project path="meta-swupdate"
 	         name="sbabic/meta-swupdate"
 	         remote="github"
-	         upstream="dunfell"
-	         revision="a9bfb4f69a459a87b9f3fec190b5d8e9eaad2538" />
+	         upstream="hardknott"
+	         revision="2c2c57d3aaae42999b6ef6dcdf67fe52b12735c3" />
 </manifest>

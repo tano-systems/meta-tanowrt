@@ -1,18 +1,18 @@
-From 79dd412baa3c2040e7651c6fd586a8d968f4a6fb Mon Sep 17 00:00:00 2001
+From 0c59d0b1c68b9fbe60deacf29f9217a45bea4577 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 4 Feb 2019 19:20:28 +0300
 Subject: [PATCH 1/2] Change configuration paths
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- libopkg/opkg_conf.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ libopkg/opkg_conf.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
-index 0f65cab..ae48870 100644
+index 28e0624..e0f9f0f 100644
 --- a/libopkg/opkg_conf.h
 +++ b/libopkg/opkg_conf.h
-@@ -35,12 +35,12 @@ extern "C" {
+@@ -37,12 +37,12 @@ extern "C" {
  #define OPKG_CONF_TMP_DIR_SUFFIX "opkg-XXXXXX"
  #define OPKG_BACKUP_SUFFIX "-opkg.backup"
  

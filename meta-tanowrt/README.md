@@ -61,7 +61,7 @@ Go to the created working directory and execute repo tool:
 cd ~/tanowrt
 repo init -u https://github.com/tano-systems/meta-tanowrt \
           -m meta-tanowrt/manifests/tanowrt.xml \
-          -b dunfell
+          -b hardknott
 ```
 
 Synchronize all repositories by executing a command:
@@ -146,35 +146,35 @@ The current exact revisions of all listed dependencies are given in [manifests/t
 * openembedded-core  
   URI: <git://git.openembedded.org/openembedded-core.git>  
   Subdirectory: meta  
-  Branch: dunfell  
+  Branch: hardknott  
 * meta-openembedded  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-oe  
-  Branch: dunfell  
+  Branch: hardknott  
 * meta-python  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-python  
-  Branch: dunfell  
+  Branch: hardknott  
 * meta-networking  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-networking  
-  Branch: dunfell  
+  Branch: hardknott  
 * meta-filesystems  
   URI: <git://git.openembedded.org/meta-openembedded.git>  
   Subdirectory: meta-filesystems  
-  Branch: dunfell  
+  Branch: hardknott  
 * meta-swupdate  
   URI: <git://github.com/sbabic/meta-swupdate.git>  
-  Branch: dunfell  
+  Branch: hardknott  
 * bitbake  
   URI: <git://git.openembedded.org/bitbake>  
-  Branch: 1.46  
+  Branch: 1.50  
 
 ### 8.2 Optional (depending on the image and/or machine)
 
 * meta-qt5  
   URI: <git://github.com/meta-qt5/meta-qt5.git>  
-  Branch: dunfell  
+  Branch: hardknott  
 
 ## 9 License
 

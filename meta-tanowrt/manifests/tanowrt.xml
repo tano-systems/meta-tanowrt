@@ -10,6 +10,6 @@
 	<project path="meta-tanowrt"
 	         name="meta-tanowrt"
 	         remote="tano-public"
-	         upstream="dunfell"
-	         revision="refs/heads/dunfell" />
+	         upstream="hardknott"
+	         revision="refs/heads/hardknott" />
 </manifest>

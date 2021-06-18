@@ -1,10 +1,10 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019, 2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano4"
+PR_append = ".tano5"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 OPKGLIBDIR = "${libdir}"
