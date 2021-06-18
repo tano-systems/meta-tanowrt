@@ -4,11 +4,11 @@
 # Open source VPN solution using SSL
 # OpenWrt recipe
 #
-# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "10"
+INC_PR = "11"
 
 inherit tanowrt-services
 
@@ -40,7 +40,6 @@ PACKAGECONFIG ??= "\
 	ssl \
 	lzo \
 	lz4 \
-	server \
 	iproute2 \
 	fragment \
 	multihome \
@@ -49,12 +48,11 @@ PACKAGECONFIG ??= "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '', '', d)} \
 "
 
-PACKAGECONFIG[ssl]                   = "--enable-crypto,--disable-crypto,openssl"
+PACKAGECONFIG[ssl]                   = ",,openssl"
 PACKAGECONFIG[small]                 = "--enable-small,,"
 PACKAGECONFIG[lzo]                   = "--enable-lzo,--disable-lzo,lzo"
 PACKAGECONFIG[lz4]                   = "--enable-lz4,--disable-lz4,lz4"
 PACKAGECONFIG[pam]                   = "--enable-plugin-auth-pam,--disable-plugin-auth-pam,libpam"
-PACKAGECONFIG[server]                = "--enable-server,--disable-server,"
 PACKAGECONFIG[mgmt]                  = "--enable-management,--disable-management,"
 PACKAGECONFIG[fragment]              = "--enable-fragment,--disable-fragment,"
 PACKAGECONFIG[multihome]             = "--enable-multihome,--disable-multihome,"
