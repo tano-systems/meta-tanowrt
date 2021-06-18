@@ -4,6 +4,6 @@
 	<project path="meta-raspberrypi"
 	         name="meta-raspberrypi"
 	         remote="yoctoproject"
-	         upstream="dunfell"
-	         revision="987993209716302eb8f314f69a2a3340555f94d8" />
+	         upstream="hardknott"
+	         revision="064f5404ea90f02bd15088de6317692098d9f770" />
 </manifest>

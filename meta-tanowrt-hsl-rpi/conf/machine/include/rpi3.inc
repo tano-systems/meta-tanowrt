@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
 MACHINEOVERRIDES =. "rpi3:raspberrypi3:"
 require conf/machine/raspberrypi3.conf
@@ -14,8 +14,8 @@ WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rpi"
 PREFERRED_VERSION_linux-tano-rpi = "5.10.%"
-LINUXLIBCVERSION = "5.4%"
-SDKLINUXLIBCVERSION = "5.4%"
+LINUXLIBCVERSION = "5.10%"
+SDKLINUXLIBCVERSION = "5.10%"
 WIREGUARD_PATCH_RPI_4_19 = "0"
 
 # Set to "1" for kernels 5.6+
@@ -77,7 +77,9 @@ SPLASH = "psplash"
 IMAGE_FEATURES += "splash"
 
 RPI_USE_U_BOOT = "1"
-RPI_CMDLINE = "root=/dev/mmcblk0p2 ro rootfstype=squashfs rootwait"
+
+# Used in rpi-cmdline recipe
+CMDLINE_ROOTFS = "root=/dev/mmcblk0p2 ro rootfstype=squashfs rootwait"
 
 GPU_MEM ?= "256"
 ENABLE_UART ?= "1"
