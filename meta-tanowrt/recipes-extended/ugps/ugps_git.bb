@@ -4,7 +4,7 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano7"
+PR = "tano8"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
 	file://ugps.init \
 "
 
-# 07.06.2021
-# ubus: display only available information
-SRCREV = "5e88403fc0d39ae8a270d2c6c6e9c8a4d5232cf3"
+# 19.06.2021
+# add support for multi GNSS solutions
+SRCREV = "350b960b6f8b08409dcef719ef1e1e0c8911040f"
 
 S = "${WORKDIR}/git"
 
