@@ -7,11 +7,11 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 PACKAGES = "${PN} cgi-swupdate cgi-swupdate-dbg"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
+PACKAGE_ARCH = "${TUNE_PKGARCH}"
 
 RDEPENDS_${PN} += "cgi-swupdate"
 
