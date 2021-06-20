@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Kernel configuration dependencies
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Example:
 #
@@ -20,7 +20,7 @@
 #
 inherit kernel-config
 
-KERNEL_KMOD_MUTE_RECOMMENDATION_WARNINGS ?= "0"
+KERNEL_KMOD_MUTE_RECOMMENDATION_WARNINGS ?= "1"
 
 def get_op_ver(s, d):
     i = s.replace(" ", "")
