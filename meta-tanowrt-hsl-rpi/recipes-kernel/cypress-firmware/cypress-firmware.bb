@@ -16,7 +16,7 @@ LIC_FILES_CHKSUM = "file://firmware/LICENCE;md5=cbc5f665d04f741f1e006d2096236ba7
 
 inherit allarch
 
-SRC_URI = "https://community.cypress.com/servlet/JiveServlet/download/19375-1-53475/cypress-fmac-${PKG_VERSION}.zip;unpack=0"
+SRC_URI = "https://community.cypress.com/gfawx74859/attachments/gfawx74859/resourcelibrary/1016/1/cypress-fmac-v5.4.18-2020_0402.zip;unpack=0"
 SRC_URI[sha256sum] = "b12b0570f462c2f3c26dde98b10235a845a7109037def1e7e51af728bcc1a958"
 
 do_configure[noexec] = "1"
