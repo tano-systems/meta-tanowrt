@@ -4,7 +4,7 @@
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano8"
+PR = "tano9"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
