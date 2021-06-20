@@ -94,6 +94,8 @@ DISTRO_EXTRA_RRECOMMENDS += "openssh-sftp-server"
 # Enable cryptodev/devcrypto engine in OpenSSL
 PACKAGECONFIG_append_pn-openssl = " cryptodev-linux"
 
+INHERIT += "do-populate-lic-deps"
+
 #
 # QEMU
 #
