@@ -1,0 +1,75 @@
+From 7325b76b40163a749e4cc7b35c5f0def45c70417 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 21 Jun 2021 17:59:28 +0300
+Subject: [PATCH] Fix MIME type detection for files with dots in name
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ file.c | 36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
+
+diff --git a/file.c b/file.c
+index abb5edc..4e3eb62 100644
+--- a/file.c
++++ b/file.c
+@@ -288,37 +288,41 @@ uh_path_lookup(struct client *cl, const char *url)
+ 
+ static const char * uh_file_mime_lookup(const char *path)
+ {
+-	const struct mimetype *m = &uh_mime_types[0];
++	const struct mimetype *m;
+ 
+ 	const char *ext;
+ 	size_t extlen = 0;
+ 	int gz = 0;
+-	
+-	if (!(ext = strrchr(path, '/')))
+-		return 0;
+ 
+-	if (!(ext = strchr(ext, '.')))
++	if (!(ext = strrchr(path, '/')))
+ 		return 0;
+ 
+ 	if (strcasecmp(strrchr(ext, '.'), ".gz") == 0)
+ 		gz = 1;
+ 
+-	/* Skip dot in extension */
+-	ext++;
++	while (ext) {
++		if (!(ext = strchr(ext, '.')))
++			return 0;
+ 
+-	extlen = strlen(ext);
++		/* Skip dot in extension */
++		ext++;
+ 
+-	while (m->extn) {
+-		if (strcasecmp(ext, m->extn) == 0) {
+-			return m->mime;
+-		}
+-		else if (gz) {
+-			if ((extlen >= 3) && (strncasecmp(ext, m->extn, extlen - 3) == 0)) {
++		extlen = strlen(ext);
++
++		m = &uh_mime_types[0];
++
++		while (m->extn) {
++			if (strcasecmp(ext, m->extn) == 0) {
+ 				return m->mime;
+ 			}
+-		}
++			else if (gz) {
++				if ((extlen >= 3) && (strncasecmp(ext, m->extn, extlen - 3) == 0)) {
++					return m->mime;
++				}
++			}
+ 
+-		m++;
++			m++;
++		}
+ 	}
+ 
+ 	return 0;
+-- 
+2.28.0.windows.1
+
