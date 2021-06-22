@@ -51,7 +51,8 @@ KERNEL_BOOT_OPTIONS = "earlyprintk=serial,ttyHSL1,115200 loglevel=7 \
   rootwait rootflags=bulk_read root=/dev/ubiblock0_0 ro rootfstype=squashfs \
   ubi.mtd=13,4096 ubi.block=0,rootfs \
   ubi.mtd=16,4096 \
-  overlay_partition=userapp_vol0 \
+  rootfs_partition=system rootfs_volume=rootfs \
+  overlay_partition=userapp overlay_volume=userapp_vol0 \
   console=ttyHSL1,115200 ima_ready=${ENABLE_IMA} \
 "
 
