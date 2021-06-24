@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano48"
+PR = "tano49"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -38,6 +38,10 @@ SRC_URI += "\
 	file://rootfs/usr/share/udhcpc/default.script \
 	file://rootfs/usr/libexec/netifd-utils/netifd-config-migrate.sh \
 	file://rootfs/lib/upgrade/backup-scripts.d/15_migrate-network-config-at-boot \
+"
+
+SRC_URI += "\
+	file://0001-system-linux-Disable-IFLA_VXLAN_GBP-support-for-kern.patch \
 "
 
 # 17.06.2021
