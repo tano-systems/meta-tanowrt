@@ -1,0 +1,29 @@
+From fd6fc55c40f6018efede2618735d1bcd2c6abdba Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 24 Jun 2021 05:17:17 +0300
+Subject: [PATCH] libc-compat.h: prevent redefinition of in6_addr, sockaddr_in6
+ and ipv6_mreq structs
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/uapi/linux/libc-compat.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/uapi/linux/libc-compat.h b/include/uapi/linux/libc-compat.h
+index 00d3700..cc0c551 100644
+--- a/include/uapi/linux/libc-compat.h
++++ b/include/uapi/linux/libc-compat.h
+@@ -56,8 +56,8 @@
+ #define __UAPI_DEF_ETHHDR 1
+ #endif
+ 
+-/* Coordinate with libc net/if.h header. */
+-#if defined(_NET_IF_H)
++/* Coordinate with libc net/if.h and netinet/in.h headers. */
++#if defined(_NET_IF_H) || defined(_NETINET_IN_H)
+ 
+ /* LIBC headers included first so don't define anything
+  * that would already be defined. */
+-- 
+2.16.2.windows.1
+
