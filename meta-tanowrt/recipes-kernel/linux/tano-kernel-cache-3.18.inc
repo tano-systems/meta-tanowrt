@@ -3,7 +3,7 @@
 # Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".6"
+PR_append = ".7"
 
 KERNEL_FEATURES_append = "\
 	features/kernel-3.18/nf_tables/nf_tables.scc \
@@ -23,4 +23,6 @@ SRC_URI_append = "\
 	file://662-use_fq_codel_by_default.patch \
 	file://663-remove_pfifo_fast.patch \
 	file://681-NET-add-of_get_mac_address_mtd.patch \
+	file://910-kobject_uevent.patch \
+	file://911-kobject_add_broadcast_uevent.patch \
 "
