@@ -14,7 +14,7 @@ an overkill for OpenWrt simple needs."
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://gpio-button-hotplug.c;beginline=1;endline=15;md5=708871d134fc952ce42b3a8d8e4e128e"
 
-PR = "tano0"
+PR = "tano1"
 
 inherit module
 
