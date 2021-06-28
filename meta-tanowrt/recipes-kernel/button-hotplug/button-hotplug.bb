@@ -9,7 +9,7 @@ If your device uses GPIO buttons, see gpio-button-hotplug."
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://button-hotplug.c;beginline=1;endline=14;md5=9d49062ff157cf40a36da911cc3de4f5"
 
-PR = "tano0"
+PR = "tano1"
 
 inherit module
 

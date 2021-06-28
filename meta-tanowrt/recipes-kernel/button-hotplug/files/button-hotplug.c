@@ -139,6 +139,10 @@ static int button_hotplug_fill_event(struct bh_event *event)
 	if (ret)
 		return ret;
 
+	ret = bh_event_add_var(event, 0, "DEVPATH=%s", "/class/input/button-hotplug");
+	if (ret)
+		return ret;
+
 	ret = bh_event_add_var(event, 0, "ACTION=%s", event->action);
 	if (ret)
 		return ret;
@@ -165,7 +169,7 @@ static void button_hotplug_work(struct work_struct *work)
 	if (!event->skb)
 		goto out_free_event;
 
-	ret = bh_event_add_var(event, 0, "%s@", event->action);
+	ret = bh_event_add_var(event, 0, "%s@/", event->action);
 	if (ret)
 		goto out_free_skb;
 
