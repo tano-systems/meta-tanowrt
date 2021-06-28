@@ -5,3 +5,6 @@ SUBSYSTEM=="net", RUN+="/sbin/hotplug-call net"
 SUBSYSTEM=="tty", RUN+="/sbin/hotplug-call tty"
 SUBSYSTEM=="usb", RUN+="/sbin/hotplug-call usb"
 SUBSYSTEM=="usbmisc", RUN+="/sbin/hotplug-call usbmisc"
+
+# Call button scripts
+SUBSYSTEM=="button", ENV{BUTTON}!="", RUN+="/etc/rc.button/$env{BUTTON}"
