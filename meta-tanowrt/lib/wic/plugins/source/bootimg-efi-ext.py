@@ -233,7 +233,7 @@ class BootimgEFIPlugin(SourcePlugin):
         hdddir = "%s/hdd/boot" % cr_workdir
 
         nokernel = source_params.get('no_kernel')
-        if nokernel == "1":
+        if nokernel != "1":
             kernel = get_bitbake_var("KERNEL_IMAGETYPE")
             if get_bitbake_var("INITRAMFS_IMAGE_BUNDLE") == "1":
                 if get_bitbake_var("INITRAMFS_IMAGE"):
