@@ -32,7 +32,6 @@ XSERVER_append_qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
 #
 QB_OPT_APPEND_remove = "-nographic"
 QB_OPT_APPEND_append = "\
-	-show-cursor \
 	-device usb-tablet \
 	-serial mon:stdio \
 	-serial null \
