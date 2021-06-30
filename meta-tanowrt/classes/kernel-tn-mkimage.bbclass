@@ -12,6 +12,7 @@
 #   KERNEL_MKIMAGE_TYPES = "ubi"
 #   KERNEL_MKIMAGE_UBI_VOL_NAME = "kernel"
 #   KERNEL_MKIMAGE_UBI_UBINIZE_ARGS = "-m 2048 -p 128KiB -s 512 -O 2048"
+#   KERNEL_MKIMAGE_INCLUDE_DEVICETREE = "0"
 #
 
 inherit kernel-artifact-names
@@ -23,8 +24,12 @@ inherit kernel-artifact-names
 # - ext3
 # - ext4
 # - vfat
+#
 
 KERNEL_MKIMAGE_TYPES ?= "ubi"
+
+# Supported only for ext2/3/4 and vfat
+KERNEL_MKIMAGE_INCLUDE_DEVICETREE ?= "0"
 
 do_kernel_mkimage_ubi[depends] += "mtd-utils-native:do_populate_sysroot"
 do_kernel_mkimage_ext4[depends] += "e2fsprogs-native:do_populate_sysroot"
@@ -119,6 +124,10 @@ ubi_assemble_image() {
 }
 
 do_kernel_mkimage_ubi() {
+	if [ "${KERNEL_MKIMAGE_INCLUDE_DEVICETREE}" = "1" ]; then
+		bbwarn "KERNEL_MKIMAGE_INCLUDE_DEVICETREE is not supported for ubi type"
+	fi
+
 	for imageType in ${KERNEL_IMAGETYPES}; do
 		ubi_assemble_image "${imageType}"
 
@@ -150,6 +159,19 @@ ext234_assemble_image() {
 		IMAGE_SIZE=$(stat -L -c %s ${FSDIR}/${imageType})
 	else
 		IMAGE_SIZE=$(stat -L -c %s ${FSDIR}/${targetName})
+	fi
+
+	if [ "${KERNEL_MKIMAGE_INCLUDE_DEVICETREE}" = "1" ]; then
+		for dtbf in ${KERNEL_DEVICETREE}; do
+			dtb=`normalize_dtb "$dtbf"`
+			dtb_ext=${dtb##*.}
+			dtb_base_name=`basename $dtb .$dtb_ext`
+			dtb_path=`get_real_dtb_path_in_kernel "$dtb"`
+			install -m 0644 $dtb_path ${FSDIR}/$dtb_base_name.$dtb_ext
+
+			DTB_SIZE=$(stat -L -c %s ${FSDIR}/$dtb_base_name.$dtb_ext)
+			IMAGE_SIZE=$(expr ${IMAGE_SIZE} + ${DTB_SIZE})
+		done
 	fi
 
 	IMAGE_SIZE=$(expr ${IMAGE_SIZE} \* ${KERNEL_MKIMAGE_OVERHEAD_FACTOR} / 102400 + ${KERNEL_MKIMAGE_EXTRA_SPACE})
@@ -276,6 +298,16 @@ vfat_assemble_image() {
 	rm -rf "${FSDIR}"
 	mkdir -p "${FSDIR}"
 	cp "${B}/arch/${ARCH}/boot/${imageType}" "${FSDIR}/${targetName}"
+
+	if [ "${KERNEL_MKIMAGE_INCLUDE_DEVICETREE}" = "1" ]; then
+		for dtbf in ${KERNEL_DEVICETREE}; do
+			dtb=`normalize_dtb "$dtbf"`
+			dtb_ext=${dtb##*.}
+			dtb_base_name=`basename $dtb .$dtb_ext`
+			dtb_path=`get_real_dtb_path_in_kernel "$dtb"`
+			install -m 0644 $dtb_path ${FSDIR}/$dtb_base_name.$dtb_ext
+		done
+	fi
 
 	build_fat_img "${FSDIR}" "${OUTPUT_ARTIFACT}" "kernel"
 	if [ -n "${OUTPUT_LINK}" ]; then
