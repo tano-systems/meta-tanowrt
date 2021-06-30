@@ -7,7 +7,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 SUMMARY = "grub.cfg for use in EFI systems"
 
-PR = "tano4"
+PR = "tano5"
 
 PROVIDES += "virtual/grub-bootconf"
 RPROVIDES_${PN} += "virtual/grub-bootconf"
