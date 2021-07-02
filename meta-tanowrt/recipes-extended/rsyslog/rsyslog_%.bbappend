@@ -1,8 +1,8 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano2"
+PR_append = ".tano3"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
@@ -49,6 +49,9 @@ do_install_append() {
 
 	install -d ${D}${sbindir}
 	install -m 0755 ${WORKDIR}/logread ${D}${sbindir}/logread
+
+	install -d ${D}${base_sbindir}
+	ln -s ${sbindir}/logread ${D}${base_sbindir}/logread
 
 	install -d ${D}${libexecdir}
 	install -m 0755 ${WORKDIR}/syslogrotate ${D}${libexecdir}/syslogrotate
