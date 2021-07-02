@@ -1,0 +1,36 @@
+From 70b178facc4e1033cdb17efb1e1d755d2083f15a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 2 Jul 2021 14:27:51 +0300
+Subject: [PATCH] msm_rmnet_bam: Disable error messages for SIOCGIWNAME ioctl
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/net/ethernet/msm/msm_rmnet_bam.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/net/ethernet/msm/msm_rmnet_bam.c b/drivers/net/ethernet/msm/msm_rmnet_bam.c
+index 1b4956948ff7..e23dbc46c6bd 100644
+--- a/drivers/net/ethernet/msm/msm_rmnet_bam.c
++++ b/drivers/net/ethernet/msm/msm_rmnet_bam.c
+@@ -30,6 +30,7 @@
+ #include <linux/msm_rmnet.h>
+ #include <linux/platform_device.h>
+ #include <linux/workqueue.h>
++#include <linux/wireless.h>
+ 
+ #include <net/pkt_sched.h>
+ 
+@@ -744,6 +745,10 @@ static int rmnet_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		rc = rmnet_ioctl_extended(dev, ifr);
+ 		break;
+ 
++	case SIOCGIWNAME:
++		rc = -EINVAL;
++		break;
++
+ 	default:
+ 		pr_err("[%s] error: rmnet_ioct called for unsupported cmd[%d]",
+ 			dev->name, cmd);
+-- 
+2.25.1
+

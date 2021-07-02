@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".5"
+PR_append = ".6"
 
 # Config
 SRC_URI_append_mangoh-green-wp7607 = "\
@@ -13,6 +13,7 @@ SRC_URI_append_mangoh-green-wp7607 = "\
 	file://0001-i2c-msm-v2-Hide-I2C_MSM_ERR_NACK-errors-for-0x3a-sla.patch \
 	file://0002-spidev-Add-spidev-to-compatible-list.patch \
 	file://0003-u_ether-Disable-error-messages-for-SIOCGMIIPHY-and-S.patch \
+	file://0004-msm_rmnet_bam-Disable-error-messages-for-SIOCGIWNAME.patch \
 "
 
 # Devicetree
