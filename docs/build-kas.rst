@@ -63,12 +63,12 @@ Build TanoWrt
 =============
 
 To build TanoWrt images, you have to run the ``kas build`` command with the
-path to the YML-target file as an argument.
+path to the target YML-file as an argument.
 
 .. code-block:: shell
 
    # cd ~/tanowrt
-   # kas build <yml-target-file>
+   # kas build <target-yml-file>
 
 For example, to build TanoWrt images for internal eMMC flash of the NXP LS1028A RDB board
 you need to run following commands from ``meta-tanowrt`` root directory:
@@ -85,18 +85,19 @@ See `Available Targets <targets_>`__ to select the proper target file.
 Available Targets
 =================
 
-YML-target files are located in ``kas/targets`` subfolder of the ``meta-tanowrt`` repository.
+Target YML-files are located in ``kas/targets`` subfolder of the ``meta-tanowrt`` repository.
 Available target files listed in the sections below:
 
 - `Virtual Machines <meta-tanowrt_>`__
-- `Microchip (Atmel) SoC's <meta-tanowrt-hsl-atmel_>`__
-- `NXP (Freescale) SoC's <meta-tanowrt-hsl-nxp_>`__
+- `Boards based on Microchip/Atmel SoC's <meta-tanowrt-hsl-atmel_>`__
+- `Boards based on NXP/Freescale SoC's <meta-tanowrt-hsl-nxp_>`__
 - `Raspberry Pi Boards <meta-tanowrt-hsl-rpi_>`__
 - `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi_>`__
-- `Texas Instruments SoC's <meta-tanowrt-hsl-ti_>`__
-- Targets with extra (commercial) features:
+- `Boards based on Texas Instruments SoC's <meta-tanowrt-hsl-ti_>`__
 
-  - `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi-extras_>`__
+Targets with extra (commercial) features:
+
+- `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi-extras_>`__
 
 .. _meta-tanowrt:
 
@@ -119,21 +120,21 @@ a bunch of target devices intended to run in a virtual environment (QEMU, Virtua
 | QEMU/ARMv8 (aarch64) machine                      |                            |                    | ``qemuarm64-screen.yml``         |
 | with screen support                               |                            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
-| QEMU/Common x86 (32-bit) machine machine          | Generic x86                | Virtual HDD        | ``qemux86.yml``                  |
+| QEMU/Common x86 (32-bit) machine                  | Generic x86                | Virtual HDD        | ``qemux86.yml``                  |
 +---------------------------------------------------+                            |                    +----------------------------------+
-| QEMU/Common x86 (32-bit) machine machine          |                            |                    | ``qemux86-screen.yml``           |
+| QEMU/Common x86 (32-bit) machine                  |                            |                    | ``qemux86-screen.yml``           |
 | with screen support                               |                            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
-| QEMU/Common x86 (64-bit) machine machine          | Generic x86-64             | Virtual HDD        | ``qemux86-64.yml``               |
+| QEMU/Common x86 (64-bit) machine                  | Generic x86-64             | Virtual HDD        | ``qemux86-64.yml``               |
 +---------------------------------------------------+                            |                    +----------------------------------+
-| QEMU/Common x86 (64-bit) machine machine          |                            |                    | ``qemux86-64-screen.yml``        |
+| QEMU/Common x86 (64-bit) machine                  |                            |                    | ``qemux86-64-screen.yml``        |
 | with screen support                               |                            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
 .. _meta-tanowrt-hsl-atmel:
 
-Microchip (Atmel) SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-hsl-atmel/README.md>`__)
-------------------------------------------------------------------------------------------
+Boards based on Microchip/Atmel SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-hsl-atmel/README.md>`__)
+--------------------------------------------------------------------------------------------------------
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -153,8 +154,8 @@ Microchip (Atmel) SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-hsl-atmel/READ
 
 .. _meta-tanowrt-hsl-nxp:
 
-NXP (Freescale) SoC's (`meta-tanowrt-hsl-nxp <../meta-tanowrt-hsl-nxp/README.md>`__)
-------------------------------------------------------------------------------------
+Boards based on NXP/Freescale SoC's (`meta-tanowrt-hsl-nxp <../meta-tanowrt-hsl-nxp/README.md>`__)
+--------------------------------------------------------------------------------------------------
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -189,8 +190,8 @@ Sierra Wireless LTE Modules (`meta-tanowrt-hsl-swi <../meta-tanowrt-hsl-swi/READ
 
 .. _meta-tanowrt-hsl-ti:
 
-Texas Instruments SoC's (`meta-tanowrt-hsl-ti <../meta-tanowrt-hsl-ti/README.md>`__)
-------------------------------------------------------------------------------------
+Boards based on Texas Instruments SoC's (`meta-tanowrt-hsl-ti <../meta-tanowrt-hsl-ti/README.md>`__)
+----------------------------------------------------------------------------------------------------
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -209,7 +210,7 @@ Texas Instruments SoC's (`meta-tanowrt-hsl-ti <../meta-tanowrt-hsl-ti/README.md>
 Targets with Extra (Commercial) Features
 ----------------------------------------
 
-TanoWrt has target YML files that are only available to commercial users. These files
+TanoWrt has target YML-files that are only available to commercial users. These files
 are located in the ``kas/targets/extras`` subfolder relative to the root of the ``meta-tanowrt`` layer. 
 Available commercial-only target files listed in the table below.
 
@@ -239,7 +240,7 @@ Clone TanoWrt core layer repository with submodules to your home directory (this
    # git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
    # cd ~/tanowrt
 
-Build TanoWrt image by running the ``kas build`` command with the path to the YML-target file as an argument:
+Build TanoWrt image by running the ``kas build`` command with the path to the target YML-file as an argument:
 
 .. code-block:: shell
 
