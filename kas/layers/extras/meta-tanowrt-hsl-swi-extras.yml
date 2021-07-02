@@ -15,4 +15,4 @@ header:
 repos:
   meta-tanowrt-hsl-swi-extras:
     url: ssh://git@git.tano-systems.com/tano/yocto/meta-tanowrt-hsl-swi-extras.git
-    refspec: 0bff1e76cc470100aeebd28a6e2df720fcc1761a
+    refspec: f5c7141ff38d7bf9873861b358eb5ad588333b7e
