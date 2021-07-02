@@ -1,0 +1,49 @@
+From 8c5ae2739fe5b90fd5a7356289719787052667ce Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 1 Jul 2021 02:33:27 +0300
+Subject: [PATCH] u_ether: Disable error messages for SIOCGMIIPHY and
+ SIOCGIWNAME ioctls
+
+Some services such as collectd or net-snmp periodically send
+the SIOCGMIIPHY and SIOCGIWNAME commands to the ecm0 interface.
+This commands are not supported by the u_ether driver and as
+a result an error messages is repeatedly displayed:
+
+    ether_ioctl: [ecm0] error: ioctl called for unsupported cmd[35143]
+    ether_ioctl: [ecm0] error: ioctl called for unsupported cmd[35585]
+
+In fact, there is nothing terrible about this, so simply disable the
+error messages for the SIOCGIWNAME and SIOCGMIIPHY commands.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/usb/gadget/function/u_ether.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/usb/gadget/function/u_ether.c b/drivers/usb/gadget/function/u_ether.c
+index 0b3bc8c19c3a..30b3d836b590 100644
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -27,6 +27,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/notifier.h>
+ #include <linux/cpufreq.h>
++#include <linux/wireless.h> /* SIOCGIWNAME */
+ #include "u_ether.h"
+ 
+ 
+@@ -1635,6 +1636,11 @@ static int ether_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		rc = rmnet_ioctl_extended(dev, ifr);
+ 		break;
+ 
++	case SIOCGIWNAME: /* fallthrough */
++	case SIOCGMIIPHY:
++		rc = -EINVAL;
++		break;
++
+ 	default:
+ 		pr_err("[%s] error: ioctl called for unsupported cmd[%d]",
+ 			dev->name, cmd);
+-- 
+2.25.1
+
