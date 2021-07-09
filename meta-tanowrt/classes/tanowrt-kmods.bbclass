@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # This file Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-#           Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+#           Copyright (C) 2020-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 ROOTFS_POSTUNINSTALL_COMMAND_append = ' rootfs_flatten_modules_hook; '
@@ -17,22 +17,33 @@ MODULES_FLATTEN_PATHS ?= "\
 "
 
 rootfs_flatten_modules_hook() {
-    if [ -z "${KERNEL_VERSION}" ]; then
-        bbfatal "Empty KERNEL_VERSION"
+    KERNEL_DIR="${KERNEL_VERSION}"
+
+    if [ -n "${KERNEL_DIR}" ] && [ ! -d "${IMAGE_ROOTFS}/lib/modules/${KERNEL_DIR}" ]; then
+        bbwarn "Could not find /lib/modules/${KERNEL_DIR} directory at IMAGE_ROOTFS"
+        KERNEL_DIR="$(cd ${IMAGE_ROOTFS}/lib/modules && ls -1 | head -1)"
+        [ -n "${KERNEL_DIR}" ] && bbwarn "Using /lib/modules/${KERNEL_DIR} instead"
     fi
 
+    if [ -z "${KERNEL_DIR}" ]; then
+        bbfatal "Can not detect kernel directory at /lib/modules"
+    fi
+
+    export KERNEL_DIR
+    bbdebug 1 "Using /lib/modules/${KERNEL_DIR} for flattening modules tree"
+
     for p in ${MODULES_FLATTEN_PATHS}; do
-        if [ -d "${IMAGE_ROOTFS}/lib/modules/${KERNEL_VERSION}/$p" ]; then
-            cd ${IMAGE_ROOTFS} && find lib/modules/${KERNEL_VERSION}/$p -name '*.ko' -exec sh -c \
+        if [ -d "${IMAGE_ROOTFS}/lib/modules/${KERNEL_DIR}/$p" ]; then
+            cd ${IMAGE_ROOTFS} && find lib/modules/${KERNEL_DIR}/$p -name '*.ko' -exec sh -c \
                 'mod="{}"; \
-                 target=${IMAGE_ROOTFS}/lib/modules/${KERNEL_VERSION}/$(basename "$mod"); \
+                 target=${IMAGE_ROOTFS}/lib/modules/${KERNEL_DIR}/$(basename "$mod"); \
                  if [ ! -e "$target" ] || [ -L "$target" ]; then \
                      rm -f $target; \
                      mv -f ${IMAGE_ROOTFS}/$mod $target; \
                  fi' \
             \;
 
-            rm -rf ${IMAGE_ROOTFS}/lib/modules/${KERNEL_VERSION}/$p
+            rm -rf ${IMAGE_ROOTFS}/lib/modules/${KERNEL_DIR}/$p
         fi
     done
 }
