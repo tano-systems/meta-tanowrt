@@ -17,7 +17,7 @@ MODULES_FLATTEN_PATHS ?= "\
 "
 
 rootfs_flatten_modules_hook() {
-    [ -d "${IMAGE_ROOTFS}/lib/modules" ] || return
+    [ -d "${IMAGE_ROOTFS}/lib/modules" ] || return 0
 
     KERNEL_DIR="${KERNEL_VERSION}"
 
