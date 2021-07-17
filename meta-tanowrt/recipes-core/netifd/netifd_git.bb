@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano50"
+PR = "tano51"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -44,9 +44,9 @@ SRC_URI += "\
 	file://0001-system-linux-Disable-IFLA_VXLAN_GBP-support-for-kern.patch \
 "
 
-# 23.06.2021
-# bridge: bring up pre-existing vlans on hotplug as well
-SRCREV_netifd = "4e92ea74273f7d569f2be67066f9ebd33cf2ecad"
+# 14.07.2021
+# vlan: fix device vlan alias handling
+SRCREV_netifd = "7f24a063475e1e2be4e0c516a5b62c3fae5ec542"
 
 S = "${WORKDIR}/git"
 
