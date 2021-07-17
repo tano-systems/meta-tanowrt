@@ -1,4 +1,4 @@
-From 12f9aa6ae6bffef6b828ce08b795a09b10799dec Mon Sep 17 00:00:00 2001
+From b7e9731d92255879c7117439f0aa493dc126a7ca Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 21 Feb 2021 03:50:05 +0300
 Subject: [PATCH] file: Add support for polled execution mode
