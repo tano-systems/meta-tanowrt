@@ -50,4 +50,7 @@ python __anonymous() {
 
     d.appendVar('SRC_URI', ' '.join(files))
     bb.build.addtask("do_microchip_ethernet_copy_src", "do_kernel_configme", "do_patch", d)
+
+    d.appendVarFlag('do_fetch', 'vardeps', ' MICROCHIP_ETHERNET_FILES')
+    d.appendVarFlag('do_fetch', 'vardeps', ' MICROCHIP_ETHERNET_GIT_SRCREV')
 }
