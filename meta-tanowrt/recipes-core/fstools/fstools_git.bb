@@ -5,7 +5,9 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano46"
+PR = "tano47"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DESCRIPTION = "OpenWrt filesystem utilities"
 HOMEPAGE = "https://git.openwrt.org/?p=project/fstools.git;a=summary"
