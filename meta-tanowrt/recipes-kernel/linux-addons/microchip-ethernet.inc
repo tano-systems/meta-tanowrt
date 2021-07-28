@@ -7,7 +7,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PV_append = "+ksz0"
+PV_append = "+ksz1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/microchip-ethernet:"
 
 MICROCHIP_ETHERNET_ENABLE ?= "1"
@@ -16,7 +16,7 @@ MICROCHIP_ETHERNET_CONFIGS ?= "ksz9477-spi"
 MICROCHIP_ETHERNET_GIT_URI      ?= "git://github.com/tano-systems/microchip-ethernet.git"
 MICROCHIP_ETHERNET_GIT_BRANCH   ?= "master"
 MICROCHIP_ETHERNET_GIT_PROTOCOL ?= "https"
-MICROCHIP_ETHERNET_GIT_SRCREV   ?= "4cd48f7ffa5ee040be0ad85e6a479cd6c8b37196"
+MICROCHIP_ETHERNET_GIT_SRCREV   ?= "d0bb6527817737786dacb4540daee9c6b69e484d"
 
 MICROCHIP_ETHERNET_DESTDIR ?= "microchip-ethernet"
 MICROCHIP_ETHERNET_SRCDIR ?= "${WORKDIR}/${MICROCHIP_ETHERNET_DESTDIR}"
