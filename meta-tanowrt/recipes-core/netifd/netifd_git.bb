@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano52"
+PR = "tano53"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -44,9 +44,9 @@ SRC_URI += "\
 	file://0001-system-linux-Disable-IFLA_VXLAN_GBP-support-for-kern.patch \
 "
 
-# 26.07.2021
-# bridge: fix regression in bringing up bridge ports
-SRCREV_netifd = "440eb0647708274cc8d7d9e7c2bb0cfdfba90023"
+# 02.08.2021
+# device: add support for configuring device link speed/duplex
+SRCREV_netifd = "1eb0fafaa9865b729509a7d47ecf1f05c2c0595c"
 
 S = "${WORKDIR}/git"
 
