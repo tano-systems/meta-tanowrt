@@ -1,4 +1,4 @@
-From 317bb77a4380141bece32c817a52e389ca277799 Mon Sep 17 00:00:00 2001
+From 0e4ef876c873228642ba1631d95264cc8b65ffd2 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 11 Jul 2019 04:50:21 +0300
 Subject: [PATCH 23/24] procd: Add shared and slab to memory table
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/system.c b/system.c
-index a875637..be9e526 100644
+index a5a5efa..e44f26a 100644
 --- a/system.c
 +++ b/system.c
-@@ -253,6 +253,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -326,6 +326,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	char line[256];
  	char *key, *val;
  	unsigned long long available, cached;
@@ -20,7 +20,7 @@ index a875637..be9e526 100644
  	FILE *f;
  
  	if (sysinfo(&info))
-@@ -264,6 +265,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -337,6 +338,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	/* if linux < 3.14 MemAvailable is not in meminfo */
  	available = 0;
  	cached = 0;
@@ -29,7 +29,7 @@ index a875637..be9e526 100644
  
  	while (fgets(line, sizeof(line), f))
  	{
-@@ -277,6 +280,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -350,6 +353,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			available = 1024 * atoll(val);
  		else if (!strcasecmp(key, "Cached"))
  			cached = 1024 * atoll(val);
@@ -40,7 +40,7 @@ index a875637..be9e526 100644
  	}
  
  	fclose(f);
-@@ -312,6 +319,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -385,6 +392,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			(uint64_t)info.mem_unit * (uint64_t)info.bufferram);
  	blobmsg_add_u64(&b, "available", available);
  	blobmsg_add_u64(&b, "cached", cached);
@@ -50,5 +50,5 @@ index a875637..be9e526 100644
  
  	c = blobmsg_open_table(&b, "swap");
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

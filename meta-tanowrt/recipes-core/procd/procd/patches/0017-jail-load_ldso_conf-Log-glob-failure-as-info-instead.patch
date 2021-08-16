@@ -1,4 +1,4 @@
-From 86fc7ee0c9c97e5765e179b0f9d66ad1f54a1b17 Mon Sep 17 00:00:00 2001
+From 09c4010e04e1c8149920e1de3b0a65aeadce01f1 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 20 Nov 2020 20:23:06 +0300
 Subject: [PATCH 17/24] jail: load_ldso_conf: Log glob failure as info instead
@@ -23,5 +23,5 @@ index 380f731..3b47dbb 100644
  			}
  			for (i = 0; i < gl.gl_pathc; i++)
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

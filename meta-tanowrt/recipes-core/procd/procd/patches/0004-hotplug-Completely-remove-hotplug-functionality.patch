@@ -1,4 +1,4 @@
-From 9188f9f316cb511b6f338160064bf69bbb76b77d Mon Sep 17 00:00:00 2001
+From 125f10d7ed06fc538f58d8dc6b792a3fc5be217e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 04/24] hotplug: Completely remove hotplug functionality
@@ -6,10 +6,10 @@ Subject: [PATCH 04/24] hotplug: Completely remove hotplug functionality
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  CMakeLists.txt  |   2 +-
- initd/preinit.c |  24 ---
- plug/coldplug.c |  74 -------
- plug/hotplug.c  | 651 --------------------------------------------------------
- plug/hotplug.h  |  49 -----
+ initd/preinit.c |  24 --
+ plug/coldplug.c |  74 ------
+ plug/hotplug.c  | 651 ------------------------------------------------
+ plug/hotplug.h  |  49 ----
  procd.c         |   6 +-
  state.c         |  10 -
  7 files changed, 2 insertions(+), 814 deletions(-)
@@ -18,7 +18,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  delete mode 100644 plug/hotplug.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c0770b3..2f9e692 100644
+index b7ea502..1b8a250 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c hotplug-dispatch.c inittab.c rcS.c ubus.c
@@ -947,5 +947,5 @@ index fb81248..41f1400 100644
  		set_stdio("console");
  		p = getpwnam("ubus");
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

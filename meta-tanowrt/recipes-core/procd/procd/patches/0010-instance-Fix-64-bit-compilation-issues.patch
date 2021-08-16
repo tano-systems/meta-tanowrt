@@ -1,4 +1,4 @@
-From a2ea93bc88642a029e7fc1bebc893d8a6591d6de Mon Sep 17 00:00:00 2001
+From b368be30b5d00f4915dee285ef19dfa4694dc892 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:14:48 +0300
 Subject: [PATCH 10/24] instance: Fix 64-bit compilation issues
@@ -36,5 +36,5 @@ index 838f80e..01556c2 100644
  			break;
  
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

@@ -1,27 +1,18 @@
-From 2c71eb8ec856acf27e75acc1a87cac5430b46e6f Mon Sep 17 00:00:00 2001
+From ba8c0e8d1331523a7d41b568930101724988e7f2 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 06:58:50 +0300
 Subject: [PATCH 13/24] uxc: Fix compiler warnings
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- uxc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ uxc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/uxc.c b/uxc.c
-index eb40eb2..54dd7c3 100644
+index 5163b9a..2105e35 100644
 --- a/uxc.c
 +++ b/uxc.c
-@@ -724,7 +724,7 @@ int main(int argc, char **argv)
- 	char *pidfile = NULL;
- 	bool autostart = false;
- 	bool force = false;
--	bool verbose = false;
-+//	bool verbose = false;
- 	int signal = SIGTERM;
- 	int c;
- 
-@@ -775,7 +775,7 @@ int main(int argc, char **argv)
+@@ -1004,7 +1004,7 @@ int main(int argc, char **argv)
  				break;
  
  			case 'v':
@@ -31,5 +22,5 @@ index eb40eb2..54dd7c3 100644
  
  			case 'V':
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano56"
+PR = "tano57"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -67,9 +67,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 05.03.2021
-# inittab: detect active console from kernel if no console= specified
-SRCREV = "2cfc26f8456a4d5ba3836c914a742f3d00bad781"
+# 15.08.2021
+# uxc: support config in uvol
+SRCREV = "104b49d6ab25a8cf067e6d8d1f2da7defb9876d4"
 
 S = "${WORKDIR}/git"
 

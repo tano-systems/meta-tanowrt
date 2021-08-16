@@ -1,4 +1,4 @@
-From b254da102775fdaaa350dd1d7c36e502df42b8cd Mon Sep 17 00:00:00 2001
+From 03d03150bf03c49328b7e8ac5afca424b6685b57 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 26 Feb 2019 19:57:49 +0300
 Subject: [PATCH 03/24] hotplug: Remove '/dev/' prefix from DEVNAME variable
@@ -28,5 +28,5 @@ index beff38a..b1a61b2 100644
  		i += l;
  	}
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

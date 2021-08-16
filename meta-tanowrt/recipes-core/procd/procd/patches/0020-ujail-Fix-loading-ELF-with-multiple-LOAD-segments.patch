@@ -1,11 +1,11 @@
-From a94f06a34391d9f3c843676f2c79fd58f3669a28 Mon Sep 17 00:00:00 2001
+From 024a23d70f7c6062091f0342d7c0f5cc2ebe11b4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 24 Feb 2021 17:13:46 +0300
 Subject: [PATCH 20/24] ujail: Fix loading ELF with multiple LOAD segments
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- jail/elf.c | 63 ++++++++++++++++++++++++++++++++++++++++++--------------------
+ jail/elf.c | 63 +++++++++++++++++++++++++++++++++++++-----------------
  1 file changed, 43 insertions(+), 20 deletions(-)
 
 diff --git a/jail/elf.c b/jail/elf.c
@@ -177,5 +177,5 @@ index 3b47dbb..89367a0 100644
  	ERROR("unknown elf format %d\n", clazz);
  	return -1;
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 
