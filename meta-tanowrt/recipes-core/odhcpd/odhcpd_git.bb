@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano26"
+PR = "tano27"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -24,9 +24,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 13.06.2021
-# config: fix ra_flags none setting
-SRCREV = "564d25e53fad925fa3ed56e3004c107d40925fa4"
+# 11.08.2021
+# dhcpv4: fix uninitialized hostname in some ubus events
+SRCREV = "01b4e6046f10e21809c3f380f2d33bf3fe59698d"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services
