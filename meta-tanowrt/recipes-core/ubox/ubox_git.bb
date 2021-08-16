@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2021, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano15"
+PR = "tano16"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -25,9 +25,9 @@ SRC_URI += "\
 	file://0001-kmodloader-Add-support-for-modprobe.blacklist-in-ker.patch \
 "
 
-# 19.10.2020
-# logd: self-degrade to 'logd' user after opening pipes
-SRCREV = "9ef886819dd48303d8ced4cdbc9afbf32682535c"
+# 27.07.2021
+# logread: fix erroneous message "Logread connected to" with udp
+SRCREV = "205defb597295a4a8966db3e618cfe41a29bed99"
 
 S = "${WORKDIR}/git"
 
