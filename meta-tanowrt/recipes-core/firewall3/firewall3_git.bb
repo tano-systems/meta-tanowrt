@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano29"
+PR = "tano30"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -34,9 +34,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 19.02.2021
-# firewall3: remove last remaining sprintf()
-SRCREV = "c2c72c6fc29cb895f25759d76e10c00a8faaa148"
+# 14.08.2021
+# ipsets: permit default timeout of 0
+SRCREV = "40e5f6a2bd0b5406eff7e1d2d4f95bbf8f9410a4"
 
 S = "${WORKDIR}/git"
 
