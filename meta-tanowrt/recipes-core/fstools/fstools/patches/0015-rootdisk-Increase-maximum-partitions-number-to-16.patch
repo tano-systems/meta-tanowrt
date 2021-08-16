@@ -1,4 +1,4 @@
-From e65aa9e84ff29b94b6ac4699a8a212559ccfa461 Mon Sep 17 00:00:00 2001
+From c032b34a3c7a09c47ada6196d63818d936f2f9dc Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:42:25 +0300
 Subject: [PATCH 15/17] rootdisk: Increase maximum partitions number to 16

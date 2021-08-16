@@ -1,4 +1,4 @@
-From ea740a4a0f7d6f66e614cbd5861faeb5b8052144 Mon Sep 17 00:00:00 2001
+From bd7cb5e80789c711b6623b724b5ea2ff310f37a5 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
 Subject: [PATCH 06/17] block: Fix device path creation
@@ -9,11 +9,11 @@ it to the beginning of the device name.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- block.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ block.c | 59 ++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 27 insertions(+), 32 deletions(-)
 
 diff --git a/block.c b/block.c
-index 515fb01..c877a43 100644
+index 421c539..5256526 100644
 --- a/block.c
 +++ b/block.c
 @@ -201,14 +201,6 @@ static char *blobmsg_get_strdup(struct blob_attr *attr)
@@ -49,7 +49,7 @@ index 515fb01..c877a43 100644
  	if (tb[SWAP_PRIO])
  		m->prio = blobmsg_get_u32(tb[SWAP_PRIO]);
  	if (m->prio)
-@@ -553,7 +545,7 @@ static struct probe_info* find_block_info(char *uuid, char *label, char *path)
+@@ -561,7 +553,7 @@ static struct probe_info* find_block_info(char *uuid, char *label, char *path)
  
  	if (path)
  		list_for_each_entry(pr, &devices, list)
@@ -58,7 +58,7 @@ index 515fb01..c877a43 100644
  				return pr;
  
  	return NULL;
-@@ -1003,19 +995,17 @@ static int mount_device(struct probe_info *pr, int type)
+@@ -1013,19 +1005,17 @@ static int mount_device(struct probe_info *pr, int type)
  	if (!pr)
  		return -1;
  
@@ -80,7 +80,7 @@ index 515fb01..c877a43 100644
  	if (m && m->extroot)
  		return -1;
  
-@@ -1042,7 +1032,9 @@ static int mount_device(struct probe_info *pr, int type)
+@@ -1052,7 +1042,9 @@ static int mount_device(struct probe_info *pr, int type)
  		free(mp);
  
  	if (type == TYPE_HOTPLUG)
@@ -91,7 +91,7 @@ index 515fb01..c877a43 100644
  
  	/* Check if device should be mounted & set the target directory */
  	if (m) {
-@@ -1101,7 +1093,7 @@ static int mount_device(struct probe_info *pr, int type)
+@@ -1124,7 +1116,7 @@ static int mount_device(struct probe_info *pr, int type)
  	handle_swapfiles(true);
  
  	if (type != TYPE_AUTOFS)
@@ -100,25 +100,54 @@ index 515fb01..c877a43 100644
  
  	return 0;
  }
-@@ -1118,7 +1110,7 @@ static int umount_device(char *path, int type, bool all)
+@@ -1151,7 +1143,7 @@ static int umount_device(char *path, int type, bool all)
  		return 0;
- 
+ 	}
  	if (type != TYPE_AUTOFS)
 -		blockd_notify("umount", basename(path), NULL, NULL);
 +		blockd_notify("umount", path, NULL, NULL);
  
  	err = umount2(mp, MNT_DETACH);
  	if (err) {
-@@ -1139,7 +1131,7 @@ static int mount_action(char *action, char *device, int type)
- 
+@@ -1174,6 +1166,18 @@ static int mount_action(char *action, char *device, int type)
  	if (!action || !device)
  		return -1;
--	snprintf(path, sizeof(path), "/dev/%s", device);
-+	snprintf(path, sizeof(path), "%s", device);
  
++	if (config_load(NULL))
++		return -1;
++
++	cache_load(1);
++
++	list_for_each_entry(pr, &devices, list)
++		if (!strcmp(basename(pr->dev), device))
++			path = pr->dev;
++
++	if (!path)
++		return -1;
++
  	if (!strcmp(action, "remove")) {
  		if (type == TYPE_HOTPLUG)
-@@ -1426,8 +1418,11 @@ static int check_extroot(char *path)
+ 			blockd_notify("hotplug", device, NULL, NULL);
+@@ -1187,18 +1191,6 @@ static int mount_action(char *action, char *device, int type)
+ 		return -1;
+ 	}
+ 
+-	if (config_load(NULL))
+-		return -1;
+-
+-	cache_load(1);
+-
+-	list_for_each_entry(pr, &devices, list)
+-		if (!strcmp(basename(pr->dev), device))
+-			path = pr->dev;
+-
+-	if (!path)
+-		return -1;
+-
+ 	return mount_device(find_block_info(NULL, NULL, path), type);
+ }
+ 
+@@ -1467,8 +1459,11 @@ static int check_extroot(char *path)
  			 errno);
  	fclose(fp);
  

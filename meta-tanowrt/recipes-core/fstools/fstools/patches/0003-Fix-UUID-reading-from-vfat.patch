@@ -1,4 +1,4 @@
-From 37c85995de1e4b167496ec0421e168825c7b286b Mon Sep 17 00:00:00 2001
+From 0b512e5d11ba89cae06375a7c284313d201674b3 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 11 Oct 2018 12:43:56 +0300
 Subject: [PATCH 03/17] Fix UUID reading from vfat

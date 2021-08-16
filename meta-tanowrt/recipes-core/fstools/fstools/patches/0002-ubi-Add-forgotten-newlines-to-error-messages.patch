@@ -1,4 +1,4 @@
-From 902dfaf391e7258227a9edd7e3dab1688b75927b Mon Sep 17 00:00:00 2001
+From b0b1645324f0800d87ba09c4f726fc3210d95a37 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 1 Jul 2018 05:43:53 +0300
 Subject: [PATCH 02/17] ubi: Add forgotten newlines to error messages
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/ubi.c b/ubi.c
-index 54f67b8..0688d03 100644
+index f0dfc5c..0a71d38 100644
 --- a/ubi.c
 +++ b/ubi.c
 @@ -143,13 +143,13 @@ static int main_detach(char *type)
@@ -25,10 +25,10 @@ index 54f67b8..0688d03 100644
  	if (err) {
 -		ULOG_ERR("cannot detach \"%s\"", mtd);
 +		ULOG_ERR("cannot detach \"%s\"\n", mtd);
+ 		libubi_close(libubi);
  		return -1;
  	}
- 
-@@ -183,7 +183,7 @@ static int main_image(char *partition, char *image, char *overlay)
+@@ -185,7 +185,7 @@ static int main_image(char *partition, char *image, char *overlay)
  
  	libubi = libubi_open();
  	if (!libubi) {
@@ -37,12 +37,13 @@ index 54f67b8..0688d03 100644
  		return -1;
  	}
  
-@@ -207,20 +207,20 @@ static int main_image(char *partition, char *image, char *overlay)
+@@ -211,14 +211,14 @@ static int main_image(char *partition, char *image, char *overlay)
  
  	err = ubidetach(libubi, mtd);
  	if (err) {
 -		ULOG_ERR("cannot detach \"%s\"", mtd);
 +		ULOG_ERR("cannot detach \"%s\"\n", mtd);
+ 		libubi_close(libubi);
  		return -1;
  	}
  
@@ -50,23 +51,25 @@ index 54f67b8..0688d03 100644
  	if (err) {
 -		ULOG_ERR("cannot attach \"%s\"", mtd);
 +		ULOG_ERR("cannot attach \"%s\"\n", mtd);
+ 		libubi_close(libubi);
  		return -1;
  	}
- 
+@@ -226,7 +226,7 @@ static int main_image(char *partition, char *image, char *overlay)
  	if (data) {
  		err = ubirmvol(libubi, node, overlay);
  		if (err) {
 -			ULOG_ERR("cannot remove \"%s\"", node);
 +			ULOG_ERR("cannot remove \"%s\"\n", node);
+ 			libubi_close(libubi);
  			return -1;
  		}
- 	}
-@@ -232,20 +232,20 @@ static int main_image(char *partition, char *image, char *overlay)
+@@ -240,14 +240,14 @@ static int main_image(char *partition, char *image, char *overlay)
  
  	err = ubirsvol(libubi, node, partition, s.st_size);
  	if (err) {
 -		ULOG_ERR("cannot resize \"%s\"", partition);
 +		ULOG_ERR("cannot resize \"%s\"\n", partition);
+ 		libubi_close(libubi);
  		return -1;
  	}
  
@@ -74,18 +77,19 @@ index 54f67b8..0688d03 100644
  	if (err) {
 -		ULOG_ERR("cannot update \"%s\"", volume);
 +		ULOG_ERR("cannot update \"%s\"\n", volume);
+ 		libubi_close(libubi);
  		return -1;
  	}
- 
+@@ -255,7 +255,7 @@ static int main_image(char *partition, char *image, char *overlay)
  	if (overlay) {
  		err = ubimkvol(libubi, node, overlay, 1);
  		if (err) {
 -			ULOG_ERR("cannot make \"%s\"", overlay);
 +			ULOG_ERR("cannot make \"%s\"\n", overlay);
+ 			libubi_close(libubi);
  			return -1;
  		}
- 	}
-@@ -263,7 +263,7 @@ static int main_info(void)
+@@ -274,7 +274,7 @@ static int main_info(void)
  
  	libubi = libubi_open();
  	if (!libubi) {

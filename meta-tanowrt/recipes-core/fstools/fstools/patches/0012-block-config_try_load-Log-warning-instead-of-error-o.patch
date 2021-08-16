@@ -1,4 +1,4 @@
-From cc17ef8aa9fe14f24509ed25b0bbfe34f4d52349 Mon Sep 17 00:00:00 2001
+From d137c9c738723e4c897bdc49ba101010f2fd5b35 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 25 Nov 2020 03:26:44 +0300
 Subject: [PATCH 12/17] block: config_try_load: Log warning instead of error on
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block.c b/block.c
-index 480b229..bb4512c 100644
+index 0844410..527b68c 100644
 --- a/block.c
 +++ b/block.c
 @@ -422,7 +422,7 @@ static struct uci_package * config_try_load(struct uci_context *ctx, char *path)

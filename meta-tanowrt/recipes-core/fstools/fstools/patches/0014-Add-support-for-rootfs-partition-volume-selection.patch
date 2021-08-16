@@ -1,4 +1,4 @@
-From 55043727afdb89998f800e66800925d0aff4ce47 Mon Sep 17 00:00:00 2001
+From 70c2572b35fa8e7d7fe92dea7110703004ace273 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:28:44 +0300
 Subject: [PATCH 14/17] Add support for rootfs partition/volume selection
@@ -24,7 +24,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  rename overlay_partition.h => partitions.h (76%)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 72e471a..0eb8a9e 100644
+index 3bb956a..a0d2014 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -17,7 +17,7 @@ ADD_LIBRARY(fstools SHARED
@@ -36,7 +36,7 @@ index 72e471a..0eb8a9e 100644
  TARGET_LINK_LIBRARIES(fstools ubox)
  INSTALL(TARGETS fstools LIBRARY DESTINATION lib)
  
-@@ -73,7 +73,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
+@@ -74,7 +74,7 @@ IF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  	ADD_DEFINITIONS(-DOVL_MOUNT_FULL_ACCESS_TIME)
  ENDIF(DEFINED CMAKE_OVL_MOUNT_FULL_ACCESS_TIME)
  
@@ -45,7 +45,7 @@ index 72e471a..0eb8a9e 100644
  TARGET_LINK_LIBRARIES(mount_root fstools)
  INSTALL(TARGETS mount_root RUNTIME DESTINATION sbin)
  
-@@ -83,7 +83,7 @@ ADD_EXECUTABLE(blockd blockd.c)
+@@ -84,7 +84,7 @@ ADD_EXECUTABLE(blockd blockd.c)
  TARGET_LINK_LIBRARIES(blockd fstools ubus blobmsg_json ${json})
  INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
  
@@ -54,7 +54,7 @@ index 72e471a..0eb8a9e 100644
  IF(DEFINED CMAKE_UBIFS_EXTROOT)
  	ADD_DEFINITIONS(-DUBIFS_EXTROOT)
  	TARGET_LINK_LIBRARIES(block fstools blkid-tiny dl uci ubox ubus blobmsg_json ubi-utils ${json})
-@@ -92,14 +92,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
+@@ -93,14 +93,14 @@ ELSE(DEFINED CMAKE_UBIFS_EXTROOT)
  ENDIF(DEFINED CMAKE_UBIFS_EXTROOT)
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
@@ -73,7 +73,7 @@ index 72e471a..0eb8a9e 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index bb4512c..7151da4 100644
+index 527b68c..b4383e2 100644
 --- a/block.c
 +++ b/block.c
 @@ -46,7 +46,7 @@
@@ -85,7 +85,7 @@ index bb4512c..7151da4 100644
  #include "libfstools/fstype.h"
  #include "libfstools/volume.h"
  #include "probe.h"
-@@ -1367,7 +1367,7 @@ static int check_extroot(char *path)
+@@ -1408,7 +1408,7 @@ static int check_extroot(char *path)
  		libubi_t libubi;
  
  		libubi = libubi_open();
@@ -94,7 +94,7 @@ index bb4512c..7151da4 100644
  		libubi_close(libubi);
  	}
  #endif
-@@ -1576,7 +1576,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1617,7 +1617,7 @@ static int main_extroot(int argc, char **argv)
  	memset(blkdev_path, 0, sizeof(blkdev_path));
  	libubi = libubi_open();
  	if (libubi) {
@@ -103,7 +103,7 @@ index bb4512c..7151da4 100644
  		libubi_close(libubi);
  		if (blkdev_path[0]) {
  			char cfg[] = "/tmp/ubifs_cfg";
-@@ -1633,7 +1633,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1674,7 +1674,7 @@ static int main_extroot(int argc, char **argv)
  		}
  	}
  
@@ -528,7 +528,7 @@ index 8cac7d2..d49fbd5 100644
  	int block = 0;
  
 diff --git a/ubi.c b/ubi.c
-index cc58f9e..7186c45 100644
+index 54284b1..05742d6 100644
 --- a/ubi.c
 +++ b/ubi.c
 @@ -23,7 +23,7 @@
@@ -540,7 +540,7 @@ index cc58f9e..7186c45 100644
  #include "libubi/libubi-tiny.h"
  
  static int print_usage(void)
-@@ -315,7 +315,7 @@ int main(int argc, char **argv)
+@@ -327,7 +327,7 @@ int main(int argc, char **argv)
  		return main_image("rootfs", argv[2], NULL);
  
  	} else if (!strcmp(argv[1], "overlay")) {

@@ -1,4 +1,4 @@
-From d7f66786af125afcd807a69b79cd6aa20b58f4cf Mon Sep 17 00:00:00 2001
+From 1b9a3d247c1772ed468791d28699c0dcc79bf4a8 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 1 Apr 2021 13:01:31 +0300
 Subject: [PATCH 17/17] libubi: Rename libubi.h to libubi-fstools.h
@@ -18,10 +18,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  rename libubi/{libubi.h => libubi-fstools.h} (99%)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0eb8a9e..a359568 100644
+index a0d2014..c9585b7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -52,7 +52,7 @@ INCLUDE_DIRECTORIES(${ubox_include_dir})
+@@ -53,7 +53,7 @@ INCLUDE_DIRECTORIES(${ubox_include_dir})
  SET_TARGET_PROPERTIES(ubi-utils PROPERTIES COMPILE_FLAGS
  		"-ffunction-sections -fdata-sections")
  
@@ -31,7 +31,7 @@ index 0eb8a9e..a359568 100644
  	DESTINATION include
  )
 diff --git a/block.c b/block.c
-index be85a01..467b824 100644
+index 66af613..ec5d3d2 100644
 --- a/block.c
 +++ b/block.c
 @@ -54,7 +54,7 @@
@@ -81,7 +81,7 @@ index 0ede6cd..eaef403 100644
  int ubiattach(libubi_t libubi, char *mtd);
  int ubidetach(libubi_t libubi, char *mtd);
 diff --git a/libubi/libubi.c b/libubi/libubi.c
-index 103d260..c53a19c 100644
+index 4e970b3..b20ec3e 100644
 --- a/libubi/libubi.c
 +++ b/libubi/libubi.c
 @@ -33,7 +33,7 @@

@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano47"
+PR = "tano48"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -61,9 +61,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 07.04.2021
-# overlay: fix syncronizing typo
-SRCREV = "c44b40be0f7547609eeadd39afce4e5db42f75bc"
+# 14.08.2021
+# block: fix two resources leaks discovered by Coverity
+SRCREV = "2e3aca299ea7bbe74f219860510c4b34e77c7aa4"
 
 S = "${WORKDIR}/git"
 
