@@ -176,24 +176,42 @@ swupdate_clear_overlay_ubivol() {
 }
 
 swupdate_clear_overlay_blkdev() {
-	local partition="rootfs_data"
+	. /lib/functions.sh
+	. /lib/upgrade/common.sh
 
-	[ -f "/tmp/overlay_partition" ] && partition=$(cat /tmp/overlay_partition)
+	local ROOT_DEVICE=""
+	export_bootdevice
+	export_partdevice ROOT_DEVICE 0
 
-	local OVERLAY_INFO=$(block info | grep "LABEL=\"${partition}\"")
+	local LABEL="rootfs_data"
+
+	[ -f "/tmp/overlay_partition" ] && LABEL=$(cat /tmp/overlay_partition)
+
+	local RET
+	local OVERLAY_INFO=$(block info | grep "LABEL=\"${LABEL}\"" | grep "${ROOT_DEVICE}")
 	local OVERLAY_DEVICE=$(echo "${OVERLAY_INFO}" | awk -F : '{ print $1 }')
+	local PARTITION="${OVERLAY_DEVICE#/dev/}"
 
-	if [ -z "${OVERLAY_DEVICE}" ]; then
-		${SWU_LOG_CMD} error \
-			"Cannot find block device for overlay partition \"${partition}\""
+	if [ "${PARTITION}" = "" ]; then
+		${SWU_LOG_CMD} error "Cannot find overlay partition with label \"${LABEL}\""
 		return 1
 	fi
 
-	mkfs.${SWU_OVERLAY_FS} -f "${OVERLAY_DEVICE}" > /dev/null 2>&1
-	if [ "$?" != "0" ]; then
+	if [ "${SWU_OVERLAY_FS}" = "ext4" ]; then
+		mkfs.${SWU_OVERLAY_FS} -L "rootfs_data" -F "/dev/${PARTITION}" > /dev/null 2>&1
+		RET=$?
+	else
+		mkfs.${SWU_OVERLAY_FS} -f "/dev/${PARTITION}" > /dev/null 2>&1
+		RET=$?
+	fi
+
+	if [ "${RET}" != "0" ]; then
 		${SWU_LOG_CMD} error \
-			"Failed to clear overlay filesystem on partition \"${partition}\""
+			"Failed to clear overlay filesystem on /dev/${PARTITION}"
 		return 1
+	else
+		${SWU_LOG_CMD} info \
+			"Successfully cleared overlay filesystem on /dev/${PARTITION}"
 	fi
 }
 
