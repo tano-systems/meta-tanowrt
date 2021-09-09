@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-INCPR = "2"
+INCPR = "3"
 
 # Prefer this version
 DEFAULT_PREFERENCE = "1"

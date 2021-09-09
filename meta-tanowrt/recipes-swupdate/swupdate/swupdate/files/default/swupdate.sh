@@ -92,8 +92,9 @@ swupdate_preinit_clear_overlay() {
 #
 swupdate_preinit_before_overlay() {
 	local swu_state=$(swupdate_get_swu_state)
+	local swu_upgrade_available=$(swupdate_get_swu_upgrade_available)
 
-	if [ "${swu_state}" = "ok" ]; then
+	if [ "${swu_state}" = "ok" ] && [ "${swu_upgrade_available}" != "1" ]; then
 		local swu_clear_overlay=$(swupdate_get_swu_clear_overlay)
 		if [ "${swu_clear_overlay}" = "1" ]; then
 			swupdate_preinit_clear_overlay
