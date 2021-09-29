@@ -16,7 +16,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano7"
+PR_append = ".tano8"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -37,6 +37,7 @@ SRC_URI_append = "\
 	file://107-debian_pppoatm_wildcard.patch \
 	file://110-debian_defaultroute.patch \
 	file://120-debian_ipv6_updown_option.patch \
+	file://121-debian_adaptive_lcp_echo.patch \
 	file://133-fix_sha1_include.patch \
 	file://140-pppoe_compile_fix.patch \
 	file://200-makefile.patch \
