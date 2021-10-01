@@ -8,7 +8,7 @@
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
 PV = "2.10.6"
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
@@ -40,7 +40,7 @@ SRC_URI = "\
 	file://usr/sbin/mwan3track \
 	file://usr/sbin/mwan3rtmon \
 	file://src/sockopt_wrap.c \
-	file://LICENSE \
+	file://src/LICENSE \
 "
 
 inherit tanowrt-services
