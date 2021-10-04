@@ -81,7 +81,14 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20
 
 ###### 1.1.3.1.3 Running TanoWrt from USB Flash
 
-*TODO: ...*
+1. Power off board.
+2. Insert prepared USB flash drive with TanoWrt to any USB 2.0 port (see section [1.1.3.1.2](#11312-writing-image-to-the-usb-flash)).
+3. Power on board.
+4. Press ESC to enter UEFI setup utility.
+5. Select "Boot Manager" in menu and press ENTER.
+6. Select you USB flash drive in boot manager menu and press ENTER.
+7. TanoWrt from selected USB flash drive will be booting.
+8. For login use credentials specified in "[Access](#5-access)" section.
 
 ###### 1.1.3.1.4 Build Firmware Upgrade Image
 
