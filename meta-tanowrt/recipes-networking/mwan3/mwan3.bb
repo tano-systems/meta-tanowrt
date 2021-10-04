@@ -40,7 +40,7 @@ SRC_URI = "\
 	file://usr/sbin/mwan3track \
 	file://usr/sbin/mwan3rtmon \
 	file://src/sockopt_wrap.c \
-	file://LICENSE \
+	file://src/LICENSE \
 "
 
 inherit tanowrt-services
