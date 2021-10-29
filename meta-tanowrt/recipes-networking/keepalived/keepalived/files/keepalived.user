@@ -12,3 +12,10 @@
 # Valid values are:
 #     $TYPE==INSTANCE: [ NOTIFY_BACKUP | NOTIFY_MASTER | NOTIFY_FAULT | NOTIFY_STOP | NOTIFY ]
 #     $TYPE==GROUP: [ NOTIFY_BACKUP | NOTIFY_MASTER | NOTIFY_FAULT | NOTIFY ]
+#
+# $1 - keepalived
+# $2 - Type (INSTANCE or GROUP)
+# $3 - Instance/Group Name
+# $4 - Instance/Group State
+# $5 - Instance/Group Priority
+#
