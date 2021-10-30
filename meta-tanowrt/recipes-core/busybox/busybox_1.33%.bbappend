@@ -5,7 +5,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano1.${INC_PR}"
+PR_append = ".tano2.${INC_PR}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Do not apply some conflicted OE patches
@@ -15,9 +15,6 @@ SRC_URI_remove = "\
 
 # Patches
 SRC_URI_append = "\
-	file://001-backport1330fix-ash-make-strdup-copy.patch \
-	file://002-backport1330fix-traceroute.patch \
-	file://010-fix-wrong-variable.patch \
 	file://120-lto-jobserver.patch \
 	file://200-udhcpc_reduce_msgs.patch \
 	file://201-udhcpc_changed_ifindex.patch \
