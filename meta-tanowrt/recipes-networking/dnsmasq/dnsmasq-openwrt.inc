@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "11"
+INC_PR = "12"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -22,8 +22,6 @@ PACKAGECONFIG += "ubus conntrack no-id"
 
 # Patches
 SRC_URI += "\
-	file://0001-Tweak-sort-order-of-tags-in-get-version.patch \
-	file://0002-Tweak-f1204a875e0f16fd645df965db346fc56d2ab1dd.patch \
 	file://100-remove-old-runtime-kernel-support.patch \
 "
 
