@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano11"
+PR = "tano12"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -122,6 +122,7 @@ RDEPENDS_${PN}-network = "\
 	curl \
 	drill \
 	iproute2 \
+	arp-scan \
 "
 
 #
