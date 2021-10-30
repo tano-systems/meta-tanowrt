@@ -5,7 +5,7 @@
 	         name="openembedded-core"
 	         remote="openembedded"
 	         upstream="hardknott"
-	         revision="6ca1047e98a1c8bc305a3f40ad1919c5038e1698">
+	         revision="7e3752dcce2236a4d1ad046b1df2edf8ee5619b4">
 		<linkfile src="meta" dest="meta" />
 		<linkfile src="scripts" dest="scripts" />
 		<linkfile src="oe-init-build-env" dest="oe-init-build-env" />
@@ -18,12 +18,12 @@
 	         name="meta-openembedded"
 	         remote="openembedded"
 	         upstream="hardknott"
-	         revision="9ee0e08ba2395b9cb93f2273bb1018adb3630407" />
+	         revision="d378e4293d18e374f5d1494a88bfc3caee4d02df" />
 
 	<!-- Bitbake -->
 	<project path="bitbake"
 	         name="bitbake"
 	         remote="openembedded"
 	         upstream="1.50"
-	         revision="0c83e98b0b4129e43e05129074fff60b22a9f2eb" />
+	         revision="7f3fd1f47f7972756b9b39b6c5ab25084fb4212c" />
 </manifest>
