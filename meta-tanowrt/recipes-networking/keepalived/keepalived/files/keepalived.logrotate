@@ -1,0 +1,13 @@
+/var/log/keepalived.log {
+	size 256k
+	compress
+	rotate 7
+	create 644
+	dateext
+	missingok
+	notifempty
+	sharedscripts
+	postrotate
+		/bin/kill -HUP `cat /var/run/rsyslogd.pid 2> /dev/null` 2> /dev/null || true
+	endscript
+}
