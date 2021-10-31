@@ -17,7 +17,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=35d2a22ecae06415d0af96aa3af51793"
 GIT_URI      = "git://github.com/tano-systems/luci-app-tn-logview.git"
 GIT_BRANCH   = "master"
 GIT_PROTOCOL = "https"
-GIT_SRCREV   = "a99be0b4ea2f3cc0b6e3a88a09b9e85a2f79674a"
+GIT_SRCREV   = "ac998316d3af0a06829e3d4e3689d4379c8d0301"
 
 SRC_URI = "${GIT_URI};branch=${GIT_BRANCH};protocol=${GIT_PROTOCOL}"
 SRCREV = "${GIT_SRCREV}"
@@ -25,6 +25,6 @@ SRCREV = "${GIT_SRCREV}"
 S = "${WORKDIR}/git"
 
 PV = "0.9.0+git${SRCPV}"
-PR = "tano11"
+PR = "tano12"
 
 LUCI_PKG_EXECUTABLE += "${D}/usr/libexec/luci-logview/*"
