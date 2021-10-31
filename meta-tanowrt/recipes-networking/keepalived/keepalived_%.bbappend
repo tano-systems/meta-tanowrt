@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano1"
+PR_append = ".tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
@@ -18,6 +18,7 @@ SRC_URI += "\
 	file://keepalived.uci-defaults \
 	file://keepalived.user \
 	file://keepalived.rsyslog \
+	file://keepalived.logrotate \
 "
 
 PACKAGES += "${PN}-mib"
@@ -53,6 +54,10 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/rsyslog.d
 	install -m 0644 ${WORKDIR}/keepalived.rsyslog \
 		${D}${sysconfdir}/rsyslog.d/keepalived.conf
+
+	install -d ${D}${sysconfdir}/logrotate.d
+	install -m 0644 ${WORKDIR}/keepalived.logrotate \
+		${D}${sysconfdir}/logrotate.d/keepalived
 }
 
 FILES_${PN}-mib = "${datadir}/snmp/mibs/"
