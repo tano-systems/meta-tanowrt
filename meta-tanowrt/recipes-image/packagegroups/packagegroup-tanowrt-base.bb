@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano12"
+PR = "tano13"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -103,6 +103,7 @@ RDEPENDS_${PN}-core = "\
 	libubox-lua \
 	fstools \
 	cronie \
+	logrotate \
 	${VIRTUAL-RUNTIME_syslog} \
 "
 
