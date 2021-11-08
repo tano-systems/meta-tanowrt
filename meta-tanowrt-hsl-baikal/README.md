@@ -50,11 +50,15 @@ For MBM 1.0/2.0 boards there are a few machines available listed in the table be
 
 ---------------------------------------------------------------------------------------------------
 
-#### 1.1.3 Build and Run
+#### 1.1.3 Requirements
 
-##### 1.1.3.1 TanoWrt on USB Flash
+To successfully run TanoWrt on MBM 1.0/2.0 boards UEFI firmware from [Baikal-M SDK 5.2 20210608](https://www.baikalelectronics.ru/products/238/) or higher is required. Follow the instructions from the SDK to update the UEFI firmware on MBM 1.0/2.0 board.
 
-###### 1.1.3.1.1 Build USB Flash Image
+#### 1.1.4 Build and Run
+
+##### 1.1.4.1 TanoWrt on USB Flash
+
+###### 1.1.4.1.1 Build USB Flash Image
 
 To build TanoWrt image for the USB flash drive use the following command:
 
@@ -68,7 +72,7 @@ When the build is complete, the USB flash image file will be located in folder (
 ./tanowrt-glibc/deploy/images/mbm10/tanowrt-image-full-mbm20.wic
 ```
 
-###### 1.1.3.1.2 Writing Image to the USB Flash
+###### 1.1.4.1.2 Writing Image to the USB Flash
 
 Use the `dd` utility to write the generated `.wic` image to the USB flash drive.
 
@@ -79,10 +83,10 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20
    of=/dev/sdc
 ```
 
-###### 1.1.3.1.3 Running TanoWrt from USB Flash
+###### 1.1.4.1.3 Running TanoWrt from USB Flash
 
 1. Power off board.
-2. Insert prepared USB flash drive with TanoWrt to any USB 2.0 port (see section [1.1.3.1.2](#11312-writing-image-to-the-usb-flash)).
+2. Insert prepared USB flash drive with TanoWrt to any USB 2.0 port (see section [1.1.4.1.2](#11312-writing-image-to-the-usb-flash)).
 3. Power on board.
 4. Press ESC to enter UEFI setup utility.
 5. Select "Boot Manager" in menu and press ENTER.
@@ -90,7 +94,7 @@ dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20
 7. TanoWrt from selected USB flash drive will be booting.
 8. For login use credentials specified in "[Access](#5-access)" section.
 
-###### 1.1.3.1.4 Build Firmware Upgrade Image
+###### 1.1.4.1.4 Build Firmware Upgrade Image
 
 To build firmware upgrade SWU image use following command:
 
@@ -106,7 +110,7 @@ When the build is complete, the SWU firmware upgrade image file will be located 
 
 This image can be used for upgrading firmware via the LuCI web interface on the MBM 2.0 board running from the USB flash drive.
 
-#### 1.1.4 MBM 1.0/2.0 Default Network Configuration
+#### 1.1.5 MBM 1.0/2.0 Default Network Configuration
 
 By default, network ports Ethernet 1 (`eth0`) and Ethernet 2 (`eth1`) are joined into a bridge (`br-lan` interface) with the RSTP protocol enabled. Bridge (`br-lan`) configured with static IP address 192.168.0.1/24 with enabled DHCP server.
 
