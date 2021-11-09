@@ -3,7 +3,7 @@
 #
 # LuCI package class
 #
-# Copyright (c) 2018, 2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018, 2020-2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -28,20 +28,29 @@ LUCI_PKG_EXECUTABLE ?= "\
 	${D}/usr/bin/* \
 "
 
+install_files() {
+	DIRSRC="$1"
+	DIRDST="$2"
+
+	cd ${DIRSRC}
+	find * -type f -exec install -Dm 644 "{}" "${DIRDST}/{}" \;
+	find * -type l -exec cp -d "{}" "${DIRDST}/{}" \;
+}
+
 do_install_append() {
 	# Install luasrc
 	if [ -d "${LUCI_PKG_SRC}/luasrc" ]; then
-		( cd ${LUCI_PKG_SRC}/luasrc; find * -type f -exec install -Dm 644 "{}" "${D}${LUCI_INSTALL_LUASRC_PATH}/{}" \; )
+		install_files "${LUCI_PKG_SRC}/luasrc" "${D}${LUCI_INSTALL_LUASRC_PATH}"
 	fi
 
 	# Install htdocs
 	if [ -d "${LUCI_PKG_SRC}/htdocs" ]; then
-		( cd ${LUCI_PKG_SRC}/htdocs; find * -type f -exec install -Dm 644 "{}" "${D}${LUCI_INSTALL_HTDOCS_PATH}/{}" \; )
+		install_files "${LUCI_PKG_SRC}/htdocs" "${D}${LUCI_INSTALL_HTDOCS_PATH}"
 	fi
 
 	# Install root files
 	if [ -d "${LUCI_PKG_SRC}/root" ]; then
-		( cd ${LUCI_PKG_SRC}/root; find * -type f -exec install -Dm 644 "{}" "${D}${LUCI_INSTALL_ROOT_PATH}/{}" \; )
+		install_files "${LUCI_PKG_SRC}/root" "${D}${LUCI_INSTALL_ROOT_PATH}"
 	fi
 
 	# Executable files
