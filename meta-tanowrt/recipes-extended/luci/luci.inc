@@ -1,15 +1,15 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2022 Tano Systems LLC. All rights reserved.
 #
 LUCI_GIT_URI      ?= "git://github.com/tano-systems/luci.git"
 LUCI_GIT_BRANCH   ?= "tano/master"
 LUCI_GIT_PROTOCOL ?= "git"
 
-# 08.11.2021
-LUCI_GIT_SRCREV ?= "3cf22a2fbe0f213afbc1417a7f8c18c9b7644f8c"
+# 16.02.2022
+LUCI_GIT_SRCREV ?= "2379c70e76c6020223f6b8f896c287182ed8de3c"
 
-PR_append = ".120"
+PR_append = ".121"
 
 libdir = "/usr/lib"
 
