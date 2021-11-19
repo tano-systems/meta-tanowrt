@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2019-2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".1"
+PR_append = ".2"
 
 python __anonymous() {
     if not d.getVar("KERNEL_CACHE_DIR"):
@@ -50,6 +50,13 @@ SRCREV_machine = "${KERNEL_SRC_SRCREV}"
 SRCREV_FORMAT = "machine"
 
 require recipes-kernel/linux/linux-yocto.inc
+
+KERNEL_FEATURES_remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/numa/numa.scc', '', d)}"
+KERNEL_FEATURES_append = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/general/numa/numa.scc', '', d)}"
+
+KERNEL_FEATURES_remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'cfg/fs/vfat.scc', '', d)}"
+KERNEL_FEATURES_append = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'features/general/fs/vfat.scc', '', d)}"
+
 inherit kernel-tano
 
 LINUX_VERSION_FULL = "${@kernel_full_version("${LINUX_VERSION}")}"
