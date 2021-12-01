@@ -6,14 +6,14 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano57"
+PR = "tano58"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://procd.c;beginline=1;endline=13;md5=61e3657604f131a859b57a40f27a9d8e"
 SECTION = "base"
-DEPENDS = "libubox ubus json-c"
+DEPENDS = "libubox ubus json-c libuci"
 TOOLCHAIN = "gcc"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -67,9 +67,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 15.08.2021
-# uxc: support config in uvol
-SRCREV = "104b49d6ab25a8cf067e6d8d1f2da7defb9876d4"
+# 16.11.2021
+# procd: service_stop_all: also kill inittab actions
+SRCREV = "01ac2c4500cb0c7934640e6d2e5f99b08483bdf4"
 
 S = "${WORKDIR}/git"
 

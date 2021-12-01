@@ -1,4 +1,4 @@
-From c1f45e0edee571df99d59a13808cba055c851fe3 Mon Sep 17 00:00:00 2001
+From 0679d917622e7daeec6bfc586260b45dbc8d3384 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 12 Nov 2020 05:00:34 +0300
 Subject: [PATCH 16/24] jail: Add libnss_* libs to mounts when using glibc
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 25 insertions(+)
 
 diff --git a/jail/jail.c b/jail/jail.c
-index fc8d824..e3106e9 100644
+index 6e9306d..761c2a6 100644
 --- a/jail/jail.c
 +++ b/jail/jail.c
-@@ -63,6 +63,10 @@
+@@ -64,6 +64,10 @@
  #include <libubox/utils.h>
  #include <libubus.h>
  
@@ -23,7 +23,7 @@ index fc8d824..e3106e9 100644
  #ifndef CLONE_NEWCGROUP
  #define CLONE_NEWCGROUP 0x02000000
  #endif
-@@ -2739,6 +2743,24 @@ errout:
+@@ -2876,6 +2880,24 @@ errout:
  	return ret;
  }
  
@@ -48,7 +48,7 @@ index fc8d824..e3106e9 100644
  static void post_main(struct uloop_timeout *t)
  {
  	if (apply_rlimits()) {
-@@ -2761,7 +2783,10 @@ static void post_main(struct uloop_timeout *t)
+@@ -2898,7 +2920,10 @@ static void post_main(struct uloop_timeout *t)
  
  #if defined(__GLIBC__)
  			if (!opts.extroot)
@@ -57,8 +57,8 @@ index fc8d824..e3106e9 100644
 +				add_glibc_nss_libs();
 +			}
  #endif
- 
- 			if (!(opts.namespace & CLONE_NEWNET)) {
+ 			if (opts.setns.ns == -1) {
+ 				if (!(opts.namespace & CLONE_NEWNET)) {
 -- 
-2.28.0.windows.1
+2.33.0.windows.2
 

@@ -1,4 +1,4 @@
-From f85878f2c34e8b5c554b4c09f778f20c1df42a06 Mon Sep 17 00:00:00 2001
+From a1f097bbbb408ba7dcf0662b335404a44ffe1295 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Mar 2021 18:01:05 +0300
 Subject: [PATCH 22/24] system: Add optional delay parameter to system.reboot
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 31 insertions(+), 2 deletions(-)
 
 diff --git a/system.c b/system.c
-index 4663bac..a5a5efa 100644
+index b3261b7..5391ff1 100644
 --- a/system.c
 +++ b/system.c
-@@ -400,11 +400,40 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -431,11 +431,40 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	return UBUS_STATUS_OK;
  }
  
@@ -55,7 +55,7 @@ index 4663bac..a5a5efa 100644
  	return 0;
  }
  
-@@ -803,7 +832,7 @@ procd_subscribe_cb(struct ubus_context *ctx, struct ubus_object *obj)
+@@ -836,7 +865,7 @@ procd_subscribe_cb(struct ubus_context *ctx, struct ubus_object *obj)
  static const struct ubus_method system_methods[] = {
  	UBUS_METHOD_NOARG("board", system_board),
  	UBUS_METHOD_NOARG("info",  system_info),
@@ -65,5 +65,5 @@ index 4663bac..a5a5efa 100644
  	UBUS_METHOD("signal", proc_signal, signal_policy),
  	UBUS_METHOD("validate_firmware_image", validate_firmware_image, validate_firmware_image_policy),
 -- 
-2.28.0.windows.1
+2.33.0.windows.2
 

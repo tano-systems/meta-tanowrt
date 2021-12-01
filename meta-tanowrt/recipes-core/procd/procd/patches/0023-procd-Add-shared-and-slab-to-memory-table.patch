@@ -1,4 +1,4 @@
-From 0e4ef876c873228642ba1631d95264cc8b65ffd2 Mon Sep 17 00:00:00 2001
+From 792240c07388bdc7cd7c7ae4038cf346804d7424 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 11 Jul 2019 04:50:21 +0300
 Subject: [PATCH 23/24] procd: Add shared and slab to memory table
@@ -9,18 +9,18 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/system.c b/system.c
-index a5a5efa..e44f26a 100644
+index 5391ff1..b8626cd 100644
 --- a/system.c
 +++ b/system.c
-@@ -326,6 +326,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -334,6 +334,7 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	char line[256];
  	char *key, *val;
  	unsigned long long available, cached;
 +	unsigned long long shmem, slab;
  	FILE *f;
- 
- 	if (sysinfo(&info))
-@@ -337,6 +338,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+ 	int i;
+ 	struct statvfs s;
+@@ -351,6 +352,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  	/* if linux < 3.14 MemAvailable is not in meminfo */
  	available = 0;
  	cached = 0;
@@ -29,7 +29,7 @@ index a5a5efa..e44f26a 100644
  
  	while (fgets(line, sizeof(line), f))
  	{
-@@ -350,6 +353,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -364,6 +367,10 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			available = 1024 * atoll(val);
  		else if (!strcasecmp(key, "Cached"))
  			cached = 1024 * atoll(val);
@@ -40,7 +40,7 @@ index a5a5efa..e44f26a 100644
  	}
  
  	fclose(f);
-@@ -385,6 +392,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
+@@ -399,6 +406,8 @@ static int system_info(struct ubus_context *ctx, struct ubus_object *obj,
  			(uint64_t)info.mem_unit * (uint64_t)info.bufferram);
  	blobmsg_add_u64(&b, "available", available);
  	blobmsg_add_u64(&b, "cached", cached);
@@ -48,7 +48,7 @@ index a5a5efa..e44f26a 100644
 +	blobmsg_add_u64(&b, "slab", slab);
  	blobmsg_close_table(&b, c);
  
- 	c = blobmsg_open_table(&b, "swap");
+ 	for (i = 0; i < sizeof(fslist) / sizeof(fslist[0]); i += 2) {
 -- 
-2.28.0.windows.1
+2.33.0.windows.2
 

@@ -1,4 +1,4 @@
-From ba8c0e8d1331523a7d41b568930101724988e7f2 Mon Sep 17 00:00:00 2001
+From f3b9aa996d313052695ef80cc541cb921721f4e9 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 06:58:50 +0300
 Subject: [PATCH 13/24] uxc: Fix compiler warnings
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/uxc.c b/uxc.c
-index 5163b9a..2105e35 100644
+index d8db49d..c71e6a6 100644
 --- a/uxc.c
 +++ b/uxc.c
-@@ -1004,7 +1004,7 @@ int main(int argc, char **argv)
+@@ -1059,7 +1059,7 @@ int main(int argc, char **argv)
  				break;
  
  			case 'v':
@@ -22,5 +22,5 @@ index 5163b9a..2105e35 100644
  
  			case 'V':
 -- 
-2.28.0.windows.1
+2.33.0.windows.2
 

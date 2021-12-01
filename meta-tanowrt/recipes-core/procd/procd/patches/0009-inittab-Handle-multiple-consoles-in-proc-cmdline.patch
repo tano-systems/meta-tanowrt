@@ -1,4 +1,4 @@
-From eb86925c1db36890660a7229759edfad7d20330e Mon Sep 17 00:00:00 2001
+From cbf7fc5ac0adb2c50d98d386e2af65e2ffaee736 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 21 Aug 2019 17:31:40 +0300
 Subject: [PATCH 09/24] inittab: Handle multiple consoles in /proc/cmdline
@@ -33,7 +33,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 121 insertions(+), 28 deletions(-)
 
 diff --git a/inittab.c b/inittab.c
-index b2ffc9a..fe5ee0d 100644
+index 128268a..3d19577 100644
 --- a/inittab.c
 +++ b/inittab.c
 @@ -43,7 +43,6 @@
@@ -148,7 +148,7 @@ index b2ffc9a..fe5ee0d 100644
  static void fork_worker(struct init_action *a)
  {
  	pid_t p;
-@@ -158,12 +243,18 @@ static void runrc(struct init_action *a)
+@@ -161,12 +246,18 @@ static void runrc(struct init_action *a)
  static void askfirst(struct init_action *a)
  {
  	int i;
@@ -168,7 +168,7 @@ index b2ffc9a..fe5ee0d 100644
  	a->tout.cb = respawn;
  	/* shift arguments only if not yet done */
  	if (a->argv[0] != ask) {
-@@ -178,41 +269,41 @@ static void askfirst(struct init_action *a)
+@@ -181,41 +272,41 @@ static void askfirst(struct init_action *a)
  		fork_worker(a);
  }
  
@@ -236,7 +236,7 @@ index b2ffc9a..fe5ee0d 100644
  	a->tout.cb = respawn;
  	/* shift arguments only if not yet done */
  	if (a->argv[0] != ask) {
-@@ -307,6 +398,8 @@ void procd_inittab(void)
+@@ -321,6 +412,8 @@ void procd_inittab(void)
  		return;
  	}
  
@@ -246,5 +246,5 @@ index b2ffc9a..fe5ee0d 100644
  	line = malloc(LINE_LEN);
  	a = calloc(1, sizeof(struct init_action));
 -- 
-2.28.0.windows.1
+2.33.0.windows.2
 
