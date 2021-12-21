@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano30"
+PR = "tano31"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -27,9 +27,9 @@ SRC_URI += "\
 	file://0001-file-Add-support-for-polled-execution-mode.patch \
 "
 
-# 13.07.2021
-# session: unload rpcd configuration before checking login
-SRCREV_rpcd = "1fa35765ddf64976aa48950cac53d501fb71dda0"
+# 02.12.2021
+# 4c532bfed25809d56e8848f3be99d8082bd3f34a
+SRCREV_rpcd = "4c532bfed25809d56e8848f3be99d8082bd3f34a"
 
 S = "${WORKDIR}/git"
 
@@ -38,10 +38,11 @@ inherit cmake tanowrt-services
 PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
 
 EXTRA_OECMAKE += "\
-  -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib/rpcd \
+  -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
   -DFILE_SUPPORT=ON \
   -DIWINFO_SUPPORT=ON \
   -DRPCSYS_SUPPORT=ON \
+  -DUCODE_SUPPORT=OFF \
 "
 
 TANOWRT_SERVICE_PACKAGES = "rpcd"
