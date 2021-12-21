@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano3"
+PR = "tano4"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -50,10 +50,10 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 16.05.2021
-# json_script: fix unannotated fall-through warning
-SRCREV = "b14c4688612c05c78ce984d7bde633bce8703b1e"
-PV = "20201212"
+# 12.11.2021
+# vlist: define vlist_for_each_element_safe
+SRCREV = "cce5e351278b307af7f69931971e3d4e060117d7"
+PV = "20211120"
 
 S = "${WORKDIR}/git"
 
