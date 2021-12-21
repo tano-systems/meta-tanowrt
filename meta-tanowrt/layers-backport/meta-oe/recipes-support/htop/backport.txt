@@ -1,0 +1,5 @@
+Recipe for htop 3.0.5 backported from meta-openembedded layer:
+  repository: https://github.com/openembedded/meta-openembedded.git
+  subdirectory: meta-oe
+  branch: master
+  revision: 390c4d638e9fb6df858813a0e681e573f921ae83
