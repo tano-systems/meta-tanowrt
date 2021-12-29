@@ -1,24 +1,24 @@
-From 45c5ae88d2b4080338c044df8191d241892d2560 Mon Sep 17 00:00:00 2001
+From 9fed78dbda8941f6aa3dd57cd305984ae10873a7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Fri, 25 Jun 2021 04:34:49 +0300
-Subject: [PATCH 1/5] baikal-m: Add support for Baikal-M platforms
+Date: Wed, 29 Dec 2021 10:57:57 +0300
+Subject: [PATCH 1/3] baikal-m: Add support for Baikal-M platforms
 
-Imported changes from baikal-arm64-5.2-20210608 (Baikal-M SDK 5.2 20210608)
-applied to vanilla kernel 5.4.114.
+Imported changes from baikal-arm64-5.3-20210924 (Baikal-M SDK 5.3 20210924)
+applied to vanilla kernel 5.4.144.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  arch/arm64/Kconfig.platforms                  |   31 +
  arch/arm64/boot/dts/Makefile                  |    1 +
  arch/arm64/boot/dts/baikal/Makefile           |    9 +
- arch/arm64/boot/dts/baikal/bm-dbm.dts         |  363 ++++
- arch/arm64/boot/dts/baikal/bm-mbm.dtsi        |  232 +++
+ arch/arm64/boot/dts/baikal/bm-dbm.dts         |  367 ++++
+ arch/arm64/boot/dts/baikal/bm-mbm.dtsi        |  240 +++
  arch/arm64/boot/dts/baikal/bm-mbm10.dts       |   30 +
- arch/arm64/boot/dts/baikal/bm-mbm20.dts       |   72 +
+ arch/arm64/boot/dts/baikal/bm-mbm20.dts       |  102 ++
  arch/arm64/boot/dts/baikal/bm-qemu.dts        |  163 ++
- arch/arm64/boot/dts/baikal/bm1000-clocks.dtsi |  383 ++++
+ arch/arm64/boot/dts/baikal/bm1000-clocks.dtsi |  363 ++++
  .../arm64/boot/dts/baikal/bm1000-cpufreq.dtsi |  249 +++
- arch/arm64/boot/dts/baikal/bm1000.dtsi        | 1043 +++++++++++
+ arch/arm64/boot/dts/baikal/bm1000.dtsi        | 1059 ++++++++++++
  drivers/clk/Makefile                          |    1 +
  drivers/clk/baikal/Makefile                   |    1 +
  drivers/clk/baikal/clk-baikal.c               |  435 +++++
@@ -30,12 +30,12 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  drivers/gpu/drm/baikal/Makefile               |   10 +
  drivers/gpu/drm/baikal/baikal-hdmi.c          |  117 ++
  drivers/gpu/drm/baikal/baikal_vdu_connector.c |  424 +++++
- drivers/gpu/drm/baikal/baikal_vdu_crtc.c      |  377 ++++
+ drivers/gpu/drm/baikal/baikal_vdu_crtc.c      |  388 +++++
  drivers/gpu/drm/baikal/baikal_vdu_debugfs.c   |  132 ++
  drivers/gpu/drm/baikal/baikal_vdu_drm.h       |   81 +
  drivers/gpu/drm/baikal/baikal_vdu_drv.c       |  396 +++++
  drivers/gpu/drm/baikal/baikal_vdu_plane.c     |  193 +++
- drivers/gpu/drm/baikal/baikal_vdu_regs.h      |  148 ++
+ drivers/gpu/drm/baikal/baikal_vdu_regs.h      |  151 ++
  drivers/gpu/drm/bridge/synopsys/Kconfig       |   17 +
  drivers/gpu/drm/bridge/synopsys/Makefile      |    1 +
  .../bridge/synopsys/baikal-hdmi-ahb-audio.c   |  686 ++++++++
@@ -73,7 +73,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  .../ethernet/stmicro/stmmac/dwmac1000_dma.h   |   26 +
  .../net/ethernet/stmicro/stmmac/dwmac_lib.c   |    8 +
  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   47 +
- .../net/ethernet/stmicro/stmmac/stmmac_main.c |  302 +++-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |  303 +++-
  .../net/ethernet/stmicro/stmmac/stmmac_xsk.c  | 1536 +++++++++++++++++
  .../net/ethernet/stmicro/stmmac/stmmac_xsk.h  |   49 +
  drivers/net/phy/Kconfig                       |   13 +
@@ -82,7 +82,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  drivers/net/phy/mv88x2222.c                   |  473 +++++
  drivers/pci/controller/dwc/Kconfig            |   11 +
  drivers/pci/controller/dwc/Makefile           |    1 +
- drivers/pci/controller/dwc/pcie-baikal.c      |  718 ++++++++
+ drivers/pci/controller/dwc/pcie-baikal.c      |  717 ++++++++
  drivers/spi/Kconfig                           |    3 +
  drivers/spi/Makefile                          |    1 +
  drivers/spi/spi-db-espi.c                     |  431 +++++
@@ -91,17 +91,23 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  drivers/usb/dwc3/Kconfig                      |    9 +
  drivers/usb/dwc3/Makefile                     |    1 +
  drivers/usb/dwc3/dwc3-baikal.c                |  126 ++
+ drivers/usb/serial/usb-serial.c               |    7 +-
  drivers/video/Kconfig                         |    2 +
  include/linux/marvell_phy.h                   |    2 +
  include/linux/mfd/baikal/lcru-pcie.h          |  140 ++
  samples/Kconfig                               |    7 +
  samples/Makefile                              |    1 +
+ sound/hda/hdac_controller.c                   |   15 +
+ sound/pci/hda/Kconfig                         |   13 +
+ sound/pci/hda/Makefile                        |    2 +
+ sound/pci/hda/hda_baikal.c                    |  525 ++++++
+ sound/pci/hda/hda_controller.c                |   57 +-
  sound/soc/codecs/tlv320aic3x.c                |    3 +
  sound/soc/dwc/Makefile                        |    1 +
  sound/soc/dwc/be_snd.c                        |  129 ++
- sound/soc/dwc/dwc-i2s.c                       |   37 +-
+ sound/soc/dwc/dwc-i2s.c                       |   39 +-
  tools/build/Makefile.include                  |    4 +
- 93 files changed, 13704 insertions(+), 125 deletions(-)
+ 99 files changed, 14358 insertions(+), 144 deletions(-)
  create mode 100644 arch/arm64/boot/dts/baikal/Makefile
  create mode 100644 arch/arm64/boot/dts/baikal/bm-dbm.dts
  create mode 100644 arch/arm64/boot/dts/baikal/bm-mbm.dtsi
@@ -140,6 +146,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  create mode 100644 drivers/spi/spi-db-espi.h
  create mode 100644 drivers/usb/dwc3/dwc3-baikal.c
  create mode 100644 include/linux/mfd/baikal/lcru-pcie.h
+ create mode 100644 sound/pci/hda/hda_baikal.c
  create mode 100644 sound/soc/dwc/be_snd.c
 
 diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.platforms
@@ -220,10 +227,10 @@ index 000000000..9729c6e3d
 +clean-files	:= *.dtb
 diff --git a/arch/arm64/boot/dts/baikal/bm-dbm.dts b/arch/arm64/boot/dts/baikal/bm-dbm.dts
 new file mode 100644
-index 000000000..5139aa917
+index 000000000..5a180bfda
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm-dbm.dts
-@@ -0,0 +1,363 @@
+@@ -0,0 +1,367 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Device tree source for Baikal Electronics DBM board
@@ -236,7 +243,7 @@ index 000000000..5139aa917
 +#include "bm1000.dtsi"
 +
 +/ {
-+	model = "Baikal Electronics Baikal-M evaluation board";
++	model = "Baikal Electronics DBM";
 +	compatible = "baikal,baikal-m";
 +	#address-cells = <2>;
 +	#size-cells = <2>;
@@ -249,7 +256,7 @@ index 000000000..5139aa917
 +		height-mm = <125>;
 +		data-mapping = "vesa-24";
 +		panel-timing {
-+			/* 1920x1080 @60Hz */
++			/* 1920x1080 @ 60 Hz */
 +			clock-frequency = <148500000>;
 +			hactive = <1920>;
 +			vactive = <1080>;
@@ -337,6 +344,10 @@ index 000000000..5139aa917
 +	system-coherency = <0>;
 +};
 +
++&hda {
++	status = "okay";
++};
++
 +&hdmi {
 +	status = "okay";
 +};
@@ -348,7 +359,7 @@ index 000000000..5139aa917
 +		#sound-dai-cells = <0>;
 +		compatible = "ti,tlv320aic3x";
 +		reg = <0x18>;
-+		gpio-reset = <&porta 4 GPIO_ACTIVE_LOW>;
++		reset-gpios = <&porta 4 GPIO_ACTIVE_LOW>;
 +		status = "okay";
 +		ai3x-micbias-vg = <1>;
 +		ai3x-ocmv = <1>;
@@ -589,10 +600,10 @@ index 000000000..5139aa917
 +};
 diff --git a/arch/arm64/boot/dts/baikal/bm-mbm.dtsi b/arch/arm64/boot/dts/baikal/bm-mbm.dtsi
 new file mode 100644
-index 000000000..ef4f7e1ed
+index 000000000..3603db2a4
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm-mbm.dtsi
-@@ -0,0 +1,232 @@
+@@ -0,0 +1,240 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Device tree include file for MBM-compatible boards
@@ -602,12 +613,20 @@ index 000000000..ef4f7e1ed
 +#include "bm1000.dtsi"
 +
 +/ {
-+	model = "Baikal Electronics Baikal-M mitx board";
++	model = "Baikal Electronics MBM";
 +	compatible = "baikal,baikal-m";
 +	#address-cells = <2>;
 +	#size-cells = <2>;
 +
 +	chosen { };
++
++	leds {
++		compatible = "gpio-leds";
++		led0 {
++			gpios = <&porta 8 GPIO_ACTIVE_HIGH>;
++			default-state = "keep";
++		};
++	};
 +
 +	sound {
 +		compatible = "simple-audio-card";
@@ -827,13 +846,13 @@ index 000000000..ef4f7e1ed
 +};
 diff --git a/arch/arm64/boot/dts/baikal/bm-mbm10.dts b/arch/arm64/boot/dts/baikal/bm-mbm10.dts
 new file mode 100644
-index 000000000..995e5b240
+index 000000000..8e02d3e08
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm-mbm10.dts
 @@ -0,0 +1,30 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * Device tree source for MBM10-compatible boards:
++ * Device tree source for MBM 1.0 compatible boards:
 + *   - TP-TF307-MB-A0 Rev.1.0 (BM1BM1-A)
 + *   - TF307-MB-S-C Rev.3.0
 + *
@@ -863,13 +882,13 @@ index 000000000..995e5b240
 +};
 diff --git a/arch/arm64/boot/dts/baikal/bm-mbm20.dts b/arch/arm64/boot/dts/baikal/bm-mbm20.dts
 new file mode 100644
-index 000000000..492b50f76
+index 000000000..1c0a459a2
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm-mbm20.dts
-@@ -0,0 +1,72 @@
+@@ -0,0 +1,102 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * Device tree source for MBM20-compatible boards:
++ * Device tree source for MBM 2.0 compatible boards:
 + *   - TF307-MB-S-D Rev.4.0 (BM1BM1-D)
 + *
 + * Copyright (C) 2021 Baikal Electronics, JSC
@@ -877,6 +896,7 @@ index 000000000..492b50f76
 +
 +/dts-v1/;
 +
++#include <dt-bindings/input/input.h>
 +#include "bm-mbm.dtsi"
 +
 +/ {
@@ -888,9 +908,8 @@ index 000000000..492b50f76
 +		width-mm = <223>;
 +		height-mm = <125>;
 +		data-mapping = "vesa-24";
-+		enable-gpios = <&porta 16 GPIO_ACTIVE_HIGH>;
 +		panel-timing {
-+			/* 1920x1080 @60Hz */
++			/* 1920x1080 @ 60 Hz */
 +			clock-frequency = <148500000>;
 +			hactive = <1920>;
 +			vactive = <1080>;
@@ -908,6 +927,29 @@ index 000000000..492b50f76
 +			panel0_lvds1: endpoint@1 {
 +				remote-endpoint = <&vdu_lvds1_pads>;
 +			};
++		};
++	};
++
++	buttons-backlight {
++		compatible = "gpio-keys";
++		autorepeat;
++		button-brightness-down {
++			label = "Brightness Down Button";
++			linux,code = <KEY_BRIGHTNESSDOWN>;
++			gpios = <&porta 18 GPIO_ACTIVE_LOW>;
++			debounce-interval = <50>;
++		};
++		button-brightness-up {
++			label = "Brightness Up Button";
++			linux,code = <KEY_BRIGHTNESSUP>;
++			gpios = <&porta 17 GPIO_ACTIVE_LOW>;
++			debounce-interval = <50>;
++		};
++		button-brightness-toggle {
++			label = "Brightness Toggle Button";
++			linux,code = <KEY_BRIGHTNESS_TOGGLE>;
++			gpios = <&porta 31 GPIO_ACTIVE_LOW>;
++			debounce-interval = <50>;
 +		};
 +	};
 +
@@ -930,6 +972,13 @@ index 000000000..492b50f76
 +	/* In order to utilize LVDS LCD panel, make sure that
 +	   status is "okay" along with panel status (see above). */
 +	status = "disabled";
++	enable-gpios = <&porta 16 GPIO_ACTIVE_LOW>;
++	backlight {
++		min-brightness-level = <10>;
++		default-brightness-level = <60>;
++		brightness-level-step = <2>;
++		pwm-frequency = <20000>;
++	};
 +	port {
 +		vdu_lvds0_pads: endpoint@0 {
 +			remote-endpoint = <&panel0_lvds0>;
@@ -1110,10 +1159,10 @@ index 000000000..c6350c0aa
 +};
 diff --git a/arch/arm64/boot/dts/baikal/bm1000-clocks.dtsi b/arch/arm64/boot/dts/baikal/bm1000-clocks.dtsi
 new file mode 100644
-index 000000000..08b033fbe
+index 000000000..0a5579d36
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm1000-clocks.dtsi
-@@ -0,0 +1,383 @@
+@@ -0,0 +1,363 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Device tree include file for BE-M1000 SoC clocks
@@ -1201,6 +1250,8 @@ index 000000000..08b033fbe
 +			"dmac",		// <12>
 +			"smbus1",	// <13>
 +			"smbus2",	// <14>
++			"hda_sys_clk",	// <15>
++			"hda_clk48",	// <16>
 +			"mshc_axi",	// <17>
 +			"mshc_ahb",	// <18>
 +			"mshc_tx_x2",	// <19>
@@ -1213,8 +1264,8 @@ index 000000000..08b033fbe
 +			"vdu_axi",	// <26>
 +			"smmu";		// <27>
 +		clock-indices =
-+			<0>, <1>, <2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>,
-+			<10>, <11>, <12>, <13>, <14>, <17>, <18>, <19>,
++			<0>, <1>, <2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, <10>,
++			<11>, <12>, <13>, <14>, <15>, <16>, <17>, <18>, <19>,
 +			<20>, <21>, <22>, <23>, <24>, <25>, <26>, <27>;
 +		clocks = <&osc25>;
 +		cmu-id = <0x20000000>;
@@ -1273,13 +1324,6 @@ index 000000000..08b033fbe
 +	};
 +
 +	clocks {
-+		ref_clk: ref_clk {
-+			compatible = "fixed-clock";
-+			#clock-cells = <0>;
-+			clock-frequency = <25000000>;
-+			clock-output-names = "refclk";
-+		};
-+
 +		cpu_clk: cpu_clk {
 +			compatible = "fixed-clock";
 +			#clock-cells = <0>;
@@ -1461,21 +1505,6 @@ index 000000000..08b033fbe
 +			#clock-cells = <1>;
 +			clock-indices = <26>;
 +			clock-frequency = <240000000>;
-+			clock-output-names = "baikal-cmu";
-+		};
-+
-+		xgbe_cmu0: cmu0@xgbe {
-+			compatible = "fixed-clock";
-+			#clock-cells = <1>;
-+			clock-indices = <0>, <10>, <13>, <15>, <17>;
-+			clock-output-names = "csr50_clk", "gmac0_tx2", "gmac1_tx2", "vdu_aclk", "hdmi_sfr_clk";
-+			clock-frequency = <50000000>, <250000000>, <250000000>, <416666667>, <25000000>;
-+		};
-+
-+		xgbe_cmu1: cmu1@xgbe {
-+			compatible = "fixed-clock";
-+			#clock-cells = <0>;
-+			clock-frequency = <600000000>;
 +			clock-output-names = "baikal-cmu";
 +		};
 +
@@ -1754,10 +1783,10 @@ index 000000000..76fee58d8
 +};
 diff --git a/arch/arm64/boot/dts/baikal/bm1000.dtsi b/arch/arm64/boot/dts/baikal/bm1000.dtsi
 new file mode 100644
-index 000000000..a146a36e4
+index 000000000..bc69835c4
 --- /dev/null
 +++ b/arch/arm64/boot/dts/baikal/bm1000.dtsi
-@@ -0,0 +1,1043 @@
+@@ -0,0 +1,1059 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Device tree include file for BE-M1000 SoC
@@ -1770,13 +1799,12 @@ index 000000000..a146a36e4
 +#include <dt-bindings/interrupt-controller/arm-gic.h>
 +
 +/*
-+ * ARM GIC v3 bindings assume interrupts (in each range) counting from 0:
++ * ARM GICv3 bindings assume interrupts (in each range) counting from 0:
 + * PPI: 0..15
 + * SPI: 0..987
 + * Baikal-M documentation ("Interrupt map") places all interrupts into the
-+ * linear map: SGI (0..15), PPI (16..31), SPI(32-1019).
-+ * So real interrupts in this device tree must be calculated
-+ * in the following manner:
++ * linear map: SGI(0..15), PPI(16..31), SPI(32-1019).
++ * So real interrupt IDs in this device tree must be calculated as follows:
 + * PPI_real = PPI_from_documentation - 16
 + * SPI_real = SPI_from_documentation - 32
 + */
@@ -1794,6 +1822,7 @@ index 000000000..a146a36e4
 +		ethernet4		= &xgmac1;
 +		gic			= &gic;
 +		gpio			= &gpio;
++		hda			= &hda;
 +		i2c0			= &i2c0;
 +		i2c1			= &i2c1;
 +		i2s			= &i2s;
@@ -2017,6 +2046,11 @@ index 000000000..a146a36e4
 +		};
 +	};
 +
++	pmu {
++		compatible = "arm,cortex-a57-pmu";
++		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
++	};
++
 +	timer {
 +		compatible = "arm,armv8-timer";
 +		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
@@ -2031,7 +2065,7 @@ index 000000000..a146a36e4
 +		#size-cells = <2>;
 +		ranges;
 +
-+		/* DDR: DDR0 (0e200000, 10000, SPI_161-166_?) */
++		/* DDR0 (e200000, 10000, SPI_161-166_?) */
 +		ddr1: memory-controller1@e200000 {
 +			compatible = "be,emc", "be,memory-controller";
 +			reg = <0x0 0x0e200000 0x0 0x10000>;
@@ -2046,9 +2080,7 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* DDR: DDR0_PHY (0e210000, 10000, ?) */
-+
-+		/* DDR: DDR1 (22200000, 10000, SPI_171-176_?) */
++		/* DDR1 (22200000, 10000, SPI_171-176_?) */
 +		ddr2: memory-controller2@22200000 {
 +			compatible = "be,emc", "be,memory-controller";
 +			reg = <0x0 0x22200000 0x0 0x10000>;
@@ -2063,7 +2095,6 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PCIe LCRU */
 +		pcie_lcru: lcru@2000000 {
 +			compatible = "syscon";
 +			reg = <0x0 0x2000000 0x0 0x80000>;
@@ -2071,8 +2102,7 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PCIe x4 #0 */
-+		pcie0: pcie@2200000 {
++		pcie0: pcie@2200000 { /* PCIe x4 #0 */
 +			compatible = "baikal,pcie-m", "snps,dw-pcie";
 +			reg = <0x0 0x02200000 0x0 0x1000>,   /* RC config space */
 +			      <0x0 0x40100000 0x0 0x100000>; /* PCI config space */
@@ -2084,7 +2114,7 @@ index 000000000..a146a36e4
 +			#address-cells = <3>;
 +			#size-cells = <2>;
 +			device_type = "pci";
-+			ranges = <0x81000000 0x0 0x00000000 0x0 0x40200000 0x0 0x00100000>, /* I/O */
++			ranges = <0x81000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,   /* I/O */
 +				 <0x82000000 0x0 0x40000000 0x4 0x00000000 0x0 0x40000000>; /* 32b non-prefetchable memory */
 +			msi-parent = <&its 0x0>;
 +			msi-map = <0x0 &its 0x0 0x10000>;
@@ -2094,8 +2124,7 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PCIe x4 #1 */
-+		pcie1: pcie@2210000 {
++		pcie1: pcie@2210000 { /* PCIe x4 #1 */
 +			compatible = "baikal,pcie-m", "snps,dw-pcie";
 +			reg = <0x0 0x02210000 0x0 0x1000>,   /* RC config space */
 +			      <0x0 0x50100000 0x0 0x100000>; /* PCI config space */
@@ -2107,7 +2136,7 @@ index 000000000..a146a36e4
 +			#address-cells = <3>;
 +			#size-cells = <2>;
 +			device_type = "pci";
-+			ranges = <0x81000000 0x0 0x00100000 0x0 0x50000000 0x0 0x00100000>, /* I/O */
++			ranges = <0x81000000 0x0 0x00100000 0x0 0x50000000 0x0 0x100000>,   /* I/O */
 +				 <0x82000000 0x0 0x40000000 0x5 0x00000000 0x0 0x40000000>; /* 32b non-prefetchable memory */
 +			msi-parent = <&its 0x0>;
 +			msi-map = <0x0 &its 0x0 0x10000>;
@@ -2117,8 +2146,7 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PCIe x8 */
-+		pcie2: pcie@2220000 {
++		pcie2: pcie@2220000 { /* PCIe x8 */
 +			compatible = "baikal,pcie-m", "snps,dw-pcie";
 +			reg = <0x0 0x02220000 0x0 0x1000>,   /* RC config space */
 +			      <0x0 0x60000000 0x0 0x100000>; /* PCI config space */
@@ -2130,7 +2158,7 @@ index 000000000..a146a36e4
 +			#address-cells = <3>;
 +			#size-cells = <2>;
 +			device_type = "pci";
-+			ranges = <0x81000000 0x0 0x00200000 0x0 0x60100000 0x0 0x00100000>, /* I/O */
++			ranges = <0x81000000 0x0 0x00200000 0x0 0x60100000 0x0 0x100000>,   /* I/O */
 +				 <0x82000000 0x0 0x80000000 0x6 0x00000000 0x0 0x80000000>; /* 32b non-prefetchable memory */
 +			msi-parent = <&its 0x0>;
 +			msi-map = <0x0 &its 0x0 0x10000>;
@@ -2140,7 +2168,12 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PVT_0: PVT0 (28200000, 10000, SPI_151_H) */
++		ccn: ccn@9000000 {
++			compatible = "arm,ccn-504";
++			reg = <0x0 0x9000000 0 0x1000000>;
++			interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
 +		pvt0: pvt0@28200000 {
 +			compatible = "baikal,pvt";
 +			reg = <0x0 0x28200000 0x0 0x10000>;
@@ -2149,25 +2182,22 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PVT_1: PVT1 (0c200000, 10000, SPI_153_H) */
 +		pvt1: pvt1@c200000 {
 +			compatible = "baikal,pvt";
-+			reg = <0x0 0x0c200000 0x0 0x10000>;
++			reg = <0x0 0xc200000 0x0 0x10000>;
 +			pvt_id = <1>;
 +			interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
 +			status = "disabled";
 +		};
 +
-+		/* PVT_2: PVT2 (0a200000, 10000, SPI_155_H) */
 +		pvt2: pvt2@a200000 {
 +			compatible = "baikal,pvt";
-+			reg = <0x0 0x0a200000 0x0 0x10000>;
++			reg = <0x0 0xa200000 0x0 0x10000>;
 +			pvt_id = <2>;
 +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
 +			status = "disabled";
 +		};
 +
-+		/* PVT_3: PVT3 (26200000, 10000, SPI_157_H) */
 +		pvt3: pvt3@26200000 {
 +			compatible = "baikal,pvt";
 +			reg = <0x0 0x26200000 0x0 0x10000>;
@@ -2176,7 +2206,6 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* PVT_MALI: PVT (2a060000, 10000, SPI_253_H) */
 +		pvt_mali: pvt_mali@2a060000 {
 +			compatible = "baikal,pvt";
 +			reg = <0x0 0x2a060000 0x0 0x10000>;
@@ -2321,7 +2350,7 @@ index 000000000..a146a36e4
 +			compatible = "snps,dw-apb-timer-osc";
 +			reg = <0x0 0x20290000 0x0 0x14>;
 +			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-frequency  = <50000000>;
++			clock-frequency = <50000000>;
 +			clocks = <&timer1_clk>;
 +			clock-names = "soc_timer1clk";
 +			status = "disabled";
@@ -2332,7 +2361,7 @@ index 000000000..a146a36e4
 +			compatible = "snps,dw-apb-timer-sp";
 +			reg = <0x0 0x20290014 0x0 0x14>;
 +			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-frequency  = <50000000>;
++			clock-frequency = <50000000>;
 +			clocks = <&timer2_clk>;
 +			clock-names = "soc_timer2clk";
 +			status = "disabled";
@@ -2343,7 +2372,7 @@ index 000000000..a146a36e4
 +			compatible = "snps,dw-apb-timer-sp";
 +			reg = <0x0 0x20290028 0x0 0x14>;
 +			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-frequency  = <50000000>;
++			clock-frequency = <50000000>;
 +			clocks = <&timer3_clk>;
 +			clock-names = "soc_timer3clk";
 +			status = "disabled";
@@ -2354,7 +2383,7 @@ index 000000000..a146a36e4
 +			compatible = "snps,dw-apb-timer-sp";
 +			reg = <0x0 0x2029003c 0x0 0x14>;
 +			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-frequency  = <50000000>;
++			clock-frequency = <50000000>;
 +			clocks = <&timer4_clk>;
 +			clock-names = "soc_timer4clk";
 +			status = "disabled";
@@ -2402,6 +2431,14 @@ index 000000000..a146a36e4
 +		};
 +
 +		/* AVLSP: HDA (202c0000, 10000, SPI_86_H) */
++		hda: hda@202c0000 {
++			compatible = "be,cw-hda";
++			reg = <0x0 0x202c0000 0x0 0x1000>;
++			interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&cmu0_avlsp 15>, <&cmu0_avlsp 16>;
++			clock-names = "hda_sys_clk", "hda_clk48";
++			status = "disabled";
++		};
 +
 +		/* AVLSP: VDU (202d0000, 10000, SPI_144-145_?) */
 +		vdu0: vdu_lvds@202d0000 {
@@ -2409,8 +2446,8 @@ index 000000000..a146a36e4
 +			reg = <0x0 0x202d0000 0x0 0x1000>;
 +			interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>, /* VDU INTR */
 +				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>; /* VDU INTR_CDD */
-+			clocks = <&cmu1_avlsp_div7>, <&cmu0_avlsp 26>;
-+			clock-names = "pclk", "aclk";
++			clocks = <&cmu1_avlsp_div7>;
++			clock-names = "pclk";
 +			lvds-out;
 +			status = "disabled";
 +		};
@@ -2545,7 +2582,6 @@ index 000000000..a146a36e4
 +			status = "disabled";
 +		};
 +
-+		/* GIC-500: GICV3 (2d000000, 400000, *) */
 +		gic: interrupt-controller@2d000000 {
 +			compatible = "arm,gic-v3";
 +			#interrupt-cells = <3>;
@@ -2553,16 +2589,13 @@ index 000000000..a146a36e4
 +			#size-cells = <2>;
 +			ranges;
 +			interrupt-controller;
-+			/* TODO: gic memory map */
-+			reg = <0x0 0x2d000000 0x0 0x10000>,  /* GICD, GIC Distributor interface */
-+			      <0x0 0x2d100000 0x0 0x200000>; /* GICR, GIC Redistributors */
-+			      /* Optional ranges: TODO */
-+			    /*<0x0 0x2d0xxxxx 0x0 0x2000>,*/ /* GICC, GIC CPU interface */
-+			    /*<0x0 0x2d0xxxxx 0x0 0x2000>,*/ /* GICH, GIC Hypervisor interface */
-+			    /*<0x0 0x2d0xxxxx 0x0 0x2000>;*/ /* GICV, GIC Virtual CPU interface */
++			reg = <0x0 0x2d000000 0x0 0x10000>,  /* GICD */
++			      <0x0 0x2d100000 0x0 0x200000>, /* GICR */
++			      <0x0 0x10200000 0x0 0x2000>,   /* GICC */
++			      <0x0 0x10210000 0x0 0x1000>,   /* GICH */
++			      <0x0 0x10220000 0x0 0x2000>;   /* GICV */
 +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
 +
-+			/* GIC.v3 Interrupt Translation Service */
 +			its: its@2d020000 {
 +				compatible = "arm,gic-v3-its";
 +				msi-controller;
@@ -2571,7 +2604,12 @@ index 000000000..a146a36e4
 +			};
 +		};
 +
-+		/* XGBE MM: GMAC0 (30240000, 10000, SPI_323_H) */
++		axi_gmac: stmmac-axi-config0 {
++			snps,wr_osr_lmt = <0x0>;
++			snps,rd_osr_lmt = <0x0>;
++			snps,blen = <0 0 0 0 0 0 4>;
++		};
++
 +		gmac0: eth0@30240000 {
 +			compatible = "be,dwmac", "snps,dwmac-3.710", "snps,dwmac";
 +			reg = <0x0 0x30240000 0x0 0x10000>;
@@ -2581,11 +2619,15 @@ index 000000000..a146a36e4
 +			max-speed = <1000>;
 +			clocks = <&soc_ethclk>, <&cmu0_xgbe 10>;
 +			clock-names = "stmmaceth", "tx2_clk";
-+			snps,fixed-burst;
 +			mac-address = [ 00 00 00 00 00 00 ];
 +			local-mac-address = [ 00 00 00 00 00 00 ];
 +			phy-mode = "rgmii-id";
 +			phy-handle = <&gmac0_phy>;
++			snps,fixed-burst;
++			snps,axi-config = <&axi_gmac>;
++			snps,no-pbl-x8;
++			snps,txpbl = <4>;
++			snps,rxpbl = <4>;
 +			snps,reset-delays-us = <0 10200 1000>;
 +			status = "disabled";
 +			dma-coherent;
@@ -2602,12 +2644,11 @@ index 000000000..a146a36e4
 +					txd1-skew-ps = <0>;
 +					txd2-skew-ps = <0>;
 +					txd3-skew-ps = <0>;
-+					txc-skew-ps  = <0xff>;
++					txc-skew-ps = <0xff>;
 +				};
 +			};
 +		};
 +
-+		/* XGBE MM: GMAC1 (30250000, 10000, SPI_324_H) */
 +		gmac1: eth1@30250000 {
 +			compatible = "be,dwmac", "snps,dwmac-3.710", "snps,dwmac";
 +			reg = <0x0 0x30250000 0x0 0x10000>;
@@ -2617,11 +2658,15 @@ index 000000000..a146a36e4
 +			max-speed = <1000>;
 +			clocks = <&soc_ethclk>, <&cmu0_xgbe 13>;
 +			clock-names = "stmmaceth", "tx2_clk";
-+			snps,fixed-burst;
 +			mac-address = [ 00 00 00 00 00 00 ];
 +			local-mac-address = [ 00 00 00 00 00 00 ];
 +			phy-mode = "rgmii-id";
 +			phy-handle = <&gmac1_phy>;
++			snps,fixed-burst;
++			snps,axi-config = <&axi_gmac>;
++			snps,no-pbl-x8;
++			snps,txpbl = <4>;
++			snps,rxpbl = <4>;
 +			snps,reset-delays-us = <0 10200 1000>;
 +			status = "disabled";
 +			dma-coherent;
@@ -2638,7 +2683,7 @@ index 000000000..a146a36e4
 +					txd1-skew-ps = <0>;
 +					txd2-skew-ps = <0>;
 +					txd3-skew-ps = <0>;
-+					txc-skew-ps  = <0xff>;
++					txc-skew-ps = <0xff>;
 +				};
 +			};
 +		};
@@ -2750,8 +2795,8 @@ index 000000000..a146a36e4
 +			reg = <0x0 0x30260000 0x0 0x1000>;
 +			interrupts = <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>, /* VDU INTR */
 +				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>; /* VDU INTR_CDD */
-+			clocks = <&cmu1_xgbe 0>, <&ref_clk>;
-+			clock-names = "pclk", "aclk";
++			clocks = <&cmu1_xgbe 0>;
++			clock-names = "pclk";
 +			status = "disabled";
 +
 +			port {
@@ -2766,7 +2811,7 @@ index 000000000..a146a36e4
 +			reg = <0 0x30280000 0 0x20000>;
 +			reg-io-width = <4>;
 +			interrupts = <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&xgbe_cmu0 0>, <&xgbe_cmu0 17>;
++			clocks = <&cmu0_xgbe 0>, <&cmu0_xgbe 17>;
 +			clock-names = "iahb", "isfr";
 +			status = "disabled";
 +
@@ -3900,10 +3945,10 @@ index 000000000..805e6e17e
 +}
 diff --git a/drivers/gpu/drm/baikal/baikal_vdu_crtc.c b/drivers/gpu/drm/baikal/baikal_vdu_crtc.c
 new file mode 100644
-index 000000000..977cacdce
+index 000000000..a4efe5623
 --- /dev/null
 +++ b/drivers/gpu/drm/baikal/baikal_vdu_crtc.c
-@@ -0,0 +1,377 @@
+@@ -0,0 +1,388 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2019-2021 Baikal Electronics JSC
@@ -3975,10 +4020,24 @@ index 000000000..977cacdce
 +	irq_stat = readl(priv->regs + IVR);
 +	raw_stat = readl(priv->regs + ISR);
 +
-+
 +	if (irq_stat & INTR_VCT) {
 +		priv->counters[10]++;
 +		drm_crtc_handle_vblank(&priv->crtc);
++		status = IRQ_HANDLED;
++	}
++
++	if (raw_stat & INTR_UFU) {
++		priv->counters[4]++;
++		status = IRQ_HANDLED;
++	}
++
++	if (raw_stat & INTR_IFO) {
++		priv->counters[5]++;
++		status = IRQ_HANDLED;
++	}
++
++	if (raw_stat & INTR_OFU) {
++		priv->counters[6]++;
 +		status = IRQ_HANDLED;
 +	}
 +
@@ -3993,7 +4052,7 @@ index 000000000..977cacdce
 +	priv->counters[3] |= raw_stat;
 +
 +	/* Clear all interrupts */
-+	writel(irq_stat, priv->regs + ISR);
++	writel(raw_stat, priv->regs + ISR);
 +
 +	return status;
 +}
@@ -4117,10 +4176,7 @@ index 000000000..977cacdce
 +		reg |= CR1_HSP;
 +	else
 +		reg &= ~CR1_HSP;
-+	if (mode->flags & DRM_MODE_FLAG_NVSYNC)
-+		reg |= CR1_VSP;
-+	else
-+		reg &= ~CR1_VSP;
++	reg &= ~CR1_VSP; // always set VSP to active high
 +	reg |= CR1_DEP; // set DE to active high;
 +	writel(reg, priv->regs + CR1);
 +
@@ -5109,10 +5165,10 @@ index 000000000..266173868
 +}
 diff --git a/drivers/gpu/drm/baikal/baikal_vdu_regs.h b/drivers/gpu/drm/baikal/baikal_vdu_regs.h
 new file mode 100644
-index 000000000..c28dbf090
+index 000000000..45be447c0
 --- /dev/null
 +++ b/drivers/gpu/drm/baikal/baikal_vdu_regs.h
-@@ -0,0 +1,148 @@
+@@ -0,0 +1,151 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2019-2021 Baikal Electronics JSC
@@ -5158,10 +5214,13 @@ index 000000000..c28dbf090
 +#define OWDEAR1     0x628
 +#define MRR         0xFFC
 +
++#define INTR_UFU    BIT(16)
 +#define INTR_BAU    BIT(7)
 +#define INTR_VCT    BIT(6)
 +#define INTR_MBE    BIT(5)
 +#define INTR_FER    BIT(4)
++#define INTR_IFO    BIT(3)
++#define INTR_OFU    BIT(0)
 +
 +#define CR1_FBP             BIT(19)
 +#define CR1_FDW_MASK        GENMASK(17, 16)
@@ -6313,7 +6372,7 @@ index 9f770d454..ac3ba444c 100644
  
  	for (i = 0; i < NUM_JOB_SLOTS; i++)
 diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index 3dc9b30a6..f04dd9955 100644
+index bfd503d22..f1c28d6c2 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
 +++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
 @@ -31,7 +31,7 @@ static int wait_ready(struct panfrost_device *pfdev, u32 as_nr)
@@ -8454,7 +8513,7 @@ index 6793fb8fe..496fb9dc6 100644
  
  static int dwcmshc_probe(struct platform_device *pdev)
 diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index a1aeb2e10..0223db132 100644
+index 2ecd9aceb..4d8e7366e 100644
 --- a/drivers/mmc/host/sdhci.c
 +++ b/drivers/mmc/host/sdhci.c
 @@ -1017,6 +1017,24 @@ static void sdhci_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
@@ -8515,12 +8574,12 @@ index a1aeb2e10..0223db132 100644
  			mode = sdhci_readw(host, SDHCI_TRANSFER_MODE);
  			sdhci_writew(host, mode & ~(SDHCI_TRNS_AUTO_CMD12 |
  				SDHCI_TRNS_AUTO_CMD23), SDHCI_TRANSFER_MODE);
-@@ -2829,9 +2832,12 @@ static void sdhci_cmd_irq(struct sdhci_host *host, u32 intmask, u32 *intmask_p)
+@@ -2835,9 +2838,12 @@ static void sdhci_cmd_irq(struct sdhci_host *host, u32 intmask, u32 *intmask_p)
  		 */
  		if (host->pending_reset)
  			return;
 +		/*
-+		// todo: fix false positives interrupts on mitx board.
++		 * TODO: fix false positive interrupts on MBM board.
  		pr_err("%s: Got command interrupt 0x%08x even though no command operation was in progress.\n",
  		       mmc_hostname(host->mmc), (unsigned)intmask);
  		sdhci_dumpregs(host);
@@ -8528,7 +8587,7 @@ index a1aeb2e10..0223db132 100644
  		return;
  	}
  
-@@ -3572,7 +3578,8 @@ static int sdhci_set_dma_mask(struct sdhci_host *host)
+@@ -3578,7 +3584,8 @@ static int sdhci_set_dma_mask(struct sdhci_host *host)
  		host->flags &= ~SDHCI_USE_64_BIT_DMA;
  
  	/* Try 64-bit mask if hardware is capable  of it */
@@ -8538,7 +8597,7 @@ index a1aeb2e10..0223db132 100644
  		ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
  		if (ret) {
  			pr_warn("%s: Failed to set 64-bit DMA mask.\n",
-@@ -3816,15 +3823,13 @@ int sdhci_setup_host(struct sdhci_host *host)
+@@ -3822,15 +3829,13 @@ int sdhci_setup_host(struct sdhci_host *host)
  		dma_addr_t dma;
  		void *buf;
  
@@ -8562,7 +8621,7 @@ index a1aeb2e10..0223db132 100644
  		host->align_buffer_sz = SDHCI_MAX_SEGS * SDHCI_ADMA2_ALIGN;
  		/*
 diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index 76e692886..b23b9e3df 100644
+index 96a0a8f97..0c98e8ce5 100644
 --- a/drivers/mmc/host/sdhci.h
 +++ b/drivers/mmc/host/sdhci.h
 @@ -222,6 +222,7 @@
@@ -8581,7 +8640,7 @@ index 76e692886..b23b9e3df 100644
  #define  SDHCI_SUPPORT_HS400	0x80000000 /* Non-standard */
  
  #define SDHCI_CAPABILITIES_1	0x44
-@@ -288,6 +290,12 @@
+@@ -289,6 +291,12 @@
  #define   SDHCI_SPEC_410	4
  #define   SDHCI_SPEC_420	5
  
@@ -8594,7 +8653,7 @@ index 76e692886..b23b9e3df 100644
  /*
   * End of controller registers.
   */
-@@ -484,9 +492,11 @@ struct sdhci_host {
+@@ -485,9 +493,11 @@ struct sdhci_host {
   * block count.
   */
  #define SDHCI_QUIRK2_USE_32BIT_BLK_CNT			(1<<18)
@@ -8606,7 +8665,7 @@ index 76e692886..b23b9e3df 100644
  	char *bounce_buffer;	/* For packing SDMA reads/writes */
  	dma_addr_t bounce_addr;
  	unsigned int bounce_buffer_size;
-@@ -535,6 +545,7 @@ struct sdhci_host {
+@@ -536,6 +546,7 @@ struct sdhci_host {
  	bool pending_reset;	/* Cmd/data reset is pending */
  	bool irq_wake_enabled;	/* IRQ wakeup is enabled */
  	bool v4_mode;		/* Host Version 4 Enable */
@@ -8614,7 +8673,7 @@ index 76e692886..b23b9e3df 100644
  
  	struct mmc_request *mrqs_done[SDHCI_MAX_MRQS];	/* Requests done */
  	struct mmc_command *cmd;	/* Current command */
-@@ -557,6 +568,7 @@ struct sdhci_host {
+@@ -558,6 +569,7 @@ struct sdhci_host {
  	dma_addr_t align_addr;	/* Mapped bounce buffer */
  
  	unsigned int desc_sz;	/* ADMA descriptor size */
@@ -10380,7 +10439,7 @@ index d993fc7e8..f5dbfc405 100644
  #if IS_ENABLED(CONFIG_STMMAC_SELFTESTS)
  void stmmac_selftest_run(struct net_device *dev,
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 8e7c60e02..f79efe949 100644
+index 10d28be73..0e779c661 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 @@ -44,6 +44,7 @@
@@ -10862,7 +10921,15 @@ index 8e7c60e02..f79efe949 100644
  
  	if (work_done < budget)
  		napi_complete_done(napi, work_done);
-@@ -4307,6 +4540,9 @@ static const struct net_device_ops stmmac_netdev_ops = {
+@@ -3704,7 +3937,6 @@ static int stmmac_napi_poll_tx(struct napi_struct *napi, int budget)
+ static void stmmac_tx_timeout(struct net_device *dev)
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+-
+ 	stmmac_global_err(priv);
+ }
+ 
+@@ -4297,6 +4529,9 @@ static const struct net_device_ops stmmac_netdev_ops = {
  	.ndo_set_mac_address = stmmac_set_mac_address,
  	.ndo_vlan_rx_add_vid = stmmac_vlan_rx_add_vid,
  	.ndo_vlan_rx_kill_vid = stmmac_vlan_rx_kill_vid,
@@ -10872,7 +10939,7 @@ index 8e7c60e02..f79efe949 100644
  };
  
  static void stmmac_reset_subtask(struct stmmac_priv *priv)
-@@ -4494,6 +4730,12 @@ int stmmac_dvr_probe(struct device *device,
+@@ -4484,6 +4719,12 @@ int stmmac_dvr_probe(struct device *device,
  		return -ENOMEM;
  	}
  
@@ -10885,7 +10952,7 @@ index 8e7c60e02..f79efe949 100644
  	INIT_WORK(&priv->service_task, stmmac_service_task);
  
  	/* Override with kernel parameters if supplied XXX CRS XXX
-@@ -4695,6 +4937,7 @@ int stmmac_dvr_probe(struct device *device,
+@@ -4685,6 +4926,7 @@ int stmmac_dvr_probe(struct device *device,
  	}
  error_hw_init:
  	destroy_workqueue(priv->wq);
@@ -10893,7 +10960,7 @@ index 8e7c60e02..f79efe949 100644
  
  	return ret;
  }
-@@ -4731,6 +4974,7 @@ int stmmac_dvr_remove(struct device *dev)
+@@ -4721,6 +4963,7 @@ int stmmac_dvr_remove(struct device *dev)
  	    priv->hw->pcs != STMMAC_PCS_RTBI)
  		stmmac_mdio_unregister(ndev);
  	destroy_workqueue(priv->wq);
@@ -13600,10 +13667,10 @@ index 69faff371..b44f54a15 100644
  obj-$(CONFIG_PCI_MESON) += pci-meson.o
 diff --git a/drivers/pci/controller/dwc/pcie-baikal.c b/drivers/pci/controller/dwc/pcie-baikal.c
 new file mode 100644
-index 000000000..1e2f64194
+index 000000000..5b5aa95ab
 --- /dev/null
 +++ b/drivers/pci/controller/dwc/pcie-baikal.c
-@@ -0,0 +1,718 @@
+@@ -0,0 +1,717 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * PCIe RC driver for Baikal SoC
@@ -14142,7 +14209,6 @@ index 000000000..1e2f64194
 +	}
 +
 +	pp->ops = &baikal_pcie_host_ops;
-+	pp->root_bus_nr = -1;
 +
 +	ret = dw_pcie_host_init(pp);
 +	if (ret) {
@@ -15160,6 +15226,31 @@ index 000000000..2426dc49b
 +MODULE_AUTHOR("Dmitry Dunaev <dmitry.dunaev@baikalelectronics.ru>");
 +MODULE_LICENSE("GPL v2");
 +MODULE_DESCRIPTION("DesignWare USB3 Baikal SoCs Glue Layer");
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index dc7a65b9e..ce5dcb4b7 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -715,9 +715,9 @@ static void find_endpoints(struct usb_serial *serial,
+ 					struct usb_serial_endpoints *epds)
+ {
+ 	struct device *dev = &serial->interface->dev;
+-	struct usb_host_interface *iface_desc;
+-	struct usb_endpoint_descriptor *epd;
+-	unsigned int i;
++ 	struct usb_host_interface *iface_desc;
++ 	struct usb_endpoint_descriptor *epd;
++ 	unsigned int i;
+ 
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_in) < USB_MAXENDPOINTS / 2);
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < USB_MAXENDPOINTS / 2);
+@@ -725,6 +725,7 @@ static void find_endpoints(struct usb_serial *serial,
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->interrupt_out) < USB_MAXENDPOINTS / 2);
+ 
+ 	iface_desc = serial->interface->cur_altsetting;
++
+ 	for (i = 0; i < iface_desc->desc.bNumEndpoints; ++i) {
+ 		epd = &iface_desc->endpoint[i].desc;
+ 
 diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
 index 427a993c7..c844d5135 100644
 --- a/drivers/video/Kconfig
@@ -15357,6 +15448,710 @@ index 7d6e4ca28..3b33993ac 100644
  obj-y					+= vfio-mdev/
  subdir-$(CONFIG_SAMPLE_VFS)		+= vfs
 +subdir-$(CONFIG_SAMPLE_BPF)             += bpf
+diff --git a/sound/hda/hdac_controller.c b/sound/hda/hdac_controller.c
+index 7e7be8e4d..e51b57df8 100644
+--- a/sound/hda/hdac_controller.c
++++ b/sound/hda/hdac_controller.c
+@@ -30,9 +30,11 @@ static void azx_clear_corbrp(struct hdac_bus *bus)
+ 			break;
+ 		udelay(1);
+ 	}
++#ifndef CONFIG_SND_HDA_BAIKAL_M
+ 	if (timeout <= 0)
+ 		dev_err(bus->dev, "CORB reset timeout#2, CORBRP = %d\n",
+ 			snd_hdac_chip_readw(bus, CORBRP));
++#endif
+ }
+ 
+ /**
+@@ -77,8 +79,15 @@ void snd_hdac_bus_init_cmd_io(struct hdac_bus *bus)
+ 	snd_hdac_chip_writew(bus, RIRBWP, AZX_RIRBWP_RST);
+ 	/* set N=1, get RIRB response interrupt for new entry */
+ 	snd_hdac_chip_writew(bus, RINTCNT, 1);
++
++#ifdef CONFIG_SND_HDA_BAIKAL_M
++	/* response irq not working in Baikal-M HDA controller */ 
++	snd_hdac_chip_writeb(bus, RIRBCTL, AZX_RBCTL_DMA_EN);
++#else
+ 	/* enable rirb dma and response irq */
+ 	snd_hdac_chip_writeb(bus, RIRBCTL, AZX_RBCTL_DMA_EN | AZX_RBCTL_IRQ_EN);
++#endif
++
+ 	/* Accept unsolicited responses */
+ 	snd_hdac_chip_updatel(bus, GCTL, AZX_GCTL_UNSOL, AZX_GCTL_UNSOL);
+ 	spin_unlock_irq(&bus->reg_lock);
+@@ -145,6 +154,11 @@ int snd_hdac_bus_send_cmd(struct hdac_bus *bus, unsigned int val)
+ 
+ 	spin_lock_irq(&bus->reg_lock);
+ 
++#ifdef CONFIG_SND_HDA_BAIKAL_M
++	/* force first codec address, because wrong codec init */
++	val |= 0x10000000;
++#endif
++
+ 	bus->last_cmd[azx_command_addr(val)] = val;
+ 
+ 	/* add command to corb */
+@@ -154,6 +168,7 @@ int snd_hdac_bus_send_cmd(struct hdac_bus *bus, unsigned int val)
+ 		spin_unlock_irq(&bus->reg_lock);
+ 		return -EIO;
+ 	}
++
+ 	wp++;
+ 	wp %= AZX_MAX_CORB_ENTRIES;
+ 
+diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
+index dae47a45b..e057cca10 100644
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -48,6 +48,19 @@ config SND_HDA_TEGRA
+ 	  To compile this driver as a module, choose M here: the module
+ 	  will be called snd-hda-tegra.
+ 
++config SND_HDA_BAIKAL_M
++	tristate "Baikal-M HD Audio"
++	depends on ARCH_BAIKAL
++	select SND_HDA
++	select SND_HDA_ALIGNED_MMIO
++	help
++	  Say Y here to support the HDA controller present in Baikal-M 
++	  SoC
++
++	  This options enables support for the HD Audio controller
++	  present in Baikal-M SoC, used to communicate audio
++	  to the mezzanine board outputs.
++
+ if SND_HDA
+ 
+ config SND_HDA_HWDEP
+diff --git a/sound/pci/hda/Makefile b/sound/pci/hda/Makefile
+index b57432f00..065238009 100644
+--- a/sound/pci/hda/Makefile
++++ b/sound/pci/hda/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ snd-hda-intel-objs := hda_intel.o
+ snd-hda-tegra-objs := hda_tegra.o
++snd-hda-baikal-m-objs := hda_baikal.o
+ 
+ snd-hda-codec-y := hda_bind.o hda_codec.o hda_jack.o hda_auto_parser.o hda_sysfs.o
+ snd-hda-codec-y += hda_controller.o
+@@ -48,3 +49,4 @@ obj-$(CONFIG_SND_HDA_CODEC_HDMI) += snd-hda-codec-hdmi.o
+ # when built in kernel
+ obj-$(CONFIG_SND_HDA_INTEL) += snd-hda-intel.o
+ obj-$(CONFIG_SND_HDA_TEGRA) += snd-hda-tegra.o
++obj-$(CONFIG_SND_HDA_BAIKAL_M) += snd-hda-baikal-m.o
+\ No newline at end of file
+diff --git a/sound/pci/hda/hda_baikal.c b/sound/pci/hda/hda_baikal.c
+new file mode 100644
+index 000000000..393cd55a4
+--- /dev/null
++++ b/sound/pci/hda/hda_baikal.c
+@@ -0,0 +1,525 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ *
++ * Implementation of primary ALSA driver code base for Baikal-M HDA controller.
++ */
++
++#include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/clocksource.h>
++#include <linux/completion.h>
++#include <linux/delay.h>
++#include <linux/dma-mapping.h>
++#include <linux/init.h>
++#include <linux/interrupt.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/moduleparam.h>
++#include <linux/mutex.h>
++#include <linux/of_device.h>
++#include <linux/slab.h>
++#include <linux/time.h>
++#include <linux/string.h>
++#include <linux/pm_runtime.h>
++
++#include <sound/core.h>
++#include <sound/initval.h>
++
++#include <sound/hda_codec.h>
++#include "hda_controller.h"
++
++#ifdef CONFIG_PM
++static int power_save = CONFIG_SND_HDA_POWER_SAVE_DEFAULT;
++module_param(power_save, bint, 0644);
++MODULE_PARM_DESC(power_save,
++		 "Automatic power-saving timeout (in seconds, 0 = disable).");
++#else
++#define power_save	0
++#endif
++
++/* max number of SDs */
++#define NUM_CAPTURE_SD 4
++#define NUM_PLAYBACK_SD 4
++
++struct hda_baikal {
++	struct azx chip;
++	struct device *dev;
++	void __iomem *regs;
++	struct work_struct probe_work;
++	struct work_struct irq_pending_work;
++	unsigned int irq_pending_warned:1;
++};
++
++static int azx_position_ok(struct azx *chip, struct azx_dev *azx_dev);
++static const struct hda_controller_ops hda_baikal_ops;
++
++/* calculate runtime delay from LPIB */
++static int azx_get_delay_from_lpib(struct azx *chip, struct azx_dev *azx_dev,
++				   unsigned int pos)
++{
++	struct snd_pcm_substream *substream = azx_dev->core.substream;
++	int stream = substream->stream;
++	unsigned int lpib_pos = azx_get_pos_lpib(chip, azx_dev);
++	int delay;
++
++	if (stream == SNDRV_PCM_STREAM_PLAYBACK)
++		delay = pos - lpib_pos;
++	else
++		delay = lpib_pos - pos;
++	if (delay < 0) {
++		if (delay >= azx_dev->core.delay_negative_threshold)
++			delay = 0;
++		else
++			delay += azx_dev->core.bufsize;
++	}
++
++	if (delay >= azx_dev->core.period_bytes) {
++		dev_info(chip->card->dev,
++			 "Unstable LPIB (%d >= %d); disabling LPIB delay counting\n",
++			 delay, azx_dev->core.period_bytes);
++		delay = 0;
++		chip->driver_caps &= ~AZX_DCAPS_COUNT_LPIB_DELAY;
++		chip->get_delay[stream] = NULL;
++	}
++
++	return bytes_to_frames(substream->runtime, delay);
++}
++
++/* called from IRQ */
++static int azx_position_check(struct azx *chip, struct azx_dev *azx_dev)
++{
++	struct hda_baikal *hda = container_of(chip, struct hda_baikal, chip);
++	int ok;
++
++	ok = azx_position_ok(chip, azx_dev);
++
++	if (ok == 1) {
++		azx_dev->irq_pending = 0;
++		return ok;
++	} else if (ok == 0) {
++		/* bogus IRQ, process it later */
++		azx_dev->irq_pending = 1;
++		schedule_work(&hda->irq_pending_work);
++	}
++	return 0;
++}
++
++/*
++ * Check whether the current DMA position is acceptable for updating
++ * periods.  Returns non-zero if it's OK.
++ *
++ * Many HD-audio controllers appear pretty inaccurate about
++ * the update-IRQ timing.  The IRQ is issued before actually the
++ * data is processed.  So, we need to process it afterwords in a
++ * workqueue.
++ */
++static int azx_position_ok(struct azx *chip, struct azx_dev *azx_dev)
++{
++	struct snd_pcm_substream *substream = azx_dev->core.substream;
++	int stream = substream->stream;
++	u32 wallclk;
++	unsigned int pos;
++
++	wallclk = azx_readl(chip, WALLCLK) - azx_dev->core.start_wallclk;
++	if (wallclk < (azx_dev->core.period_wallclk * 2) / 3)
++		return -1;	/* bogus (too early) interrupt */
++
++	if (chip->get_position[stream])
++		pos = chip->get_position[stream](chip, azx_dev);
++	else { /* use the position buffer as default */
++		pos = azx_get_pos_posbuf(chip, azx_dev);
++		if (!pos || pos == (u32)-1) {
++			dev_info(chip->card->dev,
++				 "Invalid position buffer, using LPIB read method instead.\n");
++			chip->get_position[stream] = azx_get_pos_lpib;
++			if (chip->get_position[0] == azx_get_pos_lpib &&
++			    chip->get_position[1] == azx_get_pos_lpib)
++				azx_bus(chip)->use_posbuf = false;
++			pos = azx_get_pos_lpib(chip, azx_dev);
++			chip->get_delay[stream] = NULL;
++		} else {
++			chip->get_position[stream] = azx_get_pos_posbuf;
++			if (chip->driver_caps & AZX_DCAPS_COUNT_LPIB_DELAY)
++				chip->get_delay[stream] = azx_get_delay_from_lpib;
++		}
++	}
++
++	if (pos >= azx_dev->core.bufsize)
++		pos = 0;
++
++	if (WARN_ONCE(!azx_dev->core.period_bytes,
++		      "hda-baikal: zero azx_dev->period_bytes"))
++		return -1; /* this shouldn't happen! */
++	if (wallclk < (azx_dev->core.period_wallclk * 5) / 4 &&
++	    pos % azx_dev->core.period_bytes > azx_dev->core.period_bytes / 2)
++		/* NG - it's below the first next period boundary */
++		return chip->bdl_pos_adj ? 0 : -1;
++	azx_dev->core.start_wallclk += wallclk;
++	return 1; /* OK, it's fine */
++}
++
++/*
++ * The work for pending PCM period updates.
++ */
++static void azx_irq_pending_work(struct work_struct *work)
++{
++	struct hda_baikal *hda = container_of(work, struct hda_baikal, irq_pending_work);
++	struct azx *chip = &hda->chip;
++	struct hdac_bus *bus = azx_bus(chip);
++	struct hdac_stream *s;
++	int pending, ok;
++
++	if (!hda->irq_pending_warned) {
++		dev_info(chip->card->dev,
++			 "IRQ timing workaround is activated for card #%d. Suggest a bigger bdl_pos_adj.\n",
++			 chip->card->number);
++		hda->irq_pending_warned = 1;
++	}
++
++	for (;;) {
++		pending = 0;
++		spin_lock_irq(&bus->reg_lock);
++		list_for_each_entry(s, &bus->stream_list, list) {
++			struct azx_dev *azx_dev = stream_to_azx_dev(s);
++			if (!azx_dev->irq_pending ||
++			    !s->substream ||
++			    !s->running)
++				continue;
++			ok = azx_position_ok(chip, azx_dev);
++			if (ok > 0) {
++				azx_dev->irq_pending = 0;
++				spin_unlock(&bus->reg_lock);
++				snd_pcm_period_elapsed(s->substream);
++				spin_lock(&bus->reg_lock);
++			} else if (ok < 0) {
++				pending = 0;	/* too early */
++			} else
++				pending++;
++		}
++		spin_unlock_irq(&bus->reg_lock);
++		if (!pending)
++			return;
++		msleep(1);
++	}
++}
++
++/* clear irq_pending flags and assure no on-going workq */
++static void azx_clear_irq_pending(struct azx *chip)
++{
++	struct hdac_bus *bus = azx_bus(chip);
++	struct hdac_stream *s;
++
++	spin_lock_irq(&bus->reg_lock);
++	list_for_each_entry(s, &bus->stream_list, list) {
++		struct azx_dev *azx_dev = stream_to_azx_dev(s);
++		azx_dev->irq_pending = 0;
++	}
++	spin_unlock_irq(&bus->reg_lock);
++}
++
++static int hda_baikal_dev_disconnect(struct snd_device *device)
++{
++	struct azx *chip = device->device_data;
++
++	chip->bus.shutdown = 1;
++	return 0;
++}
++
++static int hda_baikal_dev_free(struct snd_device *device)
++{
++	struct azx *chip = device->device_data;
++	struct hda_baikal *hda = container_of(chip, struct hda_baikal, chip);
++
++	cancel_work_sync(&hda->probe_work);
++	if (azx_bus(chip)->chip_init) {
++		azx_clear_irq_pending(chip);
++		azx_stop_all_streams(chip);
++		azx_stop_chip(chip);
++	}
++
++	azx_free_stream_pages(chip);
++	azx_free_streams(chip);
++	snd_hdac_bus_exit(azx_bus(chip));
++
++	return 0;
++}
++
++static int hda_baikal_init_chip(struct azx *chip, struct platform_device *pdev)
++{
++	struct hda_baikal *hda = container_of(chip, struct hda_baikal, chip);
++	struct hdac_bus *bus = azx_bus(chip);
++	struct device *dev = hda->dev;
++	struct resource *res;
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	hda->regs = devm_ioremap_resource(dev, res);
++	if (IS_ERR(hda->regs))
++		return PTR_ERR(hda->regs);
++
++	bus->remap_addr = hda->regs;
++	bus->addr = res->start;
++
++	return 0;
++}
++
++static int hda_baikal_first_init(struct azx *chip, struct platform_device *pdev)
++{
++	struct hdac_bus *bus = azx_bus(chip);
++	struct snd_card *card = chip->card;
++	int err;
++	unsigned short gcap;
++	int irq_id = platform_get_irq(pdev, 0);
++	const char *sname, *drv_name = "baikal-hda";
++	struct device_node *np = pdev->dev.of_node;
++
++	err = hda_baikal_init_chip(chip, pdev);
++	if (err)
++		return err;
++
++	err = devm_request_irq(chip->card->dev, irq_id, azx_interrupt,
++			     IRQF_SHARED, KBUILD_MODNAME, chip);
++	if (err) {
++		dev_err(chip->card->dev,
++			"unable to request IRQ %d, disabling device\n",
++			irq_id);
++		return err;
++	}
++	bus->irq = irq_id;
++
++	synchronize_irq(bus->irq);
++
++	gcap = azx_readw(chip, GCAP);
++	dev_dbg(card->dev, "chipset global capabilities = 0x%x\n", gcap);
++
++	/* force polling mode, because RIRB interrupts don't working */
++	bus->polling_mode = 1;
++
++	/* read number of streams from GCAP register instead of using
++	 * hardcoded value
++	 */
++	chip->capture_streams = (gcap >> 8) & 0x0f;
++	chip->playback_streams = (gcap >> 12) & 0x0f;
++	if (!chip->playback_streams && !chip->capture_streams) {
++		/* gcap didn't give any info, switching to old method */
++		chip->playback_streams = NUM_PLAYBACK_SD;
++		chip->capture_streams = NUM_CAPTURE_SD;
++	}
++	chip->capture_index_offset = 0;
++	chip->playback_index_offset = chip->capture_streams;
++	chip->num_streams = chip->playback_streams + chip->capture_streams;
++
++	/* initialize streams */
++	err = azx_init_streams(chip);
++	if (err < 0) {
++		dev_err(card->dev, "failed to initialize streams: %d\n", err);
++		return err;
++	}
++
++	err = azx_alloc_stream_pages(chip);
++	if (err < 0) {
++		dev_err(card->dev, "failed to allocate stream pages: %d\n",
++			err);
++		return err;
++	}
++
++	/* initialize chip */
++	azx_init_chip(chip, 1);
++
++	/* codec detection */
++	if (!bus->codec_mask) {
++		dev_err(card->dev, "no codecs found!\n");
++		return -ENODEV;
++	}
++
++	/* driver name */
++	strncpy(card->driver, drv_name, sizeof(card->driver));
++	/* shortname for card */
++	sname = of_get_property(np, "baikal,model", NULL);
++	if (!sname)
++		sname = drv_name;
++	if (strlen(sname) > sizeof(card->shortname))
++		dev_info(card->dev, "truncating shortname for card\n");
++	strncpy(card->shortname, sname, sizeof(card->shortname));
++
++	/* longname for card */
++	snprintf(card->longname, sizeof(card->longname),
++		 "%s at 0x%lx irq %i",
++		 card->shortname, bus->addr, bus->irq);
++
++	return 0;
++}
++
++static void hda_baikal_probe_work(struct work_struct *work);
++
++static int hda_baikal_create(struct snd_card *card,
++			    unsigned int driver_caps,
++			    struct hda_baikal *hda)
++{
++	static struct snd_device_ops ops = {
++		.dev_disconnect = hda_baikal_dev_disconnect,
++		.dev_free = hda_baikal_dev_free,
++	};
++	struct azx *chip;
++	int err;
++
++	chip = &hda->chip;
++
++	mutex_init(&chip->open_mutex);
++	chip->card = card;
++	chip->ops = &hda_baikal_ops;
++	chip->driver_caps = driver_caps;
++	chip->driver_type = driver_caps & 0xff;
++	chip->dev_index = 0;
++	INIT_LIST_HEAD(&chip->pcm_list);
++	INIT_WORK(&hda->irq_pending_work, azx_irq_pending_work);
++
++	chip->codec_probe_mask = 3; /* two codecs: first and second bits */
++
++	chip->single_cmd = false;
++	chip->snoop = true;
++
++	chip->get_position[0] = chip->get_position[1] = azx_get_pos_lpib;
++	chip->get_delay[0] = chip->get_delay[1] = azx_get_delay_from_lpib;
++
++	INIT_WORK(&hda->probe_work, hda_baikal_probe_work);
++
++	err = azx_bus_init(chip, NULL);
++	if (err < 0)
++		return err;
++
++	chip->bus.needs_damn_long_delay = 1;
++	chip->bus.core.aligned_mmio = 1;
++
++	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
++	if (err < 0) {
++		dev_err(card->dev, "Error creating device\n");
++		return err;
++	}
++
++	return 0;
++}
++
++static int hda_baikal_probe(struct platform_device *pdev)
++{
++	const unsigned int driver_flags = AZX_DCAPS_PM_RUNTIME |
++					  AZX_DCAPS_NO_64BIT |
++					  AZX_DCAPS_4K_BDLE_BOUNDARY |
++					  AZX_DCAPS_COUNT_LPIB_DELAY;
++	struct snd_card *card;
++	struct azx *chip;
++	struct hda_baikal *hda;
++	int err;
++
++	hda = devm_kzalloc(&pdev->dev, sizeof(*hda), GFP_KERNEL);
++	if (!hda)
++		return -ENOMEM;
++	hda->dev = &pdev->dev;
++	chip = &hda->chip;
++
++	err = snd_card_new(&pdev->dev, SNDRV_DEFAULT_IDX1, SNDRV_DEFAULT_STR1,
++			   THIS_MODULE, 0, &card);
++	if (err < 0) {
++		dev_err(&pdev->dev, "Error creating card!\n");
++		return err;
++	}
++
++	err = hda_baikal_create(card, driver_flags, hda);
++	if (err < 0)
++		goto out_free;
++	card->private_data = chip;
++
++	dev_set_drvdata(&pdev->dev, card);
++
++	pm_runtime_enable(hda->dev);
++	if (!azx_has_pm_runtime(chip))
++		pm_runtime_forbid(hda->dev);
++
++	schedule_work(&hda->probe_work);
++
++	return 0;
++
++out_free:
++	snd_card_free(card);
++	return err;
++}
++
++static void hda_baikal_probe_work(struct work_struct *work)
++{
++	struct hda_baikal *hda = container_of(work, struct hda_baikal, probe_work);
++	struct azx *chip = &hda->chip;
++	struct platform_device *pdev = to_platform_device(hda->dev);
++	int err;
++
++	pm_runtime_get_sync(hda->dev);
++	err = hda_baikal_first_init(chip, pdev);
++	if (err < 0)
++		goto out_free;
++
++	/* create codec instances */
++	err = azx_probe_codecs(chip, 1);
++	if (err < 0)
++		goto out_free;
++
++	err = azx_codec_configure(chip);
++	if (err < 0)
++		goto out_free;
++
++	err = snd_card_register(chip->card);
++	if (err < 0)
++		goto out_free;
++
++	chip->running = 1;
++
++	snd_hda_set_power_save(&chip->bus, power_save * 1000);
++
++ out_free:
++	pm_runtime_put(hda->dev);
++	return; /* no error return from async probe */
++}
++
++static int hda_baikal_remove(struct platform_device *pdev)
++{
++	int ret;
++
++	ret = snd_card_free(dev_get_drvdata(&pdev->dev));
++	pm_runtime_disable(&pdev->dev);
++
++	return ret;
++}
++
++static void hda_baikal_shutdown(struct platform_device *pdev)
++{
++	struct snd_card *card = dev_get_drvdata(&pdev->dev);
++	struct azx *chip;
++
++	if (!card)
++		return;
++	chip = card->private_data;
++	if (chip && chip->running)
++		azx_stop_chip(chip);
++}
++
++static const struct hda_controller_ops hda_baikal_ops = {
++	.position_check = azx_position_check,
++};
++
++static const struct of_device_id hda_baikal_match[] = {
++	{ .compatible = "be,cw-hda" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, hda_baikal_match);
++
++static struct platform_driver baikal_platform_hda = {
++	.driver = {
++		.name = "baikal-hda",
++		.of_match_table = hda_baikal_match,
++	},
++	.probe = hda_baikal_probe,
++	.remove = hda_baikal_remove,
++	.shutdown = hda_baikal_shutdown,
++};
++module_platform_driver(baikal_platform_hda);
++
++MODULE_DESCRIPTION("Baikal HDA bus driver");
++MODULE_LICENSE("GPL v2");
+diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
+index 6a159c6c2..f63c056ea 100644
+--- a/sound/pci/hda/hda_controller.c
++++ b/sound/pci/hda/hda_controller.c
+@@ -1264,32 +1264,59 @@ int azx_probe_codecs(struct azx *chip, unsigned int max_slots)
+ 	struct hdac_bus *bus = azx_bus(chip);
+ 	int c, codecs, err;
+ 
++#ifdef CONFIG_SND_HDA_BAIKAL_M
++	int probe_retry;
++#endif
++
+ 	codecs = 0;
+ 	if (!max_slots)
+ 		max_slots = AZX_DEFAULT_CODECS;
+ 
++#ifdef CONFIG_SND_HDA_BAIKAL_M
+ 	/* First try to probe all given codec slots */
+ 	for (c = 0; c < max_slots; c++) {
+ 		if ((bus->codec_mask & (1 << c)) & chip->codec_probe_mask) {
+-			if (probe_codec(chip, c) < 0) {
+-				/* Some BIOSen give you wrong codec addresses
+-				 * that don't exist
+-				 */
+-				dev_warn(chip->card->dev,
+-					 "Codec #%d probe error; disabling it...\n", c);
++			for (probe_retry = 0; probe_retry < 100; probe_retry++) {
++				if (probe_codec(chip, c) < 0) {
++					azx_stop_chip(chip);
++					azx_init_chip(chip, true);
++					continue;
++				}
++				else {
++					dev_warn(chip->card->dev,
++						"Codec #%d probe success; retry count = %d\n", c, probe_retry);
++					break;
++				}
+ 				bus->codec_mask &= ~(1 << c);
+-				/* More badly, accessing to a non-existing
+-				 * codec often screws up the controller chip,
+-				 * and disturbs the further communications.
+-				 * Thus if an error occurs during probing,
+-				 * better to reset the controller chip to
+-				 * get back to the sanity state.
+-				 */
+-				azx_stop_chip(chip);
+-				azx_init_chip(chip, true);
++				dev_warn(chip->card->dev,
++					"Codec #%d probe error; disabling it...\n", c);
++			}
++		}
++	}
++#else
++	/* First try to probe all given codec slots */
++	for (c = 0; c < max_slots; c++) {
++		if ((bus->codec_mask & (1 << c)) & chip->codec_probe_mask) {
++			if (probe_codec(chip, c) < 0) {
++					/* Some BIOSen give you wrong codec addresses
++					 * that don't exist
++					 */
++					dev_warn(chip->card->dev,
++						"Codec #%d probe error; disabling it...\n", c);
++					bus->codec_mask &= ~(1 << c);
++					/* More badly, accessing to a non-existing
++					 * codec often screws up the controller chip,
++					 * and disturbs the further communications.
++					 * Thus if an error occurs during probing,
++					 * better to reset the controller chip to
++					 * get back to the sanity state.
++					 */
++					azx_stop_chip(chip);
++					azx_init_chip(chip, true);
+ 			}
+ 		}
+ 	}
++#endif
+ 
+ 	/* Then create codec instances */
+ 	for (c = 0; c < max_slots; c++) {
 diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
 index 424faafcb..64328506c 100644
 --- a/sound/soc/codecs/tlv320aic3x.c
@@ -15519,7 +16314,7 @@ index 000000000..b6048758b
 +MODULE_DESCRIPTION("Baikal-M SoC Sound Driver");
 +MODULE_LICENSE("GPL");
 diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index 65112b9d8..ec12c1859 100644
+index 65112b9d8..e7dcbae77 100644
 --- a/sound/soc/dwc/dwc-i2s.c
 +++ b/sound/soc/dwc/dwc-i2s.c
 @@ -100,6 +100,7 @@ static inline void i2s_enable_irqs(struct dw_i2s_dev *dev, u32 stream,
@@ -15541,7 +16336,23 @@ index 65112b9d8..ec12c1859 100644
  			irq_valid = true;
  		}
  	}
-@@ -611,12 +614,13 @@ static int dw_configure_dai_by_dt(struct dw_i2s_dev *dev,
+@@ -189,6 +192,7 @@ static int dw_i2s_startup(struct snd_pcm_substream *substream,
+ 	struct dw_i2s_dev *dev = snd_soc_dai_get_drvdata(cpu_dai);
+ 	union dw_i2s_snd_dma_data *dma_data = NULL;
+ 
++
+ 	if (!(dev->capability & DWC_I2S_RECORD) &&
+ 			(substream->stream == SNDRV_PCM_STREAM_CAPTURE))
+ 		return -EINVAL;
+@@ -204,6 +208,7 @@ static int dw_i2s_startup(struct snd_pcm_substream *substream,
+ 
+ 	snd_soc_dai_set_dma_data(cpu_dai, substream, (void *)dma_data);
+ 
++
+ 	return 0;
+ }
+ 
+@@ -611,12 +616,13 @@ static int dw_configure_dai_by_dt(struct dw_i2s_dev *dev,
  
  }
  
@@ -15556,7 +16367,7 @@ index 65112b9d8..ec12c1859 100644
  	struct snd_soc_dai_driver *dw_i2s_dai;
  	const char *clk_id;
  
-@@ -638,16 +642,25 @@ static int dw_i2s_probe(struct platform_device *pdev)
+@@ -638,16 +644,25 @@ static int dw_i2s_probe(struct platform_device *pdev)
  		return PTR_ERR(dev->i2s_base);
  
  	dev->dev = &pdev->dev;
@@ -15591,7 +16402,7 @@ index 65112b9d8..ec12c1859 100644
  
  	dev->i2s_reg_comp1 = I2S_COMP_PARAM_1;
  	dev->i2s_reg_comp2 = I2S_COMP_PARAM_2;
-@@ -711,8 +724,10 @@ static int dw_i2s_probe(struct platform_device *pdev)
+@@ -711,8 +726,10 @@ static int dw_i2s_probe(struct platform_device *pdev)
  	}
  
  	pm_runtime_enable(&pdev->dev);

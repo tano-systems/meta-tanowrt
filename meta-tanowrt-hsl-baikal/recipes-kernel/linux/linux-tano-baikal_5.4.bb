@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Baikal-M Linux Kernel
-# Based on Baikal-M SDK 5.2 (20210608)
+# Based on Baikal-M SDK 5.3 (20210924)
 #
 # This file Copyright (C) 2021 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
@@ -12,7 +12,7 @@ DESCRIPTION = "Linux kernel for Baikal-M platforms"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
-LINUX_VERSION ?= "5.4.114"
+LINUX_VERSION ?= "5.4.144"
 LINUX_KERNEL_TYPE ?= "standard"
 PV = "${LINUX_VERSION}"
 
@@ -21,7 +21,7 @@ KERNEL_SRC_PROTOCOL ?= "https"
 KERNEL_SRC_BRANCH ?= ""
 KERNEL_SRC_SRCREV ?= ""
 
-SRC_URI[machine.sha256sum] = "be98f087cb58f23bc5edb8ee80a4794a569d48049d75b1a8eaef9f80fede9557"
+SRC_URI[machine.sha256sum] = "bc43b98271ab3885a41c2413bed26b5a6d38795731b9c194f6e72dde45b85885"
 
 SRC_URI += "\
 	file://0001-baikal-m-Add-support-for-Baikal-M-platforms.patch \
