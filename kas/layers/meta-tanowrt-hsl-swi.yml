@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 
 header:
-  version: 8
+  version: 11
   includes:
-    - meta-tanowrt.yml
-    - meta-swi-common.yml
-    - meta-swi-mdm9xxx.yml
-    - meta-swi-mdm9x28.yml
+    - kas/layers/meta-tanowrt.yml
+    - kas/layers/meta-swi-common.yml
+    - kas/layers/meta-swi-mdm9xxx.yml
+    - kas/layers/meta-swi-mdm9x28.yml
 
 repos:
   meta-tanowrt:

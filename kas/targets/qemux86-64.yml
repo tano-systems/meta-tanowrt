@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 
 header:
-  version: 8
+  version: 11
   includes:
-    - ../tanowrt-core.yml
+    - kas/tanowrt-core.yml
 
 machine: qemux86-64
 target: tanowrt-image-full-swu-factory

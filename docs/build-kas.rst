@@ -20,7 +20,7 @@ To do this, run the command:
 
    # sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
           build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
-          xz-utils debianutils iputils-ping
+          xz-utils debianutils iputils-ping file
 
 .. note:: Some targets may require additional dependencies for
           a successful build. See the ``README.md`` of the related
@@ -34,6 +34,8 @@ To install kas into your python site-package repository, run:
 .. code-block:: shell
 
    # pip3 install kas
+
+.. note:: Required kas version 2.6 or higher.
 
 See `official kas documentation <https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation>`_ for more details
 

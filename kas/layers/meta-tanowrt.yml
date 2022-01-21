@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 
 header:
-  version: 8
+  version: 11
   includes:
-    - openembedded-core.yml
-    - meta-oe.yml
-    - meta-python.yml
-    - meta-networking.yml
-    - meta-multimedia.yml
-    - meta-filesystems.yml
-    - meta-swupdate.yml
-    - meta-qt5.yml
+    - kas/layers/openembedded-core.yml
+    - kas/layers/meta-oe.yml
+    - kas/layers/meta-python.yml
+    - kas/layers/meta-networking.yml
+    - kas/layers/meta-multimedia.yml
+    - kas/layers/meta-filesystems.yml
+    - kas/layers/meta-swupdate.yml
+    - kas/layers/meta-qt5.yml
 
 repos:
   meta-tanowrt:
