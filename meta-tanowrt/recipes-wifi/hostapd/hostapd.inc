@@ -13,7 +13,7 @@ inherit pkgconfig
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/hostapd:${THISDIR}/hostapd/patches:${THISDIR}/hostapd/files:"
 
-SRC_URI = "git://w1.fi/hostap.git"
+SRC_URI = "git://w1.fi/hostap.git;branch=main"
 
 # 2020-06-08
 SRCREV = "5a8b366233f5585e68a4ffbb604fbb4a848eb325"
