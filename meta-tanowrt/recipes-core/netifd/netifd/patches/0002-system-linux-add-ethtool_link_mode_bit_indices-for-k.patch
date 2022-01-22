@@ -1,0 +1,74 @@
+From 14b1f5c24044b8630bed168f2f4cc833260e3c57 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 22 Jan 2022 04:19:02 +0300
+Subject: [PATCH] system-linux: add ethtool_link_mode_bit_indices for kernels
+ prior to 4.6.0
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ system-linux.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+
+diff --git a/system-linux.c b/system-linux.c
+index c0ba279..71419b7 100644
+--- a/system-linux.c
++++ b/system-linux.c
+@@ -1578,6 +1578,55 @@ int system_vlandev_del(struct device *vlandev)
+ 	return system_link_del(vlandev->ifname);
+ }
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4,6,0)
++
++/* Taken from https://elixir.bootlin.com/linux/v4.6/source/include/uapi/linux/ethtool.h */
++
++/* Link mode bit indices */
++enum ethtool_link_mode_bit_indices {
++	ETHTOOL_LINK_MODE_10baseT_Half_BIT	= 0,
++	ETHTOOL_LINK_MODE_10baseT_Full_BIT	= 1,
++	ETHTOOL_LINK_MODE_100baseT_Half_BIT	= 2,
++	ETHTOOL_LINK_MODE_100baseT_Full_BIT	= 3,
++	ETHTOOL_LINK_MODE_1000baseT_Half_BIT	= 4,
++	ETHTOOL_LINK_MODE_1000baseT_Full_BIT	= 5,
++	ETHTOOL_LINK_MODE_Autoneg_BIT		= 6,
++	ETHTOOL_LINK_MODE_TP_BIT		= 7,
++	ETHTOOL_LINK_MODE_AUI_BIT		= 8,
++	ETHTOOL_LINK_MODE_MII_BIT		= 9,
++	ETHTOOL_LINK_MODE_FIBRE_BIT		= 10,
++	ETHTOOL_LINK_MODE_BNC_BIT		= 11,
++	ETHTOOL_LINK_MODE_10000baseT_Full_BIT	= 12,
++	ETHTOOL_LINK_MODE_Pause_BIT		= 13,
++	ETHTOOL_LINK_MODE_Asym_Pause_BIT	= 14,
++	ETHTOOL_LINK_MODE_2500baseX_Full_BIT	= 15,
++	ETHTOOL_LINK_MODE_Backplane_BIT		= 16,
++	ETHTOOL_LINK_MODE_1000baseKX_Full_BIT	= 17,
++	ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT	= 18,
++	ETHTOOL_LINK_MODE_10000baseKR_Full_BIT	= 19,
++	ETHTOOL_LINK_MODE_10000baseR_FEC_BIT	= 20,
++	ETHTOOL_LINK_MODE_20000baseMLD2_Full_BIT = 21,
++	ETHTOOL_LINK_MODE_20000baseKR2_Full_BIT	= 22,
++	ETHTOOL_LINK_MODE_40000baseKR4_Full_BIT	= 23,
++	ETHTOOL_LINK_MODE_40000baseCR4_Full_BIT	= 24,
++	ETHTOOL_LINK_MODE_40000baseSR4_Full_BIT	= 25,
++	ETHTOOL_LINK_MODE_40000baseLR4_Full_BIT	= 26,
++	ETHTOOL_LINK_MODE_56000baseKR4_Full_BIT	= 27,
++	ETHTOOL_LINK_MODE_56000baseCR4_Full_BIT	= 28,
++	ETHTOOL_LINK_MODE_56000baseSR4_Full_BIT	= 29,
++	ETHTOOL_LINK_MODE_56000baseLR4_Full_BIT	= 30,
++
++	/* Last allowed bit for __ETHTOOL_LINK_MODE_LEGACY_MASK is bit
++	 * 31. Please do NOT define any SUPPORTED_* or ADVERTISED_*
++	 * macro for bits > 31. The only way to use indices > 31 is to
++	 * use the new ETHTOOL_GLINKSETTINGS/ETHTOOL_SLINKSETTINGS API.
++	 */
++
++	__ETHTOOL_LINK_MODE_LAST
++	  = ETHTOOL_LINK_MODE_56000baseLR4_Full_BIT,
++};
++#endif
++
+ static void
+ system_set_ethtool_settings(struct device *dev, struct device_settings *s)
+ {
+-- 
+2.34.1.windows.1
+

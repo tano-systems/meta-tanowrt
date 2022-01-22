@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano53"
+PR = "tano54"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -42,6 +42,7 @@ SRC_URI += "\
 
 SRC_URI += "\
 	file://0001-system-linux-Disable-IFLA_VXLAN_GBP-support-for-kern.patch \
+	file://0002-system-linux-add-ethtool_link_mode_bit_indices-for-k.patch \
 "
 
 # 02.08.2021
