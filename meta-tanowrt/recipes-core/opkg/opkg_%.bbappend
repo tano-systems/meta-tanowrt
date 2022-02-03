@@ -1,10 +1,10 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2018-2019, 2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019, 2021-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano5"
+PR_append = ".tano6"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 OPKGLIBDIR = "${libdir}"
@@ -21,6 +21,7 @@ SRC_URI_append = "\
 SRC_URI += "\
 	file://0001-Change-configuration-paths.patch \
 	file://0002-Add-nocase-option-to-opkg.patch \
+	file://0003-Set-PKG_UPGRADE-environment-variable.patch \
 "
 
 do_install_append () {
