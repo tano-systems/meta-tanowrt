@@ -1,0 +1,2 @@
+:syslogtag, contains, "zabbix_agentd" /var/log/zabbix_agentd.log
+& stop
