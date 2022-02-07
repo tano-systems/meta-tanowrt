@@ -1,14 +1,15 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2020, 2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".19"
+PR_append = ".20"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 	features/kernel-4.14+/fs/overlayfs-extra.scc \
 	features/kernel-4.1+/vdso.scc \
+	${@bb.utils.contains("MACHINE_FEATURES", "psample", " features/kernel-4.11+/psample.scc", "" ,d)} \
 "
 
 KERNEL_FEATURES_append_qemuall = " features/drm-bochs/drm-bochs.scc "

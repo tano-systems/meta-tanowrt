@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Packet-sampling netlink channel"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware psample.cfg
