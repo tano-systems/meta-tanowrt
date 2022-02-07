@@ -1,12 +1,14 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano6"
+PR_append = ".tano7"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+EFI_STARTUP_DEVICE ?= "fs0"
 
 GRUB_BUILDIN = "boot linux fat squash4 ext2 serial part_msdos part_gpt normal \
                 efi_gop iso9660 configfile search loadenv test echo"
@@ -17,7 +19,7 @@ do_install_append_class-target() {
 
 	# Install startup.nsh to /boot
 	install -d ${D}${EFI_PREFIX}
-	echo "fs0:${@d.getVar('EFIDIR', True).replace('/', '\\')}\\${EFI_BOOT_IMAGE}" \
+	echo "${EFI_STARTUP_DEVICE}:${@d.getVar('EFIDIR', True).replace('/', '\\')}\\${EFI_BOOT_IMAGE}" \
 		> ${D}${EFI_PREFIX}/startup.nsh
 }
 
