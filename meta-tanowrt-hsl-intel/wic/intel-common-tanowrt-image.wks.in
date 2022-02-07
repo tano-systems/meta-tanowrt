@@ -1,0 +1,19 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+#
+
+#
+# +------------+-------------------+-------------------+---------+
+# |            |                   |                   |         |
+# | Bootloader |     System A      |     System B      | Overlay |
+# |            | (kernel + rootfs) | (kernel + rootfs) | data    |
+# |            |                   |                   |         |
+# +------------+-------------------+-------------------+---------+
+#
+part /boot     --source bootimg-efi-ext --sourceparams="loader=grub-efi,no_kernel=1" --ondisk sda --label boot --active --align 1024 --overhead-factor=1.0 --uuid ${TANOWRT_PARTUUID_BOOT}
+part /rootfs_a --source=rawcopy --ondisk=sda --part-name=rootfs_a --align=1024 --size=512M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}" --uuid ${TANOWRT_PARTUUID_ROOTDEV_A}
+part /rootfs_b --source=rawcopy --ondisk=sda --part-name=rootfs_b --align=1024 --size=512M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}" --uuid ${TANOWRT_PARTUUID_ROOTDEV_B}
+part /overlay  --size=16M --use-uuid --uuid ${TANOWRT_PARTUUID_OVERLAY} --fstype=ext4 --label=rootfs_data --align=1024
+
+bootloader --ptable gpt --configfile ${DEPLOY_DIR_IMAGE}/${WKS_IMAGE_GRUB_CONFIG}

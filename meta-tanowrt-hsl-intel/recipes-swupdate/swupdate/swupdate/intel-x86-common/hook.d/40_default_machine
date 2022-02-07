@@ -1,0 +1,18 @@
+#!/bin/sh
+# Copyright (C) 2022 Tano Systems LLC. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
+case "$1" in
+	preupdate)
+		# Remount /boot with read/write permissions
+		mount /boot -o remount,rw || /bin/true
+		;;
+
+	postupdate-success|postupdate-failed)
+		# Remount /boot with read-only permissions
+		mount /boot -o remount,ro || /bin/true
+		;;
+
+	*)
+		;;
+esac

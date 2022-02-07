@@ -1,0 +1,72 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2022 Tano Systems LLC. All rights reserved.
+
+get_kernel_version() {
+	echo $(uname -r)
+}
+
+do_swupdate_gen_sw_versions() {
+
+	. /usr/lib/swupdate/swupdate_config
+	. /lib/upgrade/common.sh
+
+	local TMPFILE="${SWU_SW_VERSIONS_FILE_TMP}"
+
+	echo -n > ${TMPFILE}
+
+	local MOUNTTEMP="$(mktemp -d)"
+	local MOUNTSTATUS="1"
+
+	if [ ! -f "${SWU_GRUBBIN}" ]; then
+		local partdev
+
+		if export_bootdevice && export_partdevice partdev 1; then
+			mount -t ext4,vfat -o ro,noatime "/dev/$partdev" "${MOUNTTEMP}" && {
+				MOUNTSTATUS="0"
+				GRUBPATH="${SWU_GRUBBIN##/boot}"
+				SWU_GRUBBIN="${MOUNTTEMP}/${GRUBPATH}"
+			}
+		else
+			echo "SWUPDATE: Failed to get boot device" > /dev/kmsg
+		fi
+	fi
+
+	if [ -f "${SWU_GRUBBIN}" ]; then
+		local GRUB_BIN_VERSION=$(strings ${SWU_GRUBBIN} | sed -n '/GNU GRUB  version %s/{n;p;}')
+		if [ "${GRUB_BIN_VERSION}" != "" ]; then
+			echo "grub ${GRUB_BIN_VERSION}" >> ${TMPFILE}
+			echo "SWUPDATE: GRUB version ${GRUB_BIN_VERSION}" > /dev/kmsg
+		else
+			echo "SWUPDATE: Failed to extract the GRUB version from '${SWU_GRUBBIN}'" > /dev/kmsg
+		fi
+	else
+		echo "SWUPDATE: Can't find GRUB binary at '${SWU_GRUBBIN}'" > /dev/kmsg
+	fi
+
+	[ "${MOUNTSTATUS}" = "0" ] && umount "${MOUNTTEMP}"
+
+	# Kernel version (from uname)
+	local KERNEL_VERSION=$(get_kernel_version)
+	if [ "${KERNEL_VERSION}" != "" ]; then
+		echo "kernel ${KERNEL_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Kernel version ${KERNEL_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the kernel version" > /dev/kmsg
+	fi
+
+	# ROOTFS version
+	DISTRIB_TIMESTAMP=""
+	[ -e /etc/tanowrt_release ] && source /etc/tanowrt_release
+	if [ "${DISTRIB_TIMESTAMP}" != "" ]; then
+		local ROOTFS_VERSION=${DISTRIB_TIMESTAMP//[ :-]/-}
+		echo "rootfs ${ROOTFS_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Read-only filesystem version ${ROOTFS_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the read-only filesystem version from '/etc/tanowrt_release'" > /dev/kmsg
+	fi
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_gen_sw_versions
+}

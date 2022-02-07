@@ -102,6 +102,7 @@ Target YML-files are located in ``kas/targets`` subfolder of the ``meta-tanowrt`
 Available target files listed in the sections below:
 
 - `Virtual Machines <meta-tanowrt_>`__
+- `Intel CPU based machines <meta-tanowrt-hsl-intel_>`__
 - `Boards based on Microchip/Atmel SoC's <meta-tanowrt-hsl-atmel_>`__
 - `Boards based on NXP/Freescale SoC's <meta-tanowrt-hsl-nxp_>`__
 - `Boards based on Baikal Electronics SoC's <meta-tanowrt-hsl-baikal_>`__
@@ -143,6 +144,19 @@ a bunch of target devices intended to run in a virtual environment (QEMU, Virtua
 +---------------------------------------------------+                            |                    +----------------------------------+
 | QEMU/Common x86 (64-bit) machine                  |                            |                    | ``qemux86-64-screen.yml``        |
 | with screen support                               |                            |                    |                                  |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+
+.. _meta-tanowrt-hsl-intel:
+
+Intel CPU Based Machines (`meta-tanowrt-hsl-intel <../meta-tanowrt-hsl-intel/README.md>`__)
+---------------------------------------------------------------
+
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+|                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
++===================================================+============================+====================+==================================+
+| Intel Core i7 CPU (and later)                     | x86_64 (Intel Core i7)     | USB/SATA/NVMe      | ``intel-x86-64-corei7.yml``      |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+| Intel Skylake CPU (and later)                     | x86_64 (Intel Skylake)     | USB/SATA/NVMe      | ``intel-x86-64-skylake.yml``     |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
 .. _meta-tanowrt-hsl-atmel:
@@ -284,3 +298,26 @@ or without graphics:
 .. code-block:: shell
 
    # kas shell -c "runqemu qemux86-64-screen nographics" kas/targets/qemux86-64-screen.yml
+
+Intel Core i7 (x86_64)
+----------------------
+
+Clone TanoWrt core layer repository with submodules to your home directory (this document uses ``~/tanowrt`` for example):
+
+.. code-block:: shell
+
+   # cd ~
+   # git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
+   # cd ~/tanowrt
+
+Build TanoWrt image by running the ``kas build`` command with the path to the target YML-file as an argument:
+
+.. code-block:: shell
+
+   # kas build kas/targets/intel-x86_64-corei7.yml
+
+Run the built image in QEMU:
+
+.. code-block:: shell
+
+   # kas shell -c "DISPLAY=:0 runqemu intel-x86_64-corei7" kas/targets/intel-x86_64-corei7.yml

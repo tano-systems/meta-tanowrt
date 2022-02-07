@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/tanowrt-hsl-intel.yml
+
+machine: intel-x86-64-corei7
+target: tanowrt-image-full-swu
