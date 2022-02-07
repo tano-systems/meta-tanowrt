@@ -69,9 +69,14 @@ X86_SRC_URI_FILES = "\
 	file://preinit/79_move_config \
 "
 
+INSTALL_X86_PREINIT = "0"
+
 SRC_URI_append_qemuarm64 = "file://preinit/01_sysinfo"
 SRC_URI_append_qemux86 = "${X86_SRC_URI_FILES}"
 SRC_URI_append_qemux86-64 = "${X86_SRC_URI_FILES}"
+
+INSTALL_X86_PREINIT_qemux86 = "1"
+INSTALL_X86_PREINIT_qemux86-64 = "1"
 
 SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
@@ -240,7 +245,7 @@ do_install_append () {
 	rm -rf ${D}${sysconfdir}/skel
 	rm -rf ${D}${sysconfdir}/filesystems
 
-	if [ "${@bb.utils.contains('ARCH_X86', '${TARGET_ARCH}', 'true', 'false', d)}" = "true" ]; then
+	if [ "${INSTALL_X86_PREINIT_qemux86}" = "1" ]; then
 		install -dm 0755 ${D}/lib/preinit
 		install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
 		install -m 0644 ${WORKDIR}/preinit/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
