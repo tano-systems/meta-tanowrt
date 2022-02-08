@@ -146,4 +146,41 @@ inherit kmod/bridge
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
+inherit uci-config
+
+TANOWRT_NETIFD_CONFIGURE_INTERFACES ?= ""
+
+do_unpack[vardeps] += "TANOWRT_NETIFD_CONFIGURE_INTERFACES"
+
+#
+# You may use TANOWRT_NETIFD_CONFIGURE_INTERFACES in machine configuration.
+#
+# Example:
+#   TANOWRT_NETIFD_CONFIGURE_INTERFACES = "lan wan"
+#   TANOWRT_NETIFD_CONFIGURE_INTERFACE_lan = "proto=dhcp device=br-lan"
+#   TANOWRT_NETIFD_CONFIGURE_INTERFACE_wan = "proto=static address=192.168.10.1 device=eth1"
+#
+
+python __anonymous() {
+    configure = d.getVar("TANOWRT_NETIFD_CONFIGURE_INTERFACES", True)
+    if configure:
+        uci_commands = ""
+        uci = d.getVar("UCI", True)
+        for interface in configure.split():
+            params = d.getVar("TANOWRT_NETIFD_CONFIGURE_INTERFACE_%s" % interface, True)
+            uci_commands += "\n%s set network.%s=interface" % (uci, interface)
+            if params:
+                for param in params.split():
+                    s = param.split("=")
+                    if len(s) == 2:
+                        bb.debug(1, "Configuring %s interface: %s=%s..." % (interface, s[0], s[1]))
+                        uci_commands += "\n%s set network.%s.%s=\"%s\"" % (uci, interface, s[0], s[1])
+                    else:
+                        bb.error("Cannot configure param '%s' for interface %s" % (param, interface))
+
+        if len(uci_commands) > 0:
+            uci_commands += "\n%s commit network\n" % uci
+            d.appendVar('do_uci_config', uci_commands)
+}
+
 #OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-implicit-fallthrough', '', d)}"
