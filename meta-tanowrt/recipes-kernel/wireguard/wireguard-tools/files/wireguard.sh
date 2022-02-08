@@ -52,9 +52,17 @@ proto_wireguard_setup_peer() {
 	if [ "${preshared_key}" ]; then
 		echo "PresharedKey=${preshared_key}" >> "${wg_cfg}"
 	fi
+	allowed_ips_list=""
 	for allowed_ip in $allowed_ips; do
-		echo "AllowedIPs=${allowed_ip}" >> "${wg_cfg}"
+		if [ -z "${allowed_ips_list}" ]; then
+			allowed_ips_list="${allowed_ip}"
+		else
+			allowed_ips_list="${allowed_ips_list}, ${allowed_ip}"
+		fi
 	done
+	if [ -n "${allowed_ips_list}" ]; then
+		echo "AllowedIPs=${allowed_ips_list}" >> "${wg_cfg}"
+	fi
 	if [ "${endpoint_host}" ]; then
 		case "${endpoint_host}" in
 			*:*)
