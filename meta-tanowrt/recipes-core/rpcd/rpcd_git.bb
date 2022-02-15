@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano31"
+PR = "tano32"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -27,9 +27,9 @@ SRC_URI += "\
 	file://0001-file-Add-support-for-polled-execution-mode.patch \
 "
 
-# 02.12.2021
-# 4c532bfed25809d56e8848f3be99d8082bd3f34a
-SRCREV_rpcd = "4c532bfed25809d56e8848f3be99d8082bd3f34a"
+# 07.02.2022
+# ucode: adjust to latest ucode api
+SRCREV_rpcd = "909f2a04763dbc745488384b24281eca180452d6"
 
 S = "${WORKDIR}/git"
 
