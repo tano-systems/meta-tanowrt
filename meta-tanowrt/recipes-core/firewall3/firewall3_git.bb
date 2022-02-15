@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano30"
+PR = "tano31"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -34,9 +34,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 14.08.2021
-# ipsets: permit default timeout of 0
-SRCREV = "40e5f6a2bd0b5406eff7e1d2d4f95bbf8f9410a4"
+# 08.01.2022
+# options.c: add DSCP code LE Least Effort
+SRCREV = "0f16ea5f055722a532d4e68c7ba34ed084b48b37"
 
 S = "${WORKDIR}/git"
 
