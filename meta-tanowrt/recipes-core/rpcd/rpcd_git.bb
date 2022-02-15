@@ -5,13 +5,13 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano32"
+PR = "tano33"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
-DEPENDS = "json-c libuci libubox libubus libiwinfo virtual/crypt"
+DEPENDS = "json-c libuci libubox libubus libucode libiwinfo virtual/crypt"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -35,14 +35,14 @@ S = "${WORKDIR}/git"
 
 inherit cmake tanowrt-services
 
-PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys"
+PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys ${PN}-mod-ucode"
 
 EXTRA_OECMAKE += "\
   -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
   -DFILE_SUPPORT=ON \
   -DIWINFO_SUPPORT=ON \
   -DRPCSYS_SUPPORT=ON \
-  -DUCODE_SUPPORT=OFF \
+  -DUCODE_SUPPORT=ON \
 "
 
 TANOWRT_SERVICE_PACKAGES = "rpcd"
@@ -97,3 +97,7 @@ FILES_${PN}-mod-rpcsys = "${libdir}/rpcd/rpcsys.so"
 DESCRIPTION_${PN}-mod-iwinfo = "Provides ubus calls for accessing iwinfo data"
 FILES_${PN}-mod-iwinfo = "${libdir}/rpcd/iwinfo.so"
 RDEPENDS_${PN}-mod-iwinfo += "iwinfo"
+
+DESCRIPTION_${PN}-mod-ucode = "Allows implementing plugins using ucode scripts"
+FILES_${PN}-mod-ucode = "${libdir}/rpcd/ucode.so"
+RDEPENDS_${PN}-mod-ucode = "libucode"
