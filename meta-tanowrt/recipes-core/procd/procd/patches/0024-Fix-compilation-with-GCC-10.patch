@@ -1,4 +1,4 @@
-From ff668442b6a16556ec2a1942f2cd9ab21fc4b099 Mon Sep 17 00:00:00 2001
+From 74d4679208e75c18fe6ef6cb3b4bae6c5761650f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 14 Jun 2021 14:35:46 +0300
 Subject: [PATCH 24/24] Fix compilation with GCC 10
@@ -11,7 +11,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/jail/cgroups.c b/jail/cgroups.c
-index a9484e8..e9faa30 100644
+index 2d3dce4..26a0001 100644
 --- a/jail/cgroups.c
 +++ b/jail/cgroups.c
 @@ -601,7 +601,7 @@ static int parseOCIlinuxcgroups_legacy_cpu(struct blob_attr *msg)
@@ -41,10 +41,10 @@ index cf04490..6f262fe 100644
  			free(vr);
  	}
 diff --git a/uxc.c b/uxc.c
-index c71e6a6..3e0bdb6 100644
+index e9ea32d..8d732ef 100644
 --- a/uxc.c
 +++ b/uxc.c
-@@ -209,7 +209,10 @@ runtime_alloc(const char *container_name)
+@@ -226,7 +226,10 @@ runtime_alloc(const char *container_name)
  	struct runtime_state *s;
  	char *new_name;
  	s = calloc_a(sizeof(*s), &new_name, strlen(container_name) + 1);
@@ -56,5 +56,5 @@ index c71e6a6..3e0bdb6 100644
  	s->avl.key = s->container_name;
  	return s;
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 

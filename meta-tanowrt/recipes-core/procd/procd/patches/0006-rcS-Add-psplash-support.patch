@@ -1,4 +1,4 @@
-From 73b65bf663736cf1ffa9cb77e630202cbd2bac5a Mon Sep 17 00:00:00 2001
+From 7951f043ae1de51020d6b0b4b1290b28485841b7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 5 Jul 2019 04:19:07 +0300
 Subject: [PATCH 06/24] rcS: Add psplash support
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 85 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e08607a..8e497bc 100644
+index b5493a6..c788ba8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -34,6 +34,13 @@ FIND_LIBRARY(json NAMES json-c json)
@@ -147,5 +147,5 @@ index 2851fae..60cc4e7 100644
  		add_initd(q, gl.gl_pathv[j], param);
  
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 

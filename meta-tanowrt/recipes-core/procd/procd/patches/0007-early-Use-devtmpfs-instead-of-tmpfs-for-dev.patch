@@ -1,4 +1,4 @@
-From 397bf9657ee80f48242a09db99f125107f035af8 Mon Sep 17 00:00:00 2001
+From 1bbc7e5404a8fef92c2f200b36556b673fb6d53e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 15 Jul 2019 05:40:01 +0300
 Subject: [PATCH 07/24] early: Use devtmpfs instead of tmpfs for /dev
@@ -9,18 +9,18 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/initd/early.c b/initd/early.c
-index d69495e..8983beb 100644
+index 4b7e61c..c9b2e8c 100644
 --- a/initd/early.c
 +++ b/initd/early.c
 @@ -61,7 +61,7 @@ early_mounts(void)
  		mount("proc", "/proc", "proc", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
  		mount("sysfs", "/sys", "sysfs", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
  		mount("cgroup2", "/sys/fs/cgroup", "cgroup2",  MS_NODEV | MS_NOEXEC | MS_NOSUID | MS_RELATIME, "nsdelegate");
--		mount("tmpfs", "/dev", "tmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
-+		mount("tmpfs", "/dev", "devtmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
+-		mount("tmpfs", "/dev", "tmpfs", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=0755,size=512K");
++		mount("tmpfs", "/dev", "devtmpfs", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=0755,size=512K");
  		ignore(symlink("/tmp/shm", "/dev/shm"));
  		mkdir("/dev/pts", 0755);
- 		mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=600");
+ 		mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, 0);
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 

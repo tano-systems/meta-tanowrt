@@ -1,4 +1,4 @@
-From ef05a1277201e10c9d93816cb90d3e0462d33e15 Mon Sep 17 00:00:00 2001
+From e780ef776277b6090c544b93c66b1dc74feb2ac0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 6 Apr 2020 06:17:15 +0300
 Subject: [PATCH 12/24] system: Handle DISTRIB_TIMESTAMP in
@@ -23,5 +23,5 @@ index bbff932..b3261b7 100644
  				continue;
  
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 

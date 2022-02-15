@@ -1,4 +1,4 @@
-From bf5730ac022d5810fe3d182698e26367b089940c Mon Sep 17 00:00:00 2001
+From d836f07e2103886e172e9d21ef113211670ab4f1 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 15 Dec 2020 06:04:40 +0300
 Subject: [PATCH 18/24] early: Mount CGv1 to /tmp/cgroup-v1
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/initd/early.c b/initd/early.c
-index 8983beb..fdc6583 100644
+index c9b2e8c..1117640 100644
 --- a/initd/early.c
 +++ b/initd/early.c
 @@ -78,6 +78,12 @@ early_mounts(void)
@@ -26,5 +26,5 @@ index 8983beb..fdc6583 100644
  	mkdir("/tmp/lock", 0755);
  	mkdir("/tmp/state", 0755);
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 

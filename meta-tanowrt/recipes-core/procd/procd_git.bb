@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano58"
+PR = "tano59"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -67,9 +67,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 16.11.2021
-# procd: service_stop_all: also kill inittab actions
-SRCREV = "01ac2c4500cb0c7934640e6d2e5f99b08483bdf4"
+# 23.01.2022
+# procd: seccomp/jail: Fix build error on arm with glibc
+SRCREV = "cb0031c47b9d46f3cf84daa90d484af5f9c90e31"
 
 S = "${WORKDIR}/git"
 

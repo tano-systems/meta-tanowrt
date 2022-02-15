@@ -1,4 +1,4 @@
-From e47865bb83d0026a6502efd79a146f5f4d48f8ff Mon Sep 17 00:00:00 2001
+From bc6d9ea9d7b112b9552581413b4aa7618f418c07 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 04/24] hotplug: Completely remove hotplug functionality
@@ -18,7 +18,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  delete mode 100644 plug/hotplug.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d787052..e08607a 100644
+index 36599f0..b5493a6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -22,7 +22,7 @@ SET(SOURCES procd.c signal.c state.c hotplug-dispatch.c inittab.c rcS.c ubus.c
@@ -89,7 +89,7 @@ index 46411aa..bdd894e 100644
  	fd = creat("/tmp/.preinit", 0600);
 diff --git a/plug/coldplug.c b/plug/coldplug.c
 deleted file mode 100644
-index b185083..0000000
+index 308b79d..0000000
 --- a/plug/coldplug.c
 +++ /dev/null
 @@ -1,74 +0,0 @@
@@ -143,9 +143,9 @@ index b185083..0000000
 -	if (!is_container()) {
 -		umount2("/dev/pts", MNT_DETACH);
 -		umount2("/dev/", MNT_DETACH);
--		mount("tmpfs", "/dev", "tmpfs", MS_NOSUID, "mode=0755,size=512K");
+-		mount("tmpfs", "/dev", "tmpfs", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=0755,size=512K");
 -		mkdir("/dev/pts", 0755);
--		mount("devpts", "/dev/pts", "devpts", MS_NOEXEC | MS_NOSUID, 0);
+-		mount("devpts", "/dev/pts", "devpts", MS_NOATIME | MS_NOEXEC | MS_NOSUID, 0);
 -	}
 -
 -	ignore(symlink("/tmp/shm", "/dev/shm"));
@@ -947,5 +947,5 @@ index fb81248..41f1400 100644
  		set_stdio("console");
  		p = getpwnam("ubus");
 -- 
-2.33.0.windows.2
+2.28.0.windows.1
 
