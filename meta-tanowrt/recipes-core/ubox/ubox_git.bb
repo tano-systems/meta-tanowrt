@@ -1,9 +1,9 @@
 # Copyright (C) 2015, MentorGraphics
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
-# Copyright (C) 2018-2021, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano16"
+PR = "tano17"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
