@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano54"
+PR = "tano55"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -29,6 +29,7 @@ SRC_URI += "\
 	file://rootfs/etc/hotplug.d/net/20-smp-packet-steering \
 	file://rootfs/etc/init.d/network \
 	file://rootfs/etc/uci-defaults/15_migrate-network-config \
+	file://rootfs/etc/udhcpc.user \
 	file://rootfs/lib/netifd/proto/dhcp.sh \
 	file://rootfs/lib/netifd/dhcp.script \
 	file://rootfs/lib/network/config.sh \
@@ -45,9 +46,9 @@ SRC_URI += "\
 	file://0002-system-linux-add-ethtool_link_mode_bit_indices-for-k.patch \
 "
 
-# 02.08.2021
-# device: add support for configuring device link speed/duplex
-SRCREV_netifd = "1eb0fafaa9865b729509a7d47ecf1f05c2c0595c"
+# 04.02.2022
+# system-linux: expose hw-tc-offload ethtool feature in device status dump
+SRCREV_netifd = "fd4c9e17c8f22b866c1bf386c580074e3e678910"
 
 S = "${WORKDIR}/git"
 
@@ -109,6 +110,9 @@ do_install_append() {
 	install -d ${D}${base_libdir}/upgrade/backup-scripts.d
 	install -m 0755 ${WORKDIR}/rootfs/lib/upgrade/backup-scripts.d/15_migrate-network-config-at-boot \
 		${D}${base_libdir}/upgrade/backup-scripts.d/
+
+	install -d ${D}${sysconfdir}/udhcpc.user.d
+	install -m 0644 ${WORKDIR}/rootfs/etc/udhcpc.user ${D}${sysconfdir}/
 }
 
 ALTERNATIVE_${PN} = "ifup ifdown default.script"
@@ -134,6 +138,8 @@ FILES_${PN} += "\
 
 CONFFILES_${PN}_append = "\
 	${sysconfdir}/config/network \
+	${sysconfdir}/udhcpc.user \
+	${sysconfdir}/udhcpc.user.d/ \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "
 
