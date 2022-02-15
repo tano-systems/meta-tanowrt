@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano13"
+PR = "tano14"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
