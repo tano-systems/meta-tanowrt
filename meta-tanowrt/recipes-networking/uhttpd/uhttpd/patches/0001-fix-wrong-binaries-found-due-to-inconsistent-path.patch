@@ -8,9 +8,9 @@ Date:   Sat Jan 20 20:25:58 2018 -0500
     initscripts, when there is more than one binary of the same name.
 Index: git/main.c
 ===================================================================
---- git.orig/main.c
-+++ git/main.c
-@@ -183,8 +183,8 @@ static void init_defaults_pre(void)
+--- a/main.c
++++ b/main.c
+@@ -190,7 +190,7 @@ static void init_defaults_pre(void)
  	conf.max_connections = 100;
  	conf.realm = "Protected Area";
  	conf.cgi_prefix = "/cgi-bin";
@@ -18,5 +18,4 @@ Index: git/main.c
 +	conf.cgi_path = "/usr/sbin:/usr/bin:/sbin:/bin";
  	INIT_LIST_HEAD(&conf.cgi_alias);
  	INIT_LIST_HEAD(&conf.lua_prefix);
- }
- 
+ #if HAVE_UCODE

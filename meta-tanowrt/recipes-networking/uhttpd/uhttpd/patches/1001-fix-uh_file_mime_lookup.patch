@@ -1,12 +1,16 @@
-From 6cb7543b6a9f142f9afcd4a36e304cc900cb4405 Mon Sep 17 00:00:00 2001
+From cefdd18d407735ba684ad665e50db489c26cc01b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 7 Nov 2018 22:07:37 +0300
-Subject: [PATCH] fix uh_file_mime_lookup()
+Subject: [PATCH 1/6] fix uh_file_mime_lookup()
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ file.c      | 33 +++++++++++++++++++++++----------
+ mimetypes.h |  4 ++--
+ 2 files changed, 25 insertions(+), 12 deletions(-)
 
 diff --git a/file.c b/file.c
-index 9ad7516..852e9e3 100644
+index efb3549..e6282aa 100644
 --- a/file.c
 +++ b/file.c
 @@ -286,20 +286,33 @@ uh_path_lookup(struct client *cl, const char *url)
@@ -52,7 +56,7 @@ index 9ad7516..852e9e3 100644
  		}
  
  		m++;
-@@ -633,7 +646,7 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+@@ -634,7 +647,7 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
  
  	if (mime_type) {
  		ustream_printf(cl->us, "Content-Type: %s\r\n",
@@ -81,5 +85,5 @@ index af3a8b1..e411325 100644
  
  	{ "mp3",     "audio/mpeg" },
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

@@ -1,5 +1,5 @@
 diff --git a/file.c b/file.c
-index da680a0..18c7efa 100644
+index 1548900..efb3549 100644
 --- a/file.c
 +++ b/file.c
 @@ -137,6 +137,7 @@ uh_path_lookup(struct client *cl, const char *url)
@@ -71,7 +71,7 @@ index da680a0..18c7efa 100644
  		}
  
  		if (!(s.st_mode & mode))
-@@ -593,6 +605,9 @@ static void uh_file_free(struct client *cl)
+@@ -594,6 +606,9 @@ static void uh_file_free(struct client *cl)
  
  static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
  {
@@ -81,7 +81,7 @@ index da680a0..18c7efa 100644
  	/* test preconditions */
  	if (!cl->dispatch.no_cache &&
  	    (!uh_file_if_modified_since(cl, &pi->stat) ||
-@@ -609,13 +624,21 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+@@ -610,13 +625,21 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
  	/* write status */
  	uh_file_response_200(cl, &pi->stat);
  
@@ -107,10 +107,10 @@ index da680a0..18c7efa 100644
  	if (cl->request.method == UH_HTTP_MSG_HEAD) {
  		uh_request_done(cl);
 diff --git a/main.c b/main.c
-index 822c748..655d03f 100644
+index dda787b..694278e 100644
 --- a/main.c
 +++ b/main.c
-@@ -191,6 +191,7 @@ static void init_defaults_pre(void)
+@@ -201,6 +201,7 @@ static void init_defaults_pre(void)
  static void init_defaults_post(void)
  {
  	uh_index_add("index.html");

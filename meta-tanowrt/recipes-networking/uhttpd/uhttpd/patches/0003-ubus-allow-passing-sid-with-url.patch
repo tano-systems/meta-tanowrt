@@ -16,10 +16,10 @@ Signed-off-by: Wojciech Jowsa <wojciech.jowsa@gmail.com>
  2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/ubus.c b/ubus.c
-index cc7447e..06f5128 100644
+index 619135c..4c1f82f 100644
 --- a/ubus.c
 +++ b/ubus.c
-@@ -369,6 +369,10 @@ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
+@@ -371,6 +371,10 @@ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
  
  	sid = uh_ubus_get_auth(cl->hdr.head);
  
@@ -30,7 +30,7 @@ index cc7447e..06f5128 100644
  	if (!conf.ubus_noauth && !uh_ubus_allowed(sid, path, ":subscribe")) {
  		uh_ubus_send_header(cl, 200, "OK", "application/json");
  		uh_ubus_posix_error(cl, EACCES);
-@@ -940,8 +944,10 @@ static void uh_ubus_handle_request(struct client *cl, char *url, struct path_inf
+@@ -942,8 +946,10 @@ static void uh_ubus_handle_request(struct client *cl, char *url, struct path_inf
  		return;
  	}
  	chr = strchr(du->url_path, '?');
@@ -43,10 +43,10 @@ index cc7447e..06f5128 100644
  	du->legacy = false;
  
 diff --git a/uhttpd.h b/uhttpd.h
-index e61e176..99372be 100644
+index c755df6..7c829d0 100644
 --- a/uhttpd.h
 +++ b/uhttpd.h
-@@ -211,6 +211,7 @@ struct dispatch_ubus {
+@@ -227,6 +227,7 @@ struct dispatch_ubus {
  	struct json_object *jsobj;
  	struct json_object *jsobj_cur;
  	char *url_path;

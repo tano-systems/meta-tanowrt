@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano37"
+PR = "tano38"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=ba30601dd30339f7ff3d0ad681d45679"
 SECTION = "base"
-DEPENDS = "libubox ubus json-c ustream-ssl virtual/crypt"
+DEPENDS = "libubox libucode ubus json-c ustream-ssl virtual/crypt"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -38,9 +38,9 @@ SRC_URI += "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 15.11.2020
-# ubus: fix uhttpd crash
-SRCREV = "f53a63999784bcb7dc513e221f3f25dd3de2f35e"
+# 07.02.2022
+# main: fix leaking -p/-s argument values
+SRCREV = "2f8b1360df25bab375ec60bbba2dce8dd796161c"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services tanowrt-lua
@@ -53,7 +53,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 CFLAGS += "-D_DEFAULT_SOURCE"
 
-EXTRA_OECMAKE = "-DTLS_SUPPORT=ON -DLUA_SUPPORT=ON -DUBUS_SUPPORT=ON"
+EXTRA_OECMAKE = "-DTLS_SUPPORT=ON -DLUA_SUPPORT=ON -DUBUS_SUPPORT=ON -DUCODE_SUPPORT=ON"
 
 do_install_append() {
     install -d -m 0755 ${D}${sysconfdir}/config

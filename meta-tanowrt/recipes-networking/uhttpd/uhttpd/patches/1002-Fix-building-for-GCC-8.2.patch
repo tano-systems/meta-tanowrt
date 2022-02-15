@@ -1,7 +1,7 @@
-From 0ce85a5ada8187be93fc4f97267f69f8fef34cd8 Mon Sep 17 00:00:00 2001
+From b94c54a6b8106ac13c2eb8b2d34099697331ecf5 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 4 Jul 2019 05:01:51 +0300
-Subject: [PATCH] Fix building for GCC 8.2
+Subject: [PATCH 2/6] Fix building for GCC 8.2
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/file.c b/file.c
-index 852e9e3..e0ab15f 100644
+index e6282aa..9edd14c 100644
 --- a/file.c
 +++ b/file.c
 @@ -147,6 +147,7 @@ uh_path_lookup(struct client *cl, const char *url)
@@ -31,3 +31,6 @@ index 852e9e3..e0ab15f 100644
  		
  		/* test both ordinary path and gz path */
  		if (stat(path_phys, &p.stat) == 0){
+-- 
+2.28.0.windows.1
+

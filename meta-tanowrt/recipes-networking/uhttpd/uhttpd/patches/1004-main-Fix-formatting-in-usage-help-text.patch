@@ -1,7 +1,7 @@
-From f89c19528d6d43aa7231e5b54328861a5148f551 Mon Sep 17 00:00:00 2001
+From a91ea214725eb8c72dde87d1941c93977e2c8a9b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 10 Jan 2021 16:24:21 +0300
-Subject: [PATCH 1/2] main: Fix formatting in usage help text
+Subject: [PATCH 4/6] main: Fix formatting in usage help text
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/main.c b/main.c
-index 280bc15..3aa2319 100644
+index 694278e..53f66b9 100644
 --- a/main.c
 +++ b/main.c
-@@ -158,8 +158,8 @@ static int usage(const char *name)
+@@ -163,8 +163,8 @@ static int usage(const char *name)
  		"	-u string       URL prefix for UBUS via JSON-RPC handler\n"
  		"	-U file         Override ubus socket path\n"
  		"	-a              Do not authenticate JSON-RPC requests against UBUS session api\n"
@@ -24,5 +24,5 @@ index 280bc15..3aa2319 100644
  		"	-x string       URL prefix for CGI handler, default is '/cgi-bin'\n"
  		"	-y alias[=path]	URL alias handle\n"
 -- 
-2.16.2.windows.1
+2.28.0.windows.1
 

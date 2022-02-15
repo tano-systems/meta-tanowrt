@@ -1,7 +1,7 @@
-From 7325b76b40163a749e4cc7b35c5f0def45c70417 Mon Sep 17 00:00:00 2001
+From 93c96c370d25f458f36450941da0fcbb09e123dc Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 21 Jun 2021 17:59:28 +0300
-Subject: [PATCH] Fix MIME type detection for files with dots in name
+Subject: [PATCH 6/6] Fix MIME type detection for files with dots in name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 20 insertions(+), 16 deletions(-)
 
 diff --git a/file.c b/file.c
-index abb5edc..4e3eb62 100644
+index 9edd14c..10a3903 100644
 --- a/file.c
 +++ b/file.c
 @@ -288,37 +288,41 @@ uh_path_lookup(struct client *cl, const char *url)
