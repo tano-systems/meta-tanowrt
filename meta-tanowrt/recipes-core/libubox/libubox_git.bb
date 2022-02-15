@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano4"
+PR = "tano5"
 DESCRIPTION = "C utility functions for OpenWrt"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 
@@ -50,9 +50,9 @@ SRC_URI = "\
           file://fix-libdir.patch \
           "
 
-# 12.11.2021
-# vlist: define vlist_for_each_element_safe
-SRCREV = "cce5e351278b307af7f69931971e3d4e060117d7"
+# 10.02.2022
+# blob: clear buf->head when freeing a buffer
+SRCREV = "f2d6752901f2f2d8612fb43e10061570c9198af1"
 PV = "20211120"
 
 S = "${WORKDIR}/git"
