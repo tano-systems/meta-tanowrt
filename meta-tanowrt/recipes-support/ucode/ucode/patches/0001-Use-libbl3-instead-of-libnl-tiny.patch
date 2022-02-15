@@ -1,0 +1,54 @@
+From 743a5c425c2d6cd9f71f5c927b70ad284998da32 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 15 Feb 2022 16:13:07 +0300
+Subject: [PATCH] Use libbl3 instead of libnl-tiny
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ CMakeLists.txt | 8 ++++----
+ lib/rtnl.c     | 3 ++-
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7c84fc3..8fda309 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -124,8 +124,8 @@ IF(UCI_SUPPORT)
+ ENDIF()
+ 
+ IF(RTNL_SUPPORT)
+-  FIND_LIBRARY(nl NAMES nl-tiny)
+-  FIND_PATH(nl_include_dir NAMES netlink/msg.h PATH_SUFFIXES libnl-tiny)
++  FIND_LIBRARY(nl NAMES nl-3)
++  FIND_PATH(nl_include_dir NAMES netlink/msg.h PATH_SUFFIXES libnl3)
+   INCLUDE_DIRECTORIES(${nl_include_dir})
+   SET(LIBRARIES ${LIBRARIES} rtnl_lib)
+   ADD_LIBRARY(rtnl_lib MODULE lib/rtnl.c)
+@@ -134,8 +134,8 @@ IF(RTNL_SUPPORT)
+ ENDIF()
+ 
+ IF(NL80211_SUPPORT)
+-  FIND_LIBRARY(nl NAMES nl-tiny)
+-  FIND_PATH(nl_include_dir NAMES netlink/msg.h PATH_SUFFIXES libnl-tiny)
++  FIND_LIBRARY(nl NAMES nl-3)
++  FIND_PATH(nl_include_dir NAMES netlink/msg.h PATH_SUFFIXES libnl3)
+   INCLUDE_DIRECTORIES(${nl_include_dir})
+   SET(LIBRARIES ${LIBRARIES} nl80211_lib)
+   ADD_LIBRARY(nl80211_lib MODULE lib/nl80211.c)
+diff --git a/lib/rtnl.c b/lib/rtnl.c
+index b6a3e38..5422e1f 100644
+--- a/lib/rtnl.c
++++ b/lib/rtnl.c
+@@ -3155,7 +3155,8 @@ uc_nl_request(uc_vm_t *vm, size_t nargs)
+ 			err_return(err, NULL);
+ 
+ 		if (flagval & NLM_F_STRICT_CHK) {
+-			if (setsockopt(sock->s_fd, SOL_NETLINK, NETLINK_GET_STRICT_CHK, &enable, sizeof(enable)) < 0)
++			int s_fd = nl_socket_get_fd(sock);
++			if (setsockopt(s_fd, SOL_NETLINK, NETLINK_GET_STRICT_CHK, &enable, sizeof(enable)) < 0)
+ 				err_return(nl_syserr2nlerr(errno), "Unable to enable NETLINK_GET_STRICT_CHK");
+ 
+ 			flagval &= ~NLM_F_STRICT_CHK;
+-- 
+2.28.0.windows.1
+
