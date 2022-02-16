@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano10"
+PR = "tano11"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
@@ -22,9 +22,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uqmi.git"
 
-# 07.10.2019
-# uqmi: add timeout parameter
-SRCREV = "0a19b5b77140465c29e2afa7d611fe93abc9672f"
+# 25.01.2022
+# uqmi: add support for get operating mode
+SRCREV = "f254fc59c710d781eca3ec36e0bff2d8970370fa"
 
 SRC_URI += "\
 	file://qmi.sh \
