@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Bridge VLAN filtering"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware bridge_vlan_filtering.cfg
