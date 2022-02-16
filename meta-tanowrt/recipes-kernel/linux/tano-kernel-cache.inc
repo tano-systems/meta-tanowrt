@@ -3,7 +3,7 @@
 # Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".17"
+PR_append = ".18"
 
 KERNEL_FEATURES_append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
@@ -40,6 +40,7 @@ KERNEL_FEATURES_append = " \
 	features/general/leds/ledtrig_heartbeat.scc \
 	features/general/leds/ledtrig_timer.scc \
 	features/general/net/bridge_vlan_filtering.scc \
+	features/general/net/bridge_igmp_snooping.scc \
 "
 
 KERNEL_FEATURES_append_qemuall = " features/general/virtio/virtio.scc"
