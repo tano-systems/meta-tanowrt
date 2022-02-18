@@ -3,8 +3,28 @@
 # Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano8"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
+PR_append = ".tano9"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:${THISDIR}/${PN}/patches:"
+
+# Patches for 2.04 (2.06~rc1) GNU version
+SRC_URI += "\
+	file://0001-gpt-start-new-GPT-module.patch \
+	file://0002-gpt-rename-misnamed-header-location-fields.patch \
+	file://0003-gpt-record-size-of-of-the-entries-table.patch \
+	file://0004-gpt-consolidate-crc32-computation-code.patch \
+	file://0005-gpt-add-new-repair-function-to-sync-up-primary-and-b.patch \
+	file://0006-gpt-add-write-function-and-gptrepair-command.patch \
+	file://0007-gpt-add-a-new-generic-GUID-type.patch \
+	file://0008-gpt-new-gptprio.next-command-for-selecting-priority-.patch \
+	file://0009-gpt-split-out-checksum-recomputation.patch \
+	file://0010-gpt-move-gpt-guid-printing-function-to-common-librar.patch \
+	file://0011-gpt-switch-partition-names-to-a-16-bit-type.patch \
+	file://0012-gpt-add-search-by-partition-label-and-uuid-commands.patch \
+	file://0013-gpt-clean-up-little-endian-crc32-computation.patch \
+	file://0014-gpt-minor-cleanup.patch \
+	file://0015-gpt-add-search-by-disk-uuid-command.patch \
+	file://0016-gpt-fix-used-types-in-other-modules.patch \
+"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
