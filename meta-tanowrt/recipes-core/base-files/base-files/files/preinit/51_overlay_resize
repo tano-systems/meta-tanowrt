@@ -67,6 +67,12 @@ do_overlay_resize() {
 
 	local ROOT_DEVICE=""
 	export_bootdevice
+
+	if [ "$?" != "0" ]; then
+		echo "overlay-resize: Cannot find boot device" > /dev/kmsg
+		return
+	fi
+
 	export_partdevice ROOT_DEVICE 0
 
 	if [ "${ROOT_DEVICE}" = "" ]; then
