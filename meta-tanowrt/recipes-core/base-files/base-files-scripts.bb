@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019, 2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 require base-files.inc
 
-PR = "tano7.${INC_PR}"
+PR = "tano8.${INC_PR}"
 
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"

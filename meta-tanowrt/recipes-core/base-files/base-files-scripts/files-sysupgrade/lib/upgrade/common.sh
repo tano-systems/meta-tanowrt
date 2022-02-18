@@ -146,14 +146,144 @@ part_magic_fat() {
 	[ "$magic" = "FAT" ] || [ "$magic_fat32" = "FAT32" ]
 }
 
+#
+# Params:
+#   $1 - Device
+#   $2 - Variable name for entries number
+#   $3 - Variable name for each entry size
+#
+# Returns:
+#    = 0 - success
+#   != 0 - invalid device or not GPT partition
+#
+gpt_read_table_header() {
+	local _device="$1"
+	local _LBA1_OFFSET=512
+	local _SIGNATURE="4546492050415254" # 'EFI PART'
+
+	local _sig=$(dd if=${_device} bs=1 skip=$((${_LBA1_OFFSET})) \
+		count=8 2>/dev/null | hexdump -v -e '8/1 "%x"')
+
+	if [ "${_sig}" != "${_SIGNATURE}" ]; then
+		return 1
+	fi
+
+	local _entries=$(dd if=${_device} bs=1 skip=$((${_LBA1_OFFSET} + 80)) count=1 2>/dev/null | hexdump -v -e '"%d"')
+	local _entry_size=$(dd if=${_device} bs=1 skip=$((${_LBA1_OFFSET} + 84)) count=1 2>/dev/null | hexdump -v -e '"%d"')
+
+	export "$2=${_entries}"
+	export "$3=${_entry_size}"
+
+	return 0
+}
+
+#
+# Params:
+#   $1 - Device
+#   $2 - Partition number (counts from 0)
+#   $3 - Variable name for retrieved partition UUID
+#
+# Returns:
+#    = 0 - success
+#   != 0 - error
+#
+gpt_get_partuuid() {
+	local _device="$1"
+	local _partnum="$2"
+	local _var="$3"
+	local _skip=$((1024 + 128 * ${_partnum} + 16))
+
+	set -- $(dd if=${_device} bs=1 skip=${_skip} count=16 2>/dev/null | \
+	         hexdump -v -e '8/1 "%02x "" "2/1 "%02x""-"6/1 "%02x"')
+
+	export "${_var}=$4$3$2$1-$6$5-$8$7-$9"
+	return 0
+}
+
+#
+# Params:
+#   $1 - base device
+#   $2 - partition number (from 1)
+#
+# Returns:
+#   Partition device name
+#
+partition_device() {
+	local _partdev
+
+	case "$1" in
+		/dev/nvme*|/dev/mmcblk*)
+			_partdev="${1}p${2}"
+			;;
+		*)
+			_partdev="${1}${2}"
+			;;
+	esac
+
+	echo -n "${_partdev}"
+}
+
+#
+# Params:
+#   $1 - PARTUUID
+#   $2 - Variable name to store device
+#
+# Returns:
+#    = 0 - success
+#   != 0 - error
+#
+gpt_find_device_by_partuuid() {
+	local partuuid="$1"
+	local blockdev
+
+	for blockdev in $(find /dev -type b); do
+		blockdevname="${blockdev##/dev/}"
+		if [ -f "/sys/class/block/${blockdevname}/partition" ]; then
+			continue
+		fi
+
+		local gpt_entries
+		local gpt_entry_size
+		gpt_read_table_header "${blockdev}" gpt_entries gpt_entry_size
+		if [ "$?" != "0" ]; then
+			continue
+		fi
+
+		local gpt_entry_index=0
+		while [ "${gpt_entry_index}" != "${gpt_entries}" ]; do
+			local gpt_entry_part_uuid
+			gpt_get_partuuid "${blockdev}" "${gpt_entry_index}" gpt_entry_part_uuid
+			gpt_entry_index=$((${gpt_entry_index} + 1))
+
+			if [ "${gpt_entry_part_uuid}" = "${UUID_EMPTY}" ]; then
+				continue
+			fi
+
+			if [ "${gpt_entry_part_uuid}" = "${partuuid}" ]; then
+				export "$2=$(partition_device "${blockdev}" "${gpt_entry_index}")"
+				return 0
+			fi
+		done
+	done
+
+	return 1
+}
+
 export_bootdevice() {
-	local cmdline uuid blockdev uevent line class
+	local cmdline uuid blockdev uevent line class partdev
 	local MAJOR MINOR DEVNAME DEVTYPE
 	local rootpart="$(cmdline_get_var root)"
 
 	case "$rootpart" in
-		PARTUUID=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]-[a-f0-9][a-f0-9])
+		PARTUUID=????????-????-????-????-????????????)
 			uuid="${rootpart#PARTUUID=}"
+			gpt_find_device_by_partuuid "${uuid}" partdev
+			if [ "$?" = "0" -a -n "${partdev}" ]; then
+				uevent="/sys/class/block/${partdev##*/}/../uevent"
+			fi
+		;;
+		UUID=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]-[a-f0-9][a-f0-9])
+			uuid="${rootpart#UUID=}"
 			uuid="${uuid%-[a-f0-9][a-f0-9]}"
 			for blockdev in $(find /dev -type b); do
 				set -- $(dd if=$blockdev bs=1 skip=440 count=4 2>/dev/null | hexdump -v -e '4/1 "%02x "')
@@ -163,8 +293,8 @@ export_bootdevice() {
 				fi
 			done
 		;;
-		PARTUUID=????????-????-????-????-??????????02)
-			uuid="${rootpart#PARTUUID=}"
+		UUID=????????-????-????-????-??????????02)
+			uuid="${rootpart#UUID=}"
 			uuid="${uuid%02}00"
 			for disk in $(find /dev -type b); do
 				set -- $(dd if=$disk bs=1 skip=568 count=16 2>/dev/null | hexdump -v -e '8/1 "%02x "" "2/1 "%02x""-"6/1 "%02x"')
