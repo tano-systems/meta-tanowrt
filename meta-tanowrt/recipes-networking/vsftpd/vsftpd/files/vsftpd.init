@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2006-2011 OpenWrt.org
-# Copyright (C) 2020 Tano Systems LLC, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2020, 2022 Tano Systems LLC, Anton Kikin <a.kikin@tano-systems.com>
 
 USE_PROCD=1
 START=50
@@ -140,6 +140,9 @@ vsftpd_generate_config()
 	if [ x$enabled = x0 ]; then
 		exit 1
 	fi
+
+	# fix for '500 OOPS: priv_sock_get_cmd'
+	output_const "seccomp_sandbox" NO
 
 	# listen
 	output_const "background" NO
