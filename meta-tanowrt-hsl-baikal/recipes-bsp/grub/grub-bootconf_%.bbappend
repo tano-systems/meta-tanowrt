@@ -1,7 +1,13 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".baikal0"
+PR_append = ".baikal1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+inherit vars-expander
+EXPAND_VARIABLES:append = "${TANOWRT_PARTUUID_VARS}"
+
+SRC_URI:remove = "file://grub.cfg"
+SRC_URI:append = " file://grub.cfg.in"

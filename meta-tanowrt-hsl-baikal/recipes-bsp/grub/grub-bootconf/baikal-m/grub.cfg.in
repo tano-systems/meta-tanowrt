@@ -1,12 +1,6 @@
 set default=0
 set timeout=0
 
-set kernel_a_gdev="(hd0,2)"
-set kernel_b_gdev="(hd0,4)"
-set rootfs_a_kdev="/dev/sda3"
-set rootfs_b_kdev="/dev/sda5"
-
-set kernel_dtb="bm-mitx.dtb"
 set kernel_image="Image"
 set kernel_extra_cmdline="libata.force=noncq"
 
@@ -23,6 +17,12 @@ load_env
 serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
 
 insmod squash4
+insmod part_gpt
+
+search --no-floppy --part-uuid --set=rootdev_a @@TANOWRT_PARTUUID_ROOTDEV_A@@
+search --no-floppy --part-uuid --set=rootdev_b @@TANOWRT_PARTUUID_ROOTDEV_B@@
+search --no-floppy --part-uuid --set=kerneldev_a @@TANOWRT_PARTUUID_KERNELDEV_A@@
+search --no-floppy --part-uuid --set=kerneldev_b @@TANOWRT_PARTUUID_KERNELDEV_B@@
 
 if [ "$swu_upgrade_available" -eq 1 ]; then
 	echo "Upgrade available detected";
@@ -73,16 +73,10 @@ fi
 
 set CMDLINE="panic=15 rootwait rootfstype=squashfs console=tty console=ttyS0,115200 ${kernel_extra_cmdline}"
 
-menuentry 'System A' {
-	if [ -n "${kernel_dtb}" ]; then
-		devicetree ${kernel_a_gdev}/${kernel_dtb}
-	fi
-	linux ${kernel_a_gdev}/${kernel_image} root=${rootfs_a_kdev} ${CMDLINE} swu_active=0
+menuentry 'TanoWrt (system A)' {
+	linux ${kerneldev_a}/${kernel_image} root=PARTUUID=@@TANOWRT_PARTUUID_ROOTDEV_A@@ ${CMDLINE} swu_active=0
 }
 
-menuentry 'System B' {
-	if [ -n "${kernel_dtb}" ]; then
-		devicetree ${kernel_b_gdev}/${kernel_dtb}
-	fi
-	linux ${kernel_b_gdev}/${kernel_image} root=${rootfs_b_kdev} ${CMDLINE} swu_active=1
+menuentry 'TanoWrt (system B)' {
+	linux ${kerneldev_b}/${kernel_image} root=PARTUUID=@@TANOWRT_PARTUUID_ROOTDEV_B@@ ${CMDLINE} swu_active=1
 }
