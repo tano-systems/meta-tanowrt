@@ -1,6 +1,6 @@
-From dc0752e444f8f1fcef27f04454c34efd8bda14ca Mon Sep 17 00:00:00 2001
-From: invalid_git config <unknown@unknown>
-Date: Fri, 25 Jun 2021 00:50:14 +0000
+From 07b682f26ecaf9b333f72bdaf5611770d1fcb06a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 21 Feb 2022 11:21:53 +0300
 Subject: [PATCH 5/5] gpu/arm/midgard: Fix building in Yocto
 
 Use absolute paths for backend and platform includes
@@ -36,5 +36,5 @@ index 454756f5d..1db7b862a 100644
  # For kutf and mali_kutf_irq_latency_test
  obj-$(CONFIG_MALI_KUTF) += tests/
 -- 
-2.17.1
+2.25.1
 

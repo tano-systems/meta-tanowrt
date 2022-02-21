@@ -1,6 +1,6 @@
-From ad1d4ef1b75f94459bfc6ab0125365082165a885 Mon Sep 17 00:00:00 2001
+From da6bc0ce039331b43e71a46c6426deed4501c910 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Thu, 24 Jun 2021 10:36:20 +0300
+Date: Mon, 21 Feb 2022 11:20:35 +0300
 Subject: [PATCH 3/5] baikal_vdu_connector: Add include for module.h
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -21,5 +21,5 @@ index 805e6e17e..70f28cae0 100644
  #include <drm/drm_atomic_helper.h>
  #include <drm/drm_panel.h>
 -- 
-2.17.1
+2.25.1
 

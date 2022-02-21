@@ -1,6 +1,6 @@
-From 4afd6818551ef2d40e6434c2ac5d9d7743788e1f Mon Sep 17 00:00:00 2001
+From 7080fd37ae6aa915c388c9fb4c7a9c91c909ff00 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Wed, 29 Dec 2021 11:00:25 +0300
+Date: Mon, 21 Feb 2022 11:19:33 +0300
 Subject: [PATCH 4/5] gpu/arm/midgard: Add TX011-SW-99002-r26p0-01rel0 sources
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
@@ -80077,5 +80077,5 @@ index 000000000..dd02acd2a
 +SConscript('midgard/sconscript')
 +
 -- 
-2.17.1
+2.25.1
 
