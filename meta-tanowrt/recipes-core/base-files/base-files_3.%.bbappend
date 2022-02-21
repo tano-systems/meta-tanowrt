@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano83.${INC_PR}"
+PR_append = ".tano84.${INC_PR}"
 
 RDEPENDS_${PN} += "tano-version"
 
@@ -242,7 +242,7 @@ do_install_append () {
 	rm -rf ${D}${sysconfdir}/skel
 	rm -rf ${D}${sysconfdir}/filesystems
 
-	if [ "${INSTALL_X86_PREINIT_qemux86}" = "1" ]; then
+	if [ "${INSTALL_X86_PREINIT}" = "1" ]; then
 		install -dm 0755 ${D}/lib/preinit
 		install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
 		install -m 0644 ${WORKDIR}/preinit/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
