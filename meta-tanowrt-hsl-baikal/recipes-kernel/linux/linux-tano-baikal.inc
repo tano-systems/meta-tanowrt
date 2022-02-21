@@ -21,6 +21,7 @@ SCMVERSION ?= "n"
 LOCALVERSION = ""
 
 KERNEL_MACHINE_INCLUDE_mitx ?= "recipes-kernel/linux/linux-tano-baikal-mitx-${LINUX_VERSION_SHORT}.inc"
+KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-baikal-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 LINUX_VERSION_EXTENSION = "-tano-baikal-${LINUX_KERNEL_TYPE}"
