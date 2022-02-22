@@ -9,7 +9,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PR = "tano0"
-PV = "1.6.1+git${SRCPV}"
+PV = "1.6.3+git${SRCPV}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -24,7 +24,7 @@ RDEPENDS_${PN} += "openssl-bin"
 GIT_PROTOCOL = "https"
 
 SRC_URI = "git://github.com/tsl0922/ttyd.git;branch=main;protocol=${GIT_PROTOCOL}"
-SRCREV = "079aa6864921a0aff31686012125b0ebbc41d5a8"
+SRCREV = "6f42dc636c483e79832b76708dc5151fc83778a6"
 
 # Files
 SRC_URI += "\
