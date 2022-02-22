@@ -4,10 +4,10 @@
 # XXD utility
 # A hexdump utility by Juergen Weigert, v1.11 by Vadim Vygonets
 #
-# This file Copyright (C) 2018 Tano Systems
+# This file Copyright (C) 2018, 2022 Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "XXD utility"
 SECTION = "console/utils"
@@ -19,15 +19,15 @@ SRCREV = "ec68a99464055029c01082762517e97245ddae0c"
 
 S = "${WORKDIR}/git/src"
 
-inherit native
-
 do_configure[noexec] = "1"
 
 do_compile() {
-	${MAKE} -C ${S}/xxd clean xxd
+	oe_runmake -C ${S}/xxd clean xxd
 }
 
 do_install() {
 	install -d ${D}${base_bindir}
 	install -m 0755 ${S}/xxd/xxd ${D}${base_bindir}/xxd
 }
+
+BBCLASSEXTEND = "native nativesdk"
