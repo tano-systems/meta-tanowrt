@@ -1,4 +1,4 @@
-From 12f9821d899ac5f475daa5bc00b78aac3f620827 Mon Sep 17 00:00:00 2001
+From fc559bcd2cbab265c1031a4201cc3ac459828e57 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 8 Jan 2020 03:27:21 +0300
 Subject: [PATCH 3/3] Make libubus thread safe
@@ -13,11 +13,11 @@ Original patch by Ronny Nilsson <ronnyn@southpole.se>
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  libubus-internal.h |  2 +-
- libubus-io.c       | 12 +++++-------
- libubus-obj.c      | 42 ++++++++++++++++++++++--------------------
- libubus-req.c      | 53 +++++++++++++++++++++++++++--------------------------
- libubus-sub.c      |  8 ++++----
- libubus.c          | 42 ++++++++++++++++++++----------------------
+ libubus-io.c       | 12 +++++------
+ libubus-obj.c      | 42 +++++++++++++++++++-----------------
+ libubus-req.c      | 53 +++++++++++++++++++++++-----------------------
+ libubus-sub.c      |  8 +++----
+ libubus.c          | 42 +++++++++++++++++-------------------
  libubus.h          |  1 +
  7 files changed, 80 insertions(+), 80 deletions(-)
 
@@ -35,7 +35,7 @@ index 24477a0..9cda8c0 100644
  void ubus_handle_data(struct uloop_fd *u, unsigned int events);
  int ubus_send_msg(struct ubus_context *ctx, uint32_t seq,
 diff --git a/libubus-io.c b/libubus-io.c
-index 3561ac4..64da6de 100644
+index a1fb62b..9730130 100644
 --- a/libubus-io.c
 +++ b/libubus-io.c
 @@ -31,7 +31,7 @@
@@ -344,7 +344,7 @@ index 8793133..a4de5eb 100644
  
  	return ubus_complete_request(ctx, &req, 0);
 diff --git a/libubus.c b/libubus.c
-index 91f317c..90f453f 100644
+index aee2a3b..d8ab44b 100644
 --- a/libubus.c
 +++ b/libubus.c
 @@ -22,7 +22,7 @@
@@ -365,7 +365,7 @@ index 91f317c..90f453f 100644
  struct ubus_pending_msg {
  	struct list_head list;
  	struct ubus_msghdr_buf hdr;
-@@ -136,10 +134,10 @@ static void ubus_lookup_cb(struct ubus_request *ureq, int type, struct blob_attr
+@@ -139,10 +137,10 @@ static void ubus_lookup_cb(struct ubus_request *ureq, int type, struct blob_attr
  {
  	struct ubus_lookup_request *req;
  	struct ubus_object_data obj = {};
@@ -378,7 +378,7 @@ index 91f317c..90f453f 100644
  
  	if (!attr[UBUS_ATTR_OBJID] || !attr[UBUS_ATTR_OBJPATH] ||
  	    !attr[UBUS_ATTR_OBJTYPE])
-@@ -157,11 +155,11 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
+@@ -160,11 +158,11 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
  {
  	struct ubus_lookup_request lookup;
  
@@ -393,7 +393,7 @@ index 91f317c..90f453f 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	lookup.req.raw_data_cb = ubus_lookup_cb;
-@@ -172,10 +170,10 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
+@@ -175,10 +173,10 @@ int ubus_lookup(struct ubus_context *ctx, const char *path,
  
  static void ubus_lookup_id_cb(struct ubus_request *req, int type, struct blob_attr *msg)
  {
@@ -406,7 +406,7 @@ index 91f317c..90f453f 100644
  
  	if (!attr[UBUS_ATTR_OBJID])
  		return;
-@@ -187,11 +185,11 @@ int ubus_lookup_id(struct ubus_context *ctx, const char *path, uint32_t *id)
+@@ -190,11 +188,11 @@ int ubus_lookup_id(struct ubus_context *ctx, const char *path, uint32_t *id)
  {
  	struct ubus_request req;
  
@@ -421,7 +421,7 @@ index 91f317c..90f453f 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	req.raw_data_cb = ubus_lookup_id_cb;
-@@ -255,15 +253,15 @@ int ubus_send_event(struct ubus_context *ctx, const char *id,
+@@ -258,15 +256,15 @@ int ubus_send_event(struct ubus_context *ctx, const char *id,
  	struct ubus_request req;
  	void *s;
  
@@ -445,7 +445,7 @@ index 91f317c..90f453f 100644
  		return UBUS_STATUS_INVALID_ARGUMENT;
  
  	return ubus_complete_request(ctx, &req, 0);
-@@ -359,7 +357,7 @@ struct ubus_context *ubus_connect(const char *path)
+@@ -362,7 +360,7 @@ struct ubus_context *ubus_connect(const char *path)
  
  void ubus_shutdown(struct ubus_context *ctx)
  {
@@ -467,5 +467,5 @@ index 6925514..e33e084 100644
  
  struct ubus_object_data {
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 

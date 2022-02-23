@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano19"
+PR = "tano20"
 DESCRIPTION = "OpenWrt system message/RPC bus"
 HOMEPAGE = "http://git.openwrt.org/?p=project/libubox.git;a=summary"
 LICENSE = "BSD"
@@ -21,9 +21,9 @@ SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.pat
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"
 SRC_URI += "file://0003-Make-libubus-thread-safe.patch"
 
-# 30.06.2021
-# ubusd: ubusd: fix tx_queue linked list usage
-SRCREV = "4fc532c8a55ba8217ad67d7fd47c5eb9a8aba044"
+# 08.09.2021
+# libubus: increase stack depth for processing obj msgs
+SRCREV = "a72457b61df045d3c499a6211362b751710590d7"
 
 S = "${WORKDIR}/git"
 
