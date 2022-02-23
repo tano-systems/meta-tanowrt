@@ -1,4 +1,4 @@
-From d836f07e2103886e172e9d21ef113211670ab4f1 Mon Sep 17 00:00:00 2001
+From 3e1a04eeb53afc6f4170757c820aa366f6cf9c71 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 15 Dec 2020 06:04:40 +0300
 Subject: [PATCH 18/24] early: Mount CGv1 to /tmp/cgroup-v1
@@ -26,5 +26,5 @@ index c9b2e8c..1117640 100644
  	mkdir("/tmp/lock", 0755);
  	mkdir("/tmp/state", 0755);
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

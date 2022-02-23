@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano59"
+PR = "tano60"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -67,9 +67,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 23.01.2022
-# procd: seccomp/jail: Fix build error on arm with glibc
-SRCREV = "cb0031c47b9d46f3cf84daa90d484af5f9c90e31"
+# 18.02.2022
+# instance: exit in case asprintf() fails
+SRCREV = "ad652490d47916a27c01e3dd8f9eafcecbb4bc7f"
 
 S = "${WORKDIR}/git"
 

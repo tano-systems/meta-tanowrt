@@ -1,4 +1,4 @@
-From 66747ff563f44cdb7355861c691147e9cc6507e9 Mon Sep 17 00:00:00 2001
+From dbba717020d90922621b1fb41a0589f1ad93e842 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 12 Nov 2020 05:00:34 +0300
 Subject: [PATCH 16/24] jail: Add libnss_* libs to mounts when using glibc
@@ -60,5 +60,5 @@ index bfa2587..8b7e003 100644
  			if (opts.setns.ns == -1) {
  				if (!(opts.namespace & CLONE_NEWNET)) {
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

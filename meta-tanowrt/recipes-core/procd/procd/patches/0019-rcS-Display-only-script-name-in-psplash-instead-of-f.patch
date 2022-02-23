@@ -1,4 +1,4 @@
-From 902582ba3b7b74bf72c2c03b9eb7a5d9734156f0 Mon Sep 17 00:00:00 2001
+From 524d30c6a30ada7deb3cf3519a247ea1e39864eb Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 17 Dec 2020 21:15:32 +0300
 Subject: [PATCH 19/24] rcS: Display only script name in psplash instead of
@@ -41,5 +41,5 @@ index 60cc4e7..fd55af3 100644
  
  	clock_gettime(CLOCK_MONOTONIC_RAW, &s->ts_start);
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

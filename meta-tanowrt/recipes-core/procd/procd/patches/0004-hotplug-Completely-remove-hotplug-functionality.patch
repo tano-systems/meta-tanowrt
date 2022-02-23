@@ -1,4 +1,4 @@
-From bc6d9ea9d7b112b9552581413b4aa7618f418c07 Mon Sep 17 00:00:00 2001
+From c7adb99ed79f92e42ee2636bd34107d909c62f56 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 27 Feb 2019 00:20:01 +0300
 Subject: [PATCH 04/24] hotplug: Completely remove hotplug functionality
@@ -947,5 +947,5 @@ index fb81248..41f1400 100644
  		set_stdio("console");
  		p = getpwnam("ubus");
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
