@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano31"
+PR = "tano32"
 
 SUMMARY = "OpenWrt firewall configuration utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/firewall3.git;a=summary"
@@ -34,9 +34,9 @@ inherit kmod/ipt-nat
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-# 08.01.2022
-# options.c: add DSCP code LE Least Effort
-SRCREV = "0f16ea5f055722a532d4e68c7ba34ed084b48b37"
+# 17.02.2022
+# Revert "firewall3: support table load on access on Linux 5.15+"
+SRCREV = "4cd7d4f36bea731bf901cb067456f1d460294926"
 
 S = "${WORKDIR}/git"
 
