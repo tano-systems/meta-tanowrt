@@ -3,9 +3,41 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-require conf/machine/include/baikal-be-m1000.inc
-
 MACHINEOVERRIDES =. "mitx:"
+
+require conf/machine/include/baikal-m.inc
+
+#
+# Image generation
+#
+
+#
+# Kernel
+#
+PREFERRED_PROVIDER_virtual/kernel = "linux-tano-baikal"
+PREFERRED_VERSION_linux-tano-baikal = "5.4%"
+LINUXLIBCVERSION = "5.4%"
+SDKLINUXLIBCVERSION = "5.4%"
+
+KERNEL_IMAGETYPE = "Image"
+
+KERNEL_CLASSES = "kernel-tn-mkimage"
+KERNEL_MKIMAGE_TYPES = "ext4"
+KERNEL_MKIMAGE_INCLUDE_DEVICETREE = "1"
+
+KERNEL_DEFCONFIG ?= "defconfig"
+
+#
+# Other
+#
+
+# Enable irqbalance
+IRQBALANCE_CONFIG_ENABLED = "1"
+MACHINE_EXTRA_RDEPENDS_append = " irqbalance "
+
+# RTC hwclock parameters
+OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
+OPENWRT_HWCLOCK_LOCALTIME = "1"
 
 TANOWRT_PARTUUID_BOOT        = "6468acf8-db09-4a44-8a28-1277390934ba "
 TANOWRT_PARTUUID_OVERLAY     = "25a56de0-1873-4c27-b228-b5ff9a1f82bb"
