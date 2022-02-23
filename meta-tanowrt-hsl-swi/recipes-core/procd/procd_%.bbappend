@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2021 Tano Systems LLC. All Rights Reserved.
+# Copyright (C) 2021-2022, Tano Systems LLC. All Rights Reserved.
 #
 
-PR_append = ".1"
+PR_append = ".2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Patches

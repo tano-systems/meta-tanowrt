@@ -20,7 +20,7 @@ index fdc6583..5394f31 100644
  		mount("sysfs", "/sys", "sysfs", MS_NOATIME | MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
 -		mount("cgroup2", "/sys/fs/cgroup", "cgroup2",  MS_NODEV | MS_NOEXEC | MS_NOSUID | MS_RELATIME, "nsdelegate");
 +		mount("cgroup", "/sys/fs/cgroup", "cgroup",  MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);
- 		mount("tmpfs", "/dev", "devtmpfs", MS_NOATIME | MS_NOSUID, "mode=0755,size=512K");
+ 		mount("tmpfs", "/dev", "devtmpfs", MS_NOATIME | MS_NOEXEC | MS_NOSUID, "mode=0755,size=512K");
  		ignore(symlink("/tmp/shm", "/dev/shm"));
  		mkdir("/dev/pts", 0755);
 @@ -79,11 +79,6 @@ early_mounts(void)
