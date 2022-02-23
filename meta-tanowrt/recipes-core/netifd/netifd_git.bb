@@ -46,9 +46,9 @@ SRC_URI += "\
 	file://0002-system-linux-add-ethtool_link_mode_bit_indices-for-k.patch \
 "
 
-# 04.02.2022
-# system-linux: expose hw-tc-offload ethtool feature in device status dump
-SRCREV_netifd = "fd4c9e17c8f22b866c1bf386c580074e3e678910"
+# 20.02.2022
+# cmake: fix usage of implicit library and include paths
+SRCREV_netifd = "136006b88826feff4f0a36ffab511d1366483cf2"
 
 S = "${WORKDIR}/git"
 
