@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano38"
+PR = "tano39"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -38,9 +38,9 @@ SRC_URI += "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 07.02.2022
-# main: fix leaking -p/-s argument values
-SRCREV = "2f8b1360df25bab375ec60bbba2dce8dd796161c"
+# 19.02.2022
+# fix compiler uninitialized variable
+SRCREV = "51283f9f1df5dedcba35f40367ef5d4ab1a55e0b"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services tanowrt-lua
