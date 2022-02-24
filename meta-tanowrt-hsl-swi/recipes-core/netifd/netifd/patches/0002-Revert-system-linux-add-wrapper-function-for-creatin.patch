@@ -1,0 +1,166 @@
+From a480a005b9553817cf92aec5fb3f8fa75456b609 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 24 Feb 2022 04:14:29 +0300
+Subject: [PATCH 2/5] Revert "system-linux: add wrapper function for creating
+ link config messages"
+
+This reverts commit 3d76f2e2a1aa5c791aefce5c3458134e6e16400b.
+---
+ system-linux.c | 66 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 34 insertions(+), 32 deletions(-)
+
+diff --git a/system-linux.c b/system-linux.c
+index cfef538..7400c86 100644
+--- a/system-linux.c
++++ b/system-linux.c
+@@ -755,38 +755,21 @@ static int system_rtnl_call(struct nl_msg *msg)
+ 	return nl_wait_for_ack(sock_rtnl);
+ }
+ 
+-static struct nl_msg *__system_ifinfo_msg(int af, int index, const char *ifname, uint16_t type, uint16_t flags)
++static int system_link_del(const char *ifname)
+ {
+ 	struct nl_msg *msg;
+ 	struct ifinfomsg iim = {
+-		.ifi_family = af,
+-		.ifi_index = index,
++		.ifi_family = AF_UNSPEC,
++		.ifi_index = 0,
+ 	};
+ 
+-	msg = nlmsg_alloc_simple(type, flags | NLM_F_REQUEST);
+-	if (!msg)
+-		return NULL;
+-
+-	nlmsg_append(msg, &iim, sizeof(iim), 0);
+-	if (ifname)
+-		nla_put_string(msg, IFLA_IFNAME, ifname);
+-
+-	return msg;
+-}
+-
+-static struct nl_msg *system_ifinfo_msg(const char *ifname, uint16_t type, uint16_t flags)
+-{
+-	return __system_ifinfo_msg(AF_UNSPEC, 0, ifname, type, flags);
+-}
++	msg = nlmsg_alloc_simple(RTM_DELLINK, NLM_F_REQUEST);
+ 
+-static int system_link_del(const char *ifname)
+-{
+-	struct nl_msg *msg;
+-
+-	msg = system_ifinfo_msg(ifname, RTM_DELLINK, 0);
+ 	if (!msg)
+ 		return -1;
+ 
++	nlmsg_append(msg, &iim, sizeof(iim), 0);
++	nla_put_string(msg, IFLA_IFNAME, ifname);
+ 	return system_rtnl_call(msg);
+ }
+ 
+@@ -916,21 +899,23 @@ int system_bridge_delif(struct device *bridge, struct device *dev)
+ 
+ int system_bridge_vlan(const char *iface, uint16_t vid, bool add, unsigned int vflags)
+ {
++	struct ifinfomsg ifi = { .ifi_family = PF_BRIDGE, };
+ 	struct bridge_vlan_info vinfo = { .vid = vid, };
+ 	unsigned short flags = 0;
+ 	struct nlattr *afspec;
+ 	struct nl_msg *nlm;
+-	int index;
+ 	int ret = 0;
+ 
+-	index = if_nametoindex(iface);
+-	if (!index)
++	ifi.ifi_index = if_nametoindex(iface);
++	if (!ifi.ifi_index)
+ 		return -1;
+ 
+-	nlm = __system_ifinfo_msg(PF_BRIDGE, index, NULL, add ? RTM_SETLINK : RTM_DELLINK, 0);
++	nlm = nlmsg_alloc_simple(add ? RTM_SETLINK : RTM_DELLINK, NLM_F_REQUEST);
+ 	if (!nlm)
+ 		return -1;
+ 
++	nlmsg_append(nlm, &ifi, sizeof(ifi), 0);
++
+ 	if (vflags & BRVLAN_F_SELF)
+ 		flags |= BRIDGE_FLAGS_SELF;
+ 
+@@ -1282,15 +1267,20 @@ sec_to_jiffies(int val)
+ 
+ int system_bridge_addbr(struct device *bridge, struct bridge_config *cfg)
+ {
++	struct ifinfomsg iim = { .ifi_family = AF_UNSPEC, };
+ 	struct nlattr *linkinfo, *data;
+ 	struct nl_msg *msg;
+ 	uint64_t val;
+ 	int rv;
+ 
+-	msg = system_ifinfo_msg(bridge->ifname, RTM_NEWLINK, NLM_F_CREATE | NLM_F_EXCL);
++	msg = nlmsg_alloc_simple(RTM_NEWLINK, NLM_F_REQUEST | NLM_F_CREATE | NLM_F_EXCL);
+ 	if (!msg)
+ 		return -1;
+ 
++	nlmsg_append(msg, &iim, sizeof(iim), 0);
++
++	nla_put_string(msg, IFLA_IFNAME, bridge->ifname);
++
+ 	if (!(linkinfo = nla_nest_start(msg, IFLA_LINKINFO)))
+ 		goto nla_put_failure;
+ 
+@@ -1367,6 +1357,7 @@ int system_macvlan_add(struct device *macvlan, struct device *dev, struct macvla
+ {
+ 	struct nl_msg *msg;
+ 	struct nlattr *linkinfo, *data;
++	struct ifinfomsg iim = { .ifi_family = AF_UNSPEC, };
+ 	int i, rv;
+ 	static const struct {
+ 		const char *name;
+@@ -1378,12 +1369,16 @@ int system_macvlan_add(struct device *macvlan, struct device *dev, struct macvla
+ 		{ "passthru", MACVLAN_MODE_PASSTHRU },
+ 	};
+ 
+-	msg = system_ifinfo_msg(macvlan->ifname, RTM_NEWLINK, NLM_F_CREATE | NLM_F_EXCL);
++	msg = nlmsg_alloc_simple(RTM_NEWLINK, NLM_F_REQUEST | NLM_F_CREATE | NLM_F_EXCL);
++
+ 	if (!msg)
+ 		return -1;
+ 
++	nlmsg_append(msg, &iim, sizeof(iim), 0);
++
+ 	if (cfg->flags & MACVLAN_OPT_MACADDR)
+ 		nla_put(msg, IFLA_ADDRESS, sizeof(cfg->macaddr), cfg->macaddr);
++	nla_put_string(msg, IFLA_IFNAME, macvlan->ifname);
+ 	nla_put_u32(msg, IFLA_LINK, dev->ifindex);
+ 
+ 	if (!(linkinfo = nla_nest_start(msg, IFLA_LINKINFO)))
+@@ -1421,16 +1416,23 @@ nla_put_failure:
+ int system_link_netns_move(struct device *dev, int netns_fd, const char *target_ifname)
+ {
+ 	struct nl_msg *msg;
+-	int index;
++	struct ifinfomsg iim = {
++		.ifi_family = AF_UNSPEC,
++	};
+ 
+ 	if (!dev)
+ 		return -1;
+ 
+-	index = system_if_resolve(dev);
+-	msg = __system_ifinfo_msg(AF_UNSPEC, index, target_ifname, RTM_NEWLINK, 0);
++	iim.ifi_index = system_if_resolve(dev);
++	msg = nlmsg_alloc_simple(RTM_NEWLINK, NLM_F_REQUEST);
++
+ 	if (!msg)
+ 		return -1;
+ 
++	nlmsg_append(msg, &iim, sizeof(iim), 0);
++	if (target_ifname)
++		nla_put_string(msg, IFLA_IFNAME, target_ifname);
++
+ 	nla_put_u32(msg, IFLA_NET_NS_FD, netns_fd);
+ 	return system_rtnl_call(msg);
+ }
+-- 
+2.34.1.windows.1
+

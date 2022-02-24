@@ -1,0 +1,97 @@
+From 2f7d0dc17d3cf320adde551196bb32cc6669173f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 24 Feb 2022 04:19:57 +0300
+Subject: [PATCH 5/5] Revert "iprule: add support for uidrange"
+
+This reverts commit ed7187684685430ee6de49e551775badbee39761.
+---
+ iprule.c       | 14 --------------
+ iprule.h       |  5 -----
+ system-linux.c |  9 ---------
+ 3 files changed, 28 deletions(-)
+
+diff --git a/iprule.c b/iprule.c
+index 0956073..b9e16a5 100644
+--- a/iprule.c
++++ b/iprule.c
+@@ -44,7 +44,6 @@ enum {
+ 	RULE_ACTION,
+ 	RULE_GOTO,
+ 	RULE_SUP_PREFIXLEN,
+-	RULE_UIDRANGE,
+ 	RULE_DISABLED,
+ 	__RULE_MAX
+ };
+@@ -60,7 +59,6 @@ static const struct blobmsg_policy rule_attr[__RULE_MAX] = {
+ 	[RULE_FWMARK] = { .name = "mark", .type = BLOBMSG_TYPE_STRING },
+ 	[RULE_LOOKUP] = { .name = "lookup", .type = BLOBMSG_TYPE_STRING },
+ 	[RULE_SUP_PREFIXLEN] = { .name = "suppress_prefixlength", .type = BLOBMSG_TYPE_INT32 },
+-	[RULE_UIDRANGE] = { .name = "uidrange", .type = BLOBMSG_TYPE_STRING },
+ 	[RULE_ACTION] = { .name = "action", .type = BLOBMSG_TYPE_STRING },
+ 	[RULE_GOTO]   = { .name = "goto", .type = BLOBMSG_TYPE_INT32 },
+ 	[RULE_DISABLED] = { .name = "disabled", .type = BLOBMSG_TYPE_BOOL },
+@@ -284,18 +282,6 @@ iprule_add(struct blob_attr *attr, bool v6)
+ 		rule->flags |= IPRULE_SUP_PREFIXLEN;
+ 	}
+ 
+-	if ((cur = tb[RULE_UIDRANGE]) != NULL) {
+-		int ret = sscanf(blobmsg_get_string(cur), "%u-%u", &rule->uidrange_start, &rule->uidrange_end);
+-
+-		if (ret == 1)
+-			rule->uidrange_end = rule->uidrange_start;
+-		else if (ret != 2) {
+-			DPRINTF("Failed to parse UID range: %s\n", (char *) blobmsg_data(cur));
+-			goto error;
+-		}
+-		rule->flags |= IPRULE_UIDRANGE;
+-	}
+-
+ 	if ((cur = tb[RULE_ACTION]) != NULL) {
+ 		if (!system_resolve_iprule_action(blobmsg_data(cur), &rule->action)) {
+ 			DPRINTF("Failed to parse rule action: %s\n", (char *) blobmsg_data(cur));
+diff --git a/iprule.h b/iprule.h
+index 6d91d06..89b94b4 100644
+--- a/iprule.h
++++ b/iprule.h
+@@ -63,9 +63,6 @@ enum iprule_flags {
+ 
+ 	/* rule suppresses results by prefix length */
+ 	IPRULE_SUP_PREFIXLEN	= (1 << 13),
+-
+-	/* rule specifies uidrange */
+-	IPRULE_UIDRANGE		= (1 << 14),
+ };
+ 
+ struct iprule {
+@@ -105,8 +102,6 @@ struct iprule {
+ 
+ 	unsigned int lookup;
+ 	unsigned int sup_prefixlen;
+-	unsigned int uidrange_start;
+-	unsigned int uidrange_end;
+ 	unsigned int action;
+ 	unsigned int gotoid;
+ };
+diff --git a/system-linux.c b/system-linux.c
+index a699402..82c6a7a 100644
+--- a/system-linux.c
++++ b/system-linux.c
+@@ -3003,15 +3003,6 @@ static int system_iprule(struct iprule *rule, int cmd)
+ 	if (rule->flags & IPRULE_SUP_PREFIXLEN)
+ 		nla_put_u32(msg, FRA_SUPPRESS_PREFIXLEN, rule->sup_prefixlen);
+ 
+-	if (rule->flags & IPRULE_UIDRANGE) {
+-		struct fib_rule_uid_range uidrange = {
+-			.start = rule->uidrange_start,
+-			.end = rule->uidrange_end
+-		};
+-
+-		nla_put(msg, FRA_UID_RANGE, sizeof(uidrange), &uidrange);
+-	}
+-
+ 	if (rule->flags & IPRULE_GOTO)
+ 		nla_put_u32(msg, FRA_GOTO, rule->gotoid);
+ 
+-- 
+2.34.1.windows.1
+

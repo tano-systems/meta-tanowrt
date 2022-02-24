@@ -1,0 +1,72 @@
+From 2b664ef19571d23002e9033be1239eb01257a92e Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 24 Feb 2022 04:14:39 +0300
+Subject: [PATCH 3/5] Revert "system-linux: delete bridge devices using
+ netlink"
+
+This reverts commit 88af2f1bc6ace86c37f4fa66f852cfec9b604254.
+---
+ system-linux.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/system-linux.c b/system-linux.c
+index 7400c86..5ce004f 100644
+--- a/system-linux.c
++++ b/system-linux.c
+@@ -755,27 +755,9 @@ static int system_rtnl_call(struct nl_msg *msg)
+ 	return nl_wait_for_ack(sock_rtnl);
+ }
+ 
+-static int system_link_del(const char *ifname)
+-{
+-	struct nl_msg *msg;
+-	struct ifinfomsg iim = {
+-		.ifi_family = AF_UNSPEC,
+-		.ifi_index = 0,
+-	};
+-
+-	msg = nlmsg_alloc_simple(RTM_DELLINK, NLM_F_REQUEST);
+-
+-	if (!msg)
+-		return -1;
+-
+-	nlmsg_append(msg, &iim, sizeof(iim), 0);
+-	nla_put_string(msg, IFLA_IFNAME, ifname);
+-	return system_rtnl_call(msg);
+-}
+-
+ int system_bridge_delbr(struct device *bridge)
+ {
+-	return system_link_del(bridge->ifname);
++	return ioctl(sock_ioctl, SIOCBRDELBR, bridge->ifname);
+ }
+ 
+ static int system_bridge_if(const char *bridge, struct device *dev, int cmd, void *data)
+@@ -1437,6 +1419,24 @@ int system_link_netns_move(struct device *dev, int netns_fd, const char *target_
+ 	return system_rtnl_call(msg);
+ }
+ 
++static int system_link_del(const char *ifname)
++{
++	struct nl_msg *msg;
++	struct ifinfomsg iim = {
++		.ifi_family = AF_UNSPEC,
++		.ifi_index = 0,
++	};
++
++	msg = nlmsg_alloc_simple(RTM_DELLINK, NLM_F_REQUEST);
++
++	if (!msg)
++		return -1;
++
++	nlmsg_append(msg, &iim, sizeof(iim), 0);
++	nla_put_string(msg, IFLA_IFNAME, ifname);
++	return system_rtnl_call(msg);
++}
++
+ int system_macvlan_del(struct device *macvlan)
+ {
+ 	return system_link_del(macvlan->ifname);
+-- 
+2.34.1.windows.1
+

@@ -1,0 +1,300 @@
+From 6ea566a95679e6ae09250158e9ce635a76c79f9f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 24 Feb 2022 04:14:55 +0300
+Subject: [PATCH 4/5] Revert "system-linux: create bridge devices using
+ netlink"
+
+This reverts commit 85c3548069a751f0b854b5816db6ee7142aec07b.
+---
+ system-linux.c | 220 +++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 157 insertions(+), 63 deletions(-)
+
+diff --git a/system-linux.c b/system-linux.c
+index 5ce004f..a699402 100644
+--- a/system-linux.c
++++ b/system-linux.c
+@@ -490,9 +490,55 @@ static void system_bridge_set_isolated(struct device *dev, const char *val)
+ 	system_set_dev_sysfs("brport/isolated", dev->ifname, val);
+ }
+ 
+-static void system_bridge_set_multicast_router(struct device *dev, const char *val)
++static void system_bridge_set_multicast_router(struct device *dev, const char *val, bool bridge)
+ {
+-	system_set_dev_sysfs("brport/multicast_router", dev->ifname, val);
++	system_set_dev_sysfs(bridge ? "bridge/multicast_router" :
++				      "brport/multicast_router",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_robustness(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_startup_query_count",
++			      dev->ifname, val);
++	system_set_dev_sysfs("bridge/multicast_last_member_count",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_query_interval(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_query_interval",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_query_response_interval(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_query_response_interval",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_last_member_interval(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_last_member_interval",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_membership_interval(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_membership_interval",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_other_querier_timeout(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_querier_interval",
++			      dev->ifname, val);
++}
++
++static void system_bridge_set_startup_query_interval(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/multicast_startup_query_interval",
++			      dev->ifname, val);
+ }
+ 
+ void system_bridge_set_stp_state(struct device *dev, bool val)
+@@ -502,6 +548,31 @@ void system_bridge_set_stp_state(struct device *dev, bool val)
+ 	system_set_dev_sysfs("bridge/stp_state", dev->ifname, valstr);
+ }
+ 
++static void system_bridge_set_forward_delay(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/forward_delay", dev->ifname, val);
++}
++
++static void system_bridge_set_priority(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/priority", dev->ifname, val);
++}
++
++static void system_bridge_set_ageing_time(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/ageing_time", dev->ifname, val);
++}
++
++static void system_bridge_set_hello_time(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/hello_time", dev->ifname, val);
++}
++
++static void system_bridge_set_max_age(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/max_age", dev->ifname, val);
++}
++
+ static void system_bridge_set_learning(struct device *dev, const char *val)
+ {
+ 	system_set_dev_sysfs("brport/learning", dev->ifname, val);
+@@ -512,6 +583,11 @@ static void system_bridge_set_unicast_flood(struct device *dev, const char *val)
+ 	system_set_dev_sysfs("brport/unicast_flood", dev->ifname, val);
+ }
+ 
++static void system_bridge_set_vlan_filtering(struct device *dev, const char *val)
++{
++	system_set_dev_sysfs("bridge/vlan_filtering", dev->ifname, val);
++}
++
+ static int system_get_disable_ipv6(struct device *dev, char *buf, const size_t buf_sz)
+ {
+ 	return system_get_dev_sysctl("ipv6/conf", "disable_ipv6",
+@@ -849,7 +925,7 @@ retry:
+ 
+ 	if (dev->settings.flags & DEV_OPT_MULTICAST_ROUTER) {
+ 		snprintf(buf, sizeof(buf), "%u", dev->settings.multicast_router);
+-		system_bridge_set_multicast_router(dev, buf);
++		system_bridge_set_multicast_router(dev, buf, false);
+ 	}
+ 
+ 	if (dev->settings.flags & DEV_OPT_MULTICAST_FAST_LEAVE &&
+@@ -1247,92 +1323,110 @@ sec_to_jiffies(int val)
+ 	return (unsigned long) val * 100;
+ }
+ 
+-int system_bridge_addbr(struct device *bridge, struct bridge_config *cfg)
++static void system_bridge_conf_multicast_deps(struct device *bridge,
++					      struct bridge_config *cfg,
++					      char *buf,
++					      int buf_len)
+ {
+-	struct ifinfomsg iim = { .ifi_family = AF_UNSPEC, };
+-	struct nlattr *linkinfo, *data;
+-	struct nl_msg *msg;
+-	uint64_t val;
+-	int rv;
++	int val;
+ 
+-	msg = nlmsg_alloc_simple(RTM_NEWLINK, NLM_F_REQUEST | NLM_F_CREATE | NLM_F_EXCL);
+-	if (!msg)
+-		return -1;
++	if (cfg->flags & BRIDGE_OPT_ROBUSTNESS ||
++	    cfg->flags & BRIDGE_OPT_QUERY_INTERVAL ||
++	    cfg->flags & BRIDGE_OPT_QUERY_RESPONSE_INTERVAL) {
++		val = cfg->robustness * cfg->query_interval +
++			cfg->query_response_interval;
+ 
+-	nlmsg_append(msg, &iim, sizeof(iim), 0);
++		snprintf(buf, buf_len, "%i", val);
++		system_bridge_set_membership_interval(bridge, buf);
+ 
+-	nla_put_string(msg, IFLA_IFNAME, bridge->ifname);
++		val = cfg->robustness * cfg->query_interval +
++			cfg->query_response_interval / 2;
+ 
+-	if (!(linkinfo = nla_nest_start(msg, IFLA_LINKINFO)))
+-		goto nla_put_failure;
++		snprintf(buf, buf_len, "%i", val);
++		system_bridge_set_other_querier_timeout(bridge, buf);
++	}
+ 
+-	nla_put_string(msg, IFLA_INFO_KIND, "bridge");
++	if (cfg->flags & BRIDGE_OPT_QUERY_INTERVAL) {
++		val = cfg->query_interval / 4;
+ 
+-	if (!(data = nla_nest_start(msg, IFLA_INFO_DATA)))
+-		goto nla_put_failure;
++		snprintf(buf, buf_len, "%i", val);
++		system_bridge_set_startup_query_interval(bridge, buf);
++	}
++}
+ 
+-	nla_put_u32(msg, IFLA_BR_STP_STATE, cfg->stp);
+-	nla_put_u32(msg, IFLA_BR_FORWARD_DELAY, sec_to_jiffies(cfg->forward_delay));
+-	nla_put_u8(msg, IFLA_BR_MCAST_SNOOPING, !!cfg->igmp_snoop);
+-	nla_put_u8(msg, IFLA_BR_MCAST_QUERIER, !!cfg->multicast_querier);
+-	nla_put_u32(msg, IFLA_BR_MCAST_HASH_MAX, cfg->hash_max);
++static void system_bridge_conf_multicast(struct device *bridge,
++					 struct bridge_config *cfg,
++					 char *buf,
++					 int buf_len)
++{
++	system_set_dev_sysfs("bridge/multicast_snooping",
++		bridge->ifname, cfg->igmp_snoop ? "1" : "0");
+ 
+-	if (bridge->settings.flags & DEV_OPT_MULTICAST_ROUTER)
+-		nla_put_u8(msg, IFLA_BR_MCAST_ROUTER, !!bridge->settings.multicast_router);
++	system_set_dev_sysfs("bridge/multicast_querier",
++		bridge->ifname, cfg->multicast_querier ? "1" : "0");
+ 
+-	if (cfg->flags & BRIDGE_OPT_ROBUSTNESS) {
+-		nla_put_u32(msg, IFLA_BR_MCAST_STARTUP_QUERY_CNT, cfg->robustness);
+-		nla_put_u32(msg, IFLA_BR_MCAST_LAST_MEMBER_CNT, cfg->robustness);
++	snprintf(buf, buf_len, "%i", cfg->hash_max);
++	system_set_dev_sysfs("/bridge/hash_max",
++		bridge->ifname, buf);
++
++	if (bridge->settings.flags & DEV_OPT_MULTICAST_ROUTER) {
++		snprintf(buf, buf_len, "%u", bridge->settings.multicast_router);
++		system_bridge_set_multicast_router(bridge, buf, true);
+ 	}
+ 
+-	if (cfg->flags & BRIDGE_OPT_QUERY_INTERVAL)
+-		nla_put_u64(msg, IFLA_BR_MCAST_QUERY_INTVL, cfg->query_interval);
++	if (cfg->flags & BRIDGE_OPT_ROBUSTNESS) {
++		snprintf(buf, buf_len, "%i", cfg->robustness);
++		system_bridge_set_robustness(bridge, buf);
++	}
+ 
+-	if (cfg->flags & BRIDGE_OPT_QUERY_RESPONSE_INTERVAL)
+-		nla_put_u64(msg, IFLA_BR_MCAST_QUERY_RESPONSE_INTVL, cfg->query_response_interval);
++	if (cfg->flags & BRIDGE_OPT_QUERY_INTERVAL) {
++		snprintf(buf, buf_len, "%i", cfg->query_interval);
++		system_bridge_set_query_interval(bridge, buf);
++	}
+ 
+-	if (cfg->flags & BRIDGE_OPT_LAST_MEMBER_INTERVAL)
+-		nla_put_u64(msg, IFLA_BR_MCAST_LAST_MEMBER_INTVL, cfg->last_member_interval);
++	if (cfg->flags & BRIDGE_OPT_QUERY_RESPONSE_INTERVAL) {
++		snprintf(buf, buf_len, "%i", cfg->query_response_interval);
++		system_bridge_set_query_response_interval(bridge, buf);
++	}
+ 
+-	if (cfg->flags & BRIDGE_OPT_ROBUSTNESS ||
+-	    cfg->flags & BRIDGE_OPT_QUERY_INTERVAL ||
+-	    cfg->flags & BRIDGE_OPT_QUERY_RESPONSE_INTERVAL) {
+-		val = cfg->robustness * cfg->query_interval +
+-			cfg->query_response_interval;
++	if (cfg->flags & BRIDGE_OPT_LAST_MEMBER_INTERVAL) {
++		snprintf(buf, buf_len, "%i", cfg->last_member_interval);
++		system_bridge_set_last_member_interval(bridge, buf);
++	}
+ 
+-		nla_put_u64(msg, IFLA_BR_MCAST_MEMBERSHIP_INTVL, val);
++	system_bridge_conf_multicast_deps(bridge, cfg, buf, buf_len);
++}
+ 
+-		val -= cfg->query_response_interval / 2;
++int system_bridge_addbr(struct device *bridge, struct bridge_config *cfg)
++{
++	char buf[64];
+ 
+-		nla_put_u64(msg, IFLA_BR_MCAST_QUERIER_INTVL, val);
+-	}
++	if (ioctl(sock_ioctl, SIOCBRADDBR, bridge->ifname) < 0)
++		return -1;
+ 
+-	if (cfg->flags & BRIDGE_OPT_QUERY_INTERVAL) {
+-		val = cfg->query_interval / 4;
++	system_bridge_set_stp_state(bridge, cfg->stp);
+ 
+-		nla_put_u64(msg, IFLA_BR_MCAST_STARTUP_QUERY_INTVL, val);
+-	}
++	snprintf(buf, sizeof(buf), "%lu", sec_to_jiffies(cfg->forward_delay));
++	system_bridge_set_forward_delay(bridge, buf);
+ 
+-	nla_put_u8(msg, IFLA_BR_VLAN_FILTERING, !!cfg->vlan_filtering);
+-	nla_put_u16(msg, IFLA_BR_PRIORITY, cfg->priority);
+-	nla_put_u32(msg, IFLA_BR_HELLO_TIME, sec_to_jiffies(cfg->hello_time));
+-	nla_put_u32(msg, IFLA_BR_MAX_AGE, sec_to_jiffies(cfg->max_age));
++	system_bridge_conf_multicast(bridge, cfg, buf, sizeof(buf));
++	system_bridge_set_vlan_filtering(bridge, cfg->vlan_filtering ? "1" : "0");
+ 
+-	if (cfg->flags & BRIDGE_OPT_AGEING_TIME)
+-		nla_put_u32(msg, IFLA_BR_AGEING_TIME, sec_to_jiffies(cfg->ageing_time));
++	snprintf(buf, sizeof(buf), "%d", cfg->priority);
++	system_bridge_set_priority(bridge, buf);
+ 
+-	nla_nest_end(msg, data);
+-	nla_nest_end(msg, linkinfo);
++	snprintf(buf, sizeof(buf), "%lu", sec_to_jiffies(cfg->hello_time));
++	system_bridge_set_hello_time(bridge, buf);
+ 
+-	rv = system_rtnl_call(msg);
+-	if (rv)
+-		D(SYSTEM, "Error adding bridge '%s': %d\n", bridge->ifname, rv);
++	snprintf(buf, sizeof(buf), "%lu", sec_to_jiffies(cfg->max_age));
++	system_bridge_set_max_age(bridge, buf);
+ 
+-	return rv;
++	if (cfg->flags & BRIDGE_OPT_AGEING_TIME) {
++		snprintf(buf, sizeof(buf), "%lu", sec_to_jiffies(cfg->ageing_time));
++		system_bridge_set_ageing_time(bridge, buf);
++	}
+ 
+-nla_put_failure:
+-	nlmsg_free(msg);
+-	return -ENOMEM;
++	return 0;
+ }
+ 
+ int system_macvlan_add(struct device *macvlan, struct device *dev, struct macvlan_config *cfg)
+-- 
+2.34.1.windows.1
+
