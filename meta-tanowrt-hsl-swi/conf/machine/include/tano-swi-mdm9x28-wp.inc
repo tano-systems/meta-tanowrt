@@ -59,3 +59,5 @@ KERNEL_BOOT_OPTIONS = "earlyprintk=serial,ttyHSL1,115200 loglevel=7 \
 MACHINE_FEATURES_append = " hwrng "
 
 PACKAGECONFIG_remove_pn-procd = "ujail"
+
+PREFERRED_RPROVIDER_libdevmapper-native = "libdevmapper-native"
