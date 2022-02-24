@@ -27,6 +27,7 @@ do_image_2k.ubifs[depends] += "mtd-utils-native:do_populate_sysroot"
 
 BUILD_IMAGE_2K := "${@bb.utils.contains('IMAGE_FSTYPES', '2k.ubifs', '1', '0', d)}"
 BUILD_IMAGE_4K := "${@bb.utils.contains('IMAGE_FSTYPES', '4k.ubifs', '1', '0', d)}"
+BUILD_IMAGE_SQUASHFS := "${@bb.utils.contains('IMAGE_FSTYPES', 'squashfs', '1', '0', d)}"
 
 create_ubinize_config() {
     local cfg_path=$1
@@ -99,6 +100,7 @@ create_reset_ubinize_config() {
 
 prepare_ubi_ps() {
     local page_size=$1
+    local image_types=$2
     local image_type=
     local ubinize_cfg=
     local image_path=
@@ -110,7 +112,7 @@ prepare_ubi_ps() {
 
     mkdir -p "${IMGDEPLOYDIR}"
 
-    for rootfs_type in ubifs squashfs; do
+    for rootfs_type in ${image_types}; do
         image_type=${rootfs_type}
         if [[ "${rootfs_type}" != "squashfs" ]]; then
             image_type=${page_size}.${rootfs_type}
@@ -148,11 +150,15 @@ prepare_ubi_ps() {
 # Create UBI images
 prepare_ubi() {
 	if [ "${BUILD_IMAGE_2K}" = "1" ]; then
-		prepare_ubi_ps '2k'
+		prepare_ubi_ps '2k' 'ubifs'
 	fi
 
 	if [ "${BUILD_IMAGE_4K}" = "1" ]; then
-		prepare_ubi_ps '4k'
+		prepare_ubi_ps '4k' 'ubifs'
+	fi
+
+	if [ "${BUILD_IMAGE_SQUASHFS}" = "1" ]; then
+		prepare_ubi_ps '4k' 'squashfs'
 	fi
 
 	cd ${IMGDEPLOYDIR}

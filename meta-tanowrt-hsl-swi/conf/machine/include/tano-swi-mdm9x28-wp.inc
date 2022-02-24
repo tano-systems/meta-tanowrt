@@ -11,7 +11,7 @@ MACHINEOVERRIDES =. "swi-mdm9x28-wp:"
 #
 # Image
 #
-IMAGE_FSTYPES = "squashfs 4k.ubifs"
+IMAGE_FSTYPES = "squashfs"
 
 # Bootloader
 EXTRA_IMAGEDEPENDS += "lk"
