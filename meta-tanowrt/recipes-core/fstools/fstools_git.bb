@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano48"
+PR = "tano49"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -61,9 +61,9 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://blockd.init \
 "
 
-# 14.08.2021
-# block: fix two resources leaks discovered by Coverity
-SRCREV = "2e3aca299ea7bbe74f219860510c4b34e77c7aa4"
+# 05.02.2022
+# libfstools: avoid segfault in find_mount_point
+SRCREV = "922f1b3c091dbe12af4ba12a76ba8563418b688c"
 
 S = "${WORKDIR}/git"
 

@@ -1,7 +1,7 @@
-From 70c2572b35fa8e7d7fe92dea7110703004ace273 Mon Sep 17 00:00:00 2001
+From e4ae609668088610534ee6f49096ec372408b063 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:28:44 +0300
-Subject: [PATCH 14/17] Add support for rootfs partition/volume selection
+Subject: [PATCH 14/18] Add support for rootfs partition/volume selection
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -138,10 +138,10 @@ index 87788e3..f7d8192 100644
  	}
  
 diff --git a/libfstools/common.c b/libfstools/common.c
-index 0bf981a..bce8ade 100644
+index 229c31a..caf9193 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -139,14 +139,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -151,14 +151,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
  		if (use_f2fs(v, offset, bdev)) {
  			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %"PRIu64")...\n",
  				v->blk, offset);
@@ -159,7 +159,7 @@ index 0bf981a..bce8ade 100644
  		ret = system(str);
  		if (ret)
 diff --git a/libfstools/common.h b/libfstools/common.h
-index 12384ba..99d514c 100644
+index c3b6790..e3e0c0c 100644
 --- a/libfstools/common.h
 +++ b/libfstools/common.h
 @@ -21,7 +21,7 @@
@@ -172,7 +172,7 @@ index 12384ba..99d514c 100644
  #define F2FS_MINSIZE		(100ULL * 1024ULL * 1024ULL)
  
 diff --git a/libfstools/overlay.c b/libfstools/overlay.c
-index 727d685..fcc1f43 100644
+index d541a44..11dce9b 100644
 --- a/libfstools/overlay.c
 +++ b/libfstools/overlay.c
 @@ -27,7 +27,7 @@
@@ -184,7 +184,7 @@ index 727d685..fcc1f43 100644
  #include "libfstools.h"
  #include "volume.h"
  
-@@ -296,7 +296,7 @@ jffs2_switch(struct volume *v)
+@@ -302,7 +302,7 @@ jffs2_switch(struct volume *v)
  	volume_init(v);
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -193,7 +193,7 @@ index 727d685..fcc1f43 100644
  		return -1;
  	}
  
-@@ -417,7 +417,7 @@ int mount_overlay(struct volume *v)
+@@ -425,7 +425,7 @@ int mount_overlay(struct volume *v)
  
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -216,7 +216,7 @@ index 0612a70..4c8d58e 100644
  #ifdef OVL_ROOTDISK_PART_ENABLE
  	parse_cmdline();
 diff --git a/mount_root.c b/mount_root.c
-index a143e19..2edd165 100644
+index 26e00f6..5b29389 100644
 --- a/mount_root.c
 +++ b/mount_root.c
 @@ -20,7 +20,7 @@
@@ -245,7 +245,7 @@ index a143e19..2edd165 100644
  		volume_init(root);
  		ULOG_NOTE("mounting /dev/root\n");
  		mount("/dev/root", "/", NULL, MS_NOATIME | MS_REMOUNT, 0);
-@@ -104,7 +104,7 @@ stop(int argc, char *argv[1])
+@@ -99,7 +99,7 @@ stop(int argc, char *argv[1])
  static int
  done(int argc, char *argv[1])
  {

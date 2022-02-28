@@ -1,7 +1,7 @@
-From 1b9a3d247c1772ed468791d28699c0dcc79bf4a8 Mon Sep 17 00:00:00 2001
+From 77339a9b88fe872cb51e5e920dbc098b617f0e1e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 1 Apr 2021 13:01:31 +0300
-Subject: [PATCH 17/17] libubi: Rename libubi.h to libubi-fstools.h
+Subject: [PATCH 17/18] libubi: Rename libubi.h to libubi-fstools.h
 
 Some builds may have libubi.h in the mtd-utils package.
 To avoid conflicts, rename libubi.h in the fstools package.

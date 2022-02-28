@@ -1,7 +1,7 @@
-From 9edd55f6e60cdb23eaef637e54c5e753f55d5ae1 Mon Sep 17 00:00:00 2001
+From 85f646d869094efdd82156aca4447c43f9849c7c Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:03:57 +0300
-Subject: [PATCH 05/17] block: Add log message for unmounted device
+Subject: [PATCH 05/18] block: Add log message for unmounted device
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

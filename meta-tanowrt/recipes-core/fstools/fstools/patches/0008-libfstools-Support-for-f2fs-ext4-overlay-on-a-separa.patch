@@ -1,7 +1,7 @@
-From fb6026338c49303e896877a872fd41573f626794 Mon Sep 17 00:00:00 2001
+From bb5502324da8b96019a7204e186a614bef04a8c6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 16 Aug 2019 19:50:29 +0300
-Subject: [PATCH 08/17] libfstools: Support for f2fs/ext4 overlay on a separate
+Subject: [PATCH 08/18] libfstools: Support for f2fs/ext4 overlay on a separate
  disk partition
 
 Added support for f2fs and ext4 overlay on a separate partition on the
@@ -36,7 +36,7 @@ index 9a87979..37350bb 100644
  	ADD_DEFINITIONS(-DOVL_MOUNT_COMPRESS_ZLIB)
  ENDIF(DEFINED CMAKE_OVL_MOUNT_COMPRESS_ZLIB)
 diff --git a/libfstools/common.c b/libfstools/common.c
-index 4a91933..412e81b 100644
+index a0a1274..5eeff03 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
 @@ -23,6 +23,26 @@ read_uint_from_file(char *dirname, char *filename, unsigned int *i)
@@ -66,23 +66,23 @@ index 4a91933..412e81b 100644
  char
  *read_string_from_file(const char *dirname, const char *filename, char *buf, size_t bufsz)
  {
-@@ -63,6 +83,7 @@ int block_file_identify(FILE *f, uint64_t offset)
+@@ -67,6 +87,7 @@ int block_file_identify(FILE *f, uint64_t offset)
  		return FS_TARGZ;
  	}
  
 +#ifdef OVL_F2FS_ENABLE
- 	fseeko(f, offset + 0x400, SEEK_SET);
- 	n = fread(&magic, sizeof(magic), 1, f);
- 	if (n != 1)
-@@ -70,6 +91,7 @@ int block_file_identify(FILE *f, uint64_t offset)
+ 	if (fseeko(f, offset + 0x400, SEEK_SET) < 0)
+ 		return -1;
+ 
+@@ -76,6 +97,7 @@ int block_file_identify(FILE *f, uint64_t offset)
  
  	if (magic == cpu_to_le32(0xF2F52010))
  		return FS_F2FS;
 +#endif
  
  	magic = 0;
- 	fseeko(f, offset + 0x438, SEEK_SET);
-@@ -83,6 +105,8 @@ int block_file_identify(FILE *f, uint64_t offset)
+ 	if (fseeko(f, offset + 0x438, SEEK_SET) < 0)
+@@ -91,6 +113,8 @@ int block_file_identify(FILE *f, uint64_t offset)
  	return FS_NONE;
  }
  
@@ -91,7 +91,7 @@ index 4a91933..412e81b 100644
  static bool use_f2fs(struct volume *v, uint64_t offset, const char *bdev)
  {
  	uint64_t size = 0;
-@@ -97,6 +121,8 @@ static bool use_f2fs(struct volume *v, uint64_t offset, const char *bdev)
+@@ -109,6 +133,8 @@ static bool use_f2fs(struct volume *v, uint64_t offset, const char *bdev)
  	return ret;
  }
  
@@ -100,7 +100,7 @@ index 4a91933..412e81b 100644
  int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
  {
  	int ret = 0;
-@@ -109,12 +135,22 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -121,12 +147,22 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
  		/* fall-through */
  	case FS_NONE:
  		ULOG_INFO("overlay filesystem in %s has not been formatted yet\n", v->blk);
@@ -126,7 +126,7 @@ index 4a91933..412e81b 100644
  	default:
  		break;
 diff --git a/libfstools/common.h b/libfstools/common.h
-index b1e1cb4..3674040 100644
+index ec81951..277caa7 100644
 --- a/libfstools/common.h
 +++ b/libfstools/common.h
 @@ -15,6 +15,7 @@
@@ -690,10 +690,10 @@ index 9f2317f..27641ec 100644
  	return block_volume_format(v, p->offset, rootdev);
  }
 diff --git a/mount_root.c b/mount_root.c
-index dffb0a6..f8aa5e1 100644
+index d343909..7bda074 100644
 --- a/mount_root.c
 +++ b/mount_root.c
-@@ -72,7 +72,9 @@ start(int argc, char *argv[1])
+@@ -67,7 +67,9 @@ start(int argc, char *argv[1])
  		return ramoverlay();
  
  	case FS_EXT4:
@@ -703,7 +703,7 @@ index dffb0a6..f8aa5e1 100644
  	case FS_JFFS2:
  	case FS_UBIFS:
  		mount_overlay(data);
-@@ -112,7 +114,9 @@ done(int argc, char *argv[1])
+@@ -107,7 +109,9 @@ done(int argc, char *argv[1])
  		return jffs2_switch(v);
  
  	case FS_EXT4:

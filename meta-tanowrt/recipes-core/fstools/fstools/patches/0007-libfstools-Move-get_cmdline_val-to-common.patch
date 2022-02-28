@@ -1,29 +1,32 @@
-From ab851a9eabd89e6fa4a56ed4f19207e2667d10d3 Mon Sep 17 00:00:00 2001
+From 4c1a8407e63d5ec8ce23559b591a31a7f875c453 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 5 May 2021 02:24:01 +0300
-Subject: [PATCH 07/17] libfstools: Move get_cmdline_val to common
+Subject: [PATCH 07/18] libfstools: Move get_cmdline_val to common
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- libfstools/common.c   | 32 ++++++++++++++++++++++++++++++++
- libfstools/common.h   |  1 +
- libfstools/partname.c | 31 -------------------------------
- 3 files changed, 33 insertions(+), 31 deletions(-)
+ libfstools/common.c   | 40 ++++++++++++++++++++++++++++++++++++++++
+ libfstools/common.h   |  2 ++
+ libfstools/partname.c | 38 ++------------------------------------
+ 3 files changed, 44 insertions(+), 36 deletions(-)
 
 diff --git a/libfstools/common.c b/libfstools/common.c
-index f2d415d..4a91933 100644
+index 1b22d2c..a0a1274 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -122,3 +122,35 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -134,3 +134,43 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
  
  	return ret;
  }
 +
-+/* from procd/utils.c -> should go to libubox */
-+char* get_cmdline_val(const char* name, char* out, int len)
++/* adapted from procd/utils.c -> should go to libubox */
++char* get_var_from_file(const char* filename, const char* name, char* out, int len)
 +{
 +	char line[1024], *c, *sptr;
-+	int fd = open("/proc/cmdline", O_RDONLY);
++	int fd = open(filename, O_RDONLY);
++	if (fd == -1)
++		return NULL;
++
 +	ssize_t r = read(fd, line, sizeof(line) - 1);
 +	close(fd);
 +
@@ -50,28 +53,37 @@ index f2d415d..4a91933 100644
 +	return NULL;
 +}
 +
++/* from procd/utils.c -> should go to libubox */
++char* get_cmdline_val(const char* name, char* out, int len)
++{
++	return get_var_from_file("/proc/cmdline", name, out, len);
++}
 diff --git a/libfstools/common.h b/libfstools/common.h
-index b5cc692..b1e1cb4 100644
+index b5cc692..ec81951 100644
 --- a/libfstools/common.h
 +++ b/libfstools/common.h
-@@ -25,3 +25,4 @@ int read_uint_from_file(char *dirname, char *filename, unsigned int *i);
+@@ -25,3 +25,5 @@ int read_uint_from_file(char *dirname, char *filename, unsigned int *i);
  char *read_string_from_file(const char *dirname, const char *filename, char *buf, size_t bufsz);
  int block_file_identify(FILE *f, uint64_t offset);
  int block_volume_format(struct volume *v, uint64_t offset, const char *bdev);
 +char* get_cmdline_val(const char* name, char* out, int len);
++char* get_var_from_file(const char* filename, const char* name, char* out, int len);
 diff --git a/libfstools/partname.c b/libfstools/partname.c
-index 5d4fde5..9bcc580 100644
+index f59c52e..ba10650 100644
 --- a/libfstools/partname.c
 +++ b/libfstools/partname.c
-@@ -61,37 +61,6 @@ static int partname_volume_init(struct volume *v)
+@@ -61,40 +61,6 @@ static int partname_volume_init(struct volume *v)
  	return block_volume_format(v, 0, p->parent_dev.devpathstr);
  }
  
--/* from procd/utils.c -> should go to libubox */
--static char* get_cmdline_val(const char* name, char* out, int len)
+-/* adapted from procd/utils.c -> should go to libubox */
+-static char* get_var_from_file(const char* filename, const char* name, char* out, int len)
 -{
 -	char line[1024], *c, *sptr;
--	int fd = open("/proc/cmdline", O_RDONLY);
+-	int fd = open(filename, O_RDONLY);
+-	if (fd == -1)
+-		return NULL;
+-
 -	ssize_t r = read(fd, line, sizeof(line) - 1);
 -	close(fd);
 -
@@ -101,6 +113,21 @@ index 5d4fde5..9bcc580 100644
  static char *rootdevname(char *devpath) {
  	int l;
  
+@@ -123,12 +89,12 @@ static struct volume *partname_volume_find(char *name)
+ 	bool found = false;
+ 	glob_t gl;
+ 
+-	if (get_var_from_file("/proc/cmdline", "fstools_ignore_partname", rootparam, sizeof(rootparam))) {
++	if (get_cmdline_val("fstools_ignore_partname", rootparam, sizeof(rootparam))) {
+ 		if (!strcmp("1", rootparam))
+ 			return NULL;
+ 	}
+ 
+-	if (get_var_from_file("/proc/cmdline", "root", rootparam, sizeof(rootparam))) {
++	if (get_cmdline_val("root", rootparam, sizeof(rootparam))) {
+ 		rootdev = rootdevname(rootparam);
+ 		/* find partition on same device as rootfs */
+ 		snprintf(ueventgstr, sizeof(ueventgstr), "%s/%s/*/uevent", block_dir_name, rootdev);
 -- 
 2.28.0.windows.1
 

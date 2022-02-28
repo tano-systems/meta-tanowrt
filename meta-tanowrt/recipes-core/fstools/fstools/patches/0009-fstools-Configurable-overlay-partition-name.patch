@@ -1,7 +1,7 @@
-From fc6656fe8c3e99041bdb709ce135a0ef01d31327 Mon Sep 17 00:00:00 2001
+From 396ee3cb1805588c1a5e030e9b896ad352cea064 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 16 Dec 2019 03:58:26 +0300
-Subject: [PATCH 09/17] fstools: Configurable overlay partition name
+Subject: [PATCH 09/18] fstools: Configurable overlay partition name
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -12,12 +12,12 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  libfstools/common.h   |  2 ++
  libfstools/overlay.c  |  5 ++--
  libfstools/rootdisk.c |  6 ++---
- mount_root.c          | 11 +++++----
+ mount_root.c          |  7 +++---
  overlay_partition.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
  overlay_partition.h   | 19 +++++++++++++++
  snapshot.c            | 15 ++++++------
  ubi.c                 |  3 ++-
- 12 files changed, 117 insertions(+), 32 deletions(-)
+ 12 files changed, 115 insertions(+), 30 deletions(-)
  create mode 100644 overlay_partition.c
  create mode 100644 overlay_partition.h
 
@@ -151,10 +151,10 @@ index acff913..87788e3 100644
  	}
  
 diff --git a/libfstools/common.c b/libfstools/common.c
-index 412e81b..4118c53 100644
+index 5eeff03..bf2678a 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -139,14 +139,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -151,14 +151,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
  		if (use_f2fs(v, offset, bdev)) {
  			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %llu)...\n",
  				v->blk, offset);
@@ -172,7 +172,7 @@ index 412e81b..4118c53 100644
  		ret = system(str);
  		if (ret)
 diff --git a/libfstools/common.h b/libfstools/common.h
-index 3674040..cde40eb 100644
+index 277caa7..8b4904a 100644
 --- a/libfstools/common.h
 +++ b/libfstools/common.h
 @@ -20,6 +20,8 @@
@@ -185,7 +185,7 @@ index 3674040..cde40eb 100644
  
  int read_uint_from_file(char *dirname, char *filename, unsigned int *i);
 diff --git a/libfstools/overlay.c b/libfstools/overlay.c
-index d7d8f48..727d685 100644
+index 6790337..d541a44 100644
 --- a/libfstools/overlay.c
 +++ b/libfstools/overlay.c
 @@ -27,6 +27,7 @@
@@ -196,7 +196,7 @@ index d7d8f48..727d685 100644
  #include "libfstools.h"
  #include "volume.h"
  
-@@ -295,7 +296,7 @@ jffs2_switch(struct volume *v)
+@@ -301,7 +302,7 @@ jffs2_switch(struct volume *v)
  	volume_init(v);
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -205,7 +205,7 @@ index d7d8f48..727d685 100644
  		return -1;
  	}
  
-@@ -416,7 +417,7 @@ int mount_overlay(struct volume *v)
+@@ -424,7 +425,7 @@ int mount_overlay(struct volume *v)
  
  	mp = find_mount_point(v->blk, 0);
  	if (mp) {
@@ -246,7 +246,7 @@ index 27641ec..0612a70 100644
  				ret = rootdisk_volume_find_partition(name, p);
  			else if (ovl_partition == rootdisk_info.rootpart)
 diff --git a/mount_root.c b/mount_root.c
-index f8aa5e1..a143e19 100644
+index 7bda074..26e00f6 100644
 --- a/mount_root.c
 +++ b/mount_root.c
 @@ -20,6 +20,7 @@
@@ -266,19 +266,7 @@ index f8aa5e1..a143e19 100644
  	struct stat s;
  
  	if (!getenv("PREINIT") && stat("/tmp/.preinit", &s))
-@@ -45,9 +46,9 @@ start(int argc, char *argv[1])
- 	}
- 
- 	/*
--	 * Before trying to mount and use "rootfs_data" let's check if there is
-+	 * Before trying to mount and use "<overlay_partition>" let's check if there is
- 	 * extroot configured. Following call will handle reading config from
--	 * the "rootfs_data" on its own.
-+	 * the "<overlay_partition>" on its own.
- 	 */
- 	extroot_prefix = "";
- 	if (!mount_extroot()) {
-@@ -55,7 +56,7 @@ start(int argc, char *argv[1])
+@@ -50,7 +51,7 @@ start(int argc, char *argv[1])
  		return 0;
  	}
  
@@ -287,7 +275,7 @@ index f8aa5e1..a143e19 100644
  	volume_init(data);
  	switch (volume_identify(data)) {
  	case FS_NONE:
-@@ -103,7 +104,7 @@ stop(int argc, char *argv[1])
+@@ -98,7 +99,7 @@ stop(int argc, char *argv[1])
  static int
  done(int argc, char *argv[1])
  {

@@ -1,7 +1,7 @@
-From bd7cb5e80789c711b6623b724b5ea2ff310f37a5 Mon Sep 17 00:00:00 2001
+From c1be419df2af8118d7d7a87f249683e668a8fbb7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:04:15 +0300
-Subject: [PATCH 06/17] block: Fix device path creation
+Subject: [PATCH 06/18] block: Fix device path creation
 
 The device name in the DEVICE environment variable from udev
 comes already with the correct prefix '/dev/'. Not need to add

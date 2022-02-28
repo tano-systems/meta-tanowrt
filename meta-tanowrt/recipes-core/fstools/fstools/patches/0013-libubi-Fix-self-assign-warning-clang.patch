@@ -1,7 +1,7 @@
-From 4755e4099122f2493c2c22ec19cdad8cdce59dcd Mon Sep 17 00:00:00 2001
+From cf8a4a09b3bb301eb902ee4ec33a44bdaa65698e Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 11 Dec 2020 23:04:11 +0300
-Subject: [PATCH 13/17] libubi: Fix self-assign warning (clang)
+Subject: [PATCH 13/18] libubi: Fix self-assign warning (clang)
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---

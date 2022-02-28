@@ -1,7 +1,7 @@
-From 2ceba508eb2798356a4551d9d5f99b96810c4d77 Mon Sep 17 00:00:00 2001
+From c7c5dc89f4914b693a91e301024821ae673191ea Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 19 Nov 2020 06:29:41 +0300
-Subject: [PATCH 11/17] fstools: Support extroot for non-MTD rootfs_data
+Subject: [PATCH 11/18] fstools: Support extroot for non-MTD rootfs_data
 
 Original commit [1] message:
 
@@ -135,7 +135,7 @@ index 0000000..92233f8
 +
 +#endif
 diff --git a/libfstools/libfstools.h b/libfstools/libfstools.h
-index 6aa0e41..b93724d 100644
+index 340e2dc..c327314 100644
 --- a/libfstools/libfstools.h
 +++ b/libfstools/libfstools.h
 @@ -18,20 +18,10 @@
