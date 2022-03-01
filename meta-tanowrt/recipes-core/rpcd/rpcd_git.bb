@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano30"
+PR = "tano31"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde
 SECTION = "base"
 DEPENDS = "json-c libuci libubox libubus libiwinfo virtual/crypt"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:${THISDIR}/${PN}/files-tmp:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
@@ -25,6 +25,7 @@ SRC_URI = "\
 # Patches
 SRC_URI += "\
 	file://0001-file-Add-support-for-polled-execution-mode.patch \
+	file://0003-exec-Handle-ustream_poll-return-value-in-rpc_exec_pr.patch \
 "
 
 # 13.07.2021
