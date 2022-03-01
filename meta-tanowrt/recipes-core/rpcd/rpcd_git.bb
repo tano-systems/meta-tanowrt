@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano33"
+PR = "tano34"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -25,6 +25,7 @@ SRC_URI = "\
 # Patches
 SRC_URI += "\
 	file://0001-file-Add-support-for-polled-execution-mode.patch \
+	file://0002-exec-Increase-maximum-buffer-size-to-1-MiB.patch \
 "
 
 # 07.02.2022
