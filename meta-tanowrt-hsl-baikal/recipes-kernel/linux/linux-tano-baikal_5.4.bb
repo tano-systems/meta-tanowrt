@@ -29,10 +29,11 @@ SRC_URI += "\
 	file://0003-baikal_vdu_connector-Add-include-for-module.h.patch \
 	file://0004-gpu-arm-midgard-Add-TX011-SW-99002-r26p0-01rel0-sour.patch \
 	file://0005-gpu-arm-midgard-Fix-building-in-Yocto.patch \
+	file://0006-spi-dw-Do-not-set-DW_SPI_SER-in-dw_writer.patch \
 "
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR_append = "tano1"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_IMAGETYPE ?= "Image"

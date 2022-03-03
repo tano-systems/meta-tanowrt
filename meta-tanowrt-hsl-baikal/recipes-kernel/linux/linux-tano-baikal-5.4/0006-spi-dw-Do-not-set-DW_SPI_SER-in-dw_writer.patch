@@ -1,0 +1,25 @@
+From 306f60fff724dc19d47431e9f085e1fbb961ff91 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 4 Mar 2022 00:57:23 +0300
+Subject: [PATCH] spi-dw: Do not set DW_SPI_SER in dw_writer()
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/spi/spi-dw.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/spi/spi-dw.c b/drivers/spi/spi-dw.c
+index 29fe2bfc0..c2f96941a 100644
+--- a/drivers/spi/spi-dw.c
++++ b/drivers/spi/spi-dw.c
+@@ -196,7 +196,6 @@ static void dw_writer(struct dw_spi *dws)
+ 		dw_write_io_reg(dws, DW_SPI_DR, txw);
+ 		dws->tx += dws->n_bytes;
+ 	}
+-	dw_writel(dws, DW_SPI_SER, 1);
+ 	spin_unlock(&dws->buf_lock);
+ }
+ 
+-- 
+2.30.2
+
