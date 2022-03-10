@@ -3,7 +3,7 @@
 # Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".10"
+PR_append = ".11"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
@@ -38,4 +38,5 @@ SRC_URI_append = "\
 # Tano patches
 SRC_URI_append = "\
 	file://0001-squashfs-generate-fake-UUID.patch \
+	${@bb.utils.contains("MACHINE_FEATURES", "optoe", "file://0002-drivers-misc-eeprom-Add-optoe-driver.patch", "" ,d)} \
 "

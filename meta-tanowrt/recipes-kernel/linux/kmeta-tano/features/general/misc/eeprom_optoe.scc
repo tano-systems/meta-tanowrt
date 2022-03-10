@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "OCP EEPROM optoe driver"
+define KFEATURE_COMPATIBILITY board
+
+kconf hardware eeprom_optoe.cfg
