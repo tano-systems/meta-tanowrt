@@ -170,7 +170,7 @@ index 000000000..d1bb39b9a
 + * to modify this code at all.  LATEST_KERNEL is not defined,
 + * so you will get the code that runs on older kernels.
 + */
-+#define DEBUG 1
++/* #define DEBUG 1 */
 +#endif
 +
 +#include <linux/delay.h>

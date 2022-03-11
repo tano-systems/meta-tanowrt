@@ -3,7 +3,7 @@
 # Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".11"
+PR_append = ".12"
 
 KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
