@@ -1,24 +1,27 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 SUMMARY = "grub.cfg for use in EFI systems"
 
-PR = "tano6"
+PR = "tano7"
 
 PROVIDES += "virtual/grub-bootconf"
 RPROVIDES_${PN} += "virtual/grub-bootconf"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+inherit vars-expander
+EXPAND_VARIABLES:append = "${TANOWRT_PARTUUID_VARS}"
 
 require conf/image-uefi.conf
 
 S = "${WORKDIR}"
 
 SRC_URI += "\
-	file://grub.cfg \
+	file://grub.cfg.in \
 	file://grubenv \
 "
 

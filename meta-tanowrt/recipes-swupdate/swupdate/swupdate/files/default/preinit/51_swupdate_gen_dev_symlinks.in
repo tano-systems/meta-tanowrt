@@ -1,0 +1,11 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2022 Tano Systems LLC. All rights reserved.
+
+do_swupdate_gen_dev_symlinks() {
+	:
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_gen_dev_symlinks
+}

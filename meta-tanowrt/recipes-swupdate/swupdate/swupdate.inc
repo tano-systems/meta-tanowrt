@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
-INCPR = "5"
+INCPR = "6"
 
 # Prefer this version
 DEFAULT_PREFERENCE = "1"
@@ -36,6 +36,10 @@ EXPAND_VARIABLES += " \
 	SWU_SURICATTA \
 "
 
+EXPAND_VARIABLES += "\
+	${TANOWRT_PARTUUID_VARS} \
+"
+
 #
 # Supported bootloaders:
 # - "none" - No bootloader
@@ -66,6 +70,7 @@ SRC_URI += " \
 	file://init.d/swupdate.init \
 	file://init.d/swupdate_done.init \
 	file://conf.d/09_swupdate_args \
+	file://preinit/51_swupdate_gen_dev_symlinks.in \
 	file://preinit/51_swupdate_gen_sw_versions \
 	file://preinit/55_swupdate_preinit_before_overlay \
 	file://preinit/81_swupdate_preinit \
@@ -140,6 +145,9 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/preinit/51_swupdate_gen_sw_versions ${D}${base_libdir}/preinit/
 	install -m 0644 ${WORKDIR}/preinit/55_swupdate_preinit_before_overlay ${D}${base_libdir}/preinit/
 	install -m 0644 ${WORKDIR}/preinit/81_swupdate_preinit ${D}${base_libdir}/preinit/
+
+	install -m 0644 ${WORKDIR}/51_swupdate_gen_dev_symlinks \
+	                ${D}${base_libdir}/preinit/
 
 	# Install configuration scripts
 	install -d ${D}${libdir}/swupdate/conf.d
