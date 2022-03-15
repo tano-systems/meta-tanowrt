@@ -5,12 +5,12 @@
 case "$1" in
 	preupdate)
 		# Remount /boot with read/write permissions
-		mount /boot -o remount,rw
+		mount /boot -o remount,rw || /bin/true
 		;;
 
 	postupdate-success|postupdate-failed)
 		# Remount /boot with read-only permissions
-		mount /boot -o remount,ro
+		mount /boot -o remount,ro || /bin/true
 		;;
 
 	*)

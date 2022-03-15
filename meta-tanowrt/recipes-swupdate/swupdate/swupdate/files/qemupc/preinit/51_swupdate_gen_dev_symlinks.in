@@ -1,0 +1,32 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2022 Tano Systems LLC. All rights reserved.
+
+gen_dev_symlink_by_partuuid() {
+	local uuid="$1"
+	local symlink="$2"
+	local desc="$3"
+	local dev
+
+	. /lib/upgrade/common.sh
+
+	gpt_find_device_by_partuuid "${uuid}" dev
+	if [ "$?" = "0" -a -n "${dev}" ]; then
+		echo "SWUPDATE: ${desc} founded on ${dev} " > /dev/kmsg
+		ln -sf "${dev}" "${symlink}"
+		echo "SWUPDATE: Created symlink ${symlink} for ${dev}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Can not find device for ${desc}" > /dev/kmsg
+	fi
+}
+
+do_swupdate_gen_dev_symlinks() {
+	gen_dev_symlink_by_partuuid "@@TANOWRT_PARTUUID_ROOTDEV_A@@" /dev/swu-rootfs-a "System A"
+	gen_dev_symlink_by_partuuid "@@TANOWRT_PARTUUID_ROOTDEV_B@@" /dev/swu-rootfs-b "System B"
+	gen_dev_symlink_by_partuuid "@@TANOWRT_PARTUUID_KERNELDEV_A@@" /dev/swu-kernel-a "Kernel A"
+	gen_dev_symlink_by_partuuid "@@TANOWRT_PARTUUID_KERNELDEV_B@@" /dev/swu-kernel-b "Kernel B"
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_gen_dev_symlinks
+}
