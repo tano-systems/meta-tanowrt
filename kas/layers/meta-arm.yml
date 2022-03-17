@@ -9,7 +9,7 @@ header:
 
 repos:
   meta-arm:
-    url: git://git.yoctoproject.org/meta-arm
+    url: https://git.yoctoproject.org/meta-arm
     refspec: 9851e5714ab4b7145045d898c8f92849ddabe412
     layers:
       meta-arm:

@@ -9,5 +9,5 @@ header:
 
 repos:
   meta-ti:
-    url: git://git.yoctoproject.org/meta-ti
+    url: https://git.yoctoproject.org/meta-ti
     refspec: d54da744941ff97f2502bad2d7c51c5387bde929

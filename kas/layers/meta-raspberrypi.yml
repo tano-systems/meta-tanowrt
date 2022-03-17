@@ -8,5 +8,5 @@ header:
 
 repos:
   meta-raspberrypi:
-    url: git://git.yoctoproject.org/meta-raspberrypi
+    url: https://git.yoctoproject.org/meta-raspberrypi
     refspec: 064f5404ea90f02bd15088de6317692098d9f770

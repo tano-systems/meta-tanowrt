@@ -6,5 +6,5 @@ header:
 
 repos:
   meta-atmel:
-    url: git://github.com/linux4sam/meta-atmel
+    url: https://github.com/linux4sam/meta-atmel
     refspec: 4cf59bc866e9a0934bda0cf47c547945f449c800
