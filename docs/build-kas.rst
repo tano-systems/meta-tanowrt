@@ -82,6 +82,17 @@ you need to run following commands from ``meta-tanowrt`` root directory:
 
 See `Available Targets <targets_>`__ to select the proper target file.
 
+.. tip::
+
+   If you see ``Command 'kas' not found`` just add ``~/.local/bin`` to your ``$PATH``,
+   for example by adding the following line to your ``.bashrc`` file:
+
+   .. code-block:: shell
+
+      export PATH="$HOME/.local/bin:$PATH"
+
+   After that, restart your shell and things should work as expected.
+
 .. _targets:
 
 Available Targets
