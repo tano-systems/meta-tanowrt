@@ -8,15 +8,14 @@ SECTION = "utils"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=44fee82a1d2ed0676cf35478283e0aa0"
 
-DEPENDS = "libpng zlib"
+DEPENDS = "libpng zlib perl-native"
 
-PR = "tano1"
+PR = "tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.0.x/rrdtool-${PV}.tar.gz"
-
-SRC_URI[md5sum] = "c466e2e7df95fa8e318e46437da87686"
-SRC_URI[sha256sum] = "42aa7c213dedbd95d33ca84d92f4187880f7e96062c6a3fb05bfb16f77ba2a91"
+SRC_URI = "git://github.com/tano-systems/rrdtool-1.x.git;protocol=https;destsuffix=${BPN}-${PV}"
+SRCREV = "40ff39e03e1f22d07d6a026f7747a42fcfe40bb0"
+S = "${WORKDIR}/${BPN}-${PV}"
 
 # Patches
 SRC_URI += "\
