@@ -7,7 +7,7 @@
 # This file Copyright (C) 2018, 2022 Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "XXD utility"
 SECTION = "console/utils"
@@ -19,10 +19,12 @@ SRCREV = "ec68a99464055029c01082762517e97245ddae0c"
 
 S = "${WORKDIR}/git/src"
 
-do_configure[noexec] = "1"
+do_configure() {
+	oe_runmake -C ${S}/xxd clean
+}
 
 do_compile() {
-	oe_runmake -C ${S}/xxd clean xxd
+	oe_runmake -C ${S}/xxd xxd
 }
 
 do_install() {
