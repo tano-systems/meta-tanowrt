@@ -13,14 +13,17 @@ inherit cmake module-base
 BAIKAL_SCP_GIT_URI      ?= "git://github.com/tano-systems/baikal-scp-tool.git"
 BAIKAL_SCP_GIT_BRANCH   ?= "master"
 BAIKAL_SCP_GIT_PROTOCOL ?= "https"
-BAIKAL_SCP_GIT_SRCREV   ?= "71f8a07aa1f72cb19911ce072fae2ab7a744ebfb"
+BAIKAL_SCP_GIT_SRCREV   ?= "3db02d60abe55632d094dc0be09ba71aa23ef0af"
 
-PV = "1.0.0+git${SRCPV}"
+PV = "1.1.0+git${SRCPV}"
 PR = "tano0"
 
 SRC_URI = "${BAIKAL_SCP_GIT_URI};branch=${BAIKAL_SCP_GIT_BRANCH};protocol=${BAIKAL_SCP_GIT_PROTOCOL}"
 SRCREV = "${BAIKAL_SCP_GIT_SRCREV}"
 S = "${WORKDIR}/git"
+
+PACKAGECONFIG ??= "libcurl"
+PACKAGECONFIG[libcurl] = "-DUSE_LIBCURL=ON,-DUSE_LIBCURL=OFF,curl"
 
 MODULES_INSTALL_TARGET ?= "modules_install"
 MODULES_MODULE_SYMVERS_LOCATION = "../git/kernel"
