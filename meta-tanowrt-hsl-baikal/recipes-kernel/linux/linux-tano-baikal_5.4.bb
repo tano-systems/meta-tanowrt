@@ -31,10 +31,11 @@ SRC_URI += "\
 	file://0005-gpu-arm-midgard-Fix-building-in-Yocto.patch \
 	file://0006-spi-dw-Do-not-set-DW_SPI_SER-in-dw_writer.patch \
 	file://0007-spi-dw-Backport-from-kernel-5.10.46.patch \
+	file://0008-net-phy-leds-Trigger-leds-only-if-PHY-speed-is-known.patch \
 "
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano2"
+MACHINE_KERNEL_PR_append = "tano3"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_IMAGETYPE ?= "Image"

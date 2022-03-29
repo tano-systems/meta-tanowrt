@@ -1,0 +1,29 @@
+From: "Ivan T. Ivanov" <iivanov@suse.de>
+Subject: [PATCH] net: phy: leds: Trigger leds only if PHY speed is known
+Date: Fri, 16 Jul 2021 17:11:42 +0300
+
+This prevents "No phy led trigger registered for speed(-1)"
+alert message which is coused by phy_led_trigger_chage_speed()
+being called during attaching phy to net_device where phy device
+speed could be still unknown.
+
+Signed-off-by: Ivan T. Ivanov <iivanov@suse.de>
+---
+ drivers/net/phy/phy_led_triggers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/phy/phy_led_triggers.c b/drivers/net/phy/phy_led_triggers.c
+index f550576eb9da..4d6497c45ae4 100644
+--- a/drivers/net/phy/phy_led_triggers.c
++++ b/drivers/net/phy/phy_led_triggers.c
+@@ -33,7 +33,7 @@ void phy_led_trigger_change_speed(struct phy_device *phy)
+ 	if (!phy->link)
+ 		return phy_led_trigger_no_link(phy);
+ 
+-	if (phy->speed == 0)
++	if (phy->speed == 0 || phy->speed == SPEED_UNKNOWN)
+ 		return;
+ 
+ 	plt = phy_speed_to_led_trigger(phy, phy->speed);
+-- 
+2.32.0
