@@ -1,0 +1,5 @@
+Original recipe for dnsmasq 2.86 backported from meta-networking layer:
+  repository: https://github.com/openembedded/meta-openembedded.git
+  subdirectory: meta-networking
+  branch: master
+  revision: 47a4542bf7ddc72b2b82a0e3c3d9bb2c20bdde27
