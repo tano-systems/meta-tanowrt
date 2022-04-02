@@ -1,0 +1,47 @@
+From bec157bdd8d4a76e3434238e8e200bb3e582f7e9 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 2 Apr 2022 04:05:07 +0300
+Subject: [PATCH] Fix compilation without DNSSEC
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/dnsmasq.c | 2 +-
+ src/rfc1035.c | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/dnsmasq.c b/src/dnsmasq.c
+index c737516..98689bb 100644
+--- a/src/dnsmasq.c
++++ b/src/dnsmasq.c
+@@ -130,7 +130,7 @@ int main (int argc, char **argv)
+     }
+ #endif
+ 
+-#if defined(HAVE_CONNTRACK) && defined(HAVE_UBUS)
++#if defined(HAVE_CONNTRACK) && defined(HAVE_UBUS) && defined(HAVE_DNSSEC)
+   /* CONNTRACK UBUS code uses this buffer, so if not allocated above,
+      we need to allocate it here. */
+   if (option_bool(OPT_CMARK_ALST_EN) && !daemon->workspacename)
+diff --git a/src/rfc1035.c b/src/rfc1035.c
+index cd1fff5..14d379f 100644
+--- a/src/rfc1035.c
++++ b/src/rfc1035.c
+@@ -1042,6 +1042,7 @@ void report_addresses(struct dns_header *header, size_t len, u32 mark)
+       
+       if (aqclass == C_IN)
+ 	{
++#if defined(HAVE_DNSSEC)
+ 	  if (aqtype == T_CNAME)
+ 	    {
+ 	      if (!extract_name(header, len, &p, daemon->workspacename, 1, 0))
+@@ -1049,6 +1050,7 @@ void report_addresses(struct dns_header *header, size_t len, u32 mark)
+ 	      if (safe_name(daemon->namebuff) && safe_name(daemon->workspacename))
+ 		ubus_event_bcast_connmark_allowlist_resolved(mark, daemon->namebuff, daemon->workspacename, attl);
+ 	    }
++#endif
+ 	  if (aqtype == T_A)
+ 	    {
+ 	      struct in_addr addr;
+-- 
+2.34.1.windows.1
+

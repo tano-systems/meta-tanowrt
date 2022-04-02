@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "13"
+INC_PR = "14"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -26,6 +26,7 @@ PACKAGECONFIG += "ubus conntrack no-id dnssec"
 SRC_URI += "\
 	file://100-remove-old-runtime-kernel-support.patch \
 	file://200-ubus_dns.patch \
+	file://0001-Fix-compilation-without-DNSSEC.patch \
 "
 
 # Files
