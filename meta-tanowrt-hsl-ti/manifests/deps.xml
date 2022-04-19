@@ -11,6 +11,6 @@
 	<project path="meta-ti"
 	         name="meta-ti"
 	         remote="yoctoproject"
-	         upstream="hardknott"
+	         upstream="master"
 	         revision="d54da744941ff97f2502bad2d7c51c5387bde929" />
 </manifest>
