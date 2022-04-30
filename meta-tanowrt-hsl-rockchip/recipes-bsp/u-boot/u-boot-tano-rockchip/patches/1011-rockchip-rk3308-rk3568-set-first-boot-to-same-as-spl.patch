@@ -1,0 +1,41 @@
+From 719833c4d00c7d3a403a669f7bd07dbc86bf102a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 6 Jun 2022 16:53:58 +0300
+Subject: [PATCH 1011/1013] rockchip: rk3308,rk3568: set first boot to
+ same-as-spl
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ arch/arm/dts/rk3308-u-boot.dtsi | 2 +-
+ arch/arm/dts/rk3568-u-boot.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/dts/rk3308-u-boot.dtsi b/arch/arm/dts/rk3308-u-boot.dtsi
+index d050228..bf29901 100644
+--- a/arch/arm/dts/rk3308-u-boot.dtsi
++++ b/arch/arm/dts/rk3308-u-boot.dtsi
+@@ -12,7 +12,7 @@
+ 
+ 	chosen {
+ 		stdout-path = &uart2;
+-		u-boot,spl-boot-order = &sdmmc, &spi_nand, &spi_nor, &nandc, &emmc;
++		u-boot,spl-boot-order = "same-as-spl", &spi_nand, &spi_nor, &nandc, &emmc;
+ 	};
+ };
+ 
+diff --git a/arch/arm/dts/rk3568-u-boot.dtsi b/arch/arm/dts/rk3568-u-boot.dtsi
+index 33a7e0d..1a747f4 100644
+--- a/arch/arm/dts/rk3568-u-boot.dtsi
++++ b/arch/arm/dts/rk3568-u-boot.dtsi
+@@ -15,7 +15,7 @@
+ 
+ 	chosen {
+ 		stdout-path = &uart4;
+-		u-boot,spl-boot-order = &sdmmc0, &sdhci, &nandc0, &spi_nand, &spi_nor;
++		u-boot,spl-boot-order = "same-as-spl", &sdmmc0, &sdhci, &nandc0, &spi_nand, &spi_nor;
+ 	};
+ };
+ 
+-- 
+2.34.1.windows.1
+

@@ -1,0 +1,407 @@
+From 573938c0f55a22ad89bac728cb473666b5581ec6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 16 May 2022 16:30:52 +0300
+Subject: [PATCH 1002/1013] rockchip/scripts: A few fixes and updates to
+ Rockchip scripts
+
+make.sh: Allow to redefine some build vars
+make.sh: More verbosity
+make.sh: Do not prepend ${RKBIN} to absolute paths
+scripts: Allow to redefine path to rkbin directory
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ make.sh                    | 94 +++++++++++++++++++++++++++++++++-----
+ scripts/fit.sh             |  7 ++-
+ scripts/pack_resource.sh   |  4 +-
+ scripts/uboot.sh           |  5 +-
+ scripts/unpack_resource.sh |  4 +-
+ 5 files changed, 98 insertions(+), 16 deletions(-)
+
+diff --git a/make.sh b/make.sh
+index fb1ee3a..46c50f5 100755
+--- a/make.sh
++++ b/make.sh
+@@ -11,9 +11,10 @@ SUPPORT_LIST=`ls configs/*[r,p][x,v,k][0-9][0-9]*_defconfig`
+ CMD_ARGS=$1
+ 
+ ########################################### User can modify #############################################
+-RKBIN_TOOLS=../rkbin/tools
+-CROSS_COMPILE_ARM32=../prebuilts/gcc/linux-x86/arm/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+-CROSS_COMPILE_ARM64=../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
++RKBIN_DIR=${RKBIN_DIR:-"../rkbin"}
++RKBIN_TOOLS=${RKBIN_TOOLS:-"${RKBIN_DIR}/tools"}
++CROSS_COMPILE_ARM32=${CROSS_COMPILE_ARM32:-"../prebuilts/gcc/linux-x86/arm/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-"}
++CROSS_COMPILE_ARM64=${CROSS_COMPILE_ARM64:-"../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-"}
+ ########################################### User not touch #############################################
+ # Declare global INI file searching index name for every chip, update in select_chip_info()
+ RKCHIP=
+@@ -49,6 +50,11 @@ SCRIPT_LOADER="${SRCTREE}/scripts/loader.sh"
+ CC_FILE=".cc"
+ REP_DIR="./rep"
+ #########################################################################################################
++function echo_verbose()
++{
++	echo "[make.sh] $*"
++}
++#########################################################################################################
+ function help()
+ {
+ 	echo
+@@ -314,6 +320,9 @@ function select_chip_info()
+ 	if [ -z "${RKCHIP_LABEL}" ]; then
+ 		RKCHIP_LABEL=${RKCHIP}
+ 	fi
++
++	echo_verbose "select_chip_info: RKCHIP = ${RKCHIP}"
++	echo_verbose "select_chip_info: RKCHIP_LABEL = ${RKCHIP_LABEL}"
+ }
+ 
+ # Priority: default < CHIP_CFG_FIXUP_TABLE() < make.sh args
+@@ -368,6 +377,9 @@ function select_ini_file()
+ 	if [ ! -z "${ARG_INI_LOADER}" ]; then
+ 		INI_LOADER=${ARG_INI_LOADER}
+ 	fi
++
++	echo_verbose "select_ini_file: INI_TRUST = ${INI_TRUST}"
++	echo_verbose "select_ini_file: INI_LOADER = ${INI_LOADER}"
+ }
+ 
+ function sub_commands()
+@@ -489,9 +501,12 @@ function unwind_addr_or_continue()
+ 
+ function pack_idblock()
+ {
++	echo_verbose "pack_idblock: entry"
++
+ 	INI=${INI_LOADER}
+ 	if [ ! -f ${INI} ]; then
+ 		echo "ERROR: No ${INI}"
++		echo_verbose "pack_idblock: exit 1"
+ 		exit 1
+ 	fi
+ 
+@@ -511,6 +526,7 @@ function pack_idblock()
+ 
+ 	# pack
+ 	rm idblock.bin -f
++	echo_verbose "pack_idblock: calling './tools/mkimage -n ${PLAT} -T rksd -d ${TPL_BIN}:${SPL_BIN} idblock.bin'"
+ 	./tools/mkimage -n ${PLAT} -T rksd -d ${TPL_BIN}:${SPL_BIN} idblock.bin
+ 	echo "Input:"
+ 	echo "    ${INI}"
+@@ -519,13 +535,26 @@ function pack_idblock()
+ 	echo
+ 	echo "Pack ${PLAT} idblock.bin okay!"
+ 	echo
++	echo_verbose "pack_idblock: exit"
++}
++
++function fixup_path() {
++	DIR=$1
++	if [[ "$DIR" = /* ]]; then
++		echo "${DIR}"
++	else
++		echo "${RKBIN}/${DIR}"
++	fi
+ }
+ 
+ function pack_uboot_itb_image()
+ {
++	echo_verbose "pack_uboot_itb_image: entry"
++
+ 	INI=${INI_TRUST}
+ 	if [ ! -f ${INI} ]; then
+ 		echo "ERROR: No ${INI}"
++		echo_verbose "pack_uboot_itb_image: exit 1"
+ 		exit 1
+ 	fi
+ 
+@@ -533,9 +562,9 @@ function pack_uboot_itb_image()
+ 		BL31_ELF=`sed -n '/_bl31_/s/PATH=//p' ${INI} | tr -d '\r'`
+ 		BL32_BIN=`sed -n '/_bl32_/s/PATH=//p' ${INI} | tr -d '\r'`
+ 		rm bl31.elf tee.bin -rf
+-		cp ${RKBIN}/${BL31_ELF} bl31.elf
++		cp $(fixup_path "${BL31_ELF}") bl31.elf
+ 		if grep BL32_OPTION -A 1 ${INI} | grep SEC=1 ; then
+-			cp ${RKBIN}/${BL32_BIN} tee.bin
++			cp $(fixup_path "${BL32_BIN}") tee.bin
+ 			TEE_OFFSET=`grep BL32_OPTION -A 3 ${INI} | grep ADDR= | awk -F "=" '{ printf $2 }' | tr -d '\r'`
+ 			TEE_ARG="-t ${TEE_OFFSET}"
+ 		fi
+@@ -544,11 +573,12 @@ function pack_uboot_itb_image()
+ 		TOS=`sed -n "/TOS=/s/TOS=//p" ${INI} | tr -d '\r'`
+ 		TOSTA=`sed -n "/TOSTA=/s/TOSTA=//p" ${INI} | tr -d '\r'`
+ 		if [ ! -z "${TOSTA}" ]; then
+-			cp ${RKBIN}/${TOSTA} tee.bin
++			cp $(fixup_path "${TOSTA}") tee.bin
+ 		elif [ ! -z "${TOS}" ]; then
+-			cp ${RKBIN}/${TOS}   tee.bin
++			cp $(fixup_path "${TOS}")   tee.bin
+ 		else
+ 			echo "ERROR: No tee bin"
++			echo_verbose "pack_uboot_itb_image: exit 1"
+ 			exit 1
+ 		fi
+ 
+@@ -578,7 +608,7 @@ function pack_uboot_itb_image()
+ 		if [ "${ENABLED}" == "enabled" -o "${ENABLED}" == "okay" ]; then
+ 			NAME=`awk -F "," '/'${MCU_IDX}'=/ { printf $1 }' ${INI} | tr -d ' ' | awk -F "=" '{ print $2 }'`
+ 			OFFS=`awk -F "," '/'${MCU_IDX}'=/ { printf $2 }' ${INI} | tr -d ' '`
+-			cp ${RKBIN}/${NAME} ${MCU_BIN}
++			cp $(fixup_path "${NAME}") ${MCU_BIN}
+ 			if [ -z ${OFFS} ]; then
+ 				echo "ERROR: No ${MCU_BIN} address in ${INI}"
+ 				exit 1
+@@ -596,7 +626,7 @@ function pack_uboot_itb_image()
+ 		if [ "${ENABLED}" == "enabled" -o "${ENABLED}" == "okay" ]; then
+ 			NAME=`awk -F "," '/'${LOAD_IDX}'=/ { printf $1 }' ${INI} | tr -d ' ' | awk -F "=" '{ print $2 }'`
+ 			OFFS=`awk -F "," '/'${LOAD_IDX}'=/ { printf $2 }' ${INI} | tr -d ' '`
+-			cp ${RKBIN}/${NAME} ${LOAD_BIN}
++			cp $(fixup_path "${NAME}") ${LOAD_BIN}
+ 			if [ -z ${OFFS} ]; then
+ 				echo "ERROR: No ${LOAD_BIN} address in ${INI}"
+ 				exit 1
+@@ -628,30 +658,41 @@ function pack_uboot_itb_image()
+ 		fi
+ 	fi
+ 
+-	./tools/mkimage -f u-boot.its -E u-boot.itb >/dev/null 2>&1
++	echo_verbose "pack_uboot_itb_image: calling './tools/mkimage -f u-boot.its -E u-boot.itb'"
++	./tools/mkimage -f u-boot.its -E u-boot.itb
+ 	echo "pack u-boot.itb okay! Input: ${INI}"
+-	echo
++
++	echo_verbose "pack_uboot_itb_image: exit"
+ }
+ 
+ function pack_spl_loader_image()
+ {
++	echo_verbose "pack_spl_loader_image: entry"
++
+ 	rm *_loader_*.bin -f
+ 	cd ${RKBIN}
+ 	if [ ! -z "${ARG_SPL_BIN}" -a ! -z "${ARG_TPL_BIN}" ]; then
++		echo_verbose "pack_spl_loader_image: calling '${SCRIPT_SPL} --ini ${INI_LOADER} --tpl ${SRCTREE}/${ARG_TPL_BIN} --spl ${SRCTREE}/${ARG_SPL_BIN}'"
+ 		${SCRIPT_SPL} --ini ${INI_LOADER} --tpl ${SRCTREE}/${ARG_TPL_BIN} --spl ${SRCTREE}/${ARG_SPL_BIN}
+ 	elif [ ! -z "${ARG_TPL_BIN}" ]; then
++		echo_verbose "pack_spl_loader_image: calling '${SCRIPT_SPL} --ini ${INI_LOADER} --tpl ${SRCTREE}/${ARG_TPL_BIN}'"
+ 		${SCRIPT_SPL} --ini ${INI_LOADER} --tpl ${SRCTREE}/${ARG_TPL_BIN}
+ 	else
++		echo_verbose "pack_spl_loader_image: calling '${SCRIPT_SPL} --ini ${INI_LOADER} --spl ${SRCTREE}/${ARG_SPL_BIN}'"
+ 		${SCRIPT_SPL} --ini ${INI_LOADER} --spl ${SRCTREE}/${ARG_SPL_BIN}
+ 	fi
+ 	cd -
+ 	if [ -f ${RKBIN}/*_loader_*.bin ]; then
+ 		mv ${RKBIN}/*_loader_*.bin ./
+ 	fi
++
++	echo_verbose "pack_spl_loader_image: exit"
+ }
+ 
+ function pack_uboot_image()
+ {
++	echo_verbose "pack_uboot_image: entry"
++
+ 	rm u-boot.img u-boot-dtb.img -f
+ 	LOAD_ADDR=`sed -n "/CONFIG_SYS_TEXT_BASE=/s/CONFIG_SYS_TEXT_BASE=//p" include/autoconf.mk|tr -d '\r'`
+ 	if [ -z "${LOAD_ADDR}" ]; then
+@@ -661,45 +702,64 @@ function pack_uboot_image()
+ 
+ 	if [ -z "${LOAD_ADDR}" ]; then
+ 		echo "ERROR: No CONFIG_SYS_TEXT_BASE for u-boot";
++		echo_verbose "pack_uboot_image: exit 1"
+ 		exit 1
+ 	fi
+ 
++	echo_verbose "pack_uboot_image: calling '${SCRIPT_UBOOT} --load ${LOAD_ADDR} ${PLAT_UBOOT_SIZE}'"
+ 	${SCRIPT_UBOOT} --load ${LOAD_ADDR} ${PLAT_UBOOT_SIZE}
++
++	echo_verbose "pack_uboot_image: exit"
+ }
+ 
+ function pack_loader_image()
+ {
++	echo_verbose "pack_loader_image: entry"
++
+ 	rm *_loader_*.bin -f
+ 	cd ${RKBIN}
++	echo_verbose "pack_loader_image: calling '${SCRIPT_LOADER} --ini ${INI_LOADER}'"
+ 	${SCRIPT_LOADER} --ini ${INI_LOADER}
+ 	cd -
+ 	if [ -f ${RKBIN}/*_loader_*.bin ]; then
+ 		mv ${RKBIN}/*_loader_*.bin ./
+ 	fi
++
++	echo_verbose "pack_loader_image: exit"
+ }
+ 
+ function pack_trust_image()
+ {
++	echo_verbose "pack_trust_image: entry"
++
+ 	DRAM_BASE=`sed -n "/CONFIG_SYS_SDRAM_BASE=/s/CONFIG_SYS_SDRAM_BASE=//p" include/autoconf.mk|tr -d '\r'`
+ 
+ 	rm trust*.img -f
+ 	cd ${RKBIN}
++	echo_verbose "pack_trust_image: ARM64_TRUSTZONE = ${ARM64_TRUSTZONE}"
+ 	if [ "${ARM64_TRUSTZONE}" == "y" ]; then
++		echo_verbose "pack_trust_image: calling '${SCRIPT_ATF} --ini ${INI_TRUST} ${PLAT_SHA} ${PLAT_RSA} ${PLAT_TRUST_SIZE}'"
+ 		${SCRIPT_ATF} --ini ${INI_TRUST} ${PLAT_SHA} ${PLAT_RSA} ${PLAT_TRUST_SIZE}
+ 	else
++		echo_verbose "pack_trust_image: calling '${SCRIPT_TOS} --ini ${INI_TRUST} --base ${DRAM_BASE} ${PLAT_TRUST_SIZE}'"
+ 		${SCRIPT_TOS} --ini ${INI_TRUST} --base ${DRAM_BASE} ${PLAT_TRUST_SIZE}
+ 	fi
+ 	cd -
+ 	if [ -f ${RKBIN}/trust*.img ]; then
+ 		mv ${RKBIN}/trust*.img ./
+ 	fi
++
++	echo_verbose "pack_trust_image: exit"
+ }
+ 
+ function pack_fit_image()
+ {
++	echo_verbose "pack_fit_image: entry"
++
+ 	# check host tools
+ 	if ! which dtc >/dev/null 2>&1 ; then
+ 		echo "ERROR: No 'dtc', please: apt-get install device-tree-compiler"
++		echo_verbose "pack_fit_image: exit 1"
+ 		exit 1
+ 	fi
+ 
+@@ -710,10 +770,13 @@ function pack_fit_image()
+ 	fi
+ 
+ 	rm uboot.img trust*.img -rf
++	echo_verbose "pack_fit_image: calling '${SCRIPT_FIT} ${ARG_LIST_FIT} --chip ${RKCHIP_LABEL}'"
+ 	${SCRIPT_FIT} ${ARG_LIST_FIT} --chip ${RKCHIP_LABEL}
+ 
+ 	rm ${REP_DIR} -rf
+ 	echo "pack uboot.img okay! Input: ${INI_TRUST}"
++
++	echo_verbose "pack_fit_image: exit"
+ }
+ 
+ function handle_args_late()
+@@ -729,6 +792,9 @@ function clean_files()
+ 
+ function pack_images()
+ {
++	echo_verbose "pack_images: entry"
++	echo_verbose "pack_images: PLAT_TYPE = ${PLAT_TYPE}"
++
+ 	if [ "${ARG_RAW_COMPILE}" != "y" ]; then
+ 		if [ "${PLAT_TYPE}" == "FIT" ]; then
+ 			pack_fit_image ${ARG_LIST_FIT}
+@@ -738,6 +804,8 @@ function pack_images()
+ 			pack_loader_image
+ 		fi
+ 	fi
++
++	echo_verbose "pack_images: exit"
+ }
+ 
+ function finish()
+@@ -750,6 +818,8 @@ function finish()
+ 	fi
+ }
+ 
++echo_verbose "entry"
++
+ process_args $*
+ prepare
+ select_toolchain
+@@ -764,3 +834,5 @@ pack_images
+ finish
+ echo ${TOOLCHAIN}
+ date
++
++echo_verbose "exit"
+diff --git a/scripts/fit.sh b/scripts/fit.sh
+index b4c01bc..bf3a3c1 100755
+--- a/scripts/fit.sh
++++ b/scripts/fit.sh
+@@ -6,6 +6,9 @@
+ #
+ set -e
+ 
++RKBIN_DIR=${RKBIN_DIR:-"../rkbin"}
++RKBIN_TOOLS=${RKBIN_TOOLS:-"${RKBIN_DIR}/tools"}
++
+ FIT_DIR="fit"
+ IMG_UBOOT="uboot.img"
+ IMG_BOOT="boot.img"
+@@ -27,7 +30,7 @@ KERNEL_ADDR_PLACEHOLDER="0xffffff01"
+ RAMDISK_ADDR_PLACEHOLDER="0xffffff02"
+ # tools
+ MKIMAGE="./tools/mkimage"
+-RK_SIGN_TOOL="../rkbin/tools/rk_sign_tool"
++RK_SIGN_TOOL="${RKBIN_TOOLS}/rk_sign_tool"
+ FIT_UNPACK="./scripts/fit-unpack.sh"
+ CHECK_SIGN="./tools/fit_check_sign"
+ # key
+@@ -307,7 +310,7 @@ function fit_gen_uboot_itb()
+ 			if [ "${ARG_SPL_NEW}" == "y" ]; then
+ 				 ${CHECK_SIGN} -f ${ITB_UBOOT} -k ${SPL_DTB} -s
+ 			else
+-				spl_file="../rkbin/"`sed -n "/FlashBoot=/s/FlashBoot=//p" ${ARG_INI_LOADER}  |tr -d '\r'`
++				spl_file="${RKBIN_DIR}/"`sed -n "/FlashBoot=/s/FlashBoot=//p" ${ARG_INI_LOADER}  |tr -d '\r'`
+ 				offs=`fdtdump -s ${spl_file} | head -1 | awk -F ":" '{ print $2 }' | sed "s/ found fdt at offset //g" | tr -d " "`
+ 				if [ -z ${offs}  ]; then
+ 					echo "ERROR: invalid ${spl_file} , unable to find fdt blob"
+diff --git a/scripts/pack_resource.sh b/scripts/pack_resource.sh
+index a6e7bae..d6c9fdc 100755
+--- a/scripts/pack_resource.sh
++++ b/scripts/pack_resource.sh
+@@ -11,7 +11,9 @@ RSCE_NEW=resource.img
+ BOOT_OLD=$1
+ BOOT_NEW=boot.img
+ 
+-TOOL=../rkbin/tools/resource_tool
++RKBIN_DIR=${RKBIN_DIR:-"../rkbin"}
++RKBIN_TOOLS=${RKBIN_TOOLS:-"${RKBIN_DIR}/tools"}
++TOOL=${RKBIN_TOOLS}/resource_tool
+ IMAGES=./tools/images/
+ TMP_DIR=.resource_tmp
+ TMP_DIR2=.boot_tmp
+diff --git a/scripts/uboot.sh b/scripts/uboot.sh
+index eb9e6a8..ffafb13 100755
+--- a/scripts/uboot.sh
++++ b/scripts/uboot.sh
+@@ -7,6 +7,9 @@
+ 
+ set -e
+ 
++RKBIN_DIR=${RKBIN_DIR:-"../rkbin"}
++RKBIN_TOOLS=${RKBIN_TOOLS:-"${RKBIN_DIR}/tools"}
++
+ if [ $# -eq 0 ]; then
+ 	echo "ERROR: No args of $0"
+ 	exit 1
+@@ -50,6 +53,6 @@ if [ ${BIN_KB} -gt ${MAX_KB} ]; then
+ 	exit 1
+ fi
+ 
+-../rkbin/tools/loaderimage --pack --uboot u-boot.bin uboot.img ${LOAD_ADDR} ${SIZE}
++${RKBIN_TOOLS}/loaderimage --pack --uboot u-boot.bin uboot.img ${LOAD_ADDR} ${SIZE}
+ echo "pack uboot okay! Input: u-boot.bin"
+ echo
+diff --git a/scripts/unpack_resource.sh b/scripts/unpack_resource.sh
+index 14fe4b2..3abeb64 100755
+--- a/scripts/unpack_resource.sh
++++ b/scripts/unpack_resource.sh
+@@ -8,7 +8,9 @@
+ 
+ IMAGE_FILE=$1
+ OUTPUT_DIR=$2
+-PACK_TOOL=../rkbin/tools/resource_tool
++RKBIN_DIR=${RKBIN_DIR:-"../rkbin"}
++RKBIN_TOOLS=${RKBIN_TOOLS:-"${RKBIN_DIR}/tools"}
++PACK_TOOL=${RKBIN_TOOLS}/resource_tool
+ 
+ usage()
+ {
+-- 
+2.34.1.windows.1
+

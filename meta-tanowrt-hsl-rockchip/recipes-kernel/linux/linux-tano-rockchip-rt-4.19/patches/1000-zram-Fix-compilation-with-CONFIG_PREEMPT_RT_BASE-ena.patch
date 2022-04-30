@@ -1,0 +1,40 @@
+From 63d22beced3dc942ba855fb31ef94e4a0f40afdb Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Mon, 2 May 2022 04:15:50 +0300
+Subject: [PATCH] zram: Fix compilation with CONFIG_PREEMPT_RT_BASE enabled
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/block/zram/zram_drv.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index 21c9034191f6..59f1fe3d574a 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -70,19 +70,19 @@ static int zram_slot_trylock(struct zram *zram, u32 index)
+ 
+ 	ret = spin_trylock(&zram->table[index].lock);
+ 	if (ret)
+-		__set_bit(ZRAM_LOCK, &zram->table[index].value);
++		__set_bit(ZRAM_LOCK, &zram->table[index].flags);
+ 	return ret;
+ }
+ 
+ static void zram_slot_lock(struct zram *zram, u32 index)
+ {
+ 	spin_lock(&zram->table[index].lock);
+-	__set_bit(ZRAM_LOCK, &zram->table[index].value);
++	__set_bit(ZRAM_LOCK, &zram->table[index].flags);
+ }
+ 
+ static void zram_slot_unlock(struct zram *zram, u32 index)
+ {
+-	__clear_bit(ZRAM_LOCK, &zram->table[index].value);
++	__clear_bit(ZRAM_LOCK, &zram->table[index].flags);
+ 	spin_unlock(&zram->table[index].lock);
+ }
+ 
+-- 
+2.30.2
+

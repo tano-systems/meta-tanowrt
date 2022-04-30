@@ -1,0 +1,110 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2022 Tano Systems LLC. All rights reserved.
+
+swuplatform_get_uboot_version() {
+	local UBOOT_PATH=${1}
+	local VERSION=$(dd if=${UBOOT_PATH} bs=131072 count=8 2>/dev/null \
+		| strings 2>/dev/null \
+		| grep -m 1 'U-Boot 20' \
+		| awk '{print $2}')
+
+	echo ${VERSION}
+}
+
+swuplatform_get_idblock_version() {
+	local IDBLOCK_PATH=${1}
+	local VERSION=$(dd if=${IDBLOCK_PATH} bs=131072 count=4 2>/dev/null \
+		| strings 2>/dev/null \
+		| sed -n -e "/DDR Version/{p}" -e "/U-Boot SPL 20/{p}" \
+		| tr -s "\n" " " \
+		| awk '{ printf "%s-%s-%s", $3, $4, $7 }' \
+		| md5sum \
+		| awk '{ print $1 }')
+
+	echo ${VERSION}
+}
+
+swuplatform_get_startup_version() {
+	local STARTUP_PATH=${1}
+	local VERSION=$(dd if=${STARTUP_PATH} bs=512 skip=7936 count=1 2>/dev/null \
+		| strings 2>/dev/null \
+		| grep -m 1 'version:' \
+		| awk '{print $4}')
+
+	echo ${VERSION}
+}
+
+swuplatform_get_kernel_version() {
+	echo $(uname -r)
+}
+
+swuplatform_get_rootfs_version() {
+	local VERSION=""
+	if [ -f /etc/tanowrt_release ]; then
+		source /etc/tanowrt_release
+		if [ "${DISTRIB_TIMESTAMP}" != "" ]; then
+			VERSION=${DISTRIB_TIMESTAMP//[ :-]/-}
+		fi
+	fi
+
+	echo ${VERSION}
+}
+
+swuplatform_gen_sw_versions() {
+	. /usr/lib/swupdate/swupdate_config
+	. /lib/upgrade/common.sh
+
+	local TMPFILE="${SWU_SW_VERSIONS_FILE_TMP}"
+
+	local IDBLOCK_PATH="$1"
+	local UBOOT_PATH="$2"
+	local STARTUP_PATH="$3"
+
+	echo -n > ${TMPFILE}
+
+	# Loader version
+	local IDBLOCK_VERSION=$(swuplatform_get_idblock_version ${IDBLOCK_PATH})
+	if [ "${IDBLOCK_VERSION}" != "" ]; then
+		echo "idblock ${IDBLOCK_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Idblock version ${IDBLOCK_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the idblock version from '${IDBLOCK_PATH}'" > /dev/kmsg
+	fi
+
+	# U-Boot version
+	local UBOOT_VERSION=$(swuplatform_get_uboot_version ${UBOOT_PATH})
+	if [ "${UBOOT_VERSION}" != "" ]; then
+		echo "uboot ${UBOOT_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: U-Boot version ${UBOOT_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the U-Boot version from '${UBOOT_PATH}'" > /dev/kmsg
+	fi
+
+	# U-Boot startup script version
+	local STARTUP_VERSION=$(swuplatform_get_startup_version ${STARTUP_PATH})
+	if [ "${STARTUP_VERSION}" != "" ]; then
+		echo "startup ${STARTUP_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: U-Boot startup version ${STARTUP_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the U-Boot startup version from '${STARTUP_PATH}'" > /dev/kmsg
+	fi
+
+	# Kernel version (from uname)
+	local KERNEL_VERSION=$(swuplatform_get_kernel_version)
+	if [ "${KERNEL_VERSION}" != "" ]; then
+		echo "kernel ${KERNEL_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Kernel version ${KERNEL_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the kernel version" > /dev/kmsg
+	fi
+
+	# ROOTFS version
+	local ROOTFS_VERSION=$(swuplatform_get_rootfs_version)
+	if [ "${ROOTFS_VERSION}" != "" ]; then
+		echo "rootfs ${ROOTFS_VERSION}" >> ${TMPFILE}
+		echo "SWUPDATE: Read-only filesystem version ${ROOTFS_VERSION}" > /dev/kmsg
+	else
+		echo "SWUPDATE: Failed to extract the read-only filesystem version" > /dev/kmsg
+	fi
+}

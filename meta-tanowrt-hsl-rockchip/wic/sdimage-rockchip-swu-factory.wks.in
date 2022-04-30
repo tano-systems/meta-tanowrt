@@ -1,0 +1,18 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+#
+# short-description: Create image for SWU factory
+# installation SD card for Rockchip SoC based devices.
+#
+
+# 0~32K: gpt
+bootloader --ptable gpt
+part /idblock   --source=rawcopy                  --align=32              --sourceparams="file=${WKS_FACTORY_IMAGE_IDBLOCK_BINARY}"                --no-table
+part /startup   --source=rawcopy                  --align=3968 --size=64K --sourceparams="file=${WKS_FACTORY_IMAGE_STARTUP_BINARY}"                --no-table
+part /ubootenv1 --source=rawcopy                  --align=4032 --size=32K --sourceparams="file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}"      --no-table
+part /ubootenv2 --source=rawcopy                  --align=4064 --size=32K --sourceparams="file=${WKS_FACTORY_IMAGE_UBOOT_INITIAL_ENV_BINARY}"      --no-table
+
+part /uboot     --source=rawcopy     --part-name=boot    --align=8192 --sourceparams="file=${WKS_FACTORY_IMAGE_UBOOT_BINARY}" --uuid=${TANOWRT_PARTUUID_BOOT}
+part /kernel    --source=rawcopy     --part-name=kernel  --align=1024 --sourceparams "file=${WKS_FACTORY_IMAGE_KERNEL_BINARY}" --overhead-factor 1.0
+part /install   --source=swu-factory --part-name=install --fstype=vfat --label install --align 4 --active --overhead-factor 1.0 --extra-space 1

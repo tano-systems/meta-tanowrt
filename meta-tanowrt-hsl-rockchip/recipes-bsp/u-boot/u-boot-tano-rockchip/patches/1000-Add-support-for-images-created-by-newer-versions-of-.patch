@@ -1,0 +1,66 @@
+From 065a138f155945d9f0e9a7a02b119b51cd8d605a Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 27 May 2022 05:28:29 +0300
+Subject: [PATCH 1000/1013] Add support for images created by newer versions of
+ mkimage
+
+Newer versions of mkimage use 0 instead of IMAGE_PARAM_INVAL
+(0xffffffffff) to identify the end of data.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ cmd/source.c   | 6 +++++-
+ common/image.c | 6 +++---
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/cmd/source.c b/cmd/source.c
+index 6b1c8b7..fbf71fb 100644
+--- a/cmd/source.c
++++ b/cmd/source.c
+@@ -87,7 +87,11 @@ source (ulong addr, const char *fit_uname)
+ 		 * past the zero-terminated sequence of image lengths to get
+ 		 * to the actual image data
+ 		 */
+-		while (*data++ != IMAGE_PARAM_INVAL);
++		while (*data && (*data != IMAGE_PARAM_INVAL))
++			data++;
++
++		++data;
++
+ 		break;
+ #endif
+ #if defined(CONFIG_FIT)
+diff --git a/common/image.c b/common/image.c
+index 4518a8f..9409571 100644
+--- a/common/image.c
++++ b/common/image.c
+@@ -199,7 +199,7 @@ uint32_t image_get_load(const image_header_t *hdr)
+ {
+ 	uint32_t load = uimage_to_cpu(hdr->ih_load);
+ 
+-	return (load == IMAGE_PARAM_INVAL) ?
++	return ((load == IMAGE_PARAM_INVAL) || (load == 0)) ?
+ 		env_get_ulong("kernel_addr_r", 16, 0) : load;
+ }
+ 
+@@ -207,7 +207,7 @@ uint32_t image_get_ep(const image_header_t *hdr)
+ {
+ 	uint32_t ep = uimage_to_cpu(hdr->ih_ep);
+ 
+-	return (ep == IMAGE_PARAM_INVAL) ?
++	return ((ep == IMAGE_PARAM_INVAL) || (ep == 0)) ?
+ 		env_get_ulong("kernel_addr_r", 16, 0) : ep;
+ }
+ #endif
+@@ -260,7 +260,7 @@ ulong image_multi_count(const image_header_t *hdr)
+ 	size = (uint32_t *)image_get_data(hdr);
+ 
+ 	/* count non empty slots */
+-	for (i = 0; size[i] != IMAGE_PARAM_INVAL; ++i)
++	for (i = 0; size[i] && (size[i] != IMAGE_PARAM_INVAL); ++i)
+ 		count++;
+ 
+ 	return count;
+-- 
+2.34.1.windows.1
+

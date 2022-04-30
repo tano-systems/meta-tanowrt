@@ -1,0 +1,69 @@
+From 28ee8c54285a4e00ab150cf88e76d56c44e5a34f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 27 May 2022 05:58:35 +0300
+Subject: [PATCH 1008/1013] rockchip/rk3308: Add UART3 over GPIO0_C1/C2 pins
+ support on RK3308B
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ .../include/asm/arch-rockchip/grf_rk3308.h    |  9 +++++++++
+ arch/arm/mach-rockchip/rk3308/rk3308.c        | 19 +++++++++++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/arch/arm/include/asm/arch-rockchip/grf_rk3308.h b/arch/arm/include/asm/arch-rockchip/grf_rk3308.h
+index 0ee72b7..19778bd 100644
+--- a/arch/arm/include/asm/arch-rockchip/grf_rk3308.h
++++ b/arch/arm/include/asm/arch-rockchip/grf_rk3308.h
+@@ -196,6 +196,15 @@ struct rk3308_sgrf {
+ check_member(rk3308_sgrf, fastboot_en, 0x20);
+ 
+ enum {
++	/* GPIO0C_IOMUX */
++	/* GPIO0C1_SEL_UART3_RX and GPIO0C2_SEL_UART3_TX available only on RK3308B */
++	GPIO0C1_SEL_SHIFT		= 2,
++	GPIO0C1_SEL_MASK		= 0x3 << GPIO0C1_SEL_SHIFT,
++	GPIO0C1_SEL_UART3_RX		= 3,
++	GPIO0C2_SEL_SHIFT		= 4,
++	GPIO0C2_SEL_MASK		= 0x3 << GPIO0C2_SEL_SHIFT,
++	GPIO0C2_SEL_UART3_TX		= 3,
++
+ 	/* GPIO0B_IOMUX */
+ 	GPIO0B_SEL_SHIFT		= 0x0,
+ 	GPIO0B_SEL_MASK			= 0x3 << GPIO0B_SEL_SHIFT,
+diff --git a/arch/arm/mach-rockchip/rk3308/rk3308.c b/arch/arm/mach-rockchip/rk3308/rk3308.c
+index 290a4b5..c2d8358 100644
+--- a/arch/arm/mach-rockchip/rk3308/rk3308.c
++++ b/arch/arm/mach-rockchip/rk3308/rk3308.c
+@@ -359,10 +359,29 @@ void board_debug_uart_init(void)
+ 		     CLK_UART3_PLL_SEL_XIN_OSC0 << CLK_UART3_PLL_SEL_SHIFT |
+ 		     CLK_UART3_DIV_CON << CLK_UART3_DIV_CON_SHIFT);
+ 
++#if !defined(CONFIG_ROCKCHIP_UART_MUX_SEL_M) || (CONFIG_ROCKCHIP_UART_MUX_SEL_M == 0)
+ 	rk_clrsetreg(&grf->gpio3b_iomux,
+ 		     GPIO3B5_SEL_MASK | GPIO3B4_SEL_MASK,
+ 		     GPIO3B5_SEL_UART3_TX << GPIO3B5_SEL_SHIFT |
+ 		     GPIO3B4_SEL_UART3_RX << GPIO3B4_SEL_SHIFT);
++#elif (CONFIG_ROCKCHIP_UART_MUX_SEL_M == 1)
++	if (soc_is_rk3308b() || soc_is_rk3308bs()) {
++		/* UART3 can be muxed to GPIO0_C1/C2 only on RK3308B */
++		rk_clrsetreg(&grf->gpio0c_iomux,
++			     GPIO0C1_SEL_MASK | GPIO0C2_SEL_MASK,
++			     GPIO0C2_SEL_UART3_TX << GPIO0C2_SEL_SHIFT |
++			     GPIO0C1_SEL_UART3_RX << GPIO0C1_SEL_SHIFT);
++	}
++	else {
++		rk_clrsetreg(&grf->gpio3b_iomux,
++			     GPIO3B5_SEL_MASK | GPIO3B4_SEL_MASK,
++			     GPIO3B5_SEL_UART3_TX << GPIO3B5_SEL_SHIFT |
++			     GPIO3B4_SEL_UART3_RX << GPIO3B4_SEL_SHIFT);
++	}
++#else
++	#error "Invalid CONFIG_ROCKCHIP_UART_MUX_SEL_M for uart3 !!!"
++#endif
++
+ #else
+ 	#error "Please select proper uart as debug uart !!!"
+ #endif
+-- 
+2.34.1.windows.1
+

@@ -1,0 +1,18 @@
+# Copyright (c) 2019, Fuzhou Rockchip Electronics Co., Ltd
+# Copyright (c) 2022, Tano Systems LLC
+# Released under the MIT license (see COPYING.MIT for the terms)
+#
+# long-description: Creates a GPT disk image for Rockchip boards
+
+# 0~32K: gpt
+bootloader --ptable gpt
+part /idblock   --source=rawcopy                      --align=32               --sourceparams="file=${WKS_IMAGE_IDBLOCK_BINARY}"                --no-table
+part /startup   --source=rawcopy                      --align=3968 --size=64K  --sourceparams="file=${WKS_IMAGE_STARTUP_BINARY}"                --no-table
+part /ubootenv1 --source=rawcopy                      --align=4032 --size=32K  --sourceparams="file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}"      --no-table
+part /ubootenv2 --source=rawcopy                      --align=4064 --size=32K  --sourceparams="file=${WKS_IMAGE_UBOOT_INITIAL_ENV_BINARY}"      --no-table
+part /uboot     --source=rawcopy --part-name=boot     --align=8192 --size=8M   --sourceparams="file=${WKS_IMAGE_UBOOT_BINARY}"                  --uuid=${TANOWRT_PARTUUID_BOOT}
+part /kernel_a  --source=rawcopy --part-name=kernel_a --align=1024 --size=64M  --sourceparams="file=${WKS_IMAGE_KERNEL_BINARY}"                 --uuid=${TANOWRT_PARTUUID_KERNELDEV_A}
+part /rootfs_a  --source=rawcopy --part-name=rootfs_a --align=1024 --size=384M --sourceparams="file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}" --uuid=${TANOWRT_PARTUUID_ROOTDEV_A}
+part /kernel_b  --source=rawcopy --part-name=kernel_b --align=1024 --size=64M  --sourceparams="file=${WKS_IMAGE_KERNEL_BINARY}"                 --uuid=${TANOWRT_PARTUUID_KERNELDEV_B}
+part /rootfs_b  --source=rawcopy --part-name=rootfs_b --align=1024 --size=384M --sourceparams="file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}" --uuid=${TANOWRT_PARTUUID_ROOTDEV_B}
+part /overlay   --size=32M --use-uuid --uuid=${TANOWRT_PARTUUID_OVERLAY} --fstype=ext4 --label=rootfs_data --align=1024

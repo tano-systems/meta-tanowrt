@@ -1,0 +1,56 @@
+From c4e546897684844098d6d153ed9080bd048a6c16 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 27 May 2022 05:38:58 +0300
+Subject: [PATCH 1006/1013] rockchip/rk3308: Fix default configs
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/evb_rk3308.h    | 4 +++-
+ include/configs/rk3308_common.h | 6 +-----
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/include/configs/evb_rk3308.h b/include/configs/evb_rk3308.h
+index 5e87e59..3bcfcb5 100644
+--- a/include/configs/evb_rk3308.h
++++ b/include/configs/evb_rk3308.h
+@@ -9,7 +9,7 @@
+ 
+ #include <configs/rk3308_common.h>
+ 
+-#define CONFIG_SYS_MMC_ENV_DEV 0
++/*#define CONFIG_SYS_MMC_ENV_DEV 0*/
+ 
+ #define ROCKCHIP_DEVICE_SETTINGS \
+ 			"stdout=serial,vidconsole\0" \
+@@ -17,9 +17,11 @@
+ #undef CONFIG_CONSOLE_SCROLL_LINES
+ #define CONFIG_CONSOLE_SCROLL_LINES            10
+ 
++/*
+ #ifndef CONFIG_SPL_BUILD
+ #undef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND RKIMG_BOOTCOMMAND
+ #endif
++*/
+ 
+ #endif
+diff --git a/include/configs/rk3308_common.h b/include/configs/rk3308_common.h
+index b80059e..129eff8 100644
+--- a/include/configs/rk3308_common.h
++++ b/include/configs/rk3308_common.h
+@@ -84,11 +84,7 @@
+ #include <config_distro_bootcmd.h>
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	ENV_MEM_LAYOUT_SETTINGS \
+-	"partitions=" PARTS_DEFAULT \
+-	ROCKCHIP_DEVICE_SETTINGS \
+-	RKIMG_DET_BOOTDEV \
+-	BOOTENV_SHARED_RKNAND \
+-	BOOTENV
++	ROCKCHIP_DEVICE_SETTINGS
+ 
+ #endif
+ 
+-- 
+2.34.1.windows.1
+

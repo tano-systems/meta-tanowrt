@@ -1,0 +1,55 @@
+From e323009d0c335d725f0a229e6355e6bc170ad0e6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 21 Jul 2022 17:41:14 +0300
+Subject: [PATCH] dwc_eth_qos: Fix DT parameters names
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/net/dwc_eth_qos.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/dwc_eth_qos.c b/drivers/net/dwc_eth_qos.c
+index 524093a..5dfe525 100644
+--- a/drivers/net/dwc_eth_qos.c
++++ b/drivers/net/dwc_eth_qos.c
+@@ -1852,17 +1852,23 @@ static int eqos_probe_resources_stm32(struct udevice *dev)
+ 	}
+ 
+ 	ret = clk_get_by_name(dev, "mac-clk-rx", &eqos->clk_rx);
+-	if (ret)
+-		pr_warn("clk_get_by_name(rx) failed: %d", ret);
++	if (ret) {
++		ret = clk_get_by_name(dev, "mac_clk_rx", &eqos->clk_rx);
++		if (ret)
++			pr_warn("clk_get_by_name(rx) failed: %d", ret);
++	}
+ 
+ 	ret = clk_get_by_name(dev, "mac-clk-tx", &eqos->clk_tx);
+-	if (ret)
+-		pr_warn("clk_get_by_name(tx) failed: %d", ret);
++	if (ret) {
++		ret = clk_get_by_name(dev, "mac_clk_tx", &eqos->clk_tx);
++		if (ret)
++			pr_warn("clk_get_by_name(tx) failed: %d", ret);
++	}
+ 
+ 	/*  Get ETH_CLK clocks (optional) */
+ 	ret = clk_get_by_name(dev, "eth-ck", &eqos->clk_ck);
+ 	if (ret)
+-		pr_warn("No phy clock provided %d", ret);
++		debug("No phy clock provided %d", ret);
+ 
+ 	eqos->phyaddr = -1;
+ 	ret = dev_read_phandle_with_args(dev, "phy-handle", NULL, 0, 0,
+@@ -1875,7 +1881,7 @@ static int eqos_probe_resources_stm32(struct udevice *dev)
+ 						 GPIOD_IS_OUT |
+ 						 GPIOD_IS_OUT_ACTIVE);
+ 		if (ret)
+-			pr_warn("gpio_request_by_name(phy reset) not provided %d",
++			debug("gpio_request_by_name(phy reset) not provided %d",
+ 				ret);
+ 		else
+ 			eqos->reset_delays[1] = 2;
+-- 
+2.34.1.windows.1
+

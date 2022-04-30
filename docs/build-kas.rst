@@ -115,6 +115,7 @@ Available target files listed in the sections below:
 - `Boards based on Microchip/Atmel SoC's <meta-tanowrt-hsl-atmel_>`__
 - `Boards based on NXP/Freescale SoC's <meta-tanowrt-hsl-nxp_>`__
 - `Boards based on Baikal Electronics SoC's <meta-tanowrt-hsl-baikal_>`__
+- `Boards based on Rockchip SoC's <meta-tanowrt-hsl-rockchip_>`__
 - `Raspberry Pi Boards <meta-tanowrt-hsl-rpi_>`__
 - `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi_>`__
 - `Boards based on Texas Instruments SoC's <meta-tanowrt-hsl-ti_>`__
@@ -213,6 +214,27 @@ Boards based on NXP/Freescale SoC's (`meta-tanowrt-hsl-nxp <../meta-tanowrt-hsl-
 | NXP LS1028A RDB                                   | NXP LS1028A                | eMMC flash         | ``ls1028ardb-emmc.yml``          |
 | (Reference Design Board)                          |                            +--------------------+----------------------------------+
 |                                                   |                            | SD-card            | ``ls1028ardb-sd.yml``            |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+
+.. _meta-tanowrt-hsl-rockchip:
+
+Boards based on Rockchip SoC's (`meta-tanowrt-hsl-rockchip <../meta-tanowrt-hsl-rockchip/README.md>`__)
+-------------------------------------------------------------------------------------------------------
+
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+|                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
++===================================================+============================+====================+==================================+
+| Boardcon EM3568 SBC (Single-Board Computer)       | Rockchip RK3568            | SD-card            | ``boardcon-em3568-sd.yml``       |
+| (Embedded Development Board)                      |                            +--------------------+----------------------------------+
+|                                                   |                            | eMMC flash         | ``boardcon-em3568-emmc.yml``     |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+| Boardcon EM3566 SBC (Single-Board Computer)       | Rockchip RK3566            | SD-card            | ``boardcon-em3566-sd.yml``       |
+| (Embedded Development Board)                      |                            +--------------------+----------------------------------+
+|                                                   |                            | eMMC flash         | ``boardcon-em3566-emmc.yml``     |
++---------------------------------------------------+----------------------------+--------------------+----------------------------------+
+| Radxa ROCK Pi S                                   | Rockchip RK3308            | SD-card            | ``rock-pi-s-sd.yml``             |
+|                                                   |                            +--------------------+----------------------------------+
+|                                                   |                            | SD NAND flash      | ``rock-pi-s-sdnand.yml``         |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
 .. _meta-tanowrt-hsl-rpi:

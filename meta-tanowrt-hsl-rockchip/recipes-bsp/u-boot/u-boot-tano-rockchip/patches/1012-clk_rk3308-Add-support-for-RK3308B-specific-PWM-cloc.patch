@@ -1,0 +1,76 @@
+From 06b0d6850aff70150e8828e7363810396481dab5 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 14 Jul 2022 12:10:37 +0300
+Subject: [PATCH 1012/1013] clk_rk3308: Add support for RK3308B specific PWM
+ clocks
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ drivers/clk/rockchip/clk_rk3308.c      |  4 ++++
+ include/dt-bindings/clock/rk3308-cru.h | 14 +++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/clk/rockchip/clk_rk3308.c b/drivers/clk/rockchip/clk_rk3308.c
+index 725a5e2..0d60372 100644
+--- a/drivers/clk/rockchip/clk_rk3308.c
++++ b/drivers/clk/rockchip/clk_rk3308.c
+@@ -975,6 +975,8 @@ static ulong rk3308_clk_get_rate(struct clk *clk)
+ 		rate = rk3308_spi_get_clk(clk);
+ 		break;
+ 	case SCLK_PWM:
++	case SCLK_PWM1:
++	case SCLK_PWM2:
+ 		rate = rk3308_pwm_get_clk(clk);
+ 		break;
+ 	case DCLK_VOP:
+@@ -1060,6 +1062,8 @@ static ulong rk3308_clk_set_rate(struct clk *clk, ulong rate)
+ 		ret = rk3308_spi_set_clk(clk, rate);
+ 		break;
+ 	case SCLK_PWM:
++	case SCLK_PWM1:
++	case SCLK_PWM2:
+ 		ret = rk3308_pwm_set_clk(clk, rate);
+ 		break;
+ 	case DCLK_VOP:
+diff --git a/include/dt-bindings/clock/rk3308-cru.h b/include/dt-bindings/clock/rk3308-cru.h
+index 5f4a34b..fd5b745 100644
+--- a/include/dt-bindings/clock/rk3308-cru.h
++++ b/include/dt-bindings/clock/rk3308-cru.h
+@@ -131,6 +131,10 @@
+ #define SCLK_I2S0_2CH_SRC	118
+ #define SCLK_I2S1_2CH_SRC	119
+ 
++/* RK3308B specific */
++#define SCLK_PWM1		120
++#define SCLK_PWM2		121
++
+ /* dclk */
+ #define DCLK_VOP		125
+ 
+@@ -214,7 +218,11 @@
+ #define PCLK_OTP_PHY		229
+ #define PCLK_CPU_BOOST		230
+ 
+-#define CLK_NR_CLKS		(PCLK_CPU_BOOST + 1)
++/* RK3308B specific */
++#define PCLK_PWM1		231
++#define PCLK_PWM2		232
++
++#define CLK_NR_CLKS		(PCLK_PWM2 + 1)
+ 
+ /* soft-reset indices */
+ 
+@@ -325,6 +333,10 @@
+ /* cru_softrst_con6 */
+ #define SRST_CPU_BOOST		96
+ #define SRST_CPU_BOOST_P	97
++#define SRST_PWM1_P		98
++#define SRST_PWM1		99
++#define SRST_PWM2_P		100
++#define SRST_PWM2		101
+ #define SRST_PERI_NIU_A		104
+ #define SRST_PERI_NIU_H		105
+ #define SRST_PERI_NIU_p		106
+-- 
+2.34.1.windows.1
+

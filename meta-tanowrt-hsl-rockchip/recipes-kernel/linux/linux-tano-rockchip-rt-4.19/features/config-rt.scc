@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "RT Linux configuration"
+define KFEATURE_COMPATIBILITY all
+
+kconf non-hardware config-rt.cfg

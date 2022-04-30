@@ -13,6 +13,7 @@ local.conf
 !meta-tanowrt-hsl-baikal
 !meta-tanowrt-hsl-intel
 !meta-tanowrt-hsl-nxp
+!meta-tanowrt-hsl-rockchip
 !meta-tanowrt-hsl-rpi
 !meta-tanowrt-hsl-swi
 !meta-tanowrt-hsl-ti
