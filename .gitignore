@@ -5,7 +5,7 @@ local.conf
 *.orig
 *.rej
 *~
-/build/
+/build
 /meta-*/
 /openembedded-core/
 !meta-tanowrt
