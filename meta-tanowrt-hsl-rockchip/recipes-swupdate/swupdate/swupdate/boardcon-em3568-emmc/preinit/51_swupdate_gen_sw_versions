@@ -1,0 +1,19 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2022 Tano Systems LLC. All rights reserved.
+
+# Boardcon EM-3568 SWUpdate specific files generation
+
+do_swupdate_gen_sw_versions() {
+	. /usr/lib/swupdate/swupdate_platform
+	
+	local IDBLOCK_PATH="/dev/mmcblk0"
+	local UBOOT_PATH="/dev/mmcblk0p1"
+	local STARTUP_PATH="/dev/mmcblk0"
+
+	swuplatform_gen_sw_versions "${IDBLOCK_PATH}" "${UBOOT_PATH}" "${STARTUP_PATH}"
+}
+
+[ "$INITRAMFS" = "1" ] || {
+	boot_hook_add preinit_main do_swupdate_gen_sw_versions
+}

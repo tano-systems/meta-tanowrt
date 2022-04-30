@@ -15,17 +15,19 @@ Support for real hardware is provided by additional hardware support layers (HSL
 
 Detailed instructions on how to use each layer to build the TanoWrt Distribution images can be found in the documentation of the appropriate layers:
 
-| Layer                      | Hardware                                          |
-| -------------------------- | ------------------------------------------------- |
-| [meta-tanowrt-hsl-atmel]   | Microchip (Atmel) SoC based devices               |
-| [meta-tanowrt-hsl-nxp]     | NXP (Freescale) boards                            |
-| [meta-tanowrt-hsl-rpi]     | Raspberry Pi boards                               |
-| [meta-tanowrt-hsl-swi]     | Sierra Wireless LTE modules                       |
-| [meta-tanowrt-hsl-ti]      | Texas Instruments SoC based devices               |
+| Layer                       | Hardware                                          |
+| --------------------------- | ------------------------------------------------- |
+| [meta-tanowrt-hsl-atmel]    | Microchip (Atmel) SoC based devices               |
+| [meta-tanowrt-hsl-nxp]      | NXP (Freescale) boards                            |
+| [meta-tanowrt-hsl-rockchip] | Rockchip SoC based devices                        |
+| [meta-tanowrt-hsl-rpi]      | Raspberry Pi boards                               |
+| [meta-tanowrt-hsl-swi]      | Sierra Wireless LTE modules                       |
+| [meta-tanowrt-hsl-ti]       | Texas Instruments SoC based devices               |
 
 [meta-tanowrt]: meta-tanowrt/README.md
 [meta-tanowrt-hsl-atmel]: meta-tanowrt-hsl-atmel/README.md
 [meta-tanowrt-hsl-nxp]: meta-tanowrt-hsl-nxp/README.md
+[meta-tanowrt-hsl-rockchip]: meta-tanowrt-hsl-rockchip/README.md
 [meta-tanowrt-hsl-rpi]: meta-tanowrt-hsl-rpi/README.md
 [meta-tanowrt-hsl-swi]: meta-tanowrt-hsl-swi/README.md
 [meta-tanowrt-hsl-ti]: meta-tanowrt-hsl-ti/README.md
@@ -34,14 +36,15 @@ Detailed instructions on how to use each layer to build the TanoWrt Distribution
 
 The TanoWrt distribution uses the [SWUpdate](https://sbabic.github.io/swupdate) project for firmware upgrade implementation. For all devices that supports the firmware upgrade feature, a [double copy with fall-back](https://sbabic.github.io/swupdate/overview.html#double-copy) strategy has been implemented.
 
-| Layer                      | Firmware Upgrade Support                                          |
-| -------------------------- | ----------------------------------------------------------------- |
-| [meta-tanowrt]             | :last_quarter_moon: Partial (only for `qemux86` and `qemux86-64`) |
-| [meta-tanowrt-hsl-atmel]   | :heavy_check_mark: Yes                                            |
-| [meta-tanowrt-hsl-nxp]     | :heavy_check_mark: Yes                                            |
-| [meta-tanowrt-hsl-rpi]     | :new_moon: No                                                     |
-| [meta-tanowrt-hsl-swi]     | :new_moon: No (has its own upgrade system)                        |
-| [meta-tanowrt-hsl-ti]      | :heavy_check_mark: Yes                                            |
+| Layer                       | Firmware Upgrade Support                                          |
+| --------------------------- | ----------------------------------------------------------------- |
+| [meta-tanowrt]              | :last_quarter_moon: Partial (only for `qemux86` and `qemux86-64`) |
+| [meta-tanowrt-hsl-atmel]    | :heavy_check_mark: Yes                                            |
+| [meta-tanowrt-hsl-nxp]      | :heavy_check_mark: Yes                                            |
+| [meta-tanowrt-hsl-rockchip] | :heavy_check_mark: Yes                                            |
+| [meta-tanowrt-hsl-rpi]      | :new_moon: No                                                     |
+| [meta-tanowrt-hsl-swi]      | :new_moon: No (has its own upgrade system)                        |
+| [meta-tanowrt-hsl-ti]       | :heavy_check_mark: Yes                                            |
 
 ## 3 Prerequisites
 

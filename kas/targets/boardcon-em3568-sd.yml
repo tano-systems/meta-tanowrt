@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/tanowrt-hsl-rockchip.yml
+
+machine: boardcon-em3568-sd
+target: tanowrt-image-full-swu

@@ -1,0 +1,36 @@
+From 2760cdcff5018c1d50a708efa7a386ff42b64fce Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 1 May 2022 04:53:02 +0300
+Subject: [PATCH 2/2] Drop hacky features_check.bbclass
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ classes/features_check-core.bbclass | 1 -
+ classes/features_check.bbclass      | 6 ------
+ 2 files changed, 7 deletions(-)
+ delete mode 120000 classes/features_check-core.bbclass
+ delete mode 100644 classes/features_check.bbclass
+
+diff --git a/classes/features_check-core.bbclass b/classes/features_check-core.bbclass
+deleted file mode 120000
+index 42a6dee..0000000
+--- a/classes/features_check-core.bbclass
++++ /dev/null
+@@ -1 +0,0 @@
+-../../poky/meta/classes/features_check.bbclass
+\ No newline at end of file
+diff --git a/classes/features_check.bbclass b/classes/features_check.bbclass
+deleted file mode 100644
+index e2d9f72..0000000
+--- a/classes/features_check.bbclass
++++ /dev/null
+@@ -1,6 +0,0 @@
+-# Copyright (C) 2020, Rockchip Electronics Co., Ltd
+-# Released under the MIT license (see COPYING.MIT for the terms)
+-#
+-# This bbclass is extremely hacky.
+-
+-inherit ${@oe.utils.ifelse(os.path.exists("../poky/meta/classes/features_check.bbclass"), 'features_check-core', 'distro_features_check')}
+-- 
+2.30.2
+

@@ -1,0 +1,64 @@
+From abdd61e9d3a88da022c6f6d26926d7e99e9fbebf Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 17 Jul 2022 00:33:56 +0300
+Subject: [PATCH] Build overlays
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile             | 1 +
+ arch/arm64/Makefile  | 2 +-
+ scripts/Makefile.lib | 6 ++++++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 920ed9028edc..09417a708107 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1724,6 +1724,7 @@ clean: $(clean-dirs)
+ 	@find $(if $(KBUILD_EXTMOD), $(KBUILD_EXTMOD), .) $(RCS_FIND_IGNORE) \
+ 		\( -name '*.[aios]' -o -name '*.ko' -o -name '.*.cmd' \
+ 		-o -name '*.ko.*' -o -name '*.dtb' -o -name '*.dtb.S' \
++		-o -name '*.dtbo' -o -name '*.dtbo.S' \
+ 		-o -name '*.dwo' -o -name '*.lst' \
+ 		-o -name '*.su'  \
+ 		-o -name '.*.d' -o -name '.*.tmp' -o -name '*.mod.c' \
+diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+index 5b3908880485..b565d63e2241 100644
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -141,7 +141,7 @@ Image.%: Image
+ zinstall install:
+ 	$(Q)$(MAKE) $(build)=$(boot) $@
+ 
+-%.dtb: scripts
++%.dtb %.dtbo: scripts
+ 	$(Q)$(MAKE) $(build)=$(boot)/dts $(boot)/dts/$@
+ 
+ PHONY += dtbs dtbs_install
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 34c0f3f8c5f7..4631c61acb9b 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -295,6 +295,9 @@ cmd_dt_S_dtb=						\
+ $(obj)/%.dtb.S: $(obj)/%.dtb FORCE
+ 	$(call if_changed,dt_S_dtb)
+ 
++$(obj)/%.dtbo.S: $(obj)/%.dtbo FORCE
++	$(call if_changed,dt_S_dtb)
++
+ quiet_cmd_dtc = DTC     $@
+ cmd_dtc = mkdir -p $(dir ${dtc-tmp}) ; \
+ 	$(CPP) $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ; \
+@@ -306,6 +309,9 @@ cmd_dtc = mkdir -p $(dir ${dtc-tmp}) ; \
+ $(obj)/%.dtb: $(src)/%.dts $(DTC) FORCE
+ 	$(call if_changed_dep,dtc)
+ 
++$(obj)/%.dtbo: $(src)/%.dtso $(DTC) FORCE
++	$(call if_changed_dep,dtc)
++
+ dtc-tmp = $(subst $(comma),_,$(dot-target).dts.tmp)
+ 
+ # Bzip2
+-- 
+2.17.1
+

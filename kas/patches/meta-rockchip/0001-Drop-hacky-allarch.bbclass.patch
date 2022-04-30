@@ -1,0 +1,56 @@
+From 25d580a6a593c33c1049c8dacbe68ee573f61edc Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sun, 1 May 2022 04:52:50 +0300
+Subject: [PATCH 1/2] Drop hacky allarch.bbclass
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ classes/allarch-core.bbclass |  1 -
+ classes/allarch.bbclass      | 26 --------------------------
+ 2 files changed, 27 deletions(-)
+ delete mode 120000 classes/allarch-core.bbclass
+ delete mode 100644 classes/allarch.bbclass
+
+diff --git a/classes/allarch-core.bbclass b/classes/allarch-core.bbclass
+deleted file mode 120000
+index aeb9b04..0000000
+--- a/classes/allarch-core.bbclass
++++ /dev/null
+@@ -1 +0,0 @@
+-../../poky/meta/classes/allarch.bbclass
+\ No newline at end of file
+diff --git a/classes/allarch.bbclass b/classes/allarch.bbclass
+deleted file mode 100644
+index 50f7d41..0000000
+--- a/classes/allarch.bbclass
++++ /dev/null
+@@ -1,26 +0,0 @@
+-# Copyright (C) 2019, Fuzhou Rockchip Electronics Co., Ltd
+-# Released under the MIT license (see COPYING.MIT for the terms)
+-#
+-# This bbclass is extremely hacky, should be replaced by something like:
+-#   https://patchwork.openembedded.org/patch/154265/
+-#
+-
+-def undo_allarch_inherit(d):
+-    val = d.getVar('__inherit_cache', False) or []
+-    deps = (d.getVar('__depends', False) or [])
+-    f = os.path.join('classes', 'allarch.bbclass')
+-
+-    for v in val:
+-        if v.endswith(f):
+-            val.remove(v)
+-    d.setVar('__inherit_cache', val)
+-
+-    new_deps = []
+-    for v in deps:
+-        if not v[0].endswith(f):
+-            new_deps.append(v)
+-    d.setVar('__depends', new_deps)
+-
+-    return ''
+-
+-inherit ${@oe.utils.ifelse(d.getVar('MULTILIB_VARIANTS'), undo_allarch_inherit(d), 'allarch-core')}
+-- 
+2.30.2
+

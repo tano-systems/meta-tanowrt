@@ -1,0 +1,94 @@
+From 3d762fa6088e7ac83940eb4379664947822ede7d Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 27 May 2022 05:37:02 +0300
+Subject: [PATCH 1001/1013] Allow to define some options in defconfig
+
+The following options can now be used in defconfigs:
+- CONFIG_USE_BOOTCOMMAND
+- CONFIG_BOOTCOMMAND
+- CONFIG_SYS_MMC_ENV_DEV
+- CONFIG_SYS_MMC_ENV_PART
+- CONFIG_ENV_OFFSET_REDUND
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ common/Kconfig | 17 +++++++++++++++++
+ env/Kconfig    | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
+
+diff --git a/common/Kconfig b/common/Kconfig
+index bfb614b..052e110 100644
+--- a/common/Kconfig
++++ b/common/Kconfig
+@@ -213,6 +213,23 @@ config BOOTARGS
+ 	  CONFIG_BOOTARGS goes into the environment value "bootargs". Note that
+ 	  this value will also override the "chosen" node in FDT blob.
+ 
++config USE_BOOTCOMMAND
++	bool "Enable a default value for bootcmd"
++	help
++	  Provide a default value for the bootcmd entry in the environment.  If
++	  autoboot is enabled this is what will be run automatically.  Enable
++	  this option to be able to specify CONFIG_BOOTCOMMAND as a string.  If
++	  this option is disabled, CONFIG_BOOTCOMMAND will be undefined and
++	  won't take any space in U-Boot image.
++
++config BOOTCOMMAND
++	string "bootcmd value"
++	depends on USE_BOOTCOMMAND
++	default "run distro_bootcmd"
++	help
++	  This is the string of commands that will be used as bootcmd and if
++	  AUTOBOOT is set, automatically run.
++
+ config IO_TRACE
+ 	bool "Enable iotrace"
+ 	help
+diff --git a/env/Kconfig b/env/Kconfig
+index 50af6f9..357bcb7 100644
+--- a/env/Kconfig
++++ b/env/Kconfig
+@@ -493,12 +493,40 @@ config ENV_OFFSET
+ 	help
+ 	  Offset from the start of the device (or partition)
+ 
++config ENV_OFFSET_REDUND
++	hex "Redundant environment offset"
++	depends on (ENV_IS_IN_EEPROM || ENV_IS_IN_MMC || ENV_IS_IN_NAND || \
++		    ENV_IS_IN_SPI_FLASH)
++	default 0
++	help
++	  Offset from the start of the device (or partition) of the redundant
++	  environment location.
++
+ config ENV_SIZE
+ 	hex "Environment size"
+ 	default 0x8000
+ 	help
+ 	  Size of the environment storage area
+ 
++config SYS_MMC_ENV_DEV
++	int "mmc device number"
++	depends on ENV_IS_IN_MMC || ENV_IS_IN_FAT || SYS_LS_PPA_FW_IN_MMC || \
++		CMD_MVEBU_BUBT || FMAN_ENET || QE || PHY_CORTINA
++	default 0
++	help
++	  MMC device number on the platform where the environment is stored.
++
++config SYS_MMC_ENV_PART
++	int "mmc partition number"
++	depends on ENV_IS_IN_MMC || ENV_IS_IN_FAT
++	default 0
++	help
++	  MMC hardware partition device number on the platform where the
++	  environment is stored.  Note that this is not related to any software
++	  defined partition table but instead if we are in the user area, which is
++	  partition 0 or the first boot partition, which is 1 or some other defined
++	  partition.
++
+ endif
+ 
+ endmenu
+-- 
+2.34.1.windows.1
+

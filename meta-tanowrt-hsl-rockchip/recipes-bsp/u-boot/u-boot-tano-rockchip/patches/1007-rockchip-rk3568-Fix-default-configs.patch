@@ -1,0 +1,46 @@
+From 420bda23fa9313fafcedfcdc136120da9e1572a6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 27 May 2022 05:39:11 +0300
+Subject: [PATCH 1007/1013] rockchip/rk3568: Fix default configs
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/evb_rk3568.h    | 5 +----
+ include/configs/rk3568_common.h | 5 +----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/include/configs/evb_rk3568.h b/include/configs/evb_rk3568.h
+index f7318c3..6fc82cc 100644
+--- a/include/configs/evb_rk3568.h
++++ b/include/configs/evb_rk3568.h
+@@ -17,10 +17,7 @@
+ 		"stdout=serial,vidconsole\0" \
+ 		"stderr=serial,vidconsole\0"
+ 
+-#define CONFIG_SYS_MMC_ENV_DEV		0
+-
+-#undef CONFIG_BOOTCOMMAND
+-#define CONFIG_BOOTCOMMAND RKIMG_BOOTCOMMAND
++/*#define CONFIG_SYS_MMC_ENV_DEV		0*/
+ 
+ #ifdef CONFIG_USB_FUNCTION_DFU
+ #define CONFIG_SET_DFU_ALT_INFO
+diff --git a/include/configs/rk3568_common.h b/include/configs/rk3568_common.h
+index 1b71a78..6cd4023 100644
+--- a/include/configs/rk3568_common.h
++++ b/include/configs/rk3568_common.h
+@@ -84,10 +84,7 @@
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	ENV_MEM_LAYOUT_SETTINGS \
+-	"partitions=" PARTS_RKIMG \
+-	ROCKCHIP_DEVICE_SETTINGS \
+-	RKIMG_DET_BOOTDEV \
+-	BOOTENV
++	ROCKCHIP_DEVICE_SETTINGS
+ #endif
+ 
+ /* rockchip ohci host driver */
+-- 
+2.34.1.windows.1
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<!-- meta-rockchip -->
+	<project path="meta-rockchip"
+	         name="meta-rockchip"
+	         remote="tano-public"
+	         upstream="tano/dunfell"
+	         revision="eabeac56ef19ab78e13edb2ec066854aab7377a6" />
+</manifest>

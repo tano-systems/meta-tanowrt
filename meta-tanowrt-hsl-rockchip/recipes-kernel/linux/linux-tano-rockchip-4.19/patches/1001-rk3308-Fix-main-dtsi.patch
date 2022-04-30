@@ -1,0 +1,70 @@
+From ab7c292a62b877657a4dc8d914eac632d78b7d90 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 7 Jun 2022 03:58:36 +0300
+Subject: [PATCH] rk3308: Fix main dtsi
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ arch/arm64/boot/dts/rockchip/rk3308.dtsi | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3308.dtsi b/arch/arm64/boot/dts/rockchip/rk3308.dtsi
+index dd50c25b5827..b6c1a6860c86 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3308.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3308.dtsi
+@@ -43,7 +43,7 @@
+ 
+ 		cpu0: cpu@0 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a35", "arm,armv8";
++			compatible = "arm,cortex-a35";
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+ 			clocks = <&cru ARMCLK>;
+@@ -64,7 +64,7 @@
+ 
+ 		cpu1: cpu@1 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a35", "arm,armv8";
++			compatible = "arm,cortex-a35";
+ 			reg = <0x0 0x1>;
+ 			enable-method = "psci";
+ 			operating-points-v2 = <&cpu0_opp_table>;
+@@ -74,7 +74,7 @@
+ 
+ 		cpu2: cpu@2 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a35", "arm,armv8";
++			compatible = "arm,cortex-a35";
+ 			reg = <0x0 0x2>;
+ 			enable-method = "psci";
+ 			operating-points-v2 = <&cpu0_opp_table>;
+@@ -84,7 +84,7 @@
+ 
+ 		cpu3: cpu@3 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a35", "arm,armv8";
++			compatible = "arm,cortex-a35";
+ 			reg = <0x0 0x3>;
+ 			enable-method = "psci";
+ 			operating-points-v2 = <&cpu0_opp_table>;
+@@ -205,7 +205,7 @@
+ 	};
+ 
+ 	arm-pmu {
+-		compatible = "arm,cortex-a53-pmu";
++		compatible = "arm,cortex-a35-pmu";
+ 		interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 84 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>,
+@@ -933,6 +933,7 @@
+ 			 <&cru HCLK_VOP>;
+ 		clock-names = "aclk_vop", "dclk_vop", "hclk_vop";
+ 		status = "disabled";
++		rockchip,grf = <&grf>;
+ 
+ 		vop_out: port {
+ 			#address-cells = <1>;
+-- 
+2.30.2
+
