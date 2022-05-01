@@ -26,6 +26,7 @@ KBRANCH ?= "${KERNEL_SRC_BRANCH}"
 KMACHINE ?= "${MACHINE}"
 
 KERNEL_SRC_PROTOCOL ?= "git"
+KERNEL_SRC_NOBRANCH ?= "0"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}:"
 
@@ -33,7 +34,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}:"
 # Kernel source SRC_URI
 #
 SRC_URI += "\
-	${KERNEL_SRC_URI};name=machine;protocol=${KERNEL_SRC_PROTOCOL}${@oe.utils.conditional('KERNEL_SRC_BRANCH', '', '', ';branch=', d)}${KERNEL_SRC_BRANCH} \
+	${KERNEL_SRC_URI};name=machine;nobranch=${KERNEL_SRC_NOBRANCH};protocol=${KERNEL_SRC_PROTOCOL}${@oe.utils.conditional('KERNEL_SRC_BRANCH', '', '', ';branch=', d)}${KERNEL_SRC_BRANCH} \
 "
 
 #
