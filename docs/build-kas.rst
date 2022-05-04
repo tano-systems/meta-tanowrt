@@ -22,6 +22,15 @@ To do this, run the command:
           build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
           xz-utils debianutils iputils-ping file
 
+.. note:: If you are using Ubuntu, you will need to configure the default system shell
+          command interpreter for shell scripts to bash. You can do it with the command:
+
+          .. code-block:: shell
+
+             # sudo dpkg-reconfigure dash
+
+          Select `No` when it asks you to install dash as `/bin/sh`.
+
 .. note:: Some targets may require additional dependencies for
           a successful build. See the ``README.md`` of the related
           hardware support layer (HSL) for this information.
