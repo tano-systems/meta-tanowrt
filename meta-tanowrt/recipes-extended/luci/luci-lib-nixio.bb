@@ -3,11 +3,11 @@
 #
 # NIXIO POSIX library
 #
-# This file Copyright (c) 2019 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019, 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "NIXIO POSIX library"
 LICENSE = "Apache-2.0"
@@ -24,14 +24,14 @@ python __anonymous() {
     d.delVarFlag('do_compile', 'noexec')
 }
 
+# Installed by cmake
+LUCI_DO_INSTALL_ROOT ?= "0"
+LUCI_DO_INSTALL_LUASRC ?= "0"
+LUCI_DO_INSTALL_HTDOCS ?= "0"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=libs/luci-lib-nixio;destsuffix=git/"
 SRC_URI += "file://cmake.patch;pnum=3"
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
-
-do_install_append() {
-	# This installed to /usr/lib/lua/5.1/nixio by cmake
-	rm -rf ${D}/usr/lib/lua/nixio
-}

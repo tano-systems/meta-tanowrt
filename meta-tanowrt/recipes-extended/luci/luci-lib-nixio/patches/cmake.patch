@@ -16,7 +16,7 @@ Index: git/libs/luci-lib-nixio/CMakeLists.txt
 +TARGET_LINK_LIBRARIES(nixio crypt ssl)
 +
 +INSTALL(DIRECTORY root/usr/lib/lua/
-+	DESTINATION ${LUAPATH}
++	DESTINATION ${LUAPATH_NONARCH}
 +	USE_SOURCE_PERMISSIONS
 +)
 +

@@ -3,11 +3,11 @@
 #
 # LuCI core libraries
 #
-# This file Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano9"
+PR = "tano10"
 
 SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
@@ -87,9 +87,9 @@ do_install_append() {
 	MEDIAURLBASE_ESCAPED="${@d.getVar('LUCI_INITIAL_MEDIAURLBASE', True).replace('/', '\/')}"
 	sed -i -e "s/\(luci\.main\.mediaurlbase\)=.*/\1=${MEDIAURLBASE_ESCAPED}/" ${D}${sysconfdir}/uci-defaults/zz_luci-theme-initial
 
-	if [ "${LUCI_INSTALL_LUASRC_PATH}" != "${libdir}/lua/luci" ]; then
+	if [ "${LUCI_INSTALL_LUASRC_PATH}" != "${nonarch_libdir}/lua/luci" ]; then
 		# Make symlink for compatibility with upstream paths
-		ln -s ${LUCI_INSTALL_LUASRC_PATH} ${D}${libdir}/lua/luci
+		ln -s ${LUCI_INSTALL_LUASRC_PATH} ${D}${nonarch_libdir}/lua/luci
 	fi
 
 	if [ -d "${D}${LUCI_INSTALL_HTDOCS_PATH}/cgi-bin" ]; then
@@ -114,4 +114,12 @@ CONFFILES_${PN}_append = "\
 do_configure_prepend() {
 	oe_runmake -C ${S}/src/ clean
 	oe_runmake -C ${S}/src/ plural_formula.c
+}
+
+inherit uci-config
+
+do_uci_config_append() {
+	${UCI} set luci.main.libdir_arch="${libdir}"
+	${UCI} set luci.main.libdir_nonarch="${nonarch_libdir}"
+	${UCI} commit luci
 }

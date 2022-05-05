@@ -39,18 +39,24 @@ install_files() {
 
 do_install_append() {
 	# Install luasrc
-	if [ -d "${LUCI_PKG_SRC}/luasrc" ]; then
-		install_files "${LUCI_PKG_SRC}/luasrc" "${D}${LUCI_INSTALL_LUASRC_PATH}"
+	if [ "${LUCI_DO_INSTALL_LUASRC}" = "1" ]; then
+		if [ -d "${LUCI_PKG_SRC}/luasrc" ]; then
+			install_files "${LUCI_PKG_SRC}/luasrc" "${D}${LUCI_INSTALL_LUASRC_PATH}"
+		fi
 	fi
 
 	# Install htdocs
-	if [ -d "${LUCI_PKG_SRC}/htdocs" ]; then
-		install_files "${LUCI_PKG_SRC}/htdocs" "${D}${LUCI_INSTALL_HTDOCS_PATH}"
+	if [ "${LUCI_DO_INSTALL_HTDOCS}" = "1" ]; then
+		if [ -d "${LUCI_PKG_SRC}/htdocs" ]; then
+			install_files "${LUCI_PKG_SRC}/htdocs" "${D}${LUCI_INSTALL_HTDOCS_PATH}"
+		fi
 	fi
 
 	# Install root files
-	if [ -d "${LUCI_PKG_SRC}/root" ]; then
-		install_files "${LUCI_PKG_SRC}/root" "${D}${LUCI_INSTALL_ROOT_PATH}"
+	if [ "${LUCI_DO_INSTALL_ROOT}" = "1" ]; then
+		if [ -d "${LUCI_PKG_SRC}/root" ]; then
+			install_files "${LUCI_PKG_SRC}/root" "${D}${LUCI_INSTALL_ROOT_PATH}"
+		fi
 	fi
 
 	# Executable files

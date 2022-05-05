@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+# This file Copyright (C) 2020, 2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 # Generic Routing Encapsulation config support
 #
-PR = "tano0"
+PR = "tano1"
 
 inherit allarch
 
@@ -18,7 +18,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "file://gre.sh file://LICENSE"
 
-FILES_${PN} += "${base_libdir}/netifd/proto/"
+FILES_${PN} += "${nonarch_base_libdir}/netifd/proto/"
 
 S = "${WORKDIR}"
 
@@ -26,8 +26,8 @@ do_compile[noexec] = "1"
 do_configure[noexec] = "1"
 
 do_install() {
-	install -dm 0755 ${D}${base_libdir}/netifd/proto
-	install -m 0755 ${WORKDIR}/gre.sh ${D}${base_libdir}/netifd/proto/gre.sh
+	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/gre.sh ${D}${nonarch_base_libdir}/netifd/proto/gre.sh
 }
 
 RDEPENDS_${PN} += "resolveip"

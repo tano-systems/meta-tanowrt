@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano39"
+PR = "tano40"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=ba30601dd30339f7ff3
 SECTION = "base"
 DEPENDS = "libubox libucode ubus json-c ustream-ssl virtual/crypt"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/uhttpd.git \
@@ -65,6 +65,9 @@ do_install_append() {
     install -dm 0755 ${D}/usr/sbin
     ln -s /usr/bin/uhttpd ${D}/usr/sbin/uhttpd
     install -dm 0755 ${D}/www
+
+    sed -i -e "s:LIBDIR=\"/usr/lib\":LIBDIR=\"${libdir}\":g" \
+              ${D}${sysconfdir}/init.d/uhttpd
 }
 
 FILES_${PN}  += "${libdir}/* /www"

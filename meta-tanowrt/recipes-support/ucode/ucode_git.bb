@@ -4,7 +4,7 @@
 # Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 #
 
-PR = "tano0"
+PR = "tano1"
 
 PKG_TITLE = "ucode - Tiny scripting and templating language"
 SUMMARY = "${PKG_TITLE}"
@@ -34,6 +34,15 @@ S = "${WORKDIR}/git"
 
 inherit cmake
 
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:\${CMAKE_INSTALL_PREFIX}/lib:\${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib/ucode:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}/ucode:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}
+
 EXTRA_OECMAKE += "\
 	-DFS_SUPPORT=ON \
 	-DMATH_SUPPORT=ON \
@@ -43,7 +52,7 @@ EXTRA_OECMAKE += "\
 	-DNL80211_SUPPORT=ON \
 	-DRESOLV_SUPPORT=ON \
 	-DSTRUCT_SUPPORT=ON \
-	-DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
+	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
 "
 
 PACKAGES += "\

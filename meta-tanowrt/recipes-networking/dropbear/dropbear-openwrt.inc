@@ -51,7 +51,7 @@ SRC_URI_append = "\
 	file://0001-Add-PasswordAuthentication-option-to-client-CLI.patch \
 "
 
-FILES_${PN} += "/root /lib/preinit"
+FILES_${PN} += "/root ${TANOWRT_PATH_PREINIT}"
 
 do_configure_append() {
 	: > ${B}/localoptions.h
@@ -85,8 +85,8 @@ do_install_append() {
     # Make link to dropbearkey in /usr/bin
     ln -s ${sbindir}/dropbear ${D}${bindir}/dropbearkey
 
-    install -d ${D}/lib/preinit
-    install -m 0644 ${WORKDIR}/dropbear.failsafe ${D}/lib/preinit/99_10_failsafe_dropbear
+    install -d ${D}${TANOWRT_PATH_PREINIT}
+    install -m 0644 ${WORKDIR}/dropbear.failsafe ${D}${TANOWRT_PATH_PREINIT}/99_10_failsafe_dropbear
 }
 
 CONFFILES_${PN}_append = "\

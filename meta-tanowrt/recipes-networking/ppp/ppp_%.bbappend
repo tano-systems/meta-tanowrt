@@ -16,7 +16,7 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano8"
+PR_append = ".tano9"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -25,7 +25,7 @@ SRC_URI_remove = "file://makefile.patch"
 SRC_URI_remove = "file://makefile-remove-hard-usr-reference.patch"
 SRC_URI_remove = "file://copts.patch"
 
-EXTRA_OEMAKE_append = " PRECOMPILED_FILTER=1 STAGING_DIR=${STAGING_DIR_TARGET}"
+EXTRA_OEMAKE_append = " PRECOMPILED_FILTER=1 STAGING_DIR=${STAGING_DIR_TARGET} OE_LIBDIR=${libdir} OE_BASE_LIBDIR=${base_libdir}"
 
 SRC_URI_append = "\
 	file://010-use_target_for_configure.patch \
@@ -61,6 +61,10 @@ SRC_URI_append = "\
 	file://500-add-pptp-plugin.patch \
 	file://510-pptp_compile_fix.patch \
 	file://511-pptp_cflags.patch \
+"
+
+SRC_URI_append = "\
+	file://0001-pppd-do-not-hardcode-lib-directory.patch \
 "
 
 SRC_URI_append = "\
@@ -111,6 +115,9 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/ppp-up ${D}/lib/netifd/ppp-up
 	install -m 0755 ${WORKDIR}/ppp-down ${D}/lib/netifd/ppp-down
 	install -m 0755 ${WORKDIR}/ppp6-up ${D}/lib/netifd/ppp6-up
+
+	sed -i -e "s:/usr/lib/pppd:${libdir}/pppd:g" \
+	          ${D}/lib/netifd/proto/ppp.sh
 }
 
 PACKAGES += "${PN}-pptp"

@@ -4,7 +4,7 @@
 # This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano0"
+PR_append = ".tano1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 RDEPENDS_${PN} += "dbus"
@@ -53,11 +53,11 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/hotplug.d/net
 	install -m 0644 ${WORKDIR}/25-modemmanager-net ${D}${sysconfdir}/hotplug.d/net/
 
-	install -d ${D}${base_libdir}/netifd/proto
-	install -m 0755 ${WORKDIR}/modemmanager.proto ${D}${base_libdir}/netifd/proto/modemmanager.sh
+	install -d ${D}${nonarch_base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/modemmanager.proto ${D}${nonarch_base_libdir}/netifd/proto/modemmanager.sh
 }
 
-FILES_${PN} += "${base_libdir}/netifd"
+FILES_${PN} += "${nonarch_base_libdir}/netifd"
 
 inherit tanowrt-services
 

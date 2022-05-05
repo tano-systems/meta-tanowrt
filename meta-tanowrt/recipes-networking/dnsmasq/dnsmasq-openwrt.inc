@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "14"
+INC_PR = "15"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -65,8 +65,8 @@ do_install_append() {
     install -d ${D}${sysconfdir}/hotplug.d/tftp
     install -m 0644 ${WORKDIR}/dnsmasqsec.hotplug ${D}${sysconfdir}/hotplug.d/ntp/25-dnsmasqsec
 
-    install -d ${D}/usr/lib/dnsmasq
-    install -m 0755 ${WORKDIR}/dhcp-script.sh ${D}/usr/lib/dnsmasq/dhcp-script.sh
+    install -d ${D}${nonarch_libdir}/dnsmasq
+    install -m 0755 ${WORKDIR}/dhcp-script.sh ${D}${nonarch_libdir}/dnsmasq/dhcp-script.sh
 
     install -d ${D}/usr/share/dnsmasq
     install -m 0644 ${WORKDIR}/rfc6761.conf ${D}/usr/share/dnsmasq/rfc6761.conf
@@ -100,6 +100,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILES_${PN}_append = "\
 	/usr/share \
+	${nonarch_libdir} \
 "
 
 CONFFILES_${PN}_append = "\

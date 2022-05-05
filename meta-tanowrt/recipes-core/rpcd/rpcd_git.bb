@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano35"
+PR = "tano36"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde
 SECTION = "base"
 DEPENDS = "json-c libuci libubox libubus libucode libiwinfo virtual/crypt"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:${THISDIR}/${PN}/files-tmp:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:${THISDIR}/${BPN}/files-tmp:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
@@ -40,7 +40,7 @@ inherit cmake tanowrt-services
 PACKAGES += "${PN}-mod-file ${PN}-mod-iwinfo ${PN}-mod-rpcsys ${PN}-mod-ucode"
 
 EXTRA_OECMAKE += "\
-  -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
+  -DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
   -DFILE_SUPPORT=ON \
   -DIWINFO_SUPPORT=ON \
   -DRPCSYS_SUPPORT=ON \
@@ -58,6 +58,11 @@ do_configure_prepend () {
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       ${S}/CMakeLists.txt
+	fi
+
+	if [ -e "${S}/include/rpcd/plugin.h" ] ; then
+		sed -i -e "s:RPC_LIBRARY_DIRECTORY	INSTALL_PREFIX \"/lib/rpcd\":RPC_LIBRARY_DIRECTORY	\"${libdir}/rpcd\":g" \
+		       ${S}/include/rpcd/plugin.h
 	fi
 }
 

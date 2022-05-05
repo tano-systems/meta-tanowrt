@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2020, 2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano7"
+PR = "tano8"
 SUMMARY = "Small stream SSL library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ustream-ssl.git;a=summary"
 LICENSE = "BSD"
@@ -23,6 +23,18 @@ SRCREV = "68d09243b6fd4473004b27ff6483352e76e6af1a"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig
+
+EXTRA_OECMAKE += "\
+	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
+"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}
 
 do_install_append() {
 	install -d ${D}${includedir}/libubox

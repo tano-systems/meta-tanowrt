@@ -81,12 +81,12 @@ ROOTFS_POSTPROCESS_COMMAND += "rootfs_initramfs_fixups; "
 
 rootfs_initramfs_fixups() {
 	if [ "${TANOWRT_IMAGE_INITRAMFS_FAILSAFE_WAIT}" = "0" ]; then
-		rm -f ${IMAGE_ROOTFS}/lib/preinit/30_failsafe_wait
+		rm -f ${IMAGE_ROOTFS}${TANOWRT_PATH_PREINIT}/30_failsafe_wait
 	else
 		if [ "${TANOWRT_IMAGE_INITRAMFS_FAILSAFE}" = "0" ]; then
 			# Disable failsafe mode (set pi_preinit_no_failsafe="y")
 			sed -i -e "s/pi_preinit_no_failsafe=.*/pi_preinit_no_failsafe=\"y\"/" \
-				${IMAGE_ROOTFS}/lib/preinit/00_preinit.conf
+				${IMAGE_ROOTFS}${TANOWRT_PATH_PREINIT}/00_preinit.conf
 		fi
 	fi
 

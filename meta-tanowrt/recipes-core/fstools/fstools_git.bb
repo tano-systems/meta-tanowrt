@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano49"
+PR = "tano50"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -32,7 +32,7 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0001-block-Validate-libubi_open-return-value.patch \
@@ -78,7 +78,9 @@ TANOWRT_SERVICE_SCRIPTS_fstools += "fstab blockd"
 TANOWRT_SERVICE_STATE_fstools-fstab ?= "enabled"
 TANOWRT_SERVICE_STATE_fstools-blockd ?= "enabled"
 
-EXTRA_OECMAKE += "${EXTRA_OECONF}"
+EXTRA_OECMAKE += "\
+	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
+"
 
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
@@ -88,6 +90,14 @@ PACKAGECONFIG ??= "extroot"
 PACKAGECONFIG[extroot] = "-DCMAKE_UBIFS_EXTROOT=ON,,libubox,"
 PACKAGECONFIG[ovl-rootdisk-part] = "-DCMAKE_OVL_ROOTDISK_PART=ON,,,"
 PACKAGECONFIG[ovl-f2fs] = "-DCMAKE_OVL_F2FS=ON,,,f2fs-tools"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}
 
 do_install_append() {
 	install -dm 0755 ${D}/sbin

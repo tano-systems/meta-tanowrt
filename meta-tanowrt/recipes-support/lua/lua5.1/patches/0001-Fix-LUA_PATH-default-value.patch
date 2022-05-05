@@ -1,0 +1,30 @@
+From bc00b4fdeae4ee1d71fcaaeaccdc5afb08d4ef30 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Fri, 6 May 2022 12:39:14 +0300
+Subject: [PATCH] Fix LUA_PATH default value
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ src/luaconf.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/luaconf.h b/src/luaconf.h
+index 2a3ac33..2b36391 100644
+--- a/src/luaconf.h
++++ b/src/luaconf.h
+@@ -98,9 +98,11 @@
+ #else
+ #define LUA_ROOT	"/usr/local/"
+ #define LUA_LDIR	LUA_ROOT "share/lua/5.1/"
+-#define LUA_CDIR	LUA_ROOT "lib/lua/5.1/"
++#define LUA_ADIR	LUA_ROOT "lib/lua/5.1/"
++#define LUA_CDIR	LUA_ROOT "lib64/lua/5.1/"
+ #define LUA_PATH_DEFAULT  \
+ 		"./?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
++		            LUA_ADIR"?.lua;"  LUA_ADIR"?/init.lua;" \
+ 		            LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
+ #define LUA_CPATH_DEFAULT \
+ 	"./?.so;"  LUA_CDIR"?.so;" LUA_CDIR"loadall.so"
+-- 
+2.34.1.windows.1
+

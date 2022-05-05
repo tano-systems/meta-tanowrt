@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano7"
+PR = "tano8"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
 LICENSE = "BSD"
@@ -31,3 +31,15 @@ FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/*"
 
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-error=ignored-qualifiers', '-Wno-error=discarded-qualifiers', d)} "
+
+EXTRA_OECMAKE += "\
+	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
+"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}

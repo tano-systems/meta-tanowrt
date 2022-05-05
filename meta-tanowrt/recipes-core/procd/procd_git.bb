@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano60"
+PR = "tano61"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -18,7 +18,7 @@ TOOLCHAIN = "gcc"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/procd.git;branch=master \
@@ -81,6 +81,41 @@ inherit cmake pkgconfig
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
+do_unpack[vardeps] += "libdir"
+do_unpack[vardeps] += "base_libdir"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+
+	if [ "${libdir}" != "/usr/lib" ]; then
+		if [ -e "${S}/jail/elf.c" ] ; then
+			sed -i -e "s:alloc_library_path(\"/usr/lib\");:alloc_library_path(\"${libdir}\");:g" \
+			       ${S}/jail/elf.c
+		fi
+	fi
+
+	if [ "${base_libdir}" != "/lib" ]; then
+		if [ -e "${S}/service/instance.c" ] ; then
+			sed -i -e "s:/lib/libsetlbf.so:${base_libdir}/libsetlbf.so:g" \
+			       ${S}/service/instance.c
+		fi
+
+		if [ -e "${S}/jail/jail.c" ] ; then
+			sed -i -e "s:/lib/libnss_:${base_libdir}/libnss_:g" \
+			       ${S}/jail/jail.c
+		fi
+
+		if [ -e "${S}/trace/trace.c" ] ; then
+			sed -i -e "s:/lib/libpreload:${base_libdir}/libpreload:g" \
+			       ${S}/trace/trace.c
+		fi
+	fi
+}
+
 do_install_append() {
 	install -d ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/reload_config ${D}${base_sbindir}/
@@ -90,8 +125,8 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/uxc.init ${D}${sysconfdir}/init.d/uxc
 
-	install -d ${D}${base_libdir}/functions
-	install -m 0755 ${WORKDIR}/procd.sh ${D}${base_libdir}/functions/
+	install -d ${D}${nonarch_base_libdir}/functions
+	install -m 0755 ${WORKDIR}/procd.sh ${D}${nonarch_base_libdir}/functions/
 
 	# Make sure things are where they are expected to be
 	install -dm 0755 ${D}/sbin ${D}/lib
@@ -106,6 +141,8 @@ do_install_append() {
 		ln -s /usr/sbin/ujail-console ${D}/sbin/ujail-console
 	fi
 
+	install -d ${D}${base_libdir}
+
 	if [ "${@bb.utils.contains('PACKAGECONFIG', 'seccomp', '1', '0', d)}" = "1" ]; then
 		mv ${D}${libdir}/libpreload-seccomp.so ${D}${base_libdir}/libpreload-seccomp.so
 		mv ${D}${libdir}/libpreload-trace.so ${D}${base_libdir}/libpreload-trace.so
@@ -114,7 +151,7 @@ do_install_append() {
 	fi
 
 	mv ${D}${libdir}/libsetlbf.so ${D}${base_libdir}/libsetlbf.so
-	rmdir ${D}/usr/lib
+	rmdir ${D}${libdir}
 
 	if [ "${@bb.utils.contains('PACKAGECONFIG', 'uxc', '1', '0', d)}" = "0" ]; then
 		rm -f ${D}${sbindir}/uxc

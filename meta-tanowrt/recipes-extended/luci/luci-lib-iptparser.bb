@@ -6,7 +6,7 @@
 # This file Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 SUMMARY = "Iptables listing parser class"
 LICENSE = "Apache-2.0"

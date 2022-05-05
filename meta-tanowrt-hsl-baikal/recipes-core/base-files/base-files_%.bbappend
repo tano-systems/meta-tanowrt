@@ -17,7 +17,7 @@ do_install_append() {
 		install -d ${D}${base_libdir}/preinit
 		for f in ${PREINIT_FILES}; do
 			FILEPATH="${f#file://}"
-			install -m 0644 ${WORKDIR}/${FILEPATH} ${D}${base_libdir}/preinit/
+			install -m 0644 ${WORKDIR}/${FILEPATH} ${D}${TANOWRT_PATH_PREINIT}/
 		done
 	fi
 }

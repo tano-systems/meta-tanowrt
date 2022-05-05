@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2019 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2019, 2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano8"
+PR = "tano9"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
@@ -38,10 +38,10 @@ S = "${WORKDIR}/git"
 inherit cmake pkgconfig
 
 FILES_${PN} += "\
-	${base_libdir}/netifd/proto/mbim.sh \
+	${nonarch_base_libdir}/netifd/proto/mbim.sh \
 "
 
 do_install_append() {
-	install -dm 0755 ${D}${base_libdir}/netifd/proto
-	install -m 0755 ${WORKDIR}/mbim.sh ${D}${base_libdir}/netifd/proto/mbim.sh
+	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/mbim.sh ${D}${nonarch_base_libdir}/netifd/proto/mbim.sh
 }

@@ -24,7 +24,7 @@ PACKAGECONFIG ??= "build-lua build-ucode"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
 PACKAGECONFIG[build-ucode] = "-DBUILD_UCODE=ON,-DBUILD_UCODE=OFF,ucode"
 
-EXTRA_OECMAKE += "-DBUILD_TESTS=OFF -DLUAPATH=/usr/lib/lua/5.1"
+EXTRA_OECMAKE += "-DBUILD_TESTS=OFF"
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-unknown-warning-option', '', d)}"
 
 S = "${WORKDIR}/git"

@@ -7,7 +7,7 @@ HOMEPAGE = "http://www.xelerance.com/software/xl2tpd/"
 SECTION = "net"
 DEPENDS = "ppp virtual/kernel"
 
-PR = "tano0"
+PR = "tano1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -55,11 +55,11 @@ do_install () {
     install -d ${D}${sysconfdir}/ppp
     install -m 0644 ${WORKDIR}/options.xl2tpd ${D}${sysconfdir}/ppp/options.xl2tpd
 
-    install -d ${D}${base_libdir}/netifd/proto
-    install -m 0755 ${WORKDIR}/l2tp.sh ${D}${base_libdir}/netifd/proto/l2tp.sh
+    install -d ${D}${nonarch_base_libdir}/netifd/proto
+    install -m 0755 ${WORKDIR}/l2tp.sh ${D}${nonarch_base_libdir}/netifd/proto/l2tp.sh
 }
 
-FILES_${PN} += "${base_libdir}"
+FILES_${PN} += "${nonarch_base_libdir}"
 
 CONFFILES_${PN} += "\
 	${sysconfdir}/xl2tpd/xl2tpd.conf \

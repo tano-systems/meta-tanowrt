@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano11"
+PR = "tano12"
 
 DESCRIPTION = "OpenWrt uqmi utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uqmi.git;a=summary"
@@ -37,10 +37,10 @@ inherit cmake pkgconfig
 B = "${S}"
 
 FILES_${PN} += "\
-	${base_libdir}/netifd/proto/qmi.sh \
+	${nonarch_base_libdir}/netifd/proto/qmi.sh \
 "
 
 do_install_append() {
-	install -dm 0755 ${D}${base_libdir}/netifd/proto
-	install -m 0755 ${WORKDIR}/qmi.sh ${D}${base_libdir}/netifd/proto/qmi.sh
+	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/qmi.sh ${D}${nonarch_base_libdir}/netifd/proto/qmi.sh
 }

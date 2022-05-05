@@ -203,12 +203,12 @@ do_install_append () {
 
 	install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
 
-	install -dm 0755 ${D}/lib/preinit
-	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}/lib/preinit/80_mount_root
-	install -m 0644 ${WORKDIR}/preinit/50_partitions_setup ${D}/lib/preinit/50_partitions_setup
+	install -dm 0755 ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/preinit/80_mount_root ${D}${TANOWRT_PATH_PREINIT}/80_mount_root
+	install -m 0644 ${WORKDIR}/preinit/50_partitions_setup ${D}${TANOWRT_PATH_PREINIT}/50_partitions_setup
 
 	if [ "${TANOWRT_ENABLE_OVERLAY_RESIZE}" = "1" ]; then
-		install -m 0644 ${WORKDIR}/preinit/51_overlay_resize ${D}/lib/preinit/51_overlay_resize
+		install -m 0644 ${WORKDIR}/preinit/51_overlay_resize ${D}${TANOWRT_PATH_PREINIT}/51_overlay_resize
 	fi
 
 	rm ${D}${sysconfdir}/issue.net
@@ -243,12 +243,12 @@ do_install_append () {
 	rm -rf ${D}${sysconfdir}/filesystems
 
 	if [ "${INSTALL_X86_PREINIT}" = "1" ]; then
-		install -dm 0755 ${D}/lib/preinit
-		install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
-		install -m 0644 ${WORKDIR}/preinit/02_load_x86_ucode ${D}/lib/preinit/02_load_x86_ucode
-		install -m 0644 ${WORKDIR}/preinit/15_essential_fs_x86 ${D}/lib/preinit/15_essential_fs_x86
-		install -m 0644 ${WORKDIR}/preinit/20_check_iso ${D}/lib/preinit/20_check_iso
-		install -m 0644 ${WORKDIR}/preinit/79_move_config ${D}/lib/preinit/79_move_config
+		install -dm 0755 ${D}${TANOWRT_PATH_PREINIT}
+		install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}${TANOWRT_PATH_PREINIT}/01_sysinfo
+		install -m 0644 ${WORKDIR}/preinit/02_load_x86_ucode ${D}${TANOWRT_PATH_PREINIT}/02_load_x86_ucode
+		install -m 0644 ${WORKDIR}/preinit/15_essential_fs_x86 ${D}${TANOWRT_PATH_PREINIT}/15_essential_fs_x86
+		install -m 0644 ${WORKDIR}/preinit/20_check_iso ${D}${TANOWRT_PATH_PREINIT}/20_check_iso
+		install -m 0644 ${WORKDIR}/preinit/79_move_config ${D}${TANOWRT_PATH_PREINIT}/79_move_config
 	fi
 
 	if [ "${ROOT_HOME}" != "/home/root" ]; then
@@ -260,8 +260,8 @@ do_install_append () {
 	install -dm 0755 ${D}${libdir}/locale
 
 	# Common default PATH
-	install -dm 0755 ${D}/lib/preinit
-	PREINIT_CONF="${D}/lib/preinit/00_preinit.conf"
+	install -dm 0755 ${D}${TANOWRT_PATH_PREINIT}
+	PREINIT_CONF="${D}${TANOWRT_PATH_PREINIT}/00_preinit.conf"
 	echo "pi_suppress_stderr=\"${OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_STDERR}\"" >${PREINIT_CONF}
 	echo "fs_failsafe_wait_timeout=${OPENWRT_CONFIG_TARGET_PREINIT_TIMEOUT}" >>${PREINIT_CONF}
 	echo "pi_init_path=\"${OPENWRT_CONFIG_TARGET_PREINIT_INIT_PATH}\"" >>${PREINIT_CONF}
@@ -284,8 +284,8 @@ do_install_append () {
 }
 
 do_install_append_qemuarm64() {
-	install -dm 0755 ${D}/lib/preinit
-	install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}/lib/preinit/01_sysinfo
+	install -dm 0755 ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}${TANOWRT_PATH_PREINIT}/01_sysinfo
 }
 
 pkg_preinst_${PN} () {

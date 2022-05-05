@@ -75,12 +75,12 @@ process_templates() {
 do_install() {
 	process_templates
 
-	install -d ${D}${base_libdir}/preinit
-	install -m 0644 ${WORKDIR}/81_swi_00_alignment ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/81_swi_01_confighw ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/81_swi_05_find_partitions ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/81_swi_06_firmware_links ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/81_swi_10_mount_early ${D}${base_libdir}/preinit/
+	install -d ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/81_swi_00_alignment ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/81_swi_01_confighw ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/81_swi_05_find_partitions ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/81_swi_06_firmware_links ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/81_swi_10_mount_early ${D}${TANOWRT_PATH_PREINIT}/
 
 	install -d ${D}${sysconfdir}
 	install -m 0644 ${WORKDIR}/swi-run.env ${D}${sysconfdir}/run.env
@@ -96,4 +96,4 @@ do_install() {
 	install -m 0755 ${WORKDIR}/swi-restart_swi_apps -D ${D}${sbindir}/swi-restart_swi_apps
 }
 
-FILES_${PN} = "${sysconfdir} ${base_libdir}/preinit ${sbindir}"
+FILES_${PN} = "${sysconfdir} ${TANOWRT_PATH_PREINIT} ${sbindir}"

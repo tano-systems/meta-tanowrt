@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0"
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Factory reset script"
 LICENSE = "MIT"
@@ -21,12 +21,12 @@ SRC_URI += "\
 "
 
 do_install() {
-	install -d ${D}${base_libdir}/factory-reset.d
+	install -d ${D}${nonarch_base_libdir}/factory-reset.d
 	install -d ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/factory-reset.sh ${D}${base_sbindir}/factory-reset
 }
 
 FILES_${PN} += "\
-	${base_libdir}/factory-reset.d \
+	${nonarch_base_libdir}/factory-reset.d \
 	${base_sbindir} \
 "
