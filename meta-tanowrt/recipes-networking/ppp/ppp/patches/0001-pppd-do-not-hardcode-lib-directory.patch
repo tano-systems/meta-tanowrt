@@ -1,0 +1,49 @@
+From 548eef6abf7d35d6ffd8964cde7eb8b3ddc57c1f Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 5 May 2022 23:41:25 +0300
+Subject: [PATCH] pppd: do not hardcode lib directory
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ pppd/Makefile.linux         | 4 ++--
+ pppd/plugins/Makefile.linux | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/pppd/Makefile.linux b/pppd/Makefile.linux
+index 7716b40..37b3393 100644
+--- a/pppd/Makefile.linux
++++ b/pppd/Makefile.linux
+@@ -192,7 +192,7 @@ endif
+ 
+ ifdef FILTER
+ ifneq ($(wildcard /usr/include/pcap-bpf.h),)
+-LIBS    += -lpcap -L$(STAGING_DIR)/usr/lib
++LIBS    += -lpcap -L$(STAGING_DIR)$(OE_LIBDIR)
+ CFLAGS  += -DPPP_FILTER -I$(STAGING_DIR)/usr/include
+ endif
+ endif
+@@ -201,7 +201,7 @@ ifdef PRECOMPILED_FILTER
+ PPPDSRCS += pcap_pcc.c
+ HEADERS  += pcap_pcc.h
+ PPPDOBJS += pcap_pcc.o
+-LIBS	+= $(STAGING_DIR)/usr/lib/libpcap.a
++LIBS	+= $(STAGING_DIR)$(OE_LIBDIR)/libpcap.a
+ CFLAGS	+= -DPPP_FILTER -DPPP_PRECOMPILED_FILTER -I$(STAGING_DIR)/usr/include
+ endif
+ 
+diff --git a/pppd/plugins/Makefile.linux b/pppd/plugins/Makefile.linux
+index 05ae0e4..a06396f 100644
+--- a/pppd/plugins/Makefile.linux
++++ b/pppd/plugins/Makefile.linux
+@@ -7,7 +7,7 @@ INSTALL	= install
+ DESTDIR = $(INSTROOT)@DESTDIR@
+ BINDIR = $(DESTDIR)/sbin
+ MANDIR = $(DESTDIR)/share/man/man8
+-LIBDIR = $(DESTDIR)/lib/pppd/$(VERSION)
++LIBDIR = $(DESTDIR)$(OE_BASE_LIBDIR)/pppd/$(VERSION)
+ 
+ SUBDIRS := rp-pppoe pppoatm pppol2tp pptp
+ # Uncomment the next line to include the radius authentication plugin
+-- 
+2.34.1.windows.1
+

@@ -16,8 +16,8 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/sysctl.d/40-swi.conf ${D}${sysconfdir}/sysctl.d/
 	install -m 0644 ${WORKDIR}/eth0_address ${D}${sysconfdir}/
 
-	install -d ${D}${base_libdir}/preinit
-	install -m 0644 ${WORKDIR}/preinit/81_setup_iface_mac ${D}${base_libdir}/preinit/
+	install -d ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/preinit/81_setup_iface_mac ${D}${TANOWRT_PATH_PREINIT}/
 }
 
 CONFFILES_${PN}_append = "\

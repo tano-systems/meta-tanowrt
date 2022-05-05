@@ -11,7 +11,7 @@ Index: git/modules/luci-base/CMakeLists.txt
 +SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
 +
 +INSTALL(DIRECTORY luasrc/
-+	DESTINATION "${LUAPATH}/luci"
++	DESTINATION "${LUAPATH_NONARCH}/luci"
 +	USE_SOURCE_PERMISSIONS
 +)
 +

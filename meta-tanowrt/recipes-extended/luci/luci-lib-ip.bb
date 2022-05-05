@@ -3,11 +3,11 @@
 #
 # Lua library for IP calculation and routing information
 #
-# This file Copyright (c) 2019 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019, 2022, Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "Lua library for IP calculation and routing information"
 LICENSE = "Apache-2.0"
@@ -25,6 +25,11 @@ python __anonymous() {
     d.delVarFlag('do_configure', 'noexec')
     d.delVarFlag('do_compile', 'noexec')
 }
+
+# Installed by cmake
+LUCI_DO_INSTALL_ROOT ?= "0"
+LUCI_DO_INSTALL_LUASRC ?= "0"
+LUCI_DO_INSTALL_HTDOCS ?= "0"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 

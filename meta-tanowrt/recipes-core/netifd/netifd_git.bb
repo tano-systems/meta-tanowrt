@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano43"
+PR = "tano44"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=13;md5=572cd47ba0e377b2633
 SECTION = "base"
 DEPENDS = "json-c libubox ubus libnl uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/netifd.git;name=netifd;branch=master \
@@ -56,7 +56,7 @@ OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 
 do_configure_prepend () {
 	# replace hardcoded '/lib/' with '${base_libdir}/'
-	grep -rnl "/lib/" ${WORKDIR}/rootfs/ | xargs sed -i "s:/lib/:${base_libdir}/:g"
+	grep -rnl "/lib/" ${WORKDIR}/rootfs/ | xargs sed -i "s:/lib/:${nonarch_base_libdir}/:g"
 }
 
 do_install_append() {
@@ -78,13 +78,13 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/rootfs/etc/hotplug.d/iface/00-netstate ${D}${sysconfdir}/hotplug.d/iface/
 	install -m 0755 ${WORKDIR}/rootfs/etc/hotplug.d/net/20-smp-packet-steering ${D}${sysconfdir}/hotplug.d/net/
 
-	install -d ${D}${base_libdir}/netifd/proto
-	install -m 0755 ${WORKDIR}/rootfs/lib/netifd/proto/dhcp.sh ${D}${base_libdir}/netifd/proto/
-	install -m 0755 ${WORKDIR}/rootfs/lib/netifd/dhcp.script ${D}${base_libdir}/netifd/
-	cp -dR --preserve=mode,links ${S}/scripts/* ${D}${base_libdir}/netifd/
+	install -d ${D}${nonarch_base_libdir}/netifd/proto
+	install -m 0755 ${WORKDIR}/rootfs/lib/netifd/proto/dhcp.sh ${D}${nonarch_base_libdir}/netifd/proto/
+	install -m 0755 ${WORKDIR}/rootfs/lib/netifd/dhcp.script ${D}${nonarch_base_libdir}/netifd/
+	cp -dR --preserve=mode,links ${S}/scripts/* ${D}${nonarch_base_libdir}/netifd/
 
-	install -d ${D}${base_libdir}/network
-	install -m 0755 ${WORKDIR}/rootfs/lib/network/config.sh ${D}${base_libdir}/network/
+	install -d ${D}${nonarch_base_libdir}/network
+	install -m 0755 ${WORKDIR}/rootfs/lib/network/config.sh ${D}${nonarch_base_libdir}/network/
 
 	install -d ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/rootfs/sbin/devstatus ${D}${base_sbindir}/
@@ -108,12 +108,12 @@ ALTERNATIVE_LINK_NAME[default.script] = "/usr/share/udhcpc/default.script"
 
 FILES_${PN} += "\
 	${datadir}/udhcpc/default.script* \
-	${base_libdir}/netifd/dhcp.script \
-	${base_libdir}/netifd/utils.sh \
-	${base_libdir}/netifd/netifd-wireless.sh \
-	${base_libdir}/netifd/netifd-proto.sh \
-	${base_libdir}/netifd/proto/dhcp.sh \
-	${base_libdir}/network/config.sh \
+	${nonarch_base_libdir}/netifd/dhcp.script \
+	${nonarch_base_libdir}/netifd/utils.sh \
+	${nonarch_base_libdir}/netifd/netifd-wireless.sh \
+	${nonarch_base_libdir}/netifd/netifd-proto.sh \
+	${nonarch_base_libdir}/netifd/proto/dhcp.sh \
+	${nonarch_base_libdir}/network/config.sh \
 	${sysconfdir}/config/network \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "

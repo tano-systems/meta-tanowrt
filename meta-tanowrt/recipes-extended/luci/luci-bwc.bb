@@ -3,10 +3,10 @@
 #
 # Very simple bandwidth collector cache for LuCI realtime graphs
 #
-# This file Copyright (C) 2019 Tano Systems
+# This file Copyright (C) 2019, 2022 Tano Systems
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano1"
+PR = "tano2"
 
 DESCRIPTION = "Very simple bandwidth collector cache for LuCI realtime graphs"
 HOMEPAGE = "https://github.com/openwrt/luci"
@@ -27,6 +27,7 @@ FILES_${PN} = "\
 	${bindir}/luci-bwc"
 
 do_configure() {
+	sed -i -e "s:/usr/lib/:${libdir}/:g" ${S}/luci-bwc.c
 	oe_runmake -C ${S}/ clean
 }
 

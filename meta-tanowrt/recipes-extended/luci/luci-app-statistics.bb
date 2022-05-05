@@ -3,10 +3,10 @@
 #
 # LuCI Statistics Application
 #
-# This file Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2018-2020, 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano13"
+PR = "tano14"
 
 DEPENDS += "uci-native"
 
@@ -45,5 +45,6 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/luci_statistics.init ${D}${sysconfdir}/init.d/luci_statistics
 
 	uci -c ${D}${sysconfdir}/config set luci_statistics.collectd_iwinfo.enable='${COLLECTD_ENABLE_IWINFO}'
+	uci -c ${D}${sysconfdir}/config set luci_statistics.collectd.PluginDir="${libdir}/collectd"
 	uci -c ${D}${sysconfdir}/config commit luci_statistics
 }

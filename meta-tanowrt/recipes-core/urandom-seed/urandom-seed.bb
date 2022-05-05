@@ -29,14 +29,14 @@ TANOWRT_SERVICE_STATE_urandom-seed-urandom_seed ?= "enabled"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-FILES_${PN} += "${sysconfdir} ${base_libdir} ${base_sbindir}"
+FILES_${PN} += "${sysconfdir} ${nonarch_base_libdir} ${base_sbindir}"
 
 do_install() {
 	install -d -m 0755 ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/rootfs/etc/init.d/urandom_seed ${D}${sysconfdir}/init.d/urandom_seed
 
-	install -d -m 0755 ${D}${base_libdir}/preinit
-	install -m 0644 ${WORKDIR}/rootfs/lib/preinit/81_urandom_seed ${D}${base_libdir}/preinit/81_urandom_seed
+	install -d -m 0755 ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/rootfs/lib/preinit/81_urandom_seed ${D}${TANOWRT_PATH_PREINIT}/81_urandom_seed
 
 	install -d -m 0755 ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/rootfs/sbin/urandom_seed ${D}${base_sbindir}/urandom_seed

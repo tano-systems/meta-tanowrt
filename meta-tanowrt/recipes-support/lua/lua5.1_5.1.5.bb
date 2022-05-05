@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2020 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2020, 2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 DESCRIPTION = "Lua is a powerful light-weight programming language designed \
@@ -11,7 +11,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYRIGHT;md5=59bdd99bb82238f238cf5c65c21604fd"
 HOMEPAGE = "http://www.lua.org/"
 
-PR = "tano4"
+PR = "tano5"
 
 PROVIDES += "lua"
 RPROVIDES_${PN} = "lua"
@@ -47,6 +47,7 @@ SRC_URI_append_class-target = "\
 	file://patches/015-lnum-ppc-compat.patch \
 	file://patches/030-archindependent-bytecode.patch \
 	file://patches/300-opcode_performance.patch \
+	file://patches/0001-Fix-LUA_PATH-default-value.patch \
 "
 
 SRC_URI[md5sum] = "2e115fe26e435e33b0d5c022e4490567"
@@ -60,7 +61,9 @@ TARGET_CC_ARCH += " -fPIC ${LDFLAGS}"
 EXTRA_OEMAKE = "'CC=${CC} -fPIC' 'MYCFLAGS=${CFLAGS} -DLUA_USE_LINUX -fPIC' MYLDFLAGS='${LDFLAGS}'"
 
 do_configure_prepend() {
-    sed -i -e s:/usr/local:${prefix}:g src/luaconf.h
+    sed -i -e "s:/usr/local:${prefix}:g" \
+           -e "s:#define LUA_CDIR	LUA_ROOT \"lib64/lua/5.1/\":#define LUA_CDIR	LUA_ROOT \"${baselib}/lua/5.1/\":g" \
+           src/luaconf.h
 }
 
 do_compile () {

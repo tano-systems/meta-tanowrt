@@ -141,17 +141,17 @@ do_install_append() {
 		> ${D}${SWU_HW_COMPATIBILITY_FILE}
 
 	# Install preinit scripts
-	install -d ${D}${base_libdir}/preinit
-	install -m 0644 ${WORKDIR}/preinit/51_swupdate_gen_sw_versions ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/preinit/55_swupdate_preinit_before_overlay ${D}${base_libdir}/preinit/
-	install -m 0644 ${WORKDIR}/preinit/81_swupdate_preinit ${D}${base_libdir}/preinit/
+	install -d ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0644 ${WORKDIR}/preinit/51_swupdate_gen_sw_versions ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/preinit/55_swupdate_preinit_before_overlay ${D}${TANOWRT_PATH_PREINIT}/
+	install -m 0644 ${WORKDIR}/preinit/81_swupdate_preinit ${D}${TANOWRT_PATH_PREINIT}/
 
 	install -m 0644 ${WORKDIR}/51_swupdate_gen_dev_symlinks \
-	                ${D}${base_libdir}/preinit/
+	                ${D}${TANOWRT_PATH_PREINIT}/
 
 	# Install configuration scripts
-	install -d ${D}${libdir}/swupdate/conf.d
-	install -m 0644 ${WORKDIR}/conf.d/09_swupdate_args ${D}${libdir}/swupdate/conf.d/
+	install -d ${D}${nonarch_libdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/conf.d/09_swupdate_args ${D}${nonarch_libdir}/swupdate/conf.d/
 
 	# Install UCI config
 	install -d ${D}${sysconfdir}/config
@@ -169,30 +169,30 @@ do_install_append() {
 	                ${D}${sysconfdir}/init.d/swupdate
 
 	# Install scripts
-	install -d ${D}${libdir}/swupdate
-	install -m 0644 ${WORKDIR}/swupdate.sh ${D}${libdir}/swupdate/
-	install -m 0644 ${WORKDIR}/swupdate_config ${D}${libdir}/swupdate/
-	install -m 0755 ${WORKDIR}/swupdate_done.sh ${D}${libdir}/swupdate/
-	install -m 0755 ${WORKDIR}/swupdate_hook.sh ${D}${libdir}/swupdate/
+	install -d ${D}${nonarch_libdir}/swupdate
+	install -m 0644 ${WORKDIR}/swupdate.sh ${D}${nonarch_libdir}/swupdate/
+	install -m 0644 ${WORKDIR}/swupdate_config ${D}${nonarch_libdir}/swupdate/
+	install -m 0755 ${WORKDIR}/swupdate_done.sh ${D}${nonarch_libdir}/swupdate/
+	install -m 0755 ${WORKDIR}/swupdate_hook.sh ${D}${nonarch_libdir}/swupdate/
 
 	# Install hook.d scripts
-	install -d ${D}${libdir}/swupdate/hook.d
-	install -m 0755 ${WORKDIR}/hook.d/40_default_machine ${D}${libdir}/swupdate/hook.d/
-	install -m 0755 ${WORKDIR}/hook.d/90_default ${D}${libdir}/swupdate/hook.d/
+	install -d ${D}${nonarch_libdir}/swupdate/hook.d
+	install -m 0755 ${WORKDIR}/hook.d/40_default_machine ${D}${nonarch_libdir}/swupdate/hook.d/
+	install -m 0755 ${WORKDIR}/hook.d/90_default ${D}${nonarch_libdir}/swupdate/hook.d/
 
 	if [ "${SWU_BOOTLOADER}" = "grub-efi" ]; then
 		if [ -n "${SWU_GRUBENV}" ]; then
 			echo "SWU_GRUBENV=\"${SWU_GRUBENV}\"" \
-				>> ${D}${libdir}/swupdate/swupdate_config
+				>> ${D}${nonarch_libdir}/swupdate/swupdate_config
 		fi
 		if [ -n "${SWU_GRUBBIN}" ]; then
 			echo "SWU_GRUBBIN=\"${SWU_GRUBBIN}\"" \
-				>> ${D}${libdir}/swupdate/swupdate_config
+				>> ${D}${nonarch_libdir}/swupdate/swupdate_config
 		fi
 		echo "SWU_GRUBENV_RO=\"${SWU_GRUBENV_RO}\"" \
-			>> ${D}${libdir}/swupdate/swupdate_config
+			>> ${D}${nonarch_libdir}/swupdate/swupdate_config
 		echo "SWU_GRUBENV_MOUNTPOINT=\"${SWU_GRUBENV_MOUNTPOINT}\"" \
-			>> ${D}${libdir}/swupdate/swupdate_config
+			>> ${D}${nonarch_libdir}/swupdate/swupdate_config
 	fi
 
 	if [ ! -f "${WORKDIR}/swupdate_bootloader_${SWU_BOOTLOADER}.sh" ]; then
@@ -200,7 +200,7 @@ do_install_append() {
 	fi
 
 	install -m 0644 ${WORKDIR}/swupdate_bootloader_${SWU_BOOTLOADER}.sh \
-	                ${D}${libdir}/swupdate/
+	                ${D}${nonarch_libdir}/swupdate/
 
 	# Create symlink to generated at runtime versions file
 	ln -sf "${SWU_SW_VERSIONS_FILE_TMP}" \
@@ -213,8 +213,8 @@ FILES_${PN}-www = "/www-swupdate/*"
 FILES_${PN} += "\
 	${SWU_CONF} \
 	${SWU_HW_REVISION} \
-	${libdir}/swupdate \
-	${base_libdir}/preinit \
+	${nonarch_libdir}/swupdate \
+	${TANOWRT_PATH_PREINIT} \
 "
 
 CONFFILES_${PN} += "\

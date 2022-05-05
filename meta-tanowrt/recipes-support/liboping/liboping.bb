@@ -26,7 +26,7 @@ SRC_URI = "https://noping.cc/files/${BPN}-${PV}.tar.gz \
 SRC_URI[md5sum] = "28d085b95d1ca1acd541fc2606d5e02d"
 SRC_URI[sha256sum] = "86b44f684a3151bd4b5b75336876635ecb0f6cfe54a2fb29a6da06432f2dbb00"
 
-S = "${WORKDIR}/${PN}-${PV}"
+S = "${WORKDIR}/${BPN}-${PV}"
 
 inherit autotools
 

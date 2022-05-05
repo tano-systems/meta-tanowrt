@@ -3,10 +3,10 @@
 #
 # LuCI rpcd module
 #
-# This file Copyright (c) 2019 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2019, 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano0"
+PR = "tano1"
 DESCRIPTION = "LuCI rpcd module"
 
 LICENSE = "Apache-2.0"
@@ -27,6 +27,10 @@ SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
 
 SRC_URI += "file://0100-fix-libnl-include-directories.patch;pnum=4"
+
+do_configure_prepend() {
+	sed -i -e "s:/usr/lib/:${libdir}/:g" ${S}/luci.c
+}
 
 do_install() {
 	install -dm 0755 ${D}${libdir}/rpcd

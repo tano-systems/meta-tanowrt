@@ -96,6 +96,8 @@ PACKAGECONFIG_append_pn-openssl = " cryptodev-linux"
 
 INHERIT += "do-populate-lic-deps"
 
+INHERIT += "tanowrt-paths"
+
 #
 # QEMU
 #

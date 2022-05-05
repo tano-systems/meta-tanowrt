@@ -4,11 +4,11 @@
 # Open source VPN solution using SSL
 # OpenWrt recipe
 #
-# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "11"
+INC_PR = "12"
 
 inherit tanowrt-services
 
@@ -74,7 +74,7 @@ EXTRA_OE_CONF += "\
 inherit kmod/tun
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILES_${PN} += "/lib/upgrade/keep.d /lib/functions/openvpn.sh"
+FILES_${PN} += "${nonarch_base_libdir}/upgrade/keep.d ${nonarch_base_libdir}/functions/openvpn.sh"
 
 do_install_append() {
 	# OpenWrt files
@@ -95,16 +95,16 @@ do_install_append() {
 	install -m 644 ${WORKDIR}/openvpn.config ${D}${sysconfdir}/config/openvpn
 
 	# Install upgrade
-	install -d ${D}${base_libdir}/upgrade/keep.d
-	install -m 644 ${WORKDIR}/openvpn.upgrade ${D}${base_libdir}/upgrade/keep.d/openvpn
+	install -d ${D}${nonarch_base_libdir}/upgrade/keep.d
+	install -m 644 ${WORKDIR}/openvpn.upgrade ${D}${nonarch_base_libdir}/upgrade/keep.d/openvpn
 
 	# Install OpenVPN options
 	install -d ${D}${datadir}/openvpn
 	install -m 644 ${WORKDIR}/openvpn.options ${D}${datadir}/openvpn/openvpn.options
 
 	# Install OpenVPN functions lib
-	install -d ${D}/lib/functions
-	install -m 644 ${WORKDIR}/lib/functions/openvpn.sh ${D}/lib/functions/openvpn.sh
+	install -d ${D}${nonarch_base_libdir}/functions
+	install -m 644 ${WORKDIR}/lib/functions/openvpn.sh ${D}${nonarch_base_libdir}/functions/openvpn.sh
 
 	# Hotplug functionality
 	install -d ${D}/usr/libexec

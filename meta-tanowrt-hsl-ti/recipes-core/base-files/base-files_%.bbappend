@@ -10,6 +10,6 @@ SRC_URI_append_am335x-icev2 = "\
 "
 
 do_install_append_am335x-icev2() {
-	install -d ${D}${base_libdir}/preinit
-	install -m 0755 ${WORKDIR}/rootfs/lib/preinit/01_display_lcd_message ${D}${base_libdir}/preinit/
+	install -d ${D}${TANOWRT_PATH_PREINIT}
+	install -m 0755 ${WORKDIR}/rootfs/lib/preinit/01_display_lcd_message ${D}${TANOWRT_PATH_PREINIT}/
 }

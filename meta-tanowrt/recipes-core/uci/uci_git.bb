@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano13"
+PR = "tano14"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -38,7 +38,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/lua5.1"
 
 do_install_append() {
-    install -Dm 0755 ${WORKDIR}/uci.sh ${D}${base_libdir}/config/uci.sh
+    install -Dm 0755 ${WORKDIR}/uci.sh ${D}${nonarch_base_libdir}/config/uci.sh
 
     mkdir -p ${D}/sbin
     mkdir -p ${D}/usr/sbin
@@ -46,6 +46,6 @@ do_install_append() {
     ln -s /usr/bin/uci ${D}/sbin/uci
 }
 
-FILES_${PN} += "${base_libdir}"
+FILES_${PN} += "${nonarch_base_libdir}"
 
 BBCLASSEXTEND = "native nativesdk"

@@ -11,7 +11,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://src/odhcp6c.c;beginline=1;endline=13;md5=41d01a2c8e6a8ef58b8e5f18e68118a8"
 SECTION = "base"
 DEPENDS = "libubox"
-PR = "tano7"
+PR = "tano8"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -32,13 +32,13 @@ inherit cmake pkgconfig
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 do_install_append() {
-	install -Dm 0755 ${WORKDIR}/dhcpv6.sh ${D}${base_libdir}/netifd/proto/dhcpv6.sh
-	install -Dm 0755 ${WORKDIR}/dhcpv6.script ${D}${base_libdir}/netifd/dhcpv6.script
+	install -Dm 0755 ${WORKDIR}/dhcpv6.sh ${D}${nonarch_base_libdir}/netifd/proto/dhcpv6.sh
+	install -Dm 0755 ${WORKDIR}/dhcpv6.script ${D}${nonarch_base_libdir}/netifd/dhcpv6.script
 }
 
 FILES_${PN} += "\
-	${base_libdir}/netifd/proto/dhcpv6.sh \
-	${base_libdir}/netifd/dhcpv6.script \
+	${nonarch_base_libdir}/netifd/proto/dhcpv6.sh \
+	${nonarch_base_libdir}/netifd/dhcpv6.script \
 "
 
 RRECOMMENDS_${PN} += "netifd"

@@ -38,7 +38,7 @@ do_install_append() {
 	rm -rf ${D}${localstatedir}
 
 	# Install procd init script
-	install -m 0755 ${WORKDIR}/smstools3.init "${D}${sysconfdir}/init.d/smstools3"
+	install -m 0755 ${WORKDIR}/smstools3.init "${sysconfdir}/init.d/smstools3"
 
 	# Install configuration file
 	install -m 644 ${WORKDIR}/smstools3.conf "${D}${sysconfdir}/smsd.conf"

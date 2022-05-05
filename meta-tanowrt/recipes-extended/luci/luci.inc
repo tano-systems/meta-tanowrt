@@ -11,8 +11,6 @@ LUCI_GIT_SRCREV ?= "41bc16dfc7f5275cb9e659b93581f3ff409e7f00"
 
 PR_append = ".110"
 
-libdir = "/usr/lib"
-
 # Default distributive and LuCI name and version
 LUCI_DISTNAME     ?= "Host System"
 LUCI_DISTVERSION  ?= "SDK"

@@ -1,12 +1,12 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (c) 2018 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2018, 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 DESCRIPTION = "Kommand Line Interface Shell"
 SECTION = "console/utils"
-PR = "tano0"
+PR = "tano1"
 
 LICENSE = "klish"
 LIC_FILES_CHKSUM = "file://LICENCE;md5=763c2d89173e7008fab9b7ecf2605ab5"
@@ -23,6 +23,6 @@ SRC_URI[sha256sum] = "a89dd1027dce713407b6d68e836c8fdead56406dcfc650da84da8e0b92
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "/usr/lib/*.so"
+FILES_${PN} += "${libdir}/*.so"
 
 inherit autotools

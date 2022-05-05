@@ -8,7 +8,7 @@
 # interfaces, connection tracking and an easy to manage traffic ruleset.
 #
 PV = "2.10.6"
-PR = "tano0"
+PR = "tano1"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
 LICENSE = "GPLv2"
@@ -49,7 +49,7 @@ TANOWRT_SERVICE_PACKAGES = "mwan3"
 TANOWRT_SERVICE_SCRIPTS_mwan3 += "mwan3"
 TANOWRT_SERVICE_STATE_mwan3-mwan3 ?= "disabled"
 
-FILES_${PN} += "${libdir}/ ${base_libdir}/"
+FILES_${PN} += "${libdir}/ ${base_libdir}/ ${nonarch_base_libdir}/"
 
 S = "${WORKDIR}/src"
 
@@ -74,9 +74,9 @@ do_install() {
 	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/15-mwan3 ${D}${sysconfdir}/hotplug.d/iface/
 	install -m 0755 ${WORKDIR}/etc/hotplug.d/iface/16-mwan3-user ${D}${sysconfdir}/hotplug.d/iface/
 
-	install -dm 0755 ${D}${base_libdir}/mwan3
-	install -m 0755 ${WORKDIR}/lib/mwan3/common.sh ${D}${base_libdir}/mwan3/
-	install -m 0755 ${WORKDIR}/lib/mwan3/mwan3.sh ${D}${base_libdir}/mwan3/
+	install -dm 0755 ${D}${nonarch_base_libdir}/mwan3
+	install -m 0755 ${WORKDIR}/lib/mwan3/common.sh ${D}${nonarch_base_libdir}/mwan3/
+	install -m 0755 ${WORKDIR}/lib/mwan3/mwan3.sh ${D}${nonarch_base_libdir}/mwan3/
 
 	install -dm 0755 ${D}/usr/libexec/rpcd
 	install -m 0755 ${WORKDIR}/usr/libexec/rpcd/mwan3 ${D}/usr/libexec/rpcd/

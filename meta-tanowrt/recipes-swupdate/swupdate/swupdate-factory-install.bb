@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 PV = "1.0.0"
-PR = "tano0"
+PR = "tano1"
 
 SUMMARY = "SWUPDATE factory installation script"
 LICENSE = "MIT"
@@ -38,21 +38,21 @@ SRC_URI += "\
 "
 
 do_install() {
-	install -d ${D}${base_libdir}/preinit
+	install -d ${D}${TANOWRT_PATH_PREINIT}
 	install -m 0644 ${WORKDIR}/03_swu_install_preinit_started \
-	                ${D}${base_libdir}/preinit/
+	                ${D}${TANOWRT_PATH_PREINIT}/
 	install -m 0644 ${WORKDIR}/98_swu_install_preinit_done \
-	                ${D}${base_libdir}/preinit/
+	                ${D}${TANOWRT_PATH_PREINIT}/
 
-	install -d ${D}${libdir}/swupdate/install
-	install -m 0755 ${WORKDIR}/swu_install.sh ${D}${libdir}/swupdate/install/
-	install -m 0755 ${WORKDIR}/swu_install.board ${D}${libdir}/swupdate/install/
-	install -m 0644 ${WORKDIR}/swu_install.json ${D}${libdir}/swupdate/install/
+	install -d ${D}${nonarch_libdir}/swupdate/install
+	install -m 0755 ${WORKDIR}/swu_install.sh ${D}${nonarch_libdir}/swupdate/install/
+	install -m 0755 ${WORKDIR}/swu_install.board ${D}${nonarch_libdir}/swupdate/install/
+	install -m 0644 ${WORKDIR}/swu_install.json ${D}${nonarch_libdir}/swupdate/install/
 }
 
 FILES_${PN} += "\
-	${base_libdir}/preinit \
-	${libdir}/swupdate/install \
+	${TANOWRT_PATH_PREINIT} \
+	${nonarch_libdir}/swupdate/install \
 "
 
 #

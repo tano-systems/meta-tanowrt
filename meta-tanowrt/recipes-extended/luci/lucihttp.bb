@@ -24,7 +24,7 @@ SRCREV = "3dc89af443410c9eae7a0ff091bd7fb4c5d48f41"
 PACKAGECONFIG ??= "build-lua"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
 
-OECMAKE_C_FLAGS += "-DBUILD_TESTS=OFF -DLUAPATH=/usr/lib/lua/5.1"
+EXTRA_OECMAKE += "-DBUILD_TESTS=OFF"
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-unknown-warning-option', '', d)}"
 
 S = "${WORKDIR}/git"

@@ -4,7 +4,7 @@
 # This file Copyright (C) 2018-2020 Anton Kikin <a.kikin@tano-systems.com>
 # Partially taken from meta-openembedded layer
 #
-INC_PR = "6"
+INC_PR = "7"
 
 SUMMARY = "Collects and summarises system performance statistics"
 DESCRIPTION = "collectd is a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways, for example in RRD files."
@@ -293,13 +293,19 @@ do_install_append() {
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/collectd.init ${D}${sysconfdir}/init.d/collectd
 
+    sed -i -e "s:LIBDIR=\"/usr/lib\":LIBDIR=\"${libdir}\":g" \
+              ${D}${sysconfdir}/init.d/collectd
+
     # Install UCI config
     install -d ${D}${sysconfdir}/config
     install -m 0644 ${WORKDIR}/collectd.uci ${D}${sysconfdir}/config/collectd
 
+    sed -i -e "s:PluginDir '/usr/lib/collectd':PluginDir '${libdir}/collectd':g" \
+              ${D}${sysconfdir}/config/collectd
+
     # Install plugin JSONs
     install -d ${D}/usr/share/collectd/plugin
-    for plugin in $(ls ${D}/usr/lib/collectd/*.so); do
+    for plugin in $(ls ${D}${libdir}/collectd/*.so); do
         PLUGIN_FILE=$(basename ${plugin})
         PLUGIN_NAME=${PLUGIN_FILE%.*}
         if [ -e ${WORKDIR}/usr/share/collectd/plugin/${PLUGIN_NAME}.json ]; then

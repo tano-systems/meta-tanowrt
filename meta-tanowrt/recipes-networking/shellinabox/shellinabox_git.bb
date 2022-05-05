@@ -11,7 +11,7 @@
 # This file Copyright (c) 2018 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano2"
+PR = "tano3"
 PV = "2.21+git${SRCPV}"
 
 DESCRIPTION = "Shell In A Box implements a web server that \
@@ -75,11 +75,11 @@ do_install_append() {
 	install -m 0644 ${B}/shellinabox/white-on-black.css ${D}${sysconfdir}/shellinabox/
 	install -m 0644 ${WORKDIR}/shellinabox.css ${D}${sysconfdir}/shellinabox/
 
-	install -d -m 0755 ${D}${base_libdir}/upgrade/keep.d
-	install -m 0644 ${WORKDIR}/shellinabox.keep ${D}${base_libdir}/upgrade/keep.d/shellinabox
+	install -d -m 0755 ${D}${nonarch_base_libdir}/upgrade/keep.d
+	install -m 0644 ${WORKDIR}/shellinabox.keep ${D}${nonarch_base_libdir}/upgrade/keep.d/shellinabox
 }
 
-FILES_${PN} += "${base_libdir}/upgrade/keep.d"
+FILES_${PN} += "${nonarch_base_libdir}/upgrade/keep.d"
 
 S = "${WORKDIR}/git"
 

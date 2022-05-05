@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2021, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano15"
+PR = "tano16"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPLv2"
@@ -13,7 +13,7 @@ SECTION = "base"
 
 DEPENDS = "ubus libubox uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/ubox.git \
@@ -44,6 +44,14 @@ inherit update-alternatives
 ALTERNATIVE_${PN} = "logread"
 ALTERNATIVE_PRIORITY = "10"
 ALTERNATIVE_LINK_NAME[logread] = "${sbindir}/logread"
+
+do_configure_prepend () {
+	if [ -e "${S}/CMakeLists.txt" ] ; then
+		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
+		       ${S}/CMakeLists.txt
+	fi
+}
 
 do_install_append () {
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then
