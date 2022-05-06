@@ -48,6 +48,24 @@ TANOWRT_IMAGE_BUILDINFO_VARS ?= "\
 # Desired location of the output file in the image
 TANOWRT_IMAGE_BUILDINFO_FILE ??= "${sysconfdir}/build.json"
 
+def tanowrt_get_layer_git_branch(path, d):
+    import bb.process
+
+    try:
+        rev, _ = bb.process.run('PSEUDO_UNLOAD=1 git rev-parse --abbrev-ref HEAD', cwd=path)
+    except bb.process.ExecutionError:
+        rev = '<unknown>'
+    return rev.strip()
+
+def tanowrt_get_layer_git_revision(path, d):
+    import bb.process
+
+    try:
+        rev, _ = bb.process.run('PSEUDO_UNLOAD=1 git rev-parse HEAD', cwd=path)
+    except bb.process.ExecutionError:
+        rev = '<unknown>'
+    return rev.strip()
+
 # Gets git branch's status (clean or dirty)
 def tanowrt_get_layer_git_modified(path):
     import subprocess
@@ -71,8 +89,8 @@ def tanowrt_get_layers_info(d):
 
     for layer in layers:
         layer_name = os.path.basename(layer)
-        layer_branch = base_get_metadata_git_branch(layer, None).strip()
-        layer_rev = base_get_metadata_git_revision(layer, None)
+        layer_branch = tanowrt_get_layer_git_branch(layer, None).strip()
+        layer_rev = tanowrt_get_layer_git_revision(layer, None)
         layer_modified = tanowrt_get_layer_git_modified(layer)
 
         ret[layer_name] = {
@@ -126,8 +144,8 @@ IMAGE_PREPROCESS_COMMAND += "tanowrt_buildinfo;"
 # Calculate some version dependent variables
 #
 TANOWRT_SCM_BASE = "${@os.path.normpath(os.path.join(d.getVar('TANOWRT_BASE'), ".."))}"
-TANOWRT_SCM_BRANCH = "${@base_get_metadata_git_branch(d.getVar('TANOWRT_SCM_BASE'), None).strip()}"
-TANOWRT_SCM_REVISION = "${@base_get_metadata_git_revision(d.getVar('TANOWRT_SCM_BASE'), None)}"
+TANOWRT_SCM_BRANCH = "${@tanowrt_get_layer_git_branch(d.getVar('TANOWRT_SCM_BASE'), None).strip()}"
+TANOWRT_SCM_REVISION = "${@tanowrt_get_layer_git_revision(d.getVar('TANOWRT_SCM_BASE'), None)}"
 TANOWRT_SCM_REVISION_SHORT = "${@d.getVar('TANOWRT_SCM_REVISION')[:12]}"
 
 TANOWRT_ROOTFS_GEN_TIMESTAMP ?= "${@time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(d.getVar('DATETIME', d), '%Y%m%d%H%M%S'))} UTC"
