@@ -71,7 +71,7 @@ else
 	echo "Active system B"
 fi
 
-set CMDLINE="panic=15 rootwait rootfstype=squashfs console=tty console=ttyS0,115200 ${kernel_extra_cmdline}"
+set CMDLINE="panic=15 rootwait rootfstype=squashfs earlycon=uart8250,mmio32,0x20230000 console=uart8250,mmio32,0x20230000 ${kernel_extra_cmdline}"
 
 menuentry 'TanoWrt (system A)' {
 	linux (${kerneldev_a})/${kernel_image} root=PARTUUID=@@TANOWRT_PARTUUID_ROOTDEV_A@@ ${CMDLINE} swu_active=0
