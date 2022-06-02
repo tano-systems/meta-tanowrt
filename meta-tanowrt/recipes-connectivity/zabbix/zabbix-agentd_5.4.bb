@@ -22,7 +22,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # 23-Dec-2021 09:00
 PV = "5.4.9"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "https://cdn.zabbix.com/zabbix/sources/stable/5.4/zabbix-${PV}.tar.gz \
            file://0001-Fix-configure.ac.patch"
@@ -64,6 +64,8 @@ EXTRA_OECONF = "\
 KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}')}"
 
 CFLAGS:append = " -pthread"
+
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 do_configure:prepend() {
 	export KERNEL_VERSION="${KERNEL_VERSION}"
