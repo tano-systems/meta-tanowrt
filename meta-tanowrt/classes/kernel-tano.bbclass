@@ -193,16 +193,19 @@ do_configure_append() {
 }
 
 # LINUX_LOCALVERSION can be set to add a tag to the end of the
-# kernel version string.  such as the commit id
-def get_git_revision(p):
-    import subprocess
+# kernel version string. such as the commit id
+def get_localversion(d):
+    pr = d.getVar("PR")
+    srcrev = d.getVar("KERNEL_SRC_SRCREV")
+    localversion = ""
+    if srcrev and srcrev != "":
+        localversion += "-g%s" % (srcrev[:10])
+    if pr and pr != "":
+        localversion += "-%s" % (pr)
 
-    try:
-        return subprocess.Popen("git rev-parse HEAD 2>/dev/null ", cwd=p, shell=True, stdout=subprocess.PIPE, universal_newlines=True).communicate()[0].rstrip()
-    except OSError:
-        return None
+    return localversion
 
-LINUX_LOCALVERSION ?= "-g${@get_git_revision('${S}').__str__()[:10]}-${PR}"
+LINUX_LOCALVERSION ?= "${@get_localversion(d)}"
 
 do_configure_append() {
 	echo ${LINUX_LOCALVERSION} > ${B}/.scmversion
