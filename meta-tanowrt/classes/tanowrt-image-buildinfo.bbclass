@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2020-2021 Tano Systems LLC
+# Copyright (C) 2020-2022 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Writes build information to target filesystem
@@ -43,6 +43,9 @@ TANOWRT_IMAGE_BUILDINFO_VARS ?= "\
 	TANOWRT_RELEASE_DISTRIB_DESCRIPTION \
 	TANOWRT_RELEASE_DISTRIB_TAINTS \
 	TANOWRT_RELEASE_DISTRIB_TIMESTAMP \
+	CI_BUILD_NUMBER|optional \
+	CI_BUILD_JOB|optional \
+	CI_BUILD_NODE|optional \
 "
 
 # Desired location of the output file in the image
@@ -105,8 +108,13 @@ def tanowrt_output_vars(vars, d):
     vars = vars.split()
     ret = {}
 
-    for var in vars:
+    for v in vars:
+        var, flags = (lambda s: [ s[0], s[1] if len(s) > 1 else None ])(v.split('|'))
         value = d.getVar(var) or ""
+
+        if value == "" and flags == "optional":
+            continue
+
         if (d.getVarFlag(var, 'type') == "list"):
             ret[var] = value.split()
         else:
@@ -201,7 +209,10 @@ tanowrt_generate_openwrt_files() {
 		echo "DISTRIB_DESCRIPTION='${TANOWRT_RELEASE_DISTRIB_DESCRIPTION}'"
 		echo "DISTRIB_TAINTS='${TANOWRT_RELEASE_DISTRIB_TAINTS}'"
 		echo "DISTRIB_TIMESTAMP='${TANOWRT_RELEASE_DISTRIB_TIMESTAMP}'"
-	
+
+		[ -n "${CI_BUILD_NUMBER}" ] && echo "CI_BUILD_NUMBER='${CI_BUILD_NUMBER}'"
+		[ -n "${CI_BUILD_JOB}"    ] && echo "CI_BUILD_JOB='${CI_BUILD_JOB}'"
+		[ -n "${CI_BUILD_NODE}"   ] && echo "CI_BUILD_NODE='${CI_BUILD_NODE}'"
 	} > ${IMAGE_ROOTFS}${sysconfdir}/openwrt_release
 
 	# Make symlinks
