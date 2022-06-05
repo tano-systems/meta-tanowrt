@@ -1,12 +1,12 @@
 #!/bin/sh
 #
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2021 Tano Systems LLC. All Rights Reserved.
+# SPDX-FileCopyrightText: 2021-2022 Tano Systems LLC. All Rights Reserved.
 #
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # SWUPDATE factory installation script
-# Version 1.0.0
+# Version 1.1.0
 #
 # shellcheck shell=bash
 # shellcheck disable=SC3043
@@ -133,6 +133,7 @@ BIN_UBIMKVOL="/usr/sbin/ubimkvol"
 BIN_UBIUPDATEVOL="/usr/sbin/ubiupdatevol"
 BIN_NANDWRITE="/usr/sbin/nandwrite"
 BIN_DD="/bin/dd"
+BIN_SGDISK="/usr/sbin/sgdisk"
 BIN_PARTED="/usr/sbin/parted"
 BIN_PARTPROBE="/usr/sbin/partprobe"
 BIN_CURL="/usr/bin/curl"
@@ -1464,6 +1465,7 @@ do_blkdev_parts_do_partitions() {
 			local start
 			local end
 			local boot
+			local uuid
 
 			local parted_args="-s ${device} --script mkpart"
 
@@ -1475,6 +1477,7 @@ do_blkdev_parts_do_partitions() {
 			json_get_var start "start" ""
 			json_get_var end "end" ""
 			json_get_var boot "boot" ""
+			json_get_var uuid "uuid" ""
 
 			if [ "${type}" != "primary" ] && \
 			   [ "${type}" != "extended" ] && \
@@ -1503,6 +1506,10 @@ do_blkdev_parts_do_partitions() {
 				append parted_args "${end}"
 			fi
 
+			if [ -n "${uuid}" ]; then
+				swu_log_param "UUID" "${uuid}"
+			fi
+
 			if [ -n "${boot}" ]; then
 				swu_log_param "Boot flag" "${boot}"
 			fi
@@ -1527,6 +1534,13 @@ do_blkdev_parts_do_partitions() {
 						"${BIN_PARTED} -s ${device} --script set ${part_n} boot off" \
 						|| return $?
 				fi
+				swu_install_progress
+			fi
+
+			if [ -n "${uuid}" ]; then
+				bin_execute \
+					"${BIN_SGDISK} --partition-guid=${part_n}:${uuid} ${device}" \
+					|| return $?
 				swu_install_progress
 			fi
 
