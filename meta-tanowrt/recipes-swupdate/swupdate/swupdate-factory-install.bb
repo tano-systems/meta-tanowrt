@@ -4,8 +4,8 @@
 # Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PV = "1.0.0"
-PR = "tano1"
+PV = "1.1.0"
+PR = "tano0"
 
 SUMMARY = "SWUPDATE factory installation script"
 LICENSE = "MIT"
