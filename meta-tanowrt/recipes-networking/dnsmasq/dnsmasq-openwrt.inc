@@ -129,3 +129,38 @@ do_uci_config_append() {
 		${UCI} commit dhcp
 	fi
 }
+
+
+TANOWRT_DNSMASQ_CONFIGURE_INTERFACES ?= ""
+
+do_unpack[vardeps] += "TANOWRT_DNSMASQ_CONFIGURE_INTERFACES"
+
+#
+# You may use TANOWRT_DNSMASQ_CONFIGURE_INTERFACES in machine configuration.
+#
+# Example:
+#   TANOWRT_DNSMASQ_CONFIGURE_INTERFACES = "wan"
+#   TANOWRT_DNSMASQ_CONFIGURE_INTERFACE_wan = "interface=wan ignore=1"
+#
+
+python __anonymous() {
+    configure = d.getVar("TANOWRT_DNSMASQ_CONFIGURE_INTERFACES", True)
+    if configure:
+        uci_commands = ""
+        uci = d.getVar("UCI", True)
+        for interface in configure.split():
+            params = d.getVar("TANOWRT_DNSMASQ_CONFIGURE_INTERFACE_%s" % interface, True)
+            uci_commands += "\n%s set dhcp.%s=dhcp" % (uci, interface)
+            if params:
+                for param in params.split():
+                    s = param.split("=")
+                    if len(s) == 2:
+                        bb.debug(1, "Configuring %s interface: %s=%s..." % (interface, s[0], s[1]))
+                        uci_commands += "\n%s set dhcp.%s.%s=\"%s\"" % (uci, interface, s[0], s[1])
+                    else:
+                        bb.error("Cannot configure param '%s' for interface %s" % (param, interface))
+
+        if len(uci_commands) > 0:
+            uci_commands += "\n%s commit dhcp\n" % uci
+            d.appendVar('do_uci_config', uci_commands)
+}
