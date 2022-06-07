@@ -1,8 +1,8 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2020, 2022 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano2"
+PR_append = ".tano3"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
