@@ -17,7 +17,8 @@ validate_rngd_section()
 		'precmd:string' \
 		'watermark:uinteger' \
 		'random_step:uinteger' \
-		'timeout:uinteger'
+		'timeout:uinteger' \
+		'ignore_fail:bool:0'
 }
 
 rngd_instance()
@@ -79,6 +80,7 @@ rngd_instance()
 		procd_append_param command -o ${out_device}
 		procd_append_param command -r ${in_device}
 
+		[ "${ignore_fail}" = "1" ] && procd_append_param command -i
 		[ -z "${watermark}" ] || procd_append_param command -W ${watermark}
 		[ -z "${random_step}" ] || procd_append_param command -s ${random_step}
 		[ -z "${timeout}" ] || procd_append_param command -t ${timeout}
