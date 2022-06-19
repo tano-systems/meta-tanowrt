@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano40"
+PR = "tano41"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "BSD"
@@ -67,6 +67,8 @@ do_install_append() {
     install -dm 0755 ${D}/www
 
     sed -i -e "s:LIBDIR=\"/usr/lib\":LIBDIR=\"${libdir}\":g" \
+              ${D}${sysconfdir}/init.d/uhttpd
+    sed -i -e "s:BASE_LIBDIR=\"/lib\":BASE_LIBDIR=\"${base_libdir}\":g" \
               ${D}${sysconfdir}/init.d/uhttpd
 }
 
