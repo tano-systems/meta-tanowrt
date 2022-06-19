@@ -10,6 +10,7 @@ PX5G_BIN="/usr/sbin/px5g"
 OPENSSL_BIN="/usr/bin/openssl"
 
 LIBDIR="/usr/lib"
+BASE_LIBDIR="/lib"
 
 append_arg() {
 	local cfg="$1"
@@ -156,7 +157,7 @@ start_instance()
 	config_get UHTTPD_KEY  "$cfg" key  /etc/uhttpd.key
 	config_get UHTTPD_CERT "$cfg" cert /etc/uhttpd.crt
 
-	[ -f /lib/libustream-ssl.so ] && [ -n "$https" ] && {
+	[ -f ${BASE_LIBDIR}/libustream-ssl.so ] && [ -n "$https" ] && {
 		[ -s "$UHTTPD_CERT" -a -s "$UHTTPD_KEY" ] || {
 			[ -f "$UHTTPD_CERT.new" -o -f "$UHTTPD_KEY.new" ] || {
 				config_foreach generate_keys cert
