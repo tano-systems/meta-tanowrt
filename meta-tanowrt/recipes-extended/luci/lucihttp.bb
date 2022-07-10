@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2022, Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano8"
+PR = "tano9"
 
 DESCRIPTION = "LuCI HTTP utility library"
 LICENSE = "MIT"
@@ -18,7 +18,7 @@ SRC_URI = "\
 	git://github.com/jow-/lucihttp.git;protocol=https \
 "
 
-SRCREV = "cc8518386cd37f25e574a66be63f1d62d2bd5a0a"
+SRCREV = "6e68a1065f3ed1889e5fa053b206bd3aa108bd5f"
 
 PACKAGECONFIG ??= "build-lua build-ucode"
 PACKAGECONFIG[build-lua] = "-DBUILD_LUA=ON,-DBUILD_LUA=OFF,"
