@@ -6,10 +6,10 @@ LUCI_GIT_URI      ?= "git://github.com/tano-systems/luci.git"
 LUCI_GIT_BRANCH   ?= "tano/master"
 LUCI_GIT_PROTOCOL ?= "git"
 
-# 04.07.2022
-LUCI_GIT_SRCREV ?= "f45626dc734cef57d1d1caf3e7662cd99394607c"
+# 11.07.2022
+LUCI_GIT_SRCREV ?= "07eb337c2b7503712c3661dc0e14619f51da12b7"
 
-PR_append = ".132"
+PR_append = ".133"
 
 # Default distributive and LuCI name and version
 LUCI_DISTNAME     ?= "Host System"
