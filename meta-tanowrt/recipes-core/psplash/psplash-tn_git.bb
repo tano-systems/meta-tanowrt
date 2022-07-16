@@ -34,11 +34,11 @@ RCONFLICTS_${PN} = "psplash"
 PSPLASH_TN_GIT_URI      ?= "gitsm://github.com/tano-systems/psplash-tn"
 PSPLASH_TN_GIT_BRANCH   ?= "tano/master"
 PSPLASH_TN_GIT_PROTOCOL ?= "https"
-PSPLASH_TN_GIT_SRCREV   ?= "a2aeb2ece1eda22b395ccdf7f9ad6ca07b4875be"
+PSPLASH_TN_GIT_SRCREV   ?= "b6c41df8232c3e5d88a24efb3f2a21a6c3ee58db"
 
 SRCREV = "${PSPLASH_TN_GIT_SRCREV}"
 PV = "0.1+git${SRCPV}"
-PR = "tano13"
+PR = "tano14"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
