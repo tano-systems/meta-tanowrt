@@ -1,0 +1,1534 @@
+DDR Version V1.13 20220218
+In
+ddrconfig:7
+LP4 MR14:0x4d
+LPDDR4, 324MHz
+BW=32 Col=10 Bk=8 CS0 Row=15 CS1 Row=15 CS=2 Die BW=16 Size=2048MB
+tdqss: cs0 dqs0: 409ps, dqs1: 313ps, dqs2: 385ps, dqs3: 337ps,
+tdqss: cs1 dqs0: 409ps, dqs1: 313ps, dqs2: 409ps, dqs3: 337ps,
+
+change to: 324MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x58
+
+change to: 528MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x68
+
+change to: 780MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x58
+
+change to: 1056MHz(final freq)
+PHY drv:clk:38,ca:38,DQ:30,odt:60
+vrefinner:16%, vrefout:29%
+dram drv:40,odt:80
+vref_ca:00000068
+clk skew:0x1e
+cs 0:
+the read training result:
+DQS0:0x3e, DQS1:0x38, DQS2:0x3d, DQS3:0x3e,
+min  : 0xd  0xe  0xf  0xb  0x1  0x7  0xa  0x9 , 0x2  0x1  0x3  0x3  0x5  0x4  0xa  0x4 ,
+       0x9  0x9  0x9  0x5  0x2  0x3  0x6  0x5 , 0xb  0x8  0x7  0x1  0xb  0xc  0x9  0xb ,
+mid  :0x2b 0x2b 0x2c 0x29 0x20 0x24 0x27 0x26 ,0x21 0x1f 0x21 0x21 0x24 0x22 0x26 0x22 ,
+      0x27 0x27 0x27 0x23 0x20 0x22 0x24 0x24 ,0x29 0x27 0x25 0x1f 0x28 0x29 0x28 0x29 ,
+max  :0x49 0x49 0x4a 0x47 0x3f 0x41 0x44 0x44 ,0x40 0x3e 0x40 0x3f 0x43 0x41 0x42 0x41 ,
+      0x46 0x45 0x45 0x42 0x3e 0x41 0x42 0x43 ,0x47 0x46 0x44 0x3e 0x46 0x47 0x47 0x48 ,
+range:0x3c 0x3b 0x3b 0x3c 0x3e 0x3a 0x3a 0x3b ,0x3e 0x3d 0x3d 0x3c 0x3e 0x3d 0x38 0x3d ,
+      0x3d 0x3c 0x3c 0x3d 0x3c 0x3e 0x3c 0x3e ,0x3c 0x3e 0x3d 0x3d 0x3b 0x3b 0x3e 0x3d ,
+the write training result:
+DQS0:0x55, DQS1:0x48, DQS2:0x52, DQS3:0x4b,
+min  :0x90 0x92 0x92 0x92 0x86 0x8a 0x8d 0x8f 0x8d ,0x80 0x83 0x83 0x84 0x83 0x85 0x88 0x85 0x84 ,
+      0x8c 0x8b 0x8d 0x89 0x86 0x88 0x89 0x8c 0x89 ,0x85 0x86 0x83 0x7e 0x85 0x86 0x84 0x89 0x7e ,
+mid  :0xad 0xaf 0xaf 0xae 0xa1 0xa6 0xa9 0xaa 0xaa ,0x9e 0x9f 0xa0 0xa0 0xa0 0xa1 0xa4 0xa1 0x9f ,
+      0xa9 0xa9 0xa9 0xa6 0xa1 0xa2 0xa2 0xa7 0xa5 ,0xa3 0xa2 0x9f 0x9a 0xa1 0xa3 0x9f 0xa4 0x9a ,
+max  :0xcb 0xcc 0xcd 0xca 0xbd 0xc3 0xc6 0xc6 0xc7 ,0xbc 0xbb 0xbd 0xbd 0xbd 0xbd 0xc0 0xbd 0xbb ,
+      0xc6 0xc7 0xc6 0xc4 0xbc 0xbd 0xbc 0xc2 0xc2 ,0xc1 0xbe 0xbb 0xb7 0xbd 0xc1 0xbb 0xc0 0xb6 ,
+range:0x3b 0x3a 0x3b 0x38 0x37 0x39 0x39 0x37 0x3a ,0x3c 0x38 0x3a 0x39 0x3a 0x38 0x38 0x38 0x37 ,
+      0x3a 0x3c 0x39 0x3b 0x36 0x35 0x33 0x36 0x39 ,0x3c 0x38 0x38 0x39 0x38 0x3b 0x37 0x37 0x38 ,
+cs 1:
+the read training result:
+DQS0:0x3e, DQS1:0x38, DQS2:0x3c, DQS3:0x3d,
+min  : 0xb  0xd  0xd  0x9  0x1  0x5  0x8  0x7 , 0x1  0x1  0x3  0x2  0x4  0x4  0xa  0x4 ,
+       0x7  0x7  0x8  0x4  0x1  0x3  0x7  0x5 , 0xb  0x9  0x7  0x1  0xb  0xc  0x9  0xb ,
+mid  :0x2a 0x2b 0x2b 0x28 0x20 0x23 0x26 0x25 ,0x20 0x1f 0x22 0x21 0x24 0x23 0x27 0x22 ,
+      0x26 0x25 0x26 0x22 0x1f 0x21 0x24 0x24 ,0x28 0x27 0x25 0x1f 0x28 0x29 0x27 0x29 ,
+max  :0x49 0x49 0x4a 0x47 0x3f 0x41 0x44 0x44 ,0x3f 0x3e 0x41 0x40 0x44 0x43 0x44 0x41 ,
+      0x45 0x44 0x44 0x41 0x3d 0x40 0x41 0x43 ,0x46 0x46 0x44 0x3d 0x45 0x46 0x46 0x47 ,
+range:0x3e 0x3c 0x3d 0x3e 0x3e 0x3c 0x3c 0x3d ,0x3e 0x3d 0x3e 0x3e 0x40 0x3f 0x3a 0x3d ,
+      0x3e 0x3d 0x3c 0x3d 0x3c 0x3d 0x3a 0x3e ,0x3b 0x3d 0x3d 0x3c 0x3a 0x3a 0x3d 0x3c ,
+the write training result:
+DQS0:0x55, DQS1:0x48, DQS2:0x52, DQS3:0x4b,
+min  :0x8c 0x8d 0x8d 0x8b 0x81 0x86 0x87 0x89 0x88 ,0x7b 0x7d 0x7e 0x7e 0x7f 0x7f 0x83 0x80 0x7e ,
+      0x8b 0x8b 0x8c 0x89 0x85 0x88 0x89 0x8d 0x8a ,0x82 0x82 0x7f 0x7a 0x82 0x83 0x7f 0x84 0x7a ,
+mid  :0xa9 0xaa 0xaa 0xa8 0x9d 0xa1 0xa4 0xa5 0xa5 ,0x99 0x9a 0x9b 0x9b 0x9c 0x9b 0x9e 0x9c 0x9a ,
+      0xa8 0xa8 0xa9 0xa5 0xa0 0xa2 0xa2 0xa6 0xa5 ,0x9f 0x9e 0x9b 0x97 0x9e 0xa0 0x9b 0xa0 0x96 ,
+max  :0xc6 0xc8 0xc8 0xc6 0xb9 0xbc 0xc1 0xc1 0xc2 ,0xb7 0xb7 0xb8 0xb8 0xb9 0xb8 0xba 0xb9 0xb7 ,
+      0xc6 0xc6 0xc6 0xc2 0xbb 0xbd 0xbc 0xc0 0xc1 ,0xbc 0xbb 0xb8 0xb4 0xbb 0xbd 0xb8 0xbc 0xb3 ,
+range:0x3a 0x3b 0x3b 0x3b 0x38 0x36 0x3a 0x38 0x3a ,0x3c 0x3a 0x3a 0x3a 0x3a 0x39 0x37 0x39 0x39 ,
+      0x3b 0x3b 0x3a 0x39 0x36 0x35 0x33 0x33 0x37 ,0x3a 0x39 0x39 0x3a 0x39 0x3a 0x39 0x38 0x39 ,
+CA Training result:
+cs:0 min  :0x4d 0x43 0x4a 0x37 0x48 0x38 0x4a ,0x54 0x43 0x4d 0x3c 0x4a 0x3b 0x4a ,
+cs:0 mid  :0x89 0x87 0x84 0x7e 0x81 0x7d 0x74 ,0x8b 0x89 0x84 0x82 0x83 0x7f 0x73 ,
+cs:0 max  :0xc6 0xcc 0xbe 0xc6 0xba 0xc2 0x9e ,0xc3 0xcf 0xbc 0xc8 0xbd 0xc4 0x9d ,
+cs:0 range:0x79 0x89 0x74 0x8f 0x72 0x8a 0x54 ,0x6f 0x8c 0x6f 0x8c 0x73 0x89 0x53 ,
+cs:1 min  :0x4d 0x43 0x48 0x3a 0x47 0x38 0x3c ,0x52 0x43 0x4c 0x3e 0x48 0x3a 0x3b ,
+cs:1 mid  :0x87 0x87 0x83 0x7f 0x80 0x7c 0x70 ,0x8b 0x87 0x85 0x83 0x83 0x80 0x71 ,
+cs:1 max  :0xc2 0xcc 0xbe 0xc4 0xba 0xc0 0xa4 ,0xc4 0xcc 0xbe 0xc8 0xbe 0xc6 0xa7 ,
+cs:1 range:0x75 0x89 0x76 0x8a 0x73 0x88 0x68 ,0x72 0x89 0x72 0x8a 0x76 0x8c 0x6c ,
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10 (Jul 21 2022 - 15:38:55)
+unknown raw ID 3f6c928
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+spl: partition error
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(fe4f274c06...) + OK
+## Checking uboot 0x00a00000 ... sha256(5fb810a4d9...) + OK
+## Checking fdt 0x00b0d2a0 ... sha256(b680d052f6...) + OK
+## Checking atf-2 0x00068000 ... sha256(8d44036095...) + OK
+## Checking atf-3 0xfdcd0000 ... sha256(e410275b51...) + OK
+## Checking atf-4 0xfdcc9000 ... sha256(990c53fc01...) + OK
+## Checking atf-5 0x00066000 ... sha256(315a4195a9...) + OK
+## Checking optee 0x08400000 ... sha256(b8cddafab0...) + OK
+Jumping to U-Boot(0x00a00000) via ARM Trusted Firmware(0x00040000)
+Total: 308.117 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-181-gc9a647cae:cl
+NOTICE:  BL31: Built : 10:55:41, Oct 18 2021
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    pmu v1 is valid
+INFO:    dfs DDR fsp_param[0].freq_mhz= 1056MHz
+INFO:    dfs DDR fsp_param[1].freq_mhz= 324MHz
+INFO:    dfs DDR fsp_param[2].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_param[3].freq_mhz= 780MHz
+INFO:    Using opteed sec cpu_context!
+INFO:    boot cpu mask: 0
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: Start rockchip platform init
+I/TC: Rockchip release version: 1.0
+I/TC: OP-TEE version: 3.6.0-307-g0b06ae94 #1 Fri May  7 01:52:27 UTC 2021 aarch64
+I/TC: Initialized
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0xa00000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10 (Jul 21 2022 - 15:38:55 +0000)
+
+Model: Boardcon EM3568 SBC Board
+PreSerial: 2, raw, 0xfe660000
+DRAM:  2 GiB
+Sysmem: init
+Relocation Offset: 7d36c000
+Relocation fdt: 7b9e5f88 - 7b9fece8
+CR: M/C/I
+I2c0 speed: 100000Hz
+vsel-gpios- not found! Error: -2
+vdd_cpu init 900000 uV
+PMIC:  RK8090 (on=0x40, off=0x00)
+vdd_logic init 900000 uV
+vdd_gpu init 900000 uV
+vdd_npu init 900000 uV
+io-domain: OK
+Failed to get scmi clk dev
+NAND:  nand_base: timeout while waiting for chip to become ready
+nand_base: No NAND device found
+0 MiB
+mtd_blk:   no mmc device at slot 1
+dwmmc@fe2b0000: 1 (SD), dwmmc@fe2c0000: 2, sdhci@fe310000: 0
+Bootdev(atags): <NULL> <NULL>
+Use emmc as default boot media
+Repair the Primary gpt table OK!
+MMC0: HS200, 200Mhz
+PartType: EFI
+MMC:   Model: Boardcon EM3568 SBC Board
+rockchip_set_serialno: could not find efuse/otp device
+No misc partition
+boot mode: normal
+CLK: (sync kernel. arm: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+  apll 816000 KHz
+  dpll 528000 KHz
+  gpll 1188000 KHz
+  cpll 1000000 KHz
+  npll 1200000 KHz
+  vpll 24000 KHz
+  hpll 24000 KHz
+  ppll 200000 KHz
+  armclk 816000 KHz
+  aclk_bus 150000 KHz
+  pclk_bus 100000 KHz
+  aclk_top_high 300000 KHz
+  aclk_top_low 200000 KHz
+  hclk_top 150000 KHz
+  pclk_top 100000 KHz
+  aclk_perimid 300000 KHz
+  hclk_perimid 150000 KHz
+  pclk_pmu 100000 KHz
+No misc partition
+Net:   eth1: ethernet@fe010000, eth0: ethernet@fe2a0000
+Hit key to stop autoboot('CTRL+C'):  0
+switch to partitions #0, OK
+mmc1 is current device
+
+MMC read: dev # 1, block # 7936, count 128 ... 128 blocks read: OK
+## Executing script at 00c00000
+Board name: evb_rk3568
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc1 is current device
+18692300 bytes read in 1581 ms (11.3 MiB/s)
+Force console to be enabled
+Booting kernel 0x04080000#conf-rockchip_boardcon-em3568.dtb...
+Fdt Ramdisk skip relocation
+No misc partition
+## Loading kernel from FIT Image at 04080000 ...
+   Using 'conf-rockchip_boardcon-em3568.dtb' configuration
+## Verified-boot: 0
+   Trying 'kernel-1' kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  gzip compressed
+     Data Start:   0x04080114
+     Data Size:    9221774 Bytes = 8.8 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x00280000
+     Entry Point:  0x00280000
+     Hash algo:    sha256
+     Hash value:   2405d34725f79c607c3ba1446b7e3961842ced004669f1bb16a5d360ec2046f1
+   Verifying Hash Integrity ... sha256+ OK
+## Loading ramdisk from FIT Image at 04080000 ...
+   Using 'conf-rockchip_boardcon-em3568.dtb' configuration
+   Trying 'ramdisk-1' ramdisk subimage
+     Description:  tanowrt-image-initramfs-swu-factory
+     Type:         RAMDisk Image
+     Compression:  uncompressed
+     Data Start:   0x0496d23c
+     Data Size:    9330919 Bytes = 8.9 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: unavailable
+     Entry Point:  unavailable
+     Hash algo:    sha256
+     Hash value:   3825ab90933f775909c505e3a9c08c81cc93024852853133ed37ac183da98b3c
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at 04080000 ...
+   Using 'conf-rockchip_boardcon-em3568.dtb' configuration
+   Trying 'fdt-rockchip_boardcon-em3568.dtb' fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x0494b8c4
+     Data Size:    137356 Bytes = 134.1 KiB
+     Architecture: AArch64
+     Load Address: 0x0a100000
+     Hash algo:    sha256
+     Hash value:   35cc419de806cfdaedaee6f32406d75eb920ce15329ea5f19dc1e17ecd69f838
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x0494b8c4 to 0x0a100000
+   Booting using the fdt blob at 0x0a100000
+   Uncompressing GZIP Kernel Image from 0x04080114 to 0x00280000 ... with 0157a008 bytes OK
+   kernel loaded at 0x00280000, end = 0x017fa008
+  'reserved-memory' ramoops@110000: addr=110000 size=f0000
+   Using Device Tree in place at 000000000a100000, end 000000000a12488b
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0x80000000 (size: 0x76c00000)
+Total: 5532.874 ms
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
+[    0.000000] Linux version 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 (oe-user@oe-host) (gcc version 10.3.0 (GCC), GNU ld (GNU Binutils) 2.36.1.20210703) #1 SMP Thu Jul 21 21:45:48 UTC 2022
+[    0.000000] Machine model: Boardcon EM3568 SBC Board
+[    0.000000] earlycon: uart8250 at MMIO32 0x00000000fe660000 (options '')
+[    0.000000] bootconsole [uart8250] enabled
+[    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-logo@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 16 MiB at 0x000000007f000000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: Trusted OS migration not required
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 23 pages/cpu s54376 r8192 d31640 u94208
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: Virtualization Host Extensions
+[    0.000000] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 511496
+[    0.000000] Kernel command line: console=ttyFIQ0,1500000n8 earlycon=uart8250,mmio32,0xfe660000  root=/dev/ram rootfstype=squashfs rootwait=1 earlyprintk panic=15
+[    0.000000] Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes)
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] Memory: 1992924K/2078720K available (13950K kernel code, 1896K rwdata, 4640K rodata, 1472K init, 506K bss, 69412K reserved, 16384K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] ftrace: allocating 50720 entries in 199 pages
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu:     RCU event tracing is enabled.
+[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=8 to nr_cpu_ids=4.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: Distributor has no Range Selector support
+[    0.000000] GICv3: no VLPI support, no direct LPI support
+[    0.000000] ITS [mem 0xfd440000-0xfd45ffff]
+[    0.000000] ITS@0x00000000fd440000: allocated 8192 Devices @7c4f0000 (indirect, esz 8, psz 64K, shr 0)
+[    0.000000] ITS@0x00000000fd440000: allocated 32768 Interrupt Collections @7c500000 (flat, esz 2, psz 64K, shr 0)
+[    0.000000] ITS: using cache flushing for cmd queue
+[    0.000000] GIC: using LPI property table @0x000000007c510000
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x00000000fd460000
+[    0.000000] CPU0: using LPI pending table @0x000000007c520000
+[    0.000000] GIC: using cache flushing for LPI property table
+[    0.000000] random: random: get_random_bytes called from start_kernel+0x358/0x4e0 with crng_init=0
+[    0.000000] arch_timer: cp15 timer(s) running at 24.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000006] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.002300] Console: colour dummy device 80x25
+[    0.002759] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=80000)
+[    0.003724] pid_max: default: 32768 minimum: 301
+[    0.004363] Mount-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.005004] Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.007636] ASID allocator initialised with 32768 entries
+[    0.008313] rcu: Hierarchical SRCU implementation.
+[    0.011582] Platform MSI: interrupt-controller@fd440000 domain created
+[    0.012794] PCI/MSI: /interrupt-controller@fd400000/interrupt-controller@fd440000 domain created
+[    0.014422] smp: Bringing up secondary CPUs ...
+[    0.015678] Detected VIPT I-cache on CPU1
+[    0.015720] GICv3: CPU1: found redistributor 100 region 0:0x00000000fd480000
+[    0.015775] CPU1: using LPI pending table @0x000000007c6b0000
+[    0.015831] CPU1: Booted secondary processor 0x0000000100 [0x412fd050]
+[    0.016874] Detected VIPT I-cache on CPU2
+[    0.016909] GICv3: CPU2: found redistributor 200 region 0:0x00000000fd4a0000
+[    0.016958] CPU2: using LPI pending table @0x000000007c700000
+[    0.017003] CPU2: Booted secondary processor 0x0000000200 [0x412fd050]
+[    0.017886] Detected VIPT I-cache on CPU3
+[    0.017919] GICv3: CPU3: found redistributor 300 region 0:0x00000000fd4c0000
+[    0.017970] CPU3: using LPI pending table @0x000000007c720000
+[    0.018014] CPU3: Booted secondary processor 0x0000000300 [0x412fd050]
+[    0.018152] smp: Brought up 1 node, 4 CPUs
+[    0.025094] SMP: Total of 4 processors activated.
+[    0.025540] CPU features: detected: GIC system register CPU interface
+[    0.026140] CPU features: detected: Privileged Access Never
+[    0.026662] CPU features: detected: LSE atomic instructions
+[    0.027206] CPU features: detected: User Access Override
+[    0.027701] CPU features: detected: 32-bit EL0 Support
+[    0.028182] CPU features: detected: RAS Extension Support
+[    0.028884] CPU: All CPU(s) started at EL2
+[    0.029299] alternatives: patching kernel code
+[    0.037155] devtmpfs: initialized
+[    0.066793] Registered cp15_barrier emulation handler
+[    0.067289] Registered setend emulation handler
+[    0.068080] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 6370867519511994 ns
+[    0.069005] futex hash table entries: 1024 (order: 4, 65536 bytes)
+[    0.070446] pinctrl core: initialized pinctrl subsystem
+[    0.072104] NET: Registered protocol family 16
+[    0.077098] cpuidle: using governor menu
+[    0.077511] Registered FIQ tty driver
+[    0.078318] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.081243] DMA: preallocated 2048 KiB pool for atomic allocations
+[    0.087511] console [pstore-1] enabled
+[    0.087869] pstore: Registered ramoops as persistent store backend
+[    0.088453] ramoops: attached 0xf0000@0x110000, ecc: 0/0
+[    0.129804] rockchip-gpio fdd60000.gpio: probed gpio0 (fdd60000.gpio)
+[    0.131192] rockchip-gpio fe740000.gpio: probed gpio1 (fe740000.gpio)
+[    0.132522] rockchip-gpio fe750000.gpio: probed gpio2 (fe750000.gpio)
+[    0.133868] rockchip-gpio fe760000.gpio: probed gpio3 (fe760000.gpio)
+[    0.135179] rockchip-gpio fe770000.gpio: probed gpio4 (fe770000.gpio)
+[    0.135901] rockchip-pinctrl pinctrl: probed pinctrl
+[    0.151691] cryptd: max_cpu_qlen set to 1000
+[    0.154076] console [ttyFIQ0] enabled
+[    0.154076] console [ttyFIQ0] enabled
+[    0.154765] bootconsole [uart8250] disabled
+[    0.154765] bootconsole [uart8250] disabled
+[    0.155423] Registered fiq debugger ttyFIQ0
+[    0.156603] vcc3v3_sys: supplied by dc_12v
+[    0.157099] vdd_fixed: supplied by vcc3v3_sys
+[    0.157589] vcc5v0_sys: supplied by dc_12v
+[    0.158072] vcc5v0_usb: supplied by dc_12v
+[    0.158568] vcc2v5-sys: supplied by vcc3v3_sys
+[    0.159074] vcc3v3_bu: supplied by vcc5v0_sys
+[    0.159765] vcc5v0_host: supplied by vcc5v0_usb
+[    0.160598] vcc5v0_otg: supplied by vcc5v0_usb
+[    0.160929] vcc3v3_lcd0_n: supplied by vcc3v3_sys
+[    0.161438] vcc3v3_lcd1_n: supplied by vcc3v3_sys
+[    0.163605] rk_iommu fde4b000.iommu: version = 2
+[    0.164320] rk_iommu fdea0800.iommu: version = 2
+[    0.164812] rk_iommu fded0480.iommu: version = 2
+[    0.165390] rk_iommu fdee0800.iommu: version = 2
+[    0.165889] rk_iommu fdef0800.iommu: version = 2
+[    0.166351] rk_iommu fdf40f00.iommu: version = 2
+[    0.166955] rk_iommu fdf80800.iommu: version = 2
+[    0.167476] rk_iommu fdfe0800.iommu: version = 2
+[    0.168028] rk_iommu fdff1a00.iommu: version = 2
+[    0.168457] rk_iommu fe043e00.iommu: version = 2
+[    0.169556] SCSI subsystem initialized
+[    0.169959] usbcore: registered new interface driver usbfs
+[    0.170053] usbcore: registered new interface driver hub
+[    0.170137] usbcore: registered new device driver usb
+[    0.170244] media: Linux media interface: v0.10
+[    0.170313] videodev: Linux video capture interface: v2.00
+[    0.170460] pps_core: LinuxPPS API ver. 1 registered
+[    0.170487] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.170531] PTP clock support registered
+[    0.170951] arm-scmi firmware:scmi: SCMI Protocol v2.0 'rockchip:' Firmware version 0x0
+[    0.174074] Advanced Linux Sound Architecture Driver Initialized.
+[    0.174804] Bluetooth: Core ver 2.22
+[    0.174877] NET: Registered protocol family 31
+[    0.174902] Bluetooth: HCI device and connection manager initialized
+[    0.174930] Bluetooth: HCI socket layer initialized
+[    0.174956] Bluetooth: L2CAP socket layer initialized
+[    0.175020] Bluetooth: SCO socket layer initialized
+[    0.175602] rockchip-cpuinfo cpuinfo: SoC            : 35682000
+[    0.175635] rockchip-cpuinfo cpuinfo: Serial         : ffa99f38c5705d02
+[    0.176774] clocksource: Switched to clocksource arch_sys_counter
+[    0.300406] thermal thermal_zone1: power_allocator: sustainable_power will be estimated
+[    0.300838] NET: Registered protocol family 2
+[    0.301067] IP idents hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.302705] tcp_listen_portaddr_hash hash table entries: 1024 (order: 3, 40960 bytes)
+[    0.302796] TCP established hash table entries: 16384 (order: 5, 131072 bytes)
+[    0.302959] TCP bind hash table entries: 16384 (order: 7, 524288 bytes)
+[    0.303570] TCP: Hash tables configured (established 16384 bind 16384)
+[    0.303781] UDP hash table entries: 1024 (order: 4, 98304 bytes)
+[    0.303901] UDP-Lite hash table entries: 1024 (order: 4, 98304 bytes)
+[    0.304283] NET: Registered protocol family 1
+[    0.305138] RPC: Registered named UNIX socket transport module.
+[    0.305167] RPC: Registered udp transport module.
+[    0.305189] RPC: Registered tcp transport module.
+[    0.305209] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.307234] Trying to unpack rootfs image as initramfs...
+[    0.971051] Freeing initrd memory: 9108K
+[    0.972459] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.975553] Initialise system trusted keyrings
+[    0.975831] workingset: timestamp_bits=45 max_order=19 bucket_order=0
+[    0.985851] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.987087] NFS: Registering the id_resolver key type
+[    0.987139] Key type id_resolver registered
+[    0.987153] Key type id_legacy registered
+[    0.987206] ntfs: driver 2.1.32 [Flags: R/O].
+[    0.987523] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.988074] fuse init (API version 7.27)
+[    0.988649] SGI XFS with security attributes, no debug enabled
+[    0.993284] NET: Registered protocol family 38
+[    0.993342] Key type asymmetric registered
+[    0.993358] Asymmetric key parser 'x509' registered
+[    0.993470] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 243)
+[    0.993500] io scheduler noop registered
+[    0.993522] io scheduler deadline registered
+[    0.993706] io scheduler cfq registered (default)
+[    0.993735] io scheduler mq-deadline registered
+[    0.993757] io scheduler kyber registered
+[    0.995230] rockchip-csi2-dphy csi2-dphy2: csi2 dphy2 probe successfully!
+[    0.995451] rockchip-csi2-dphy-hw fe870000.csi2-dphy-hw: csi2 dphy hw probe successfully!
+[    0.998902] phy phy-fe8a0000.usb2-phy.0: Linked as a consumer to regulator.8
+[    0.999299] phy phy-fe8a0000.usb2-phy.1: Linked as a consumer to regulator.9
+[    1.001232] extcon extcon1: failed to create extcon usb2-phy link
+[    1.001660] phy phy-fe8b0000.usb2-phy.3: No vbus specified for otg port
+[    1.013830] pwm-backlight backlight: backlight supply power not found, using dummy regulator
+[    1.013964] pwm-backlight backlight: Linked as a consumer to regulator.0
+[    1.014296] pwm-backlight backlight1: backlight1 supply power not found, using dummy regulator
+[    1.014391] pwm-backlight backlight1: Linked as a consumer to regulator.0
+[    1.014731] mpp_service mpp-srv: unknown mpp version for missing VCS info
+[    1.014762] mpp_service mpp-srv: probe start
+[    1.015814] iommu: Adding device fdf40000.rkvenc to group 5
+[    1.015869] mpp_rkvenc fdf40000.rkvenc: Linked as a consumer to fdf40f00.iommu
+[    1.016152] mpp_rkvenc fdf40000.rkvenc: probing start
+[    1.016864] mpp_rkvenc fdf40000.rkvenc: venc regulator not ready, retry
+[    1.016894] rkvenc_init:1199: failed to add venc devfreq
+[    1.017344] mpp_rkvenc fdf40000.rkvenc: probing finish
+[    1.018806] iommu: Adding device fdea0400.vdpu to group 1
+[    1.018866] mpp_vdpu2 fdea0400.vdpu: Linked as a consumer to fdea0800.iommu
+[    1.019102] mpp_vdpu2 fdea0400.vdpu: probe device
+[    1.019909] mpp_vdpu2 fdea0400.vdpu: probing finish
+[    1.020753] iommu: Adding device fdee0000.vepu to group 3
+[    1.020797] mpp_vepu2 fdee0000.vepu: Linked as a consumer to fdee0800.iommu
+[    1.021058] mpp_vepu2 fdee0000.vepu: probe device
+[    1.021848] mpp_vepu2 fdee0000.vepu: probing finish
+[    1.022598] iommu: Adding device fdef0000.iep to group 4
+[    1.022659] mpp-iep2 fdef0000.iep: Linked as a consumer to fdef0800.iommu
+[    1.022872] mpp-iep2 fdef0000.iep: probe device
+[    1.023600] mpp-iep2 fdef0000.iep: allocate roi buffer failed
+[    1.023845] mpp-iep2 fdef0000.iep: probing finish
+[    1.024602] iommu: Adding device fded0000.jpegd to group 2
+[    1.024648] mpp_jpgdec fded0000.jpegd: Linked as a consumer to fded0480.iommu
+[    1.024855] mpp_jpgdec fded0000.jpegd: probe device
+[    1.025646] mpp_jpgdec fded0000.jpegd: probing finish
+[    1.026444] iommu: Adding device fdf80200.rkvdec to group 6
+[    1.026499] mpp_rkvdec2 fdf80200.rkvdec: Linked as a consumer to fdf80800.iommu
+[    1.026904] mpp_rkvdec2 fdf80200.rkvdec: probing start
+[    1.027119] mpp_rkvdec2 fdf80200.rkvdec: 16 task capacity link mode detected
+[    1.027594] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_a is not found!
+[    1.027626] rkvdec2_init:661: No niu aclk reset resource define
+[    1.027654] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_h is not found!
+[    1.027675] rkvdec2_init:664: No niu hclk reset resource define
+[    1.027927] mpp_rkvdec2 fdf80200.rkvdec: sram_start 0x00000000fdcc0000
+[    1.027946] mpp_rkvdec2 fdf80200.rkvdec: rcb_iova 0x0000000010000000
+[    1.027961] mpp_rkvdec2 fdf80200.rkvdec: sram_size 45056
+[    1.027989] mpp_rkvdec2 fdf80200.rkvdec: rcb_size 65536
+[    1.028015] mpp_rkvdec2 fdf80200.rkvdec: min_width 512
+[    1.028103] mpp_rkvdec2 fdf80200.rkvdec: link mode probe finish
+[    1.028211] mpp_rkvdec2 fdf80200.rkvdec: probing finish
+[    1.028707] mpp_service mpp-srv: probe success
+[    1.037883] dma-pl330 fe530000.dmac: Loaded driver for PL330 DMAC-241330
+[    1.037934] dma-pl330 fe530000.dmac:         DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    1.041520] dma-pl330 fe550000.dmac: Loaded driver for PL330 DMAC-241330
+[    1.041564] dma-pl330 fe550000.dmac:         DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    1.042932] rockchip-system-monitor rockchip-system-monitor: system monitor probe
+[    1.044433] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    1.045620] fe670000.serial: ttyS3 at MMIO 0xfe670000 (irq = 65, base_baud = 1500000) is a 16550A
+[    1.046326] fe680000.serial: ttyS4 at MMIO 0xfe680000 (irq = 66, base_baud = 1500000) is a 16550A
+[    1.047028] fe690000.serial: ttyS5 at MMIO 0xfe690000 (irq = 67, base_baud = 1500000) is a 16550A
+[    1.047668] fe6b0000.serial: ttyS7 at MMIO 0xfe6b0000 (irq = 68, base_baud = 1500000) is a 16550A
+[    1.051243] random: fast init done
+[    1.051593] random: crng init done
+[    1.051651] iommu: Adding device fe040000.vop to group 9
+[    1.051712] rockchip-vop2 fe040000.vop: Linked as a consumer to fe043e00.iommu
+[    1.058130] rockchip-drm display-subsystem: Linked as a consumer to fe040000.vop
+[    1.058437] rockchip-drm display-subsystem: Linked as a consumer to fdc60000.syscon:lvds
+[    1.059921] rockchip-drm display-subsystem: Linked as a consumer to fe0a0000.hdmi
+[    1.062701] rockchip-drm display-subsystem: dmc is disabled
+[    1.063134] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x0, primary plane phy id: -1
+[    1.063177] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp1 assign plane mask: 0x0, primary plane phy id: -1
+[    1.063211] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x0, primary plane phy id: -1
+[    1.063352] [drm] unsupported AFBC format[3432564e]
+[    1.063541] rockchip-vop2 fe040000.vop: [drm:vop2_bind] Cluster0-win0 as cursor plane for vp0
+[    1.063746] rockchip-vop2 fe040000.vop: [drm:vop2_bind] Cluster1-win0 as cursor plane for vp1
+[    1.064835] rockchip-drm display-subsystem: bound fe040000.vop (ops 0xffffff8008ef9158)
+[    1.072240] panel-simple panel: Linked as a consumer to regulator.10
+[    1.072333] panel-simple panel: panel supply vsp not found, using dummy regulator
+[    1.072423] panel-simple panel: Linked as a consumer to regulator.0
+[    1.072490] panel-simple panel: panel supply vsn not found, using dummy regulator
+[    1.074558] mali fde60000.gpu: Kernel DDK version g7p1-01bet0
+[    1.074790] mali fde60000.gpu: Linked as a consumer to regulator.3
+[    1.074984] mali fde60000.gpu: dev_pm_opp_set_regulators: no regulator (shadercores) found: -19
+[    1.075139] mali fde60000.gpu: leakage=7
+[    1.075216] mali fde60000.gpu: pvtm = 83970, from nvmem
+[    1.076006] mali fde60000.gpu: avs=0
+[    1.076048] W : [File] : drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c; [Line] : 112; [Func] : kbase_platform_rk_init(); power-off-delay-ms not available.
+[    1.076138] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    1.076517] mali fde60000.gpu: GPU identified as 0x2 arch 7.4.0 r1p0 status 0
+[    1.076692] mali fde60000.gpu: No priority control manager is configured
+[    1.076729] mali fde60000.gpu: No memory group manager is configured
+[    1.077390] brd: module loaded
+[    1.077622] mali fde60000.gpu: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    1.078766] mali fde60000.gpu: Probed as mali0
+[    1.087300] loop: module loaded
+[    1.087984] zram: Added device: zram0
+[    1.088170] lkdtm: No crash points registered, enable through debugfs
+[    1.090182] ahci fc000000.sata: forcing port_map 0x0 -> 0x1
+[    1.090270] ahci fc000000.sata: AHCI 0001.0300 32 slots 1 ports 6 Gbps 0x1 impl platform mode
+[    1.090303] ahci fc000000.sata: flags: ncq sntf pm led clo only pmp fbs pio slum part ccc apst
+[    1.090342] ahci fc000000.sata: port 0 is not capable of FBS
+[    1.091857] scsi host0: ahci
+[    1.092383] ata1: SATA max UDMA/133 mmio [mem 0xfc000000-0xfc000fff] port 0x100 irq 11
+[    1.094970] libphy: Fixed MDIO Bus: probed
+[    1.096622] rk_gmac-dwmac fe010000.ethernet: no regulator found
+[    1.096666] rk_gmac-dwmac fe010000.ethernet: clock input or output? (input).
+[    1.096685] rk_gmac-dwmac fe010000.ethernet: TX delay(0x4f).
+[    1.096701] rk_gmac-dwmac fe010000.ethernet: RX delay(0x26).
+[    1.096724] rk_gmac-dwmac fe010000.ethernet: integrated PHY? (no).
+[    1.096847] rk_gmac-dwmac fe010000.ethernet: clock input from PHY
+[    1.101888] rk_gmac-dwmac fe010000.ethernet: init for RGMII
+[    1.102261] rk_gmac-dwmac fe010000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    1.102292] rk_gmac-dwmac fe010000.ethernet:         DWMAC4/5
+[    1.102319] rk_gmac-dwmac fe010000.ethernet: DMA HW capability register supported
+[    1.102341] rk_gmac-dwmac fe010000.ethernet: RX Checksum Offload Engine supported
+[    1.102362] rk_gmac-dwmac fe010000.ethernet: TX Checksum insertion supported
+[    1.102381] rk_gmac-dwmac fe010000.ethernet: Wake-Up On Lan supported
+[    1.102442] rk_gmac-dwmac fe010000.ethernet: TSO supported
+[    1.102460] rk_gmac-dwmac fe010000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    1.102476] rk_gmac-dwmac fe010000.ethernet: TSO feature enabled
+[    1.233476] libphy: stmmac: probed
+[    1.237667] devfreq fde60000.gpu: Couldn't update frequency transition information.
+[    1.242028] rk_gmac-dwmac fe2a0000.ethernet: no regulator found
+[    1.242087] rk_gmac-dwmac fe2a0000.ethernet: clock input or output? (input).
+[    1.242107] rk_gmac-dwmac fe2a0000.ethernet: TX delay(0x3c).
+[    1.242123] rk_gmac-dwmac fe2a0000.ethernet: RX delay(0x2f).
+[    1.242144] rk_gmac-dwmac fe2a0000.ethernet: integrated PHY? (no).
+[    1.242222] rk_gmac-dwmac fe2a0000.ethernet: clock input from PHY
+[    1.247265] rk_gmac-dwmac fe2a0000.ethernet: init for RGMII
+[    1.247668] rk_gmac-dwmac fe2a0000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    1.247701] rk_gmac-dwmac fe2a0000.ethernet:         DWMAC4/5
+[    1.247729] rk_gmac-dwmac fe2a0000.ethernet: DMA HW capability register supported
+[    1.247752] rk_gmac-dwmac fe2a0000.ethernet: RX Checksum Offload Engine supported
+[    1.247773] rk_gmac-dwmac fe2a0000.ethernet: TX Checksum insertion supported
+[    1.247792] rk_gmac-dwmac fe2a0000.ethernet: Wake-Up On Lan supported
+[    1.247854] rk_gmac-dwmac fe2a0000.ethernet: TSO supported
+[    1.247870] rk_gmac-dwmac fe2a0000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    1.247899] rk_gmac-dwmac fe2a0000.ethernet: TSO feature enabled
+[    1.380210] libphy: stmmac: probed
+[    1.380519] mdio_bus stmmac-0: MDIO device at address 0 is missing.
+[    1.382452] PPP generic driver version 2.4.2
+[    1.382756] PPP MPPE Compression module registered
+[    1.382786] NET: Registered protocol family 24
+[    1.383132] usbcore: registered new interface driver cdc_ether
+[    1.400997] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.401054] ehci-pci: EHCI PCI platform driver
+[    1.401159] ehci-platform: EHCI generic platform driver
+[    1.403562] ehci-platform fd800000.usb: EHCI Host Controller
+[    1.403850] ehci-platform fd800000.usb: new USB bus registered, assigned bus number 1
+[    1.404644] ehci-platform fd800000.usb: irq 12, io mem 0xfd800000
+[    1.406844] ata1: SATA link down (SStatus 0 SControl 300)
+[    1.416828] ehci-platform fd800000.usb: USB 2.0 started, EHCI 1.00
+[    1.417184] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    1.417216] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.417240] usb usb1: Product: EHCI Host Controller
+[    1.417262] usb usb1: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 ehci_hcd
+[    1.417284] usb usb1: SerialNumber: fd800000.usb
+[    1.418029] hub 1-0:1.0: USB hub found
+[    1.418104] hub 1-0:1.0: 1 port detected
+[    1.420962] ehci-platform fd880000.usb: EHCI Host Controller
+[    1.421244] ehci-platform fd880000.usb: new USB bus registered, assigned bus number 2
+[    1.422015] ehci-platform fd880000.usb: irq 14, io mem 0xfd880000
+[    1.433490] ehci-platform fd880000.usb: USB 2.0 started, EHCI 1.00
+[    1.433854] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    1.433887] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.433917] usb usb2: Product: EHCI Host Controller
+[    1.433940] usb usb2: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 ehci_hcd
+[    1.433962] usb usb2: SerialNumber: fd880000.usb
+[    1.434646] hub 2-0:1.0: USB hub found
+[    1.434719] hub 2-0:1.0: 1 port detected
+[    1.435857] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.435903] ohci-platform: OHCI generic platform driver
+[    1.436250] ohci-platform fd840000.usb: Generic Platform OHCI controller
+[    1.436528] ohci-platform fd840000.usb: new USB bus registered, assigned bus number 3
+[    1.437071] ohci-platform fd840000.usb: irq 13, io mem 0xfd840000
+[    1.497743] usb usb3: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    1.497777] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.497794] usb usb3: Product: Generic Platform OHCI controller
+[    1.497808] usb usb3: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 ohci_hcd
+[    1.497822] usb usb3: SerialNumber: fd840000.usb
+[    1.498516] hub 3-0:1.0: USB hub found
+[    1.498597] hub 3-0:1.0: 1 port detected
+[    1.499357] ohci-platform fd8c0000.usb: Generic Platform OHCI controller
+[    1.499621] ohci-platform fd8c0000.usb: new USB bus registered, assigned bus number 4
+[    1.500068] ohci-platform fd8c0000.usb: irq 15, io mem 0xfd8c0000
+[    1.561060] usb usb4: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    1.561094] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.561111] usb usb4: Product: Generic Platform OHCI controller
+[    1.561126] usb usb4: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 ohci_hcd
+[    1.561139] usb usb4: SerialNumber: fd8c0000.usb
+[    1.561811] hub 4-0:1.0: USB hub found
+[    1.561887] hub 4-0:1.0: 1 port detected
+[    1.564391] xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+[    1.564738] xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 5
+[    1.566257] xhci-hcd xhci-hcd.0.auto: hcc params 0x0220fe64 hci version 0x110 quirks 0x0000011002010010
+[    1.566361] xhci-hcd xhci-hcd.0.auto: irq 81, io mem 0xfd000000
+[    1.566928] usb usb5: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    1.566962] usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.566987] usb usb5: Product: xHCI Host Controller
+[    1.567009] usb usb5: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 xhci-hcd
+[    1.567031] usb usb5: SerialNumber: xhci-hcd.0.auto
+[    1.567760] hub 5-0:1.0: USB hub found
+[    1.567838] hub 5-0:1.0: 1 port detected
+[    1.568391] xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+[    1.568667] xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 6
+[    1.568712] xhci-hcd xhci-hcd.0.auto: Host supports USB 3.0 SuperSpeed
+[    1.568842] usb usb6: We don't know the algorithms for LPM for this host, disabling LPM.
+[    1.569066] usb usb6: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 4.19
+[    1.569098] usb usb6: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.569122] usb usb6: Product: xHCI Host Controller
+[    1.569144] usb usb6: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 xhci-hcd
+[    1.569159] usb usb6: SerialNumber: xhci-hcd.0.auto
+[    1.569790] hub 6-0:1.0: USB hub found
+[    1.569871] hub 6-0:1.0: 1 port detected
+[    1.570631] usbcore: registered new interface driver cdc_acm
+[    1.570662] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.571014] usbcore: registered new interface driver uas
+[    1.571243] usbcore: registered new interface driver usb-storage
+[    1.571389] usbcore: registered new interface driver usbserial_generic
+[    1.571447] usbserial: USB Serial support registered for generic
+[    1.571523] usbcore: registered new interface driver ftdi_sio
+[    1.571579] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    1.571934] usbcore: registered new interface driver keyspan
+[    1.571991] usbserial: USB Serial support registered for Keyspan - (without firmware)
+[    1.572049] usbserial: USB Serial support registered for Keyspan 1 port adapter
+[    1.572103] usbserial: USB Serial support registered for Keyspan 2 port adapter
+[    1.572156] usbserial: USB Serial support registered for Keyspan 4 port adapter
+[    1.572253] usbcore: registered new interface driver oti6858
+[    1.572315] usbserial: USB Serial support registered for oti6858
+[    1.572403] usbcore: registered new interface driver qcserial
+[    1.572460] usbserial: USB Serial support registered for Qualcomm USB modem
+[    1.574778] .. rk pwm remotectl v2.0 init
+[    1.575205] input: fdd70030.pwm as /devices/platform/fdd70030.pwm/input/input0
+[    1.575694] remotectl-pwm fdd70030.pwm: pwm version is 0x2130000
+[    1.575795] remotectl-pwm fdd70030.pwm: Controller support pwrkey capture
+[    1.576885] i2c /dev entries driver
+[    1.579161] fan53555-regulator 0-001c: FAN53555 Option[12] Rev[15] Detected!
+[    1.581013] vdd_cpu: supplied by vcc5v0_sys
+[    1.586179] rk808 0-0020: chip id: 0x8090
+[    1.586259] rk808 0-0020: No cache defaults, reading back from HW
+[    1.610074] rk808 0-0020: source: on=0x40, off=0x00
+[    1.610146] rk808 0-0020: support dcdc3 fb mode:-22, 63
+[    1.610179] rk808 0-0020: support pmic reset mode:0,0
+[    1.616103] rk808-regulator rk808-regulator: there is no dvs0 gpio
+[    1.616174] rk808-regulator rk808-regulator: there is no dvs1 gpio
+[    1.616292] vdd_logic: supplied by vcc3v3_sys
+[    1.616922] vdd_gpu: supplied by vcc3v3_sys
+[    1.617395] vcc_ddr: supplied by vcc3v3_sys
+[    1.617879] vdd_npu: supplied by vcc3v3_sys
+[    1.618386] vcc_1v8: supplied by vcc3v3_sys
+[    1.618845] vdda0v9_image: supplied by vcc3v3_sys
+[    1.619309] vdda_0v9: supplied by vcc3v3_sys
+[    1.619800] vdda0v9_pmu: supplied by vcc3v3_sys
+[    1.620320] vccio_acodec: supplied by vcc3v3_sys
+[    1.620772] vccio_sd: supplied by vcc3v3_sys
+[    1.621263] vcc3v3_pmu: supplied by vcc3v3_sys
+[    1.621748] vcca_1v8: supplied by vcc3v3_sys
+[    1.622224] vcca1v8_pmu: supplied by vcc3v3_sys
+[    1.622709] vcca1v8_image: supplied by vcc3v3_sys
+[    1.623175] vcc_3v3: supplied by vcc3v3_sys
+[    1.623668] vcc3v3_sd: supplied by vcc3v3_sys
+[    1.624273] rk817-battery rk817-battery: Failed to find matching dt id
+[    1.624627] rk817-charger rk817-charger: Failed to find matching dt id
+[    1.628084] input: rk805 pwrkey as /devices/platform/fdd40000.i2c/i2c-0/0-0020/rk805-pwrkey/input/input1
+[    1.634690] rk808-rtc rk808-rtc: registered as rtc0
+[    1.636461] rk808-rtc rk808-rtc: setting system clock to 2022-07-22 01:13:42 UTC (1658452422)
+[    1.638807] goodix_ts_probe() start
+[    1.639000] Goodix-TS 1-005d: Linked as a consumer to regulator.28
+[    1.666826] usb 1-1: new high-speed USB device number 2 using ehci-platform
+[    1.787637] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    1.815231] usb 1-1: New USB device found, idVendor=05e3, idProduct=0608, bcdDevice=85.36
+[    1.815264] usb 1-1: New USB device strings: Mfr=0, Product=1, SerialNumber=0
+[    1.815281] usb 1-1: Product: USB2.0 Hub
+[    1.816168] hub 1-1:1.0: USB hub found
+[    1.816601] hub 1-1:1.0: 4 ports detected
+[    1.884301] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    1.980959] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    2.077627] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    2.096799] usb 1-1.4: new high-speed USB device number 3 using ehci-platform
+[    2.174255] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    2.194474] usb 1-1.4: New USB device found, idVendor=0bda, idProduct=d723, bcdDevice= 2.00
+[    2.194508] usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    2.194524] usb 1-1.4: Product: 802.11n WLAN Adapter
+[    2.194538] usb 1-1.4: Manufacturer: Realtek
+[    2.194551] usb 1-1.4: SerialNumber: 00e04c000001
+[    2.270968] <<-GTP-ERROR->> I2C Read: 0x8000, 10 bytes failed, errcode: -6! Process reset.
+[    2.366836] <<-GTP-ERROR->> I2C read 0x8000, 10 bytes, double check failed!
+[    2.366862] <<-GTP-ERROR->> Failed to get chip-type, set chip type default: GOODIX_GT9
+[    2.367694] <<-GTP-ERROR->> I2C Read: 0x8047, 1 bytes failed, errcode: -6! Process reset.
+[    2.463472] <<-GTP-ERROR->> GTP i2c test failed time 1.
+[    2.480960] <<-GTP-ERROR->> I2C Read: 0x8047, 1 bytes failed, errcode: -6! Process reset.
+[    2.576804] <<-GTP-ERROR->> GTP i2c test failed time 2.
+[    2.594285] <<-GTP-ERROR->> I2C Read: 0x8047, 1 bytes failed, errcode: -6! Process reset.
+[    2.690140] <<-GTP-ERROR->> GTP i2c test failed time 3.
+[    2.707621] <<-GTP-ERROR->> I2C Read: 0x8047, 1 bytes failed, errcode: -6! Process reset.
+[    2.803470] <<-GTP-ERROR->> GTP i2c test failed time 4.
+[    2.820951] <<-GTP-ERROR->> I2C Read: 0x8047, 1 bytes failed, errcode: -6! Process reset.
+[    2.916806] <<-GTP-ERROR->> GTP i2c test failed time 5.
+[    2.933473] <goodix_ts_probe>_2786    I2C communication ERROR!
+[    2.933500]    <goodix_ts_probe>_2861  prob error !!!!!!!!!!!!!!!
+[    2.933619] Goodix-TS 1-005d: Dropping the link to regulator.28
+[    2.945714] rtc_hym8563 3-0051: rtc core: registered hym8563 as rtc1
+[    2.950053] iommu: Adding device fdff0000.rkisp to group 8
+[    2.950184] rkisp_hw fdff0000.rkisp: Linked as a consumer to fdff1a00.iommu
+[    2.950462] rkisp_hw fdff0000.rkisp: is_thunderboot: 0
+[    2.950497] rkisp_hw fdff0000.rkisp: max input:2592x1944@30fps
+[    2.950546] rkisp_hw fdff0000.rkisp: can't request region for resource [mem 0xfdff0000-0xfdffffff]
+[    2.951782] rkisp rkisp-vir1: rkisp driver version: v01.07.00
+[    2.952193] rkisp rkisp-vir1: Entity type for entity rkisp-isp-subdev was not initialized!
+[    2.952237] rkisp rkisp-vir1: Entity type for entity rkisp-csi-subdev was not initialized!
+[    2.955017] usbcore: registered new interface driver uvcvideo
+[    2.955053] USB Video Class driver (1.1.1)
+[    2.955403] rockchip-iodomain fdc20000.syscon:io-domains: Linked as a consumer to regulator.28
+[    2.955468] rockchip-iodomain fdc20000.syscon:io-domains: pmuio1(3300000 uV) supplied by vcc_3v3
+[    2.955643] rockchip-iodomain fdc20000.syscon:io-domains: pmuio2(3300000 uV) supplied by vcc_3v3
+[    2.955810] rockchip-iodomain fdc20000.syscon:io-domains: vccio1(3300000 uV) supplied by vcc_3v3
+[    2.955977] rockchip-iodomain fdc20000.syscon:io-domains: Linked as a consumer to regulator.18
+[    2.956037] rockchip-iodomain fdc20000.syscon:io-domains: vccio2(1800000 uV) supplied by vcc_1v8
+[    2.956201] rockchip-iodomain fdc20000.syscon:io-domains: vccio3(3300000 uV) supplied by vcc_3v3
+[    2.956353] rockchip-iodomain fdc20000.syscon:io-domains: vccio4(1800000 uV) supplied by vcc_1v8
+[    2.956521] rockchip-iodomain fdc20000.syscon:io-domains: vccio5(3300000 uV) supplied by vcc_3v3
+[    2.956675] rockchip-iodomain fdc20000.syscon:io-domains: vccio6(1800000 uV) supplied by vcc_1v8
+[    2.956884] rockchip-iodomain fdc20000.syscon:io-domains: vccio7(3300000 uV) supplied by vcc_3v3
+[    2.960941] rockchip-thermal fe710000.tsadc: tsadc is probed successfully!
+[    2.962432] Bluetooth: HCI UART driver ver 2.3
+[    2.962465] Bluetooth: HCI UART protocol H4 registered
+[    2.962479] Bluetooth: HCI UART protocol ATH3K registered
+[    2.962591] usbcore: registered new interface driver bfusb
+[    2.963010] cpu cpu0: leakage=21
+[    2.963089] cpu cpu0: pvtm = 83970, from nvmem
+[    2.963125] cpu cpu0: pvtm-volt-sel=1
+[    2.964193] cpu cpu0: Linked as a consumer to regulator.13
+[    2.964287] cpu cpu0: Dropping the link to regulator.13
+[    2.964998] cpu cpu0: Linked as a consumer to regulator.13
+[    2.966129] cpu cpu0: avs=0
+[    2.966232] energy_model: pd0: hertz/watts ratio non-monotonically decreasing: em_cap_state 2 >= em_cap_state1
+[    2.966593] cpu cpu0: l=0 h=2147483647 hyst=5000 l_limit=0 h_limit=0 h_table=0
+[    2.970323] cpu cpu0: failed to find power_model node
+[    2.972518] sdhci: Secure Digital Host Controller Interface driver
+[    2.972551] sdhci: Copyright(c) Pierre Ossman
+[    2.972564] Synopsys Designware Multimedia Card Interface Driver
+[    2.974126] dwmmc_rockchip fe2b0000.dwmmc: IDMAC supports 32-bit address mode.
+[    2.974522] dwmmc_rockchip fe2b0000.dwmmc: Using internal DMA controller.
+[    2.974552] dwmmc_rockchip fe2b0000.dwmmc: Version ID is 270a
+[    2.974623] dwmmc_rockchip fe2b0000.dwmmc: DW MMC controller at irq 49,32 bit host data width,256 deep fifo
+[    2.974808] dwmmc_rockchip fe2b0000.dwmmc: Linked as a consumer to regulator.29
+[    2.974908] dwmmc_rockchip fe2b0000.dwmmc: Linked as a consumer to regulator.23
+[    2.988652] mmc_host mmc1: Bus speed (slot 0) = 375000Hz (slot req 400000Hz, actual 375000HZ div = 0)
+[    3.001694] sdhci-pltfm: SDHCI platform and OF driver helper
+[    3.003693] mmc0: Unknown controller version (5). You may experience problems.
+[    3.036005] mmc0: SDHCI controller on fe310000.sdhci [fe310000.sdhci] using ADMA
+[    3.037697] leds-gpio: probe of leds failed with error -16
+[    3.039880] hidraw: raw HID events driver (C) Jiri Kosina
+[    3.041015] usbcore: registered new interface driver usbhid
+[    3.041045] usbhid: USB HID core driver
+[    3.041705] rockchip,bus bus-npu: Linked as a consumer to regulator.14
+[    3.041752] rockchip,bus bus-npu: Failed to get leakage
+[    3.041850] rockchip,bus bus-npu: pvtm = 83970, from nvmem
+[    3.041884] rockchip,bus bus-npu: pvtm-volt-sel=1
+[    3.042313] rockchip,bus bus-npu: avs=0
+[    3.045273] rockchip-saradc fe720000.saradc: Linked as a consumer to regulator.25
+[    3.046326] optee: probing for conduit method from DT.
+[    3.046398] optee: revision 3.6 (0b06ae94)
+[    3.047173] optee: initialized driver
+[    3.047216] rksfc_base v1.1 2016-01-08
+[    3.048050] rksfc fe300000.sfc: rksfc_probe clk rate = 99000000
+[    3.048250] rkflash_dev_init enter
+[    3.048284] sfc nor id: 0 0 0
+[    3.048297] rkflash[1] is invalid
+[    3.048300] rkflash_dev_init enter
+[    3.048326] sfc_nand id: 0 0 0
+[    3.048349] rkflash[2] is invalid
+[    3.049633] usbcore: registered new interface driver snd-usb-audio
+[    3.051945] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 50000000Hz, actual 50000000HZ div = 0)
+[    3.053267] rk817-codec rk817-codec: DMA mask not set
+[    3.063623] NET: Registered protocol family 26
+[    3.063673] u32 classifier
+[    3.063682]     Actions configured
+[    3.063803] Initializing XFRM netlink socket
+[    3.064433] NET: Registered protocol family 10
+[    3.065652] Segment Routing with IPv6
+[    3.065736] NET: Registered protocol family 17
+[    3.065845] NET: Registered protocol family 15
+[    3.065983] Bridge firewalling registered
+[    3.066211] Bluetooth: RFCOMM socket layer initialized
+[    3.066252] Bluetooth: RFCOMM ver 1.11
+[    3.066305] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    3.066331] Bluetooth: HIDP socket layer initialized
+[    3.066406] l2tp_core: L2TP core driver, V2.0
+[    3.066433] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    3.066449] l2tp_netlink: L2TP netlink interface
+[    3.066495] 8021q: 802.1Q VLAN Support v1.8
+[    3.066538] [BT_RFKILL]: Enter rfkill_rk_init
+[    3.066557] [WLAN_RFKILL]: Enter rfkill_wlan_init
+[    3.067221] [WLAN_RFKILL]: Enter rfkill_wlan_probe
+[    3.067294] [WLAN_RFKILL]: wlan_platdata_parse_dt: wifi_chip_type = rtl8723du
+[    3.067314] [WLAN_RFKILL]: wlan_platdata_parse_dt: enable wifi power control.
+[    3.067331] [WLAN_RFKILL]: wlan_platdata_parse_dt: wifi power controled by gpio.
+[    3.067377] [WLAN_RFKILL]: wlan_platdata_parse_dt: The ref_wifi_clk not found !
+[    3.067394] [WLAN_RFKILL]: rfkill_wlan_probe: init gpio
+[    3.067412] [WLAN_RFKILL]: rfkill_set_wifi_bt_power: 1
+[    3.067427] [WLAN_RFKILL]: Exit rfkill_wlan_probe
+[    3.067985] [BT_RFKILL]: bluetooth_platdata_parse_dt: uart_rts_gpios is no-in-use.
+[    3.068202] [BT_RFKILL]: bt_default device registered.
+[    3.068314] Key type dns_resolver registered
+[    3.068642] flash vendor_init_thread!
+[    3.068661] flash vendor storage:20170308 ret = -1
+[    3.069192] ov13850 2-0010: driver version: 00.01.05
+[    3.069248] ov13850 2-0010: Failed to get power-gpios, maybe no use
+[    3.069277] ov13850 2-0010: Failed to get reset-gpios
+[    3.069304] ov13850 2-0010: Failed to get pwdn-gpios
+[    3.069369] ov13850 2-0010: 2-0010 supply avdd not found, using dummy regulator
+[    3.069449] ov13850 2-0010: Linked as a consumer to regulator.0
+[    3.069487] ov13850 2-0010: 2-0010 supply dovdd not found, using dummy regulator
+[    3.069583] ov13850 2-0010: 2-0010 supply dvdd not found, using dummy regulator
+[    3.069641] ov13850 2-0010: could not get default pinstate
+[    3.069658] ov13850 2-0010: could not get sleep pinstate
+[    3.070056] mmc0: new HS200 MMC card at address 0001
+[    3.070969] mmcblk0: mmc0:0001 8GTF4R 7.28 GiB
+[    3.071607] mmcblk0boot0: mmc0:0001 8GTF4R partition 1 4.00 MiB
+[    3.072294] mmcblk0boot1: mmc0:0001 8GTF4R partition 2 4.00 MiB
+[    3.072562] mmcblk0rpmb: mmc0:0001 8GTF4R partition 3 512 KiB, chardev (238:0)
+[    3.074300] ov13850 2-0010: Unexpected sensor id(000000), ret(-5)
+[    3.074754] ov13850 4-0010: driver version: 00.01.05
+[    3.074811] ov13850 4-0010: Failed to get power-gpios, maybe no use
+[    3.074840] ov13850 4-0010: Failed to get reset-gpios
+[    3.074867] ov13850 4-0010: Failed to get pwdn-gpios
+[    3.074934] ov13850 4-0010: 4-0010 supply avdd not found, using dummy regulator
+[    3.074999] ov13850 4-0010: Linked as a consumer to regulator.0
+[    3.075048] ov13850 4-0010: 4-0010 supply dovdd not found, using dummy regulator
+[    3.075127] ov13850 4-0010: 4-0010 supply dvdd not found, using dummy regulator
+[    3.078736] ov13850 4-0010: Unexpected sensor id(000000), ret(-5)
+[    3.079852] Loading compiled-in X.509 certificates
+[    3.080514] pstore: Using compression: deflate
+[    3.081660] rga2: Driver loaded successfully ver:3.2.63318
+[    3.082058] rga2: Module initialized.
+[    3.112430] rockchip-drm display-subsystem: dmc is disabled
+[    3.112750] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x0, primary plane phy id: -1
+[    3.112777] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp1 assign plane mask: 0x0, primary plane phy id: -1
+[    3.112798] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x0, primary plane phy id: -1
+[    3.112929] rockchip-vop2 fe040000.vop: [drm:vop2_bind] Cluster0-win0 as cursor plane for vp0
+[    3.113043] rockchip-vop2 fe040000.vop: [drm:vop2_bind] Cluster1-win0 as cursor plane for vp1
+[    3.113713] rockchip-drm display-subsystem: bound fe040000.vop (ops 0xffffff8008ef9158)
+[    3.113781] rockchip-drm display-subsystem: bound fdc60000.syscon:lvds (ops 0xffffff8008eff0e0)
+[    3.113977] dwhdmi-rockchip fe0a0000.hdmi: Detected HDMI TX controller v2.11a with HDCP (DWC HDMI 2.0 TX PHY)
+[    3.114839] dwhdmi-rockchip fe0a0000.hdmi: registered DesignWare HDMI I2C bus driver
+[    3.116499] rockchip-drm display-subsystem: bound fe0a0000.hdmi (ops 0xffffff8008efd220)
+[    3.116523] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    3.116530] [drm] No driver support for vblank timestamp query.
+[    3.116726] rockchip-drm display-subsystem: failed to parse loader memory
+[    3.121123] rockchip-vop2 fe040000.vop: [drm:vop2_crtc_atomic_enable] Update mode to 1280x800p59, type: 7 for vp1
+[    3.121624] rockchip-drm display-subsystem: fb0:  frame buffer device
+[    3.122826] [drm] Initialized rockchip 2.0.0 20140818 for display-subsystem on minor 0
+[    3.123325] input: adc-keys as /devices/platform/adc-keys/input/input2
+[    3.124153] asoc-simple-card rk809-sound: ASoC: DAPM unknown pin Headphones
+[    3.129220] asoc-simple-card rk809-sound: rk817-hifi <-> fe410000.i2s mapping ok
+[    3.129849] input: rockchip,rk809-codec Headphones as /devices/platform/rk809-sound/sound/card0/input3
+[    3.131089] asoc-simple-card spdif-sound: dit-hifi <-> fe460000.spdif mapping ok
+[    3.133584] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    3.139967] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    3.140150] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    3.140168] cfg80211: failed to load regulatory.db
+[    3.141206] rockchip-pm rockchip-suspend: not set pwm-regulator-config
+[    3.141975] I : [File] : drivers/gpu/arm/mali400/mali/linux/mali_kernel_linux.c; [Line] : 413; [Func] : mali_module_init(); svn_rev_string_from_arm of this mali_ko is '', rk_ko_ver is '5', built at '21:46:47', on 'Jul 21 2022'.
+[    3.142467] Mali:
+[    3.142469] Mali device driver loaded
+[    3.142499] rkisp rkisp-vir1: clear unready subdev num: 1
+[    3.142754] rkisp-vir1: update sensor failed
+[    3.142961] ALSA device list:
+[    3.142973]   #0: rockchip,rk809-codec
+[    3.142983]   #1: ROCKCHIP,SPDIF
+[    3.145068] Freeing unused kernel memory: 1472K
+[    3.149787] dwmmc_rockchip fe2b0000.dwmmc: Successfully tuned phase to 124
+[    3.149819] mmc1: new ultra high speed SDR104 SDHC card at address 0001
+[    3.151050] mmcblk1: mmc1:0001 00000 14.6 GiB
+[    3.158016]  mmcblk1: p1 p2 p3
+[    3.166942] Run /init as init process
+[    3.205215] vendor storage:20190527 ret = 0
+[    3.276928] asoc-simple-card rk809-sound: ASoC: DAPM unknown pin Headphones
+[    3.364078] init: Console is alive
+[    3.364255] init: - watchdog -
+[    3.366013] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    3.366096] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    3.374787] init: - preinit -
+Press the [x] key to cancel automatic installation
+Press the [r] key to install without last action (reboot/power off)
+
+┌────────────────────────┐
+│                        │
+│  Global configuration  │
+│                        │
+└────────────────────────┘
+* Last action: reboot
+* Last action delay: 5 seconds
+
+┌────────────────┐
+│                │
+│  Verification  │
+│                │
+└────────────────┘
+
+Checking required block devices...
+════════════════════════════════════════════════════════════════════════════════
+Block device /dev/mmcblk0 found
+Block device /dev/mmcblk1 found
+
+┌────────────────────┐
+│                    │
+│  Pre-installation  │
+│                    │
+└────────────────────┘
+
+Mounting filesystems...
+════════════════════════════════════════════════════════════════════════════════
+
+Mount 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk1p3
+* Target: /mnt
+* Filsystem: vfat
+* Create target: yes
+Executing command '/bin/mount -t vfat /dev/mmcblk1p3 /mnt'...
+Executed '/bin/mount -t vfat /dev/mmcblk1p3 /mnt' with exit code 0
+Mounted
+
+Erasing block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+* Block size: 512
+* Count: 131072
+Executing command '/bin/dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=131072'...
+131072+0 records in
+131072+0 records out
+Executed '/bin/dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=131072' with exit code 0
+Block device /dev/mmcblk0 erased
+
+Creating partitions on block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+* Label: gpt
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mklabel gpt'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mklabel gpt' with exit code 0
+Executing command '/usr/sbin/partprobe'...
+Executed '/usr/sbin/partprobe' with exit code 0
+Partition 1:
+* Name: boot
+* Partition type: primary
+* Start: 8MiB
+* End: 16MiB
+* UUID: dc8f9328-92f5-497e-a845-6f564ef32034
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 8MiB 16MiB'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 8MiB 16MiB' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 1 'boot''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 1 'boot'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=1:dc8f9328-92f5-497e-a845-6f564ef32034 /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=1:dc8f9328-92f5-497e-a845-6f564ef32034 /dev/mmcblk0' with exit code 0
+Partition 2:
+* Name: kernel_a
+* Partition type: primary
+* Filesystem type: ext4
+* Start: 16MiB
+* End: 80MiB
+* UUID: a0a965a8-8328-4540-8543-786c9e88b7b8
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 16MiB 80MiB'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 16MiB 80MiB' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 2 'kernel_a''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 2 'kernel_a'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=2:a0a965a8-8328-4540-8543-786c9e88b7b8 /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=2:a0a965a8-8328-4540-8543-786c9e88b7b8 /dev/mmcblk0' with exit code 0
+Partition 3:
+* Name: rootfs_a
+* Partition type: primary
+* Start: 80MiB
+* End: 1104MiB
+* UUID: d3aa42ba-48e8-4d08-9676-f630d3746140
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 80MiB 1104MiB'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 80MiB 1104MiB' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 3 'rootfs_a''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 3 'rootfs_a'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=3:d3aa42ba-48e8-4d08-9676-f630d3746140 /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=3:d3aa42ba-48e8-4d08-9676-f630d3746140 /dev/mmcblk0' with exit code 0
+Partition 4:
+* Name: kernel_b
+* Partition type: primary
+* Filesystem type: ext4
+* Start: 1104MiB
+* End: 1168MiB
+* UUID: ec341c88-9b34-4027-9e7e-33c5900c95f6
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 1104MiB 1168MiB'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 1104MiB 1168MiB' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 4 'kernel_b''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 4 'kernel_b'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=4:ec341c88-9b34-4027-9e7e-33c5900c95f6 /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=4:ec341c88-9b34-4027-9e7e-33c5900c95f6 /dev/mmcblk0' with exit code 0
+Partition 5:
+* Name: rootfs_b
+* Partition type: primary
+* Start: 1168MiB
+* End: 2192MiB
+* UUID: ec087a31-9005-49df-b77b-d7c4312a0511
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 1168MiB 2192MiB'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 1168MiB 2192MiB' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 5 'rootfs_b''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 5 'rootfs_b'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=5:ec087a31-9005-49df-b77b-d7c4312a0511 /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=5:ec087a31-9005-49df-b77b-d7c4312a0511 /dev/mmcblk0' with exit code 0
+Partition 6:
+* Name: rootfs_data
+* Partition type: primary
+* Filesystem type: ext4
+* Start: 2192MiB
+* End: 100%
+* UUID: 8b06d263-67ab-452e-a126-cc8345d60f9c
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 2192MiB 100%'...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 2192MiB 100%' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script name 6 'rootfs_data''...
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script name 6 'rootfs_data'' with exit code 0
+Executing command '/usr/sbin/sgdisk --partition-guid=6:8b06d263-67ab-452e-a126-cc8345d60f9c /dev/mmcblk0'...
+The operation has completed successfully.
+Executed '/usr/sbin/sgdisk --partition-guid=6:8b06d263-67ab-452e-a126-cc8345d60f9c /dev/mmcblk0' with exit code 0
+Executing command '/usr/sbin/parted -s /dev/mmcblk0 --script print'...
+Model: MMC 8GTF4R (sd/mmc)
+Disk /dev/mmcblk0: 7818MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name         Flags
+ 1      8389kB  16.8MB  8389kB               boot
+ 2      16.8MB  83.9MB  67.1MB               kernel_a
+ 3      83.9MB  1158MB  1074MB               rootfs_a
+ 4      1158MB  1225MB  67.1MB  ext4         kernel_b
+ 5      1225MB  2298MB  1074MB               rootfs_b
+ 6      2298MB  7817MB  5519MB  ext4         rootfs_data
+
+Executed '/usr/sbin/parted -s /dev/mmcblk0 --script print' with exit code 0
+Executing command '/usr/sbin/partprobe'...
+Executed '/usr/sbin/partprobe' with exit code 0
+Created partitions on block device /dev/mmcblk0
+
+Creating filesystems on block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0p6
+* Filesystem type: ext4
+* Label: rootfs_data
+Executing command '/sbin/mkfs.ext4 -F -L rootfs_data /dev/mmcblk0p6'...
+mke2fs 1.46.1 (9-Feb-2021)
+/dev/mmcblk0p6 contains a ext4 file system labelled 'rootfs_data'
+        last mounted on / on Fri Aug  4 09:00:48 2017
+Discarding device blocks: done
+Creating filesystem with 1347328 4k blocks and 337344 inodes
+Filesystem UUID: ef0b7779-1757-4da4-9dec-3842e657d144
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Executed '/sbin/mkfs.ext4 -F -L rootfs_data /dev/mmcblk0p6' with exit code 0
+Created ext4 filesystem on /dev/mmcblk0p6
+
+Writing images to block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+Image 1:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+* Offset: 4128768 bytes
+Executing command '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=4128768 seek=1'...
+0+1 records in
+0+1 records out
+Executed '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=4128768 seek=1' with exit code 0
+Image 2:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+* Offset: 4161536 bytes
+Executing command '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=4161536 seek=1'...
+0+1 records in
+0+1 records out
+Executed '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=4161536 seek=1' with exit code 0
+Writed images to block device /dev/mmcblk0
+
+┌────────────────┐
+│                │
+│  Installation  │
+│                │
+└────────────────┘
+
+┌─────────────────────┐
+│                     │
+│  Installing images  │
+│                     │
+└─────────────────────┘
+
+Installing image 1...
+════════════════════════════════════════════════════════════════════════════════
+* Type: swupdate
+* Image source: local
+* Image URL: /mnt/swu_install.swu
+* Extra arguments: --no-bootloader-env
+* Dry run: 1
+* Install: 1
+* Selections: ${SWU_SYSTEM_A_SELECTION} ${SWU_SYSTEM_B_SELECTION}
+* Selections (expanded): tanowrt,system-a tanowrt,system-b
+
+[dry] run for selection 'tanowrt,system-a'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.rk0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on boardcon-em3568-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4024
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-07-21-21:44:06-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Boardcon EM3568 SBC (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-07-21-21:44:06-UTC: tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo in device : /dev/mmcblk0p3 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.10: fitImage-boardcon-em3568-emmc.ext4 in device : /dev/mmcblk0p2 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.rk0: startup-boardcon-em3568-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10: u-boot-boardcon-em3568-emmc.bin-emmc in device : /dev/mmcblk0p1 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image idblock 17b2bb9761023c00e7ca3d0f46e73286: idblock.img-boardcon-em3568-emmc-emmc in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware boardcon-em3568-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 48037888
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo, 48037888 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename idblock.img-boardcon-em3568-emmc-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 296960
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-boardcon-em3568-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2097152
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-boardcon-em3568-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2168
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-boardcon-em3568-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 12281856
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-boardcon-em3568-emmc.ext4, 12281856 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-boardcon-em3568-emmc.ext4 dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream idblock.img-boardcon-em3568-emmc-emmc dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 32768 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-boardcon-em3568-emmc.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-boardcon-em3568-emmc.img dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 4063232 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-a' [dry] run success
+
+[dry] run for selection 'tanowrt,system-b'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.rk0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on boardcon-em3568-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4024
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-07-21-21:44:06-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Boardcon EM3568 SBC (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-07-21-21:44:06-UTC: tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo in device : /dev/mmcblk0p5 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.10: fitImage-boardcon-em3568-emmc.ext4 in device : /dev/mmcblk0p4 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.rk0: startup-boardcon-em3568-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10: u-boot-boardcon-em3568-emmc.bin-emmc in device : /dev/mmcblk0p1 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image idblock 17b2bb9761023c00e7ca3d0f46e73286: idblock.img-boardcon-em3568-emmc-emmc in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware boardcon-em3568-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 48037888
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo, 48037888 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename idblock.img-boardcon-em3568-emmc-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 296960
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-boardcon-em3568-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2097152
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-boardcon-em3568-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2168
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-boardcon-em3568-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 12281856
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-boardcon-em3568-emmc.ext4, 12281856 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-boardcon-em3568-emmc.ext4 dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream idblock.img-boardcon-em3568-emmc-emmc dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 32768 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-boardcon-em3568-emmc.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-boardcon-em3568-emmc.img dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 4063232 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-b' [dry] run success
+
+[install] run for selection 'tanowrt,system-a'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.rk0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on boardcon-em3568-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4024
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-07-21-21:44:06-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Boardcon EM3568 SBC (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-07-21-21:44:06-UTC: tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo in device : /dev/mmcblk0p3 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.10: fitImage-boardcon-em3568-emmc.ext4 in device : /dev/mmcblk0p2 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.rk0: startup-boardcon-em3568-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10: u-boot-boardcon-em3568-emmc.bin-emmc in device : /dev/mmcblk0p1 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image idblock 17b2bb9761023c00e7ca3d0f46e73286: idblock.img-boardcon-em3568-emmc-emmc in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware boardcon-em3568-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 48037888
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo, 48037888 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename idblock.img-boardcon-em3568-emmc-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 296960
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-boardcon-em3568-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2097152
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-boardcon-em3568-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2168
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-boardcon-em3568-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 12281856
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-boardcon-em3568-emmc.ext4, 12281856 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-boardcon-em3568-emmc.ext4 raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream idblock.img-boardcon-em3568-emmc-emmc raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 32768 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-boardcon-em3568-emmc.bin-emmc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-boardcon-em3568-emmc.img raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 4063232 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-a' [install] run success
+
+[install] run for selection 'tanowrt,system-b'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.rk0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on boardcon-em3568-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4024
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-07-21-21:44:06-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Boardcon EM3568 SBC (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-07-21-21:44:06-UTC: tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo in device : /dev/mmcblk0p5 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.10: fitImage-boardcon-em3568-emmc.ext4 in device : /dev/mmcblk0p4 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.rk0: startup-boardcon-em3568-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10: u-boot-boardcon-em3568-emmc.bin-emmc in device : /dev/mmcblk0p1 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image idblock 17b2bb9761023c00e7ca3d0f46e73286: idblock.img-boardcon-em3568-emmc-emmc in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware boardcon-em3568-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 48037888
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo, 48037888 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-boardcon-em3568-emmc.squashfs-lzo raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename idblock.img-boardcon-em3568-emmc-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 296960
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-boardcon-em3568-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2097152
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-boardcon-em3568-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2168
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-boardcon-em3568-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 12281856
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-boardcon-em3568-emmc.ext4, 12281856 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-boardcon-em3568-emmc.ext4 raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream idblock.img-boardcon-em3568-emmc-emmc raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 32768 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-boardcon-em3568-emmc.bin-emmc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-boardcon-em3568-emmc.img raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 4063232 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-b' [install] run success
+
+┌─────────────────────┐
+│                     │
+│  Post-installation  │
+│                     │
+└─────────────────────┘
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_active 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_active 0'...
+Executed 'fw_setenv swu_active 0' with exit code 0
+
+Command 2
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_upgrade_available 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_upgrade_available 0'...
+Executed 'fw_setenv swu_upgrade_available 0' with exit code 0
+
+Command 3
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_bootcount 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_bootcount 0'...
+Executed 'fw_setenv swu_bootcount 0' with exit code 0
+
+┌────────────────────────────────────────────────┐
+│                                                │
+│  SUCCESS: Installation successfully completed  │
+│                                                │
+└────────────────────────────────────────────────┘
+
+Rebooting in 5 seconds...
+Rebooting in 4 seconds...
+Rebooting in 3 seconds...
+Rebooting in 2 seconds...
+Rebooting in 1 seconds...
+Rebooting now...
+[   39.783885] reboot: Restarting system

@@ -1,0 +1,129 @@
+DDR Version V1.31 20210118
+REG2C: 0x00000033, 0x00000033
+In
+589MHz
+DDR3
+Col=10 Bank=3 Row=15 Size=512MB
+OUT
+U-Boot SPL board init
+U-Boot SPL 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano7 (Jun 07 2022 - 10:13:52)
+Trying to boot from MMC1
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf@1 0x00040000 ... sha256(45d1df3f41...) + OK
+## Checking uboot 0x00600000 ... sha256(85d171c691...) + OK
+## Checking fdt 0x006ad2c0 ... sha256(c1a12a5405...) + OK
+## Checking atf@2 0xfff82000 ... sha256(1d10f82247...) + OK
+Jumping to U-Boot(0x00600000) via ARM Trusted Firmware(0x00040000)
+Total: 500.734 ms
+
+INFO:    Preloader serial: 0
+NOTICE:  BL31: v1.3(release):30f1405
+NOTICE:  BL31: Built : 17:08:28, Sep 23 2019
+INFO:    Lastlog: last=0x100000, realtime=0x102000, size=0x2000
+INFO:    ARM GICv2 driver initialized
+INFO:    Using opteed sec cpu_context!
+INFO:    boot cpu mask: 1
+INFO:    plat_rockchip_pmu_init: pd status 0xe
+INFO:    BL31: Initializing runtime services
+WARNING: No OPTEE provided by BL2 boot loader, Booting device without OPTEE initialization. SMC`s destined for OPTEE will return SMC_UNK
+ERROR:   Error initializing runtime service opteed_fast
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x600000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano7 (Jun 07 2022 - 10:13:52 +0000)
+
+Model: Radxa ROCK Pi S
+PreSerial: 0, raw, 0xff0a0000
+DRAM:  510 MiB
+Sysmem: init
+Relocation Offset: 1f903000
+Relocation fdt: 1f4f1fc0 - 1f4f9d00
+CR: M/C/I
+MMC:   dwmmc@ff480000: 1, dwmmc@ff490000: 0
+In:    serial
+Out:   serial
+Err:   serial
+Model: Radxa ROCK Pi S
+Bootdev(atags): mmc 0
+MMC0: Legacy, 52Mhz
+PartType: EFI
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+## Error: Can't overwrite "serial#"
+## Error inserting "serial#" variable, errno=1
+No misc partition
+boot mode: None
+CLK: (sync kernel. arm: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+  apll 816000 KHz
+  dpll 1300000 KHz
+  vpll0 1177823 KHz
+  vpll1 901583 KHz
+  aclk_bus 185714 KHz
+  hclk_bus 100000 KHz
+  pclk_bus 100000 KHz
+  aclk_peri 185714 KHz
+  hclk_peri 100000 KHz
+  pclk_peri 100000 KHz
+  hclk_audio 98151 KHz
+  pclk_audio 98151 KHz
+No misc partition
+Net:   No ethernet found.
+Hit key to stop autoboot('CTRL+C'):  0
+switch to partitions #0, OK
+mmc0 is current device
+
+MMC read: dev # 0, block # 7936, count 128 ... 128 blocks read: OK
+## Executing script at 00500000
+Board name: evb_rk3308
+Active system A
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc0 is current device
+3866792 bytes read in 192 ms (19.2 MiB/s)
+Booting kernel 0x04080000#conf-rockchip_rk3308-rock-pi-s.dtb...
+Fdt Ramdisk skip relocation
+No misc partition
+## Loading kernel from FIT Image at 04080000 ...
+   Using 'conf-rockchip_rk3308-rock-pi-s.dtb' configuration
+## Verified-boot: 0
+   Trying 'kernel-1' kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  gzip compressed
+     Data Start:   0x04080110
+     Data Size:    3801255 Bytes = 3.6 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x00280000
+     Entry Point:  0x00280000
+     Hash algo:    sha256
+     Hash value:   04860dd17cdc50ea4472225846e06774f1544dcdc3e8d6bdf2edf71d2b479a11
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at 04080000 ...
+   Using 'conf-rockchip_rk3308-rock-pi-s.dtb' configuration
+   Trying 'fdt-rockchip_rk3308-rock-pi-s.dtb' fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x044202d8
+     Data Size:    63526 Bytes = 62 KiB
+     Architecture: AArch64
+     Load Address: 0x0a100000
+     Hash algo:    sha256
+     Hash value:   96247eca1cd477c2e367fd856b2bd9c570fb1d183da910f8e6b586c7889ef16a
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x044202d8 to 0x0a100000
+   Booting using the fdt blob at 0x0a100000
+   Uncompressing GZIP Kernel Image from 0x04080110 to 0x00280000 ... with 007e7808 bytes OK
+   kernel loaded at 0x00280000, end = 0x00a67808
+  'reserved-memory' ramoops@110000: addr=110000 size=f0000
+   Using Device Tree in place at 000000000a100000, end 000000000a112825
+Adding bank: 0x00200000 - 0x20000000 (size: 0x1fe00000)
+Total: 1784.127 ms
+
+Starting kernel ...

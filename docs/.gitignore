@@ -1,0 +1,4 @@
+_build/
+.vscode/
+__pycache__/
+*.mo

@@ -1,0 +1,4 @@
+pyaml
+sphinx_rtd_theme
+sphinx_tabs
+sphinxcontrib-mermaid

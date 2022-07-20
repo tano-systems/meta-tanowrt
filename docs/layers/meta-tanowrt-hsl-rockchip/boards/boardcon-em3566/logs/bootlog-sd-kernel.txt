@@ -1,0 +1,704 @@
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
+[    0.000000] Linux version 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8 (oe-user@oe-host) (gcc version 10.3.0 (GCC), GNU ld (GNU Binutils) 2.36.1.20210703) #1 SMP Wed Jul 20 02:57:20 UTC 2022
+[    0.000000] Machine model: Boardcon EM3566 SBC Board
+[    0.000000] earlycon: uart8250 at MMIO32 0x00000000fe680000 (options '')
+[    0.000000] bootconsole [uart8250] enabled
+[    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-logo@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 16 MiB at 0x000000007f000000
+[    0.000000] On node 0 totalpages: 519680
+[    0.000000]   DMA32 zone: 8184 pages used for memmap
+[    0.000000]   DMA32 zone: 0 pages reserved
+[    0.000000]   DMA32 zone: 519680 pages, LIFO batch:63
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: Trusted OS migration not required
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 23 pages/cpu s54376 r8192 d31640 u94208
+[    0.000000] pcpu-alloc: s54376 r8192 d31640 u94208 alloc=23*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: Virtualization Host Extensions
+[    0.000000] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 511496
+[    0.000000] Kernel command line: console=ttyFIQ0,1500000n8 earlycon=uart8250,mmio32,0xfe680000  root=PARTUUID=b626e226-cafe-480e-be29-2ed7e6e53d37 ro rootfstype=squashfs rootwait rootfs_partition=3 rootfs_volume=3 earlyprintk panic=15
+[    0.000000] Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes)
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] Memory: 2002336K/2078720K available (13950K kernel code, 1896K rwdata, 4656K rodata, 1472K init, 506K bss, 60000K reserved, 16384K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] ftrace: allocating 50763 entries in 199 pages
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu:     RCU event tracing is enabled.
+[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=8 to nr_cpu_ids=4.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: Distributor has no Range Selector support
+[    0.000000] GICv3: no VLPI support, no direct LPI support
+[    0.000000] ITS [mem 0xfd440000-0xfd45ffff]
+[    0.000000] ITS@0x00000000fd440000: allocated 8192 Devices @7c4f0000 (indirect, esz 8, psz 64K, shr 0)
+[    0.000000] ITS@0x00000000fd440000: allocated 32768 Interrupt Collections @7c500000 (flat, esz 2, psz 64K, shr 0)
+[    0.000000] ITS: using cache flushing for cmd queue
+[    0.000000] GIC: using LPI property table @0x000000007c510000
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x00000000fd460000
+[    0.000000] CPU0: using LPI pending table @0x000000007c520000
+[    0.000000] GIC: using cache flushing for LPI property table
+[    0.000000] random: random: get_random_bytes called from start_kernel+0x358/0x4e0 with crng_init=0
+[    0.000000] arch_timer: cp15 timer(s) running at 24.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000006] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.001988] Console: colour dummy device 80x25
+[    0.002447] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=80000)
+[    0.003409] pid_max: default: 32768 minimum: 301
+[    0.004054] Mount-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.004690] Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.007321] ASID allocator initialised with 32768 entries
+[    0.008001] rcu: Hierarchical SRCU implementation.
+[    0.011321] Platform MSI: interrupt-controller@fd440000 domain created
+[    0.012414] PCI/MSI: /interrupt-controller@fd400000/interrupt-controller@fd440000 domain created
+[    0.013918] smp: Bringing up secondary CPUs ...
+[    0.015179] Detected VIPT I-cache on CPU1
+[    0.015219] GICv3: CPU1: found redistributor 100 region 0:0x00000000fd480000
+[    0.015272] CPU1: using LPI pending table @0x000000007c6b0000
+[    0.015332] CPU1: Booted secondary processor 0x0000000100 [0x412fd050]
+[    0.016377] Detected VIPT I-cache on CPU2
+[    0.016412] GICv3: CPU2: found redistributor 200 region 0:0x00000000fd4a0000
+[    0.016463] CPU2: using LPI pending table @0x000000007c700000
+[    0.016508] CPU2: Booted secondary processor 0x0000000200 [0x412fd050]
+[    0.017395] Detected VIPT I-cache on CPU3
+[    0.017429] GICv3: CPU3: found redistributor 300 region 0:0x00000000fd4c0000
+[    0.017481] CPU3: using LPI pending table @0x000000007c720000
+[    0.017525] CPU3: Booted secondary processor 0x0000000300 [0x412fd050]
+[    0.017661] smp: Brought up 1 node, 4 CPUs
+[    0.024600] SMP: Total of 4 processors activated.
+[    0.025045] CPU features: detected: GIC system register CPU interface
+[    0.025650] CPU features: detected: Privileged Access Never
+[    0.026174] CPU features: detected: LSE atomic instructions
+[    0.026711] CPU features: detected: User Access Override
+[    0.027211] CPU features: detected: 32-bit EL0 Support
+[    0.027694] CPU features: detected: RAS Extension Support
+[    0.028393] CPU: All CPU(s) started at EL2
+[    0.028805] alternatives: patching kernel code
+[    0.036674] devtmpfs: initialized
+[    0.059763] Registered cp15_barrier emulation handler
+[    0.060258] Registered setend emulation handler
+[    0.061038] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 6370867519511994 ns
+[    0.061961] futex hash table entries: 1024 (order: 4, 65536 bytes)
+[    0.063409] pinctrl core: initialized pinctrl subsystem
+[    0.064251] regulator-dummy: no parameters
+[    0.065053] NET: Registered protocol family 16
+[    0.069666] cpuidle: using governor menu
+[    0.070075] Registered FIQ tty driver
+[    0.070984] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.073961] DMA: preallocated 2048 KiB pool for atomic allocations
+[    0.078474] console [pstore-1] enabled
+[    0.078833] pstore: Registered ramoops as persistent store backend
+[    0.079459] ramoops: attached 0xf0000@0x110000, ecc: 0/0
+[    0.111271] rockchip-gpio fdd60000.gpio: probed gpio0 (fdd60000.gpio)
+[    0.112610] rockchip-gpio fe740000.gpio: probed gpio1 (fe740000.gpio)
+[    0.113944] rockchip-gpio fe750000.gpio: probed gpio2 (fe750000.gpio)
+[    0.115229] rockchip-gpio fe760000.gpio: probed gpio3 (fe760000.gpio)
+[    0.116531] rockchip-gpio fe770000.gpio: probed gpio4 (fe770000.gpio)
+[    0.117273] rockchip-pinctrl pinctrl: probed pinctrl
+[    0.133002] cryptd: max_cpu_qlen set to 1000
+[    0.135237] console [ttyFIQ0] enabled
+[    0.135946] bootconsole [uart8250] disabled
+[    0.136614] Registered fiq debugger ttyFIQ0
+[    0.137185] dc_12v: 12000 mV
+[    0.137483] reg-fixed-voltage dc-12v: dc_12v supplying 12000000uV
+[    0.137627] reg-fixed-voltage vcc3v3-sys: Looking up vin-supply from device tree
+[    0.137641] vcc3v3_sys: supplied by dc_12v
+[    0.137678] dc_12v: could not add device link regulator.2 err -2
+[    0.137728] vcc3v3_sys: 3300 mV
+[    0.137979] reg-fixed-voltage vcc3v3-sys: vcc3v3_sys supplying 3300000uV
+[    0.138116] reg-fixed-voltage vcc_1v8: Looking up vin-supply from device tree
+[    0.138129] vcc_1v8: supplied by vcc3v3_sys
+[    0.138163] vcc3v3_sys: could not add device link regulator.3 err -2
+[    0.138212] vcc_1v8: 1800 mV
+[    0.138465] reg-fixed-voltage vcc_1v8: vcc_1v8 supplying 1800000uV
+[    0.138607] reg-fixed-voltage vcc_3v3: Looking up vin-supply from device tree
+[    0.138620] vcc_3v3: supplied by vcc3v3_sys
+[    0.138656] vcc3v3_sys: could not add device link regulator.4 err -2
+[    0.138706] vcc_3v3: 3300 mV
+[    0.138940] reg-fixed-voltage vcc_3v3: vcc_3v3 supplying 3300000uV
+[    0.139074] reg-fixed-voltage vdd-fixed: Looking up vin-supply from device tree
+[    0.139087] vdd_fixed: supplied by vcc3v3_sys
+[    0.139122] vcc3v3_sys: could not add device link regulator.5 err -2
+[    0.139190] vdd_fixed: 950 mV
+[    0.139458] reg-fixed-voltage vdd-fixed: vdd_fixed supplying 950000uV
+[    0.139607] reg-fixed-voltage vcc5v0-sys: Looking up vin-supply from device tree
+[    0.139620] vcc5v0_sys: supplied by dc_12v
+[    0.139655] dc_12v: could not add device link regulator.6 err -2
+[    0.139703] vcc5v0_sys: 5000 mV
+[    0.139948] reg-fixed-voltage vcc5v0-sys: vcc5v0_sys supplying 5000000uV
+[    0.140084] reg-fixed-voltage vcc5v0-usb: Looking up vin-supply from device tree
+[    0.140097] vcc5v0_usb: supplied by dc_12v
+[    0.140130] dc_12v: could not add device link regulator.7 err -2
+[    0.140180] vcc5v0_usb: 5000 mV
+[    0.140436] reg-fixed-voltage vcc5v0-usb: vcc5v0_usb supplying 5000000uV
+[    0.140725] reg-fixed-voltage vcc5v0-host-regulator: Looking up vin-supply from device tree
+[    0.140741] vcc5v0_host: supplied by vcc5v0_usb
+[    0.140774] vcc5v0_usb: could not add device link regulator.8 err -2
+[    0.140831] vcc5v0_host: 5000 mV
+[    0.141076] reg-fixed-voltage vcc5v0-host-regulator: vcc5v0_host supplying 5000000uV
+[    0.141311] vcc5v0_otg: 5000 mV
+[    0.141519] reg-fixed-voltage vcc5v0-otg-regulator: Looking up vin-supply from device tree
+[    0.141533] vcc5v0_otg: supplied by vcc5v0_usb
+[    0.141678] reg-fixed-voltage vcc5v0-otg-regulator: vcc5v0_otg supplying 5000000uV
+[    0.142574] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_npu-supply from device tree
+[    0.142599] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_npu-supply property in node /power-management@fdd90000/power-controller failed
+[    0.142692] rk_iommu fde4b000.iommu: version = 2
+[    0.143341] rk_iommu fdea0800.iommu: version = 2
+[    0.143625] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_vpu-supply from device tree
+[    0.143651] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_vpu-supply property in node /power-management@fdd90000/power-controller failed
+[    0.143834] rk_iommu fded0480.iommu: version = 2
+[    0.144118] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rga-supply from device tree
+[    0.144144] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rga-supply property in node /power-management@fdd90000/power-controller failed
+[    0.144390] rk_iommu fdee0800.iommu: version = 2
+[    0.144886] rk_iommu fdef0800.iommu: version = 2
+[    0.145349] rk_iommu fdf40f00.iommu: version = 2
+[    0.145683] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rkvenc-supply from device tree
+[    0.145707] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rkvenc-supply property in node /power-management@fdd90000/power-controller failed
+[    0.145894] rk_iommu fdf80800.iommu: version = 2
+[    0.146237] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rkvdec-supply from device tree
+[    0.146262] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_rkvdec-supply property in node /power-management@fdd90000/power-controller failed
+[    0.146409] rk_iommu fe043e00.iommu: version = 2
+[    0.147388] SCSI subsystem initialized
+[    0.147461] libata version 3.00 loaded.
+[    0.147735] usbcore: registered new interface driver usbfs
+[    0.147840] usbcore: registered new interface driver hub
+[    0.147923] usbcore: registered new device driver usb
+[    0.148027] media: Linux media interface: v0.10
+[    0.148094] videodev: Linux video capture interface: v2.00
+[    0.148227] pps_core: LinuxPPS API ver. 1 registered
+[    0.148254] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.148298] PTP clock support registered
+[    0.148719] arm-scmi firmware:scmi: SCMI Protocol v2.0 'rockchip:' Firmware version 0x0
+[    0.151229] Advanced Linux Sound Architecture Driver Initialized.
+[    0.151947] Bluetooth: Core ver 2.22
+[    0.152018] NET: Registered protocol family 31
+[    0.152043] Bluetooth: HCI device and connection manager initialized
+[    0.152081] Bluetooth: HCI socket layer initialized
+[    0.152110] Bluetooth: L2CAP socket layer initialized
+[    0.152169] Bluetooth: SCO socket layer initialized
+[    0.152769] rockchip-cpuinfo cpuinfo: SoC            : 35662000
+[    0.152801] rockchip-cpuinfo cpuinfo: Serial         : ac7ac6b1f2b390e5
+[    0.154002] clocksource: Switched to clocksource arch_sys_counter
+[    0.279627] thermal thermal_zone1: power_allocator: sustainable_power will be estimated
+[    0.280066] NET: Registered protocol family 2
+[    0.280292] IP idents hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.281927] tcp_listen_portaddr_hash hash table entries: 1024 (order: 3, 40960 bytes)
+[    0.282011] TCP established hash table entries: 16384 (order: 5, 131072 bytes)
+[    0.282173] TCP bind hash table entries: 16384 (order: 7, 524288 bytes)
+[    0.282696] TCP: Hash tables configured (established 16384 bind 16384)
+[    0.282890] UDP hash table entries: 1024 (order: 4, 98304 bytes)
+[    0.283024] UDP-Lite hash table entries: 1024 (order: 4, 98304 bytes)
+[    0.283379] NET: Registered protocol family 1
+[    0.284239] RPC: Registered named UNIX socket transport module.
+[    0.284268] RPC: Registered udp transport module.
+[    0.284290] RPC: Registered tcp transport module.
+[    0.284310] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.285149] PCI: CLS 0 bytes, default 64
+[    0.287363] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.290048] Initialise system trusted keyrings
+[    0.290302] workingset: timestamp_bits=45 max_order=19 bucket_order=0
+[    0.300419] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.301595] NFS: Registering the id_resolver key type
+[    0.301650] Key type id_resolver registered
+[    0.301664] Key type id_legacy registered
+[    0.301722] ntfs: driver 2.1.32 [Flags: R/O].
+[    0.302036] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.302583] fuse init (API version 7.27)
+[    0.303147] SGI XFS with security attributes, no debug enabled
+[    0.307922] NET: Registered protocol family 38
+[    0.307980] Key type asymmetric registered
+[    0.307996] Asymmetric key parser 'x509' registered
+[    0.308055] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 243)
+[    0.308083] io scheduler noop registered
+[    0.308104] io scheduler deadline registered
+[    0.308284] io scheduler cfq registered (default)
+[    0.308314] io scheduler mq-deadline registered
+[    0.308337] io scheduler kyber registered
+[    0.311667] phy phy-fe8a0000.usb2-phy.0: Looking up phy-supply from device tree
+[    0.311698] vcc5v0_host: could not add device link phy-fe8a0000.usb2-phy.0 err -2
+[    0.311758] phy phy-fe8a0000.usb2-phy.0: Linked as a consumer to regulator.8
+[    0.311938] phy phy-fe8a0000.usb2-phy.1: Looking up phy-supply from device tree
+[    0.311952] phy phy-fe8a0000.usb2-phy.1: Looking up phy-supply property in node /usb2-phy@fe8a0000/otg-port failed
+[    0.312072] phy phy-fe8a0000.usb2-phy.1: Looking up vbus-supply from device tree
+[    0.312154] phy phy-fe8a0000.usb2-phy.1: Linked as a consumer to regulator.9
+[    0.314136] extcon extcon1: failed to create extcon usb2-phy link
+[    0.314225] phy phy-fe8b0000.usb2-phy.2: Looking up phy-supply from device tree
+[    0.314251] vcc5v0_host: could not add device link phy-fe8b0000.usb2-phy.2 err -2
+[    0.314307] phy phy-fe8b0000.usb2-phy.2: Linked as a consumer to regulator.8
+[    0.314475] phy phy-fe8b0000.usb2-phy.3: Looking up phy-supply from device tree
+[    0.314496] vcc5v0_host: could not add device link phy-fe8b0000.usb2-phy.3 err -2
+[    0.314555] phy phy-fe8b0000.usb2-phy.3: Linked as a consumer to regulator.8
+[    0.314692] phy phy-fe8b0000.usb2-phy.3: Looking up vbus-supply from device tree
+[    0.314705] phy phy-fe8b0000.usb2-phy.3: Looking up vbus-supply property in node /usb2-phy@fe8b0000/otg-port failed
+[    0.314726] phy phy-fe8b0000.usb2-phy.3: No vbus specified for otg port
+[    0.321786] mpp_service mpp-srv: unknown mpp version for missing VCS info
+[    0.321835] mpp_service mpp-srv: probe start
+[    0.322730] iommu: Adding device fdf40000.rkvenc to group 5
+[    0.322790] mpp_rkvenc fdf40000.rkvenc: Linked as a consumer to fdf40f00.iommu
+[    0.323080] mpp_rkvenc fdf40000.rkvenc: probing start
+[    0.323701] mpp_rkvenc fdf40000.rkvenc: Looking up venc-supply from device tree
+[    0.323725] mpp_rkvenc fdf40000.rkvenc: venc regulator not ready, retry
+[    0.323755] rkvenc_init:1199: failed to add venc devfreq
+[    0.324262] mpp_rkvenc fdf40000.rkvenc: probing finish
+[    0.325399] iommu: Adding device fdea0400.vdpu to group 1
+[    0.325443] mpp_vdpu2 fdea0400.vdpu: Linked as a consumer to fdea0800.iommu
+[    0.325690] mpp_vdpu2 fdea0400.vdpu: probe device
+[    0.326489] mpp_vdpu2 fdea0400.vdpu: probing finish
+[    0.327081] iommu: Adding device fdee0000.vepu to group 3
+[    0.327137] mpp_vepu2 fdee0000.vepu: Linked as a consumer to fdee0800.iommu
+[    0.327474] mpp_vepu2 fdee0000.vepu: probe device
+[    0.328237] mpp_vepu2 fdee0000.vepu: probing finish
+[    0.328862] iommu: Adding device fdef0000.iep to group 4
+[    0.328918] mpp-iep2 fdef0000.iep: Linked as a consumer to fdef0800.iommu
+[    0.329138] mpp-iep2 fdef0000.iep: probe device
+[    0.329803] mpp-iep2 fdef0000.iep: allocate roi buffer failed
+[    0.330040] mpp-iep2 fdef0000.iep: probing finish
+[    0.330644] iommu: Adding device fded0000.jpegd to group 2
+[    0.330752] mpp_jpgdec fded0000.jpegd: Linked as a consumer to fded0480.iommu
+[    0.330969] mpp_jpgdec fded0000.jpegd: probe device
+[    0.331739] mpp_jpgdec fded0000.jpegd: probing finish
+[    0.332396] iommu: Adding device fdf80200.rkvdec to group 6
+[    0.332451] mpp_rkvdec2 fdf80200.rkvdec: Linked as a consumer to fdf80800.iommu
+[    0.332796] mpp_rkvdec2 fdf80200.rkvdec: probing start
+[    0.333028] mpp_rkvdec2 fdf80200.rkvdec: 16 task capacity link mode detected
+[    0.333490] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_a is not found!
+[    0.333521] rkvdec2_init:661: No niu aclk reset resource define
+[    0.333550] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_h is not found!
+[    0.333566] rkvdec2_init:664: No niu hclk reset resource define
+[    0.333813] mpp_rkvdec2 fdf80200.rkvdec: sram_start 0x00000000fdcc0000
+[    0.333832] mpp_rkvdec2 fdf80200.rkvdec: rcb_iova 0x0000000010000000
+[    0.333860] mpp_rkvdec2 fdf80200.rkvdec: sram_size 45056
+[    0.333884] mpp_rkvdec2 fdf80200.rkvdec: rcb_size 65536
+[    0.333910] mpp_rkvdec2 fdf80200.rkvdec: min_width 512
+[    0.334033] mpp_rkvdec2 fdf80200.rkvdec: link mode probe finish
+[    0.334136] mpp_rkvdec2 fdf80200.rkvdec: probing finish
+[    0.334494] mpp_service mpp-srv: probe success
+[    0.342513] dma-pl330 fe530000.dmac: Loaded driver for PL330 DMAC-241330
+[    0.342560] dma-pl330 fe530000.dmac:         DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    0.346190] dma-pl330 fe550000.dmac: Loaded driver for PL330 DMAC-241330
+[    0.346233] dma-pl330 fe550000.dmac:         DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    0.347453] rockchip-system-monitor rockchip-system-monitor: system monitor probe
+[    0.348273] pwm-regulator vdd-logic: Looking up pwm-supply from device tree
+[    0.348292] vdd_logic: supplied by vcc3v3_sys
+[    0.348330] vcc3v3_sys: could not add device link regulator.10 err -2
+[    0.348481] vdd_logic: 840 <--> 1040 mV at 840 mV
+[    0.348970] pwm-regulator vdd-npu: Looking up pwm-supply from device tree
+[    0.348984] vdd_npu: supplied by vcc3v3_sys
+[    0.349021] vcc3v3_sys: could not add device link regulator.11 err -2
+[    0.349108] vdd_npu: 810 <--> 1150 mV at 810 mV
+[    0.350003] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    0.351137] fe660000.serial: ttyS2 at MMIO 0xfe660000 (irq = 48, base_baud = 1500000) is a 16550A
+[    0.351838] fe690000.serial: ttyS5 at MMIO 0xfe690000 (irq = 49, base_baud = 1500000) is a 16550A
+[    0.354909] random: fast init done
+[    0.355149] iommu: Adding device fe040000.vop to group 7
+[    0.355209] rockchip-vop2 fe040000.vop: Linked as a consumer to fe043e00.iommu
+[    0.355263] random: crng init done
+[    0.360165] rockchip-drm display-subsystem: Linked as a consumer to fe040000.vop
+[    0.361552] rockchip-drm display-subsystem: Linked as a consumer to fe0a0000.hdmi
+[    0.363602] rockchip-drm display-subsystem: defer getting devfreq
+[    0.363988] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x0, primary plane phy id: -1
+[    0.364060] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp1 assign plane mask: 0x0, primary plane phy id: -1
+[    0.364095] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x0, primary plane phy id: -1
+[    0.364474] [drm] unsupported AFBC format[3432564e]
+[    0.364564] [drm] failed to init overlay plane Cluster0-win1
+[    0.364659] [drm] failed to init overlay plane Cluster1-win1
+[    0.364965] rockchip-drm display-subsystem: bound fe040000.vop (ops 0xffffff8008ef9158)
+[    0.365250] dwhdmi-rockchip fe0a0000.hdmi: Detected HDMI TX controller v2.11a with HDCP (DWC HDMI 2.0 TX PHY)
+[    0.366082] dwhdmi-rockchip fe0a0000.hdmi: registered DesignWare HDMI I2C bus driver
+[    0.366936] rockchip-drm display-subsystem: bound fe0a0000.hdmi (ops 0xffffff8008efd220)
+[    0.366960] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    0.366974] [drm] No driver support for vblank timestamp query.
+[    0.367175] rockchip-drm display-subsystem: failed to parse loader memory
+[    0.367259] [drm] Cannot find any crtc or sizes
+[    0.367557] [drm] Cannot find any crtc or sizes
+[    0.368828] [drm] Initialized rockchip 2.0.0 20140818 for display-subsystem on minor 0
+[    0.376357] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_gpu-supply from device tree
+[    0.376389] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_gpu-supply property in node /power-management@fdd90000/power-controller failed
+[    0.376458] mali fde60000.gpu: Kernel DDK version g7p1-01bet0
+[    0.376522] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.376585] mali fde60000.gpu: Looking up mali-supply from device tree
+[    0.376715] mali fde60000.gpu: Linked as a consumer to regulator.5
+[    0.376750] mali fde60000.gpu: Looking up shadercores-supply from device tree
+[    0.376767] mali fde60000.gpu: Looking up shadercores-supply property in node /gpu@fde60000 failed
+[    0.376845] mali fde60000.gpu: Looking up mali-supply from device tree
+[    0.376885] vdd_fixed: could not add device link fde60000.gpu err -17
+[    0.376898] vdd_fixed: Failed to create debugfs directory
+[    0.376911] mali fde60000.gpu: Looking up shadercores-supply from device tree
+[    0.376925] mali fde60000.gpu: Looking up shadercores-supply property in node /gpu@fde60000 failed
+[    0.376943] mali fde60000.gpu: dev_pm_opp_set_regulators: no regulator (shadercores) found: -19
+[    0.377106] mali fde60000.gpu: leakage=5
+[    0.377529] brd: module loaded
+[    0.377912] mali fde60000.gpu: avs=0
+[    0.377958] W : [File] : drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c; [Line] : 112; [Func] : kbase_platform_rk_init(); power-off-delay-ms not available.
+[    0.378529] mali fde60000.gpu: GPU identified as 0x2 arch 7.4.0 r1p0 status 0
+[    0.378688] mali fde60000.gpu: No priority control manager is configured
+[    0.378721] mali fde60000.gpu: No memory group manager is configured
+[    0.379529] mali fde60000.gpu: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    0.380711] mali fde60000.gpu: Probed as mali0
+[    0.387797] loop: module loaded
+[    0.388482] zram: Added device: zram0
+[    0.388679] lkdtm: No crash points registered, enable through debugfs
+[    0.392162] libphy: Fixed MDIO Bus: probed
+[    0.393674] rk_gmac-dwmac fe010000.ethernet: Looking up phy-supply from device tree
+[    0.393700] rk_gmac-dwmac fe010000.ethernet: Looking up phy-supply property in node /ethernet@fe010000 failed
+[    0.393726] rk_gmac-dwmac fe010000.ethernet: no regulator found
+[    0.393769] rk_gmac-dwmac fe010000.ethernet: clock input or output? (output).
+[    0.393788] rk_gmac-dwmac fe010000.ethernet: TX delay(0x4f).
+[    0.393803] rk_gmac-dwmac fe010000.ethernet: RX delay(0x25).
+[    0.393824] rk_gmac-dwmac fe010000.ethernet: integrated PHY? (no).
+[    0.398922] rk_gmac-dwmac fe010000.ethernet: init for RGMII
+[    0.399268] rk_gmac-dwmac fe010000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    0.399299] rk_gmac-dwmac fe010000.ethernet:         DWMAC4/5
+[    0.399325] rk_gmac-dwmac fe010000.ethernet: DMA HW capability register supported
+[    0.399349] rk_gmac-dwmac fe010000.ethernet: RX Checksum Offload Engine supported
+[    0.399370] rk_gmac-dwmac fe010000.ethernet: TX Checksum insertion supported
+[    0.399392] rk_gmac-dwmac fe010000.ethernet: Wake-Up On Lan supported
+[    0.399462] rk_gmac-dwmac fe010000.ethernet: TSO supported
+[    0.399479] rk_gmac-dwmac fe010000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    0.399496] rk_gmac-dwmac fe010000.ethernet: TSO feature enabled
+[    0.530705] libphy: stmmac: probed
+[    0.533110] PPP generic driver version 2.4.2
+[    0.533427] PPP MPPE Compression module registered
+[    0.533457] NET: Registered protocol family 24
+[    0.533799] usbcore: registered new interface driver cdc_ether
+[    0.534590] devfreq fde60000.gpu: Couldn't update frequency transition information.
+[    0.543211] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_pipe-supply from device tree
+[    0.543244] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_pipe-supply property in node /power-management@fdd90000/power-controller failed
+[    0.546965] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.547020] ehci-pci: EHCI PCI platform driver
+[    0.547127] ehci-platform: EHCI generic platform driver
+[    0.549515] ehci-platform fd800000.usb: EHCI Host Controller
+[    0.549804] ehci-platform fd800000.usb: new USB bus registered, assigned bus number 1
+[    0.550503] ehci-platform fd800000.usb: irq 11, io mem 0xfd800000
+[    0.560714] ehci-platform fd800000.usb: USB 2.0 started, EHCI 1.00
+[    0.561063] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    0.561095] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.561120] usb usb1: Product: EHCI Host Controller
+[    0.561143] usb usb1: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8 ehci_hcd
+[    0.561165] usb usb1: SerialNumber: fd800000.usb
+[    0.561892] hub 1-0:1.0: USB hub found
+[    0.561974] hub 1-0:1.0: 1 port detected
+[    0.564812] ehci-platform fd880000.usb: EHCI Host Controller
+[    0.565084] ehci-platform fd880000.usb: new USB bus registered, assigned bus number 2
+[    0.565792] ehci-platform fd880000.usb: irq 13, io mem 0xfd880000
+[    0.577384] ehci-platform fd880000.usb: USB 2.0 started, EHCI 1.00
+[    0.577749] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    0.577780] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.577809] usb usb2: Product: EHCI Host Controller
+[    0.577832] usb usb2: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8 ehci_hcd
+[    0.577854] usb usb2: SerialNumber: fd880000.usb
+[    0.578493] hub 2-0:1.0: USB hub found
+[    0.578569] hub 2-0:1.0: 1 port detected
+[    0.579571] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    0.579639] ohci-platform: OHCI generic platform driver
+[    0.579989] ohci-platform fd840000.usb: Generic Platform OHCI controller
+[    0.580284] ohci-platform fd840000.usb: new USB bus registered, assigned bus number 3
+[    0.580859] ohci-platform fd840000.usb: irq 12, io mem 0xfd840000
+[    0.641649] usb usb3: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    0.641682] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.641700] usb usb3: Product: Generic Platform OHCI controller
+[    0.641715] usb usb3: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8 ohci_hcd
+[    0.641729] usb usb3: SerialNumber: fd840000.usb
+[    0.642412] hub 3-0:1.0: USB hub found
+[    0.642486] hub 3-0:1.0: 1 port detected
+[    0.643252] ohci-platform fd8c0000.usb: Generic Platform OHCI controller
+[    0.643516] ohci-platform fd8c0000.usb: new USB bus registered, assigned bus number 4
+[    0.644041] ohci-platform fd8c0000.usb: irq 14, io mem 0xfd8c0000
+[    0.704965] usb usb4: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    0.704998] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.705015] usb usb4: Product: Generic Platform OHCI controller
+[    0.705031] usb usb4: Manufacturer: Linux 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8 ohci_hcd
+[    0.705045] usb usb4: SerialNumber: fd8c0000.usb
+[    0.705731] hub 4-0:1.0: USB hub found
+[    0.705811] hub 4-0:1.0: 1 port detected
+[    0.707759] usbcore: registered new interface driver cdc_acm
+[    0.707791] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    0.708150] usbcore: registered new interface driver uas
+[    0.708331] usbcore: registered new interface driver usb-storage
+[    0.708481] usbcore: registered new interface driver usbserial_generic
+[    0.708540] usbserial: USB Serial support registered for generic
+[    0.708623] usbcore: registered new interface driver ftdi_sio
+[    0.708667] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    0.708929] usbcore: registered new interface driver keyspan
+[    0.708986] usbserial: USB Serial support registered for Keyspan - (without firmware)
+[    0.709040] usbserial: USB Serial support registered for Keyspan 1 port adapter
+[    0.709099] usbserial: USB Serial support registered for Keyspan 2 port adapter
+[    0.709153] usbserial: USB Serial support registered for Keyspan 4 port adapter
+[    0.709246] usbcore: registered new interface driver oti6858
+[    0.709302] usbserial: USB Serial support registered for oti6858
+[    0.709385] usbcore: registered new interface driver qcserial
+[    0.709430] usbserial: USB Serial support registered for Qualcomm USB modem
+[    0.711753] i2c /dev entries driver
+[    0.827382] usb 2-1: new high-speed USB device number 2 using ehci-platform
+[    0.975865] usb 2-1: New USB device found, idVendor=05e3, idProduct=0608, bcdDevice=85.36
+[    0.975900] usb 2-1: New USB device strings: Mfr=0, Product=1, SerialNumber=0
+[    0.975916] usb 2-1: Product: USB2.0 Hub
+[    0.976915] hub 2-1:1.0: USB hub found
+[    0.977365] hub 2-1:1.0: 4 ports detected
+[    1.717375] rk3x-i2c fdd40000.i2c: timeout, ipd: 0x00, state: 1
+[    1.717424] fan53555-regulator 0-001c: Failed to get chip ID!
+[    1.717541] fan53555-regulator: probe of 0-001c failed with error -110
+[    2.730709] rk3x-i2c fe5a0000.i2c: timeout, ipd: 0x00, state: 2
+[    2.730758] rtc-hym8563 1-0051: could not init device, -110
+[    2.730830] rtc-hym8563: probe of 1-0051 failed with error -110
+[    2.733782] usbcore: registered new interface driver uvcvideo
+[    2.733816] USB Video Class driver (1.1.1)
+[    2.734037] rockchip-iodomain fdc20000.syscon:io-domains: Looking up pmuio1-supply from device tree
+[    2.734129] rockchip-iodomain fdc20000.syscon:io-domains: Linked as a consumer to regulator.4
+[    2.734180] rockchip-iodomain fdc20000.syscon:io-domains: pmuio1(3300000 uV) supplied by vcc_3v3
+[    2.734230] rockchip-iodomain fdc20000.syscon:io-domains: Looking up pmuio2-supply from device tree
+[    2.734323] rockchip-iodomain fdc20000.syscon:io-domains: pmuio2(3300000 uV) supplied by vcc_3v3
+[    2.734374] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio1-supply from device tree
+[    2.734456] rockchip-iodomain fdc20000.syscon:io-domains: vccio1(3300000 uV) supplied by vcc_3v3
+[    2.734509] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio2-supply from device tree
+[    2.734603] rockchip-iodomain fdc20000.syscon:io-domains: Linked as a consumer to regulator.3
+[    2.734636] rockchip-iodomain fdc20000.syscon:io-domains: vccio2(1800000 uV) supplied by vcc_1v8
+[    2.734691] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio3-supply from device tree
+[    2.734776] rockchip-iodomain fdc20000.syscon:io-domains: vccio3(3300000 uV) supplied by vcc_3v3
+[    2.734827] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio4-supply from device tree
+[    2.734909] rockchip-iodomain fdc20000.syscon:io-domains: vccio4(1800000 uV) supplied by vcc_1v8
+[    2.734962] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio5-supply from device tree
+[    2.735075] rockchip-iodomain fdc20000.syscon:io-domains: vccio5(3300000 uV) supplied by vcc_3v3
+[    2.735126] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio6-supply from device tree
+[    2.735207] rockchip-iodomain fdc20000.syscon:io-domains: vccio6(1800000 uV) supplied by vcc_1v8
+[    2.735258] rockchip-iodomain fdc20000.syscon:io-domains: Looking up vccio7-supply from device tree
+[    2.735339] rockchip-iodomain fdc20000.syscon:io-domains: vccio7(3300000 uV) supplied by vcc_3v3
+[    2.738522] rockchip-thermal fe710000.tsadc: tsadc is probed successfully!
+[    2.739941] usbcore: registered new interface driver bfusb
+[    2.740047] usbcore: registered new interface driver btusb
+[    2.740408] cpu cpu0: leakage=18
+[    2.740500] cpu cpu0: Looking up cpu-supply from device tree
+[    2.740523] cpu cpu0: Failed to get reg
+[    2.740934] cpu cpu0: Looking up cpu-supply from device tree
+[    2.742224] sdhci: Secure Digital Host Controller Interface driver
+[    2.742241] sdhci: Copyright(c) Pierre Ossman
+[    2.742268] Synopsys Designware Multimedia Card Interface Driver
+[    2.743487] dwmmc_rockchip fe2b0000.dwmmc: IDMAC supports 32-bit address mode.
+[    2.743895] dwmmc_rockchip fe2b0000.dwmmc: Using internal DMA controller.
+[    2.743933] dwmmc_rockchip fe2b0000.dwmmc: Version ID is 270a
+[    2.744087] dwmmc_rockchip fe2b0000.dwmmc: DW MMC controller at irq 38,32 bit host data width,256 deep fifo
+[    2.744145] dwmmc_rockchip fe2b0000.dwmmc: Looking up vmmc-supply from device tree
+[    2.744280] dwmmc_rockchip fe2b0000.dwmmc: Linked as a consumer to regulator.4
+[    2.744303] dwmmc_rockchip fe2b0000.dwmmc: Looking up vqmmc-supply from device tree
+[    2.744320] dwmmc_rockchip fe2b0000.dwmmc: Looking up vqmmc-supply property in node /dwmmc@fe2b0000 failed
+[    2.757718] mmc_host mmc1: Bus speed (slot 0) = 375000Hz (slot req 400000Hz, actual 375000HZ div = 0)
+[    2.771257] dwmmc_rockchip fe2c0000.dwmmc: IDMAC supports 32-bit address mode.
+[    2.771652] dwmmc_rockchip fe2c0000.dwmmc: Using internal DMA controller.
+[    2.771708] dwmmc_rockchip fe2c0000.dwmmc: Version ID is 270a
+[    2.771847] dwmmc_rockchip fe2c0000.dwmmc: DW MMC controller at irq 39,32 bit host data width,256 deep fifo
+[    2.771902] dwmmc_rockchip fe2c0000.dwmmc: Looking up vmmc-supply from device tree
+[    2.771918] dwmmc_rockchip fe2c0000.dwmmc: Looking up vmmc-supply property in node /dwmmc@fe2c0000 failed
+[    2.771947] dwmmc_rockchip fe2c0000.dwmmc: Looking up vqmmc-supply from device tree
+[    2.771958] dwmmc_rockchip fe2c0000.dwmmc: Looking up vqmmc-supply property in node /dwmmc@fe2c0000 failed
+[    2.772058] mmc_host mmc2: card is non-removable.
+[    2.784562] mmc_host mmc2: Bus speed (slot 0) = 375000Hz (slot req 400000Hz, actual 375000HZ div = 0)
+[    2.797624] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.799470] sdhci-dwcmshc fe310000.sdhci: Looking up vmmc-supply from device tree
+[    2.799487] sdhci-dwcmshc fe310000.sdhci: Looking up vmmc-supply property in node /sdhci@fe310000 failed
+[    2.799515] sdhci-dwcmshc fe310000.sdhci: Looking up vqmmc-supply from device tree
+[    2.799526] sdhci-dwcmshc fe310000.sdhci: Looking up vqmmc-supply property in node /sdhci@fe310000 failed
+[    2.799548] mmc0: Unknown controller version (5). You may experience problems.
+[    2.808297] mmc2 mmc_send_io_op_cond err: -110
+[    2.820918] mmc_host mmc2: Bus speed (slot 0) = 375000Hz (slot req 375000Hz, actual 375000HZ div = 0)
+[    2.832054] mmc0: SDHCI controller on fe310000.sdhci [fe310000.sdhci] using ADMA
+[    2.833698] hidraw: raw HID events driver (C) Jiri Kosina
+[    2.834357] usbcore: registered new interface driver usbhid
+[    2.834388] usbhid: USB HID core driver
+[    2.834853] rockchip,bus bus-npu: Looking up bus-supply from device tree
+[    2.834975] rockchip,bus bus-npu: Linked as a consumer to regulator.10
+[    2.835022] rockchip,bus bus-npu: Failed to get leakage
+[    2.835183] rockchip,bus bus-npu: Looking up pvtm-supply from device tree
+[    2.835205] rockchip,bus bus-npu: Failed to get reg
+[    2.835675] rockchip,bus bus-npu: avs=0
+[    2.836262] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 50000000Hz, actual 50000000HZ div = 0)
+[    2.836411] mmc1: new high speed SDHC card at address aaaa
+[    2.838161] mmcblk1: mmc1:aaaa SL16G 14.8 GiB
+[    2.839007] rockchip-saradc fe720000.saradc: Looking up vref-supply from device tree
+[    2.839116] rockchip-saradc fe720000.saradc: Linked as a consumer to regulator.3
+[    2.840166] optee: probing for conduit method from DT.
+[    2.840218] optee: revision 3.6 (0b06ae94)
+[    2.840832] optee: initialized driver
+[    2.840876] rksfc_base v1.1 2016-01-08
+[    2.842095] rksfc fe300000.sfc: rksfc_probe clk rate = 99000000
+[    2.842237] rkflash_dev_init enter
+[    2.842276] sfc nor id: 0 0 0
+[    2.842290] rkflash[1] is invalid
+[    2.842293] rkflash_dev_init enter
+[    2.842331] sfc_nand id: 0 0 0
+[    2.842351] rkflash[2] is invalid
+[    2.844206] usbcore: registered new interface driver snd-usb-audio
+[    2.845986] mmc2 mmc_send_io_op_cond err: -110
+[    2.847408]  mmcblk1: p1 p2 p3 p4 p5 p6
+[    2.854665] NET: Registered protocol family 26
+[    2.854718] u32 classifier
+[    2.854730]     Actions configured
+[    2.854884] Initializing XFRM netlink socket
+[    2.855605] NET: Registered protocol family 10
+[    2.856827] Segment Routing with IPv6
+[    2.856937] NET: Registered protocol family 17
+[    2.856983] NET: Registered protocol family 15
+[    2.857083] Bridge firewalling registered
+[    2.857457] Bluetooth: RFCOMM socket layer initialized
+[    2.857515] Bluetooth: RFCOMM ver 1.11
+[    2.857551] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.857582] Bluetooth: HIDP socket layer initialized
+[    2.857680] l2tp_core: L2TP core driver, V2.0
+[    2.857716] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    2.857739] l2tp_netlink: L2TP netlink interface
+[    2.857817] 8021q: 802.1Q VLAN Support v1.8
+[    2.857867] [BT_RFKILL]: Enter rfkill_rk_init
+[    2.857889] [WLAN_RFKILL]: Enter rfkill_wlan_init
+[    2.858770] Key type dns_resolver registered
+[    2.859239] flash vendor_init_thread!
+[    2.859259] flash vendor storage:20170308 ret = -1
+[    2.861096] Loading compiled-in X.509 certificates
+[    2.861966] pstore: Using compression: deflate
+[    2.863414] rga2: Driver loaded successfully ver:3.2.63318
+[    2.863882] rga2: Module initialized.
+[    2.864847] mmc0: new HS200 MMC card at address 0001
+[    2.866277] mmcblk0: mmc0:0001 8GTF4R 7.28 GiB
+[    2.867059] mmcblk0boot0: mmc0:0001 8GTF4R partition 1 4.00 MiB
+[    2.867886] mmcblk0boot1: mmc0:0001 8GTF4R partition 2 4.00 MiB
+[    2.868342] mmcblk0rpmb: mmc0:0001 8GTF4R partition 3 512 KiB, chardev (238:0)
+[    2.881376] mmc2 mmc_send_io_op_cond err: -110
+[    2.909628] cpu cpu0: Looking up cpu-supply from device tree
+[    2.912554] cpu cpu0: Looking up cpu-supply from device tree
+[    2.913291] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_vi-supply from device tree
+[    2.913321] rockchip-pm-domain fdd90000.power-management:power-controller: Looking up pd_vi-supply property in node /power-management@fdd90000/power-controller failed
+[    2.916066] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    2.918604] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    2.918778] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    2.918810] cfg80211: failed to load regulatory.db
+[    2.919274] mmc2 mmc_send_io_op_cond err: -110
+[    2.921018] I : [File] : drivers/gpu/arm/mali400/mali/linux/mali_kernel_linux.c; [Line] : 413; [Func] : mali_module_init(); svn_rev_string_from_arm of this mali_ko is '', rk_ko_ver is '5', built at '02:58:12', on 'Jul 20 2022'.
+[    2.921525] Mali:
+[    2.921528] Mali device driver loaded
+[    2.921714] ALSA device list:
+[    2.921737]   No soundcards found.
+[    2.929032] VFS: Mounted root (squashfs filesystem) readonly on device 179:3.
+[    2.931105] devtmpfs: mounted
+[    2.934644] Freeing unused kernel memory: 1472K
+[    2.950873] Run /sbin/init as init process
+[    2.988801] vendor storage:20190527 ret = 0
+[    3.073861] init: Console is alive
+[    3.074219] init: - watchdog -
+[    3.084128] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    3.084459] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    3.095265] init: - preinit -
+[    7.466688] overlay-resize: Root device mmcblk1
+[    7.566394] overlay-resize: Overlay partition /dev/mmcblk1p6 (disk /dev/mmcblk1)
+[    7.600354] overlay-resize: EXT4 filesystem
+[    7.751872] overlay-resize: Filesystem successfully checked (0)
+[    8.132153] overlay-resize: Partition 6 resized to fill its full disk size
+[    8.132328] overlay-resize: Partition /dev/mmcblk1p6 end sector 1933311 -> 100% (31116160)
+[    8.132458] overlay-resize: Resizing filesystem on partition /dev/mmcblk1p6...
+[   15.006558] overlay-resize: Filesystem resized
+[   15.068224] SWUPDATE: Idblock version d0d58d6f04fd4bf89750887aa292c5f9
+[   15.132490] SWUPDATE: U-Boot version 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano8
+[   15.142258] SWUPDATE: U-Boot startup version 1.0.0-tano1.rk0
+[   15.155077] SWUPDATE: Kernel version 4.19.219-tano-rk-standard-g40b753b965-tano2.2.20.20.1.8
+[   15.163880] SWUPDATE: Read-only filesystem version 2022-07-20-07-42-56-UTC
+[   15.231222] mount_root: /dev/mmcblk1p1: p1, rw, start 8388608, size 8388608
+[   15.235737] mount_root: /dev/mmcblk1p2: p2, rw, start 16777216, size 67108864
+[   15.235949] mount_root: /dev/mmcblk1p3: p3, rw, start 83886080, size 402653184 [rootfs]
+[   15.241232] mount_root: /dev/mmcblk1p4: p4, rw, start 486539264, size 67108864
+[   15.242638] mount_root: /dev/mmcblk1p5: p5, rw, start 553648128, size 402653184
+[   15.247438] mount_root: /dev/mmcblk1p6: p6, rw, start 956301312, size 14975221248 [overlay]
+[   15.247550] mount_root: root filesystem on the /dev/mmcblk1p3 partition of /dev/mmcblk1 (rw) device
+[   15.264177] mount_root: founded suitable overlay partition /dev/mmcblk1p6
+[   15.264677] mount_root: loading kmods from internal overlay
+[   15.270483] kmodloader: loading kernel modules from //etc/modules-boot.d/*
+[   15.270639] kmodloader: done loading kernel modules from //etc/modules-boot.d/*
+[   15.410644] EXT4-fs (mmcblk1p6): mounted filesystem with ordered data mode. Opts: (null)
+[   15.411020] block: attempting to load /tmp/ext4_cfg/upper/etc/config/fstab
+[   15.415740] block: unable to load configuration (fstab: Entry not found)
+[   15.415849] block: attempting to load /tmp/ext4_cfg/etc/config/fstab
+[   15.415986] block: unable to load configuration (fstab: Entry not found)
+[   15.416084] block: attempting to load /etc/config/fstab
+[   15.416934] block: extroot: not configured
+[   15.519673] EXT4-fs (mmcblk1p6): mounted filesystem with ordered data mode. Opts: (null)
+[   15.591748] block: attempting to load /tmp/ext4_cfg/upper/etc/config/fstab
+[   15.591927] block: unable to load configuration (fstab: Entry not found)
+[   15.592027] block: attempting to load /tmp/ext4_cfg/etc/config/fstab
+[   15.592178] block: unable to load configuration (fstab: Entry not found)
+[   15.592277] block: attempting to load /etc/config/fstab
+[   15.592690] block: extroot: not configured
+[   15.615453] mount_root: overlay filesystem has not been fully initialized yet
+[   15.619126] mount_root: switching to ext4 overlay
+[   15.788818] Root filesystem mounted
+[   15.932321] urandom-seed: Seed file not found (/etc/urandom.seed)
+[   15.955655] procd: - watchdog -
+[   15.962498] procd: - ubus -
+[   16.020910] procd: - init -
+[   16.758750] kmodloader: loading kernel modules from /etc/modules.d/*
+[   16.762177] kmodloader: done loading kernel modules from /etc/modules.d/*
+[   19.775580] cgroup: cgroup: disabling cgroup2 socket matching due to net_prio or net_cls activation
+[   21.270554] udevd[1755]: starting version 3.2.10
+[   21.324646] udevd[1755]: starting eudev-3.2.10
+[   33.770804] vcc5v0_otg: disabling
+[   37.678056] cpu cpu0: Looking up cpu-supply from device tree
+[   37.683169] Generic PHY stmmac-1:00: attached PHY driver [Generic PHY] (mii_bus:phy_addr=stmmac-1:00, irq=POLL)
+[   37.686100] dwmac4: Master AXI performs any burst length
+[   37.686169] rk_gmac-dwmac fe010000.ethernet eth0: No Safety Features support found
+[   37.686211] rk_gmac-dwmac fe010000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   37.688898] rk_gmac-dwmac fe010000.ethernet eth0: registered PTP clock
+[   37.690635] br-lan: port 1(eth0) entered blocking state
+[   37.690764] br-lan: port 1(eth0) entered disabled state
+[   37.691782] device eth0 entered promiscuous mode
+[   37.706390] br-lan: port 1(eth0) entered blocking state
+[   37.706447] br-lan: port 1(eth0) entered forwarding state
+[   37.710976] IPv6: ADDRCONF(NETDEV_UP): br-lan: link is not ready
+[   38.678263] br-lan: port 1(eth0) entered disabled state
+[   38.705128] rk_gmac-dwmac fe010000.ethernet eth0: Link is Up - 1Gbps/Full - flow control off
+[   38.705254] br-lan: port 1(eth0) entered blocking state
+[   38.705274] br-lan: port 1(eth0) entered forwarding state
+[   38.705586] IPv6: ADDRCONF(NETDEV_CHANGE): br-lan: link becomes ready
+[   39.050769] br-lan: port 1(eth0) entered disabled state
+[   39.051453] device eth0 left promiscuous mode
+[   39.051631] br-lan: port 1(eth0) entered disabled state
+[   39.075265] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   39.125976] cpu cpu0: Looking up cpu-supply from device tree
+[   39.129159] Generic PHY stmmac-1:00: attached PHY driver [Generic PHY] (mii_bus:phy_addr=stmmac-1:00, irq=POLL)
+[   39.131794] dwmac4: Master AXI performs any burst length
+[   39.131859] rk_gmac-dwmac fe010000.ethernet eth0: No Safety Features support found
+[   39.131900] rk_gmac-dwmac fe010000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   39.134760] rk_gmac-dwmac fe010000.ethernet eth0: registered PTP clock
+[   39.135768] br-lan: port 1(eth0) entered blocking state
+[   39.135801] br-lan: port 1(eth0) entered disabled state
+[   39.136371] device eth0 entered promiscuous mode
+[   39.140111] br-lan: port 1(eth0) entered blocking state
+[   39.140148] br-lan: port 1(eth0) entered forwarding state
+[   39.691510] br-lan: port 1(eth0) entered disabled state
+[   40.031160] device eth0 left promiscuous mode
+[   40.031370] br-lan: port 1(eth0) entered disabled state
+[   40.055269] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   40.108276] cpu cpu0: Looking up cpu-supply from device tree
+[   40.111902] Generic PHY stmmac-1:00: attached PHY driver [Generic PHY] (mii_bus:phy_addr=stmmac-1:00, irq=POLL)
+[   40.125082] dwmac4: Master AXI performs any burst length
+[   40.125139] rk_gmac-dwmac fe010000.ethernet eth0: No Safety Features support found
+[   40.125179] rk_gmac-dwmac fe010000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   40.188330] rk_gmac-dwmac fe010000.ethernet eth0: registered PTP clock
+[   40.189282] br-lan: port 1(eth0) entered blocking state
+[   40.189319] br-lan: port 1(eth0) entered disabled state
+[   40.189845] device eth0 entered promiscuous mode
+[   40.192934] IPv6: ADDRCONF(NETDEV_UP): br-lan: link is not ready
+[   44.251636] rk_gmac-dwmac fe010000.ethernet eth0: Link is Up - 1Gbps/Full - flow control off
+[   44.251864] br-lan: port 1(eth0) entered blocking state
+[   44.251885] br-lan: port 1(eth0) entered forwarding state
+[   44.252173] IPv6: ADDRCONF(NETDEV_CHANGE): br-lan: link becomes ready
+[   46.359580] using random self ethernet address
+[   46.359628] using random host ethernet address
+[   46.365231] usb0: HOST MAC 3a:42:46:a5:8b:d1
+[   46.365621] usb0: MAC ba:e0:19:71:23:db
+[   46.365703] using random self ethernet address
+[   46.365730] using random host ethernet address
+[   46.365858] g_ether gadget: Ethernet Gadget, version: Memorial Day 2008
+[   46.365897] g_ether gadget: g_ether ready
+[   46.388566] IPv6: ADDRCONF(NETDEV_UP): usb0: link is not ready

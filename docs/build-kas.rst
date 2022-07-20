@@ -1,136 +1,56 @@
 .. SPDX-License-Identifier: MIT
 
-*************************
 Building TanoWrt with kas
-*************************
-
-.. note:: `kas <http://github.com/siemens/kas>`_ is a setup tool for
-          bitbake based projects.
-
-.. note:: The recommended Linux distribution on host system
-          is Ubuntu 20.04 or Ubuntu 18.04.
-
-Install Required Packages
 =========================
 
-For a successful build, additional packages must be installed.
-To do this, run the command:
+.. note:: `kas <http://github.com/siemens/kas>`_ is a setup tool for
+          BitBake based projects.
 
-.. code-block:: shell
-
-   # sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
-          build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
-          xz-utils debianutils iputils-ping file
-
-.. note:: If you are using Ubuntu, you will need to configure the default system shell
-          command interpreter for shell scripts to bash. You can do it with the command:
-
-          .. code-block:: shell
-
-             # sudo dpkg-reconfigure dash
-
-          Select `No` when it asks you to install dash as `/bin/sh`.
-
-.. note:: Some targets may require additional dependencies for
-          a successful build. See the ``README.md`` of the related
-          hardware support layer (HSL) for this information.
-
-Install kas
-===========
-
-To install kas into your python site-package repository, run:
-
-.. code-block:: shell
-
-   # pip3 install kas
-
-.. note:: Required kas version 2.6 or higher.
-
-See `official kas documentation <https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation>`_ for more details
-
-Clone TanoWrt Repository
-========================
-
-Clone TanoWrt core layer repository to your home directory (this document uses ``~/tanowrt`` for example):
-
-.. code-block:: shell
-
-   # cd ~
-   # git clone https://github.com/tano-systems/meta-tanowrt tanowrt
-
-Initialize and Update Submodules
-================================
-
-When using the kas utility, it is required to have BitBake at the root
-of the meta-tanowrt layer. The BitBake submodule must be initialized
-and updated before building:
-
-.. code-block:: shell
-
-   # cd ~/tanowrt
-   # git submodule update --init
-
-Build TanoWrt
-=============
-
-To build TanoWrt images, you have to run the ``kas build`` command with the
-path to the target YML-file as an argument.
-
-.. code-block:: shell
-
-   # cd ~/tanowrt
-   # kas build <target-yml-file>
+.. include:: include/kas-common-part.rst.inc
 
 For example, to build TanoWrt images for internal eMMC flash of the NXP LS1028A RDB board
 you need to run following commands from ``meta-tanowrt`` root directory:
 
-.. code-block:: shell
+.. code-block:: console
 
    # cd ~/tanowrt
    # kas build kas/targets/ls1028ardb-emmc.yml
 
 See `Available Targets <targets_>`__ to select the proper target file.
 
-.. tip::
-
-   If you see ``Command 'kas' not found`` just add ``~/.local/bin`` to your ``$PATH``,
-   for example by adding the following line to your ``.bashrc`` file:
-
-   .. code-block:: shell
-
-      export PATH="$HOME/.local/bin:$PATH"
-
-   After that, restart your shell and things should work as expected.
 
 .. _targets:
 
 Available Targets
-=================
+-----------------
 
 Target YML-files are located in ``kas/targets`` subfolder of the ``meta-tanowrt`` repository.
 Available target files listed in the sections below:
 
-- `Virtual Machines <meta-tanowrt_>`__
-- `Intel CPU based machines <meta-tanowrt-hsl-intel_>`__
-- `Boards based on Microchip/Atmel SoC's <meta-tanowrt-hsl-atmel_>`__
-- `Boards based on NXP/Freescale SoC's <meta-tanowrt-hsl-nxp_>`__
-- `Boards based on Baikal Electronics SoC's <meta-tanowrt-hsl-baikal_>`__
-- `Boards based on Rockchip SoC's <meta-tanowrt-hsl-rockchip_>`__
-- `Raspberry Pi Boards <meta-tanowrt-hsl-rpi_>`__
-- `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi_>`__
-- `Boards based on Texas Instruments SoC's <meta-tanowrt-hsl-ti_>`__
+- :ref:`sec-meta-tanowrt`
+- :ref:`sec-meta-tanowrt-hsl-intel`
+- :ref:`sec-meta-tanowrt-hsl-atmel`
+- :ref:`sec-meta-tanowrt-hsl-nxp`
+- :ref:`sec-meta-tanowrt-hsl-baikal`
+- :ref:`sec-meta-tanowrt-hsl-rockchip`
+- :ref:`sec-meta-tanowrt-hsl-rpi`
+- :ref:`sec-meta-tanowrt-hsl-swi`
+- :ref:`sec-meta-tanowrt-hsl-ti`
 
 Targets with extra (commercial) features:
 
-- `Sierra Wireless LTE Modules <meta-tanowrt-hsl-swi-extras_>`__
+- :ref:`sec-meta-tanowrt-hsl-swi-extras`
 
-.. _meta-tanowrt:
 
-Virtual Machines (`meta-tanowrt <../meta-tanowrt/README.md>`__)
----------------------------------------------------------------
+.. _sec-meta-tanowrt:
 
-The TanoWrt core layer (`meta-tanowrt <../meta-tanowrt/README.md>`__) provides support for
-a bunch of target devices intended to run in a virtual environment (QEMU, VirtualBox, etc.).
+Virtual Machines
+^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt`
+
+The TanoWrt core layer provides support for a target devices
+intended to run in a virtual environment (QEMU, VirtualBox, etc.).
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -156,10 +76,13 @@ a bunch of target devices intended to run in a virtual environment (QEMU, Virtua
 | with screen support                               |                            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-intel:
 
-Intel CPU Based Machines (`meta-tanowrt-hsl-intel <../meta-tanowrt-hsl-intel/README.md>`__)
----------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-intel:
+
+Intel CPU Based Machines
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-intel`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -169,10 +92,13 @@ Intel CPU Based Machines (`meta-tanowrt-hsl-intel <../meta-tanowrt-hsl-intel/REA
 | Intel Skylake CPU (and later)                     | x86_64 (Intel Skylake)     | USB/SATA/NVMe      | ``intel-x86-64-skylake.yml``     |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-atmel:
 
-Boards based on Microchip/Atmel SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-hsl-atmel/README.md>`__)
---------------------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-atmel:
+
+Microchip/Atmel SoC's
+^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-atmel`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -190,10 +116,13 @@ Boards based on Microchip/Atmel SoC's (`meta-tanowrt-hsl-atmel <../meta-tanowrt-
 |                                                   |                            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-baikal:
 
-Boards based on Baikal Electronics SoC's (`meta-tanowrt-hsl-baikal <../meta-tanowrt-hsl-baikal/README.md>`__)
--------------------------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-baikal:
+
+Baikal Electronics SoC's
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-baikal`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -203,10 +132,13 @@ Boards based on Baikal Electronics SoC's (`meta-tanowrt-hsl-baikal <../meta-tano
 | Baikal Electronics MBM 2.0 Board                  | Baikal-M BE-M1000          | USB/SATA/NVMe      | ``mbm20.yml``                    |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-nxp:
 
-Boards based on NXP/Freescale SoC's (`meta-tanowrt-hsl-nxp <../meta-tanowrt-hsl-nxp/README.md>`__)
---------------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-nxp:
+
+NXP/Freescale SoC's
+^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-nxp`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -216,10 +148,13 @@ Boards based on NXP/Freescale SoC's (`meta-tanowrt-hsl-nxp <../meta-tanowrt-hsl-
 |                                                   |                            | SD-card            | ``ls1028ardb-sd.yml``            |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-rockchip:
 
-Boards based on Rockchip SoC's (`meta-tanowrt-hsl-rockchip <../meta-tanowrt-hsl-rockchip/README.md>`__)
--------------------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-rockchip:
+
+Fuzhou Rockchip Electronics.SoC's
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-rockchip`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -237,10 +172,13 @@ Boards based on Rockchip SoC's (`meta-tanowrt-hsl-rockchip <../meta-tanowrt-hsl-
 |                                                   |                            | SD NAND flash      | ``rock-pi-s-sdnand.yml``         |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-rpi:
 
-Raspberry Pi Boards (`meta-tanowrt-hsl-rpi <../meta-tanowrt-hsl-rpi/README.md>`__)
-----------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-rpi:
+
+Raspberry Pi Boards
+^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-rpi`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -248,10 +186,13 @@ Raspberry Pi Boards (`meta-tanowrt-hsl-rpi <../meta-tanowrt-hsl-rpi/README.md>`_
 | Raspberry Pi 3 Model B/B+                         | Broadcom BCM2837/BCM2837B0 | SD-card            | ``rpi3-sd.yml``                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-swi:
 
-Sierra Wireless LTE Modules (`meta-tanowrt-hsl-swi <../meta-tanowrt-hsl-swi/README.md>`__)
-------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-swi:
+
+Sierra Wireless LTE Modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-swi`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -260,10 +201,13 @@ Sierra Wireless LTE Modules (`meta-tanowrt-hsl-swi <../meta-tanowrt-hsl-swi/READ
 |                                                   | WP7607/WP7607-1            |                    |                                  |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
-.. _meta-tanowrt-hsl-ti:
 
-Boards based on Texas Instruments SoC's (`meta-tanowrt-hsl-ti <../meta-tanowrt-hsl-ti/README.md>`__)
-----------------------------------------------------------------------------------------------------
+.. _sec-meta-tanowrt-hsl-ti:
+
+Texas Instruments SoC's
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Support layer: :ref:`meta-tanowrt-hsl-ti`
 
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 |                   Board (Device)                  |           SoC(s)           |     Storage(s)     |   Target file (at kas/targets)   |
@@ -279,17 +223,20 @@ Boards based on Texas Instruments SoC's (`meta-tanowrt-hsl-ti <../meta-tanowrt-h
 |                                                   |                            | SD-card            | ``am574x-idk-sd.yml``            |
 +---------------------------------------------------+----------------------------+--------------------+----------------------------------+
 
+
 Targets with Extra (Commercial) Features
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 TanoWrt has target YML-files that are only available to commercial users. These files
 are located in the ``kas/targets/extras`` subfolder relative to the root of the ``meta-tanowrt`` layer. 
 Available commercial-only target files listed in the table below.
 
-.. _meta-tanowrt-hsl-swi-extras:
+.. _sec-meta-tanowrt-hsl-swi-extras:
 
-Sierra Wireless LTE Modules (`meta-tanowrt-hsl-swi-extras <../meta-tanowrt-hsl-swi-extras/README.md>`__)
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Sierra Wireless LTE Modules (Extra)
++++++++++++++++++++++++++++++++++++
+
+Support layer: :ref:`meta-tanowrt-hsl-swi-extras`
 
 +--------------------------+------------------------+------------+-----------------------------------------+--------------------------------------------------+
 |      Board (Device)      |         SoC(s)         | Storage(s) |   Target file (at kas/targets/extras)   |                Extra Features                    |
@@ -299,56 +246,56 @@ Sierra Wireless LTE Modules (`meta-tanowrt-hsl-swi-extras <../meta-tanowrt-hsl-s
 +--------------------------+------------------------+------------+-----------------------------------------+--------------------------------------------------+
 
 Examples
-========
+--------
 
 QEMU (x86_64)
--------------
+^^^^^^^^^^^^^
 
 Clone TanoWrt core layer repository with submodules to your home directory (this document uses ``~/tanowrt`` for example):
 
-.. code-block:: shell
+.. code-block:: console
 
-   # cd ~
-   # git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
-   # cd ~/tanowrt
+   $ cd ~
+   $ git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
+   $ cd ~/tanowrt
 
 Build TanoWrt image by running the ``kas build`` command with the path to the target YML-file as an argument:
 
-.. code-block:: shell
+.. code-block:: console
 
-   # kas build kas/targets/qemux86-64-screen.yml
+   $ kas build kas/targets/qemux86-64-screen.yml
 
 Run the built image in QEMU:
 
-.. code-block:: shell
+.. code-block:: console
 
-   # kas shell -c "DISPLAY=:0 runqemu qemux86-64-screen" kas/targets/qemux86-64-screen.yml
+   $ kas shell -c "DISPLAY=:0 runqemu qemux86-64-screen" kas/targets/qemux86-64-screen.yml
 
 or without graphics:
 
-.. code-block:: shell
+.. code-block:: console
 
-   # kas shell -c "runqemu qemux86-64-screen nographics" kas/targets/qemux86-64-screen.yml
+   $ kas shell -c "runqemu qemux86-64-screen nographics" kas/targets/qemux86-64-screen.yml
 
 Intel Core i7 (x86_64)
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 Clone TanoWrt core layer repository with submodules to your home directory (this document uses ``~/tanowrt`` for example):
 
-.. code-block:: shell
+.. code-block:: console
 
-   # cd ~
-   # git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
-   # cd ~/tanowrt
+   $ cd ~
+   $ git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
+   $ cd ~/tanowrt
 
 Build TanoWrt image by running the ``kas build`` command with the path to the target YML-file as an argument:
 
-.. code-block:: shell
+.. code-block:: console
 
-   # kas build kas/targets/intel-x86_64-corei7.yml
+   $ kas build kas/targets/intel-x86_64-corei7.yml
 
 Run the built image in QEMU:
 
-.. code-block:: shell
+.. code-block:: console
 
-   # kas shell -c "DISPLAY=:0 runqemu intel-x86_64-corei7" kas/targets/intel-x86_64-corei7.yml
+   $ kas shell -c "DISPLAY=:0 runqemu intel-x86_64-corei7" kas/targets/intel-x86_64-corei7.yml
