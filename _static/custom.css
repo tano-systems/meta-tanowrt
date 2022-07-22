@@ -1,0 +1,414 @@
+﻿body {
+	font-family: Carlito,Lato,proxima-nova,Helvetica Neue,Arial,sans-serif;
+}
+
+.rst-content .toctree-wrapper>p.caption,
+h1, h2, h3, h4, h5, h6, legend {
+/*	font-family: Roboto Slab,ff-tisa-web-pro,Georgia,Arial,sans-serif;*/
+	font-family: Carlito,Lato,proxima-nova,Helvetica Neue,Arial,sans-serif;
+}
+
+.rst-content .toctree-wrapper > p.caption {
+	margin-bottom: 16px;
+	margin-top: 24px;
+}
+
+div.wy-nav-content {
+	max-width: none;
+}
+
+.rst-content h1,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4,
+.rst-content h5,
+.rst-content h6 {
+	margin-top: revert;
+	display: flow-root;
+}
+
+.rst-content img.with-shadow {
+	box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+}
+
+.rst-content img.with-border {
+	border: 1px solid #d0d0d0;
+}
+
+.rst-content table td p {
+	font-size: inherit;
+}
+
+
+.rst-content div.figure {
+	margin-top: 24px;
+}
+
+.rst-content .section > a > img,
+.rst-content .section > img {
+	margin-top: 12px;
+}
+
+.rst-content .document dl,
+.rst-content .document ol,
+.rst-content .document ul {
+	margin-bottom: 12px;
+}
+
+.rst-content .document ul {
+/*	padding-left: 2.5em;*/
+}
+
+.rst-content .document ul > li > ul {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.rst-content li {
+	list-style: disc;
+}
+
+.rst-content .toctree-wrapper ul {
+	padding-left: 0;
+}
+
+.rst-content .toctree-wrapper li {
+	list-style: none;
+}
+
+.rst-content .section ul,
+.rst-content .toctree-wrapper ul,
+.rst-content .wy-plain-list-disc,
+.rst-content article ul,
+.rst-content .admonition,
+.rst-content .admonition-todo,
+.rst-content .attention,
+.rst-content .caution,
+.rst-content .danger,
+.rst-content .error,
+.rst-content .hint,
+.rst-content .important,
+.rst-content .note,
+.rst-content .seealso,
+.rst-content .tip,
+.rst-content .warning,
+.rst-content .wy-alert,
+.rst-content div[class^=highlight],
+.rst-content pre.literal-block,
+.rst-content p {
+	margin-bottom: 12px;
+}
+
+.rst-content .contents ul ul,
+.rst-content .contents ul p {
+	margin-bottom: 0;
+}
+
+.rst-content .wy-table-responsive {
+	margin-top: 24px;
+	margin-bottom: 24px;
+}
+
+.rst-content .figure p.caption {
+	text-align: center;
+	margin-top: 6px;
+}
+
+.rst-content a.reference.external:not(.image-reference):after {
+	content: "";
+	padding-left: 16px;
+	background: url(icon-external-link.png);
+	background-size: 12px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.rst-content table > caption {
+	text-align: left !important;
+}
+
+.rst-content div.center,
+.rst-content p.center {
+	text-align: center;
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+	height: auto;
+	line-height: 20px;
+	margin: 12px 0 12px;
+	white-space: normal;
+}
+
+.rst-content section ol li>p:only-child,
+.rst-content section ol li>p:only-child:last-child,
+.rst-content section ul li>p:only-child,
+.rst-content section ul li>p:only-child:last-child {
+	margin-bottom: 0;
+}
+
+.rst-content .highlight {
+/*	background: #f1f1f1;*/
+/*	background: #eaedfa;*/
+	background: #fafaea;
+/*	background: #effaea;*/
+/*	background: #eaf4fa;*/
+}
+
+.rst-content div.admonition {
+	border-radius: 8px;
+	box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+/*	margin-bottom: 24px;*/
+}
+
+.rst-content .admonition-title {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	padding: 8px 12px;
+}
+
+.rst-content .admonition-title:before {
+	margin-right: 8px;
+}
+
+.rst-content code.literal,
+.rst-content tt.literal {
+	color: #2980b9;
+	border-radius: 4px;
+	white-space: pre;
+}
+
+.rst-content table.docutils td,
+.rst-content table.field-list td {
+	vertical-align: top;
+}
+
+.rst-content ul.wy-breadcrumbs {
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.rst-content .wy-breadcrumbs li {
+	padding-right: 5px;
+}
+
+.rst-content .wy-breadcrumbs li a {
+	padding-right: 0;
+}
+
+.rst-content .wy-breadcrumbs li.wy-breadcrumbs-aside {
+	margin-left: auto;
+	padding-left: 32px;
+	padding-right: 0;
+}
+
+.rst-content table.docutils caption,
+.rst-content table.field-list caption,
+.wy-table caption {
+	padding-top: 0;
+}
+
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+	white-space: normal;
+	vertical-align: top;
+}
+
+.rst-content table.docutils td:first-child,
+.rst-content table.docutils th:first-child,
+.rst-content table.field-list td:first-child,
+.rst-content table.field-list th:first-child,
+.wy-table td:first-child,
+.wy-table th:first-child {
+	border-left-width: 1px;
+}
+
+.rst-content .admonition-todo p:last-child,
+.rst-content .admonition p:last-child,
+.rst-content .attention p:last-child,
+.rst-content .caution p:last-child,
+.rst-content .danger p:last-child,
+.rst-content .error p:last-child,
+.rst-content .hint p:last-child,
+.rst-content .important p:last-child,
+.rst-content .note p:last-child,
+.rst-content .seealso p:last-child,
+.rst-content .tip p:last-child,
+.rst-content .warning p:last-child,
+.wy-alert p:last-child {
+	line-height: 1.4;
+}
+
+.rst-content .figure p.caption,
+.rst-content .figure.align-default p.caption {
+	text-align: left;
+}
+
+.rst-content .figure.align-center p.caption {
+	text-align: center;
+}
+
+.rst-content table.docutils td .admonition,
+.rst-content table.docutils td .admonition-todo,
+.rst-content table.docutils td .attention,
+.rst-content table.docutils td .caution,
+.rst-content table.docutils td .danger,
+.rst-content table.docutils td .error,
+.rst-content table.docutils td .hint,
+.rst-content table.docutils td .important,
+.rst-content table.docutils td .note,
+.rst-content table.docutils td .seealso,
+.rst-content table.docutils td .tip,
+.rst-content table.docutils td .warning {
+	margin-top: 12px;
+}
+
+.rst-content h1,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4,
+.rst-content h5,
+.rst-content h6,
+.rst-content h7,
+.rst-content h8,
+.rst-content h9,
+.rst-content .toc-backref {
+	color: #1d5c86;
+}
+
+.rst-content h1,
+.rst-content h2 {
+	border-bottom: 2px solid #1d5c86;
+	padding-bottom: 0;
+}
+
+.rst-content h1 > code,
+.rst-content h1 > tt,
+.rst-content h1 > a.toc-backref > code,
+.rst-content h1 > a.toc-backref > tt,
+.rst-content h2 > code,
+.rst-content h2 > tt,
+.rst-content h2 > a.toc-backref > code,
+.rst-content h2 > a.toc-backref > tt {
+	padding: 0 5px;
+	color: #1d5c86 !important;
+}
+
+.rst-content dl.footnote dd p {
+	line-height: 1.3;
+}
+
+html.writer-html5 .rst-content dl.field-list>dd,
+html.writer-html5 .rst-content dl.field-list>dt,
+html.writer-html5 .rst-content dl.footnote>dd,
+html.writer-html5 .rst-content dl.footnote>dt {
+	margin-bottom: 0;
+}
+
+.rst-content .contents ul li,
+.rst-content .section ul li,
+.rst-content .toctree-wrapper ul li,
+.wy-plain-list-disc li,
+article ul li {
+	list-style: disc;
+	margin-left: 24px;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a,
+.wy-menu-vertical li.toctree-l3.current>a {
+	padding: 0.2em 2.0em 0.2em 4.045em;
+	line-height: 1.3;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4>a,
+.wy-menu-vertical li.toctree-l4.current>a {
+	padding: 0.2em 2.0em 0.2em 5.663em;
+	line-height: 1.3;
+}
+
+.rst-content div.docutils.container.indent-block {
+	margin-left: 2em;
+	margin-bottom: 2em;
+	border-left: 4px solid #e1e4e5;
+	padding-left: 0.75em;
+}
+
+div.mermaid {
+	padding-bottom: 12px;
+}
+
+.rst-content table tr td .line-block {
+	margin-bottom: 0;
+}
+
+.rst-content .rst-footer-buttons {
+	margin-top: 32px;
+}
+
+.rst-content .sphinx-tabs-panel {
+	padding-bottom: 0;
+}
+
+/* Footnotes */
+.rst-content aside.footnote {
+	font-size: 85%;
+	display: flex;
+}
+
+.rst-content aside.footnote p {
+	font-size: inherit;
+	line-height: 18px;
+	margin-bottom: 8px;
+	margin-left: 4px;
+	color: #666;
+}
+
+/*
+.rst-content .admonition-todo .admonition-title,
+.rst-content .admonition-todo .wy-alert-title,
+.rst-content .attention .admonition-title,
+.rst-content .attention .wy-alert-title,
+.rst-content .caution .admonition-title,
+.rst-content .caution .wy-alert-title,
+.rst-content .warning .admonition-title,
+.rst-content .warning .wy-alert-title,
+.rst-content .wy-alert-warning.admonition .admonition-title,
+.rst-content .wy-alert-warning.admonition .wy-alert-title,
+.rst-content .wy-alert-warning.danger .admonition-title,
+.rst-content .wy-alert-warning.danger .wy-alert-title,
+.rst-content .wy-alert-warning.error .admonition-title,
+.rst-content .wy-alert-warning.error .wy-alert-title,
+.rst-content .wy-alert-warning.hint .admonition-title,
+.rst-content .wy-alert-warning.hint .wy-alert-title,
+.rst-content .wy-alert-warning.important .admonition-title,
+.rst-content .wy-alert-warning.important .wy-alert-title,
+.rst-content .wy-alert-warning.note .admonition-title,
+.rst-content .wy-alert-warning.note .wy-alert-title,
+.rst-content .wy-alert-warning.seealso .admonition-title,
+.rst-content .wy-alert-warning.seealso .wy-alert-title,
+.rst-content .wy-alert-warning.tip .admonition-title,
+.rst-content .wy-alert-warning.tip .wy-alert-title,
+.rst-content .wy-alert.wy-alert-warning .admonition-title,
+.wy-alert.wy-alert-warning .rst-content .admonition-title,
+.wy-alert.wy-alert-warning .wy-alert-title {
+	background: #ff9538;
+}
+
+.rst-content .admonition-todo,
+.rst-content .attention,
+.rst-content .caution,
+.rst-content .warning,
+.rst-content .wy-alert-warning.admonition,
+.rst-content .wy-alert-warning.danger,
+.rst-content .wy-alert-warning.error,
+.rst-content .wy-alert-warning.hint,
+.rst-content .wy-alert-warning.important,
+.rst-content .wy-alert-warning.note,
+.rst-content .wy-alert-warning.seealso,
+.rst-content .wy-alert-warning.tip,
+.wy-alert.wy-alert-warning {
+	background: #fff9ed;
+}
+*/

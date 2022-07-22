@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.9.1 Boardcon EM3566 U-Boot Boot Log &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="1.9.2 Boardcon EM3566 Linux Boot Log (dmesg)" href="bootlog-kernel.html" />
+    <link rel="prev" title="1 Boardcon EM3566 SBC" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">TanoWrt Core Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build-kas.html">Building TanoWrt with kas</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Rockchip SoC's</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">1 Boardcon EM3566 SBC</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html#board-overview">1.1 Board Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#supported-build-targets">1.2 Supported Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#supported-images">1.3 Supported Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build">1.4 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#produced-build-artifacts">1.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#flash-images">1.6 Flash Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#booting-and-running">1.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#upgrade-running-system">1.8 Upgrade Running System</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">1.9 Additional Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#references">1.10 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../boardcon-em3568/index.html">2 Boardcon EM3568 SBC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rock-pi-s/index.html">3 Radxa ROCK Pi S</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)</a> &raquo;</li>
+    
+      <li><a href="index.html"><span class="section-number">1 </span>Boardcon EM3566 SBC</a> &raquo;</li>
+    
+    <li><span class="section-number">1.9.1 </span>Boardcon EM3566 U-Boot Boot Log</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-rockchip/boards/boardcon-em3566/bootlog-u-boot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="boardcon-em3566-u-boot-boot-log">
+<h1><span class="section-number">1.9.1 </span>Boardcon EM3566 U-Boot Boot Log<a class="headerlink" href="#boardcon-em3566-u-boot-boot-log" title="Permalink to this heading"></a></h1>
+<p>U-Boot boot log from external microSD card.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>DDR Version V1.13 20220218
+ln
+ddrconfig:7
+LP4 MR14:0x4d
+LPDDR4, 324MHz
+BW=32 Col=10 Bk=8 CS0 Row=15 CS1 Row=15 CS=2 Die BW=16 Size=2048MB
+tdqss: cs0 dqs0: 554ps, dqs1: 458ps, dqs2: 530ps, dqs3: 482ps,
+tdqss: cs1 dqs0: 554ps, dqs1: 458ps, dqs2: 506ps, dqs3: 458ps,
+
+change to: 324MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x58
+
+change to: 528MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x63
+
+change to: 780MHz
+PHY drv:clk:38,ca:38,DQ:30,odt:0
+vrefinner:41%, vrefout:41%
+dram drv:40,odt:0
+clk skew:0x58
+
+change to: 1056MHz(final freq)
+PHY drv:clk:38,ca:38,DQ:30,odt:60
+vrefinner:16%, vrefout:29%
+dram drv:40,odt:80
+vref_ca:00000068
+clk skew:0x15
+cs 0:
+the read training result:
+DQS0:0x34, DQS1:0x34, DQS2:0x3a, DQS3:0x38,
+min  : 0xd  0xd  0xa  0x8  0x2  0x5  0x6  0x4 , 0x5  0x5  0x3  0x2  0x5  0x7  0x9  0x5 ,
+       0xa  0xd  0xb  0x9  0x7  0x2  0x9  0x9 , 0xa  0x7  0x8  0x2  0x8  0x8  0x9  0xb ,
+mid  :0x28 0x27 0x26 0x24 0x1d 0x20 0x21 0x1e ,0x20 0x20 0x1f 0x1e 0x21 0x22 0x24 0x21 ,
+      0x26 0x29 0x26 0x25 0x24 0x1f 0x25 0x25 ,0x26 0x24 0x24 0x1e 0x24 0x25 0x26 0x27 ,
+max  :0x43 0x41 0x43 0x41 0x38 0x3b 0x3d 0x39 ,0x3c 0x3c 0x3c 0x3a 0x3d 0x3e 0x3f 0x3e ,
+      0x43 0x46 0x41 0x41 0x41 0x3c 0x41 0x42 ,0x43 0x41 0x41 0x3b 0x41 0x43 0x43 0x43 ,
+range:0x36 0x34 0x39 0x39 0x36 0x36 0x37 0x35 ,0x37 0x37 0x39 0x38 0x38 0x37 0x36 0x39 ,
+      0x39 0x39 0x36 0x38 0x3a 0x3a 0x38 0x39 ,0x39 0x3a 0x39 0x39 0x39 0x3b 0x3a 0x38 ,
+the write training result:
+DQS0:0x5f, DQS1:0x52, DQS2:0x5c, DQS3:0x56,
+min  :0x91 0x93 0x94 0x93 0x89 0x8b 0x8e 0x8b 0x8e ,0x80 0x80 0x7f 0x7f 0x81 0x84 0x83 0x82 0x82 ,
+      0x8e 0x90 0x8f 0x8d 0x8a 0x88 0x8b 0x8e 0x8e ,0x87 0x86 0x85 0x82 0x87 0x89 0x87 0x88 0x85 ,
+mid  :0xae 0xaf 0xb0 0xae 0xa5 0xa8 0xa9 0xa6 0xa9 ,0x9d 0x9c 0x9b 0x9c 0x9d 0x9f 0x9f 0x9e 0x9e ,
+      0xa9 0xab 0xaa 0xa8 0xa5 0xa3 0xa5 0xa7 0xa9 ,0xa3 0xa2 0xa1 0x9f 0xa3 0xa5 0xa3 0xa5 0xa2 ,
+max  :0xcb 0xcc 0xcd 0xca 0xc1 0xc5 0xc5 0xc2 0xc5 ,0xba 0xb9 0xb8 0xb9 0xba 0xbb 0xbb 0xba 0xba ,
+      0xc5 0xc7 0xc6 0xc3 0xc1 0xbe 0xc0 0xc1 0xc4 ,0xc0 0xbf 0xbe 0xbc 0xc0 0xc2 0xbf 0xc2 0xbf ,
+range:0x3a 0x39 0x39 0x37 0x38 0x3a 0x37 0x37 0x37 ,0x3a 0x39 0x39 0x3a 0x39 0x37 0x38 0x38 0x38 ,
+      0x37 0x37 0x37 0x36 0x37 0x36 0x35 0x33 0x36 ,0x39 0x39 0x39 0x3a 0x39 0x39 0x38 0x3a 0x3a ,
+cs 1:
+the read training result:
+DQS0:0x36, DQS1:0x35, DQS2:0x36, DQS3:0x36,
+min  : 0xc  0xd  0xb  0x8  0x2  0x4  0x7  0x4 , 0x5  0x4  0x2  0x1  0x4  0x5  0x8  0x4 ,
+       0x9  0xb  0xa  0x8  0x6  0x2  0x8  0x7 , 0xa  0x7  0x8  0x2  0x8  0x8  0x8  0xb ,
+mid  :0x28 0x28 0x27 0x25 0x1e 0x20 0x23 0x20 ,0x21 0x20 0x1f 0x1e 0x21 0x22 0x24 0x21 ,
+      0x24 0x26 0x23 0x22 0x21 0x1d 0x22 0x21 ,0x25 0x22 0x22 0x1d 0x23 0x24 0x24 0x26 ,
+max  :0x44 0x44 0x44 0x43 0x3a 0x3c 0x3f 0x3c ,0x3e 0x3c 0x3d 0x3b 0x3e 0x40 0x41 0x3f ,
+      0x3f 0x41 0x3d 0x3c 0x3c 0x38 0x3c 0x3c ,0x41 0x3e 0x3d 0x38 0x3f 0x41 0x41 0x41 ,
+range:0x38 0x37 0x39 0x3b 0x38 0x38 0x38 0x38 ,0x39 0x38 0x3b 0x3a 0x3a 0x3b 0x39 0x3b ,
+      0x36 0x36 0x33 0x34 0x36 0x36 0x34 0x35 ,0x37 0x37 0x35 0x36 0x37 0x39 0x39 0x36 ,
+the write training result:
+DQS0:0x5f, DQS1:0x52, DQS2:0x5c, DQS3:0x56,
+min  :0x92 0x94 0x94 0x93 0x8a 0x8b 0x8e 0x8d 0x8e ,0x80 0x80 0x7f 0x7f 0x81 0x85 0x83 0x82 0x82 ,
+      0x89 0x8d 0x8b 0x8a 0x88 0x84 0x88 0x8a 0x8b ,0x83 0x82 0x82 0x7f 0x84 0x85 0x84 0x86 0x82 ,
+mid  :0xaf 0xb0 0xb0 0xaf 0xa6 0xa7 0xaa 0xa8 0xaa ,0x9d 0x9c 0x9c 0x9c 0x9d 0xa0 0x9f 0x9e 0x9e ,
+      0xa6 0xa9 0xa7 0xa6 0xa4 0xa0 0xa3 0xa5 0xa6 ,0xa0 0x9f 0x9f 0x9c 0xa0 0xa2 0xa0 0xa2 0x9f ,
+max  :0xcc 0xcc 0xcd 0xcb 0xc3 0xc4 0xc6 0xc3 0xc6 ,0xbb 0xb9 0xb9 0xb9 0xba 0xbc 0xbb 0xbb 0xbb ,
+      0xc3 0xc6 0xc3 0xc2 0xc0 0xbc 0xbe 0xc1 0xc2 ,0xbe 0xbd 0xbc 0xb9 0xbd 0xbf 0xbc 0xbf 0xbc ,
+range:0x3a 0x38 0x39 0x38 0x39 0x39 0x38 0x36 0x38 ,0x3b 0x39 0x3a 0x3a 0x39 0x37 0x38 0x39 0x39 ,
+      0x3a 0x39 0x38 0x38 0x38 0x38 0x36 0x37 0x37 ,0x3b 0x3b 0x3a 0x3a 0x39 0x3a 0x38 0x39 0x3a ,
+CA Training result:
+cs:0 min  :0x4c 0x42 0x48 0x37 0x44 0x37 0x42 ,0x4d 0x40 0x48 0x39 0x43 0x36 0x46 ,
+cs:0 mid  :0x86 0x85 0x82 0x7e 0x7d 0x7c 0x6d ,0x87 0x84 0x80 0x7d 0x7f 0x7a 0x71 ,
+cs:0 max  :0xc1 0xc9 0xbc 0xc5 0xb7 0xc2 0x99 ,0xc1 0xc9 0xb9 0xc1 0xbc 0xbf 0x9d ,
+cs:0 range:0x75 0x87 0x74 0x8e 0x73 0x8b 0x57 ,0x74 0x89 0x71 0x88 0x79 0x89 0x57 ,
+cs:1 min  :0x4b 0x40 0x47 0x37 0x43 0x36 0x37 ,0x4a 0x3d 0x43 0x36 0x43 0x34 0x36 ,
+cs:1 mid  :0x85 0x84 0x81 0x7d 0x7d 0x7c 0x6d ,0x84 0x82 0x7e 0x7a 0x7e 0x79 0x6d ,
+cs:1 max  :0xc0 0xc9 0xbb 0xc3 0xb8 0xc3 0xa4 ,0xbf 0xc8 0xb9 0xbf 0xb9 0xbf 0xa5 ,
+cs:1 range:0x75 0x89 0x74 0x8c 0x75 0x8d 0x6d ,0x75 0x8b 0x76 0x89 0x76 0x8b 0x6f ,
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10 (Jul 21 2022 - 17:24:55)
+unknown raw ID 3f6c928
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+spl: partition error
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(fe4f274c06...) + OK
+## Checking uboot 0x00a00000 ... sha256(13c3b1721c...) + OK
+## Checking fdt 0x00b0d270 ... sha256(14c4d4c732...) + OK
+## Checking atf-2 0x00068000 ... sha256(8d44036095...) + OK
+## Checking atf-3 0xfdcd0000 ... sha256(e410275b51...) + OK
+## Checking atf-4 0xfdcc9000 ... sha256(990c53fc01...) + OK
+## Checking atf-5 0x00066000 ... sha256(315a4195a9...) + OK
+## Checking optee 0x08400000 ... sha256(b8cddafab0...) + OK
+Jumping to U-Boot(0x00a00000) via ARM Trusted Firmware(0x00040000)
+Total: 306.371 ms
+
+INFO:    Preloader serial: 4
+I/TC:
+I/TC: Start rockchip platform init
+I/TC: Rockchip release version: 1.0
+I/TC: OP-TEE version: 3.6.0-307-g0b06ae94 #1 Fri May  7 01:52:27 UTC 2021 aarch64
+I/TC: Initialized
+
+
+U-Boot 2017.09-gitAUTOINC+e3ca3c3805_fe66a9be19-tano10 (Jul 21 2022 - 17:24:55 +0000)
+
+Model: Rockchip RK3568 Evaluation Board
+PreSerial: 4, raw, 0xfe680000
+DRAM:  2 GiB
+Sysmem: init
+Relocation Offset: 7d36c000
+Relocation fdt: 7b9e6f48 - 7b9fecd8
+CR: M/C/I
+io-domain: OK
+Failed to get scmi clk dev
+NAND:  nand_base: timeout while waiting for chip to become ready
+nand_base: No NAND device found
+0 MiB
+mtd_blk:   no mmc device at slot 1
+dwmmc@fe2b0000: 1 (SD), dwmmc@fe2c0000: 2, sdhci@fe310000: 0
+Bootdev(atags): &lt;NULL&gt; &lt;NULL&gt;
+Use emmc as default boot media
+MMC0: HS200, 200Mhz
+PartType: EFI
+MMC:   Model: Rockchip RK3568 Evaluation Board
+rockchip_set_serialno: could not find efuse/otp device
+No misc partition
+boot mode: None
+CLK: (sync kernel. arm: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+  apll 816000 KHz
+  dpll 528000 KHz
+  gpll 1188000 KHz
+  cpll 1000000 KHz
+  npll 1200000 KHz
+  vpll 24000 KHz
+  hpll 24000 KHz
+  ppll 200000 KHz
+  armclk 816000 KHz
+  aclk_bus 150000 KHz
+  pclk_bus 100000 KHz
+  aclk_top_high 300000 KHz
+  aclk_top_low 200000 KHz
+  hclk_top 150000 KHz
+  pclk_top 100000 KHz
+  aclk_perimid 300000 KHz
+  hclk_perimid 150000 KHz
+  pclk_pmu 100000 KHz
+No misc partition
+Net:   No ethernet found.
+Hit key to stop autoboot(&#39;CTRL+C&#39;):  0
+switch to partitions #0, OK
+mmc1 is current device
+
+MMC read: dev # 1, block # 7936, count 128 ... 128 blocks read: OK
+## Executing script at 00c00000
+Board name: evb_rk3568
+Active system A
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc1 is current device
+9348688 bytes read in 795 ms (11.2 MiB/s)
+Booting kernel 0x04080000#conf-rockchip_boardcon-em3566.dtb...
+Fdt Ramdisk skip relocation
+No misc partition
+## Loading kernel from FIT Image at 04080000 ...
+   Using &#39;conf-rockchip_boardcon-em3566.dtb&#39; configuration
+## Verified-boot: 0
+   Trying &#39;kernel-1&#39; kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  gzip compressed
+     Data Start:   0x04080110
+     Data Size:    9231345 Bytes = 8.8 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x00280000
+     Entry Point:  0x00280000
+     Hash algo:    sha256
+     Hash value:   7874dc84c5c353b552f1dbeb1031c2eb3e3c33f51f53521f1ac273387d3599a9
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at 04080000 ...
+   Using &#39;conf-rockchip_boardcon-em3566.dtb&#39; configuration
+   Trying &#39;fdt-rockchip_boardcon-em3566.dtb&#39; fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x0494de24
+     Data Size:    115329 Bytes = 112.6 KiB
+     Architecture: AArch64
+     Load Address: 0x0a100000
+     Hash algo:    sha256
+     Hash value:   9385fb1f34954c9f4f5d786f73e6bb90742e0e62a30eee706822eee9d065470b
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x0494de24 to 0x0a100000
+   Booting using the fdt blob at 0x0a100000
+   Uncompressing GZIP Kernel Image from 0x04080110 to 0x00280000 ... with 0158a808 bytes OK
+   kernel loaded at 0x00280000, end = 0x0180a808
+  &#39;reserved-memory&#39; ramoops@110000: addr=110000 size=f0000
+   Using Device Tree in place at 000000000a100000, end 000000000a11f280
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0x80000000 (size: 0x76c00000)
+Total: 4453.248 ms
+
+Starting kernel ...
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 22.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
