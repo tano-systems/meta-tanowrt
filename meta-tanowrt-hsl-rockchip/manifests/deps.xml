@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-	<!-- meta-rockchip -->
-	<project path="meta-rockchip"
-	         name="JeffyCN/meta-rockchip"
-	         remote="github"
-	         upstream="hardknott"
-	         revision="7dc5460f64070a2941b8d707eb13af99a36a4511" />
-</manifest>
