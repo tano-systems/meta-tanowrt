@@ -12,7 +12,7 @@ Baikal Electronics SoC's Hardware Support Layer (meta-tanowrt-hsl-baikal)
 meta-tanowrt-hsl-baikal |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the Baikal Electronics SoC based boards.
 
-.. image:: images/baikalelectronics-logo.png
+.. image:: /common/images/logos/baikal-electronics.png
    :height: 120
 
 Requirements and Dependencies

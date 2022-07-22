@@ -184,7 +184,7 @@ Supported root filesystem images are listed in the Table
 Build
 =====
 
-.. include:: ../../../../include/kas-common-part.rst.inc
+.. include:: /common/include/kas-common-part.rst.inc
 
 By default, unless otherwise specified, a root file system image specified
 in the target configuration is built. The default root filesystem image
@@ -622,7 +622,7 @@ The WebUI can be accessed via Ethernet port or USB network connection through HT
 You must see something like this in browser after you logged in:
 
 .. _fig-boardcon-em3568-luci-login:
-.. figure:: ../../../../common/images/luci-login.png
+.. figure:: /common/images/luci/page-login.png
     :width: 900
 
     LuCI WebUI Login Page
@@ -668,7 +668,7 @@ choose :menuselection:`System --> Firmware Upgrade` in the main menu.
 Next, follow the instructions on the page.
 
 .. _fig-boardcon-em3568-luci-swupdate:
-.. figure:: ../../../../common/images/luci-swupdate.png
+.. figure:: /common/images/luci/page-swupdate.png
     :width: 900
 
     LuCI WebUI Firmware Upgrade Page

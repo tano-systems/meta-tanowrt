@@ -10,7 +10,7 @@ TanoWrt Embedded Linux Distribution
 
 .. container:: sidebar
 
-   .. image:: sphinx-static/tano-systems.png
+   .. image:: /common/images/logos/tano-systems.png
       :target: https://tano-systems.com/en.html
       :align: center
 

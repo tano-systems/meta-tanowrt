@@ -2,7 +2,7 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Rockchip SoC based boards.
 
-<img src="../docs/layers/meta-tanowrt-hsl-rockchip/images/rockchip-logo.png" height="100" />
+<img src="../docs/common/images/logos/rockchip.png" height="100" />
 
 ## 1 Documentation
 

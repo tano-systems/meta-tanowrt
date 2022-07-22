@@ -6,7 +6,7 @@ Building TanoWrt with kas
 .. note:: `kas <http://github.com/siemens/kas>`_ is a setup tool for
           BitBake based projects.
 
-.. include:: include/kas-common-part.rst.inc
+.. include:: /common/include/kas-common-part.rst.inc
 
 For example, to build TanoWrt images for internal eMMC flash of the NXP LS1028A RDB board
 you need to run following commands from ``meta-tanowrt`` root directory:

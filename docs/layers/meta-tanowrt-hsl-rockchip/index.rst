@@ -12,7 +12,7 @@ Rockchip SoC's Hardware Support Layer (meta-tanowrt-hsl-rockchip)
 meta-tanowrt-hsl-rockchip |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the Fuzhou Rockchip Electronics SoC based boards.
 
-.. image:: images/rockchip-logo.png
+.. image:: /common/images/logos/rockchip.png
    :height: 120
 
 Requirements and Dependencies

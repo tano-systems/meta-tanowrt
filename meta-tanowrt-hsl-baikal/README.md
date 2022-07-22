@@ -2,7 +2,7 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the Baikal Electronics SoC boards.
 
-![Baikal Electronics](../docs/layers/meta-tanowrt-hsl-baikal/images/baikalelectronics-logo.png)
+![Baikal Electronics](../docs/common/images/logos/baikalel-ectronics.png)
 
 ## 1 Documentation
 
