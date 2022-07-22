@@ -28,12 +28,25 @@ microphone array input, with high dynamic noise reduction algorithm,
 it can accurately recognize human voices even in noisy environments,
 and achieve precise voice control of the devices.
 
-.. _fig-boardcon-em3568-angle:
-.. figure:: images/boardcon-em3568-angle.jpeg
+Interfaces and Connectors
+-------------------------
+
+.. _fig-boardcon-em3568:
+.. figure:: images/boardcon-em3568.jpg
+    :width: 1000
+    :class: with-border
+
+    Boardcon EM3568 Single Board Computer
+
+Photos
+------
+
+.. _fig-boardcon-em3568-angle-front:
+.. figure:: images/boardcon-em3568-angle-front.jpeg
     :width: 500
     :class: with-border
 
-    Boardcon EM3568 front with an angle view
+    Boardcon EM3568 front view
 
 .. _fig-boardcon-em3568-top:
 .. figure:: images/boardcon-em3568-top.jpeg
@@ -391,8 +404,6 @@ Booting from Internal eMMC Flash
 Erasing Internal eMMC Flash
 ------------------------------
 
-.. todo:: Update
-
 You can erase the internal eMMC flash memory in the following ways:
 
 - Linux command line;
@@ -536,9 +547,9 @@ See :ref:`fig-boardcon-em3568-usb-to-ttl` figure for example
 connection USB to TTL converter with Boardcon EM3568.
 
 .. _fig-boardcon-em3568-usb-to-ttl:
-.. figure:: images/boardcon-em3568-usb-to-ttl.jpeg
+.. figure:: images/boardcon-em3568-usb-to-ttl.jpg
     :class: with-border
-    :width: 450px
+    :width: 500
 
     USB to TTL Converter Connection to Boardcon EM3568
 

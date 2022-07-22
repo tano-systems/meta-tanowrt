@@ -23,23 +23,29 @@ and voice applications. ROCK Pi S comes in two RAxM sizes 256 MiB or 512 MiB DDR
 and uses microSD card for OS and storage. Optionally, ROCK Pi S can provide
 on board storage version with 1/2/4/8 GiB NAND flash.
 
-.. _fig-rock-pi-s-angle:
-.. figure:: images/rock-pi-s-angle.jpeg
-    :width: 500
+Interfaces and Connectors
+-------------------------
+
+.. _fig-rock-pi-s:
+.. figure:: images/rock-pi-s.jpg
+    :width: 1000
     :class: with-border
 
-    ROCK Pi S front with an angle view
+    ROCK Pi S Board
+
+Photos
+------
 
 .. _fig-rock-pi-s-top:
 .. figure:: images/rock-pi-s-top.jpeg
-    :width: 500
+    :width: 350
     :class: with-border
 
     ROCK Pi S top view
 
 .. _fig-rock-pi-s-back:
 .. figure:: images/rock-pi-s-back.jpeg
-    :width: 500
+    :width: 350
     :class: with-border
 
     ROCK Pi S back view
@@ -514,15 +520,8 @@ connect only TX, RX and GND wires.
 | GND    | Pin 25           | Pin 6            |
 +--------+------------------+------------------+
 
-See :ref:`fig-rock-pi-s-usb-to-ttl` figure for example
+See :numref:`fig-rock-pi-s` for example
 connection USB to TTL converter with ROCK Pi S V1.1 or later.
-
-.. _fig-rock-pi-s-usb-to-ttl:
-.. figure:: images/rock-pi-s-usb-to-ttl.jpeg
-    :class: with-border
-
-    USB to TTL Converter Connection to ROCK Pi S (V1.1 or later)
-
 
 .. rubric:: Serial Setting on Host PC
 
