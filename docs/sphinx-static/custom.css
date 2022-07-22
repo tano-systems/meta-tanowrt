@@ -24,7 +24,13 @@ div.wy-nav-content {
 .rst-content h5,
 .rst-content h6 {
 	margin-top: revert;
+	margin-bottom: 16px;
 	display: flow-root;
+}
+
+.rst-content h1,
+.rst-content h2 {
+	margin-top: 32px;
 }
 
 .rst-content img.with-shadow {
@@ -148,27 +154,57 @@ div.wy-nav-content {
 }
 
 .rst-content .highlight {
-/*	background: #f1f1f1;*/
-/*	background: #eaedfa;*/
 	background: #fafaea;
-/*	background: #effaea;*/
-/*	background: #eaf4fa;*/
 }
 
 .rst-content div.admonition {
-	border-radius: 8px;
+	border-radius: 4px;
 	box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 /*	margin-bottom: 24px;*/
 }
 
 .rst-content .admonition-title {
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 	padding: 8px 12px;
 }
 
 .rst-content .admonition-title:before {
 	margin-right: 8px;
+}
+
+.rst-content .admonition-title, .wy-alert-title {
+	font-weight: normal;
+}
+
+.rst-content .admonition-todo .admonition-title,
+.rst-content .admonition-todo .wy-alert-title,
+.rst-content .attention .admonition-title,
+.rst-content .attention .wy-alert-title,
+.rst-content .caution .admonition-title,
+.rst-content .caution .wy-alert-title,
+.rst-content .warning .admonition-title,
+.rst-content .warning .wy-alert-title,
+.rst-content .wy-alert-warning.admonition .admonition-title,
+.rst-content .wy-alert-warning.admonition .wy-alert-title,
+.rst-content .wy-alert-warning.danger .admonition-title,
+.rst-content .wy-alert-warning.danger .wy-alert-title,
+.rst-content .wy-alert-warning.error .admonition-title,
+.rst-content .wy-alert-warning.error .wy-alert-title,
+.rst-content .wy-alert-warning.hint .admonition-title,
+.rst-content .wy-alert-warning.hint .wy-alert-title,
+.rst-content .wy-alert-warning.important .admonition-title,
+.rst-content .wy-alert-warning.important .wy-alert-title,
+.rst-content .wy-alert-warning.note .admonition-title,
+.rst-content .wy-alert-warning.note .wy-alert-title,
+.rst-content .wy-alert-warning.seealso .admonition-title,
+.rst-content .wy-alert-warning.seealso .wy-alert-title,
+.rst-content .wy-alert-warning.tip .admonition-title,
+.rst-content .wy-alert-warning.tip .wy-alert-title,
+.rst-content .wy-alert.wy-alert-warning .admonition-title,
+.wy-alert.wy-alert-warning .rst-content .admonition-title,
+.wy-alert.wy-alert-warning .wy-alert-title {
+	background: hsl(28deg 79% 60%);
 }
 
 .rst-content code.literal,
@@ -365,50 +401,19 @@ div.mermaid {
 	color: #666;
 }
 
-/*
-.rst-content .admonition-todo .admonition-title,
-.rst-content .admonition-todo .wy-alert-title,
-.rst-content .attention .admonition-title,
-.rst-content .attention .wy-alert-title,
-.rst-content .caution .admonition-title,
-.rst-content .caution .wy-alert-title,
-.rst-content .warning .admonition-title,
-.rst-content .warning .wy-alert-title,
-.rst-content .wy-alert-warning.admonition .admonition-title,
-.rst-content .wy-alert-warning.admonition .wy-alert-title,
-.rst-content .wy-alert-warning.danger .admonition-title,
-.rst-content .wy-alert-warning.danger .wy-alert-title,
-.rst-content .wy-alert-warning.error .admonition-title,
-.rst-content .wy-alert-warning.error .wy-alert-title,
-.rst-content .wy-alert-warning.hint .admonition-title,
-.rst-content .wy-alert-warning.hint .wy-alert-title,
-.rst-content .wy-alert-warning.important .admonition-title,
-.rst-content .wy-alert-warning.important .wy-alert-title,
-.rst-content .wy-alert-warning.note .admonition-title,
-.rst-content .wy-alert-warning.note .wy-alert-title,
-.rst-content .wy-alert-warning.seealso .admonition-title,
-.rst-content .wy-alert-warning.seealso .wy-alert-title,
-.rst-content .wy-alert-warning.tip .admonition-title,
-.rst-content .wy-alert-warning.tip .wy-alert-title,
-.rst-content .wy-alert.wy-alert-warning .admonition-title,
-.wy-alert.wy-alert-warning .rst-content .admonition-title,
-.wy-alert.wy-alert-warning .wy-alert-title {
-	background: #ff9538;
+.rst-content figcaption {
+	margin-top: 4px;
 }
 
-.rst-content .admonition-todo,
-.rst-content .attention,
-.rst-content .caution,
-.rst-content .warning,
-.rst-content .wy-alert-warning.admonition,
-.rst-content .wy-alert-warning.danger,
-.rst-content .wy-alert-warning.error,
-.rst-content .wy-alert-warning.hint,
-.rst-content .wy-alert-warning.important,
-.rst-content .wy-alert-warning.note,
-.rst-content .wy-alert-warning.seealso,
-.rst-content .wy-alert-warning.tip,
-.wy-alert.wy-alert-warning {
-	background: #fff9ed;
+.rst-content table.docutils caption,
+.rst-content table.field-list caption, .wy-table caption,
+.rst-content figcaption p {
+	font: inherit;
+	font-size: 85%;
+	font-style: italic;
 }
-*/
+
+.rst-content table.docutils caption,
+.rst-content table.field-list caption, .wy-table caption {
+	padding-bottom: 6px;
+}
