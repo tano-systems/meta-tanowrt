@@ -75,7 +75,8 @@ master_doc = 'index'
 language = u'en'
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+#pygments_style = 'sphinx'
+pygments_style = 'stata-dark'
 
 # -- Options for HTML output -------------------------------------------------
 
