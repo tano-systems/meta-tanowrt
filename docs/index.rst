@@ -28,6 +28,7 @@ and focused on running in embedded systems, including real-time systems.
    :maxdepth: 1
    :caption: Hardware Support Layers
 
+   Baikal Electroincs SoC's <layers/meta-tanowrt-hsl-baikal/index>
    Rockchip SoC's <layers/meta-tanowrt-hsl-rockchip/index>
 
 .. toctree::

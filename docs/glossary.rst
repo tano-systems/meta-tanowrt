@@ -30,3 +30,6 @@ Glossary
 
    :term:`DHCP`
       *Dynamic Host Configuration Protocol*
+
+   :term:`LLDP`
+      *Link Layer Discovery Protocol*
