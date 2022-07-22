@@ -169,13 +169,14 @@ Supported root filesystem images are listed in the Table
 .. _table-boardcon-em3568-supported-images:
 .. table:: Supported Images
 
-   +-----------------------------------+----------------------+-------------------------+
-   | Image Recipe (``<image-recipe>``) | Supported Target(s)  | Description             |
-   +===================================+======================+=========================+
-   | ``tanowrt-image-full``            | *All*                | Standard TanoWrt image  |
-   +-----------------------------------+----------------------+-------------------------+
-   | ``tanowrt-image-minimal``         | *All*                | Minimal TanoWrt image   |
-   +-----------------------------------+----------------------+-------------------------+
+   +-----------------------------------+----------------------+--------------------------+
+   | Image Recipe (``<image-recipe>``) | Supported Target(s)  | Description              |
+   +===================================+======================+==========================+
+   | ``tanowrt-image-full``            | *All*                | Standard TanoWrt image   |
+   +-----------------------------------+----------------------+--------------------------+
+   | ``tanowrt-image-full-swu``        | *All*                | Standard TanoWrt image   |
+   |                                   |                      | (SWUpdate upgrade image) |
+   +-----------------------------------+----------------------+--------------------------+
 
 
 .. _sec-boardcon-em3568-build:

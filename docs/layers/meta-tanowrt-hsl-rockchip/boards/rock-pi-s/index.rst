@@ -150,19 +150,20 @@ Short explanations for the table columns:
 Supported Images
 ================
 
-Supported root filesystem images are listed in the Table
-:ref:`table-rock-pi-s-supported-images`.
+Supported root filesystem images are listed in
+the :numref:`table-rock-pi-s-supported-images`.
 
 .. _table-rock-pi-s-supported-images:
 .. table:: Supported Images
 
-   +-----------------------------------+----------------------+-------------------------+
-   | Image Recipe (``<image-recipe>``) | Supported Target(s)  | Description             |
-   +===================================+======================+=========================+
-   | ``tanowrt-image-full``            | *All*                | Standard TanoWrt image  |
-   +-----------------------------------+----------------------+-------------------------+
-   | ``tanowrt-image-minimal``         | *All*                | Minimal TanoWrt image   |
-   +-----------------------------------+----------------------+-------------------------+
+   +-----------------------------------+----------------------+--------------------------+
+   | Image Recipe (``<image-recipe>``) | Supported Target(s)  | Description              |
+   +===================================+======================+==========================+
+   | ``tanowrt-image-full``            | *All*                | Standard TanoWrt image   |
+   +-----------------------------------+----------------------+--------------------------+
+   | ``tanowrt-image-full-swu``        | *All*                | Standard TanoWrt image   |
+   |                                   |                      | (SWUpdate upgrade image) |
+   +-----------------------------------+----------------------+--------------------------+
 
 
 .. _sec-rock-pi-s-build:
