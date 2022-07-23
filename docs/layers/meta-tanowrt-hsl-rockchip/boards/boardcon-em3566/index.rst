@@ -199,10 +199,6 @@ Produced Build Artifacts
 ========================
 
 All produced build artifacts are stored in the ``~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>`` directory.
-
-.. note:: ``<MACHINE>`` in the artifacts path is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-boardcon-em3566-targets_>`__.
-
 Refer to table :ref:`table-boardcon-em3566-artifacts` for a description of some common (not all) build artifacts.
 
 .. _table-boardcon-em3566-artifacts:
@@ -211,33 +207,45 @@ Refer to table :ref:`table-boardcon-em3566-artifacts` for a description of some 
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | Artifact                                                | Target(s)                     | Description                                                   |
    +=========================================================+===============================+===============================================================+
-   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
-   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``startup-factory-<MACHINE>.img``                       | ``boardcon-em3566-emmc.yml``  | U-Boot startup script for factory installation image.         |
+   | .. centered:: Bootloader                                                                                                                                |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-sdcard``                        | *All*                         | Rockchip IDBLOCK image for booting from SD card.              |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-emmc``                          | ``boardcon-em3566-emmc.yml``  | Rockchip IDBLOCK image for booting from internal eMMC.        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Bootloader (U-Boot)                                                                                                                       |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-factory-<MACHINE>.img``                       | ``boardcon-em3566-emmc.yml``  | U-Boot startup script for factory installation image.         |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``u-boot-initial-env-<MACHINE>-sdcard``                 | *All*                         | U-Boot initial environment image for SD card image.           |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``u-boot-initial-env-<MACHINE>-emmc``                   | ``boardcon-em3566-emmc.yml``  | U-Boot initial environment image for internal eMMC image.     |
+   | ``u-boot-initial-env-<MACHINE>-emmc``                   | ``boardcon-em3566-emmc.yml``  | U-Boot initial environment image for internal eMMC flash.     |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-sdcard``                         | *All*                         | U-Boot binary image for booting from SD card.                 |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-emmc``                           | ``boardcon-em3566-emmc.yml``  | U-Boot binary image for booting from internal eMMC flash.     |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Linux Kernel and DTB                                                                                                                      |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``fitImage-<MACHINE>.bin``                              | *All*                         | Flattened Image Tree (FIT) image with Linux kernel            |
    |                                                         |                               | and Device Tree Blobs (DTB).                                  |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``fitImage-<MACHINE>.ext4``                             | *All*                         | FIT image packed into an ext4 file system image.              |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``rk3308-boardcon-em3566-<MACHINE>.dtb``                | *All*                         | Target Device Tree Blob (DTB).                                |
+   | ``boardcon-em3566-<MACHINE>.dtb``                       | *All*                         | Target Device Tree Blob (DTB).                                |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Images                                                                                                                                    |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.sdcard.img``                 | ``boardcon-em3566-sd.yml``    | SD card image including all required partitions for booting   |
    |                                                         |                               | and running the system. This image is ready to be written     |
-   |                                                         |                               | to the SD card using the dd utility or similar                |
+   |                                                         |                               | to the SD card using the :command:`dd` utility or similar     |
    |                                                         |                               | (see :ref:`sec-boardcon-em3566-flash`).                       |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``     | ``boardcon-em3566-emmc.yml``  | SD card factory installation image. This image is ready       |
-   |                                                         |                               | to be written to the SD card using the dd utility or similar  |
-   |                                                         |                               | (see :ref:`sec-boardcon-em3566-flash`).                       |
+   |                                                         |                               | to be written to the SD card using the :command:`dd` utility  |
+   |                                                         |                               | or similar (see :ref:`sec-boardcon-em3566-flash`).            |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.squashfs-lzo``               | *All*                         | Root filesystem image (squashfs with LZO compression).        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
@@ -245,9 +253,10 @@ Refer to table :ref:`table-boardcon-em3566-artifacts` for a description of some 
    |                                                         |                               | (see :ref:`sec-boardcon-em3566-upgrade`).                     |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
 
-.. note:: ``<MACHINE>`` in the artifact name is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-boardcon-em3566-targets_>`__.
-          ``<image-recipe>`` is replaced by the actual `image recipe <sec-boardcon-em3566-images_>`__ name.
+.. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
+          the actual value of the ``MACHINE`` BitBake variable for the chosen
+          `target <sec-boardcon-em3566-targets_>`__. ``<image-recipe>`` is replaced
+          by the actual `image recipe <sec-boardcon-em3566-images_>`__ name.
 
 For example, below is the complete list of artifacts produced by the
 ``boardcon-em3566-sd.yml`` target build.
@@ -314,7 +323,7 @@ Flash Images
 Flash Image to microSD Card
 ---------------------------
 
-Use the ``dd`` utility to write the generated ``.sdcard.img`` images to the SD card.
+Use the :command:`dd` utility to write the generated ``.sdcard.img`` images to the SD card.
 This can be an SD card image intended for booting and running the system from
 an SD card (``<image-recipe>-<MACHINE>.sdcard.img``) or a factory installation
 image (``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``).

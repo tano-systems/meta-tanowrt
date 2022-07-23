@@ -199,10 +199,6 @@ Produced Build Artifacts
 ========================
 
 All produced build artifacts are stored in the ``~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>`` directory.
-
-.. note:: ``<MACHINE>`` in the artifacts path is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-rock-pi-s-targets_>`__.
-
 Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common (not all) build artifacts.
 
 .. _table-rock-pi-s-artifacts:
@@ -211,17 +207,27 @@ Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | Artifact                                                | Target(s)                     | Description                                                   |
    +=========================================================+===============================+===============================================================+
-   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
-   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``startup-factory-<MACHINE>.img``                       | ``rock-pi-s-sdnand.yml``      | U-Boot startup script for factory installation image.         |
+   | .. centered:: Bootloader                                                                                                                                |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-sdcard``                        | *All*                         | Rockchip IDBLOCK image for booting from SD card.              |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-sdnand``                        | ``rock-pi-s-sdnand.yml``      | Rockchip IDBLOCK image for booting from internal SD NAND.     |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Bootloader (U-Boot)                                                                                                                       |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-factory-<MACHINE>.img``                       | ``rock-pi-s-sdnand.yml``      | U-Boot startup script for factory installation image.         |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``u-boot-initial-env-<MACHINE>-sdcard``                 | *All*                         | U-Boot initial environment image for SD card image.           |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``u-boot-initial-env-<MACHINE>-sdnand``                 | ``rock-pi-s-sdnand.yml``      | U-Boot initial environment image for internal SD NAND image.  |
+   | ``u-boot-initial-env-<MACHINE>-sdnand``                 | ``rock-pi-s-sdnand.yml``      | U-Boot initial environment image for internal SD NAND flash.  |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-sdcard``                         | *All*                         | U-Boot binary image for booting from SD card.                 |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-sdnand``                         | ``rock-pi-s-sdnand.yml``      | U-Boot binary image for booting from internal SD NAND flash.  |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Linux Kernel and DTB                                                                                                                      |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``fitImage-<MACHINE>.bin``                              | *All*                         | Flattened Image Tree (FIT) image with Linux kernel            |
    |                                                         |                               | and Device Tree Blobs (DTB).                                  |
@@ -230,14 +236,16 @@ Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``rk3308-rock-pi-s-<MACHINE>.dtb``                      | *All*                         | Target Device Tree Blob (DTB).                                |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Images                                                                                                                                    |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.sdcard.img``                 | ``rock-pi-s-sd.yml``          | SD card image including all required partitions for booting   |
    |                                                         |                               | and running the system. This image is ready to be written     |
-   |                                                         |                               | to the SD card using the dd utility or similar                |
+   |                                                         |                               | to the SD card using the :command:`dd` utility or similar     |
    |                                                         |                               | (see :ref:`sec-rock-pi-s-flash`).                             |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``     | ``rock-pi-s-sdnand.yml``      | SD card factory installation image. This image is ready       |
-   |                                                         |                               | to be written to the SD card using the dd utility or similar  |
-   |                                                         |                               | (see :ref:`sec-rock-pi-s-flash`).                             |
+   |                                                         |                               | to be written to the SD card using the :command:`dd` utility  |
+   |                                                         |                               | or similar (see :ref:`sec-rock-pi-s-flash`).                  |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.squashfs-lzo``               | *All*                         | Root filesystem image (squashfs with LZO compression).        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
@@ -245,9 +253,10 @@ Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common
    |                                                         |                               | (see :ref:`sec-rock-pi-s-upgrade`).                           |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
 
-.. note:: ``<MACHINE>`` in the artifact name is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-rock-pi-s-targets_>`__.
-          ``<image-recipe>`` is replaced by the actual `image recipe <sec-rock-pi-s-images_>`__ name.
+.. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
+          the actual value of the ``MACHINE`` BitBake variable for the chosen
+          `target <sec-rock-pi-s-targets_>`__. ``<image-recipe>`` is replaced
+          by the actual `image recipe <sec-rock-pi-s-images_>`__ name.
 
 For example, below is the complete list of artifacts produced by the
 ``rock-pi-s-sd.yml`` target build.
@@ -314,7 +323,7 @@ Flash Images
 Flash Image to microSD Card
 ---------------------------
 
-Use the ``dd`` utility to write the generated ``.sdcard.img`` images to the SD card.
+Use the :command:`dd` utility to write the generated ``.sdcard.img`` images to the SD card.
 This can be an SD card image intended for booting and running the system from
 an SD card (``<image-recipe>-<MACHINE>.sdcard.img``) or a factory installation
 image (``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``).

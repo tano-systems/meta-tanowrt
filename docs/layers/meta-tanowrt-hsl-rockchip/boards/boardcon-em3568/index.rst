@@ -197,7 +197,7 @@ command should be used:
 
    $ kas build --target <image-recipe> kas/targets/<target-yml-file>
 
-.. seealso:: 
+.. seealso::
 
    - See :ref:`sec-boardcon-em3568-targets` section to select the required target file.
    - See :ref:`sec-boardcon-em3568-images` section to select the required root filesystem image recipe.
@@ -212,10 +212,6 @@ Produced Build Artifacts
 ========================
 
 All produced build artifacts are stored in the ``~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>`` directory.
-
-.. note:: ``<MACHINE>`` in the artifacts path is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-boardcon-em3568-targets_>`__.
-
 Refer to table :ref:`table-boardcon-em3568-artifacts` for a description of some common (not all) build artifacts.
 
 .. _table-boardcon-em3568-artifacts:
@@ -224,33 +220,45 @@ Refer to table :ref:`table-boardcon-em3568-artifacts` for a description of some 
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | Artifact                                                | Target(s)                     | Description                                                   |
    +=========================================================+===============================+===============================================================+
-   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
-   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``startup-factory-<MACHINE>.img``                       | ``boardcon-em3568-emmc.yml``  | U-Boot startup script for factory installation image.         |
+   | .. centered:: Bootloader                                                                                                                                |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-sdcard``                        | *All*                         | Rockchip IDBLOCK image for booting from SD card.              |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``idblock.img-<MACHINE>-emmc``                          | ``boardcon-em3568-emmc.yml``  | Rockchip IDBLOCK image for booting from internal eMMC.        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Bootloader (U-Boot)                                                                                                                       |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-<MACHINE>.img``                               | *All*                         | U-Boot startup script.                                        |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``startup-factory-<MACHINE>.img``                       | ``boardcon-em3568-emmc.yml``  | U-Boot startup script for factory installation image.         |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``u-boot-initial-env-<MACHINE>-sdcard``                 | *All*                         | U-Boot initial environment image for SD card image.           |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``u-boot-initial-env-<MACHINE>-emmc``                   | ``boardcon-em3568-emmc.yml``  | U-Boot initial environment image for internal eMMC image.     |
+   | ``u-boot-initial-env-<MACHINE>-emmc``                   | ``boardcon-em3568-emmc.yml``  | U-Boot initial environment image for internal eMMC flash.     |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-sdcard``                         | *All*                         | U-Boot binary image for booting from SD card.                 |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | ``u-boot-<MACHINE>.bin-emmc``                           | ``boardcon-em3568-emmc.yml``  | U-Boot binary image for booting from internal eMMC flash.     |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Linux Kernel and DTB                                                                                                                      |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``fitImage-<MACHINE>.bin``                              | *All*                         | Flattened Image Tree (FIT) image with Linux kernel            |
    |                                                         |                               | and Device Tree Blobs (DTB).                                  |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``fitImage-<MACHINE>.ext4``                             | *All*                         | FIT image packed into an ext4 file system image.              |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | ``rk3308-boardcon-em3568-<MACHINE>.dtb``                | *All*                         | Target Device Tree Blob (DTB).                                |
+   | ``boardcon-em3568-<MACHINE>.dtb``                       | *All*                         | Target Device Tree Blob (DTB).                                |
+   +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
+   | .. centered:: Images                                                                                                                                    |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.sdcard.img``                 | ``boardcon-em3568-sd.yml``    | SD card image including all required partitions for booting   |
    |                                                         |                               | and running the system. This image is ready to be written     |
-   |                                                         |                               | to the SD card using the dd utility or similar                |
+   |                                                         |                               | to the SD card using the :command:`dd` utility or similar     |
    |                                                         |                               | (see :ref:`sec-boardcon-em3568-flash`).                       |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``     | ``boardcon-em3568-emmc.yml``  | SD card factory installation image. This image is ready       |
-   |                                                         |                               | to be written to the SD card using the dd utility or similar  |
-   |                                                         |                               | (see :ref:`sec-boardcon-em3568-flash`).                       |
+   |                                                         |                               | to be written to the SD card using the :command:`dd` utility  |
+   |                                                         |                               | or similar (see :ref:`sec-boardcon-em3568-flash`).            |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | ``<image-recipe>-<MACHINE>.squashfs-lzo``               | *All*                         | Root filesystem image (squashfs with LZO compression).        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
@@ -258,12 +266,13 @@ Refer to table :ref:`table-boardcon-em3568-artifacts` for a description of some 
    |                                                         |                               | (see :ref:`sec-boardcon-em3568-upgrade`).                     |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
 
-.. note:: ``<MACHINE>`` in the artifact name is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-boardcon-em3568-targets_>`__.
-          ``<image-recipe>`` is replaced by the actual `image recipe <sec-boardcon-em3568-images_>`__ name.
+.. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
+          the actual value of the ``MACHINE`` BitBake variable for the chosen
+          `target <sec-boardcon-em3568-targets_>`__. ``<image-recipe>`` is replaced
+          by the actual `image recipe <sec-boardcon-em3568-images_>`__ name.
 
-For example, below is the complete list of artifacts produced by the
-``boardcon-em3568-sd.yml`` target build.
+For example, below is the complete list of artifacts produced
+by the ``boardcon-em3568-sd.yml`` target build.
 
 .. code-block:: console
 
@@ -315,6 +324,89 @@ For example, below is the complete list of artifacts produced by the
    lrwxrwxrwx 2   95 Jul 20 05:56 u-boot-initial-env-sdcard.bin -> u-boot-initial-env-boardcon-em3568-sd-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano8.bin
    -rw-r--r-- 2 2.0M Jul 20 05:56 u-boot-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano8.bin
 
+Same, but without the symbolic links:
+
+.. code-block:: console
+
+   [~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3568-sd]$ $ ls -gGh | grep -v -e "^l"
+   total 311M
+   -rw-r--r-- 2 105K Jul 20 06:00 boardcon-em3568--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd-20220720025543.dtb
+   -rw-r--r-- 2 9.0M Jul 20 06:00 fitImage--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd-20220720025543.bin
+   -rw-r--r-- 2  12M Jul 20 06:00 fitImage-4.19.219+gitAUTOINC+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd.ext4
+   -rw-r--r-- 2  12M Jul 20 06:00 fitImage-boardcon-em3568-sd.ext4
+   -rw-r--r-- 2 1.6K Jul 20 06:00 fitImage-its--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd-20220720025543.its
+   -rw-r--r-- 2 8.9M Jul 20 06:00 fitImage-linux.bin--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd-20220720025543.bin
+   -rwxr-xr-x 2 294K Jul 20 05:56 idblock.img-boardcon-em3568-sd-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rwxr-xr-x 2 453K Jul 20 05:56 loader.bin-boardcon-em3568-sd-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rw-r--r-- 2  50M Jul 20 06:00 modules--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3568-sd-20220720025543.tgz
+   -rw-r--r-- 2 2.2K Jun  8 03:04 startup.img
+   -rw-r--r-- 2   16 Jun  8 03:04 startup.img.version
+   -rw-r--r-- 2  55K Jul 20 10:44 tanowrt-image-full-boardcon-em3568-sd-20220720074256.rootfs.manifest
+   -rw-r--r-- 2 945M Jul 20 10:45 tanowrt-image-full-boardcon-em3568-sd-20220720074256.rootfs.sdcard.img
+   -rw-r--r-- 2  47M Jul 20 10:44 tanowrt-image-full-boardcon-em3568-sd-20220720074256.rootfs.squashfs-lzo
+   -rw-r--r-- 2   24 Jul 20 10:45 tanowrt-image-full-boardcon-em3568-sd-20220720074256.rootfs.version
+   -rw-r--r-- 2 393K Jul 20 10:44 tanowrt-image-full-boardcon-em3568-sd-20220720074256.testdata.json
+   -rw-r--r-- 2 5.3K Jul 20 10:44 tanowrt-image-full.env
+   -rw-r--r-- 2 2.3K Jul 20 10:44 tanowrt-image-full-sdimage-rockchip-swu-a-b.wks
+   -rw-r--r-- 2  61M Jul 20 10:45 tanowrt-image-full-swu-boardcon-em3568-sd-20220720074256.swu
+   -rw-r--r-- 2  468 Jul 20 05:56 u-boot-initial-env-boardcon-em3568-sd-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano8
+   -rw-r--r-- 2  32K Jul 20 05:56 u-boot-initial-env-boardcon-em3568-sd-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano8.bin
+   -rw-r--r-- 2 2.0M Jul 20 05:56 u-boot-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano8.bin
+
+For comparison, here is the complete list (without symbolic links) of artifacts
+produced by the ``boardcon-em3568-emmc.yml`` target build:
+
+.. code-block:: console
+   :emphasize-lines: 8,10-12,14,16,18-19,30-36,40-42
+
+   [~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3568-emmc]$ $ ls -gGh | grep -v -e "^l"
+   total 452M
+   -rw-r--r-- 2 135K Jul 22 04:42 boardcon-em3568--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.dtb
+   -rw-r--r-- 2 9.0M Jul 22 04:42 fitImage--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.bin
+   -rw-r--r-- 2  12M Jul 22 04:42 fitImage-4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc.ext4
+   -rw-r--r-- 2  12M Jul 22 04:42 fitImage-boardcon-em3568-emmc.ext4
+   -rw-r--r-- 2 1.6K Jul 22 04:42 fitImage-its--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.its
+   -rw-r--r-- 2 2.3K Jul 22 04:42 fitImage-its-tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.its
+   -rw-r--r-- 2 8.8M Jul 22 04:42 fitImage-linux.bin--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.bin
+   -rw-r--r-- 2  23M Jul 22 04:42 fitImage-tanowrt-image-initramfs-swu-factory-4.19.219+gitAUTOINC+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc.ext4
+   -rw-r--r-- 2  18M Jul 22 04:42 fitImage-tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.bin
+   -rw-r--r-- 2  23M Jul 22 04:42 fitImage-tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc.ext4
+   -rwxr-xr-x 2 290K Jul 22 04:42 idblock.img-boardcon-em3568-emmc-emmc-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rwxr-xr-x 2 290K Jul 22 04:42 idblock.img-boardcon-em3568-emmc-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rwxr-xr-x 2 449K Jul 22 04:42 loader.bin-boardcon-em3568-emmc-emmc-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rwxr-xr-x 2 449K Jul 22 04:42 loader.bin-boardcon-em3568-emmc-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19
+   -rw-r--r-- 2  51M Jul 22 04:42 modules--4.19.219+git0+40b753b965-tano3.2.20.20.1.11-boardcon-em3568-emmc-20220722014100.tgz
+   -rw-r--r-- 2  898 Jul 21 06:42 startup-factory.img
+   -rw-r--r-- 2   16 Jul 21 06:42 startup-factory.img.version
+   -rw-r--r-- 2 2.2K Jul 21 06:42 startup.img
+   -rw-r--r-- 2   16 Jul 21 06:42 startup.img.version
+   -rw-r--r-- 2  56K Jul 22 04:43 tanowrt-image-full-boardcon-em3568-emmc-20220722014100.rootfs.manifest
+   -rw-r--r-- 2 945M Jul 22 04:43 tanowrt-image-full-boardcon-em3568-emmc-20220722014100.rootfs.sdcard.img
+   -rw-r--r-- 2  46M Jul 22 04:43 tanowrt-image-full-boardcon-em3568-emmc-20220722014100.rootfs.squashfs-lzo
+   -rw-r--r-- 2   24 Jul 22 04:43 tanowrt-image-full-boardcon-em3568-emmc-20220722014100.rootfs.version
+   -rw-r--r-- 2 395K Jul 22 04:43 tanowrt-image-full-boardcon-em3568-emmc-20220722014100.testdata.json
+   -rw-r--r-- 2 5.4K Jul 22 04:43 tanowrt-image-full.env
+   -rw-r--r-- 2 2.3K Jul 22 04:43 tanowrt-image-full-sdimage-rockchip-swu-a-b.wks
+   -rw-r--r-- 2  60M Jul 22 04:43 tanowrt-image-full-swu-boardcon-em3568-emmc-20220722014100.swu
+   -rw-r--r-- 2  93M Jul 22 04:43 tanowrt-image-full-swu-factory-boardcon-em3568-emmc-20220722014100.sdcard.img
+   -rw-r--r-- 2 5.9K Jul 22 02:02 tanowrt-image-full-swu-factory.env
+   -rw-r--r-- 2 1.4K Jul 22 02:02 tanowrt-image-full-swu-factory-sdimage-rockchip-swu-factory.wks
+   -rw-r--r-- 2 8.9M Jul 22 04:42 tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc-20220722014100.rootfs.cpio.gz
+   -rw-r--r-- 2 3.2K Jul 22 04:42 tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc-20220722014100.rootfs.manifest
+   -rw-r--r-- 2   24 Jul 22 04:42 tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc-20220722014100.rootfs.version
+   -rw-r--r-- 2 400K Jul 22 04:42 tanowrt-image-initramfs-swu-factory-boardcon-em3568-emmc-20220722014100.testdata.json
+   -rw-r--r-- 2 2.0M Jul 22 04:42 u-boot-emmc-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11.bin
+   -rw-r--r-- 2  468 Jul 22 04:42 u-boot-initial-env-boardcon-em3568-emmc-emmc-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11
+   -rw-r--r-- 2  32K Jul 22 04:42 u-boot-initial-env-boardcon-em3568-emmc-emmc-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11.bin
+   -rw-r--r-- 2  468 Jul 22 04:42 u-boot-initial-env-boardcon-em3568-emmc-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11
+   -rw-r--r-- 2  32K Jul 22 04:42 u-boot-initial-env-boardcon-em3568-emmc-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11.bin
+   -rw-r--r-- 2 2.0M Jul 22 04:42 u-boot-sdcard-2017.09+gitAUTOINC+e3ca3c3805_fe66a9be19-tano11.bin
+
+New files, compared to the build for the SD card are highlighted. These files are required
+for building initial factory installation image for SD card (see :ref:`sec-boardcon-em3568-flash-emmc`).
+Initial factory installation image is required for writing TanoWrt firmware to internal eMMC flash
+using small installation system bootable from SD card.
+
 
 .. _sec-boardcon-em3568-flash:
 
@@ -327,7 +419,7 @@ Flash Images
 Flash Image to microSD Card
 ---------------------------
 
-Use the ``dd`` utility to write the generated ``.sdcard.img`` images to the SD card.
+Use the :command:`dd` utility to write the generated ``.sdcard.img`` images to the SD card.
 This can be an SD card image intended for booting and running the system from
 an SD card (``<image-recipe>-<MACHINE>.sdcard.img``) or a factory installation
 image (``<image-recipe>-swu-factory-<MACHINE>.sdcard.img``).
@@ -349,7 +441,7 @@ Where ``/dev/mmcblk1`` is the device name of the SD card.
 .. _sec-boardcon-em3568-flash-emmc:
 
 Flash Image to eMMC Flash
-----------------------------
+-------------------------
 
 For the initial flashing of the internal eMMC memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
