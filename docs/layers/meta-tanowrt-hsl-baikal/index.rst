@@ -15,6 +15,11 @@ layer (:term:`HSL`) for the Baikal Electronics SoC based boards.
 .. image:: /common/images/logos/baikal-electronics.png
    :height: 120
 
+.. rubric:: Contents
+.. contents::
+   :depth: 2
+   :local:
+
 Requirements and Dependencies
 =============================
 
@@ -25,6 +30,8 @@ Dependencies of the :ref:`meta-tanowrt-hsl-baikal <meta-tanowrt-hsl-baikal>` lay
 
 .. list-table::
    :header-rows: 1
+   :width: 100%
+   :widths: 15, 40, 15, 15, 15
 
    * - Layer
      - URI
@@ -35,7 +42,7 @@ Dependencies of the :ref:`meta-tanowrt-hsl-baikal <meta-tanowrt-hsl-baikal>` lay
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
      - hardknott
-     - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
+     - :download:`kas/layers/meta-tanowrt.yml </../kas/layers/meta-tanowrt.yml>`
 
 
 Supported Boards
@@ -44,39 +51,14 @@ Supported Boards
 TanoWrt has demonstration support for some devices and development boards based on Baikal Electronics SoC's.
 All supported devices are listed in the table below.
 
-.. _table-hsl-baikal-supported-boards:
-.. table:: Supported Boards
-
-   +------------------------+------------------------------------------+---------------------+--------------------------+
-   | Board                  | SoC                                      | RAM                 | Supported Storage(s)     |
-   +========================+==========================================+=====================+==========================+
-   | |mbm10|                | Baikal Electronics BE-M1000              | up to 64 GiB DDR4   || USB Flash               |
-   |                        | 8-core ARM Cortex-A57 64 bits processor, |                     || SATA [#not-supported]_  |
-   |                        | up to 1.5 GHz                            |                     || NVMe [#not-supported]_  |
-   +------------------------+                                          |                     || microSD                 |
-   | |mbm20|                |                                          |                     |                          |
-   |                        |                                          |                     |                          |
-   |                        |                                          |                     |                          |
-   +------------------------+------------------------------------------+---------------------+--------------------------+
-
-.. |mbm10| replace:: :ref:`Baikal Electronics MBM 1.0 (TF307) <device-mbm>`
-.. |mbm20| replace:: :ref:`Baikal Electronics MBM 2.0 (TF307) <device-mbm>`
-
-.. [#not-supported] Support for HDD and NVMe storages is under development. Currently supported running TanoWrt
-                    only from USB flash drive.
-
-.. toctree::
-   :hidden:
-   :numbered:
-
-   boards/mbm/index.rst
+.. include:: .layer-boards.rst.inc
 
 License
 ============
 
 All metadata is MIT licensed unless otherwise stated.
 Source code included in tree for individual recipes is under the
-LICENSE stated in each recipe (``.bb`` file) unless otherwise stated.
+LICENSE stated in each recipe (:file:`.bb` file) unless otherwise stated.
 
 Maintainers
 ============

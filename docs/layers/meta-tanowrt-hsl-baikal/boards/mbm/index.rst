@@ -4,13 +4,19 @@
 .. include:: <xhtml1-special.txt>
 
 
-.. _device-mbm:
-.. _device-mbm10:
-.. _device-mbm20:
+.. _machine-mbm:
+.. _machine-mbm10:
+.. _machine-mbm20:
 
-**************************************
-Baikal Electronics MBM 1.0/2.0 (TF307)
-**************************************
+*******************
+MBM 1.0/2.0 (TF307)
+*******************
+
+.. rubric:: Contents
+.. contents::
+   :depth: 1
+   :local:
+
 
 .. _sec-mbm-board:
 
@@ -32,32 +38,32 @@ a similar design and only minor differences.
 .. figure:: images/tf307-mb-s-d-top.webp
     :width: 1000
 
-    Baikal Electronics MBM 2.0 (TF307-MB-S-D) Top View
+    MBM 2.0 (TF307-MB-S-D) Board Top View
 
 .. _fig-mbm20-front:
 .. figure:: images/tf307-mb-s-d-front.webp
     :width: 1000
 
-    Baikal Electronics MBM 2.0 (TF307-MB-S-D) Front View
+    MBM 2.0 (TF307-MB-S-D) Board Front View
 
-More Photos
------------
+Photos
+------
 
 .. _fig-mbm10-top:
 .. figure:: images/tf307-mb-s-c-top.webp
     :width: 400
     :class: with-border
 
-    Baikal Electronics MBM 1.0 (TF307-MB-S-C) Board Top View
+    MBM 1.0 (TF307-MB-S-C) Board Top View
 
 
 Specification
 -------------
 
-.. table:: Baikal Electronics MBM 1.0/2.0 (TF307) Specification
+.. table:: MBM 1.0/2.0 (TF307) Specification
 
    +-------------+-------------------------------------------------------------+
-   | Model       | Baikal Electronics MBM 1.0/2.0                              |
+   | Model       | MBM 1.0/2.0 (TF307)                                         |
    +=============+=============================================================+
    | Processor   || Baikal Electronics BE-M1000                                |
    |             || 8-core ARM Cortex-A57 64 bits processor,                   |
@@ -98,59 +104,71 @@ Specification
 
 .. _sec-mbm-targets:
 
-Supported Build Targets
-=======================
+Build Targets
+=============
 
-.. _table-mbm-supported-targets:
-.. table:: Supported Build Targets
+.. _sec-mbm-machines:
 
-   +----------+--------------------------+-----------------+-------------+------------------------+--------------------+
-   | Board    |  Hardware Revision       | Target          | Machine     | Running Media          | Installation Media |
-   +==========+==========================+=================+=============+========================+====================+
-   | MBM 1.0  || TF-307-MB-S-A (Rev 1.0) | ``mbm10.yml``   | ``mbm10``   | USB Flash              | |ndash|            |
-   |          || TF-307-MB-S-B (Rev 2.0) |                 |             |                        |                    |
-   |          || TF-307-MB-S-C (Rev 3.0) |                 |             |                        |                    |
-   +----------+--------------------------+-----------------+-------------+------------------------+--------------------+
-   | MBM 2.0  || TF-307-MB-S-D (Rev 4.0) | ``mbm20.yml``   | ``mbm20``   | USB Flash              | |ndash|            |
-   +----------+--------------------------+-----------------+-------------+------------------------+--------------------+
+Machines
+--------
 
-Short explanations for the table columns:
+.. _table-mbm-machines:
+.. table:: Supported Machines
 
-- Board: target board.
-- Target: target YML-file located in ``kas/targets`` directory.
-- Machine: target machine name stored in the ``MACHINE`` BitBake variable.
-- Running Media: external or internal data storage where the TanoWrt operating system is running.
-- Installation Media: external storage device for which an installation image is generated. When booting from
-  the Installation Media, the TanoWrt system is installed on the Running Media storage.
-- Root Filesystem Image: root file system image recipe name (see :ref:`sec-mbm-images` to see supported images).
+   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+-------------------------+
+   | Board [#]_   | Hardware Revision        | Target YAML [#]_      | Machine [#]_  | Target Recipe(s) [#]_      | Running Media [#]_     | Installation Media [#]_ |
+   +==============+==========================+=======================+===============+============================+========================+=========================+
+   | MBM 1.0      || TF-307-MB-S-A (Rev 1.0) | ``mbm10.yml``         | ``mbm10``     | ``tanowrt-image-full-swu`` | USB Flash              | |ndash|                 |
+   |              || TF-307-MB-S-B (Rev 2.0) |                       |               |                            |                        |                         |
+   |              || TF-307-MB-S-C (Rev 3.0) |                       |               |                            |                        |                         |
+   +--------------+--------------------------+-----------------------+---------------+                            |                        |                         |
+   | MBM 2.0      || TF-307-MB-S-D (Rev 4.0) | ``mbm20.yml``         | ``mbm20``     |                            |                        |                         |
+   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+-------------------------+
+
+.. [#] Target board.
+.. [#] Target YAML-file located in the :file:`kas/targets` directory.
+.. [#] Target machine name stored in the ``MACHINE`` BitBake variable for selected Target YAML.
+.. [#] Recipes that will be built by default for the target. In :numref:`sec-mbm-images`,
+       you can find list of supported recipes for the target images, which you can build in addition
+       to the default recipes using optional ``--target`` option in build command
+       (see :numref:`sec-mbm-build`).
+.. [#] External or internal data storage where the TanoWrt operating system is running.
+.. [#] External storage device for which an installation image is generated. When booting from
+       the Installation Media, the TanoWrt system is installed on the Running Media storage.
 
 
 .. _sec-mbm-images:
 
-Supported Images
-================
+Images
+------
 
-Supported root filesystem images are listed in the
-:numref:`table-mbm-supported-images`.
-
-.. _table-mbm-supported-images:
+.. _table-mbm-images:
 .. table:: Supported Images
+   :widths: 25, 25, 50
 
-   +-----------------------------------+----------------------+--------------------------+
-   | Image Recipe (``<image-recipe>``) | Supported Target(s)  | Description              |
-   +===================================+======================+==========================+
-   | ``tanowrt-image-full``            | *All*                | Standard TanoWrt image   |
-   +-----------------------------------+----------------------+--------------------------+
-   | ``tanowrt-image-full-swu``        | *All*                | Standard TanoWrt image   |
-   |                                   |                      | (SWUpdate upgrade image) |
-   +-----------------------------------+----------------------+--------------------------+
-   | ``tanowrt-image-qt5``             | *All*                | Standard TanoWrt image   |
-   |                                   |                      | with Qt5 support         |
-   +-----------------------------------+----------------------+--------------------------+
-   | ``tanowrt-image-qt5-swu``         | *All*                | Standard TanoWrt image   |
-   |                                   |                      | with Qt5 support         |
-   |                                   |                      | (SWUpdate upgrade image) |
-   +-----------------------------------+----------------------+--------------------------+
+   +-----------------------------------+-------------------------+-----------------------------------------------------+
+   | Recipe [#]_                       | Supported by Target(s)  | Description                                         |
+   +===================================+=========================+=====================================================+
+   | ``tanowrt-image-full``            | *All*                   | Standard TanoWrt image.                             |
+   +-----------------------------------+-------------------------+-----------------------------------------------------+
+   | ``tanowrt-image-full-swu``        | *All*                   | Standard TanoWrt image                              |
+   |                                   |                         | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                                   |                         | image. When building this image,                    |
+   |                                   |                         | ``tanowrt-image-full`` will also be built           |
+   |                                   |                         | as dependency.                                      |
+   +-----------------------------------+-------------------------+-----------------------------------------------------+
+   | ``tanowrt-image-qt5``             | *All*                   | Standard TanoWrt image                              |
+   |                                   |                         | with Qt5 support.                                   |
+   +-----------------------------------+-------------------------+-----------------------------------------------------+
+   | ``tanowrt-image-qt5-swu``         | *All*                   | Standard TanoWrt image with Qt5 support             |
+   |                                   |                         | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                                   |                         | image. When building this image,                    |
+   |                                   |                         | ``tanowrt-image-qt5`` will also be built            |
+   |                                   |                         | as dependency.                                      |
+   +-----------------------------------+-------------------------+-----------------------------------------------------+
+
+.. [#] Image recipe name. This name can be used as argument
+       for ``--target`` build command option (see :numref:`sec-mbm-build` section).
 
 
 .. _sec-mbm-build:
@@ -158,26 +176,41 @@ Supported root filesystem images are listed in the
 Build
 =====
 
-.. include:: /common/include/kas-common-part.rst.inc
-
-By default, unless otherwise specified, a root file system image specified
-in the target configuration is built. The default root filesystem image
-recipe name for each supported target can be found in Table
-:ref:`table-mbm-supported-targets` (Root Filesystem Image column).
-If you need to build a different image for the target, the following build
-command should be used:
-
-.. code-block:: console
-
-   $ kas build --target <image-recipe> kas/targets/<target-yml-file>
+Please read the common information on how to perform a TanoWrt
+images build and preparing the build environment in section ":ref:`sec-build`".
 
 .. seealso:: 
 
-   - See :ref:`sec-mbm-targets` section to select the required target file.
-   - See :ref:`sec-mbm-images` section to select the required root filesystem image recipe.
-   - See :ref:`sec-mbm-artifacts` section for detailed information
+   - See section :numref:`sec-mbm-machines` to select the required target YAML file (``<target-yml>``).
+   - See section :numref:`sec-mbm-images` to select the required root filesystem image recipe (``<target-recipe>``).
+   - See section :numref:`sec-mbm-artifacts` for detailed information
      about the produced build artifacts.
 
+Examples
+--------
+
+Build Default Images for MBM 1.0 Board
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   $ kas build targets/kas/mbm10.yml
+
+
+Build Default Images for MBM 2.0 Board
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   $ kas build targets/kas/mbm20.yml
+
+
+Build ``tanowrt-image-full-qt5`` Image for MBM 2.0 Board
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   $ kas build --target tanowrt-image-full-qt5 targets/kas/mbm20.yml
 
 
 .. _sec-mbm-artifacts:
@@ -185,48 +218,44 @@ command should be used:
 Produced Build Artifacts
 ========================
 
-All produced build artifacts are stored in the ``~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>`` directory.
-
-.. note:: ``<MACHINE>`` in the artifacts path is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-mbm-targets_>`__.
-
+All produced build artifacts are stored in the :file:`~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>` directory.
 Refer to table :ref:`table-mbm-artifacts` for a description of some common (not all) build artifacts.
 
 .. _table-mbm-artifacts:
 .. table:: Produced Build Artifacts
+   :widths: 15, 15
 
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | Artifact                                    | Target(s) | Description                                                   |
-   +=============================================+===========+===============================================================+
-   | .. centered:: Bootloader                                                                                                |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``grub-efi-bootaa64.efi``                   | *All*     | GRUB bootloader image                                         |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``grub-efi-grubenv``                        | *All*     | GRUB bootloader initial environment                           |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``grub-efi-startup.nsh``                    | *All*     | Startup script for UEFI shell                                 |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``grub.cfg``                                | *All*     | GRUB bootloader configuration file                            |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | .. centered:: Linux Kernel                                                                                              |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``Image-<MACHINE>.bin``                     | *All*     | Linux kernel binary image                                     |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | .. centered:: Images                                                                                                    |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``<image-recipe>-<MACHINE>.wic``            | *All*     | Bootable image including all required partitions for booting  |
-   |                                             |           | and running the system. This image is ready to be written     |
-   |                                             |           | to the USB flash drive using the :command:`dd` utility        |
-   |                                             |           | or similar (see :ref:`sec-mbm-flash`).                        |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``<image-recipe>-<MACHINE>.squashfs-lzo``   | *All*     | Root filesystem image (squashfs with LZO compression).        |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
-   | ``<image-recipe>-swu-<MACHINE>.swu``        | *All*     | SWUpdate image for updating system                            |
-   |                                             |           | (see :ref:`sec-mbm-upgrade`).                                 |
-   +---------------------------------------------+-----------+---------------------------------------------------------------+
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | Artifact                                        | Target(s) | Description                                                   |
+   +=================================================+===========+===============================================================+
+   | .. centered:: Bootloader                                                                                                    |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`grub-efi-bootaa64.efi`                   | *All*     | GRUB bootloader image                                         |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`grub-efi-grubenv`                        | *All*     | GRUB bootloader initial environment                           |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`grub-efi-startup.nsh`                    | *All*     | Startup script for UEFI shell                                 |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`grub.cfg`                                | *All*     | GRUB bootloader configuration file                            |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | .. centered:: Linux Kernel                                                                                                  |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`Image-<MACHINE>.bin`                     | *All*     | Linux kernel binary image                                     |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | .. centered:: Images                                                                                                        |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`<image-recipe>-<MACHINE>.wic`            | *All*     | Bootable image including all required partitions for booting  |
+   |                                                 |           | and running the system. This image is ready to be written     |
+   |                                                 |           | to the USB flash drive using the :command:`dd` utility        |
+   |                                                 |           | or similar (see :ref:`sec-mbm-flash`).                        |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`<image-recipe>-<MACHINE>.squashfs-lzo`   | *All*     | Root filesystem image (squashfs with LZO compression).        |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
+   | :file:`<image-recipe>-swu-<MACHINE>.swu`        | *All*     | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
+   +-------------------------------------------------+-----------+---------------------------------------------------------------+
 
-.. note:: ``<MACHINE>`` in the artifact name is replaced by the actual value of the
-          ``MACHINE`` BitBake variable for the chosen `target <sec-mbm-targets_>`__.
+.. note:: ``<MACHINE>`` in the artifacts path and artifacts file names are replaced by the actual
+          value of the ``MACHINE`` BitBake variable for the chosen `target <sec-mbm-targets_>`__.
           ``<image-recipe>`` is replaced by the actual `image recipe <sec-mbm-images_>`__ name.
 
 For example, below is the complete list of artifacts produced by the
@@ -267,30 +296,17 @@ For example, below is the complete list of artifacts produced by the
 
 .. _sec-mbm-flash:
 
-Flash Images
-============
+Writing Images
+==============
 
 
 .. _sec-mbm-flash-usb:
 
-Flash Image to USB Flash Drive
--------------------------------
+Wriging Image to USB Flash Drive
+--------------------------------
 
-Use the :command:`dd` utility to write the generated ``.wic`` images to the USB
-flash drive.
-
-For example:
-
-.. code-block:: console
-
-   $ sudo dd if=~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20.wic \
-             of=/dev/sdc \
-             bs=1k
-
-Where ``/dev/sdc`` is the device name of the USB flash drive.
-
-.. tip:: For writing USB flash drive under Windows we recommend to use
-         `PassMark imageUSB utility <https://www.osforensics.com/tools/write-usb-images.html>`__.
+No special information about writing images to USB flash drive
+for described boards. See common instructions in :ref:`sec-writing-sd-or-usb` section.
 
 
 .. _sec-mbm-booting:
@@ -298,10 +314,10 @@ Where ``/dev/sdc`` is the device name of the USB flash drive.
 Booting and Running
 ===================
 
-.. important:: To successfully run TanoWrt on MBM 1.0/2.0 boards UEFI firmware from
-               `Baikal-M SDK 5.2 20210608 <https://www.baikalelectronics.ru/products/238/>`__
-               or higher is required. Follow the instructions from the SDK to update the
-               UEFI firmware on MBM 1.0/2.0 board.
+To successfully run TanoWrt on MBM 1.0/2.0 boards UEFI firmware from
+`Baikal-M SDK 5.2 20210608 <https://www.baikalelectronics.ru/products/238/>`__
+or higher is required. Follow the instructions from the SDK to update the
+UEFI firmware on MBM 1.0/2.0 board.
 
 
 Booting from USB Flash Drive
@@ -314,25 +330,14 @@ Booting from USB Flash Drive
 4. Press ESC to enter UEFI setup utility.
 5. Select :menuselection:`Boot Manager` in menu and press :kbd:`ENTER`.
 6. Select your USB flash drive in boot manager menu and press :kbd:`ENTER`.
-7. TanoWrt from selected USB flash drive will be booting.
-
-
-.. _sec-mbm-access-credentials:
-
-Access Credentials
-------------------
-
-The following credentials are used by default to access the system via
-CLI (Command Line Interface), SSH (Secure SHell) or/and WebUI (Web User Interface):
-
-- Username: ``root``
-- Password: ``root``
+   TanoWrt will be booting from selected USB flash drive.
+7. When the system boots, log in using the default :ref:`credentials <sec-access-creds>`.
 
 
 .. _sec-mbm-network-config:
 
 Default Network Configuration
------------------------------
+=============================
 
 By default, network ports Ethernet 1 (``eth0``) and Ethernet 2 (``eth1``)
 are joined into a bridge (``br-lan`` interface) with the :term:`RSTP`
@@ -344,8 +349,8 @@ Ethernet ports 1 (``eth0``) and 2 (``eth1``) have enabled :term:`LLDP` by defaul
 
 .. _sec-mbm-webui:
 
-WebUI
------
+Web User Interface
+=============================
 
 The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
 You must see something like this in browser after you logged in:
@@ -365,42 +370,11 @@ You must see something like this in browser after you logged in:
 
 .. _sec-mbm-upgrade:
 
-Upgrade Running System
-======================
+Firmware Upgrade
+================
 
-You can upgrade the running system via CLI (Command Line Interface) or WebUI (Web User Interface).
-
-
-CLI (Command Line Interface)
-----------------------------
-
-Use the following commands to upgrade the firmware using the command line:
-
-- Upgrade from a local file (e.g. on an USB flash drive):
-
-  .. code-block:: console
-
-     [root@tanowrt ~]# swupdate-client /mnt/sdb1/<image-recipe>-swu-<MACHINE>.swu
-
-- Upgrade from a file hosted on a remote HTTP server:
-
-  .. code-block:: console
-
-     [root@tanowrt ~]# wget -O- http://remote.server.com/path/to/<image-recipe>-swu-<MACHINE>.swu | swupdate-client
-
-
-WebUI (Web User Interface)
---------------------------
-
-To upgrade the firmware using the web interface,
-choose :menuselection:`System --> Firmware Upgrade` in the main menu.
-Next, follow the instructions on the page.
-
-.. _fig-mbm-luci-swupdate:
-.. figure:: /common/images/luci/page-swupdate.png
-    :width: 900
-
-    LuCI WebUI Firmware Upgrade Page
+No special information about firmware upgrade.
+See common instructions in :ref:`sec-firmware-upgrade` section.
 
 
 References

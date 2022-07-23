@@ -237,3 +237,7 @@ html_last_updated_fmt = '%d.%m.%Y'
 
 # If false, no index is generated.
 html_use_index = True
+
+extlinks = {
+    'tanowrt_github_blob': ('https://github.com/tano-systems/meta-tanowrt/blob/master%s', None),
+}

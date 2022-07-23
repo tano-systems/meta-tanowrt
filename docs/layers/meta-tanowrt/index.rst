@@ -11,6 +11,14 @@ TanoWrt Core Layer (meta-tanowrt)
 
 .. todo:: Documentation is under development
 
+Supported Boards
+================
+
+The TanoWrt core layer provides support for a target devices
+intended to run in a virtual environment (QEMU, VirtualBox, etc.).
+
+.. include:: .layer-boards.rst.inc
+
 License
 ============
 
