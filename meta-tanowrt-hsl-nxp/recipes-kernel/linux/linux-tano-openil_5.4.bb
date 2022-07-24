@@ -10,8 +10,10 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 KERNEL_SRC_URI ?= "git://github.com/openil/linux.git;nobranch=1"
-KERNEL_SRC_BRANCH ?= ""
-KERNEL_SRC_SRCREV ?= "OpenIL-v1.10-linux-202012"
+KERNEL_SRC_BRANCH ?= "linux-5.4.y"
+
+# Tag: OpenIL-v1.10-linux-202012"
+KERNEL_SRC_SRCREV ?= "93206fd71a8d1e033b3d469505b768051b519baf"
 
 LINUX_VERSION ?= "5.4.3-rt1"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
