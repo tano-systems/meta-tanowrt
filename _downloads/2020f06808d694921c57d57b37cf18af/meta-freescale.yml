@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+
+repos:
+  meta-freescale:
+    url: https://git.yoctoproject.org/git/meta-freescale.git
+    refspec: 7f12b5e235e67bfe28891d460cb6b1f3025bd0ea

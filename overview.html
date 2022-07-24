@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Building TanoWrt" href="build.html" />
+    <link rel="prev" title="TanoWrt Embedded Linux Distribution Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-targets">Supported Targets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-machines">Virtual Machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intel-cpu-based-machines">Intel CPU Based Machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#microchip-atmel-soc-s">Microchip/Atmel SoC’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#baikal-electronics-soc-s">Baikal Electronics SoC’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nxp-freescale-soc-s">NXP/Freescale SoC’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fuzhou-rockchip-electronics-soc-s">Fuzhou Rockchip Electronics.SoC’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raspberry-pi-boards">Raspberry Pi Boards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sierra-wireless-lte-modules">Sierra Wireless LTE Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#texas-instruments-soc-s">Texas Instruments SoC’s</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#default-access-credentials">Default Access Credentials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt/index.html">meta-tanowrt</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html">meta-tanowrt-hsl-rockchip</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+    <li>Overview</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Under development</p>
+</div>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id17">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#source-code" id="id18">Source Code</a></p></li>
+<li><p><a class="reference internal" href="#supported-targets" id="id19">Supported Targets</a></p></li>
+<li><p><a class="reference internal" href="#default-access-credentials" id="id20">Default Access Credentials</a></p></li>
+</ul>
+</div>
+<section id="introduction">
+<span id="sec-intro"></span><h2><a class="toc-backref" href="#id17">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Add content</p>
+</div>
+</section>
+<section id="source-code">
+<span id="sec-sources"></span><h2><a class="toc-backref" href="#id18">Source Code</a><a class="headerlink" href="#source-code" title="Permalink to this heading"></a></h2>
+<p>TanoWrt is an open source project. TanoWrt source code is available
+on <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt">GitHub</a>.</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Add content</p>
+</div>
+<section id="license">
+<span id="sec-license"></span><h3>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h3>
+<p>All metadata in TanoWrt repositories is <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/LICENSE">MIT licensed</a>
+unless otherwise stated. Source code included in tree for individual recipes is under the
+<code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> stated in each recipe (<code class="file docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
+<a class="reference internal image-reference" href="_images/mit-license.png"><img alt="_images/mit-license.png" src="_images/mit-license.png" style="width: 150px;" /></a>
+</section>
+</section>
+<section id="supported-targets">
+<span id="sec-supported-targets"></span><h2><a class="toc-backref" href="#id19">Supported Targets</a><a class="headerlink" href="#supported-targets" title="Permalink to this heading"></a></h2>
+<p>Target YAML-files are located in <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> subfolder of the
+<code class="docutils literal notranslate"><span class="pre">meta-tanowrt</span></code> repository. Available target files listed in the subsections below
+and grouped by support layers.</p>
+<section id="virtual-machines">
+<h3>Virtual Machines<a class="headerlink" href="#virtual-machines" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> none, provided by <a class="reference internal" href="layers/meta-tanowrt/index.html#meta-tanowrt"><span class="std std-ref">TanoWrt Core Layer (meta-tanowrt)</span></a></p>
+<table class="colwidths-given docutils align-default" id="id8" style="width: 100%">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Virtual Machines</span><a class="headerlink" href="#id8" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Virtual Device</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>QEMU/ARMv5 (ARM926EJ-S) machine</p></td>
+<td rowspan="2"><p>Generic ARMv5</p></td>
+<td rowspan="8"><p><em>Virtual</em>
+(host)</p></td>
+<td rowspan="2"><p>Virtual NAND flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemuarm.yml">qemuarm.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QEMU/ARMv5 (ARM926EJ-S) machine
+with screen support</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemuarm-screen.yml">qemuarm-screen.yml</a></p></td>
+</tr>
+<tr class="row-even"><td><p>QEMU/ARMv8 (aarch64) machine</p></td>
+<td rowspan="2"><p>Generic ARMv8 (aarch64)</p></td>
+<td rowspan="2"><p>Virtual NAND flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemuarm64.yml">qemuarm64.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QEMU/ARMv8 (aarch64) machine
+with screen support</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemuarm64-screen.yml">qemuarm64-screen.yml</a></p></td>
+</tr>
+<tr class="row-even"><td><p>QEMU/Common x86 (32-bit) machine</p></td>
+<td rowspan="2"><p>Generic x86</p></td>
+<td rowspan="2"><p>Virtual HDD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemux86.yml">qemux86.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QEMU/Common x86 (32-bit) machine
+with screen support</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemux86-screen.yml">qemux86-screen.yml</a></p></td>
+</tr>
+<tr class="row-even"><td><p>QEMU/Common x86 (64-bit) machine</p></td>
+<td rowspan="2"><p>Generic x86-64</p></td>
+<td rowspan="2"><p>Virtual HDD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemux86-64.yml">qemux86-64.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QEMU/Common x86 (64-bit) machine
+with screen support</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/qemux86-64-screen.yml">qemux86-64-screen.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="intel-cpu-based-machines">
+<h3>Intel CPU Based Machines<a class="headerlink" href="#intel-cpu-based-machines" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <span class="xref std std-ref">meta-tanowrt-hsl-intel</span></p>
+<table class="colwidths-given docutils align-default" id="id9" style="width: 100%">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Supported Intel CPU Based Boards</span><a class="headerlink" href="#id9" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Intel Core i7 CPU (and later)</p></td>
+<td><p>x86_64 (Intel Core i7)</p></td>
+<td rowspan="2"><p>At least
+64 MiB</p></td>
+<td><p>USB/SATA/NVMe</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/intel-x86-64-corei7.yml">intel-x86-64-corei7.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Intel Skylake CPU (and later)</p></td>
+<td><p>x86_64 (Intel Skylake)</p></td>
+<td><p>USB/SATA/NVMe</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/intel-x86-64-skylake.yml">intel-x86-64-skylake.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="microchip-atmel-soc-s">
+<h3>Microchip/Atmel SoC’s<a class="headerlink" href="#microchip-atmel-soc-s" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <span class="xref std std-ref">meta-tanowrt-hsl-atmel</span></p>
+<table class="colwidths-given docutils align-default" id="id10" style="width: 100%">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Supported Microchip/Atmel SoC’s Based Boards</span><a class="headerlink" href="#id10" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported
+Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p>KSZ9477 Managed Switch Evaluation Kit with
+SAMA5D36 MPU (EVB-KSZ9477)</p></td>
+<td rowspan="4"><div class="line-block">
+<div class="line"><strong>Model:</strong> Microchip (Atmel) ATSAMA5D36</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A5 processor-based MPU</div>
+<div class="line"><strong>Frequency:</strong> up to 536 MHz</div>
+</div>
+</td>
+<td rowspan="4"><p>256 MiB DDR2</p></td>
+<td><p>NAND flash
+(256 MiB)</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9477-nand.yml">evb-ksz9477-nand.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD-card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9477-sd.yml">evb-ksz9477-sd.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>KSZ9563 Plug-in Evaluation Board (EVB-KSZ9563)
+on SAMA5D3 Ethernet Development System (DM320114)</p></td>
+<td><p>NAND flash
+(256 MiB)</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9563-nand.yml">evb-ksz9563-nand.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD-card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9563-sd.yml">evb-ksz9563-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="baikal-electronics-soc-s">
+<h3>Baikal Electronics SoC’s<a class="headerlink" href="#baikal-electronics-soc-s" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/index.html#meta-tanowrt-hsl-baikal"><span class="std std-ref">Baikal Electronics SoC’s Hardware Support Layer (meta-tanowrt-hsl-baikal)</span></a></p>
+<table class="colwidths-given docutils align-default" id="id11" style="width: 100%">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Supported Baikal Electronics SoC’s Based Boards</span><a class="headerlink" href="#id11" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/boards/mbm/index.html#machine-mbm10"><span class="std std-ref">MBM 1.0/2.0 (TF307)</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Baikal Electronics BE-M1000</div>
+<div class="line"><strong>Cores:</strong> 8 x ARM Cortex-A57 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.5 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>up to 64 GiB DDR4</p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line">USB Flash</div>
+<div class="line">SATA <a class="footnote-reference brackets" href="#not-supported" id="id4">1</a></div>
+<div class="line">NVMe <a class="footnote-reference brackets" href="#not-supported" id="id5">1</a></div>
+<div class="line">microSD</div>
+</div>
+</td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/mbm10.yml">mbm10.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/boards/mbm/index.html#machine-mbm20"><span class="std std-ref">MBM 1.0/2.0 (TF307)</span></a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/mbm20.yml">mbm20.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="not-supported"><span class="brackets">1</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id5">2</a>)</span></dt>
+<dd><p>Support for HDD and NVMe storages is under development. Currently supported running TanoWrt
+only from USB flash drive.</p>
+</dd>
+</dl>
+</section>
+<section id="nxp-freescale-soc-s">
+<h3>NXP/Freescale SoC’s<a class="headerlink" href="#nxp-freescale-soc-s" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html#meta-tanowrt-hsl-nxp"><span class="std std-ref">NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)</span></a></p>
+<table class="colwidths-given docutils align-default" id="id12" style="width: 100%">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Supported Freescale/NXP SoC’s Based Boards</span><a class="headerlink" href="#id12" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/boards/ls1028ardb/index.html#machine-ls1028ardb"><span class="std std-ref">NXP LS1028A RDB</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> NXP Layerscape LS1028A</div>
+<div class="line"><strong>Cores:</strong> 2 x ARM Cortex-A72 64 bit</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>4 GiB DDR4 SDRAM</p></td>
+<td><p>eMMC flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/ls1028ardb-emmc.yml">ls1028ardb-emmc.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD-card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/ls1028ardb-sd.yml">ls1028ardb-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fuzhou-rockchip-electronics-soc-s">
+<h3>Fuzhou Rockchip Electronics.SoC’s<a class="headerlink" href="#fuzhou-rockchip-electronics-soc-s" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html#meta-tanowrt-hsl-rockchip"><span class="std std-ref">Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)</span></a></p>
+<table class="colwidths-given docutils align-default" id="id13" style="width: 100%">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id13" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/boards/boardcon-em3566/index.html#machine-boardcon-em3566"><span class="std std-ref">Boardcon EM3566 SBC</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3566</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A55 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.8 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>2 GiB LPDDR4</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3566-sd.yml">boardcon-em3566-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id6">2</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3566-emmc.yml">boardcon-em3566-emmc.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/boards/boardcon-em3568/index.html#machine-boardcon-em3568"><span class="std std-ref">Boardcon EM3568 SBC</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3568</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A55 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.8 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>2 GiB LPDDR4</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3568-sd.yml">boardcon-em3568-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id7">2</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3568-emmc.yml">boardcon-em3568-emmc.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/boards/rock-pi-s/index.html#machine-rock-pi-s"><span class="std std-ref">Radxa ROCK Pi S</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3308</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A35 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>up to 512 MiB DDR3</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rock-pi-s-sd.yml">rock-pi-s-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD NAND up to 8 GB</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rock-pi-s-sdnand.yml">rock-pi-s-sdnand.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="emmc-size"><span class="brackets">2</span><span class="fn-backref">(<a href="#id6">1</a>,<a href="#id7">2</a>)</span></dt>
+<dd><p>Actual eMMC flash size is approximately 7.28 GiB</p>
+</dd>
+</dl>
+</section>
+<section id="raspberry-pi-boards">
+<h3>Raspberry Pi Boards<a class="headerlink" href="#raspberry-pi-boards" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <span class="xref std std-ref">meta-tanowrt-hsl-rpi</span></p>
+<table class="colwidths-given docutils align-default" id="id14" style="width: 100%">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Supported Raspberry Pi Boards</span><a class="headerlink" href="#id14" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Raspberry Pi 3 Model B/B+</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Broadcom BCM2837/BCM2837B0</div>
+<div class="line"><strong>Cores:</strong> 4 x ARM Cortex-A53 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.2 GHz</div>
+</div>
+</td>
+<td><p><em>TODO</em></p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rpi3-sd.yml">rpi3-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sierra-wireless-lte-modules">
+<h3>Sierra Wireless LTE Modules<a class="headerlink" href="#sierra-wireless-lte-modules" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <span class="xref std std-ref">meta-tanowrt-hsl-swi</span></p>
+<table class="colwidths-given docutils align-default" id="id15" style="width: 100%">
+<caption><span class="caption-number">Table 8 </span><span class="caption-text">Supported Sierra Wireless LTE Modules Based Boards</span><a class="headerlink" href="#id15" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mangOH Green with WP7607</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Sierra Wireless WP7607 or WP7607-1</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A7</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td><p><em>TODO</em></p></td>
+<td><p>NAND flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/mangoh-green-wp7607.yml">mangoh-green-wp7607.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="texas-instruments-soc-s">
+<h3>Texas Instruments SoC’s<a class="headerlink" href="#texas-instruments-soc-s" title="Permalink to this heading"></a></h3>
+<p><strong>Hardware Support Layer:</strong> <span class="xref std std-ref">meta-tanowrt-hsl-ti</span></p>
+<table class="colwidths-given docutils align-default" id="id16" style="width: 100%">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Supported Texas Instruments Soc’s Based Boards</span><a class="headerlink" href="#id16" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p>BeagleBone Black</p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Texas Instruments AM3358</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A8</div>
+<div class="line"><strong>Frequency:</strong> up to 1 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p><em>TODO</em></p></td>
+<td><p>eMMC flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/am335x-bbb-emmc.yml">am335x-bbb-emmc.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/am335x-bbb-sd.yml">am335x-bbb-sd.yml</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Texas Instruments AM3359 ICEv2 EVM (TMDSICE3359)</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Texas Instruments AM3359</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A8</div>
+<div class="line"><strong>Frequency:</strong> up to 800 MHz</div>
+</div>
+</td>
+<td><p><em>TODO</em></p></td>
+<td><p>SD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/am335x-icev2-sd.yml">am335x-icev2-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Texas Instruments AM574x IDK EVM (TMDSIDK574)</p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Texas Instruments AM5748</div>
+<div class="line"><strong>Cores:</strong> 2 x ARM Cortex-A15</div>
+<div class="line"><strong>Frequency:</strong> up to 1.5 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p><em>TODO</em></p></td>
+<td><p>eMMC flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/am574x-idk-emmc.yml">am574x-idk-emmc.yml</a></p></td>
+</tr>
+<tr class="row-even"><td><p>SD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/am574x-idk-sd.yml">am574x-idk-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="default-access-credentials">
+<span id="sec-access-creds"></span><h2><a class="toc-backref" href="#id20">Default Access Credentials</a><a class="headerlink" href="#default-access-credentials" title="Permalink to this heading"></a></h2>
+<p>The following credentials are used by default to access the TanoWrt via
+CLI (Command Line Interface), SSH (Secure SHell) and WebUI (Web User Interface):</p>
+<ul class="simple">
+<li><p>Username: <code class="docutils literal notranslate"><span class="pre">root</span></code></p></li>
+<li><p>Password: <code class="docutils literal notranslate"><span class="pre">root</span></code></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

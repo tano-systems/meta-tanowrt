@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp) &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1 NXP LS1028A RDB" href="boards/ls1028ardb/index.html" />
+    <link rel="prev" title="1 MBM 1.0/2.0 (TF307)" href="../meta-tanowrt-hsl-baikal/boards/mbm/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt/index.html">meta-tanowrt</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">meta-tanowrt-hsl-nxp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-and-dependencies">Requirements and Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-boards">Supported Boards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="boards/ls1028ardb/index.html">1 NXP LS1028A RDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rockchip/index.html">meta-tanowrt-hsl-rockchip</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+    <li>NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/layers/meta-tanowrt-hsl-nxp/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nxp-freescale-hardware-support-layer-meta-tanowrt-hsl-nxp">
+<span id="meta-tanowrt-hsl-nxp"></span><h1>NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)<a class="headerlink" href="#nxp-freescale-hardware-support-layer-meta-tanowrt-hsl-nxp" title="Permalink to this heading"></a></h1>
+<p>meta-tanowrt-hsl-nxp — <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt">TanoWrt</a> hardware support
+layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span class="xref std std-term">HSL</span></a>) for the NXP (Freescale) SoC based boards.</p>
+<a class="reference internal image-reference" href="../../_images/nxp.svg"><img alt="../../_images/nxp.svg" src="../../_images/nxp.svg" width="300" /></a>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#requirements-and-dependencies" id="id2">Requirements and Dependencies</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dependencies" id="id3">Dependencies</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#supported-boards" id="id4">Supported Boards</a></p></li>
+<li><p><a class="reference internal" href="#license" id="id5">License</a></p></li>
+<li><p><a class="reference internal" href="#maintainers" id="id6">Maintainers</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id7">References</a></p></li>
+</ul>
+</div>
+<section id="requirements-and-dependencies">
+<h2><a class="toc-backref" href="#id2">Requirements and Dependencies</a><a class="headerlink" href="#requirements-and-dependencies" title="Permalink to this heading"></a></h2>
+<section id="dependencies">
+<h3><a class="toc-backref" href="#id3">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<p>Dependencies of the <a class="reference internal" href="#meta-tanowrt-hsl-nxp"><span class="std std-ref">meta-tanowrt-hsl-nxp</span></a> layer are described in the table below.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>URI</p></th>
+<th class="head"><p>Subfolder</p></th>
+<th class="head"><p>Branch</p></th>
+<th class="head"><p>Configuration YML-file</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../meta-tanowrt/index.html#meta-tanowrt"><span class="std std-ref">meta-tanowrt</span></a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt.git">https://github.com/tano-systems/meta-tanowrt.git</a></p></td>
+<td><p>meta-tanowrt</p></td>
+<td><p>hardknott</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/14ff4f332b153da0a8ad62d18bee7389/meta-tanowrt.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-tanowrt.yml</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>meta-freescale</p></td>
+<td><p><a class="reference external" href="https://git.yoctoproject.org/meta-freescale">https://git.yoctoproject.org/meta-freescale</a></p></td>
+<td><p>–</p></td>
+<td><p>hardknott</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/2020f06808d694921c57d57b37cf18af/meta-freescale.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-freescale.yml</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="supported-boards">
+<h2><a class="toc-backref" href="#id4">Supported Boards</a><a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
+<p>TanoWrt has demonstration support for some devices and development boards based on NXP SoC’s.
+All supported devices are listed in the table below.</p>
+<table class="colwidths-given docutils align-default" id="id1" style="width: 100%">
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">Supported Freescale/NXP SoC’s Based Boards</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/ls1028ardb/index.html#machine-ls1028ardb"><span class="std std-ref">NXP LS1028A RDB</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> NXP Layerscape LS1028A</div>
+<div class="line"><strong>Cores:</strong> 2 x ARM Cortex-A72 64 bit</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>4 GiB DDR4 SDRAM</p></td>
+<td><p>eMMC flash</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/ls1028ardb-emmc.yml">ls1028ardb-emmc.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD-card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/ls1028ardb-sd.yml">ls1028ardb-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="license">
+<h2><a class="toc-backref" href="#id5">License</a><a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<p>All metadata is MIT licensed unless otherwise stated.
+Source code included in tree for individual recipes is under the
+LICENSE stated in each recipe (<code class="file docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
+</section>
+<section id="maintainers">
+<h2><a class="toc-backref" href="#id6">Maintainers</a><a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
+<p>Anton Kikin &lt;<a class="reference external" href="mailto:a&#46;kikin&#37;&#52;&#48;tano-systems&#46;com">a<span>&#46;</span>kikin<span>&#64;</span>tano-systems<span>&#46;</span>com</a>&gt;</p>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id7">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.nxp.com/">NXP official site</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

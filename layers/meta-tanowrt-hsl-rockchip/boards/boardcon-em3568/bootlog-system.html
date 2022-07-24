@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2.9.3 Boardcon EM3568 System Boot Log &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+  <title>2.11.3 Boardcon EM3568 System Boot Log &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="3 Radxa ROCK Pi S" href="../rock-pi-s/index.html" />
-    <link rel="prev" title="2.9.2 Boardcon EM3568 U-Boot Boot Log" href="bootlog-u-boot.html" /> 
+    <link rel="prev" title="2.11.2 Boardcon EM3568 U-Boot Boot Log" href="bootlog-u-boot.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,28 +45,38 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">TanoWrt Core Layer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../build-kas.html">Building TanoWrt with kas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">meta-tanowrt</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Rockchip SoC's</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">meta-tanowrt-hsl-rockchip</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../boardcon-em3566/index.html">1 Boardcon EM3566 SBC</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">2 Boardcon EM3568 SBC</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="index.html#board-overview">2.1 Board Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#supported-build-targets">2.2 Supported Build Targets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#supported-images">2.3 Supported Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#build">2.4 Build</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#produced-build-artifacts">2.5 Produced Build Artifacts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#flash-images">2.6 Flash Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#booting-and-running">2.7 Booting and Running</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#upgrade-running-system">2.8 Upgrade Running System</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">2.9 Additional Information</a></li>
-<li class="toctree-l4"><a class="reference internal" href="index.html#references">2.10 References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build-targets">2.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build">2.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#produced-build-artifacts">2.4 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#writing-images">2.5 Writing Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#booting-and-running">2.6 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#serial-console">2.7 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#default-network-configuration">2.8 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#web-user-interface">2.9 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#firmware-upgrade">2.10 Firmware Upgrade</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">2.11 Additional Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#references">2.12 References</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../rock-pi-s/index.html">3 Radxa ROCK Pi S</a></li>
@@ -105,7 +115,7 @@
     
       <li><a href="index.html"><span class="section-number">2 </span>Boardcon EM3568 SBC</a> &raquo;</li>
     
-    <li><span class="section-number">2.9.3 </span>Boardcon EM3568 System Boot Log</li>
+    <li><span class="section-number">2.11.3 </span>Boardcon EM3568 System Boot Log</li>
 
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/layers/meta-tanowrt-hsl-rockchip/boards/boardcon-em3568/bootlog-system.rst.txt" rel="nofollow"> View page source</a>
@@ -117,7 +127,7 @@
            <div itemprop="articleBody">
              
   <section id="boardcon-em3568-system-boot-log">
-<h1><span class="section-number">2.9.3 </span>Boardcon EM3568 System Boot Log<a class="headerlink" href="#boardcon-em3568-system-boot-log" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">2.11.3 </span>Boardcon EM3568 System Boot Log<a class="headerlink" href="#boardcon-em3568-system-boot-log" title="Permalink to this heading"></a></h1>
 <p>TanoWrt boot log from internal eMMC flash memory.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
 [    0.000000] Linux version 4.19.219-tano-rk-standard-g40b753b965-tano3.2.20.20.1.10 (oe-user@oe-host) (gcc version 10.3.0 (GCC), GNU ld (GNU Binutils) 2.36.1.20210703) #1 SMP Thu Jul 21 21:45:48 UTC 2022
@@ -912,7 +922,7 @@ Password:
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 22.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
     </p>
   </div>
 </footer>

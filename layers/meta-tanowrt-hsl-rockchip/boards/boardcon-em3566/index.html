@@ -26,7 +26,7 @@
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="1.9.1 Boardcon EM3566 U-Boot Boot Log" href="bootlog-u-boot.html" />
+    <link rel="next" title="1.11.1 Boardcon EM3566 U-Boot Boot Log" href="bootlog-u-boot.html" />
     <link rel="prev" title="Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)" href="../../index.html" /> 
 </head>
 
@@ -48,27 +48,37 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">TanoWrt Core Layer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../build-kas.html">Building TanoWrt with kas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">meta-tanowrt</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Rockchip SoC's</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">meta-tanowrt-hsl-rockchip</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1 Boardcon EM3566 SBC</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#supported-build-targets">1.2 Supported Build Targets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#supported-images">1.3 Supported Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build">1.4 Build</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.5 Produced Build Artifacts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#flash-images">1.6 Flash Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.7 Booting and Running</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#upgrade-running-system">1.8 Upgrade Running System</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#additional-information">1.9 Additional Information</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#references">1.10 References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build">1.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.4 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.5 Writing Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.6 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-console">1.7 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">1.8 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">1.9 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">1.10 Firmware Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-information">1.11 Additional Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">1.12 References</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../boardcon-em3568/index.html">2 Boardcon EM3568 SBC</a></li>
@@ -118,9 +128,26 @@
            <div itemprop="articleBody">
              
   <section id="boardcon-em3566-sbc">
-<span id="device-boardcon-em3566"></span><h1><span class="section-number">1 </span>Boardcon EM3566 SBC<a class="headerlink" href="#boardcon-em3566-sbc" title="Permalink to this heading"></a></h1>
+<span id="machine-boardcon-em3566"></span><h1><span class="section-number">1 </span>Boardcon EM3566 SBC<a class="headerlink" href="#boardcon-em3566-sbc" title="Permalink to this heading"></a></h1>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#board-overview" id="id26">Board Overview</a></p></li>
+<li><p><a class="reference internal" href="#build-targets" id="id27">Build Targets</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id28">Build</a></p></li>
+<li><p><a class="reference internal" href="#produced-build-artifacts" id="id29">Produced Build Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#writing-images" id="id30">Writing Images</a></p></li>
+<li><p><a class="reference internal" href="#booting-and-running" id="id31">Booting and Running</a></p></li>
+<li><p><a class="reference internal" href="#serial-console" id="id32">Serial Console</a></p></li>
+<li><p><a class="reference internal" href="#default-network-configuration" id="id33">Default Network Configuration</a></p></li>
+<li><p><a class="reference internal" href="#web-user-interface" id="id34">Web User Interface</a></p></li>
+<li><p><a class="reference internal" href="#firmware-upgrade" id="id35">Firmware Upgrade</a></p></li>
+<li><p><a class="reference internal" href="#additional-information" id="id36">Additional Information</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id37">References</a></p></li>
+</ul>
+</div>
 <section id="board-overview">
-<span id="sec-boardcon-em3566-board"></span><h2><span class="section-number">1.1 </span>Board Overview<a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<span id="sec-boardcon-em3566-board"></span><h2><a class="toc-backref" href="#id26"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
 <p>Boardcon EM3566 single board computer (<a class="reference internal" href="../../../../glossary.html#term-SBC"><span class="xref std std-term">SBC</span></a>) features 2 GiB memory
 (up to 8 GiB), ﻿comes with MIPI/LVDS, HDMI and eDP video out, and offers
 Gigabit Ethernet port, as well as M.2 socket which enables expansion with
@@ -132,28 +159,28 @@ for AI accelerator extend the reach of AI solutions. EM3566 supports
 microphone array input, with high dynamic noise reduction algorithm,
 it can accurately recognize human voices even in noisy environments,
 and achieve precise voice control of the devices.</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id16">
 <span id="fig-boardcon-em3566-angle"></span><a class="with-border reference internal image-reference" href="../../../../_images/boardcon-em3566-angle.jpeg"><img alt="../../../../_images/boardcon-em3566-angle.jpeg" class="with-border" src="../../../../_images/boardcon-em3566-angle.jpeg" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Boardcon EM3566 front with an angle view</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.15 </span><span class="caption-text">Boardcon EM3566 front with an angle view</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id17">
 <span id="fig-boardcon-em3566-top"></span><a class="with-border reference internal image-reference" href="../../../../_images/boardcon-em3566-top.jpeg"><img alt="../../../../_images/boardcon-em3566-top.jpeg" class="with-border" src="../../../../_images/boardcon-em3566-top.jpeg" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.2 </span><span class="caption-text">Boardcon EM3566 top view</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.16 </span><span class="caption-text">Boardcon EM3566 top view</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id18">
 <span id="fig-boardcon-em3566-back"></span><a class="with-border reference internal image-reference" href="../../../../_images/boardcon-em3566-back.jpeg"><img alt="../../../../_images/boardcon-em3566-back.jpeg" class="with-border" src="../../../../_images/boardcon-em3566-back.jpeg" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.3 </span><span class="caption-text">Boardcon EM3566 back view</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.17 </span><span class="caption-text">Boardcon EM3566 back view</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<section id="features">
-<h3><span class="section-number">1.1.1 </span>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h3>
-<table class="docutils align-default" id="id5">
-<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">Boardcon EM3566 Features</span><a class="headerlink" href="#id5" title="Permalink to this table"></a></caption>
+<section id="specification">
+<h3><span class="section-number">1.1.1 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-number">Table 1.9 </span><span class="caption-text">Boardcon EM3566 Specification</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 85%" />
@@ -276,183 +303,163 @@ Features</p></td>
 </table>
 </section>
 </section>
-<section id="supported-build-targets">
-<span id="sec-boardcon-em3566-targets"></span><h2><span class="section-number">1.2 </span>Supported Build Targets<a class="headerlink" href="#supported-build-targets" title="Permalink to this heading"></a></h2>
-<span id="table-boardcon-em3566-supported-targets"></span><table class="docutils align-default" id="id6">
-<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">Supported Build Targets</span><a class="headerlink" href="#id6" title="Permalink to this table"></a></caption>
+<section id="build-targets">
+<span id="sec-boardcon-em3566-targets"></span><h2><a class="toc-backref" href="#id27"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<section id="machines">
+<span id="sec-boardcon-em3566-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
+<span id="table-boardcon-em3566-machines"></span><table class="docutils align-default" id="id20">
+<caption><span class="caption-number">Table 1.10 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 26%" />
-<col style="width: 24%" />
-<col style="width: 20%" />
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 16%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Target</p></th>
-<th class="head"><p>Machine</p></th>
-<th class="head"><p>Running Media</p></th>
-<th class="head"><p>Installation Media</p></th>
+<tr class="row-odd"><th class="head"><p>Board <a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<th class="head"><p>Target YAML <a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine <a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s) <a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media <a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media <a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code></p></td>
+<tr class="row-even"><td rowspan="2"><p>Boardcon EM3566</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
 <td><p>microSD card</p></td>
 <td><p>–</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu-factory</span></code></p></td>
 <td><p>internal eMMC</p></td>
 <td><p>microSD card</p></td>
 </tr>
 </tbody>
 </table>
-<p>Short explanations for the table columns:</p>
-<ul class="simple">
-<li><p>Target: target YML-file located in <code class="docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p></li>
-<li><p>Machine: target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable.</p></li>
-<li><p>Running Media: external or internal data storage where the TanoWrt operating system is running.</p></li>
-<li><p>Installation Media: external storage device for which an installation image is generated. When booting from
-the Installation Media, the TanoWrt system is installed on the Running Media storage.</p></li>
-<li><p>Root Filesystem Image: root file system image recipe name (see <a class="reference internal" href="#sec-boardcon-em3566-images"><span class="std std-ref">Supported Images</span></a> to see supported images).</p></li>
-</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Target board.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-boardcon-em3566-images"><span class="std std-numref">Section 1.2.2</span></a>,
+you can find list of supported recipes for the target images, which you can build in addition
+to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
+(see <a class="reference internal" href="#sec-boardcon-em3566-build"><span class="std std-numref">Section 1.3</span></a>).</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd><p>External storage device for which an installation image is generated. When booting from
+the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
+</dd>
+</dl>
 </section>
-<section id="supported-images">
-<span id="sec-boardcon-em3566-images"></span><h2><span class="section-number">1.3 </span>Supported Images<a class="headerlink" href="#supported-images" title="Permalink to this heading"></a></h2>
-<p>Supported root filesystem images are listed in the Table
-<a class="reference internal" href="#table-boardcon-em3566-supported-images"><span class="std std-ref">Supported Images</span></a>.</p>
-<span id="table-boardcon-em3566-supported-images"></span><table class="docutils align-default" id="id7">
-<caption><span class="caption-number">Table 1.3 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id7" title="Permalink to this table"></a></caption>
+<section id="images">
+<span id="sec-boardcon-em3566-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
+<span id="table-boardcon-em3566-images"></span><table class="colwidths-given docutils align-default" id="id21">
+<caption><span class="caption-number">Table 1.11 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 43%" />
-<col style="width: 27%" />
-<col style="width: 30%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Image Recipe (<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;</span></code>)</p></th>
-<th class="head"><p>Supported Target(s)</p></th>
+<tr class="row-odd"><th class="head"><p>Recipe <a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<th class="head"><p>Supported by Target(s)</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
 <td><p><em>All</em></p></td>
-<td><p>Standard TanoWrt image</p></td>
+<td><p>Standard TanoWrt image.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-minimal</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
 <td><p><em>All</em></p></td>
-<td><p>Minimal TanoWrt image</p></td>
+<td><p>Standard TanoWrt image
+and <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">firmware upgrade</span></a>
+image. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code> will also be built
+as dependency.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu-factory</span></code></p></td>
+<td><p>Only
+<code class="docutils literal notranslate"><span class="pre">boardcon-em566-emmc.yml</span></code></p></td>
+<td><p>Standard TanoWrt image
+and <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">firmware upgrade</span></a>
+image.
+When building this image, <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code>
+and <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code> will also be built
+as dependencies.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
+<dd><p>Image recipe name. This name can be used as argument
+for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-boardcon-em3566-build"><span class="std std-numref">Section 1.3</span></a> section).</p>
+</dd>
+</dl>
+</section>
 </section>
 <section id="build">
-<span id="sec-boardcon-em3566-build"></span><h2><span class="section-number">1.4 </span>Build<a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
-<section id="install-required-packages">
-<h3><span class="section-number">1.4.1 </span>Install Required Packages<a class="headerlink" href="#install-required-packages" title="Permalink to this heading"></a></h3>
-<p>For a successful build, additional packages must be installed.
-To do this, run the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib <span class="se">\</span>
-       build-essential chrpath socat cpio python python3 python3-pip python3-pexpect <span class="se">\</span>
-       xz-utils debianutils iputils-ping file
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you are using Ubuntu, you will need to configure the default system shell
-command interpreter for shell scripts to bash. You can do it with the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo dpkg-reconfigure dash
-</pre></div>
-</div>
-<p>Select <cite>No</cite> when it asks you to install dash as <cite>/bin/sh</cite>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The recommended Linux distribution on host system
-is Ubuntu 20.04 or higher.</p>
-</div>
-</section>
-<section id="install-kas">
-<h3><span class="section-number">1.4.2 </span>Install kas<a class="headerlink" href="#install-kas" title="Permalink to this heading"></a></h3>
-<p>To install kas into your python site-package repository, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3 install <span class="nv">kas</span><span class="o">==</span><span class="m">2</span>.6.3
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Required kas version 2.6.3.</p>
-</div>
-<p>See <a class="reference external" href="https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation">official kas documentation</a> for more details</p>
-</section>
-<section id="clone-tanowrt-repository">
-<h3><span class="section-number">1.4.3 </span>Clone TanoWrt Repository<a class="headerlink" href="#clone-tanowrt-repository" title="Permalink to this heading"></a></h3>
-<p>Clone TanoWrt core layer repository to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~
-<span class="gp">$ </span>git clone https://github.com/tano-systems/meta-tanowrt tanowrt
-</pre></div>
-</div>
-</section>
-<section id="initialize-and-update-submodules">
-<h3><span class="section-number">1.4.4 </span>Initialize and Update Submodules<a class="headerlink" href="#initialize-and-update-submodules" title="Permalink to this heading"></a></h3>
-<p>When using the kas utility, it is required to have BitBake at the root
-of the meta-tanowrt layer. The BitBake submodule must be initialized
-and updated before building:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~/tanowrt
-<span class="gp">$ </span>git submodule update --init
-</pre></div>
-</div>
-</section>
-<section id="build-tanowrt">
-<h3><span class="section-number">1.4.5 </span>Build TanoWrt<a class="headerlink" href="#build-tanowrt" title="Permalink to this heading"></a></h3>
-<p>To build TanoWrt images, you have to run the <code class="docutils literal notranslate"><span class="pre">kas</span> <span class="pre">build</span></code> command with the
-path to the target YML-file as an argument.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span><span class="nb">cd</span> ~/tanowrt
-<span class="gp"># </span>kas build kas/targets/&lt;target-yml-file&gt;
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>If you see <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">'kas'</span> <span class="pre">not</span> <span class="pre">found</span></code> just add <code class="docutils literal notranslate"><span class="pre">~/.local/bin</span></code> to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>,
-for example by adding the following line to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export PATH=&quot;$HOME/.local/bin:$PATH&quot;</span>
-</pre></div>
-</div>
-<p>After that, restart your shell and things should work as expected.</p>
-</div>
-<p>By default, unless otherwise specified, a root file system image specified
-in the target configuration is built. The default root filesystem image
-recipe name for each supported target can be found in Table
-<a class="reference internal" href="#table-boardcon-em3566-supported-targets"><span class="std std-ref">Supported Build Targets</span></a> (Root Filesystem Image column).
-If you need to build a different image for the target, the following build
-command should be used:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build --target &lt;image-recipe&gt; kas/targets/&lt;target-yml-file&gt;
-</pre></div>
-</div>
+<span id="sec-boardcon-em3566-build"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<p>Please read the common information on how to perform a TanoWrt
+images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p>See <a class="reference internal" href="#sec-boardcon-em3566-targets"><span class="std std-ref">Supported Build Targets</span></a> section to select the required target file.</p></li>
-<li><p>See <a class="reference internal" href="#sec-boardcon-em3566-images"><span class="std std-ref">Supported Images</span></a> section to select the required root filesystem image recipe.</p></li>
-<li><p>See <a class="reference internal" href="#sec-boardcon-em3566-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> section for detailed information
+<li><p>See section <a class="reference internal" href="#sec-boardcon-em3566-machines"><span class="std std-numref">Section 1.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-boardcon-em3566-images"><span class="std std-numref">Section 1.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-boardcon-em3566-artifacts"><span class="std std-numref">Section 1.4</span></a> for detailed information
 about the produced build artifacts.</p></li>
 </ul>
 </div>
+<section id="examples">
+<h3><span class="section-number">1.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<section id="build-default-images-for-boardcon-em3566-board">
+<h4><span class="section-number">1.3.1.1 </span>Build Default Images for Boardcon EM3566 Board<a class="headerlink" href="#build-default-images-for-boardcon-em3566-board" title="Permalink to this heading"></a></h4>
+<p class="rubric">For microSD Card</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/boardcon-em3566-sd.yml
+</pre></div>
+</div>
+<p>Default images will be produced to boot and run from the microSD
+card on the Boardcon EM3566 target board.</p>
+<p class="rubric">For Internal eMMC Flash</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/boardcon-em3566-emmc.yml
+</pre></div>
+</div>
+<p>An initial factory installation image will be generated,
+intended to run from the microSD card. The installer image
+will install the default image to the internal eMMC flash
+memory and further the Boardcon EM3566 board will boot
+and run from the eMMC flash memory.</p>
+</section>
 </section>
 </section>
 <section id="produced-build-artifacts">
-<span id="sec-boardcon-em3566-artifacts"></span><h2><span class="section-number">1.5 </span>Produced Build Artifacts<a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
-<p>All produced build artifacts are stored in the <code class="docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path is replaced by the actual value of the
-<code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen <a class="reference internal" href="#sec-boardcon-em3566-targets">target</a>.</p>
-</div>
-<p>Refer to table <a class="reference internal" href="#table-boardcon-em3566-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
-<span id="table-boardcon-em3566-artifacts"></span><table class="docutils align-default" id="id8">
-<caption><span class="caption-number">Table 1.4 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id8" title="Permalink to this table"></a></caption>
+<span id="sec-boardcon-em3566-artifacts"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.4 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
+Refer to table <a class="reference internal" href="#table-boardcon-em3566-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
+<span id="table-boardcon-em3566-artifacts"></span><table class="colwidths-given docutils align-default" id="id22">
+<caption><span class="caption-number">Table 1.12 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 38%" />
-<col style="width: 21%" />
-<col style="width: 42%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 68%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Artifact</p></th>
@@ -461,76 +468,96 @@ about the produced build artifacts.</p></li>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">startup-&lt;MACHINE&gt;.img</span></code></p></td>
-<td><p><em>All</em></p></td>
-<td><p>U-Boot startup script.</p></td>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Bootloader</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">startup-factory-&lt;MACHINE&gt;.img</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
-<td><p>U-Boot startup script for factory installation image.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">idblock.img-&lt;MACHINE&gt;-sdcard</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">idblock.img-&lt;MACHINE&gt;-sdcard</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Rockchip IDBLOCK image for booting from SD card.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">idblock.img-&lt;MACHINE&gt;-emmc</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">idblock.img-&lt;MACHINE&gt;-emmc</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
 <td><p>Rockchip IDBLOCK image for booting from internal eMMC.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-sdcard</span></code></p></td>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Bootloader (U-Boot)</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">startup-&lt;MACHINE&gt;.img</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot startup script.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">startup-factory-&lt;MACHINE&gt;.img</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
+<td><p>U-Boot startup script for factory installation image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-sdcard</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>U-Boot initial environment image for SD card image.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-emmc</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-emmc</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
-<td><p>U-Boot initial environment image for internal eMMC image.</p></td>
+<td><p>U-Boot initial environment image for internal eMMC flash.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.bin</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-&lt;MACHINE&gt;.bin-sdcard</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot binary image for booting from SD card.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-&lt;MACHINE&gt;.bin-emmc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
+<td><p>U-Boot binary image for booting from internal eMMC flash.</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Linux Kernel and DTB</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.bin</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Flattened Image Tree (FIT) image with Linux kernel
 and Device Tree Blobs (DTB).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.ext4</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.ext4</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>FIT image packed into an ext4 file system image.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rk3308-boardcon-em3566-&lt;MACHINE&gt;.dtb</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">boardcon-em3566-&lt;MACHINE&gt;.dtb</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Target Device Tree Blob (DTB).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Images</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code></p></td>
 <td><p>SD card image including all required partitions for booting
 and running the system. This image is ready to be written
-to the SD card using the dd utility or similar
-(see <a class="reference internal" href="#sec-boardcon-em3566-flash"><span class="std std-ref">Flash Images</span></a>).</p></td>
+to the SD card using the <strong class="command">dd</strong> utility or similar
+(see <a class="reference internal" href="#sec-boardcon-em3566-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code></p></td>
 <td><p>SD card factory installation image. This image is ready
-to be written to the SD card using the dd utility or similar
-(see <a class="reference internal" href="#sec-boardcon-em3566-flash"><span class="std std-ref">Flash Images</span></a>).</p></td>
+to be written to the SD card using the <strong class="command">dd</strong> utility
+or similar (see <a class="reference internal" href="#sec-boardcon-em3566-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Root filesystem image (squashfs with LZO compression).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
 <td><p><em>All</em></p></td>
-<td><p>SWUpdate image for updating system
-(see <a class="reference internal" href="#sec-boardcon-em3566-upgrade"><span class="std std-ref">Upgrade Running System</span></a>).</p></td>
+<td><p><a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware upgrade</span></a> image.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifact name is replaced by the actual value of the
-<code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen <a class="reference internal" href="#sec-boardcon-em3566-targets">target</a>.
-<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;</span></code> is replaced by the actual <a class="reference internal" href="#sec-boardcon-em3566-images">image recipe</a> name.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifact file names are replaced by
+the actual value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen
+<a class="reference internal" href="#sec-boardcon-em3566-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;</span></code> is replaced
+by the actual <a class="reference internal" href="#sec-boardcon-em3566-images">image recipe</a> name.</p>
 </div>
 <p>For example, below is the complete list of artifacts produced by the
 <code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code> target build.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3566-sd]$ </span>$ ls -gGh
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3566-sd]$ </span>ls -gGh
 <span class="go">total 311M</span>
 <span class="go">-rw-r--r-- 2 105K Jul 20 06:00 boardcon-em3566--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3566-sd-20220720025543.dtb</span>
 <span class="go">lrwxrwxrwx 2   97 Jul 20 06:00 boardcon-em3566-boardcon-em3566-sd.dtb -&gt; boardcon-em3566--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3566-sd-20220720025543.dtb</span>
@@ -580,45 +607,27 @@ to be written to the SD card using the dd utility or similar
 </pre></div>
 </div>
 </section>
-<section id="flash-images">
-<span id="sec-boardcon-em3566-flash"></span><h2><span class="section-number">1.6 </span>Flash Images<a class="headerlink" href="#flash-images" title="Permalink to this heading"></a></h2>
-<section id="flash-image-to-microsd-card">
-<span id="sec-boardcon-em3566-flash-sd"></span><h3><span class="section-number">1.6.1 </span>Flash Image to microSD Card<a class="headerlink" href="#flash-image-to-microsd-card" title="Permalink to this heading"></a></h3>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">dd</span></code> utility to write the generated <code class="docutils literal notranslate"><span class="pre">.sdcard.img</span></code> images to the SD card.
-This can be an SD card image intended for booting and running the system from
-an SD card (<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.sdcard.img</span></code>) or a factory installation
-image (<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>).
-See <a class="reference internal" href="#sec-boardcon-em3566-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for details.</p>
-<p>For example:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo dd <span class="k">if</span><span class="o">=</span>~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3566-sd/tanowrt-image-full-boardcon-em3566-sd.sdcard.img <span class="se">\</span>
-          <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1 <span class="se">\</span>
-          <span class="nv">bs</span><span class="o">=</span>1k
-</pre></div>
-</div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code> is the device name of the SD card.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>For writing SD card under Windows we recommend to use
-<a class="reference external" href="https://www.osforensics.com/tools/write-usb-images.html">PassMark imageUSB utility</a>.</p>
-</div>
+<section id="writing-images">
+<span id="sec-boardcon-em3566-flash"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.5 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<section id="writing-image-to-microsd-card">
+<span id="sec-boardcon-em3566-flash-sd"></span><h3><span class="section-number">1.5.1 </span>Writing Image to microSD Card<a class="headerlink" href="#writing-image-to-microsd-card" title="Permalink to this heading"></a></h3>
+<p>No special information about writing images to microSD card
+for Boardcon EM3566 board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing images to SD Card or USB Flash Drive</span></a> section.</p>
 </section>
-<section id="flash-image-to-emmc-flash">
-<span id="sec-boardcon-em3566-flash-emmc"></span><h3><span class="section-number">1.6.2 </span>Flash Image to eMMC Flash<a class="headerlink" href="#flash-image-to-emmc-flash" title="Permalink to this heading"></a></h3>
+<section id="writing-image-to-emmc-flash">
+<span id="sec-boardcon-em3566-flash-emmc"></span><h3><span class="section-number">1.5.2 </span>Writing Image to eMMC Flash<a class="headerlink" href="#writing-image-to-emmc-flash" title="Permalink to this heading"></a></h3>
 <p>For the initial flashing of the internal eMMC memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
-(see <a class="reference internal" href="#sec-boardcon-em3566-targets"><span class="std std-ref">Supported Build Targets</span></a> for details) that assumes using the
+(see <a class="reference internal" href="#sec-boardcon-em3566-targets"><span class="std std-ref">Build Targets</span></a> for details) that assumes using the
 factory installation image for the initial flashing of the
-device, a factory installation image (<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>)
+device, a factory installation image (<code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>)
 will be automatically generated during the build process
-(see <a class="reference internal" href="#sec-boardcon-em3566-build"><span class="std std-ref">Build</span></a>).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To write the factory installation image to an SD card, follow the instructions
-from <a class="reference internal" href="#sec-boardcon-em3566-flash-sd"><span class="std std-ref">Flash Image to microSD Card</span></a> section.</p>
-</div>
+(see <a class="reference internal" href="#sec-boardcon-em3566-build"><span class="std std-ref">Build</span></a>).
+To write the factory installation image to a SD card, follow the instructions
+from <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing images to SD Card or USB Flash Drive</span></a> section.</p>
 <p>When you boot device from the prepaired SD card with factory installation image the installation
 of TanoWrt to the internal eMMC flash memory will be done automatically. The detailed
-installation log is available on the debug UART. After the installation is complete,
+installation log is available on the <a class="reference internal" href="#sec-boardcon-em3566-serial"><span class="std std-ref">debug UART</span></a>. After the installation is complete,
 the board will reboots automatically. When the device is rebooted, the installed system
 will be booted from the internal eMMC flash memory.</p>
 <div class="admonition caution">
@@ -629,15 +638,16 @@ flash memory will be permanently lost.</p>
 </section>
 </section>
 <section id="booting-and-running">
-<span id="sec-boardcon-em3566-booting"></span><h2><span class="section-number">1.7 </span>Booting and Running<a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<span id="sec-boardcon-em3566-booting"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.6 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <section id="booting-from-sd-card">
-<h3><span class="section-number">1.7.1 </span>Booting from SD Card<a class="headerlink" href="#booting-from-sd-card" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">1.6.1 </span>Booting from SD Card<a class="headerlink" href="#booting-from-sd-card" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Insert the micro SD card to the board.</p></li>
 <li><p>Connect the power cable to the DC input connector.</p></li>
 <li><p>Boardcon EM3566 will boot.</p></li>
 <li><p>(Optional) Use a USB to TTL serial cable to make a connection between
 your PC and Boardcon EM3566. See <a class="reference internal" href="#sec-boardcon-em3566-serial"><span class="std std-ref">Serial Console</span></a> section for details.</p></li>
+<li><p>Log in to system using default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
 </ol>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
@@ -647,16 +657,17 @@ section for details about erasing internal eMMC flash.</p>
 </div>
 </section>
 <section id="booting-from-internal-emmc-flash">
-<h3><span class="section-number">1.7.2 </span>Booting from Internal eMMC Flash<a class="headerlink" href="#booting-from-internal-emmc-flash" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">1.6.2 </span>Booting from Internal eMMC Flash<a class="headerlink" href="#booting-from-internal-emmc-flash" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Connect the power cable to the DC input connector.</p></li>
 <li><p>Boardcon EM3566 will boot.</p></li>
 <li><p>(Optional) Use a USB to TTL serial cable to make a connection between
 your PC and Boardcon EM3566. See <a class="reference internal" href="#sec-boardcon-em3566-serial"><span class="std std-ref">Serial Console</span></a> section for details.</p></li>
+<li><p>Log in to system using default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
 </ol>
 </section>
 <section id="erasing-internal-emmc-flash">
-<span id="sec-boardcon-em3566-emmc-erase"></span><h3><span class="section-number">1.7.3 </span>Erasing Internal eMMC Flash<a class="headerlink" href="#erasing-internal-emmc-flash" title="Permalink to this heading"></a></h3>
+<span id="sec-boardcon-em3566-emmc-erase"></span><h3><span class="section-number">1.6.3 </span>Erasing Internal eMMC Flash<a class="headerlink" href="#erasing-internal-emmc-flash" title="Permalink to this heading"></a></h3>
 <p>You can erase the internal eMMC flash memory in the following ways:</p>
 <ul class="simple">
 <li><p>Linux command line;</p></li>
@@ -700,8 +711,8 @@ system boot log by running the command dmesg. For example:</p>
 <span class="go">[    9.170150] EXT4-fs (mmcblk1p6): mounted filesystem with ordered data mode. Opts: (null)</span>
 </pre></div>
 </div>
-<p>This output shows that device <code class="docutils literal notranslate"><span class="pre">/dev/mmcblk0</span></code> is eMMC flash
-memory and device <code class="docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code> is SD card.</p>
+<p>This output shows that device <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk0</span></code> is eMMC flash
+memory and device <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code> is SD card.</p>
 </div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p class="rubric">Erasing eMMC Using U-Boot Command Line</p>
 <p>If the device has a functional U-Boot bootloader, you can erase
 eMMC with the following commands entered at the U-Boot command line:</p>
@@ -717,7 +728,7 @@ eMMC with the following commands entered at the U-Boot command line:</p>
 <p>Please note that if the U-Boot bootloader on the eMMC flash memory
 is different from the one built as part of the TanoWrt distribution,
 the device number of the eMMC flash memory may be different from
-the one shown above. Use the <code class="docutils literal notranslate"><span class="pre">mmc</span> <span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">mmc</span> <span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">mmc</span> <span class="pre">info</span></code>
+the one shown above. Use the <strong class="command">mmc dev</strong>, <strong class="command">mmc list</strong> and <strong class="command">mmc info</strong>
 commands to identify the valid eMMC flash memory device number:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">=&gt; mmc dev 0</span>
 <span class="go">switch to partitions #0, OK</span>
@@ -746,14 +757,15 @@ commands to identify the valid eMMC flash memory device number:</p>
 <p>If the device fails to boot, e.g. due to a corrupted boot loader,
 the only way to erase the eMMC flash memory is to use a USB
 connection with a PC and use special utilities.</p>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id15">
 <p class="admonition-title">Todo</p>
 <p>Documentation is under development</p>
 </div>
 </div></div>
 </section>
+</section>
 <section id="serial-console">
-<span id="sec-boardcon-em3566-serial"></span><h3><span class="section-number">1.7.4 </span>Serial Console<a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h3>
+<span id="sec-boardcon-em3566-serial"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.7 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The default baudrate of Boardcon EM3566 with original firmware is 1500000 (1.5 Mbps),
@@ -808,10 +820,10 @@ firmware</em></p></td>
 </table>
 <p>See <a class="reference internal" href="#fig-boardcon-em3566-usb-to-ttl"><span class="std std-ref">USB to TTL Converter Connection to Boardcon EM3566</span></a> figure for example
 connection USB to TTL converter with Boardcon EM3566.</p>
-<figure class="align-default" id="id9">
+<figure class="align-default" id="id23">
 <span id="fig-boardcon-em3566-usb-to-ttl"></span><a class="with-border reference internal image-reference" href="../../../../_images/boardcon-em3566-usb-to-ttl.jpeg"><img alt="../../../../_images/boardcon-em3566-usb-to-ttl.jpeg" class="with-border" src="../../../../_images/boardcon-em3566-usb-to-ttl.jpeg" style="width: 600px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.4 </span><span class="caption-text">USB to TTL Converter Connection to Boardcon EM3566</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.18 </span><span class="caption-text">USB to TTL Converter Connection to Boardcon EM3566</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p class="rubric">Serial Setting on Host PC</p>
@@ -846,17 +858,8 @@ described in table below.</p>
 </tbody>
 </table>
 </section>
-<section id="access-credentials">
-<span id="sec-boardcon-em3566-access-credentials"></span><h3><span class="section-number">1.7.5 </span>Access Credentials<a class="headerlink" href="#access-credentials" title="Permalink to this heading"></a></h3>
-<p>The following credentials are used by default to access the system via
-CLI (Command Line Interface), SSH (Secure SHell) or/and WebUI (Web User Interface):</p>
-<ul class="simple">
-<li><p>Username: <code class="docutils literal notranslate"><span class="pre">root</span></code></p></li>
-<li><p>Password: <code class="docutils literal notranslate"><span class="pre">root</span></code></p></li>
-</ul>
-</section>
 <section id="default-network-configuration">
-<span id="sec-boardcon-em3566-network-config"></span><h3><span class="section-number">1.7.6 </span>Default Network Configuration<a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h3>
+<span id="sec-boardcon-em3566-network-config"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">1.8 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
 <p>By default Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface).
 Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured to obtain IP configuration via <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> client.
 To see obtained IP configuration use the following command:</p>
@@ -870,70 +873,42 @@ USB network interface configured with static IP address 192.168.128.1 with enabl
 <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server with pool with single IP address for client (your PC) 192.168.128.100.</p>
 <p>WiFi module and 3G/GPRS modules currently are not supported in TanoWrt.</p>
 </section>
-<section id="webui">
-<span id="sec-boardcon-em3566-webui"></span><h3><span class="section-number">1.7.7 </span>WebUI<a class="headerlink" href="#webui" title="Permalink to this heading"></a></h3>
+<section id="web-user-interface">
+<span id="sec-boardcon-em3566-webui"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.9 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
 <p>The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
 You must see something like this in browser after you logged in:</p>
-<figure class="align-default" id="id10">
-<span id="fig-boardcon-em3566-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/luci-login.png"><img alt="../../../../_images/luci-login.png" src="../../../../_images/luci-login.png" style="width: 900px;" /></a>
+<figure class="align-default" id="id24">
+<span id="fig-boardcon-em3566-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.5 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.19 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id11">
-<span id="fig-boardcon-em3566-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/luci-status.png"><img alt="../../../../_images/luci-status.png" src="../../../../_images/luci-status.png" style="width: 900px;" /></a>
+<figure class="align-default" id="id25">
+<span id="fig-boardcon-em3566-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/luci-status1.png"><img alt="../../../../_images/luci-status1.png" src="../../../../_images/luci-status1.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.6 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<section id="upgrade-running-system">
-<span id="sec-boardcon-em3566-upgrade"></span><h2><span class="section-number">1.8 </span>Upgrade Running System<a class="headerlink" href="#upgrade-running-system" title="Permalink to this heading"></a></h2>
-<p>You can upgrade the running system via CLI (Command Line Interface) or WebUI (Web User Interface).</p>
-<section id="cli-command-line-interface">
-<h3><span class="section-number">1.8.1 </span>CLI (Command Line Interface)<a class="headerlink" href="#cli-command-line-interface" title="Permalink to this heading"></a></h3>
-<p>Use the following commands to upgrade the firmware using the command line:</p>
-<ul>
-<li><p>Upgrade from a local file (e.g. on an SD card):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>swupdate-client /mnt/mmcblk1/&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu
-</pre></div>
-</div>
-</li>
-<li><p>Upgrade from a file hosted on a remote HTTP server:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>wget -O- http://remote.server.com/path/to/&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu <span class="p">|</span> swupdate-client
-</pre></div>
-</div>
-</li>
-</ul>
-</section>
-<section id="webui-web-user-interface">
-<h3><span class="section-number">1.8.2 </span>WebUI (Web User Interface)<a class="headerlink" href="#webui-web-user-interface" title="Permalink to this heading"></a></h3>
-<p>To upgrade the firmware using the web interface,
-choose <span class="menuselection">System ‣ Firmware Upgrade</span> in the main menu.
-Next, follow the instructions on the page.</p>
-<figure class="align-default" id="id12">
-<span id="fig-boardcon-em3566-luci-swupdate"></span><a class="reference internal image-reference" href="../../../../_images/luci-swupdate.png"><img alt="../../../../_images/luci-swupdate.png" src="../../../../_images/luci-swupdate.png" style="width: 900px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 1.7 </span><span class="caption-text">LuCI WebUI Firmware Upgrade Page</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.20 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
+<section id="firmware-upgrade">
+<span id="sec-boardcon-em3566-upgrade"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.10 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<p>No special information about firmware upgrade.
+See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
 </section>
 <section id="additional-information">
-<h2><span class="section-number">1.9 </span>Additional Information<a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id36"><span class="section-number">1.11 </span>Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
 <p>Here are sections with various additional information about the
 Boardcon EM3566  board and the operation of TanoWrt on it.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bootlog-u-boot.html">1.9.1 Boardcon EM3566 U-Boot Boot Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bootlog-kernel.html">1.9.2 Boardcon EM3566 Linux Boot Log (dmesg)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="factory-installation-to-emmc.html">1.9.3 Boardcon EM3566 Factory Installation to eMMC Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootlog-u-boot.html">1.11.1 Boardcon EM3566 U-Boot Boot Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootlog-kernel.html">1.11.2 Boardcon EM3566 Linux Boot Log (dmesg)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factory-installation-to-emmc.html">1.11.3 Boardcon EM3566 Factory Installation to eMMC Log</a></li>
 </ul>
 </div>
 </section>
 <section id="references">
-<h2><span class="section-number">1.10 </span>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id37"><span class="section-number">1.12 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="http://www.armdesigner.com/EM3566_SBC/">http://www.armdesigner.com/EM3566_SBC/</a></p></li>
 </ol>
@@ -947,7 +922,7 @@ Boardcon EM3566  board and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 22.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
     </p>
   </div>
 </footer>

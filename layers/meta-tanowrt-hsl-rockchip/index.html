@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1 Boardcon EM3566 SBC" href="boards/boardcon-em3566/index.html" />
-    <link rel="prev" title="Building TanoWrt with kas" href="../../build-kas.html" /> 
+    <link rel="prev" title="1 NXP LS1028A RDB" href="../meta-tanowrt-hsl-nxp/boards/ls1028ardb/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,14 +45,22 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt/index.html">TanoWrt Core Layer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../build-kas.html">Building TanoWrt with kas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt/index.html">meta-tanowrt</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Rockchip SoC's</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">meta-tanowrt-hsl-rockchip</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements-and-dependencies">Requirements and Dependencies</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
@@ -107,19 +115,33 @@
 <span id="meta-tanowrt-hsl-rockchip"></span><h1>Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)<a class="headerlink" href="#rockchip-soc-s-hardware-support-layer-meta-tanowrt-hsl-rockchip" title="Permalink to this heading"></a></h1>
 <p>meta-tanowrt-hsl-rockchip — <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt">TanoWrt</a> hardware support
 layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span class="xref std std-term">HSL</span></a>) for the Fuzhou Rockchip Electronics SoC based boards.</p>
-<a class="reference internal image-reference" href="../../_images/rockchip-logo.png"><img alt="../../_images/rockchip-logo.png" src="../../_images/rockchip-logo.png" style="height: 120px;" /></a>
+<a class="reference internal image-reference" href="../../_images/rockchip.png"><img alt="../../_images/rockchip.png" src="../../_images/rockchip.png" style="height: 120px;" /></a>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#requirements-and-dependencies" id="id4">Requirements and Dependencies</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dependencies" id="id5">Dependencies</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#supported-boards" id="id6">Supported Boards</a></p></li>
+<li><p><a class="reference internal" href="#license" id="id7">License</a></p></li>
+<li><p><a class="reference internal" href="#maintainers" id="id8">Maintainers</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id9">References</a></p></li>
+</ul>
+</div>
 <section id="requirements-and-dependencies">
-<h2>Requirements and Dependencies<a class="headerlink" href="#requirements-and-dependencies" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Requirements and Dependencies</a><a class="headerlink" href="#requirements-and-dependencies" title="Permalink to this heading"></a></h2>
 <section id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
 <p>Dependencies of the <a class="reference internal" href="#meta-tanowrt-hsl-rockchip"><span class="std std-ref">meta-tanowrt-hsl-rockchip</span></a> layer are described in the table below.</p>
-<table class="docutils align-default">
+<table class="colwidths-given docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
@@ -147,57 +169,69 @@ layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span c
 </section>
 </section>
 <section id="supported-boards">
-<h2>Supported Boards<a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6">Supported Boards</a><a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
 <p>TanoWrt has demonstration support for some devices and development boards based on Rockchip SoC’s.
 All supported devices are listed in the table below.</p>
-<span id="table-hsl-rockchip-supported-boards"></span><table class="docutils align-default" id="id3">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Boards</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<table class="colwidths-given docutils align-default" id="id3" style="width: 100%">
+<caption><span class="caption-number">Table 13 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 31%" />
-<col style="width: 33%" />
-<col style="width: 16%" />
-<col style="width: 21%" />
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Board</p></th>
 <th class="head"><p>SoC</p></th>
 <th class="head"><p>RAM</p></th>
 <th class="head"><p>Supported Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="boards/boardcon-em3566/index.html#device-boardcon-em3566"><span class="std std-ref">Boardcon EM3566 SBC</span></a></p></td>
-<td><p>Rockchip RK3566
-Quad Cortex-A55 ARM 64 bits processor,
-up to 1.8 GHz</p></td>
-<td><p>2 GiB LPDDR4</p></td>
-<td><div class="line-block">
-<div class="line">microSD</div>
-<div class="line">8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id1">1</a></div>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/boardcon-em3566/index.html#machine-boardcon-em3566"><span class="std std-ref">Boardcon EM3566 SBC</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3566</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A55 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.8 GHz</div>
 </div>
 </td>
+<td rowspan="2"><p>2 GiB LPDDR4</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3566-sd.yml">boardcon-em3566-sd.yml</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="boards/boardcon-em3568/index.html#device-boardcon-em3568"><span class="std std-ref">Boardcon EM3568 SBC</span></a></p></td>
-<td><p>Rockchip RK3568
-Quad Cortex-A55 ARM 64 bits processor,
-up to 2.0 GHz</p></td>
-<td><p>2 GiB LPDDR4</p></td>
-<td><div class="line-block">
-<div class="line">microSD</div>
-<div class="line">8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id2">1</a></div>
-</div>
-</td>
+<tr class="row-odd"><td><p>8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id1">1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3566-emmc.yml">boardcon-em3566-emmc.yml</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="boards/rock-pi-s/index.html#device-rock-pi-s"><span class="std std-ref">Radxa ROCK Pi S</span></a></p></td>
-<td><p>Rockchip RK3308
-Quad Cortex-A35 ARM 64 bits processor,
-up to 1.3 GHz</p></td>
-<td><p>up to 512 MiB DDR3</p></td>
-<td><div class="line-block">
-<div class="line">microSD</div>
-<div class="line">SD NAND up to 8 GB</div>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/boardcon-em3568/index.html#machine-boardcon-em3568"><span class="std std-ref">Boardcon EM3568 SBC</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3568</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A55 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.8 GHz</div>
 </div>
 </td>
+<td rowspan="2"><p>2 GiB LPDDR4</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3568-sd.yml">boardcon-em3568-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>8 GB eMMC <a class="footnote-reference brackets" href="#emmc-size" id="id2">1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3568-emmc.yml">boardcon-em3568-emmc.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/rock-pi-s/index.html#machine-rock-pi-s"><span class="std std-ref">Radxa ROCK Pi S</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Rockchip RK3308</div>
+<div class="line"><strong>Cores:</strong> 4 x Cortex-A35 ARM 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td rowspan="2"><p>up to 512 MiB DDR3</p></td>
+<td><p>microSD</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rock-pi-s-sd.yml">rock-pi-s-sd.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD NAND up to 8 GB</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rock-pi-s-sdnand.yml">rock-pi-s-sdnand.yml</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -210,17 +244,17 @@ up to 1.3 GHz</p></td>
 </div>
 </section>
 <section id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">License</a><a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
 <p>All metadata is MIT licensed unless otherwise stated.
 Source code included in tree for individual recipes is under the
-LICENSE stated in each recipe (<code class="docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
+LICENSE stated in each recipe (<code class="file docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
 </section>
 <section id="maintainers">
-<h2>Maintainers<a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Maintainers</a><a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
 <p>Anton Kikin &lt;<a class="reference external" href="mailto:a&#46;kikin&#37;&#52;&#48;tano-systems&#46;com">a<span>&#46;</span>kikin<span>&#64;</span>tano-systems<span>&#46;</span>com</a>&gt;</p>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="http://www.rock-chips.com/a/en/index.html">Fuzhou Rockchip Electronics official site</a></p></li>
 </ol>
@@ -234,7 +268,7 @@ LICENSE stated in each recipe (<code class="docutils literal notranslate"><span 
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 22.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
     </p>
   </div>
 </footer>
