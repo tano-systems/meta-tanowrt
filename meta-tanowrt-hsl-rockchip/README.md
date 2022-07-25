@@ -6,7 +6,7 @@
 
 ## 1 Documentation
 
-You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-rockchip/index.html).
+You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-rockchip).
 
 ## 2 License
 

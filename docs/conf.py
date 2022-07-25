@@ -47,6 +47,7 @@ extensions = [
 	'sphinx_tabs.tabs',
 	'sphinx.ext.intersphinx',
 	'sphinxcontrib.mermaid',
+	'sphinx_design',
 	'yocto-vars',
 ]
 
@@ -89,7 +90,9 @@ html_theme = "sphinx_rtd_theme"
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'navigation_depth': 5,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -225,7 +228,12 @@ latex_show_urls = 'footnote'
 # Hide 'Created using Sphinx' text
 html_show_sphinx = False
 
-# create substitution for project configuration variables
+rst_prolog = """
+.. include:: <s5defs.txt>
+.. include:: <xhtml1-lat1.txt>
+.. include:: <xhtml1-special.txt>
+
+"""
 ##rst_prolog = """
 ##.. |project_name| replace:: %s
 ##.. |copyright| replace:: %s
@@ -241,3 +249,40 @@ html_use_index = True
 extlinks = {
     'tanowrt_github_blob': ('https://github.com/tano-systems/meta-tanowrt/blob/master%s', None),
 }
+
+# From https://stackoverflow.com/questions/32773139/how-can-i-configure-the-separator-character-used-for-menuselection
+from docutils import nodes, utils
+from sphinx.roles import _amp_re
+
+def patched_menusel_role(typ, rawtext, text, lineno, inliner, options={}, content=[]):
+    text = utils.unescape(text)
+    if typ == 'menuselection':
+        text = text.replace('-->', u'\N{RIGHTWARDS ARROW}')  # Here is the patch 
+    spans = _amp_re.split(text)  
+
+    node = nodes.emphasis(rawtext=rawtext)
+    for i, span in enumerate(spans):
+        span = span.replace('&&', '&')
+        if i == 0:
+            if len(span) > 0:
+                textnode = nodes.Text(span)
+                node += textnode
+            continue
+        accel_node = nodes.inline()
+        letter_node = nodes.Text(span[0])
+        accel_node += letter_node
+        accel_node['classes'].append('accelerator')
+        node += accel_node
+        textnode = nodes.Text(span[1:])
+        node += textnode
+
+    node['classes'].append(typ)
+    return [node], []
+
+def setup(sphinx):
+    import sys
+    import os
+    from docutils.parsers.rst import roles
+
+    # Use 'patched_menusel_role' function for processing the 'menuselection' role
+    roles.register_local_role("menuselection", patched_menusel_role)

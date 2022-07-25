@@ -4,7 +4,7 @@
 Overview
 ========
 
-.. todo:: Under development
+.. todo:: Add content
 
 .. rubric:: Contents
 .. contents::
@@ -29,8 +29,6 @@ Source Code
 TanoWrt is an open source project. TanoWrt source code is available
 on `GitHub <https://github.com/tano-systems/meta-tanowrt>`__.
 
-.. todo:: Add content
-
 
 .. _sec-license:
 
@@ -41,18 +39,21 @@ All metadata in TanoWrt repositories is :tanowrt_github_blob:`MIT licensed </LIC
 unless otherwise stated. Source code included in tree for individual recipes is under the
 ``LICENSE`` stated in each recipe (:file:`.bb` file) unless otherwise stated.
 
-.. image:: /common/images/logos/mit-license.png
+.. figure:: /common/images/logos/mit-license.png
    :width: 150
 
 
 .. _sec-supported-targets:
 
-Supported Targets
-=================
+Demonstration Boards Support
+============================
 
-Target YAML-files are located in :file:`kas/targets` subfolder of the
-``meta-tanowrt`` repository. Available target files listed in the subsections below
-and grouped by support layers.
+TanoWrt has demonstration support for some devices and development boards.
+All supported boards are listed in the subsections below and grouped by support layers.
+
+.. note:: Target YAML-files for each supported board are located
+          in :file:`kas/targets` subfolder of the ``meta-tanowrt``
+          repository.
 
 
 Virtual Machines
@@ -71,7 +72,7 @@ Intel CPU Based Machines
 .. include:: /layers/meta-tanowrt-hsl-intel/.layer-boards-table.rst.inc
 
 
-Microchip/Atmel SoC's
+Microchip (Atmel) SoC
 ---------------------
 
 **Hardware Support Layer:** :ref:`meta-tanowrt-hsl-atmel`
@@ -79,15 +80,47 @@ Microchip/Atmel SoC's
 .. include:: /layers/meta-tanowrt-hsl-atmel/.layer-boards-table.rst.inc
 
 
-Baikal Electronics SoC's
-------------------------
+Baikal Electronics SoC
+----------------------
 
 **Hardware Support Layer:** :ref:`meta-tanowrt-hsl-baikal`
 
 .. include:: /layers/meta-tanowrt-hsl-baikal/.layer-boards-table.rst.inc
 
 
-NXP/Freescale SoC's
+Broadcom SoC
+------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-brcm`
+
+.. include:: /layers/meta-tanowrt-hsl-brcm/.layer-boards-table.rst.inc
+
+
+Elvees SoC
+----------------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-elvees`
+
+.. include:: /layers/meta-tanowrt-hsl-elvees/.layer-boards-table.rst.inc
+
+
+Marvell SoC
+-----------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-marvell`
+
+.. include:: /layers/meta-tanowrt-hsl-marvell/.layer-boards-table.rst.inc
+
+
+MediaTek SoC
+------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-mtk`
+
+.. include:: /layers/meta-tanowrt-hsl-mtk/.layer-boards-table.rst.inc
+
+
+NXP (Freescale) SoC
 -------------------
 
 **Hardware Support Layer:** :ref:`meta-tanowrt-hsl-nxp`
@@ -95,8 +128,16 @@ NXP/Freescale SoC's
 .. include:: /layers/meta-tanowrt-hsl-nxp/.layer-boards-table.rst.inc
 
 
-Fuzhou Rockchip Electronics.SoC's
----------------------------------
+Quectel LTE Modules
+-----------------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-quectel`
+
+.. include:: /layers/meta-tanowrt-hsl-quectel/.layer-boards-table.rst.inc
+
+
+Fuzhou Rockchip Electronics.SoC
+-------------------------------
 
 **Hardware Support Layer:** :ref:`meta-tanowrt-hsl-rockchip`
 
@@ -119,12 +160,28 @@ Sierra Wireless LTE Modules
 .. include:: /layers/meta-tanowrt-hsl-swi/.layer-boards-table.rst.inc
 
 
-Texas Instruments SoC's
------------------------
+STMicroelectronics SoC
+----------------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-stm`
+
+.. include:: /layers/meta-tanowrt-hsl-stm/.layer-boards-table.rst.inc
+
+
+Texas Instruments SoC
+---------------------
 
 **Hardware Support Layer:** :ref:`meta-tanowrt-hsl-ti`
 
 .. include:: /layers/meta-tanowrt-hsl-ti/.layer-boards-table.rst.inc
+
+
+Xilinx FPGA
+-----------------------
+
+**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-xilinx`
+
+.. include:: /layers/meta-tanowrt-hsl-xilinx/.layer-boards-table.rst.inc
 
 
 .. _sec-access-creds:

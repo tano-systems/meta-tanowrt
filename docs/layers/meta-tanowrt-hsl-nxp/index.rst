@@ -1,30 +1,30 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
 .. _meta-tanowrt-hsl-nxp:
 
-===========================================================
-NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)
-===========================================================
+=============================================================
+NXP (Freescale) Hardware Support Layer (meta-tanowrt-hsl-nxp)
+=============================================================
 
 meta-tanowrt-hsl-nxp |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the NXP (Freescale) SoC based boards.
 
-.. image:: /common/images/logos/nxp.svg
-   :width: 300
+.. container:: flex
+
+   .. figure:: /common/images/logos/nxp.svg
+      :width: 250
+
+   .. figure:: /common/images/logos/freescale.png
+      :width: 300
+
 
 .. rubric:: Contents
 .. contents::
    :depth: 2
    :local:
 
-Requirements and Dependencies
-=============================
-
 Dependencies
-------------
+============
 
 Dependencies of the :ref:`meta-tanowrt-hsl-nxp <meta-tanowrt-hsl-nxp>` layer are described in the table below.
 
@@ -53,7 +53,7 @@ Dependencies of the :ref:`meta-tanowrt-hsl-nxp <meta-tanowrt-hsl-nxp>` layer are
 Supported Boards
 ================
 
-TanoWrt has demonstration support for some devices and development boards based on NXP SoC's.
+TanoWrt has demonstration support for some devices and development boards based on NXP (Freescale) SoC's.
 All supported devices are listed in the table below.
 
 .. include:: .layer-boards.rst.inc
@@ -73,4 +73,4 @@ Anton Kikin <a.kikin@tano-systems.com>
 References
 ==========
 
-1. `NXP official site <https://www.nxp.com/>`__
+1. `NXP Official Site <https://www.nxp.com/>`__

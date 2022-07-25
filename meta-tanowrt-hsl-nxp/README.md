@@ -2,11 +2,11 @@
 
 [TanoWrt](https://github.com/tano-systems/meta-tanowrt) hardware support layer for the NXP (Freescale) boards.
 
-<img src="../docs/common/images/logos/nxp.svg" height ="150px" />
+<img src="../docs/common/images/logos/nxp.svg" height="150px" />
 
 ## 1 Documentation
 
-You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-nxp/index.html).
+You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-nxp).
 
 ## 2 License
 

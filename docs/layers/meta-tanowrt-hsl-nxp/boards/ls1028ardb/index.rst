@@ -1,9 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
-
 .. _machine-ls1028ardb:
 
 ***************
@@ -25,22 +21,21 @@ The LS1028A reference design board (RDB) is a computing, evaluation,
 and development platform that supports industrial IoT applications,
 human machine interface solutions, and industrial networking.
 
-Interfaces and Connectors
--------------------------
-
 .. _fig-ls1028ardb-front:
 .. figure:: images/ls1028ardb-front.jpg
-    :width: 1000
-    :class: with-border
+   :width: 1000
+   :align: center
+   :class: with-border
 
-    NXP LS1028A RDB Front View
+   NXP LS1028A RDB Front View
 
 .. _fig-ls1028ardb-back:
 .. figure:: images/ls1028ardb-back.jpg
-    :width: 1000
-    :class: with-border
+   :width: 1000
+   :align: center
+   :class: with-border
 
-    NXP LS1028A RDB Back View
+   NXP LS1028A RDB Back View
 
 Photos
 ------
@@ -64,7 +59,7 @@ Specification
    | Processor    || Layerscape LS1028A                                                          |
    |              || Dual-core processor based on Cortex-A72 64 bits                             |
    |              || frequency up to 1.5 GHz                                                     |
-   |              |  ECC on internal L1, L2 caches for high-reliability applications             |
+   |              || ECC on internal L1, L2 caches for high-reliability applications             |
    +--------------+------------------------------------------------------------------------------+
    | Memory       || 4 GiB DDR4 SDRAM w/ECC                                                      |
    |              || 32-bit DDR4 bus at data rates up to 1600 MT/s                               |
@@ -106,13 +101,13 @@ Machines
 .. _table-ls1028ardb-machines:
 .. table:: Supported Machines
 
-   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
-   | Board [#]_      | Target YAML [#]_             | Machine [#]_             | Target Recipe(s) [#]_              | Running Media [#]_     | Installation Media [#]_ |
-   +=================+==============================+==========================+====================================+========================+=========================+
-   | NXP LS1028A RDB | ``ls1028ardb-sd.yml``        | ``ls1028ardb-sd``        | ``tanowrt-image-full-swu``         | SD card                | |ndash|                 |
-   |                 +------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
-   |                 | ``ls1028ardb-emmc.yml``      | ``ls1028ardb-emmc``      | ``tanowrt-image-full-swu-factory`` | internal eMMC          | SD card                 |
-   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   | Board\ [#]_     | Target YAML\ [#]_            | Machine\ [#]_            | Target Recipe(s)\ [#]_             | Running Media\ [#]_    | Installation Media\ [#]_ |
+   +=================+==============================+==========================+====================================+========================+==========================+
+   | NXP LS1028A RDB | ``ls1028ardb-sd.yml``        | ``ls1028ardb-sd``        | ``tanowrt-image-full-swu``         | SD card                | |ndash|                  |
+   |                 +------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   |                 | ``ls1028ardb-emmc.yml``      | ``ls1028ardb-emmc``      | ``tanowrt-image-full-swu-factory`` | internal eMMC          | SD card                  |
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
 
 .. [#] Target board.
 .. [#] Target YAML-file located in the :file:`kas/targets` directory.
@@ -133,37 +128,40 @@ Images
 
 .. _table-ls1028ardb-images:
 .. table:: Supported Images
-   :widths: 25, 25, 50
+   :widths: 15, 15, 15, 55
 
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | Recipe [#]_                        | Supported by Target(s)       | Description                                            |
-   +====================================+==============================+========================================================+
-   | ``tanowrt-image-full``             | *All*                        | Standard TanoWrt image.                                |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | ``tanowrt-image-full-swu``         | *All*                        | Standard TanoWrt image                                 |
-   |                                    |                              | and :ref:`firmware upgrade <sec-firmware-upgrade>`     |
-   |                                    |                              | image. When building this image,                       |
-   |                                    |                              | ``tanowrt-image-full`` will also be built              |
-   |                                    |                              | as dependency.                                         |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | ``tanowrt-image-full-swu-factory`` | Only ``ls1028ardb-emmc.yml`` | Factory installation image for standard TanoWrt image. |
-   |                                    |                              | When building this image, ``tanowrt-image-full`` and   |
-   |                                    |                              | ``tanowrt-image-full-swu`` will also be built          |
-   |                                    |                              | as dependencies.                                       |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | ``tanowrt-image-qt5``              | *All*                        | Standard TanoWrt image with Qt5 support.               |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | ``tanowrt-image-qt5-swu``          | *All*                        | Standard TanoWrt image with Qt5 support                |
-   |                                    |                              | and :ref:`firmware upgrade <sec-firmware-upgrade>`     |
-   |                                    |                              | image. When building this image,                       |
-   |                                    |                              | ``tanowrt-image-qt5`` will also be built               |
-   |                                    |                              | as dependency.                                         |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
-   | ``tanowrt-image-qt5-swu-factory``  | Only ``ls1028ardb-emmc.yml`` | Factory installation image for standard TanoWrt image  |
-   |                                    |                              | with Qt5 support. When building this image,            |
-   |                                    |                              | ``tanowrt-image-qt5`` and ``tanowrt-image-qt5-swu``    |
-   |                                    |                              | will also be built as dependencies.                    |
-   +------------------------------------+------------------------------+--------------------------------------------------------+
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
+   | Read-Only Root Filesystem | Recipe\ [#]_                       | Supported by Target(s)     | Description                                         |
+   | Image                     |                                    |                            |                                                     |
+   +===========================+====================================+============================+=====================================================+
+   | ``tanowrt-image-full``    | ``tanowrt-image-full``             | *All*                      | Standard TanoWrt image.                             |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu``         | *All*                      | Standard TanoWrt image                              |
+   |                           |                                    |                            | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                            | image. When building this image,                    |
+   |                           |                                    |                            | ``tanowrt-image-full`` will also be built           |
+   |                           |                                    |                            | as dependency.                                      |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu-factory`` | ``ls1028ardb-emmc.yml``    | Factory installation image for standard TanoWrt  .  |
+   |                           |                                    |                            | image. When building this image,                    |
+   |                           |                                    |                            | ``tanowrt-image-full``                              |
+   |                           |                                    |                            | and ``tanowrt-image-full-swu`` will also be built   |
+   |                           |                                    |                            | as dependencies.                                    |
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
+   | ``tanowrt-image-qt5``     | ``tanowrt-image-qt5``              | *All*                      | Standard TanoWrt image with Qt5 support.            |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-qt5-swu``          | *All*                      | Standard TanoWrt image with Qt5 support             |
+   |                           |                                    |                            | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                            | image. When building this image,                    |
+   |                           |                                    |                            | ``tanowrt-image-qt5`` will also be built            |
+   |                           |                                    |                            | as dependency.                                      |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-qt5-swu-factory``  | ``ls1028ardb-emmc.yml``    | Factory installation image for standard TanoWrt     |
+   |                           |                                    |                            | image with Qt5 support. When building this image,   |
+   |                           |                                    |                            | ``tanowrt-image-qt5``                               |
+   |                           |                                    |                            | and ``tanowrt-image-qt5-swu`` will also be built    |
+   |                           |                                    |                            | as dependencies.                                    |
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
 
 .. [#] Image recipe name. This name can be used as argument
        for ``--target`` build command option (see :numref:`sec-ls1028ardb-build` section).
@@ -180,9 +178,10 @@ figure and table below.
 
 .. _fig-ls1028ardb-boot-source-selcetion:
 .. figure:: images/ls1028ardb-dip-switches.svg
-    :width: 600
+   :align: center
+   :width: 600
 
-    NXP LS1028A RDB Boot Source Selection
+   NXP LS1028A RDB Boot Source Selection
 
 Also you can switch the boot source in runtime from the U-Boot command
 line using the command :command:`qixis_reset`:
@@ -263,9 +262,10 @@ are shown in the figure below.
 
 .. _fig-ls1028ardb-layout-sd:
 .. figure:: images/ls1028ardb-layout-sd.svg
-    :width: 1000
+   :align: center
+   :width: 1000
 
-    NXP LS1028A RDB Partitions Layout for SD Card
+   NXP LS1028A RDB Partitions Layout for SD Card
 
 eMMC
 ----
@@ -275,9 +275,10 @@ are shown in the figure below.
 
 .. _fig-ls1028ardb-layout-emmc:
 .. figure:: images/ls1028ardb-layout-emmc.svg
-    :width: 1000
+   :align: center
+   :width: 1000
 
-    NXP LS1028A RDB Partitions Layout for eMMC
+   NXP LS1028A RDB Partitions Layout for eMMC
 
 
 .. _sec-ls1028ardb-artifacts:
@@ -285,14 +286,12 @@ are shown in the figure below.
 Produced Build Artifacts
 ========================
 
-.. todo:: Update
-
 All produced build artifacts are stored in the :file:`~/tanowrt/build/tanowrt-glibc/deploy/images/<MACHINE>` directory.
 Refer to table :ref:`table-ls1028ardb-artifacts` for a description of some common (not all) build artifacts.
 
 .. _table-ls1028ardb-artifacts:
 .. table:: Produced Build Artifacts
-   :widths: 15, 15
+   :widths: 15, 15, 70
 
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
    | Artifact                                                            | Target(s)                     | Description                                                          |
@@ -338,26 +337,28 @@ Refer to table :ref:`table-ls1028ardb-artifacts` for a description of some commo
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
    | .. centered:: Images                                                                                                                                                       |
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.sdcard.img`                         | ``ls1028ardb-sd.yml``         | SD card image including all required partitions for booting          |
+   | :file:`<rootfs-image>-<MACHINE>.sdcard.img`                         | ``ls1028ardb-sd.yml``         | SD card image including all required partitions for booting          |
    |                                                                     |                               | and running the system. This image is ready to be written            |
    |                                                                     |                               | to the SD card using the :command:`dd` utility or similar            |
    |                                                                     |                               | (see :ref:`sec-ls1028ardb-flash`).                                   |
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img`             | ``ls1028ardb-emmc.yml``       | SD card factory installation image. This image is ready              |
+   | :file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img`             | ``ls1028ardb-emmc.yml``       | SD card factory installation image. This image is ready              |
    |                                                                     |                               | to be written to the SD card using the :command:`dd` utility         |
    |                                                                     |                               | or similar (see :ref:`sec-ls1028ardb-flash`).                        |
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
    | :file:`tanowrt-image-initramfs-swu-factory-<MACHINE>.cpio.gz`       | ``ls1028ardb-emmc.yml``       | Root filesystem initramfs image for factory installtion              |
-   | :file:`<image-recipe>-<MACHINE>.squashfs-lzo`                       |                               | image. This image is included in                                     |
+   |                                                                     |                               | image. This image is included in                                     |
    |                                                                     |                               | :file:`fitImage-tanowrt-image-initramfs-swu-factory-<MACHINE>.ext4`. |
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-<MACHINE>.swu`                            | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.                |
+   | :file:`<rootfs-image>-<MACHINE>.squashfs-lzo`                       | *All*                         | Root filesystem image (squashfs with LZO compression).               |
+   +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
+   | :file:`<rootfs-image>-swu-<MACHINE>.swu`                            | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.                |
    +---------------------------------------------------------------------+-------------------------------+----------------------------------------------------------------------+
 
 .. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
           the actual value of the ``MACHINE`` BitBake variable for the chosen
-          `target <sec-ls1028ardb-targets_>`__. ``<image-recipe>`` is replaced
-          by the actual `image recipe <sec-ls1028ardb-images_>`__ name.
+          `target <sec-ls1028ardb-targets_>`__. ``<rootfs-image>`` is replaced
+          by the actual read-only root filesystem `image <sec-ls1028ardb-images_>`__ name.
 
 For example, below is the lists of artifacts produced by the ``ls1028ardb-emmc.yml``
 and ``ls1028ardb-sd.yml`` target builds. There are two types of listings here |mdash|
@@ -619,7 +620,6 @@ a complete listing, and a reduced listing without the symbolic links display.
 Writing Images
 ==============
 
-
 .. _sec-ls1028ardb-flash-sd:
 
 Writing Image to SD Card
@@ -627,6 +627,22 @@ Writing Image to SD Card
 
 No special information about writing images to microSD card
 for NXP LS1028A RDB board. See common instructions in :ref:`sec-writing-sd-or-usb` section.
+
+.. rubric:: Examples
+
+Writing factory installation image for the ``ls1028ardb-emmc.yml`` target to the SD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-swu-factory-ls1028ardb-emmc.sdcard.img of=/dev/mmcblk1
+
+Writing bootable card image for the ``ls1028ardb-sd.yml`` target to the SD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-ls1028ardb-sd.sdcard.img of=/dev/mmcblk1
 
 
 .. _sec-ls1028ardb-flash-emmc:
@@ -638,7 +654,7 @@ For the initial flashing of the internal eMMC memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
 (see :ref:`sec-ls1028ardb-targets` for details) that assumes using the
 factory installation image for the initial flashing of the
-device, a factory installation image (:file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img`)
+device, a factory installation image (:file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img`)
 will be automatically generated during the build process
 (see :ref:`sec-ls1028ardb-build`).
 To write the factory installation image to a SD card, follow the instructions
@@ -716,10 +732,11 @@ Default Network Configuration
 
 .. _fig-ls1028ardb-network:
 .. figure:: images/ls1028ardb-network.jpg
-    :width: 1000
-    :class: with-border
+   :width: 1000
+   :align: center
+   :class: with-border
 
-    NXP LS1028A RDB Default Network Configuration
+   NXP LS1028A RDB Default Network Configuration
 
 By default, network ports SWP0, SWP1, SWP2 and SWP3 are joined
 into a bridge (``br-lan`` interface) with the :term:`RSTP` protocol enabled.
@@ -762,20 +779,22 @@ and MAC0 (``eno0``) have enabled :term:`LLDP` by default.
 Web User Interface
 =============================
 
-The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
-You must see something like this in browser after you logged in:
+The WebUI can be accessed via any Ethernet port bridged to LAN network
+through HTTP(s) protocol. You must see something like this in browser:
 
 .. _fig-ls1028ardb-luci-login:
 .. figure:: /common/images/luci/page-login.png
-    :width: 900
+   :align: center
+   :width: 900
 
-    LuCI WebUI Login Page
+   LuCI WebUI Login Page
 
 .. _fig-ls1028ardb-luci-status:
-.. figure:: images/luci-status.png
-    :width: 900
+.. figure:: images/ls1028ardb-luci-status.png
+   :align: center
+   :width: 900
 
-    LuCI WebUI Overview Page
+   LuCI WebUI Overview Page
 
 
 .. _sec-ls1028ardb-upgrade:
@@ -784,7 +803,9 @@ Firmware Upgrade
 ================
 
 No special information about firmware upgrade.
-See common instructions in :ref:`sec-firmware-upgrade` section.
+Use produced :file:`.swu` :ref:`artifact <table-ls1028ardb-artifacts>` for upgrading running system.
+
+.. seealso:: See common instructions in :ref:`sec-firmware-upgrade` section.
 
 
 References

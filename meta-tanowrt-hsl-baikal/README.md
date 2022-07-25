@@ -6,7 +6,7 @@
 
 ## 1 Documentation
 
-You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-baikal/index.html).
+You can find documentation for this layer [here](https://tano-systems.github.io/meta-tanowrt/layers/meta-tanowrt-hsl-baikal).
 
 ## 2 License
 
