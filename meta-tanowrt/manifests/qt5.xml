@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-	<!-- meta-qt5 -->
-	<project path="meta-qt5"
-	         name="meta-qt5/meta-qt5"
-	         remote="github"
-	         upstream="hardknott"
-	         revision="a00af3eae082b772469d9dd21b2371dd4d237684" />
-</manifest>

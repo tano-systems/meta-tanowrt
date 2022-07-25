@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-	<!-- meta-swupdate -->
-	<project path="meta-swupdate"
-	         name="sbabic/meta-swupdate"
-	         remote="github"
-	         upstream="hardknott"
-	         revision="2c2c57d3aaae42999b6ef6dcdf67fe52b12735c3" />
-</manifest>

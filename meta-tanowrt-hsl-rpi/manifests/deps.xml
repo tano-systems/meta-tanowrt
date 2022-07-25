@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-	<!-- meta-raspberrypi -->
-	<project path="meta-raspberrypi"
-	         name="meta-raspberrypi"
-	         remote="yoctoproject"
-	         upstream="hardknott"
-	         revision="064f5404ea90f02bd15088de6317692098d9f770" />
-</manifest>

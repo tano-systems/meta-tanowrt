@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-	<!-- meta-swi -->
-	<project path="meta-swi"
-	         name="legatoproject/meta-swi.git"
-	         remote="github"
-	         upstream="yocto-3.0-ref"
-	         revision="33b80a739ed47095f8a89ca0c6fae10346375800" />
-</manifest>
