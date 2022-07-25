@@ -46,7 +46,7 @@ IMAGE_INSTALL_append = " kernel-devicetree "
 TI_STAGING_KERNEL_VERSION ?= "5.4"
 
 # Set to "1" for kernels 5.6+
-TANOWRT_WIREGUARD_IN_KERNEL = "0"
+TANOWRT_WIREGUARD_IN_KERNEL ?= "0"
 
 PREFERRED_PROVIDER_virtual/kernel = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_KERNEL', '1', 'linux-tano-ti-sdk-rt', 'linux-tano-ti-staging-rt', d)}"
 PREFERRED_VERSION_linux-tano-ti-staging-rt = "${TI_STAGING_KERNEL_VERSION}%"
