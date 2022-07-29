@@ -28,6 +28,8 @@ S = "${WORKDIR}/git"
 
 SRC_URI += "file://0100-fix-libnl-include-directories.patch;pnum=4"
 
+do_unpack[vardeps] += "libdir"
+
 do_configure_prepend() {
 	sed -i -e "s:/usr/lib/:${libdir}/:g" ${S}/luci.c
 }
