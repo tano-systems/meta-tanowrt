@@ -53,6 +53,9 @@ TANOWRT_SERVICE_STATE_rpcd-rpcd ?= "enabled"
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
+# Reunpack sources if libdir is changed
+do_unpack[vardeps] += "libdir"
+
 do_configure_prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
