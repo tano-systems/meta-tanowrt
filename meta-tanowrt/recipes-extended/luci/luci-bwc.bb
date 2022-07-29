@@ -26,6 +26,8 @@ S = "${WORKDIR}/git"
 FILES_${PN} = "\
 	${bindir}/luci-bwc"
 
+do_unpack[vardeps] += "libdir"
+
 do_configure() {
 	sed -i -e "s:/usr/lib/:${libdir}/:g" ${S}/luci-bwc.c
 	oe_runmake -C ${S}/ clean
