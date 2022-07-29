@@ -55,6 +55,8 @@ CFLAGS += "-D_DEFAULT_SOURCE"
 
 EXTRA_OECMAKE = "-DTLS_SUPPORT=ON -DLUA_SUPPORT=ON -DUBUS_SUPPORT=ON -DUCODE_SUPPORT=ON"
 
+do_unpack[vardeps] += "libdir base_libdir"
+
 do_install_append() {
     install -d -m 0755 ${D}${sysconfdir}/config
     install -d -m 0755 ${D}${sysconfdir}/init.d
