@@ -60,6 +60,8 @@ S = "${WORKDIR}/lua-${PV}"
 TARGET_CC_ARCH += " -fPIC ${LDFLAGS}"
 EXTRA_OEMAKE = "'CC=${CC} -fPIC' 'MYCFLAGS=${CFLAGS} -DLUA_USE_LINUX -fPIC' MYLDFLAGS='${LDFLAGS}'"
 
+do_unpack[vardeps] += "baselib"
+
 do_configure_prepend() {
     sed -i -e "s:/usr/local:${prefix}:g" \
            -e "s:#define LUA_CDIR	LUA_ROOT \"lib64/lua/5.1/\":#define LUA_CDIR	LUA_ROOT \"${baselib}/lua/5.1/\":g" \
