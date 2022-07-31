@@ -435,14 +435,12 @@ You must see something like this in browser:
 
 .. _fig-mangoh-green-wp7607-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-mangoh-green-luci-status:
 .. figure:: images/mangoh-green-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

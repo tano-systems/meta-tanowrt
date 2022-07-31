@@ -28,7 +28,6 @@ of Ethernet, four of which can be used concurrently: 2x Gb Ethernet ports and
 
 .. _fig-am574x-idk:
 .. figure:: images/am574x-idk.jpg
-   :align: center
    :width: 1000
    :class: with-border
 
@@ -243,7 +242,6 @@ are shown in the figure below.
 .. _fig-am574x-idk-layout-sd:
 .. figure:: images/am574x-idk-layout-sd.svg
     :width: 1000
-    :align: center
 
     AM574x IDK EVM Partitions Layout for microSD Card
 
@@ -256,7 +254,6 @@ are shown in the figure below.
 .. _fig-am574x-idk-layout-emmc:
 .. figure:: images/am574x-idk-layout-emmc.svg
     :width: 1000
-    :align: center
 
     AM574x IDK EVM Partitions Layout for eMMC
 
@@ -786,14 +783,12 @@ You must see something like this in browser after you logged in:
 .. _fig-am574x-idk-luci-login:
 .. figure:: /common/images/luci/page-login.png
    :width: 900
-   :align: center
 
    LuCI WebUI Login Page
 
 .. _fig-am574x-idk-luci-status:
 .. figure:: images/am574x-idk-luci-status.png
    :width: 900
-   :align: center
 
    LuCI WebUI Overview Page
 

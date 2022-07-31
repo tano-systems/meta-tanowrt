@@ -28,14 +28,12 @@ a similar design and only minor differences.
 
 .. _fig-mbm20-top:
 .. figure:: images/tf307-mb-s-d-top.webp
-   :align: center
    :width: 1000
 
    MBM 2.0 (TF307-MB-S-D) Board Top View
 
 .. _fig-mbm20-front:
 .. figure:: images/tf307-mb-s-d-front.webp
-   :align: center
    :width: 1000
 
    MBM 2.0 (TF307-MB-S-D) Board Front View
@@ -360,14 +358,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-mbm-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-mbm-luci-status:
 .. figure:: images/tf307-mb-luci-status.webp
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

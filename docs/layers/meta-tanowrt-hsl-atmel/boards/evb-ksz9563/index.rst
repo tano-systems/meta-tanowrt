@@ -41,7 +41,6 @@ no Ethernet capabilities when no daughter board is connected.
 .. _fig-evb-ksz9563:
 .. figure:: images/evb-ksz9563.jpg
    :width: 1000
-   :align: center
    :class: with-border
 
    EVB-KSZ9563 on SAMA5D3 EDS Interfaces and Connectors
@@ -255,7 +254,6 @@ are shown in the figure below.
 
 .. _fig-evb-ksz9563-layout-sd:
 .. figure:: images/evb-ksz9563-layout-sd.svg
-   :align: center
    :width: 1000
 
    EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for SD Card
@@ -268,7 +266,6 @@ are shown in the figure below.
 
 .. _fig-evb-ksz9563-layout-nand:
 .. figure:: images/evb-ksz9563-layout-nand.svg
-   :align: center
    :width: 1000
 
    EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for NAND
@@ -731,14 +728,12 @@ You must see something like this in browser:
 
 .. _fig-evb-ksz9563-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-evb-ksz9563-luci-status:
 .. figure:: images/evb-ksz9563-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

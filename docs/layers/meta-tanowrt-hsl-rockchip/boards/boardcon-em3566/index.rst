@@ -231,6 +231,14 @@ memory and further the Boardcon EM3566 board will boot
 and run from the eMMC flash memory.
 
 
+.. _sec-boardcon-em3566-partitioning:
+
+Partitioning Layouts
+====================
+
+Images for Boardcon EM3566 board using default partitions layouts described :ref:`here <sec-hsl-rockchip-partitioning>`.
+
+
 .. _sec-boardcon-em3566-artifacts:
 
 Produced Build Artifacts
@@ -654,14 +662,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-boardcon-em3566-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-boardcon-em3566-luci-status:
 .. figure:: images/boardcon-em3566-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

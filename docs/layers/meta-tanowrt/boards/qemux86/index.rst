@@ -424,14 +424,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-qemux86-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-qemux86-luci-status:
 .. figure:: images/qemux86-64-screen-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

@@ -28,7 +28,6 @@ designs with minimal external components and with best in class low power perfor
 
 .. _fig-am335x-icev2:
 .. figure:: images/am335x-icev2.jpg
-   :align: center
    :width: 1000
 
    AM3359 ICEv2 EVM Interfaces and Connectors
@@ -65,7 +64,7 @@ Photos
       :width: 300
       :class: with-border
 
-      AM3359 ICEv2 EVM Bottom Box Contents
+      AM3359 ICEv2 EVM Box Contents
 
 
 
@@ -222,7 +221,6 @@ are shown in the figure below.
 
 .. _fig-am335x-icev2-layout-sd:
 .. figure:: images/am335x-icev2-layout-sd.svg
-   :align: center
    :width: 1000
 
    AM3359 ICEv2 EVM Partitions Layout for microSD Card
@@ -497,14 +495,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-am335x-icev2-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-am335x-icev2-luci-status:
 .. figure:: images/am335x-icev2-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

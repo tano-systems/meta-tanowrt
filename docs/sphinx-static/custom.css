@@ -14,8 +14,8 @@ h1, h2, h3, h4, h5, h6, legend {
 }
 
 div.wy-nav-content {
-/*	max-width: none;*/
-	max-width: 1200px;
+	max-width: none;
+/*	max-width: 1200px;*/
 }
 
 .rst-content div.flex {
@@ -680,6 +680,11 @@ kbd
 	.wy-nav-content-wrap {
 		margin-left: 0;
 	}
+}
+
+/* Sidebar background */
+.wy-nav-side {
+	background: #272525;
 }
 
 /* Roles */
