@@ -1,8 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
 .. _meta-tanowrt-hsl-rockchip:
 
 =================================================================
@@ -12,19 +9,16 @@ Rockchip SoC's Hardware Support Layer (meta-tanowrt-hsl-rockchip)
 meta-tanowrt-hsl-rockchip |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the Fuzhou Rockchip Electronics SoC based boards.
 
-.. image:: /common/images/logos/rockchip.png
-   :height: 120
+.. figure:: /common/images/logos/rockchip.png
+   :height: 100
 
 .. rubric:: Contents
 .. contents::
    :depth: 2
    :local:
 
-Requirements and Dependencies
-=============================
-
 Dependencies
-------------
+============
 
 Dependencies of the :ref:`meta-tanowrt-hsl-rockchip <meta-tanowrt-hsl-rockchip>` layer are described in the table below.
 
@@ -73,4 +67,4 @@ Anton Kikin <a.kikin@tano-systems.com>
 References
 ==========
 
-1. `Fuzhou Rockchip Electronics official site <http://www.rock-chips.com/a/en/index.html>`__
+1. `Fuzhou Rockchip Electronics Official Site <http://www.rock-chips.com/a/en/index.html>`__

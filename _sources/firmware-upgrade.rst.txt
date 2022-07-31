@@ -32,13 +32,13 @@ Use the following commands to upgrade the firmware using the command line:
 
   .. code-block:: console
 
-     [root@tanowrt ~]# swupdate-client /mnt/sdb1/<image-recipe>-swu-<MACHINE>.swu
+     [root@tanowrt ~]# swupdate-client /mnt/sdb1/<rootfs-image>-swu-<MACHINE>.swu
 
 - Upgrade from a file hosted on a remote HTTP server:
 
   .. code-block:: console
 
-     [root@tanowrt ~]# wget -O- http://remote.server.com/path/to/<image-recipe>-swu-<MACHINE>.swu | swupdate-client
+     [root@tanowrt ~]# wget -O- http://remote.server.com/path/to/<rootfs-image>-swu-<MACHINE>.swu | swupdate-client
 
 
 WebUI (Web User Interface)

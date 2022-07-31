@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.12.1 Erasing SPI NOR Flash Contents &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/design-tabs.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="2.12.2 Configuring PPP Connection over UART4" href="ppp-over-uart4.html" />
+    <link rel="prev" title="2 AM3359 ICEv2 EVM (TMDSICE3359)" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Texas Instruments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../am335x-bbb/index.html">1 BeagleBone Black</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">2 AM3359 ICEv2 EVM (TMDSICE3359)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../index.html#board-overview">2.1 Board Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#build-targets">2.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#build">2.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#partitioning-layouts">2.4 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#produced-build-artifacts">2.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#writing-image-to-microsd-card">2.6 Writing Image to microSD Card</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#booting-and-running">2.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#serial-console">2.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#default-network-configuration">2.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#web-user-interface">2.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#firmware-upgrade">2.11 Firmware Upgrade</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html#additional-information">2.12 Additional Information</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">2.12.1 Erasing SPI NOR Flash Contents</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ppp-over-uart4.html">2.12.2 Configuring PPP Connection over UART4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ti-uio.html">2.12.3 Enabling TI UIO</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#references">2.13 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../am574x-idk/index.html">3 AM574x IDK EVM (TMDSIDK574)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../../index.html">Texas Instruments Hardware Support Layer (meta-tanowrt-hsl-ti)</a> &raquo;</li>
+    
+      <li><a href="../index.html"><span class="section-number">2 </span>AM3359 ICEv2 EVM (TMDSICE3359)</a> &raquo;</li>
+    
+    <li><span class="section-number">2.12.1 </span>Erasing SPI NOR Flash Contents</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/layers/meta-tanowrt-hsl-ti/boards/am335x-icev2/extra/erasing-nor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="erasing-spi-nor-flash-contents">
+<span id="sec-am335x-icev2-erasing-nor"></span><h1><span class="section-number">2.12.1 </span>Erasing SPI NOR Flash Contents<a class="headerlink" href="#erasing-spi-nor-flash-contents" title="Permalink to this heading"></a></h1>
+<p>The <a class="reference internal" href="../index.html#machine-am335x-icev2"><span class="std std-ref">AM3359 ICEv2</span></a> development board from Texas Instruments
+comes pre-loaded with a default application in the on-board SPI flash device. To boot Linux
+from the microSD card, you must clear the SPI flash so that the
+boot process falls back to microSD card boot mode. The following steps clear
+the SPI flash.</p>
+<ol class="arabic">
+<li><p>Make sure pins 1 and 2 of Jumper J5 (sysboot) are connected on the board</p></li>
+<li><p>Make sure that USB cable is connected from the AM3359 ICEv2 board to your
+host development machine</p></li>
+<li><p>Launch Code Composer Studio (CCS)</p>
+<ul class="simple">
+<li><p>If you do not have CCS, download it here: <a class="reference external" href="http://processors.wiki.ti.com/index.php/Download_CCS">CCS Download</a></p></li>
+</ul>
+</li>
+<li><p>Create a target configuration file in CCS to connect to the AM3359 ICEv2 board:</p>
+<ul class="simple">
+<li><p>Click <em class="menuselection">File → New → Target Configuration File</em></p></li>
+<li><p>Filename: <code class="file docutils literal notranslate"><span class="pre">AM3359-ice-v2.ccxml</span></code>. Check <span class="guilabel">Use shared location</span> to be available
+to anyone who uses the workspace. Click <span class="guilabel">Finish</span>. A window opens up which is to
+configure the connection details</p>
+<ul>
+<li><p>Connection: Texas Instruments XDS100v2 USB Debug Probe</p></li>
+<li><p>Device: ICE_AM3359</p></li>
+<li><p>Click “Save”</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Launch your AM3359 ICEv2 Target Configuration:</p>
+<ul class="simple">
+<li><p>Click <em class="menuselection">Window → Show View → Target Configurations</em></p></li>
+<li><p>Right click on the <code class="file docutils literal notranslate"><span class="pre">AM3359-ice-v2.ccxml</span></code> file and the click <span class="guilabel">Launch Selected Configuration</span></p></li>
+<li><p>This should switch your current perspective to the <span class="guilabel">CCS Debug</span> perspective.
+If it doesn’t, click <em class="menuselection">View → Debug</em> to get to the <span class="guilabel">CCS Debug</span> perspective</p></li>
+</ul>
+</li>
+<li><p>Connect the debugger to the CortexA8 core:</p>
+<ul class="simple">
+<li><p>Right click on <span class="guilabel">Texas Instruments XDS100v2 USB Debug Probe_0/CortxA8</span> listed in
+the <span class="guilabel">Debug view</span> and select <em class="menuselection">Connect Target</em>.</p></li>
+</ul>
+</li>
+<li><p>Load the SPI flash programmer into the CortexA8 core:</p>
+<ul class="simple">
+<li><p>Download the SPI flash programmer and unzip it: <a class="reference external" href="http://processors.wiki.ti.com/index.php/File:Isdk_spi_flasher.zip">Isdk_spi_flasher.zip</a></p></li>
+<li><p>Highlight the <span class="guilabel">Texas Instruments XDS100v2 USB Debug Probe_0/CortexA8</span> by clicking on it</p></li>
+<li><p>Click <em class="menuselection">Run → Load → Load Program</em></p></li>
+<li><p>Browse to the <code class="file docutils literal notranslate"><span class="pre">isdk_spi_flasher.out</span></code> file (that you just downloaded and unzipped) and click <span class="guilabel">OK</span></p></li>
+</ul>
+</li>
+<li><p>Run the SPI flash programmer on the CortexA8:</p>
+<ul class="simple">
+<li><p>Highlight the <span class="guilabel">Texas Instruments XDS100v2 USB Debug Probe_0/CortexA8</span> by clicking on it</p></li>
+<li><p>Click <em class="menuselection">Run → Resume</em></p></li>
+</ul>
+</li>
+<li><p>At this point the SPI flash programmer is running on the CortexA8 and we just need to follow the prompts to clear the flash:</p>
+<ul>
+<li><p>If it isn’t opened already, open the <span class="guilabel">Console view</span> by clicking <em class="menuselection">Window → Show View → Console</em></p></li>
+<li><p>The program will give you the following prompts, type the responses and press <kbd class="kbd docutils literal notranslate">ENTER</kbd>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Enter Operation [1 - Flash] [2 - Erase]: 2</span>
+<span class="go">Enter the offset [in Hex]: 0</span>
+<span class="go">Enter size to be erased in Kilo bytes: 64</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

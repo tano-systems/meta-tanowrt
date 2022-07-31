@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
@@ -20,6 +21,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -47,19 +49,32 @@
               <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick.html">Quick Start Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building TanoWrt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="firmware-upgrade.html">Firmware Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="common-tasks.html">Common Tasks</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt/index.html">meta-tanowrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt/index.html">Core Layer</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html">meta-tanowrt-hsl-rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="current">
@@ -97,26 +112,70 @@
              
   <section id="glossary">
 <h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this heading"></a></h1>
-<dl class="glossary simple">
+<dl class="glossary">
 <dt id="term-BSP"><a class="reference internal" href="#term-BSP"><span class="xref std std-term">BSP</span></a><a class="headerlink" href="#term-BSP" title="Permalink to this term"></a></dt><dd><p><em>Board Support Package</em></p>
+<p>In embedded systems, a board support package (BSP) is the layer of software containing
+hardware-specific boot firmware and device drivers and other routines that allow a given
+embedded operating system to function in a given hardware environment (a board), integrated
+with the embedded operating system.</p>
 </dd>
 <dt id="term-DHCP"><a class="reference internal" href="#term-DHCP"><span class="xref std std-term">DHCP</span></a><a class="headerlink" href="#term-DHCP" title="Permalink to this term"></a></dt><dd><p><em>Dynamic Host Configuration Protocol</em></p>
+</dd>
+<dt id="term-DTB"><a class="reference internal" href="#term-DTB"><span class="xref std std-term">DTB</span></a><a class="headerlink" href="#term-DTB" title="Permalink to this term"></a></dt><dd><p><em>Device Tree Blob</em></p>
+<p>Device tree is a data structure describing the hardware components of a particular
+computer so that the operating system’s kernel can use and manage those components,
+including the CPU or CPUs, the memory, the buses and the integrated peripherals.</p>
+</dd>
+<dt id="term-DTBO"><a class="reference internal" href="#term-DTBO"><span class="xref std std-term">DTBO</span></a><a class="headerlink" href="#term-DTBO" title="Permalink to this term"></a></dt><dd><p><em>Device Tree Blob Overlay</em></p>
 </dd>
 <dt id="term-EDB"><a class="reference internal" href="#term-EDB"><span class="xref std std-term">EDB</span></a><a class="headerlink" href="#term-EDB" title="Permalink to this term"></a></dt><dd><p><em>Embedded Development Board</em></p>
 </dd>
 <dt id="term-eSDK"><a class="reference internal" href="#term-eSDK"><span class="xref std std-term">eSDK</span></a><a class="headerlink" href="#term-eSDK" title="Permalink to this term"></a></dt><dd><p><em>extensible Software Development Kit</em></p>
+<p>The Yocto Project Extensible SDK (eSDK) has tools that allow you to easily add new
+applications and libraries to an image, modify the source of an existing component
+and test changes on the target hardware. The main benefit over the standard <a class="reference internal" href="#term-SDK"><span class="xref std std-term">SDK</span></a>
+is improved team workflow due to tighter integration with the OpenEmbedded build system.</p>
 </dd>
 <dt id="term-HS"><a class="reference internal" href="#term-HS"><span class="xref std std-term">HS</span></a><a class="headerlink" href="#term-HS" title="Permalink to this term"></a></dt><dd><p><em>High-Speed</em></p>
 </dd>
 <dt id="term-HSL"><a class="reference internal" href="#term-HSL"><span class="xref std std-term">HSL</span></a><a class="headerlink" href="#term-HSL" title="Permalink to this term"></a></dt><dd><p><em>Hardware Support Layer</em></p>
 </dd>
 <dt id="term-LLDP"><a class="reference internal" href="#term-LLDP"><span class="xref std std-term">LLDP</span></a><a class="headerlink" href="#term-LLDP" title="Permalink to this term"></a></dt><dd><p><em>Link Layer Discovery Protocol</em></p>
+<p>The Link Layer Discovery Protocol (LLDP) is a vendor-neutral link layer protocol used
+by network devices for advertising their identity, capabilities, and neighbors on a
+local area network based on IEEE 802 technology, principally wired Ethernet. The protocol
+is formally referred to by the IEEE as Station and Media Access Control Connectivity Discovery
+specified in IEEE 802.1AB with additional support in IEEE 802.3 section 6 clause 79.</p>
+</dd>
+<dt id="term-MSTP"><a class="reference internal" href="#term-MSTP"><span class="xref std std-term">MSTP</span></a><a class="headerlink" href="#term-MSTP" title="Permalink to this term"></a></dt><dd><p><em>Multiple Spanning Tree Protocol</em></p>
+<p>The Multiple Spanning Tree Protocol (MSTP), originally defined in IEEE 802.1s-2002 and
+later merged into IEEE 802.1Q-2005, defines an extension to <a class="reference internal" href="#term-RSTP"><span class="xref std std-term">RSTP</span></a> to further develop
+the usefulness of VLANs.</p>
 </dd>
 <dt id="term-RSTP"><a class="reference internal" href="#term-RSTP"><span class="xref std std-term">RSTP</span></a><a class="headerlink" href="#term-RSTP" title="Permalink to this term"></a></dt><dd><p><em>Rapid Spanning Tree Protocol</em></p>
+<p>In 2001, the IEEE introduced Rapid Spanning Tree Protocol (RSTP) as IEEE 802.1w.
+RSTP was then incorporated into IEEE 802.1D-2004 making the original <a class="reference internal" href="#term-STP"><span class="xref std std-term">STP</span></a> standard obsolete.
+RSTP was designed to be backward-compatible with standard <a class="reference internal" href="#term-STP"><span class="xref std std-term">STP</span></a>.</p>
+<p>RSTP provides significantly faster spanning tree convergence after a topology change,
+introducing new convergence behaviors and bridge port roles to accomplish this. While <a class="reference internal" href="#term-STP"><span class="xref std std-term">STP</span></a> can
+take 30 to 50 seconds to respond to a topology change, RSTP is typically able to respond to changes
+within 3 × hello times (default: 3 × 2 seconds) or within a few milliseconds of a physical
+link failure. The hello time is an important and configurable time interval that is used
+by RSTP for several purposes; its default value is 2 seconds.</p>
 </dd>
 <dt id="term-SBC"><a class="reference internal" href="#term-SBC"><span class="xref std std-term">SBC</span></a><a class="headerlink" href="#term-SBC" title="Permalink to this term"></a></dt><dd><p><em>Single-Board Computer</em></p>
 </dd>
 <dt id="term-SDK"><a class="reference internal" href="#term-SDK"><span class="xref std std-term">SDK</span></a><a class="headerlink" href="#term-SDK" title="Permalink to this term"></a></dt><dd><p><em>Software Development Kit</em></p>
+<p>A Software Development Kt (SDK) is a collection of software development tools in one
+installable package. They facilitate the creation of applications by having a compiler,
+debugger and sometimes a software framework. They are normally specific to a hardware
+platform and operating system combination.</p>
+</dd>
+<dt id="term-STP"><a class="reference internal" href="#term-STP"><span class="xref std std-term">STP</span></a><a class="headerlink" href="#term-STP" title="Permalink to this term"></a></dt><dd><p><em>Spanning Tree Protocol</em></p>
+<p>The Spanning Tree Protocol (STP) is a network protocol that builds a loop-free logical
+topology for Ethernet networks. The basic function of STP is to prevent bridge loops and
+the broadcast radiation that results from them. Spanning tree also allows a network
+design to include backup links providing fault tolerance if an active link fails.</p>
 </dd>
 </dl>
 </section>
@@ -128,7 +187,7 @@
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
     </p>
   </div>
 </footer>

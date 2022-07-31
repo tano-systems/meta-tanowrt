@@ -14,13 +14,15 @@ h1, h2, h3, h4, h5, h6, legend {
 }
 
 div.wy-nav-content {
-	max-width: none;
+/*	max-width: none;*/
+	max-width: 1200px;
 }
 
 .rst-content div.flex {
 	display: flex;
 	gap: 16px;
 	flex-wrap: wrap;
+	align-items: flex-end;
 }
 
 .rst-content h1,
@@ -65,10 +67,6 @@ div.wy-nav-content {
 .rst-content .document ol,
 .rst-content .document ul {
 	margin-bottom: 12px;
-}
-
-.rst-content .document ul {
-/*	padding-left: 2.5em;*/
 }
 
 .rst-content .document ul > li > ul {
@@ -192,6 +190,7 @@ div.wy-nav-content {
 
 .rst-content .wy-breadcrumbs li {
 	padding-right: 5px;
+	margin-left: 0;
 }
 
 .rst-content .wy-breadcrumbs li a {
@@ -265,16 +264,15 @@ div.wy-nav-content {
 	margin-top: 12px;
 }
 
-.rst-content h1,
-.rst-content h2,
-.rst-content h3,
-.rst-content h4,
-.rst-content h5,
-.rst-content h6,
-.rst-content h7,
-.rst-content h8,
-.rst-content h9,
-.rst-content .toc-backref {
+.rst-content h1, .rst-content h1 > a.toc-backref,
+.rst-content h2, .rst-content h2 > a.toc-backref,
+.rst-content h3, .rst-content h3 > a.toc-backref,
+.rst-content h4, .rst-content h4 > a.toc-backref,
+.rst-content h5, .rst-content h5 > a.toc-backref,
+.rst-content h6, .rst-content h6 > a.toc-backref,
+.rst-content h7, .rst-content h7 > a.toc-backref,
+.rst-content h8, .rst-content h8 > a.toc-backref,
+.rst-content h9, .rst-content h9 > a.toc-backref {
 	color: #1d5c86;
 }
 
@@ -282,6 +280,18 @@ div.wy-nav-content {
 .rst-content h2 {
 	border-bottom: 2px solid #1d5c86;
 	padding-bottom: 0;
+	line-height: 1.1;
+}
+
+.rst-content h3,
+.rst-content h4 {
+	border-bottom: 1px solid #1d5c86;
+}
+
+.rst-content h3 > code,
+.rst-content h4 > code {
+	position: relative;
+	top: -3px;
 }
 
 .rst-content h1 > code,
@@ -311,6 +321,7 @@ html.writer-html5 .rst-content dl.footnote>dt {
 .rst-content .section ul li,
 .rst-content .toctree-wrapper ul li,
 .wy-plain-list-disc li,
+.rst-content li,
 article ul li {
 	list-style: disc;
 	margin-left: 24px;
@@ -367,7 +378,8 @@ div.mermaid {
 }
 
 .rst-content p.caption span.caption-number:after,
-.rst-content caption span.caption-number:after {
+.rst-content caption span.caption-number:after,
+.rst-content figcaption span.caption-number:after {
 	content: "— ";
 }
 
@@ -596,4 +608,263 @@ kbd
 
 .rst-content .sphinx-tabs-panel {
 	padding-bottom: 6px;
+}
+
+.margin-left-20   { margin-left: 20px; }
+.margin-right-20  { margin-right: 20px; }
+.margin-top-20    { margin-top: 20px; }
+.margin-bottom-20 { margin-bottom: 20px; }
+
+/* Menu */
+
+.wy-menu-vertical li.toctree-l4.current li.toctree-l5>a, .wy-menu-vertical li.toctree-l5.current>a {
+	padding: 0.2em 2.0em 0.2em 7.1em;
+	line-height: 1.3;
+}
+
+.wy-menu-vertical li.toctree-l2.current > a { background: #c9c9c9 !important; }
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a { background: #c9c9c9; }
+
+.wy-menu-vertical li.toctree-l3.current > a { background: #bdbdbd !important; }
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a { background: #bdbdbd; }
+
+.wy-menu-vertical li.toctree-l4.current > a { background: #a8a8a8 !important; }
+.wy-menu-vertical li.toctree-l4.current li.toctree-l5 > a { background: #a8a8a8; }
+
+/*.wy-menu-vertical li.toctree-l1.current a:hover,*/
+.wy-menu-vertical li.toctree-l2 a:hover {
+	background: hsl(204deg 63% 95%) !important;
+}
+
+.wy-menu-vertical li.toctree-l3 a:hover {
+	background: hsl(204deg 63% 90%) !important;
+}
+
+.wy-menu-vertical li.toctree-l4 a:hover {
+	background: hsl(204deg 63% 85%) !important;
+}
+
+.wy-menu-vertical li.toctree-l5 a:hover {
+	background: hsl(204deg 63% 80%) !important;
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+	margin-top: 20px;
+	margin-bottom: 4px;
+}
+
+.wy-menu-vertical a {
+	line-height: 16px;
+}
+
+/* Left sidebar width (300px -> 350px) */
+
+.wy-nav-side { width: 350px; }
+.wy-side-scroll { width: 370px; }
+.wy-side-nav-search { width: 350px; }
+.wy-menu-vertical { width: 350px; }
+.wy-nav-content-wrap { margin-left: 350px; }
+
+@media screen and (max-width: 768px) {
+	.wy-nav-side {
+		left: -350px;
+	}
+
+	.wy-menu.wy-menu-vertical,
+	.wy-side-nav-search,
+	.wy-side-scroll {
+		width: auto;
+	}
+
+	.wy-nav-content-wrap {
+		margin-left: 0;
+	}
+}
+
+/* Roles */
+
+/*.rst-content .menuselection,*/
+.rst-content .guilabel {
+	border: 1px solid #7fbbe3;
+	background: #e7f2fa;
+	font-size: 80%;
+	font-weight: 700;
+	border-radius: 4px;
+	padding: 2.4px 6px;
+	margin: auto 2px;
+}
+
+/* ------------------- */
+
+.rst-content .section ol li ul,
+.rst-content ol.arabic li ul,
+.wy-plain-list-decimal li ul,
+article ol li ul {
+	margin-bottom: 12px;
+}
+
+.rst-content figure {
+	margin-bottom: 12px;
+}
+
+a.headerlink {
+	display: none;
+}
+
+.rst-content .align-center:not(table) {
+	text-align: center;
+}
+
+.rst-content .align-center {
+	margin-bottom: 12px;
+}
+
+/* Colors and text decoration.
+ For example, :black:`text in black` or :blink:`text blinking` in rST. */
+
+.black {
+	color: black;
+}
+
+.gray {
+/*	color: gray;*/
+	color: #a6a6a6;
+}
+
+.grey {
+/*	color: gray;*/
+	color: #a6a6a6;
+}
+
+.silver {
+	color: silver;
+}
+
+.white {
+	color: white;
+}
+
+.maroon {
+	color: maroon;
+}
+
+.red {
+	color: red;
+}
+
+.magenta {
+	color: magenta;
+}
+
+.fuchsia {
+	color: fuchsia;
+}
+
+.pink {
+	color: pink;
+}
+
+.orange {
+	color: orange;
+}
+
+.yellow {
+	color: yellow;
+}
+
+.lime {
+	color: lime;
+}
+
+.green {
+	color: green;
+}
+
+.olive {
+	color: olive;
+}
+
+.teal {
+	color: teal;
+}
+
+.cyan {
+	color: cyan;
+}
+
+.aqua {
+	color: aqua;
+}
+
+.blue {
+	/*color: blue;*/
+	color: #2980b9;
+}
+
+.navy {
+	color: navy;
+}
+
+.purple {
+	color: purple;
+}
+
+.under {
+	text-decoration: underline;
+}
+
+.over {
+	text-decoration: overline;
+}
+
+.blink {
+	text-decoration: blink;
+}
+
+.strike {
+	text-decoration: line-through;
+}
+
+.it {
+	font-style: italic;
+}
+
+.ob {
+	font-style: oblique;
+}
+
+.small {
+	font-size: small;
+}
+
+.large {
+	font-size: large;
+}
+
+.smallpar {
+	font-size: small;
+}
+
+.grid-item-center {
+	text-align: center;
+}
+
+.grid-item-center .sd-card .sd-card-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.grid-under-development {
+	background-color: #f3f6f6;
+}
+
+.rst-content .container.caption > p {
+	margin-bottom: 16px;
+	margin-top: 24px;
+	font-size: 150%;
+	line-height: 24px;
+	font-weight: 700;
+	color: #404040;
 }

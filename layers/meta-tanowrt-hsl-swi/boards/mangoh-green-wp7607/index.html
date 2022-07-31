@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1 mangOH Green with WP7607 or WP7607-1 &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/tabs.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="1.13.1 Setting Up a Modem Data Connection" href="extra/setting-up-modem.html" />
+    <link rel="prev" title="Sierra Wireless LTE Modules Hardware Support Layer (meta-tanowrt-hsl-swi)" href="../../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Sierra Wireless</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements">Requirements</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1 mangOH Green with WP7607 or WP7607-1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#block-diagram">1.1.1 Block Diagram</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#photos">1.1.2 Photos</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">1.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">1.2.2 Images</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build">1.3 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">1.3.1 Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">1.4 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.6 Writing Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-console">1.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">1.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">1.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">1.11 Firmware Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limitations">1.12 Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-information">1.13 Additional Information</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="extra/setting-up-modem.html">1.13.1 Setting Up a Modem Data Connection</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#references">1.14 References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Sierra Wireless LTE Modules Hardware Support Layer (meta-tanowrt-hsl-swi)</a> &raquo;</li>
+    
+    <li><span class="section-number">1 </span>mangOH Green with WP7607 or WP7607-1</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-swi/boards/mangoh-green-wp7607/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mangoh-green-with-wp7607-or-wp7607-1">
+<span id="machine-mangoh-green-wp7607"></span><h1><span class="section-number">1 </span>mangOH Green with WP7607 or WP7607-1<a class="headerlink" href="#mangoh-green-with-wp7607-or-wp7607-1" title="Permalink to this heading"></a></h1>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#board-overview" id="id25">Board Overview</a></p></li>
+<li><p><a class="reference internal" href="#build-targets" id="id26">Build Targets</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id27">Build</a></p></li>
+<li><p><a class="reference internal" href="#partitioning-layouts" id="id28">Partitioning Layouts</a></p></li>
+<li><p><a class="reference internal" href="#produced-build-artifacts" id="id29">Produced Build Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#writing-images" id="id30">Writing Images</a></p></li>
+<li><p><a class="reference internal" href="#booting-and-running" id="id31">Booting and Running</a></p></li>
+<li><p><a class="reference internal" href="#serial-console" id="id32">Serial Console</a></p></li>
+<li><p><a class="reference internal" href="#default-network-configuration" id="id33">Default Network Configuration</a></p></li>
+<li><p><a class="reference internal" href="#web-user-interface" id="id34">Web User Interface</a></p></li>
+<li><p><a class="reference internal" href="#firmware-upgrade" id="id35">Firmware Upgrade</a></p></li>
+<li><p><a class="reference internal" href="#limitations" id="id36">Limitations</a></p></li>
+<li><p><a class="reference internal" href="#additional-information" id="id37">Additional Information</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id38">References</a></p></li>
+</ul>
+</div>
+<section id="board-overview">
+<span id="sec-mangoh-green-wp7607-board"></span><h2><a class="toc-backref" href="#id25"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<p>The mangOH Green is an open-source hardware development platform for CF3
+modules that incorporates several hardware interfaces and standardized IoT
+Expansion Card slots for expanded functionality.</p>
+<section id="block-diagram">
+<h3><span class="section-number">1.1.1 </span>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this heading"></a></h3>
+<div class="flex docutils container">
+<figure class="align-default" id="id15">
+<span id="fig-mangoh-green-block-diagram-basic"></span><a class="reference internal image-reference" href="../../../../_images/mangoh-green-block-diagram-basic.png"><img alt="../../../../_images/mangoh-green-block-diagram-basic.png" src="../../../../_images/mangoh-green-block-diagram-basic.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.40 </span><span class="caption-text">mangOH Green Basic Block Diagram</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id16">
+<span id="fig-mangoh-green-block-diagram-detailed"></span><a class="with-border reference internal image-reference" href="../../../../_images/mangoh-green-block-diagram-detailed.png"><img alt="../../../../_images/mangoh-green-block-diagram-detailed.png" class="with-border" src="../../../../_images/mangoh-green-block-diagram-detailed.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.41 </span><span class="caption-text">mangOH Green Detailed Block Diagram</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="photos">
+<h3><span class="section-number">1.1.2 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
+<div class="flex docutils container">
+<figure class="align-default" id="id17">
+<span id="fig-mangoh-green-top"></span><a class="with-border reference internal image-reference" href="../../../../_images/mangoh-green-top.png"><img alt="../../../../_images/mangoh-green-top.png" class="with-border" src="../../../../_images/mangoh-green-top.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.42 </span><span class="caption-text">mangOH Green Top View</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id18">
+<span id="fig-mangoh-green-angled"></span><a class="with-border reference internal image-reference" href="../../../../_images/mangoh-green-angled.png"><img alt="../../../../_images/mangoh-green-angled.png" class="with-border" src="../../../../_images/mangoh-green-angled.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.43 </span><span class="caption-text">mangOH Green Angled View</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id19">
+<span id="fig-mangoh-green-front"></span><a class="with-border reference internal image-reference" href="../../../../_images/mangoh-green-front.jpg"><img alt="../../../../_images/mangoh-green-front.jpg" class="with-border" src="../../../../_images/mangoh-green-front.jpg" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.44 </span><span class="caption-text">mangOH Green Front View</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="build-targets">
+<span id="sec-mangoh-green-wp7607-targets"></span><h2><a class="toc-backref" href="#id26"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<section id="machines">
+<span id="sec-mangoh-green-wp7607-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
+<span id="table-mangoh-green-wp7607-machines"></span><table class="docutils align-default" id="id20">
+<caption><span class="caption-number">Table 1.24 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mangOH Green
+with WP7607
+or WP7607-1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mangoh-green-wp7607.yml</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mangoh-green-wp7607</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p>NAND flash</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Target board.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-mangoh-green-wp7607-images"><span class="std std-numref">Section 1.2.2</span></a>,
+you can find list of supported recipes for the target images, which you can build in addition
+to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
+(see <a class="reference internal" href="#sec-mangoh-green-wp7607-build"><span class="std std-numref">Section 1.3</span></a>).</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd><p>External storage device for which an installation image is generated. When booting from
+the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
+</dd>
+</dl>
+</section>
+<section id="images">
+<span id="sec-mangoh-green-wp7607-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
+<span id="table-mangoh-green-wp7607-images"></span><table class="colwidths-given docutils align-default" id="id21">
+<caption><span class="caption-number">Table 1.25 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
+Image</p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<th class="head"><p>Supported by Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Standard TanoWrt image.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
+<dd><p>Image recipe name. This name can be used as argument
+for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-mangoh-green-wp7607-build"><span class="std std-numref">Section 1.3</span></a> section).</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="build">
+<span id="sec-mangoh-green-wp7607-build"></span><h2><a class="toc-backref" href="#id27"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<p>Please read the common information on how to perform a TanoWrt
+images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>See section <a class="reference internal" href="#sec-mangoh-green-wp7607-machines"><span class="std std-numref">Section 1.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-mangoh-green-wp7607-images"><span class="std std-numref">Section 1.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-mangoh-green-wp7607-artifacts"><span class="std std-numref">Section 1.5</span></a> for detailed information
+about the produced build artifacts.</p></li>
+</ul>
+</div>
+<section id="examples">
+<h3><span class="section-number">1.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<section id="build-default-image-for-mangoh-green-board-with-wp7607">
+<h4><span class="section-number">1.3.1.1 </span>Build Default Image for mangOH Green Board with WP7607<a class="headerlink" href="#build-default-image-for-mangoh-green-board-with-wp7607" title="Permalink to this heading"></a></h4>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/mangoh-green-wp7607.yml
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="partitioning-layouts">
+<span id="sec-mangoh-green-wp7607-partitioning"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<p>Here is a list of used by system MTD partitions and their descriptions.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>MTD</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Size</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mtd11</p></td>
+<td><p>aboot</p></td>
+<td><p>1 MiB</p></td>
+<td><p>Little Kernel (LK) bootloader</p></td>
+</tr>
+<tr class="row-odd"><td><p>mtd12</p></td>
+<td><p>boot</p></td>
+<td><p>14 MiB</p></td>
+<td><p>Linux kernel</p></td>
+</tr>
+<tr class="row-even"><td><p>mtd13</p></td>
+<td><p>system</p></td>
+<td><p>59 MiB</p></td>
+<td><p>Read-only root filesystem (squashfs)</p></td>
+</tr>
+<tr class="row-odd"><td><p>mtd14</p></td>
+<td><p>lefwkro</p></td>
+<td><p>17.25 MiB</p></td>
+<td><p>Unused</p></td>
+</tr>
+<tr class="row-even"><td><p>mtd15</p></td>
+<td><p>swirw</p></td>
+<td><p>15.5 MiB</p></td>
+<td><p>Unused</p></td>
+</tr>
+<tr class="row-odd"><td><p>mtd16</p></td>
+<td><p>userapp</p></td>
+<td><p>130 MiB</p></td>
+<td><p>Overlay filesystem (ubifs)</p></td>
+</tr>
+</tbody>
+</table>
+<p>All user data are stored in overlayfs in partition mtd16 (userapp). You can clean
+up this partition manually after system is boots up using the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>jffs2reset -r -y
+</pre></div>
+</div>
+<p>or over web-interface LuCI (see <span class="guilabel">Restore</span> section in <em class="menuselection">System → Backup</em>).</p>
+</section>
+<section id="produced-build-artifacts">
+<span id="sec-mangoh-green-wp7607-artifacts"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
+Refer to table <a class="reference internal" href="#table-mangoh-green-wp7607-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common build artifacts.</p>
+<span id="table-mangoh-green-wp7607-artifacts"></span><table class="colwidths-given docutils align-default" id="id22">
+<caption><span class="caption-number">Table 1.26 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Artifact</p></th>
+<th class="head"><p>Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Bootloader</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">appsboot.mbn</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Bootloader (Little Kernel) binary with fastboot support.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">boot-yocto-mdm9x28.img</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Image with bootloader and linux kernel.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Linux Kernel and DTB</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">zImage-&lt;MACHINE&gt;.bin</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Linux kernel compressed binary image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">dtb</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Folder with compiled Device Tree Blobs (DTB).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">masterDTB.4k</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Image with compiled Device Tree Blobs (DTB).</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Images</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.squashfs</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Read-only root filesystem image (squashfs).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.ubi</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Read-only root filesystem image (UBI).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.wp76xx.spk</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>SPK image contains bootloader, linux kernel, DTB and read-only
+filesystem images. This image can be used for firmware upgrade with
+<strong class="command">swiflash</strong> utility
+(see <a class="reference internal" href="#sec-mangoh-green-wp7607-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifact file names are replaced by
+the actual value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen
+<a class="reference internal" href="#sec-mangoh-green-wp7607-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;</span></code> is replaced
+by the actual read-only root filesystem <a class="reference internal" href="#sec-mangoh-green-wp7607-images">image</a> name.</p>
+</div>
+<p>For example, below is the lists of artifacts produced by the <code class="docutils literal notranslate"><span class="pre">mangoh-green-wp7607-nand.yml</span></code>
+and <code class="docutils literal notranslate"><span class="pre">mangoh-green-wp7607-sd.yml</span></code> target builds. There are two types of listings here —
+a complete listing, and a reduced listing without the symbolic links display.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<span class="go">total 315M</span>
+<span class="go">-rwxr-xr-x 1 530K Jul 29 10:56 appsboot.mbn</span>
+<span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.2k</span>
+<span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.4k</span>
+<span class="go">-rw-r--r-- 1   40 Jul 29 11:00 boot_mbnhdr</span>
+<span class="go">-rw-r--r-- 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28-20220729080026.2k.img</span>
+<span class="go">-rw-r--r-- 1 6.1M Jul 29 11:00 boot-yocto-mdm9x28-20220729080026.4k.img</span>
+<span class="go">-rw-r--r-- 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.2k.img.signed</span>
+<span class="go">-rwxr-xr-x 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.2k.img.unsigned</span>
+<span class="go">-rw-r--r-- 1 6.1M Jul 29 11:00 boot-yocto-mdm9x28.4k.img.signed</span>
+<span class="go">-rwxr-xr-x 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.4k.img.unsigned</span>
+<span class="go">drwxr-xr-x 3 4.0K Jul 29 11:00 dtb</span>
+<span class="go">-rw-r--r-- 1   67 Jul 29 11:00 kernel.version</span>
+<span class="go">-rw-r--r-- 1   44 Jul 29 10:56 lk.version</span>
+<span class="go">-rw------- 2 414K Jul 29 11:00 masterDTB.2k</span>
+<span class="go">-rw------- 2 420K Jul 29 11:00 masterDTB.4k</span>
+<span class="go">-rw-r--r-- 2  37M Jul 29 11:00 modules--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.tgz</span>
+<span class="go">-rw-r--r-- 2 512K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.reset.ubifs.4k.ubi</span>
+<span class="go">-rw-r--r-- 2  45K Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2  21M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs</span>
+<span class="go">-rw-r--r-- 2 176K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.hash</span>
+<span class="go">-rw-r--r-- 2  608 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.hash.txt</span>
+<span class="go">-rw-r--r-- 2 5.5K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.rhash</span>
+<span class="go">-rw-r--r-- 2   65 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.rhash.unsigned</span>
+<span class="go">-rw-r--r-- 2  117 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.ubinize.cfg</span>
+<span class="go">-rw-r--r-- 2   24 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.version</span>
+<span class="go">-rw-r--r-- 2  23M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.squashfs.4k.ubi</span>
+<span class="go">-rw-r--r-- 2 325K Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607-20220729063515.testdata.json</span>
+<span class="go">-rw-r--r-- 1  30M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.clean.spk</span>
+<span class="go">-rw-r--r-- 1  30M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.spk</span>
+<span class="go">-rwxr-xr-x 2 132M Jul 29 11:00 vmlinux</span>
+<span class="go">-rw-r--r-- 2 5.6M Jul 29 11:00 zImage--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.bin</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls -gGh
+<span class="go">total 315M</span>
+<span class="go">-rwxr-xr-x 1 530K Jul 29 10:56 appsboot.mbn</span>
+<span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.2k</span>
+<span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.4k</span>
+<span class="go">-rw-r--r-- 1   40 Jul 29 11:00 boot_mbnhdr</span>
+<span class="go">-rw-r--r-- 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28-20220729080026.2k.img</span>
+<span class="go">-rw-r--r-- 1 6.1M Jul 29 11:00 boot-yocto-mdm9x28-20220729080026.4k.img</span>
+<span class="go">lrwxrwxrwx 1   40 Jul 29 11:00 boot-yocto-mdm9x28.2k.img -&gt; boot-yocto-mdm9x28-20220729080026.2k.img</span>
+<span class="go">-rw-r--r-- 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.2k.img.signed</span>
+<span class="go">-rwxr-xr-x 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.2k.img.unsigned</span>
+<span class="go">lrwxrwxrwx 1   40 Jul 29 11:00 boot-yocto-mdm9x28.4k.img -&gt; boot-yocto-mdm9x28-20220729080026.4k.img</span>
+<span class="go">-rw-r--r-- 1 6.1M Jul 29 11:00 boot-yocto-mdm9x28.4k.img.signed</span>
+<span class="go">-rwxr-xr-x 1 6.0M Jul 29 11:00 boot-yocto-mdm9x28.4k.img.unsigned</span>
+<span class="go">lrwxrwxrwx 1   40 Jul 29 11:00 boot-yocto-mdm9x28.img -&gt; boot-yocto-mdm9x28-20220729080026.4k.img</span>
+<span class="go">lrwxrwxrwx 1   25 Jul 29 11:00 boot-yocto-mdm9x28.img.unsigned -&gt; boot-yocto-mdm9x28.4k.img</span>
+<span class="go">drwxr-xr-x 3 4.0K Jul 29 11:00 dtb</span>
+<span class="go">-rw-r--r-- 1   67 Jul 29 11:00 kernel.version</span>
+<span class="go">-rw-r--r-- 1   44 Jul 29 10:56 lk.version</span>
+<span class="go">-rw------- 2 414K Jul 29 11:00 masterDTB.2k</span>
+<span class="go">-rw------- 2 420K Jul 29 11:00 masterDTB.4k</span>
+<span class="go">-rw-r--r-- 2  37M Jul 29 11:00 modules--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.tgz</span>
+<span class="go">lrwxrwxrwx 2   88 Jul 29 11:00 modules-mangoh-green-wp7607.tgz -&gt; modules--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.tgz</span>
+<span class="go">-rw-r--r-- 2 512K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.reset.ubifs.4k.ubi</span>
+<span class="go">-rw-r--r-- 2  45K Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2  21M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs</span>
+<span class="go">-rw-r--r-- 2 176K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.hash</span>
+<span class="go">-rw-r--r-- 2  608 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.hash.txt</span>
+<span class="go">-rw-r--r-- 2 5.5K Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.rhash</span>
+<span class="go">-rw-r--r-- 2   65 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.rhash.unsigned</span>
+<span class="go">-rw-r--r-- 2  117 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs.ubinize.cfg</span>
+<span class="go">-rw-r--r-- 2   24 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.version</span>
+<span class="go">-rw-r--r-- 2  23M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.squashfs.4k.ubi</span>
+<span class="go">-rw-r--r-- 2 325K Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607-20220729063515.testdata.json</span>
+<span class="go">-rw-r--r-- 1  30M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.clean.spk</span>
+<span class="go">-rw-r--r-- 1  30M Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.spk</span>
+<span class="go">lrwxrwxrwx 2   45 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.4k.default -&gt; tanowrt-image-full-mangoh-green-wp7607.4k.ubi</span>
+<span class="go">lrwxrwxrwx 2   54 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.4k.ubi -&gt; tanowrt-image-full-mangoh-green-wp7607.squashfs.4k.ubi</span>
+<span class="go">lrwxrwxrwx 2   49 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.default -&gt; tanowrt-image-full-mangoh-green-wp7607.4k.default</span>
+<span class="go">lrwxrwxrwx 2   69 Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607.manifest -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.manifest</span>
+<span class="go">lrwxrwxrwx 2   69 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.squashfs -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.squashfs</span>
+<span class="go">lrwxrwxrwx 2   69 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.squashfs.4k.ubi -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.squashfs.4k.ubi</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 29 11:02 tanowrt-image-full-mangoh-green-wp7607.testdata.json -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   54 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.ubi -&gt; tanowrt-image-full-mangoh-green-wp7607.squashfs.4k.ubi</span>
+<span class="go">lrwxrwxrwx 2   68 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.version -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.rootfs.version</span>
+<span class="go">lrwxrwxrwx 1   70 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.wp76xx.clean.spk -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.clean.spk</span>
+<span class="go">lrwxrwxrwx 1   64 Jul 29 11:03 tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk -&gt; tanowrt-image-full-mangoh-green-wp7607-20220729063515.wp76xx.spk</span>
+<span class="go">-rwxr-xr-x 2 132M Jul 29 11:00 vmlinux</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 29 11:00 zImage -&gt; zImage--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.bin</span>
+<span class="go">-rw-r--r-- 2 5.6M Jul 29 11:00 zImage--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.bin</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 29 11:00 zImage-mangoh-green-wp7607.bin -&gt; zImage--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.bin</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="writing-images">
+<span id="sec-mangoh-green-wp7607-flash"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<p>Note that when flashing the <code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.wp76xx.spk</span></code> images
+(see <a class="reference internal" href="#sec-mangoh-green-wp7607-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> section), user data in overlayfs
+are not cleared. This allows flashing of a new system while keeping the user
+configuration. However, it can also cause issues with the new firmware as it
+may not update some important files. See “Used Flash Partitions” section for
+extra information about clearing overlayfs data.</p>
+<p>To write the built image to the device, follow these steps:</p>
+<ol class="arabic">
+<li><p>Power off the mangOH Green board.</p></li>
+<li><p>Turn SW401-7 (TP1_BOOT) DIP switch to ON state.</p></li>
+<li><p>Connect mangOH Green board with your PC via micro USB cable (connector CN311).</p></li>
+<li><p>Power on mangOH Green board.</p></li>
+<li><p>Run the <a class="reference internal" href="../../index.html#sec-hsl-swi-install-swiflash"><span class="std std-ref">swiflash</span></a> utility on your PC as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash -m wp76xx -i &lt;path-to-image&gt; -p &lt;port&gt;
+</pre></div>
+</div>
+<p>Where:</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-i">
+<span class="sig-name descname"><span class="pre">-i</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;path-to-image&gt;</span></span><a class="headerlink" href="#cmdoption-i" title="Permalink to this definition"></a></dt>
+<dd><p>Path to image file in the CWE (SPK) format.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-p">
+<span class="sig-name descname"><span class="pre">-p</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-p" title="Permalink to this definition"></a></dt>
+<dd><p>USB port that will be used to firmware downloading.
+You can use any path from <code class="file docutils literal notranslate"><span class="pre">/dev/serial/by-path</span></code>
+or <code class="file docutils literal notranslate"><span class="pre">/dev/serial/by-id</span></code>.</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash -m wp76xx <span class="se">\</span>
+    -p /dev/serial/by-id/usb-Sierra_Wireless__Incorporated_Sierra_Wireless_WP7607_VN91720016071042 <span class="se">\</span>
+    -i ~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607/tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk
+</pre></div>
+</div>
+</li>
+<li><p>Wait until the flashing is complete.</p></li>
+<li><p>Power off mangOH Green board.</p></li>
+<li><p>Turn SW401-7 (TP1_BOOT) DIP switch back to OFF state.</p></li>
+<li><p>Power on mangOH Green board.</p></li>
+<li><p>Flashed system will be booting.</p></li>
+</ol>
+</section>
+<section id="booting-and-running">
+<span id="sec-mangoh-green-wp7607-booting"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Power on board.</p></li>
+<li><p>TanoWrt will be booting from internal NAND.</p></li>
+<li><p>Log in to system using default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend to upgrade your WP76xx modem firmware to release 16 from
+<a class="reference external" href="https://source.sierrawireless.com/resources/airprime/software/wp76xx/wp76xx-firmware-latest-release-components">here</a>.</p>
+</div>
+</section>
+<section id="serial-console">
+<span id="sec-mangoh-green-wp7607-serial"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<p>At startup, the bootloader and Linux kernel log messages are outputed
+to the serial port UART2 (RS232 DB9 connector CN700 on board).</p>
+<p>The default serial console settings for mangOH Green with WP7607 for bootloader
+and kernel are described in the table below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Baudrate</p></td>
+<td><p>115200</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data bits</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>Stop bits</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parity</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Flow control</p></td>
+<td><p>none</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="default-network-configuration">
+<span id="sec-mangoh-green-wp7607-network-config"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">1.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<p>By default configured and enabled only <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface with static IPv4 address 192.168.10.1
+with enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server on it.</p>
+</section>
+<section id="web-user-interface">
+<span id="sec-mangoh-green-wp7607-webui"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<p>The WebUI can be accessed via any Ethernet port bridged to LAN network
+(1 or 2) or via USB RNDIS connection through HTTP(s) protocol.
+You must see something like this in browser:</p>
+<figure class="align-center" id="id23">
+<span id="fig-mangoh-green-wp7607-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.45 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id24">
+<span id="fig-mangoh-green-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/mangoh-green-luci-status.png"><img alt="../../../../_images/mangoh-green-luci-status.png" src="../../../../_images/mangoh-green-luci-status.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.46 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="firmware-upgrade">
+<span id="sec-mangoh-green-wp7607-upgrade"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Default for TanoWrt <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">firmware upgrade</span></a>
+method is not supported for mangOH Green with WP7607 target.</p>
+<p>mangOH Green with WP7607 has its own upgrade system.</p>
+</div>
+</section>
+<section id="limitations">
+<h2><a class="toc-backref" href="#id36"><span class="section-number">1.12 </span>Limitations</a><a class="headerlink" href="#limitations" title="Permalink to this heading"></a></h2>
+<p>This layer has very little support for the modem hardware. Using this layer you
+can only set up a PPP connection using the internal modem AT command port. This
+is all the capabilities of this layer for using modem hardware.</p>
+<p>For support more sophisticated features of the modem hardware, an additional
+<strong>meta-tanowrt-hsl-swi-extras</strong> layer is required. Extra <strong>meta-tanowrt-hsl-swi-extras</strong>
+layer is a TanoWrt hardware support layer (HSL) for the Sierra Wireless modules
+contains recipes for proprietary/commercial software. Extra <strong>meta-tanowrt-hsl-swi-extras</strong>
+layer provides support for the following extra features:</p>
+<ul>
+<li><p>Partial or full firmware upgrade via WebUI</p>
+<figure class="align-default" id="fig-mangoh-green-luci-fwu-upgrade">
+<a class="reference internal image-reference" href="../../../../_images/mangoh-green-luci-fwu-upgrade.png"><img alt="../../../../_images/mangoh-green-luci-fwu-upgrade.png" src="../../../../_images/mangoh-green-luci-fwu-upgrade.png" style="width: 800px;" /></a>
+</figure>
+</li>
+<li><p>Control and monitor via WebUI or/and ubus</p>
+<figure class="align-default" id="fig-mangoh-green-luci-mdm-status">
+<a class="reference internal image-reference" href="../../../../_images/mangoh-green-luci-mdm-status.png"><img alt="../../../../_images/mangoh-green-luci-mdm-status.png" src="../../../../_images/mangoh-green-luci-mdm-status.png" style="width: 800px;" /></a>
+</figure>
+</li>
+<li><p>Modem data connection (supported LTE/UMTS/GSM modes)</p></li>
+<li><p>Support for GNSS subsystem (WebUI and ubus)</p></li>
+<li><p>Receiving and sending SMS over WebUI or/and ubus with notifications (full UCS2 alphabet support)</p></li>
+<li><p><a class="reference external" href="https://legato.io/">Legato Framework</a></p></li>
+<li><p><em>and much more…</em></p></li>
+</ul>
+<p>Sources of <strong>meta-tanowrt-hsl-swi-extras</strong> layer cannot be published publicly
+due to Qualcomm Inc. and Sierra Wireless Inc. proprietary licenses restrictions but
+can be provided commercially. Please contact <a class="reference external" href="https://tano-systems.com">Tano Systems LLC</a>
+for details.</p>
+</section>
+<section id="additional-information">
+<h2><a class="toc-backref" href="#id37"><span class="section-number">1.13 </span>Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
+<p>Here are sections with various additional information about the
+mangOH Green with WP7607 and the operation of TanoWrt on it.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extra/setting-up-modem.html">1.13.1 Setting Up a Modem Data Connection</a></li>
+</ul>
+</div>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id38"><span class="section-number">1.14 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://mangoh.io/mangoh-green">https://mangoh.io/mangoh-green</a></p></li>
+<li><p><a class="reference external" href="https://www.sierrawireless.com/products-and-solutions/embedded-solutions/products/wp7607/">https://www.sierrawireless.com/products-and-solutions/embedded-solutions/products/wp7607/</a></p></li>
+<li><p><a class="reference external" href="https://www.sierrawireless.com/products-and-solutions/embedded-solutions/products/wp7607-1/">https://www.sierrawireless.com/products-and-solutions/embedded-solutions/products/wp7607-1/</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

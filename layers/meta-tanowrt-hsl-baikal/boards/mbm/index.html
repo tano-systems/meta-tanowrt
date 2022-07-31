@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
@@ -20,10 +21,11 @@
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)" href="../../../meta-tanowrt-hsl-nxp/index.html" />
+    <link rel="next" title="Broadcom Hardware Support Layer (meta-tanowrt-hsl-brcm)" href="../../../meta-tanowrt-hsl-brcm/index.html" />
     <link rel="prev" title="Baikal Electronics SoC’s Hardware Support Layer (meta-tanowrt-hsl-baikal)" href="../../index.html" /> 
 </head>
 
@@ -48,26 +50,45 @@
               <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">meta-tanowrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">meta-tanowrt-hsl-baikal</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Baikal Electronics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1 MBM 1.0/2.0 (TF307)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build">1.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#photos">1.1.1 Photos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#specification">1.1.2 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">1.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">1.2.2 Images</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build">1.3 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">1.3.1 Examples</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.4 Produced Build Artifacts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.5 Writing Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.6 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.5 Writing Images</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#wriging-image-to-usb-flash-drive">1.5.1 Wriging Image to USB Flash Drive</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.6 Booting and Running</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-usb-flash-drive">1.6.1 Booting from USB Flash Drive</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">1.7 Default Network Configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#web-user-interface">1.8 Web User Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">1.9 Firmware Upgrade</a></li>
@@ -81,8 +102,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">meta-tanowrt-hsl-rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul>
@@ -142,36 +174,33 @@
 <p>A system board in the mini-ITX form factor. The board’s compact
 and unified design is suitable for any desktop solution compatible
 with the mini-ITX form factor.</p>
-<section id="interfaces-and-connectors">
-<h3><span class="section-number">1.1.1 </span>Interfaces and Connectors<a class="headerlink" href="#interfaces-and-connectors" title="Permalink to this heading"></a></h3>
 <p>The figures below shows the MBM 2.0 board (TF307-MB-S-D). The MBM 1.0 board has
 a similar design and only minor differences.</p>
-<figure class="align-default" id="id15">
+<figure class="align-center" id="id15">
 <span id="fig-mbm20-top"></span><a class="reference internal image-reference" href="../../../../_images/tf307-mb-s-d-top.webp"><img alt="../../../../_images/tf307-mb-s-d-top.webp" src="../../../../_images/tf307-mb-s-d-top.webp" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">MBM 2.0 (TF307-MB-S-D) Board Top View</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.15 </span><span class="caption-text">MBM 2.0 (TF307-MB-S-D) Board Top View</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id16">
+<figure class="align-center" id="id16">
 <span id="fig-mbm20-front"></span><a class="reference internal image-reference" href="../../../../_images/tf307-mb-s-d-front.webp"><img alt="../../../../_images/tf307-mb-s-d-front.webp" src="../../../../_images/tf307-mb-s-d-front.webp" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.2 </span><span class="caption-text">MBM 2.0 (TF307-MB-S-D) Board Front View</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.16 </span><span class="caption-text">MBM 2.0 (TF307-MB-S-D) Board Front View</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-</section>
 <section id="photos">
-<h3><span class="section-number">1.1.2 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">1.1.1 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
 <figure class="align-default" id="id17">
 <span id="fig-mbm10-top"></span><a class="with-border reference internal image-reference" href="../../../../_images/tf307-mb-s-c-top.webp"><img alt="../../../../_images/tf307-mb-s-c-top.webp" class="with-border" src="../../../../_images/tf307-mb-s-c-top.webp" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.3 </span><span class="caption-text">MBM 1.0 (TF307-MB-S-C) Board Top View</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.17 </span><span class="caption-text">MBM 1.0 (TF307-MB-S-C) Board Top View</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="specification">
-<h3><span class="section-number">1.1.3 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">1.1.2 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default" id="id18">
-<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">MBM 1.0/2.0 (TF307) Specification</span><a class="headerlink" href="#id18" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 1.8 </span><span class="caption-text">MBM 1.0/2.0 (TF307) Specification</span><a class="headerlink" href="#id18" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 18%" />
 <col style="width: 82%" />
@@ -261,7 +290,7 @@ connectors</p></td>
 <section id="machines">
 <span id="sec-mbm-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
 <span id="table-mbm-machines"></span><table class="docutils align-default" id="id19">
-<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 1.9 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 9%" />
 <col style="width: 17%" />
@@ -269,16 +298,16 @@ connectors</p></td>
 <col style="width: 10%" />
 <col style="width: 18%" />
 <col style="width: 15%" />
-<col style="width: 16%" />
+<col style="width: 17%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Board <a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
 <th class="head"><p>Hardware Revision</p></th>
-<th class="head"><p>Target YAML <a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
-<th class="head"><p>Machine <a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
-<th class="head"><p>Target Recipe(s) <a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
-<th class="head"><p>Running Media <a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
-<th class="head"><p>Installation Media <a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
 </tr>
 </thead>
 <tbody>
@@ -333,20 +362,24 @@ the Installation Media, the TanoWrt system is installed on the Running Media sto
 <section id="images">
 <span id="sec-mbm-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
 <span id="table-mbm-images"></span><table class="colwidths-given docutils align-default" id="id20">
-<caption><span class="caption-number">Table 1.3 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 1.10 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 50%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 55%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Recipe <a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
+Image</p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
 <th class="head"><p>Supported by Target(s)</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<tr class="row-even"><td rowspan="2"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Standard TanoWrt image.</p></td>
 </tr>
@@ -358,10 +391,10 @@ image. When building this image,
 <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code> will also be built
 as dependency.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
+<tr class="row-even"><td rowspan="2"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
 <td><p><em>All</em></p></td>
-<td><p>Standard TanoWrt image
-with Qt5 support.</p></td>
+<td><p>Standard TanoWrt image with Qt5 support.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5-swu</span></code></p></td>
 <td><p><em>All</em></p></td>
@@ -421,11 +454,11 @@ about the produced build artifacts.</p></li>
 <p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
 Refer to table <a class="reference internal" href="#table-mbm-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
 <span id="table-mbm-artifacts"></span><table class="colwidths-given docutils align-default" id="id21">
-<caption><span class="caption-number">Table 1.4 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 1.11 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 68%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Artifact</p></th>
@@ -463,18 +496,18 @@ Refer to table <a class="reference internal" href="#table-mbm-artifacts"><span c
 <tr class="row-odd"><td colspan="3"><p class="centered">
 <strong>Images</strong></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.wic</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.wic</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Bootable image including all required partitions for booting
 and running the system. This image is ready to be written
 to the USB flash drive using the <strong class="command">dd</strong> utility
 or similar (see <a class="reference internal" href="#sec-mbm-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Root filesystem image (squashfs with LZO compression).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p><a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware upgrade</span></a> image.</p></td>
 </tr>
@@ -484,7 +517,7 @@ or similar (see <a class="reference internal" href="#sec-mbm-flash"><span class=
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifacts file names are replaced by the actual
 value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen <a class="reference internal" href="#sec-mbm-targets">target</a>.
-<code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;</span></code> is replaced by the actual <a class="reference internal" href="#sec-mbm-images">image recipe</a> name.</p>
+<code class="docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;</span></code> is replaced by the actual read-only rootfs filesystem <a class="reference internal" href="#sec-mbm-images">image</a> name.</p>
 </div>
 <p>For example, below is the complete list of artifacts produced by the
 <code class="docutils literal notranslate"><span class="pre">mbm20.yml</span></code> target build.</p>
@@ -525,7 +558,13 @@ value of the <code class="docutils literal notranslate"><span class="pre">MACHIN
 <section id="wriging-image-to-usb-flash-drive">
 <span id="sec-mbm-flash-usb"></span><h3><span class="section-number">1.5.1 </span>Wriging Image to USB Flash Drive<a class="headerlink" href="#wriging-image-to-usb-flash-drive" title="Permalink to this heading"></a></h3>
 <p>No special information about writing images to USB flash drive
-for described boards. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing images to SD Card or USB Flash Drive</span></a> section.</p>
+for described boards. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
+<p class="rubric">Examples</p>
+<p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">mbm20.yml</span></code> target to the USB flash drive
+<code class="file docutils literal notranslate"><span class="pre">/dev/sdc</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-mbm20.wic <span class="nv">of</span><span class="o">=</span>/dev/sdc
+</pre></div>
+</div>
 </section>
 </section>
 <section id="booting-and-running">
@@ -542,7 +581,7 @@ UEFI firmware on MBM 1.0/2.0 board.</p>
 USB 2.0 or 3.0 port (see section <a class="reference internal" href="#sec-mbm-board"><span class="std std-ref">Board Overview</span></a>).</p></li>
 <li><p>Power on board.</p></li>
 <li><p>Press ESC to enter UEFI setup utility.</p></li>
-<li><p>Select <span class="menuselection">Boot Manager</span> in menu and press <kbd class="kbd docutils literal notranslate">ENTER</kbd>.</p></li>
+<li><p>Select <em class="menuselection">Boot Manager</em> in menu and press <kbd class="kbd docutils literal notranslate">ENTER</kbd>.</p></li>
 <li><p>Select your USB flash drive in boot manager menu and press <kbd class="kbd docutils literal notranslate">ENTER</kbd>.
 TanoWrt will be booting from selected USB flash drive.</p></li>
 <li><p>When the system boots, log in using the default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
@@ -561,23 +600,27 @@ protocol enabled. Bridge (<code class="docutils literal notranslate"><span class
 <span id="sec-mbm-webui"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.8 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
 <p>The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
 You must see something like this in browser after you logged in:</p>
-<figure class="align-default" id="id22">
+<figure class="align-center" id="id22">
 <span id="fig-mbm-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.4 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.18 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id23">
-<span id="fig-mbm-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/luci-status.webp"><img alt="../../../../_images/luci-status.webp" src="../../../../_images/luci-status.webp" style="width: 900px;" /></a>
+<figure class="align-center" id="id23">
+<span id="fig-mbm-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/tf307-mb-luci-status.webp"><img alt="../../../../_images/tf307-mb-luci-status.webp" src="../../../../_images/tf307-mb-luci-status.webp" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.5 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.19 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="firmware-upgrade">
 <span id="sec-mbm-upgrade"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.9 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
 <p>No special information about firmware upgrade.
-See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-mbm-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+</div>
 </section>
 <section id="references">
 <h2><a class="toc-backref" href="#id33"><span class="section-number">1.10 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
@@ -595,7 +638,7 @@ See common instructions in <a class="reference internal" href="../../../../firmw
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
     </p>
   </div>
 </footer>

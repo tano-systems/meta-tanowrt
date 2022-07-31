@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.12.2 Configuring PPP Connection over UART4 &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/design-tabs.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="2.12.3 Enabling TI UIO" href="ti-uio.html" />
+    <link rel="prev" title="2.12.1 Erasing SPI NOR Flash Contents" href="erasing-nor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Texas Instruments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../am335x-bbb/index.html">1 BeagleBone Black</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">2 AM3359 ICEv2 EVM (TMDSICE3359)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../index.html#board-overview">2.1 Board Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#build-targets">2.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#build">2.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#partitioning-layouts">2.4 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#produced-build-artifacts">2.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#writing-image-to-microsd-card">2.6 Writing Image to microSD Card</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#booting-and-running">2.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#serial-console">2.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#default-network-configuration">2.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#web-user-interface">2.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#firmware-upgrade">2.11 Firmware Upgrade</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html#additional-information">2.12 Additional Information</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="erasing-nor.html">2.12.1 Erasing SPI NOR Flash Contents</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">2.12.2 Configuring PPP Connection over UART4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ti-uio.html">2.12.3 Enabling TI UIO</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#references">2.13 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../am574x-idk/index.html">3 AM574x IDK EVM (TMDSIDK574)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../../index.html">Texas Instruments Hardware Support Layer (meta-tanowrt-hsl-ti)</a> &raquo;</li>
+    
+      <li><a href="../index.html"><span class="section-number">2 </span>AM3359 ICEv2 EVM (TMDSICE3359)</a> &raquo;</li>
+    
+    <li><span class="section-number">2.12.2 </span>Configuring PPP Connection over UART4</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/layers/meta-tanowrt-hsl-ti/boards/am335x-icev2/extra/ppp-over-uart4.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuring-ppp-connection-over-uart4">
+<h1><span class="section-number">2.12.2 </span>Configuring PPP Connection over UART4<a class="headerlink" href="#configuring-ppp-connection-over-uart4" title="Permalink to this heading"></a></h1>
+<p>Here is an instruction on how to configure PPP connection over UART4
+on a <a class="reference internal" href="../index.html#machine-am335x-icev2"><span class="std std-ref">TI AM3359 ICEv2 (TMDSICE3359)</span></a> board.</p>
+<p>By default, the pppd service is running on the UART4 port ready for
+connection via null-modem cable with PC. UART4 signals are routed to
+J3 connector (Host Expansion Connector 2) of ICEv2 board. To connect the
+null-modem cable you need to use the following pins of the J3 connector:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal</p></th>
+<th class="head"><p>Host Expansion Connector 2 (J3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>Pin 2</p></td>
+</tr>
+<tr class="row-odd"><td><p>RX</p></td>
+<td><p>Pin 7</p></td>
+</tr>
+<tr class="row-even"><td><p>TX</p></td>
+<td><p>Pin 8</p></td>
+</tr>
+</tbody>
+</table>
+<p>To establish a connection on the PC side you need to run the pppd service with
+the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd nodetach <span class="nb">local</span> lock noauth nocrtscts passive &lt;IP-1&gt;:&lt;IP-2&gt; &lt;serial-device&gt; &lt;baudrate&gt; <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>Where:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;IP-1&gt;</span></code></dt><dd><p>IP address of host PC (e.g. <code class="docutils literal notranslate"><span class="pre">172.16.0.100</span></code>) for PPP connection;</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;IP-2&gt;</span></code></dt><dd><p>IP address of the ICEv2 board (e.g. <code class="docutils literal notranslate"><span class="pre">172.16.0.1</span></code>) for PPP connection;</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;serial-device&gt;</span></code></dt><dd><p>Serial device name (e.g. <code class="file docutils literal notranslate"><span class="pre">/dev/ttyS1</span></code>);</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;baudrate&gt;</span></code></dt><dd><p>Serial port baud rate (115200 by default). If you need to change the baud rate, you should also
+do it on the AM3359 ICEv2 board in the configuration file <code class="file docutils literal notranslate"><span class="pre">/etc/config/network`</span></code>
+(section <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">interface</span> <span class="pre">'uart4'</span></code>, option <code class="docutils literal notranslate"><span class="pre">pppd_options</span></code>) and execute command</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ubus call network reload
+</pre></div>
+</div>
+</dd>
+</dl>
+<section id="example">
+<h2><span class="section-number">2.12.2.1 </span>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<p>For example, if host PC has a serial device named <code class="file docutils literal notranslate"><span class="pre">/dev/ttyS1</span></code>, the IP addresses
+of the PPP connection should be assigned to <code class="docutils literal notranslate"><span class="pre">172.16.0.100</span></code> (host PC) and <code class="docutils literal notranslate"><span class="pre">172.16.0.1</span></code>
+(ICEv2 board), then pppd should be started with the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd nodetach <span class="nb">local</span> lock noauth nocrtscts passive <span class="m">172</span>.16.0.100:172.16.0.1 /dev/ttyS1 <span class="m">115200</span> <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>After executing this command on host PC you should see the <code class="docutils literal notranslate"><span class="pre">ppp0</span></code> interface with
+the assigned IP address <code class="docutils literal notranslate"><span class="pre">172.16.0.100</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ifconfig ppp0
+<span class="go">ppp0: flags=4305&lt;UP,POINTOPOINT,RUNNING,NOART,MULTICAST&gt;  mtu 1500</span>
+<span class="go">          inet addr:172.16.0.100  netmask 255.255.255.255  destination 172.16.0.1</span>
+<span class="go">          ppp  txqueuelen 3  (Point-to-Point Protocol)</span>
+<span class="go">          RX packets 14  bytes 293 (293.0 B)</span>
+<span class="go">          RX errors 0  dropped 0  overruns 0  frame 0</span>
+<span class="go">          TX packets 11  bytes 119 (119.0 B)</span>
+<span class="go">          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span>
+</pre></div>
+</div>
+<p>Now you can access AM3359 ICEv2 board from host PC using IP address <code class="docutils literal notranslate"><span class="pre">172.16.0.1</span></code>.
+For example, you can test it with the <strong class="command">ping</strong> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ping <span class="m">172</span>.16.0.1
+<span class="go">PING 172.16.0.1 (172.16.0.1): 56 data bytes</span>
+<span class="go">64 bytes from 172.16.0.1: seq=0 ttl=64 time=21.212 ms</span>
+<span class="go">64 bytes from 172.16.0.1: seq=1 ttl=64 time=22.162 ms</span>
+<span class="go">64 bytes from 172.16.0.1: seq=2 ttl=64 time=22.233 ms</span>
+<span class="go">64 bytes from 172.16.0.1: seq=3 ttl=64 time=22.186 ms</span>
+<span class="go">64 bytes from 172.16.0.1: seq=4 ttl=64 time=20.161 ms</span>
+<span class="go">^C</span>
+<span class="go">--- 172.16.0.1 ping statistics ---</span>
+<span class="go">5 packets transmitted, 5 packets received, 0% packet loss</span>
+<span class="go">round-trip min/avg/max = 20.161/21.590/22.233 ms</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

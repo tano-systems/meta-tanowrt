@@ -1,9 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
-
 .. _machine-mbm:
 .. _machine-mbm10:
 .. _machine-mbm20:
@@ -27,24 +23,22 @@ A system board in the mini-ITX form factor. The board's compact
 and unified design is suitable for any desktop solution compatible
 with the mini-ITX form factor.
 
-
-Interfaces and Connectors
--------------------------
-
 The figures below shows the MBM 2.0 board (TF307-MB-S-D). The MBM 1.0 board has
 a similar design and only minor differences.
 
 .. _fig-mbm20-top:
 .. figure:: images/tf307-mb-s-d-top.webp
-    :width: 1000
+   :align: center
+   :width: 1000
 
-    MBM 2.0 (TF307-MB-S-D) Board Top View
+   MBM 2.0 (TF307-MB-S-D) Board Top View
 
 .. _fig-mbm20-front:
 .. figure:: images/tf307-mb-s-d-front.webp
-    :width: 1000
+   :align: center
+   :width: 1000
 
-    MBM 2.0 (TF307-MB-S-D) Board Front View
+   MBM 2.0 (TF307-MB-S-D) Board Front View
 
 Photos
 ------
@@ -115,15 +109,15 @@ Machines
 .. _table-mbm-machines:
 .. table:: Supported Machines
 
-   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+-------------------------+
-   | Board [#]_   | Hardware Revision        | Target YAML [#]_      | Machine [#]_  | Target Recipe(s) [#]_      | Running Media [#]_     | Installation Media [#]_ |
-   +==============+==========================+=======================+===============+============================+========================+=========================+
-   | MBM 1.0      || TF-307-MB-S-A (Rev 1.0) | ``mbm10.yml``         | ``mbm10``     | ``tanowrt-image-full-swu`` | USB Flash              | |ndash|                 |
-   |              || TF-307-MB-S-B (Rev 2.0) |                       |               |                            |                        |                         |
-   |              || TF-307-MB-S-C (Rev 3.0) |                       |               |                            |                        |                         |
-   +--------------+--------------------------+-----------------------+---------------+                            |                        |                         |
-   | MBM 2.0      || TF-307-MB-S-D (Rev 4.0) | ``mbm20.yml``         | ``mbm20``     |                            |                        |                         |
-   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+-------------------------+
+   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+--------------------------+
+   | Board\ [#]_  | Hardware Revision        | Target YAML\ [#]_     | Machine\ [#]_ | Target Recipe(s)\ [#]_     | Running Media\ [#]_    | Installation Media\ [#]_ |
+   +==============+==========================+=======================+===============+============================+========================+==========================+
+   | MBM 1.0      || TF-307-MB-S-A (Rev 1.0) | ``mbm10.yml``         | ``mbm10``     | ``tanowrt-image-full-swu`` | USB Flash              | |ndash|                  |
+   |              || TF-307-MB-S-B (Rev 2.0) |                       |               |                            |                        |                          |
+   |              || TF-307-MB-S-C (Rev 3.0) |                       |               |                            |                        |                          |
+   +--------------+--------------------------+-----------------------+---------------+                            |                        |                          |
+   | MBM 2.0      || TF-307-MB-S-D (Rev 4.0) | ``mbm20.yml``         | ``mbm20``     |                            |                        |                          |
+   +--------------+--------------------------+-----------------------+---------------+----------------------------+------------------------+--------------------------+
 
 .. [#] Target board.
 .. [#] Target YAML-file located in the :file:`kas/targets` directory.
@@ -144,28 +138,28 @@ Images
 
 .. _table-mbm-images:
 .. table:: Supported Images
-   :widths: 25, 25, 50
+   :widths: 15, 15, 15, 55
 
-   +-----------------------------------+-------------------------+-----------------------------------------------------+
-   | Recipe [#]_                       | Supported by Target(s)  | Description                                         |
-   +===================================+=========================+=====================================================+
-   | ``tanowrt-image-full``            | *All*                   | Standard TanoWrt image.                             |
-   +-----------------------------------+-------------------------+-----------------------------------------------------+
-   | ``tanowrt-image-full-swu``        | *All*                   | Standard TanoWrt image                              |
-   |                                   |                         | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
-   |                                   |                         | image. When building this image,                    |
-   |                                   |                         | ``tanowrt-image-full`` will also be built           |
-   |                                   |                         | as dependency.                                      |
-   +-----------------------------------+-------------------------+-----------------------------------------------------+
-   | ``tanowrt-image-qt5``             | *All*                   | Standard TanoWrt image                              |
-   |                                   |                         | with Qt5 support.                                   |
-   +-----------------------------------+-------------------------+-----------------------------------------------------+
-   | ``tanowrt-image-qt5-swu``         | *All*                   | Standard TanoWrt image with Qt5 support             |
-   |                                   |                         | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
-   |                                   |                         | image. When building this image,                    |
-   |                                   |                         | ``tanowrt-image-qt5`` will also be built            |
-   |                                   |                         | as dependency.                                      |
-   +-----------------------------------+-------------------------+-----------------------------------------------------+
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
+   | Read-Only Root Filesystem | Recipe\ [#]_                       | Supported by Target(s)     | Description                                         |
+   | Image                     |                                    |                            |                                                     |
+   +===========================+====================================+============================+=====================================================+
+   | ``tanowrt-image-full``    | ``tanowrt-image-full``             | *All*                      | Standard TanoWrt image.                             |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu``         | *All*                      | Standard TanoWrt image                              |
+   |                           |                                    |                            | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                            | image. When building this image,                    |
+   |                           |                                    |                            | ``tanowrt-image-full`` will also be built           |
+   |                           |                                    |                            | as dependency.                                      |
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
+   | ``tanowrt-image-qt5``     | ``tanowrt-image-qt5``              | *All*                      | Standard TanoWrt image with Qt5 support.            |
+   |                           +------------------------------------+----------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-qt5-swu``          | *All*                      | Standard TanoWrt image with Qt5 support             |
+   |                           |                                    |                            | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                            | image. When building this image,                    |
+   |                           |                                    |                            | ``tanowrt-image-qt5`` will also be built            |
+   |                           |                                    |                            | as dependency.                                      |
+   +---------------------------+------------------------------------+----------------------------+-----------------------------------------------------+
 
 .. [#] Image recipe name. This name can be used as argument
        for ``--target`` build command option (see :numref:`sec-mbm-build` section).
@@ -223,7 +217,7 @@ Refer to table :ref:`table-mbm-artifacts` for a description of some common (not 
 
 .. _table-mbm-artifacts:
 .. table:: Produced Build Artifacts
-   :widths: 15, 15
+   :widths: 15, 15, 70
 
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
    | Artifact                                        | Target(s) | Description                                                   |
@@ -244,19 +238,19 @@ Refer to table :ref:`table-mbm-artifacts` for a description of some common (not 
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
    | .. centered:: Images                                                                                                        |
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.wic`            | *All*     | Bootable image including all required partitions for booting  |
+   | :file:`<rootfs-image>-<MACHINE>.wic`            | *All*     | Bootable image including all required partitions for booting  |
    |                                                 |           | and running the system. This image is ready to be written     |
    |                                                 |           | to the USB flash drive using the :command:`dd` utility        |
    |                                                 |           | or similar (see :ref:`sec-mbm-flash`).                        |
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.squashfs-lzo`   | *All*     | Root filesystem image (squashfs with LZO compression).        |
+   | :file:`<rootfs-image>-<MACHINE>.squashfs-lzo`   | *All*     | Root filesystem image (squashfs with LZO compression).        |
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-<MACHINE>.swu`        | *All*     | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
+   | :file:`<rootfs-image>-swu-<MACHINE>.swu`        | *All*     | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
    +-------------------------------------------------+-----------+---------------------------------------------------------------+
 
 .. note:: ``<MACHINE>`` in the artifacts path and artifacts file names are replaced by the actual
           value of the ``MACHINE`` BitBake variable for the chosen `target <sec-mbm-targets_>`__.
-          ``<image-recipe>`` is replaced by the actual `image recipe <sec-mbm-images_>`__ name.
+          ``<rootfs-image>`` is replaced by the actual read-only rootfs filesystem `image <sec-mbm-images_>`__ name.
 
 For example, below is the complete list of artifacts produced by the
 ``mbm20.yml`` target build.
@@ -308,6 +302,15 @@ Wriging Image to USB Flash Drive
 No special information about writing images to USB flash drive
 for described boards. See common instructions in :ref:`sec-writing-sd-or-usb` section.
 
+.. rubric:: Examples
+
+Writing bootable card image for the ``mbm20.yml`` target to the USB flash drive
+:file:`/dev/sdc`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-mbm20.wic of=/dev/sdc
+
 
 .. _sec-mbm-booting:
 
@@ -357,15 +360,17 @@ You must see something like this in browser after you logged in:
 
 .. _fig-mbm-luci-login:
 .. figure:: /common/images/luci/page-login.png
-    :width: 900
+   :align: center
+   :width: 900
 
-    LuCI WebUI Login Page
+   LuCI WebUI Login Page
 
 .. _fig-mbm-luci-status:
-.. figure:: images/luci-status.webp
-    :width: 900
+.. figure:: images/tf307-mb-luci-status.webp
+   :align: center
+   :width: 900
 
-    LuCI WebUI Overview Page
+   LuCI WebUI Overview Page
 
 
 .. _sec-mbm-upgrade:
@@ -374,7 +379,9 @@ Firmware Upgrade
 ================
 
 No special information about firmware upgrade.
-See common instructions in :ref:`sec-firmware-upgrade` section.
+Use produced :file:`.swu` :ref:`artifact <table-mbm-artifacts>` for upgrading running system.
+
+.. seealso:: See common instructions in :ref:`sec-firmware-upgrade` section.
 
 
 References

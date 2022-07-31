@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sierra Wireless LTE Modules Hardware Support Layer (meta-tanowrt-hsl-swi) &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1 mangOH Green with WP7607 or WP7607-1" href="boards/mangoh-green-wp7607/index.html" />
+    <link rel="prev" title="1 Raspberry Pi 3 Model B/B+" href="../meta-tanowrt-hsl-rpi/boards/rpi3/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sierra Wireless</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-swiflash-command-line-tool">Install swiflash Command Line Tool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-boards">Supported Boards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="boards/mangoh-green-wp7607/index.html">1 mangOH Green with WP7607 or WP7607-1</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+    <li>Sierra Wireless LTE Modules Hardware Support Layer (meta-tanowrt-hsl-swi)</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/layers/meta-tanowrt-hsl-swi/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sierra-wireless-lte-modules-hardware-support-layer-meta-tanowrt-hsl-swi">
+<span id="meta-tanowrt-hsl-swi"></span><h1>Sierra Wireless LTE Modules Hardware Support Layer (meta-tanowrt-hsl-swi)<a class="headerlink" href="#sierra-wireless-lte-modules-hardware-support-layer-meta-tanowrt-hsl-swi" title="Permalink to this heading"></a></h1>
+<p>meta-tanowrt-hsl-swi — <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt">TanoWrt</a> hardware support
+layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span class="xref std std-term">HSL</span></a>) for the Sierra Wireless LTE modules.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../../_images/sierra-wireless.svg"><img alt="../../_images/sierra-wireless.svg" src="../../_images/sierra-wireless.svg" width="250" /></a>
+</figure>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#dependencies" id="id6">Dependencies</a></p></li>
+<li><p><a class="reference internal" href="#requirements" id="id7">Requirements</a></p>
+<ul>
+<li><p><a class="reference internal" href="#install-swiflash-command-line-tool" id="id8">Install swiflash Command Line Tool</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#supported-boards" id="id9">Supported Boards</a></p></li>
+<li><p><a class="reference internal" href="#license" id="id10">License</a></p></li>
+<li><p><a class="reference internal" href="#maintainers" id="id11">Maintainers</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id12">References</a></p></li>
+</ul>
+</div>
+<section id="dependencies">
+<h2><a class="toc-backref" href="#id6">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
+<p>Dependencies of the <a class="reference internal" href="#meta-tanowrt-hsl-swi"><span class="std std-ref">meta-tanowrt-hsl-swi</span></a> layer are described in the table below.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 35%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>URI</p></th>
+<th class="head"><p>Subfolder</p></th>
+<th class="head"><p>Branch</p></th>
+<th class="head"><p>Configuration YML-file</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../meta-tanowrt/index.html#meta-tanowrt"><span class="std std-ref">meta-tanowrt</span></a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt.git">https://github.com/tano-systems/meta-tanowrt.git</a></p></td>
+<td><p>meta-tanowrt</p></td>
+<td><p>hardknott</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/14ff4f332b153da0a8ad62d18bee7389/meta-tanowrt.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-tanowrt.yml</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>meta-swi/common</p></td>
+<td><p><a class="reference external" href="https://github.com/legatoproject/meta-swi.git">https://github.com/legatoproject/meta-swi.git</a></p></td>
+<td><p>common</p></td>
+<td><p>yocto-3.0-ref</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/07aa6a17ede54d090cfe0f6902633972/meta-swi-common.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-swi-common.yml</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>meta-swi/meta-swi-mdm9x28</p></td>
+<td><p><a class="reference external" href="https://github.com/legatoproject/meta-swi.git">https://github.com/legatoproject/meta-swi.git</a></p></td>
+<td><p>meta-swi-mdm9x28</p></td>
+<td><p>yocto-3.0-ref</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/2bdab3034d1a21c76851a140674b26cd/meta-swi-mdm9x28.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-swi-mdm9x28.yml</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>meta-swi/meta-swi-mdm9xxx</p></td>
+<td><p><a class="reference external" href="https://github.com/legatoproject/meta-swi.git">https://github.com/legatoproject/meta-swi.git</a></p></td>
+<td><p>meta-swi-mdm9xxx</p></td>
+<td><p>yocto-3.0-ref</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/3fb22fda7528fefe13813cb649956621/meta-swi-mdm9xxx.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-swi-mdm9xxx.yml</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="requirements">
+<h2><a class="toc-backref" href="#id7">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<section id="install-swiflash-command-line-tool">
+<span id="sec-hsl-swi-install-swiflash"></span><h3><a class="toc-backref" href="#id8">Install swiflash Command Line Tool</a><a class="headerlink" href="#install-swiflash-command-line-tool" title="Permalink to this heading"></a></h3>
+<p>This utility is required for writing (flashing) CWE (SPK) image
+to the device. If you using Ubuntu 16.04 or higher, you can install the tool
+using the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget https://downloads.sierrawireless.com/tools/swiflash/swiflash_latest.deb -O /tmp/swiflash_latest.deb
+<span class="gp">$ </span>sudo apt-get install /tmp/swiflash_latest.deb
+</pre></div>
+</div>
+<p>To install the tool on other systems, follow the instructions
+outlined <a class="reference external" href="https://source.sierrawireless.com/resources/airprime/software/swiflash/">here</a>.</p>
+</section>
+</section>
+<section id="supported-boards">
+<span id="sec-hsl-swi-supported-boards"></span><h2><a class="toc-backref" href="#id9">Supported Boards</a><a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
+<p>TanoWrt has demonstration support for some devices and development boards based on Texas Instruments SoC’s.
+All supported devices are listed in the table below.</p>
+<table class="colwidths-given docutils align-default" id="id5" style="width: 100%">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Supported Sierra Wireless LTE Modules Based Boards</span><a class="headerlink" href="#id5" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Kernel Version</p></th>
+<th class="head"><p>Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="boards/mangoh-green-wp7607/index.html#machine-mangoh-green-wp7607"><span class="std std-ref">mangOH Green with WP7607 or WP7607-1</span></a></p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Sierra Wireless WP7607 or WP7607-1</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A7</div>
+<div class="line"><strong>Frequency:</strong> up to 1.3 GHz</div>
+</div>
+</td>
+<td><p>256 MiB<a class="footnote-reference brackets" href="#id3" id="id1">1</a></p></td>
+<td><p>3.18.140
+(non-RT)</p></td>
+<td><p>512 MiB
+NAND flash<a class="footnote-reference brackets" href="#id4" id="id2">2</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/mangoh-green-wp7607.yml">mangoh-green-wp7607.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Only 128 MiB available for the ARM processor</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Only 210 MiB available for the ARM processor</p>
+</dd>
+</dl>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="license">
+<h2><a class="toc-backref" href="#id10">License</a><a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<p>All metadata is MIT licensed unless otherwise stated.
+Source code included in tree for individual recipes is under the
+LICENSE stated in each recipe (<code class="file docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
+</section>
+<section id="maintainers">
+<h2><a class="toc-backref" href="#id11">Maintainers</a><a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
+<p>Anton Kikin &lt;<a class="reference external" href="mailto:a&#46;kikin&#37;&#52;&#48;tano-systems&#46;com">a<span>&#46;</span>kikin<span>&#64;</span>tano-systems<span>&#46;</span>com</a>&gt;</p>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id12">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.sierrawireless.com/">Sierra Wireless</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

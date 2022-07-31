@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running TanoWrt Image Inside Oracle VirtualBox &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="TanoWrt Services Summary Table" href="services.html" />
+    <link rel="prev" title="2 ARM Virtual Machines" href="../boards/qemuarm/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Core Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#supported-virtual-machines">Supported Virtual Machines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#additional-information">Additional Information</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Running TanoWrt Image Inside Oracle VirtualBox</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-and-configuring-virtual-machine">Creating and Configuring Virtual Machine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-virtual-machine">Running Virtual Machine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="services.html">TanoWrt Services Summary Table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#maintainers">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../index.html">TanoWrt Core Layer (meta-tanowrt)</a> &raquo;</li>
+    
+    <li>Running TanoWrt Image Inside Oracle VirtualBox</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/layers/meta-tanowrt/extra/virtualbox.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-tanowrt-image-inside-oracle-virtualbox">
+<span id="sec-run-in-virtualbox"></span><h1>Running TanoWrt Image Inside Oracle VirtualBox<a class="headerlink" href="#running-tanowrt-image-inside-oracle-virtualbox" title="Permalink to this heading"></a></h1>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#requirements" id="id1">Requirements</a></p></li>
+<li><p><a class="reference internal" href="#creating-and-configuring-virtual-machine" id="id2">Creating and Configuring Virtual Machine</a></p></li>
+<li><p><a class="reference internal" href="#running-virtual-machine" id="id3">Running Virtual Machine</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id4">References</a></p></li>
+</ul>
+</div>
+<section id="requirements">
+<h2><a class="toc-backref" href="#id1">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p>Required Oracle VirtualBox 6.1 or higher.</p>
+</section>
+<section id="creating-and-configuring-virtual-machine">
+<h2><a class="toc-backref" href="#id2">Creating and Configuring Virtual Machine</a><a class="headerlink" href="#creating-and-configuring-virtual-machine" title="Permalink to this heading"></a></h2>
+<p>From the Oracle VM VirtualBox Manager, create a new Virtual Machine:</p>
+<figure class="align-default">
+<img alt="../../../_images/virtualbox-create.png" class="with-shadow" src="../../../_images/virtualbox-create.png" />
+</figure>
+<ol class="arabic simple">
+<li><p>Configure parameters in the <span class="guilabel">Name and operating system</span> group:</p>
+<ul class="simple">
+<li><p>Name: tanowrt-qemux86-64;</p></li>
+<li><p>Type: Linux;</p></li>
+<li><p>Version: Other Linux (64-bit).</p></li>
+</ul>
+</li>
+<li><p>Configure parameters in the <span class="guilabel">Memory size</span> group:</p>
+<ul class="simple">
+<li><p>Select 256 MB (or more).</p></li>
+</ul>
+</li>
+<li><p>Configure parameters in the <span class="guilabel">Hard disk</span> group:</p>
+<ul class="simple">
+<li><p>Select: <span class="guilabel">Do not add a virtual hard disk now</span>.</p></li>
+</ul>
+</li>
+<li><p>Click <span class="guilabel">Create</span> button.</p></li>
+</ol>
+<p>Now the virtual machine has been successfully created. Next you need to do
+a small configuration of the created virtual machine.</p>
+<ol class="arabic">
+<li><p>Click on the created virtual machine in the Oracle VM VirtualBox Manager and
+press <span class="guilabel">Settings</span> button (or press <kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">S</kbd>).</p></li>
+<li><p>Select <span class="guilabel">System</span> on the left pane:</p>
+<ul class="simple">
+<li><p>Select ICH9 in <span class="guilabel">Chipset</span> dropdown menu.</p></li>
+<li><p>Enable <span class="guilabel">Enable EFI (special OSes only)</span> option.</p></li>
+</ul>
+<figure class="align-default">
+<img alt="../../../_images/virtualbox-config-system.png" class="with-shadow" src="../../../_images/virtualbox-config-system.png" />
+</figure>
+</li>
+<li><p>Select <span class="guilabel">Storage</span> on the left pane:</p>
+<ul class="simple">
+<li><p>Remove existing IDE Controller (select controller and press <span class="guilabel">Removes selected storage controller</span> button.</p></li>
+<li><p>Clicks on the <span class="guilabel">Adds new storage controller button</span> button and select <span class="guilabel">AHCI (SATA)</span>.</p></li>
+<li><p>Select created AHCI Controller and press <span class="guilabel">Adds hard disk</span> button.</p></li>
+<li><p>Select (or add) TanoWrt VMDK image (<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-qemux86-64-screen.wic.vmdk</span></code>) in the opened
+Hard Disk Selector window and press <span class="guilabel">Choose</span> button.</p></li>
+</ul>
+<figure class="align-default">
+<img alt="../../../_images/virtualbox-config-storage-add.png" class="with-shadow" src="../../../_images/virtualbox-config-storage-add.png" />
+</figure>
+<figure class="align-default">
+<img alt="../../../_images/virtualbox-config-storage-ahci.png" class="with-shadow" src="../../../_images/virtualbox-config-storage-ahci.png" />
+</figure>
+</li>
+<li><p>Click <span class="guilabel">OK</span> button</p></li>
+</ol>
+</section>
+<section id="running-virtual-machine">
+<h2><a class="toc-backref" href="#id3">Running Virtual Machine</a><a class="headerlink" href="#running-virtual-machine" title="Permalink to this heading"></a></h2>
+<p>In the Oracle VM VirtualBox Manager select virtual machine and start the VM (click on the <span class="guilabel">Start</span> button):</p>
+<figure class="align-center">
+<a class="with-shadow reference internal image-reference" href="../../../_images/virtualbox-run.png"><img alt="../../../_images/virtualbox-run.png" class="with-shadow" src="../../../_images/virtualbox-run.png" style="width: 800px;" /></a>
+</figure>
+<p>When system is boots up, you may log in with <a class="reference internal" href="../../../overview.html#sec-access-creds"><span class="std std-ref">default credentials</span></a>:</p>
+<figure class="align-center">
+<a class="with-shadow reference internal image-reference" href="../../../_images/virtualbox-run-login.png"><img alt="../../../_images/virtualbox-run-login.png" class="with-shadow" src="../../../_images/virtualbox-run-login.png" style="width: 800px;" /></a>
+</figure>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id4">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.virtualbox.org/">https://www.virtualbox.org/</a></p></li>
+<li><p><a class="reference external" href="http://gmacario.github.io/howto/gdp/genivi/yocto/virtualbox/embedded/ivi/2015/11/14/running-yocto-image-inside-virtualbox.html">http://gmacario.github.io/howto/gdp/genivi/yocto/virtualbox/embedded/ivi/2015/11/14/running-yocto-image-inside-virtualbox.html</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

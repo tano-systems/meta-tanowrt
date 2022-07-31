@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1 BeagleBone Black &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/tabs.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="2 AM3359 ICEv2 EVM (TMDSICE3359)" href="../am335x-icev2/index.html" />
+    <link rel="prev" title="Texas Instruments Hardware Support Layer (meta-tanowrt-hsl-ti)" href="../../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Texas Instruments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1 BeagleBone Black</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#block-diagram">1.1.1 Block Diagram</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#specification">1.1.2 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">1.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">1.2.2 Images</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build">1.3 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">1.3.1 Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">1.4 Partitioning Layouts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#microsd">1.4.1 microSD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#emmc">1.4.2 eMMC</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.5 Produced Build Artifacts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-am335x-bbb-sd-yml-target">1.5.1 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> Target</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-am335x-bbb-emmc-yml-target">1.5.2 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code> Target</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.6 Writing Images</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-sd-card">1.6.1 Writing Image to SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-emmc-flash">1.6.2 Writing Image to eMMC Flash</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.7 Booting and Running</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-microsd-card">1.7.1 Booting from microSD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-internal-emmc-flash">1.7.2 Booting from Internal eMMC Flash</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-console">1.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">1.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">1.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">1.11 Firmware Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">1.12 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../am335x-icev2/index.html">2 AM3359 ICEv2 EVM (TMDSICE3359)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../am574x-idk/index.html">3 AM574x IDK EVM (TMDSIDK574)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Texas Instruments Hardware Support Layer (meta-tanowrt-hsl-ti)</a> &raquo;</li>
+    
+    <li><span class="section-number">1 </span>BeagleBone Black</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-ti/boards/am335x-bbb/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="beaglebone-black">
+<span id="machine-am335x-bbb"></span><h1><span class="section-number">1 </span>BeagleBone Black<a class="headerlink" href="#beaglebone-black" title="Permalink to this heading"></a></h1>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#board-overview" id="id25">Board Overview</a></p></li>
+<li><p><a class="reference internal" href="#build-targets" id="id26">Build Targets</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id27">Build</a></p></li>
+<li><p><a class="reference internal" href="#partitioning-layouts" id="id28">Partitioning Layouts</a></p></li>
+<li><p><a class="reference internal" href="#produced-build-artifacts" id="id29">Produced Build Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#writing-images" id="id30">Writing Images</a></p></li>
+<li><p><a class="reference internal" href="#booting-and-running" id="id31">Booting and Running</a></p></li>
+<li><p><a class="reference internal" href="#serial-console" id="id32">Serial Console</a></p></li>
+<li><p><a class="reference internal" href="#default-network-configuration" id="id33">Default Network Configuration</a></p></li>
+<li><p><a class="reference internal" href="#web-user-interface" id="id34">Web User Interface</a></p></li>
+<li><p><a class="reference internal" href="#firmware-upgrade" id="id35">Firmware Upgrade</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id36">References</a></p></li>
+</ul>
+</div>
+<section id="board-overview">
+<span id="sec-am335x-bbb-board"></span><h2><a class="toc-backref" href="#id25"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<p>BeagleBone Black is a low-cost, community-supported development platform for developers
+and hobbyists.</p>
+<figure class="align-center" id="id15">
+<span id="fig-am335x-bbb"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-bbb.jpg"><img alt="../../../../_images/am335x-bbb.jpg" class="with-border" src="../../../../_images/am335x-bbb.jpg" style="width: 800px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.47 </span><span class="caption-text">BeagleBone Black Top and Bottom Views</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="block-diagram">
+<h3><span class="section-number">1.1.1 </span>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this heading"></a></h3>
+<figure class="align-default" id="id16">
+<span id="fig-am335x-bbb-block-diagram"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-bbb-block-diagram.jpg"><img alt="../../../../_images/am335x-bbb-block-diagram.jpg" class="with-border" src="../../../../_images/am335x-bbb-block-diagram.jpg" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.48 </span><span class="caption-text">BeagleBone Black Block Diagram</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="specification">
+<h3><span class="section-number">1.1.2 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">Table 1.27 </span><span class="caption-text">BeagleBone Black Specification</span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>BeagleBone Black</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Processor</p></td>
+<td><div class="line-block">
+<div class="line">Texas Instruments AM3358 (Sitara AM3358BZCZ100)</div>
+<div class="line">1 x ARM Cortex-A8</div>
+<div class="line">frequency up to 1.0 GHz</div>
+<div class="line">3D graphics accelerator</div>
+<div class="line">NEON floating-point accelerator</div>
+<div class="line">2 × PRU 32-bit microcontrollers</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>GPU</p></td>
+<td><div class="line-block">
+<div class="line">SGX530 3D, 20M Polygons/s</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>PMIC</p></td>
+<td><div class="line-block">
+<div class="line">TPS65217C PMIC regulator and one additional LDO</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Memory</p></td>
+<td><div class="line-block">
+<div class="line">512 MiB DDR3L SDRAM</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Storage</p></td>
+<td><div class="line-block">
+<div class="line">4 GB, 8-bit Embedded MMC (eMMC)</div>
+<div class="line">microSD card</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Debug</p></td>
+<td><div class="line-block">
+<div class="line">Optional Onboard 20-pin CTI JTAG, Serial Header</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>USB</p></td>
+<td><div class="line-block">
+<div class="line">1 × Type A USB 2.0 Host LS/FS/HS</div>
+<div class="line">1 × miniUSB (client mode)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Video</p></td>
+<td><div class="line-block">
+<div class="line">1 × HDMI interface (microHDMI)</div>
+<div class="line">16b HDMI, 1280x1024 (MAX)</div>
+<div class="line">1024x768, 1280x720, 1440x900, 1920x1080&#64;24Hz w/EDID Support</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Audio</p></td>
+<td><div class="line-block">
+<div class="line">Via HDMI Interface, Stereo</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Ethernet</p></td>
+<td><div class="line-block">
+<div class="line">1 × 10/100 RJ45 Ethernet (SMSC PHY)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Expansion
+Connectors
+(3.3V I/O on
+all
+signals)</p></td>
+<td><div class="line-block">
+<div class="line">5V, 3.3V, VDD_ADC(1.8V)</div>
+<div class="line">1 × McASP</div>
+<div class="line">1 × SPI</div>
+<div class="line">1 × I2C</div>
+<div class="line">69 × GPIO</div>
+<div class="line">1 × LCD</div>
+<div class="line">1 × GPMC</div>
+<div class="line">2 × MMC</div>
+<div class="line">7 × AIN (1.8V max),</div>
+<div class="line">4 × Timers</div>
+<div class="line">4 × Serial Ports</div>
+<div class="line">1 × CAN</div>
+<div class="line">2 × EHRPWM</div>
+<div class="line">DMA Interrupt</div>
+<div class="line">Power button</div>
+<div class="line">Expansion Board ID (up to 4 can be stacked)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Power Source</p></td>
+<td><p>miniUSB USB or DC Jack</p></td>
+</tr>
+<tr class="row-even"><td><p>Power</p></td>
+<td><p>5V/1A DC input jack</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="build-targets">
+<span id="sec-am335x-bbb-targets"></span><h2><a class="toc-backref" href="#id26"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<section id="machines">
+<span id="sec-am335x-bbb-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
+<span id="table-am335x-bbb-machines"></span><table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 1.28 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id18" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p>BeagleBone Black</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
+<td><p>microSD card</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu-factory</span></code></p></td>
+<td><p>internal eMMC</p></td>
+<td><p>microSD card</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Target board.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-am335x-bbb-images"><span class="std std-numref">Section 1.2.2</span></a>,
+you can find list of supported recipes for the target images, which you can build in addition
+to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
+(see <a class="reference internal" href="#sec-am335x-bbb-build"><span class="std std-numref">Section 1.3</span></a>).</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd><p>External storage device for which an installation image is generated. When booting from
+the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
+</dd>
+</dl>
+</section>
+<section id="images">
+<span id="sec-am335x-bbb-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
+<span id="table-am335x-bbb-images"></span><table class="colwidths-given docutils align-default" id="id19">
+<caption><span class="caption-number">Table 1.29 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
+Image</p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<th class="head"><p>Supported by Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Standard TanoWrt image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Standard TanoWrt image
+and <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">firmware upgrade</span></a>
+image. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code> will also be built
+as dependency.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu-factory</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>Factory installation image for standard TanoWrt
+image. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code>
+and <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code> will also be built
+as dependencies.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
+<dd><p>Image recipe name. This name can be used as argument
+for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-am335x-bbb-build"><span class="std std-numref">Section 1.3</span></a> section).</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="build">
+<span id="sec-am335x-bbb-build"></span><h2><a class="toc-backref" href="#id27"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<p>Please read the common information on how to perform a TanoWrt
+images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>See section <a class="reference internal" href="#sec-am335x-bbb-machines"><span class="std std-numref">Section 1.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-am335x-bbb-images"><span class="std std-numref">Section 1.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-am335x-bbb-artifacts"><span class="std std-numref">Section 1.5</span></a> for detailed information
+about the produced build artifacts.</p></li>
+</ul>
+</div>
+<section id="examples">
+<h3><span class="section-number">1.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<section id="build-default-images-for-beaglebone-black-board">
+<h4><span class="section-number">1.3.1.1 </span>Build Default Images for BeagleBone Black Board<a class="headerlink" href="#build-default-images-for-beaglebone-black-board" title="Permalink to this heading"></a></h4>
+<p class="rubric">For SD Card</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-bbb-sd.yml
+</pre></div>
+</div>
+<p>Default images will be produced to boot and run from the SD
+card on the BeagleBone Black target board.</p>
+<p class="rubric">For Internal eMMC Flash</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-bbb-emmc.yml
+</pre></div>
+</div>
+<p>An initial factory installation image will be generated,
+intended to run from the SD card. The installer image
+will install the default image to the internal eMMC flash
+memory and further the BeagleBone Black board will boot
+and run from the eMMC flash memory.</p>
+</section>
+</section>
+</section>
+<section id="partitioning-layouts">
+<span id="sec-am335x-bbb-partitioning"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<section id="microsd">
+<h3><span class="section-number">1.4.1 </span>microSD<a class="headerlink" href="#microsd" title="Permalink to this heading"></a></h3>
+<p>The partitioning and data layout of the microSD card image for the BeagleBone Black board
+are shown in the figure below.</p>
+<figure class="align-center" id="id20">
+<span id="fig-am335x-bbb-layout-sd"></span><a class="reference internal image-reference" href="../../../../_images/am335x-bbb-layout-sd.svg"><img alt="../../../../_images/am335x-bbb-layout-sd.svg" src="../../../../_images/am335x-bbb-layout-sd.svg" width="1000" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.49 </span><span class="caption-text">BeagleBone Black Partitions Layout for microSD Card</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="emmc">
+<h3><span class="section-number">1.4.2 </span>eMMC<a class="headerlink" href="#emmc" title="Permalink to this heading"></a></h3>
+<p>The partitioning and data layout of the eMMC image for the BeagleBone Black board
+are shown in the figure below.</p>
+<figure class="align-center" id="id21">
+<span id="fig-am335x-bbb-layout-emmc"></span><a class="reference internal image-reference" href="../../../../_images/am335x-bbb-layout-emmc.svg"><img alt="../../../../_images/am335x-bbb-layout-emmc.svg" src="../../../../_images/am335x-bbb-layout-emmc.svg" width="1000" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.50 </span><span class="caption-text">BeagleBone Black Partitions Layout for eMMC</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The ROM2 (Boot Partition 1, <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1boot0</span></code>) and ROM3 (Boot Partition 2, <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1boot1</span></code>)
+eMMC hardware partitions are currently not used. TI AM335x devices does not support booting
+from eMMC boot partitions. Only boot from user area is supported.</p>
+<p>In the future, it is planned to use SPL (MLO) to select the partition depending on
+the Boot Partition [179] register value from the EXTCSD area. On boot partitions
+it is planned to store redundant U-Boot and startup script images.</p>
+</section>
+</section>
+<section id="produced-build-artifacts">
+<span id="sec-am335x-bbb-artifacts"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
+Refer to table <a class="reference internal" href="#table-am335x-bbb-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
+<span id="table-am335x-bbb-artifacts"></span><table class="colwidths-given docutils align-default" id="id22">
+<caption><span class="caption-number">Table 1.30 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Artifact</p></th>
+<th class="head"><p>Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Bootloader (SPL)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">MLO-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>MLO binary blob for microSD card images.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">MLO-emmc-defconfig</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>MLO binary blob for eMMC images.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Bootloader (U-Boot)</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">startup-&lt;MACHINE&gt;.img</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot startup script.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">startup-factory-&lt;MACHINE&gt;.img</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>U-Boot startup script for factory installation image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot initial environment image for microSD card image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-emmc-defconfig</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>U-Boot initial environment image for internal eMMC flash.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-&lt;MACHINE&gt;.bin-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot binary image for booting from microSD card.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-&lt;MACHINE&gt;.bin-emmc-defconfig</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>U-Boot binary image for booting from internal eMMC flash.</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Linux Kernel and DTB</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.bin</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Flattened Image Tree (FIT) image with Linux kernel
+and Device Tree Blobs (DTB).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.ext4</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>FIT image packed into an ext4 file system image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">am335x-boneblack.dtb</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Target Device Tree Blob (DTB).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.ext4</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>FIT image for SWU factory installation image with
+initramfs image.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Images</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code></p></td>
+<td><p>SD card image including all required partitions for booting
+and running the system. This image is ready to be written
+to the SD card using the <strong class="command">dd</strong> utility or similar
+(see <a class="reference internal" href="#sec-am335x-bbb-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>SD card factory installation image. This image is ready
+to be written to the SD card using the <strong class="command">dd</strong> utility
+or similar (see <a class="reference internal" href="#sec-am335x-bbb-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.cpio.gz</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code></p></td>
+<td><p>Root filesystem initramfs image for factory installtion
+image. This image is included in
+<code class="file docutils literal notranslate"><span class="pre">fitImage-tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.ext4</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Root filesystem image (squashfs with LZO compression).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p><a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware upgrade</span></a> image.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifact file names are replaced by
+the actual value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen
+<a class="reference internal" href="#sec-am335x-bbb-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;</span></code> is replaced
+by the actual read-only root filesystem <a class="reference internal" href="#sec-am335x-bbb-images">image</a> name.</p>
+</div>
+<p>For example, below is the lists of artifacts produced by the <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code>
+and <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> target builds. There are two types of listings here —
+a complete listing, and a reduced listing without the symbolic links display.</p>
+<section id="build-artifacts-listings-for-am335x-bbb-sd-yml-target">
+<h3><span class="section-number">1.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am335x-bbb-sd-yml-target" title="Permalink to this heading"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<span class="go">total 164M</span>
+<span class="go">-rw-r--r-- 2  60K Jul 25 04:22 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 04:22 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:22 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:22 fitImage-am335x-bbb-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 1.6K Jul 25 04:22 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 04:22 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 04:19 MLO-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:19 MLO-am335x-bbb-sd-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.7M Jul 25 04:22 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.tgz</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 04:19 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:19 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  92K Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2 932M Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.sdcard.img</span>
+<span class="go">-rw-r--r-- 2  30M Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 356K Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd-20220725011807.testdata.json</span>
+<span class="go">-rw-r--r-- 2 5.4K Jul 25 04:24 tanowrt-image-full.env</span>
+<span class="go">-rw-r--r-- 2 3.0K Jul 25 04:24 tanowrt-image-full-sdimage-ti-swu-a-b.wks</span>
+<span class="go">-rw-r--r-- 2  38M Jul 25 04:24 tanowrt-image-full-swu-am335x-bbb-sd-20220725011807.swu</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:19 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 04:19 u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls -gGh
+<span class="go">total 164M</span>
+<span class="go">-rw-r--r-- 2  60K Jul 25 04:22 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
+<span class="go">lrwxrwxrwx 2   92 Jul 25 04:22 am335x-boneblack-am335x-bbb-sd.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
+<span class="go">lrwxrwxrwx 2   92 Jul 25 04:22 am335x-boneblack.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
+<span class="go">lrwxrwxrwx 2   84 Jul 25 04:22 fitImage -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 04:22 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:22 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd.ext4</span>
+<span class="go">lrwxrwxrwx 2   84 Jul 25 04:22 fitImage-am335x-bbb-sd.bin -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:22 fitImage-am335x-bbb-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 1.6K Jul 25 04:22 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.its</span>
+<span class="go">lrwxrwxrwx 2   88 Jul 25 04:22 fitImage-its-am335x-bbb-sd -&gt; fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 04:22 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">lrwxrwxrwx 2   94 Jul 25 04:22 fitImage-linux.bin-am335x-bbb-sd -&gt; fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:19 MLO -&gt; MLO-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:19 MLO-am335x-bbb-sd -&gt; MLO-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 04:19 MLO-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:19 MLO-am335x-bbb-sd-sdcard-defconfig-x3</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:19 MLO-sdcard-defconfig -&gt; MLO-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   37 Jul 25 04:19 MLO-sdcard-defconfig-x3 -&gt; MLO-am335x-bbb-sd-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.7M Jul 25 04:22 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.tgz</span>
+<span class="go">lrwxrwxrwx 2   83 Jul 25 04:22 modules-am335x-bbb-sd.tgz -&gt; modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.tgz</span>
+<span class="go">lrwxrwxrwx 2   11 Jul 25 04:19 startup-am335x-bbb-sd.img -&gt; startup.img</span>
+<span class="go">lrwxrwxrwx 2   19 Jul 25 04:19 startup-am335x-bbb-sd.img.version -&gt; startup.img.version</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 04:19 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:19 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  92K Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2 932M Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.sdcard.img</span>
+<span class="go">-rw-r--r-- 2  30M Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 356K Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd-20220725011807.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   63 Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd.manifest -&gt; tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.manifest</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd.sdcard.img -&gt; tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.sdcard.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd.squashfs-lzo -&gt; tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.squashfs-lzo</span>
+<span class="go">lrwxrwxrwx 2   61 Jul 25 04:23 tanowrt-image-full-am335x-bbb-sd.testdata.json -&gt; tanowrt-image-full-am335x-bbb-sd-20220725011807.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   62 Jul 25 04:24 tanowrt-image-full-am335x-bbb-sd.version -&gt; tanowrt-image-full-am335x-bbb-sd-20220725011807.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 5.4K Jul 25 04:24 tanowrt-image-full.env</span>
+<span class="go">-rw-r--r-- 2 3.0K Jul 25 04:24 tanowrt-image-full-sdimage-ti-swu-a-b.wks</span>
+<span class="go">-rw-r--r-- 2  38M Jul 25 04:24 tanowrt-image-full-swu-am335x-bbb-sd-20220725011807.swu</span>
+<span class="go">lrwxrwxrwx 2   55 Jul 25 04:24 tanowrt-image-full-swu-am335x-bbb-sd.swu -&gt; tanowrt-image-full-swu-am335x-bbb-sd-20220725011807.swu</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:19 u-boot-am335x-bbb-sd.img -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:19 u-boot-am335x-bbb-sd.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:19 u-boot.img -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:19 u-boot.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   89 Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig -&gt; u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   93 Jul 25 04:19 u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   89 Jul 25 04:19 u-boot-initial-env-sdcard-defconfig -&gt; u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   93 Jul 25 04:19 u-boot-initial-env-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:19 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:19 u-boot-spl.bin -&gt; u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:19 u-boot-spl.bin-am335x-bbb-sd -&gt; u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 04:19 u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:19 u-boot-spl.bin-am335x-bbb-sd-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:19 u-boot-spl.bin-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="build-artifacts-listings-for-am335x-bbb-emmc-yml-target">
+<h3><span class="section-number">1.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am335x-bbb-emmc-yml-target" title="Permalink to this heading"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<span class="go">total 186M</span>
+<span class="go">-rw-r--r-- 2  60K Jul 25 04:13 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 04:13 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:13 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:13 fitImage-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2 1.6K Jul 25 04:13 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">-rw-r--r-- 2 2.3K Jul 25 04:13 fitImage-its-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 04:13 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2  15M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2  12M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2  15M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2  47K Jul 25 04:13 MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 04:13 MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:13 MLO-am335x-bbb-emmc-emmc-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:13 MLO-am335x-bbb-emmc-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.7M Jul 25 04:13 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.tgz</span>
+<span class="go">-rw-r--r-- 2 1.3K Jul 25 04:14 startup-factory.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:14 startup-factory.img.version</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 04:14 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:14 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  93K Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2  30M Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 356K Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">-rw-r--r-- 2  37M Jul 25 04:17 tanowrt-image-full-swu-am335x-bbb-emmc-20220725005407.swu</span>
+<span class="go">-rw-r--r-- 2  56M Jul 25 04:17 tanowrt-image-full-swu-factory-am335x-bbb-emmc-20220725005407.sdcard.img</span>
+<span class="go">-rw-r--r-- 2 6.0K Jul 25 04:14 tanowrt-image-full-swu-factory.env</span>
+<span class="go">-rw-r--r-- 2 2.2K Jul 25 04:14 tanowrt-image-full-swu-factory-sdimage-ti-swu-factory.wks</span>
+<span class="go">-rw-r--r-- 2 7.1M Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.cpio.gz</span>
+<span class="go">-rw-r--r-- 2 3.6K Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 362K Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:13 u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:13 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">-rwxr-xr-x 2  46K Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls -gGh
+<span class="go">total 186M</span>
+<span class="go">-rw-r--r-- 2  60K Jul 25 04:13 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
+<span class="go">lrwxrwxrwx 2   94 Jul 25 04:13 am335x-boneblack-am335x-bbb-emmc.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
+<span class="go">lrwxrwxrwx 2   94 Jul 25 04:13 am335x-boneblack.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
+<span class="go">lrwxrwxrwx 2   86 Jul 25 04:13 fitImage -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 04:13 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:13 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc.ext4</span>
+<span class="go">lrwxrwxrwx 2   86 Jul 25 04:13 fitImage-am335x-bbb-emmc.bin -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 04:13 fitImage-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2 1.6K Jul 25 04:13 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">lrwxrwxrwx 2   90 Jul 25 04:13 fitImage-its-am335x-bbb-emmc -&gt; fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">-rw-r--r-- 2 2.3K Jul 25 04:13 fitImage-its-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">lrwxrwxrwx 2  142 Jul 25 04:13 fitImage-its-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-am335x-bbb-emmc -&gt; fitImage-its-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 04:13 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">lrwxrwxrwx 2   96 Jul 25 04:13 fitImage-linux.bin-am335x-bbb-emmc -&gt; fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2  15M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc.ext4</span>
+<span class="go">-rw-r--r-- 2  12M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">lrwxrwxrwx 2  138 Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-am335x-bbb-emmc -&gt; fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
+<span class="go">-rw-r--r-- 2  15M Jul 25 04:13 fitImage-tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.ext4</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:13 MLO -&gt; MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:13 MLO-am335x-bbb-emmc -&gt; MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  47K Jul 25 04:13 MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 04:13 MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:13 MLO-am335x-bbb-emmc-emmc-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 04:13 MLO-am335x-bbb-emmc-sdcard-defconfig-x3</span>
+<span class="go">lrwxrwxrwx 2  114 Jul 25 04:13 MLO-emmc-defconfig -&gt; MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   37 Jul 25 04:13 MLO-emmc-defconfig-x3 -&gt; MLO-am335x-bbb-emmc-emmc-defconfig-x3</span>
+<span class="go">lrwxrwxrwx 2  116 Jul 25 04:13 MLO-sdcard-defconfig -&gt; MLO-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   39 Jul 25 04:13 MLO-sdcard-defconfig-x3 -&gt; MLO-am335x-bbb-emmc-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.7M Jul 25 04:13 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.tgz</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:13 modules-am335x-bbb-emmc.tgz -&gt; modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.tgz</span>
+<span class="go">lrwxrwxrwx 2   11 Jul 25 04:14 startup-am335x-bbb-emmc.img -&gt; startup.img</span>
+<span class="go">lrwxrwxrwx 2   19 Jul 25 04:14 startup-am335x-bbb-emmc.img.version -&gt; startup.img.version</span>
+<span class="go">lrwxrwxrwx 2   19 Jul 25 04:14 startup-factory-am335x-bbb-emmc.img -&gt; startup-factory.img</span>
+<span class="go">lrwxrwxrwx 2   27 Jul 25 04:14 startup-factory-am335x-bbb-emmc.img.version -&gt; startup-factory.img.version</span>
+<span class="go">-rw-r--r-- 2 1.3K Jul 25 04:14 startup-factory.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:14 startup-factory.img.version</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 04:14 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 04:14 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  93K Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2  30M Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 356K Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc.manifest -&gt; tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">lrwxrwxrwx 2   69 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc.squashfs-lzo -&gt; tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.squashfs-lzo</span>
+<span class="go">lrwxrwxrwx 2   63 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc.testdata.json -&gt; tanowrt-image-full-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   64 Jul 25 04:17 tanowrt-image-full-am335x-bbb-emmc.version -&gt; tanowrt-image-full-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">-rw-r--r-- 2  37M Jul 25 04:17 tanowrt-image-full-swu-am335x-bbb-emmc-20220725005407.swu</span>
+<span class="go">lrwxrwxrwx 2   57 Jul 25 04:17 tanowrt-image-full-swu-am335x-bbb-emmc.swu -&gt; tanowrt-image-full-swu-am335x-bbb-emmc-20220725005407.swu</span>
+<span class="go">-rw-r--r-- 2  56M Jul 25 04:17 tanowrt-image-full-swu-factory-am335x-bbb-emmc-20220725005407.sdcard.img</span>
+<span class="go">lrwxrwxrwx 2   72 Jul 25 04:17 tanowrt-image-full-swu-factory-am335x-bbb-emmc.sdcard.img -&gt; tanowrt-image-full-swu-factory-am335x-bbb-emmc-20220725005407.sdcard.img</span>
+<span class="go">-rw-r--r-- 2 6.0K Jul 25 04:14 tanowrt-image-full-swu-factory.env</span>
+<span class="go">-rw-r--r-- 2 2.2K Jul 25 04:14 tanowrt-image-full-swu-factory-sdimage-ti-swu-factory.wks</span>
+<span class="go">-rw-r--r-- 2 7.1M Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.cpio.gz</span>
+<span class="go">-rw-r--r-- 2 3.6K Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 362K Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   81 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.cpio.gz -&gt; tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.cpio.gz</span>
+<span class="go">lrwxrwxrwx 2   82 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.manifest -&gt; tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.manifest</span>
+<span class="go">lrwxrwxrwx 2   80 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.testdata.json -&gt; tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   81 Jul 25 04:13 tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc.version -&gt; tanowrt-image-initramfs-swu-factory-am335x-bbb-emmc-20220725005407.rootfs.version</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:13 u-boot-am335x-bbb-emmc.img -&gt; u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:13 u-boot-am335x-bbb-emmc.img-emmc-defconfig -&gt; u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:13 u-boot-am335x-bbb-emmc.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:13 u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:13 u-boot.img -&gt; u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 04:13 u-boot.img-emmc-defconfig -&gt; u-boot-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 04:13 u-boot.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   89 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig -&gt; u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   93 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig -&gt; u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   95 Jul 25 04:13 u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   89 Jul 25 04:13 u-boot-initial-env-emmc-defconfig -&gt; u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   93 Jul 25 04:13 u-boot-initial-env-emmc-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-emmc-emmc-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 04:13 u-boot-initial-env-sdcard-defconfig -&gt; u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   95 Jul 25 04:13 u-boot-initial-env-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-bbb-emmc-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 04:13 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:13 u-boot-spl.bin -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">-rwxr-xr-x 2  46K Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-emmc-defconfig -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   85 Jul 25 04:13 u-boot-spl.bin-emmc-defconfig -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-emmc-defconfig</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 04:13 u-boot-spl.bin-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+</section>
+<section id="writing-images">
+<span id="sec-am335x-bbb-flash"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<section id="writing-image-to-sd-card">
+<span id="sec-am335x-bbb-flash-sd"></span><h3><span class="section-number">1.6.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
+<p>No special information about writing images to microSD card
+for BeagleBone Black board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
+<p class="rubric">Examples</p>
+<p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code> target to the microSD
+card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-am335x-bbb-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+</pre></div>
+</div>
+<p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> target to the microSD
+card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-bbb-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+</pre></div>
+</div>
+</section>
+<section id="writing-image-to-emmc-flash">
+<span id="sec-am335x-bbb-flash-emmc"></span><h3><span class="section-number">1.6.2 </span>Writing Image to eMMC Flash<a class="headerlink" href="#writing-image-to-emmc-flash" title="Permalink to this heading"></a></h3>
+<p>For the initial flashing of the internal eMMC memory it is recommended to use
+the special image of the initial factory installation. If you choose a build target
+(see <a class="reference internal" href="#sec-am335x-bbb-targets"><span class="std std-ref">Build Targets</span></a> for details) that assumes using the
+factory installation image for the initial flashing of the
+device, a factory installation image (<code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>)
+will be automatically generated during the build process
+(see <a class="reference internal" href="#sec-am335x-bbb-build"><span class="std std-ref">Build</span></a>).
+To write the factory installation image to a SD card, follow the instructions
+from <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
+<p>When you boot device from the prepaired SD card with factory installation image the installation
+of TanoWrt to the internal eMMC flash memory will be done automatically. The detailed
+installation log is available on the <a class="reference internal" href="#sec-am335x-bbb-serial"><span class="std std-ref">debug UART</span></a>.
+After the installation is complete, the board will reboots automatically. When the
+device is rebooted, the installed system will be booted from the internal eMMC flash memory.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Be aware that during the installation all existing data on the internal eMMC
+flash memory will be permanently lost.</p>
+</div>
+</section>
+</section>
+<section id="booting-and-running">
+<span id="sec-am335x-bbb-booting"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<section id="booting-from-microsd-card">
+<h3><span class="section-number">1.7.1 </span>Booting from microSD Card<a class="headerlink" href="#booting-from-microsd-card" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Insert the microSD card into the slot on the BeagleBone Black board (power is off).</p></li>
+<li><p>Press and hold the S2 button.</p></li>
+<li><p>Power on board.</p></li>
+<li><p>Wait 1–3 seconds and release S2 button.</p></li>
+<li><p>TanoWrt will be booting from microSD card.</p></li>
+<li><p>Log in to system using default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
+</ol>
+<p>The procedure described above is only required if the internal eMMC drive contains
+a working firmware, because when the board is powered on, it first attempts to boot
+from the internal eMMC. If you want to always boot from the microSD card, you need to
+erase the eMMC flash boot area. For example, this can be done by using the U-Boot command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">=&gt; mmc dev 1; mmc erase 0 400</span>
+</pre></div>
+</div>
+<p>or with a command in the Linux terminal:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1 <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span><span class="m">512</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Be aware that these commands will make the existing
+firmware on the eMMC flash memory <strong>INOPERABLE</strong>.</p>
+</div>
+</section>
+<section id="booting-from-internal-emmc-flash">
+<h3><span class="section-number">1.7.2 </span>Booting from Internal eMMC Flash<a class="headerlink" href="#booting-from-internal-emmc-flash" title="Permalink to this heading"></a></h3>
+<p>The board by default tries to boot from the internal eMMC flash memory first.
+Therefore, if the internal eMMC flash memory has a working firmware, you
+don’t need to perform any additional actions to boot from it.</p>
+</section>
+</section>
+<section id="serial-console">
+<span id="sec-am335x-bbb-serial"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<p>Establishing a serial communication between host computer and
+BeagleBone Black board requires a USB-to-TTL serial cable.
+Connect the USB-to-TTL serial cable as described below.
+Don’t connect the VCC wire, connect only TX, RX and GND wires.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" rowspan="2"><p>Signal</p></th>
+<th class="head"><p>BeagleBone Black</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>J1 6-pin connector</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>Pin 1</p></td>
+</tr>
+<tr class="row-even"><td><p>TX</p></td>
+<td><p>Pin 4</p></td>
+</tr>
+<tr class="row-odd"><td><p>RX</p></td>
+<td><p>Pin 5</p></td>
+</tr>
+</tbody>
+</table>
+<p>The default serial console settings for BeagleBone Black for U-Boot and kernel
+are described in the table below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Baudrate</p></td>
+<td><p>115200</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data bits</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>Stop bits</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parity</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Flow control</p></td>
+<td><p>none</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="default-network-configuration">
+<span id="sec-am335x-bbb-network-config"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">1.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<p>By default Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge
+(<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface). Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured with static IP address 192.168.0.1/24 with
+enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server.</p>
+<p>Also you can connect to the board using USB RNDIS connection (<code class="docutils literal notranslate"><span class="pre">usb0</span></code> interface).
+RNDIS interface configured with static IP address 172.16.0.1/24 with
+enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server.</p>
+<p>The Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code>) has enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> by default.</p>
+</section>
+<section id="web-user-interface">
+<span id="sec-am335x-bbb-webui"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<p>The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
+You must see something like this in browser after you logged in:</p>
+<figure class="align-center" id="id23">
+<span id="fig-am335x-bbb-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.51 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id24">
+<span id="fig-am335x-bbb-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/am335x-bbb-luci-status.png"><img alt="../../../../_images/am335x-bbb-luci-status.png" src="../../../../_images/am335x-bbb-luci-status.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.52 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="firmware-upgrade">
+<span id="sec-am335x-bbb-upgrade"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<p>No special information about firmware upgrade.
+Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-am335x-bbb-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+</div>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id36"><span class="section-number">1.12 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://beagleboard.org/black">https://beagleboard.org/black</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

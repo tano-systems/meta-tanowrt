@@ -1,8 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
 .. _meta-tanowrt-hsl-baikal:
 
 =========================================================================
@@ -12,7 +9,7 @@ Baikal Electronics SoC's Hardware Support Layer (meta-tanowrt-hsl-baikal)
 meta-tanowrt-hsl-baikal |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the Baikal Electronics SoC based boards.
 
-.. image:: /common/images/logos/baikal-electronics.png
+.. figure:: /common/images/logos/baikal-electronics.png
    :height: 120
 
 .. rubric:: Contents
@@ -20,11 +17,8 @@ layer (:term:`HSL`) for the Baikal Electronics SoC based boards.
    :depth: 2
    :local:
 
-Requirements and Dependencies
-=============================
-
 Dependencies
-------------
+============
 
 Dependencies of the :ref:`meta-tanowrt-hsl-baikal <meta-tanowrt-hsl-baikal>` layer are described in the table below.
 
@@ -68,4 +62,4 @@ Anton Kikin <a.kikin@tano-systems.com>
 References
 ==========
 
-1. `Baikal Electronics official site <https://www.baikalelectronics.ru/>`__
+1. `Baikal Electronics Official Site <https://www.baikalelectronics.ru/>`__

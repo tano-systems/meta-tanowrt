@@ -1,9 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
-
 .. _machine-rock-pi-s:
 
 ***************
@@ -28,32 +24,32 @@ and voice applications. ROCK Pi S comes in two RAxM sizes 256 MiB or 512 MiB DDR
 and uses microSD card for OS and storage. Optionally, ROCK Pi S can provide
 on board storage version with 1/2/4/8 GiB NAND flash.
 
-Interfaces and Connectors
--------------------------
-
 .. _fig-rock-pi-s:
 .. figure:: images/rock-pi-s.jpg
-    :width: 1000
-    :class: with-border
+   :align: center
+   :width: 1000
+   :class: with-border
 
-    ROCK Pi S Board
+   ROCK Pi S Board
 
 Photos
 ------
 
-.. _fig-rock-pi-s-top:
-.. figure:: images/rock-pi-s-top.jpeg
-    :width: 350
-    :class: with-border
+.. container:: flex
 
-    ROCK Pi S top view
+   .. _fig-rock-pi-s-top:
+   .. figure:: images/rock-pi-s-top.jpeg
+       :width: 350
+       :class: with-border
 
-.. _fig-rock-pi-s-back:
-.. figure:: images/rock-pi-s-back.jpeg
-    :width: 350
-    :class: with-border
+       ROCK Pi S Top View
 
-    ROCK Pi S back view
+   .. _fig-rock-pi-s-bottom:
+   .. figure:: images/rock-pi-s-bottom.jpeg
+       :width: 350
+       :class: with-border
+
+       ROCK Pi S Bottom View
 
 
 Specification
@@ -138,13 +134,13 @@ Machines
 .. _table-rock-pi-s-machines:
 .. table:: Supported Machines
 
-   +-----------------+------------------------------+----------------------+------------------------------------+------------------------+-------------------------+
-   | Board [#]_      | Target YAML [#]_             | Machine [#]_         | Target Recipe(s) [#]_              | Running Media [#]_     | Installation Media [#]_ |
-   +=================+==============================+======================+====================================+========================+=========================+
-   | ROCK Pi S       | ``rock-pi-s-sd.yml``         | ``rock-pi-s-sd``     | ``tanowrt-image-full-swu``         | microSD card           | |ndash|                 |
-   |                 +------------------------------+----------------------+------------------------------------+------------------------+-------------------------+
-   |                 | ``rock-pi-s-sdnand.yml``     | ``rock-pi-s-sdnand`` | ``tanowrt-image-full-swu-factory`` | internal SD NAND flash | microSD card            |
-   +-----------------+------------------------------+----------------------+------------------------------------+------------------------+-------------------------+
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   | Board\ [#]_     | Target YAML\ [#]_            | Machine\ [#]_            | Target Recipe(s)\ [#]_             | Running Media\ [#]_    | Installation Media\ [#]_ |
+   +=================+==============================+==========================+====================================+========================+==========================+
+   | ROCK Pi S       | ``rock-pi-s-sd.yml``         | ``rock-pi-s-sd``         | ``tanowrt-image-full-swu``         | microSD card           | |ndash|                  |
+   |                 +------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   |                 | ``rock-pi-s-sdnand.yml``     | ``rock-pi-s-sdnand``     | ``tanowrt-image-full-swu-factory`` | internal SD NAND flash | microSD card             |
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
 
 .. [#] Target board.
 .. [#] Target YAML-file located in the :file:`kas/targets` directory.
@@ -167,24 +163,24 @@ Images
 .. table:: Supported Images
    :widths: 25, 25, 50
 
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | Recipe [#]_                        | Supported by Target(s)      | Description                                        |
-   +====================================+=============================+====================================================+
-   | ``tanowrt-image-full``             | *All*                       | Standard TanoWrt image.                            |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | ``tanowrt-image-full-swu``         | *All*                       | Standard TanoWrt image                             |
-   |                                    |                             | and :ref:`firmware upgrade <sec-firmware-upgrade>` |
-   |                                    |                             | image. When building this image,                   |
-   |                                    |                             | ``tanowrt-image-full`` will also be built          |
-   |                                    |                             | as dependency.                                     |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | ``tanowrt-image-full-swu-factory`` | Only                        | Standard TanoWrt image                             |
-   |                                    | ``rock-pi-s-sdnand.yml``    | and :ref:`firmware upgrade <sec-firmware-upgrade>` |
-   |                                    |                             | image.                                             |
-   |                                    |                             | When building this image, ``tanowrt-image-full``   |
-   |                                    |                             | and ``tanowrt-image-full-swu`` will also be built  |
-   |                                    |                             | as dependencies.                                   |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
+   +---------------------------+------------------------------------+------------------------------+-----------------------------------------------------+
+   | Read-Only Root Filesystem | Recipe\ [#]_                       | Supported by Target(s)       | Description                                         |
+   | Image                     |                                    |                              |                                                     |
+   +===========================+====================================+==============================+=====================================================+
+   | ``tanowrt-image-full``    | ``tanowrt-image-full``             | *All*                        | Standard TanoWrt image.                             |
+   |                           +------------------------------------+------------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu``         | *All*                        | Standard TanoWrt image                              |
+   |                           |                                    |                              | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                              | image. When building this image,                    |
+   |                           |                                    |                              | ``tanowrt-image-full`` will also be built           |
+   |                           |                                    |                              | as dependency.                                      |
+   |                           +------------------------------------+------------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu-factory`` | ``rock-pi-s-sdnand.yml``     | Factory installation image for standard TanoWrt     |
+   |                           |                                    |                              | image. When building this image,                    |
+   |                           |                                    |                              | ``tanowrt-image-full``                              |
+   |                           |                                    |                              | and ``tanowrt-image-full-swu`` will also be built   |
+   |                           |                                    |                              | as dependencies.                                    |
+   +---------------------------+------------------------------------+------------------------------+-----------------------------------------------------+
 
 .. [#] Image recipe name. This name can be used as argument
        for ``--target`` build command option (see :numref:`sec-rock-pi-s-build` section).
@@ -243,7 +239,7 @@ Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common
 
 .. _table-rock-pi-s-artifacts:
 .. table:: Produced Build Artifacts
-   :widths: 15, 15
+   :widths: 15, 15, 70
 
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | Artifact                                                | Target(s)                     | Description                                                   |
@@ -279,24 +275,24 @@ Refer to table :ref:`table-rock-pi-s-artifacts` for a description of some common
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | .. centered:: Images                                                                                                                                    |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.sdcard.img`             | ``rock-pi-s-sd.yml``          | SD card image including all required partitions for booting   |
+   | :file:`<rootfs-image>-<MACHINE>.sdcard.img`             | ``rock-pi-s-sd.yml``          | SD card image including all required partitions for booting   |
    |                                                         |                               | and running the system. This image is ready to be written     |
    |                                                         |                               | to the SD card using the :command:`dd` utility or similar     |
    |                                                         |                               | (see :ref:`sec-rock-pi-s-flash`).                             |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img` | ``rock-pi-s-sdnand.yml``      | SD card factory installation image. This image is ready       |
+   | :file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img` | ``rock-pi-s-sdnand.yml``      | SD card factory installation image. This image is ready       |
    |                                                         |                               | to be written to the SD card using the :command:`dd` utility  |
    |                                                         |                               | or similar (see :ref:`sec-rock-pi-s-flash`).                  |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.squashfs-lzo`           | *All*                         | Root filesystem image (squashfs with LZO compression).        |
+   | :file:`<rootfs-image>-<MACHINE>.squashfs-lzo`           | *All*                         | Root filesystem image (squashfs with LZO compression).        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-<MACHINE>.swu`                | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
+   | :file:`<rootfs-image>-swu-<MACHINE>.swu`                | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
 
 .. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
           the actual value of the ``MACHINE`` BitBake variable for the chosen
-          `target <sec-rock-pi-s-targets_>`__. ``<image-recipe>`` is replaced
-          by the actual `image recipe <sec-rock-pi-s-images_>`__ name.
+          `target <sec-rock-pi-s-targets_>`__. ``<rootfs-image>`` is replaced
+          by the actual read-only root filesystem `image <sec-rock-pi-s-images_>`__ name.
 
 For example, below is the complete list of artifacts produced by the
 ``rock-pi-s-sd.yml`` target build.
@@ -366,6 +362,22 @@ Writing Image to microSD Card
 No special information about writing images to microSD card
 for ROCK Pi S board. See common instructions in :ref:`sec-writing-sd-or-usb` section.
 
+.. rubric:: Examples
+
+Writing factory installation image for the ``rock-pi-s-sdnand.yml`` target to the microSD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-swu-factory-rock-pi-s-sdnand.sdcard.img of=/dev/mmcblk1
+
+Writing bootable image for the ``rock-pi-s-sd.yml`` target to the microSD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-rock-pi-s-sd.sdcard.img of=/dev/mmcblk1
+
 
 .. _sec-rock-pi-s-flash-sdnand:
 
@@ -376,7 +388,7 @@ For the initial flashing of the internal SD NAND memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
 (see :ref:`sec-rock-pi-s-targets` for details) that assumes using the
 factory installation image for the initial flashing of the
-device, a factory installation image (:file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img`)
+device, a factory installation image (:file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img`)
 will be automatically generated during the build process
 (see :ref:`sec-rock-pi-s-build`).
 To write the factory installation image to an SD card, follow the instructions
@@ -602,15 +614,17 @@ You must see something like this in browser after you logged in:
 
 .. _fig-rock-pi-s-luci-login:
 .. figure:: /common/images/luci/page-login.png
-    :width: 900
+   :align: center
+   :width: 900
 
-    LuCI WebUI Login Page
+   LuCI WebUI Login Page
 
 .. _fig-rock-pi-s-luci-status:
-.. figure:: images/luci-status.png
-    :width: 900
+.. figure:: images/rock-pi-s-luci-status.png
+   :align: center
+   :width: 900
 
-    LuCI WebUI Overview Page
+   LuCI WebUI Overview Page
 
 
 .. _sec-rock-pi-s-upgrade:
@@ -619,7 +633,9 @@ Firmware Upgrade
 ================
 
 No special information about firmware upgrade.
-See common instructions in :ref:`sec-firmware-upgrade` section.
+Use produced :file:`.swu` :ref:`artifact <table-rock-pi-s-artifacts>` for upgrading running system.
+
+.. seealso:: See common instructions in :ref:`sec-firmware-upgrade` section.
 
 
 Additional Information

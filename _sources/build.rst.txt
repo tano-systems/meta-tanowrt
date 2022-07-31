@@ -129,6 +129,8 @@ you need to run following commands from :file:`meta-tanowrt` root directory:
 See :ref:`sec-supported-targets` to select the proper target YML file.
 
 
+.. _sec-build-local-conf:
+
 Local Configuration
 ===================
 

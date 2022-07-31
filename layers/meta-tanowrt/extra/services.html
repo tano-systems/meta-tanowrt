@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TanoWrt Services Summary Table &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Microchip (Atmel) Hardware Support Layer (meta-tanowrt-hsl-atmel)" href="../../meta-tanowrt-hsl-atmel/index.html" />
+    <link rel="prev" title="Running TanoWrt Image Inside Oracle VirtualBox" href="virtualbox.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Core Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#supported-virtual-machines">Supported Virtual Machines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#additional-information">Additional Information</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="virtualbox.html">Running TanoWrt Image Inside Oracle VirtualBox</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">TanoWrt Services Summary Table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#maintainers">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../index.html">TanoWrt Core Layer (meta-tanowrt)</a> &raquo;</li>
+    
+    <li>TanoWrt Services Summary Table</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/layers/meta-tanowrt/extra/services.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tanowrt-services-summary-table">
+<h1>TanoWrt Services Summary Table<a class="headerlink" href="#tanowrt-services-summary-table" title="Permalink to this heading"></a></h1>
+<span id="table-tanowrt-services"></span><table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">TanoWrt Services Summary Table</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" rowspan="2"><p>Package Name</p></th>
+<th class="head" rowspan="2"><p>Service Description</p></th>
+<th class="head" colspan="4"><p>Init Script
+at <code class="file docutils literal notranslate"><span class="pre">/etc/init.d</span></code></p></th>
+<th class="head" rowspan="2"><p>UCI Config(s)
+at <code class="file docutils literal notranslate"><span class="pre">/etc/config</span></code></p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>Start</p></th>
+<th class="head"><p>Stop</p></th>
+<th class="head"><p>Default
+State</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>dnsmasq</p></td>
+<td><p>DNS server, DHCP server,
+TFTP server</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dnsmasq</span></code></p></td>
+<td><p>19</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dhcp</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>modemmanager</p></td>
+<td><p>Daemon controlling mobile broadband
+(2G/3G/4G) devices and connections.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">modemmanager</span></code></p></td>
+<td><p>70</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>smstools3</p></td>
+<td><p>SMS Gateway software which can send
+and receive short messages through
+GSM modems and mobile phones.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">smstools3</span></code></p></td>
+<td><p>94</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>zabbix-agentd</p></td>
+<td><p>Zabbix agent daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">zabbix_agentd</span></code></p></td>
+<td><p>60</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">zabbix_agentd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="8"><p>base-files</p></td>
+<td><p>Base system initialization script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+<td><p>10</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Boot initialization script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boot</span></code></p></td>
+<td><p>10</p></td>
+<td><p>90</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Script for synchonizing time between
+system and hardware RTC.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sysfixtime</span></code></p></td>
+<td><p>00</p></td>
+<td><p>90</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Done initialization script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">done</span></code></p></td>
+<td><p>95</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Script for initializing sysctl
+configuration values.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sysctl</span></code></p></td>
+<td><p>11</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Script for unmounting all mounts.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">umount</span></code></p></td>
+<td><p>–</p></td>
+<td><p>90</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO initialization script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gpio_switch</span></code></p></td>
+<td><p>94</p></td>
+<td><p>10</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>LED’s initialization script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">led</span></code></p></td>
+<td><p>96</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>busybox</p></td>
+<td><p>NTP server.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sysntpd</span></code></p></td>
+<td><p>98</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Watchdog daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">watchdog</span></code></p></td>
+<td><p>00</p></td>
+<td><p>99</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">watchdog</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>dbus</p></td>
+<td><p>D-Bus message bus.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dbus</span></code></p></td>
+<td><p>60</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>firewall3</p></td>
+<td><p>OpenWrt firewall configuration.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">firewall</span></code></p></td>
+<td><p>19</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">firewall</span></code></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>fstools</p></td>
+<td><p>Block device mounting and checking.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fstab</span></code></p></td>
+<td><p>40</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fstab</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Block device automounting daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">blockd</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fstab</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>libcgroup</p></td>
+<td><p>Linux control group abstraction
+library and tools.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cgroups</span></code></p></td>
+<td><p>11</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cgroups</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>netifd</p></td>
+<td><p>OpenWrt Network interface
+configuration daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">network</span></code></p></td>
+<td><p>20</p></td>
+<td><p>90</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">network</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>odhcpd</p></td>
+<td><p>OpenWrt DHCP/DHCPv6(-PD)/RA server
+and relay.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">odhcpd</span></code></p></td>
+<td><p>35</p></td>
+<td><p>85</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dhcp</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>procd</p></td>
+<td><p>OpenWrt container management.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uxc</span></code></p></td>
+<td><p>99</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uxc</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>psplash-tn</p></td>
+<td><p>Userspace graphical boot splash
+screen.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">psplash</span></code></p></td>
+<td><p>00</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">psplash</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>rpcd</p></td>
+<td><p>OpenWrt ubus RPC server.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rpcd</span></code></p></td>
+<td><p>12</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rpcd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>ubox</p></td>
+<td><p>OpenWrt system log implementation.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">log</span></code></p></td>
+<td><p>12</p></td>
+<td><p>89</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>eudev</p></td>
+<td><p>A device file manager for the Linux
+kernel. It manages device nodes in
+<code class="file docutils literal notranslate"><span class="pre">/dev</span></code> and handles all user
+space actions when adding
+or removing devices.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">udev</span></code></p></td>
+<td><p>15</p></td>
+<td><p>95</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>urandom-seed</p></td>
+<td><p>/etc/urandom.seed handling
+for OpenWrt.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">urandom_seed</span></code></p></td>
+<td><p>99</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>urngd</p></td>
+<td><p>OpenWrt non-physical true random
+number generator based on timing
+jitter.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">urngd</span></code></p></td>
+<td><p>00</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>apcupsd</p></td>
+<td><p>Daemon for controlling APC UPSes.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">apcupsd</span></code></p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>collectd</p></td>
+<td><p>Daemon which collects system
+performance statistics periodically
+and provides mechanisms to store the
+values in a variety of ways, for
+example in RRD files.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">collectd</span></code></p></td>
+<td><p>80</p></td>
+<td><p>10</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">collectd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>usb-gadget-network</p></td>
+<td><p>Init script to initialize network
+(RNDIS) usb gadget.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">usb-gadget-network</span></code></p></td>
+<td><p>98</p></td>
+<td><p>20</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>haveged</p></td>
+<td><p>A simple entropy daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">haveged</span></code></p></td>
+<td><p>01</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>irqbalance</p></td>
+<td><p>Daemon to balance interrupts across
+multiple CPUs, which can lead to
+better performance and IO balance
+on SMP systems.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">irqbalance</span></code></p></td>
+<td><p>90</p></td>
+<td><p>10</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">irqbalance</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>luci-app-statistics</p></td>
+<td><p>LuCI statistics application.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">luci_statistics</span></code></p></td>
+<td><p>79</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">luci_statistics</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>rsyslog</p></td>
+<td><p>Enhanced multi-threaded syslogd</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rsyslog</span></code></p></td>
+<td><p>12</p></td>
+<td><p>89</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>ugps</p></td>
+<td><p>OpenWrt GPS daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ugps</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gps</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>usbmode</p></td>
+<td><p>Tool for controlling “flip flop”
+(multiple devices) USB gear like
+UMTS sticks.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">usbmode</span></code></p></td>
+<td><p>20</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>modutils-initscripts</p></td>
+<td><p>Initscript for auto-loading kernel
+modules on boot.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">modutils</span></code></p></td>
+<td><p>00</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>ddns-scripts</p></td>
+<td><p>Dynamic DNS server.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ddns</span></code></p></td>
+<td><p>95</p></td>
+<td><p>10</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ddns</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>dropbear</p></td>
+<td><p>A lightweight SSH and SCP
+implementation.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dropbear</span></code></p></td>
+<td><p>19</p></td>
+<td><p>50</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dropbear</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>igh-ethercat</p></td>
+<td><p>IgH EtherCAT Master for Linux.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ethercat</span></code></p></td>
+<td><p>60</p></td>
+<td><p>20</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ethercat</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>keepalived</p></td>
+<td><p>High Availability monitor built
+upon LVS, VRRP and service pollers.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">keepalived</span></code></p></td>
+<td><p>70</p></td>
+<td><p>01</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">keepalived</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>lldpd</p></td>
+<td><p>A 802.1ab implementation (LLDP)
+to help you locate neighbors of
+all your equipments.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lldpd</span></code></p></td>
+<td><p>90</p></td>
+<td><p>01</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lldpd</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>mbusd</p></td>
+<td><p>Modbus TCP to Modbus RTU
+(RS-232/485) gateway.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mbusd</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mbusd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>mosquitto</p></td>
+<td><p>Open source MQTT implementation.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mosquitto</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mosquitto</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>mstpd</p></td>
+<td><p>Multiple Spanning Tree Protocol
+(MSTP) daemon. Supports MSTP, RSTP
+and STP protocols.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mstpd</span></code></p></td>
+<td><p>19</p></td>
+<td><p>01</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">mstpd</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">network</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>mwan3</p></td>
+<td><p>Multiwan hotplug script with
+connection tracking support.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mwan3</span></code></p></td>
+<td><p>19</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mwan3</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>netperf</p></td>
+<td><p>Network performance benchmark
+including tests for TCP, UDP,
+sockets, ATM and more.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netserver</span></code></p></td>
+<td><p>50</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>nlbwmon</p></td>
+<td><p>Traffic usage monitor daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nlbwmon</span></code></p></td>
+<td><p>60</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">nlbwmon</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">system</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dhcp</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>openvpn</p></td>
+<td><p>A full-featured SSL VPN solution
+via tun device.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openvpn</span></code></p></td>
+<td><p>90</p></td>
+<td><p>10</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openvpn</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>qos-scripts</p></td>
+<td><p>QoS initialization scripts</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">qos</span></code></p></td>
+<td><p>50</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">qos</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>relayd</p></td>
+<td><p>OpenWrt IPv4 pseudo-bridge
+routing daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">relayd</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">network</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>shellinabox</p></td>
+<td><p>Shell In A Box implements a web
+server that can export arbitrary
+command line tools to a web based
+terminal emulator.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shellinabox</span></code></p></td>
+<td><p>98</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shellinabox</span></code></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>net-snmp</p></td>
+<td><p>Open source SNMP implementation
+(daemon).</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">snmpd</span></code></p></td>
+<td><p>50</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">snmpd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Open source SNMP implementation
+(notification receiver).</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">snmpdtrapd</span></code></p></td>
+<td><p>50</p></td>
+<td><p>–</p></td>
+<td><p><span class="gray">Disabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>ttyd</p></td>
+<td><p>A simple command-line tool for
+sharing terminal over the web.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ttyd</span></code></p></td>
+<td><p>30</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ttyd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>uhttpd</p></td>
+<td><p>Tiny HTTP server.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uhttpd</span></code></p></td>
+<td><p>50</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uhttpd</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>umdnsd</p></td>
+<td><p>OpenWrt MDNS daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">umdns</span></code></p></td>
+<td><p>80</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">umdns</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>vnstat2</p></td>
+<td><p>Console-based network traffic
+monitor.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vnstat</span></code></p></td>
+<td><p>60</p></td>
+<td><p>50</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vnstat</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>vsftpd</p></td>
+<td><p>Very Secure FTP server.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vsftpd</span></code></p></td>
+<td><p>50</p></td>
+<td><p>05</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vsftpd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>xl2tpd</p></td>
+<td><p>Xelerance version of the Layer 2
+Tunneling Protocol (L2TP) daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xl2tpd</span></code></p></td>
+<td><p>60</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>netdata</p></td>
+<td><p>Real-time performance monitoring.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netdata</span></code></p></td>
+<td><p>99</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>rng-tools</p></td>
+<td><p>Random number generator daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rngd</span></code></p></td>
+<td><p>00</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rngd</span></code></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>swupdate</p></td>
+<td><p>Software (firmware) upgrade daemon.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">swupdate</span></code></p></td>
+<td><p>95</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Successfull software (firmware)
+upgrade handler script.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">swupdate_done</span></code></p></td>
+<td><p>99</p></td>
+<td><p>–</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>hostapd</p></td>
+<td><p>User space daemon for extended
+IEEE 802.11 management.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">wpad</span></code></p></td>
+<td><p>19</p></td>
+<td><p>21</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>rssileds</p></td>
+<td><p>RSSI real-time LED indicator.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rssileds</span></code></p></td>
+<td><p>96</p></td>
+<td><p>89</p></td>
+<td><p><span class="blue">Enabled</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

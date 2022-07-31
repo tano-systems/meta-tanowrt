@@ -1,9 +1,5 @@
 .. SPDX-License-Identifier: MIT
 
-.. include:: <xhtml1-lat1.txt>
-.. include:: <xhtml1-special.txt>
-
-
 .. _machine-boardcon-em3568:
 
 *******************
@@ -33,32 +29,32 @@ microphone array input, with high dynamic noise reduction algorithm,
 it can accurately recognize human voices even in noisy environments,
 and achieve precise voice control of the devices.
 
-Interfaces and Connectors
--------------------------
-
 .. _fig-boardcon-em3568:
 .. figure:: images/boardcon-em3568.jpg
-    :width: 1000
-    :class: with-border
+   :width: 1000
+   :align: center
+   :class: with-border
 
-    Boardcon EM3568 Single Board Computer
+   Boardcon EM3568 Single Board Computer
 
 Photos
 ------
 
-.. _fig-boardcon-em3568-angle-front:
-.. figure:: images/boardcon-em3568-angle-front.jpeg
-    :width: 500
-    :class: with-border
+.. container:: flex
 
-    Boardcon EM3568 front view
+   .. _fig-boardcon-em3568-angle-front:
+   .. figure:: images/boardcon-em3568-angle-front.jpeg
+      :width: 400
+      :class: with-border
 
-.. _fig-boardcon-em3568-top:
-.. figure:: images/boardcon-em3568-top.jpeg
-    :width: 500
-    :class: with-border
+      Boardcon EM3568 front view
 
-    Boardcon EM3568 top view
+   .. _fig-boardcon-em3568-top:
+   .. figure:: images/boardcon-em3568-top.jpeg
+      :width: 400
+      :class: with-border
+
+      Boardcon EM3568 top view
 
 
 Specification
@@ -151,13 +147,13 @@ Machines
 .. _table-boardcon-em3568-machines:
 .. table:: Supported Machines
 
-   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
-   | Board [#]_      | Target YAML [#]_             | Machine [#]_             | Target Recipe(s) [#]_              | Running Media [#]_     | Installation Media [#]_ |
-   +=================+==============================+==========================+====================================+========================+=========================+
-   | Boardcon EM3568 | ``boardcon-em3568-sd.yml``   | ``boardcon-em3568-sd``   | ``tanowrt-image-full-swu``         | microSD card           | |ndash|                 |
-   |                 +------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
-   |                 | ``boardcon-em3568-emmc.yml`` | ``boardcon-em3568-emmc`` | ``tanowrt-image-full-swu-factory`` | internal eMMC          | microSD card            |
-   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+-------------------------+
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   | Board\ [#]_     | Target YAML\ [#]_            | Machine\ [#]_            | Target Recipe(s)\ [#]_             | Running Media\ [#]_    | Installation Media\ [#]_ |
+   +=================+==============================+==========================+====================================+========================+==========================+
+   | Boardcon EM3568 | ``boardcon-em3568-sd.yml``   | ``boardcon-em3568-sd``   | ``tanowrt-image-full-swu``         | microSD card           | |ndash|                  |
+   |                 +------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
+   |                 | ``boardcon-em3568-emmc.yml`` | ``boardcon-em3568-emmc`` | ``tanowrt-image-full-swu-factory`` | internal eMMC          | microSD card             |
+   +-----------------+------------------------------+--------------------------+------------------------------------+------------------------+--------------------------+
 
 .. [#] Target board.
 .. [#] Target YAML-file located in the :file:`kas/targets` directory.
@@ -178,26 +174,26 @@ Images
 
 .. _table-boardcon-em3568-images:
 .. table:: Supported Images
-   :widths: 25, 25, 50
+   :widths: 15, 15, 15, 55
 
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | Recipe [#]_                        | Supported by Target(s)      | Description                                        |
-   +====================================+=============================+====================================================+
-   | ``tanowrt-image-full``             | *All*                       | Standard TanoWrt image.                            |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | ``tanowrt-image-full-swu``         | *All*                       | Standard TanoWrt image                             |
-   |                                    |                             | and :ref:`firmware upgrade <sec-firmware-upgrade>` |
-   |                                    |                             | image. When building this image,                   |
-   |                                    |                             | ``tanowrt-image-full`` will also be built          |
-   |                                    |                             | as dependency.                                     |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
-   | ``tanowrt-image-full-swu-factory`` | Only                        | Standard TanoWrt image                             |
-   |                                    | ``boardcon-em568-emmc.yml`` | and :ref:`firmware upgrade <sec-firmware-upgrade>` |
-   |                                    |                             | image.                                             |
-   |                                    |                             | When building this image, ``tanowrt-image-full``   |
-   |                                    |                             | and ``tanowrt-image-full-swu`` will also be built  |
-   |                                    |                             | as dependencies.                                   |
-   +------------------------------------+-----------------------------+----------------------------------------------------+
+   +---------------------------+------------------------------------+------------------------------+-----------------------------------------------------+
+   | Read-Only Root Filesystem | Recipe\ [#]_                       | Supported by Target(s)       | Description                                         |
+   | Image                     |                                    |                              |                                                     |
+   +===========================+====================================+==============================+=====================================================+
+   | ``tanowrt-image-full``    | ``tanowrt-image-full``             | *All*                        | Standard TanoWrt image.                             |
+   |                           +------------------------------------+------------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu``         | *All*                        | Standard TanoWrt image                              |
+   |                           |                                    |                              | and :ref:`firmware upgrade <sec-firmware-upgrade>`  |
+   |                           |                                    |                              | image. When building this image,                    |
+   |                           |                                    |                              | ``tanowrt-image-full`` will also be built           |
+   |                           |                                    |                              | as dependency.                                      |
+   |                           +------------------------------------+------------------------------+-----------------------------------------------------+
+   |                           | ``tanowrt-image-full-swu-factory`` | ``boardcon-em3568-emmc.yml`` | Factory installation image for standard TanoWrt     |
+   |                           |                                    |                              | image. When building this image,                    |
+   |                           |                                    |                              | ``tanowrt-image-full``                              |
+   |                           |                                    |                              | and ``tanowrt-image-full-swu`` will also be built   |
+   |                           |                                    |                              | as dependencies.                                    |
+   +---------------------------+------------------------------------+------------------------------+-----------------------------------------------------+
 
 .. [#] Image recipe name. This name can be used as argument
        for ``--target`` build command option (see :numref:`sec-boardcon-em3568-build` section).
@@ -256,7 +252,7 @@ Refer to table :ref:`table-boardcon-em3568-artifacts` for a description of some 
 
 .. _table-boardcon-em3568-artifacts:
 .. table:: Produced Build Artifacts
-   :widths: 15, 15
+   :widths: 15, 15, 70
 
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | Artifact                                                | Target(s)                     | Description                                                   |
@@ -292,24 +288,24 @@ Refer to table :ref:`table-boardcon-em3568-artifacts` for a description of some 
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
    | .. centered:: Images                                                                                                                                    |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.sdcard.img`             | ``boardcon-em3568-sd.yml``    | SD card image including all required partitions for booting   |
+   | :file:`<rootfs-image>-<MACHINE>.sdcard.img`             | ``boardcon-em3568-sd.yml``    | SD card image including all required partitions for booting   |
    |                                                         |                               | and running the system. This image is ready to be written     |
    |                                                         |                               | to the SD card using the :command:`dd` utility or similar     |
    |                                                         |                               | (see :ref:`sec-boardcon-em3568-flash`).                       |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img` | ``boardcon-em3568-emmc.yml``  | SD card factory installation image. This image is ready       |
+   | :file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img` | ``boardcon-em3568-emmc.yml``  | SD card factory installation image. This image is ready       |
    |                                                         |                               | to be written to the SD card using the :command:`dd` utility  |
    |                                                         |                               | or similar (see :ref:`sec-boardcon-em3568-flash`).            |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-<MACHINE>.squashfs-lzo`           | *All*                         | Root filesystem image (squashfs with LZO compression).        |
+   | :file:`<rootfs-image>-<MACHINE>.squashfs-lzo`           | *All*                         | Root filesystem image (squashfs with LZO compression).        |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
-   | :file:`<image-recipe>-swu-<MACHINE>.swu`                | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
+   | :file:`<rootfs-image>-swu-<MACHINE>.swu`                | *All*                         | :ref:`Firmware upgrade <sec-firmware-upgrade>` image.         |
    +---------------------------------------------------------+-------------------------------+---------------------------------------------------------------+
 
 .. note:: ``<MACHINE>`` in the artifacts path and artifact file names are replaced by
           the actual value of the ``MACHINE`` BitBake variable for the chosen
-          `target <sec-boardcon-em3568-targets_>`__. ``<image-recipe>`` is replaced
-          by the actual `image recipe <sec-boardcon-em3568-images_>`__ name.
+          `target <sec-boardcon-em3568-targets_>`__. ``<rootfs-image>`` is replaced
+          by the actual read-only root filesystem `image <sec-boardcon-em3568-images_>`__ name.
 
 For example, below is the complete list of artifacts produced
 by the ``boardcon-em3568-sd.yml`` target build.
@@ -462,6 +458,22 @@ Writing Image to microSD Card
 No special information about writing images to microSD card
 for Boardcon EM3568 board. See common instructions in :ref:`sec-writing-sd-or-usb` section.
 
+.. rubric:: Examples
+
+Writing factory installation image for the ``boardcon-em3568-emmc.yml`` target to the microSD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-swu-factory-boardcon-em3568-emmc.sdcard.img of=/dev/mmcblk1
+
+Writing bootable image for the ``boardcon-em3568-sd.yml`` target to the microSD
+card :file:`/dev/mmcblk1`:
+
+.. code-block:: console
+
+   $ dd if=tanowrt-image-full-boardcon-em3568-sd.sdcard.img of=/dev/mmcblk1
+
 
 .. _sec-boardcon-em3568-flash-emmc:
 
@@ -472,7 +484,7 @@ For the initial flashing of the internal eMMC memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
 (see :ref:`sec-boardcon-em3568-targets` for details) that assumes using the
 factory installation image for the initial flashing of the
-device, a factory installation image (:file:`<image-recipe>-swu-factory-<MACHINE>.sdcard.img`)
+device, a factory installation image (:file:`<rootfs-image>-swu-factory-<MACHINE>.sdcard.img`)
 will be automatically generated during the build process
 (see :ref:`sec-boardcon-em3568-build`).
 To write the factory installation image to a SD card, follow the instructions
@@ -632,7 +644,7 @@ You can erase the internal eMMC flash memory in the following ways:
       the only way to erase the eMMC flash memory is to use a USB
       connection with a PC and use special utilities.
 
-      .. todo:: Documentation is under development
+      .. todo:: Add content
 
 
 .. _sec-boardcon-em3568-serial:
@@ -729,15 +741,17 @@ You must see something like this in browser after you logged in:
 
 .. _fig-boardcon-em3568-luci-login:
 .. figure:: /common/images/luci/page-login.png
-    :width: 900
+   :align: center
+   :width: 900
 
-    LuCI WebUI Login Page
+   LuCI WebUI Login Page
 
 .. _fig-boardcon-em3568-luci-status:
-.. figure:: images/luci-status.png
-    :width: 900
+.. figure:: images/boardcon-em3568-luci-status.png
+   :align: center
+   :width: 900
 
-    LuCI WebUI Overview Page
+   LuCI WebUI Overview Page
 
 
 .. _sec-boardcon-em3568-upgrade:
@@ -746,7 +760,9 @@ Firmware Upgrade
 ================
 
 No special information about firmware upgrade.
-See common instructions in :ref:`sec-firmware-upgrade` section.
+Use produced :file:`.swu` :ref:`artifact <table-boardcon-em3568-artifacts>` for upgrading running system.
+
+.. seealso:: See common instructions in :ref:`sec-firmware-upgrade` section.
 
 
 Additional Information

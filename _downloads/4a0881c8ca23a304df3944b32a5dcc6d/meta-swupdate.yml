@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/layers/meta-oe.yml
+
+repos:
+  meta-swupdate:
+    url: https://github.com/sbabic/meta-swupdate.git
+    refspec: 2c2c57d3aaae42999b6ef6dcdf67fe52b12735c3

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+
+repos:
+  meta-swi:
+    url: https://github.com/legatoproject/meta-swi.git
+    refspec: 33b80a739ed47095f8a89ca0c6fae10346375800
+    layers:
+      common:

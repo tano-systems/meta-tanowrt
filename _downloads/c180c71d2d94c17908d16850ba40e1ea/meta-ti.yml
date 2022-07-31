@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/layers/openembedded-core.yml
+    - kas/layers/meta-arm.yml
+
+repos:
+  meta-ti:
+    url: https://git.yoctoproject.org/meta-ti
+    refspec: d54da744941ff97f2502bad2d7c51c5387bde929

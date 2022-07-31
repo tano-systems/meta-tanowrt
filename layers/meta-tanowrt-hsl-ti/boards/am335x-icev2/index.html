@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2 AM3359 ICEv2 EVM (TMDSICE3359) &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/tabs.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="2.12.1 Erasing SPI NOR Flash Contents" href="extra/erasing-nor.html" />
+    <link rel="prev" title="1 BeagleBone Black" href="../am335x-bbb/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Texas Instruments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../am335x-bbb/index.html">1 BeagleBone Black</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2 AM3359 ICEv2 EVM (TMDSICE3359)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">2.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#photos">2.1.1 Photos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#specification">2.1.2 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">2.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">2.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">2.2.2 Images</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build">2.3 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">2.3.1 Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">2.4 Partitioning Layouts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#microsd-card">2.4.1 microSD Card</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">2.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-image-to-microsd-card">2.6 Writing Image to microSD Card</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">2.7 Booting and Running</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#choosing-boot-mode">2.7.1 Choosing Boot Mode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#choosing-ethernet-mode">2.7.2 Choosing Ethernet Mode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-microsd-card">2.7.3 Booting from microSD Card</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-console">2.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">2.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">2.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">2.11 Firmware Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-information">2.12 Additional Information</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="extra/erasing-nor.html">2.12.1 Erasing SPI NOR Flash Contents</a></li>
+<li class="toctree-l5"><a class="reference internal" href="extra/ppp-over-uart4.html">2.12.2 Configuring PPP Connection over UART4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="extra/ti-uio.html">2.12.3 Enabling TI UIO</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#references">2.13 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../am574x-idk/index.html">3 AM574x IDK EVM (TMDSIDK574)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Texas Instruments Hardware Support Layer (meta-tanowrt-hsl-ti)</a> &raquo;</li>
+    
+    <li><span class="section-number">2 </span>AM3359 ICEv2 EVM (TMDSICE3359)</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-ti/boards/am335x-icev2/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="am3359-icev2-evm-tmdsice3359">
+<span id="machine-am335x-icev2"></span><h1><span class="section-number">2 </span>AM3359 ICEv2 EVM (TMDSICE3359)<a class="headerlink" href="#am3359-icev2-evm-tmdsice3359" title="Permalink to this heading"></a></h1>
+<p class="rubric">Contents</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#board-overview" id="id27">Board Overview</a></p></li>
+<li><p><a class="reference internal" href="#build-targets" id="id28">Build Targets</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id29">Build</a></p></li>
+<li><p><a class="reference internal" href="#partitioning-layouts" id="id30">Partitioning Layouts</a></p></li>
+<li><p><a class="reference internal" href="#produced-build-artifacts" id="id31">Produced Build Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#writing-image-to-microsd-card" id="id32">Writing Image to microSD Card</a></p></li>
+<li><p><a class="reference internal" href="#booting-and-running" id="id33">Booting and Running</a></p></li>
+<li><p><a class="reference internal" href="#serial-console" id="id34">Serial Console</a></p></li>
+<li><p><a class="reference internal" href="#default-network-configuration" id="id35">Default Network Configuration</a></p></li>
+<li><p><a class="reference internal" href="#web-user-interface" id="id36">Web User Interface</a></p></li>
+<li><p><a class="reference internal" href="#firmware-upgrade" id="id37">Firmware Upgrade</a></p></li>
+<li><p><a class="reference internal" href="#additional-information" id="id38">Additional Information</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id39">References</a></p></li>
+</ul>
+</div>
+<section id="board-overview">
+<span id="sec-am335x-icev2-board"></span><h2><a class="toc-backref" href="#id27"><span class="section-number">2.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<p>The AM3359 Industrial Communications Engine (ICE) is a development platform targeted
+for systems that specifically focus on the industrial communications capabilities
+of the Sitara AM335x Arm® Cortex™-A8 processors.</p>
+<p>The AM335x Arm Cortex-A8 processors integrate the Programmable Real-time Unit (PRU)
+that has been architected to implement the real-time communication technologies used
+in a broad range of industrial automation equipment. It enables low foot print
+designs with minimal external components and with best in class low power performance.</p>
+<figure class="align-center" id="id15">
+<span id="fig-am335x-icev2"></span><a class="reference internal image-reference" href="../../../../_images/am335x-icev2.jpg"><img alt="../../../../_images/am335x-icev2.jpg" src="../../../../_images/am335x-icev2.jpg" style="width: 1000px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">AM3359 ICEv2 EVM Interfaces and Connectors</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="photos">
+<h3><span class="section-number">2.1.1 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
+<div class="flex docutils container">
+<figure class="align-default" id="id16">
+<span id="fig-am335x-icev2-angled"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-icev2-angled.png"><img alt="../../../../_images/am335x-icev2-angled.png" class="with-border" src="../../../../_images/am335x-icev2-angled.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">AM3359 ICEv2 EVM Angled View</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id17">
+<span id="fig-am335x-icev2-top"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-icev2-top.png"><img alt="../../../../_images/am335x-icev2-top.png" class="with-border" src="../../../../_images/am335x-icev2-top.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.21 </span><span class="caption-text">AM3359 ICEv2 EVM Top View</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id18">
+<span id="fig-am335x-icev2-bottom"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-icev2-bottom.png"><img alt="../../../../_images/am335x-icev2-bottom.png" class="with-border" src="../../../../_images/am335x-icev2-bottom.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">AM3359 ICEv2 EVM Bottom View</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id19">
+<span id="fig-am335x-icev2-box"></span><a class="with-border reference internal image-reference" href="../../../../_images/am335x-icev2-box.png"><img alt="../../../../_images/am335x-icev2-box.png" class="with-border" src="../../../../_images/am335x-icev2-box.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">AM3359 ICEv2 EVM Bottom Box Contents</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="specification">
+<h3><span class="section-number">2.1.2 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-number">Table 2.12 </span><span class="caption-text">AM3359 ICEv2 EVM Specification</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>AM3359 ICEv2 EVM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Processor</p></td>
+<td><div class="line-block">
+<div class="line">Texas Instruments AM3359 (Sitara AM3359ZCZ)</div>
+<div class="line">1 × ARM Cortex-A8
+frequency up to 1.0 GHz</div>
+<div class="line">NEON floating-point accelerator</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>PMIC</p></td>
+<td><div class="line-block">
+<div class="line">TPS65910A3 power management IC</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Memory</p></td>
+<td><div class="line-block">
+<div class="line">256 MiB DDR3 SDRAM (128M × 16)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Storage</p></td>
+<td><div class="line-block">
+<div class="line">microSD card</div>
+<div class="line">64 Mbit (8 MiB) SPI Flash (W25Q64)</div>
+<div class="line">16 Mbit (2 MiB) NOR Flash (M29W160EB)</div>
+<div class="line">256 KiB EEPROM (CAT24C256WI-GT3)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Debug</p></td>
+<td><div class="line-block">
+<div class="line">Optional Onboard 20-pin CTI JTAG, Serial Header</div>
+<div class="line">Embedded XDS100V2 USB emulation through the Micro USB AB connector</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>USB</p></td>
+<td><div class="line-block">
+<div class="line">1 × Micro USB AB (USB to JTAG and USB to UART)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Ethernet</p></td>
+<td><div class="line-block">
+<div class="line">2 × 10/100 Ethernet transceivers (TLK110)</div>
+<div class="line">(connected to gigabit switch or PRU-ICSS units through muxing)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>CAN/Profibus</p></td>
+<td><div class="line-block">
+<div class="line">1 × DB9 female connector</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Expansion
+Connectors</p></td>
+<td><div class="line-block">
+<div class="line">24V Power</div>
+<div class="line">5V Power</div>
+<div class="line">8 × Industrial 24V digital inputs</div>
+<div class="line">8 × Industrial 24V digital outputs</div>
+<div class="line">6 × Analog inputs</div>
+<div class="line">3 × GPIO</div>
+<div class="line">2 × Latch inputs</div>
+<div class="line">1 × LCD connector</div>
+<div class="line">1 × SPI</div>
+<div class="line">1 × I2C</div>
+<div class="line">1 × JTAG EMU4</div>
+<div class="line">1 × UART</div>
+<div class="line">1 × GPMC</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Power Source</p></td>
+<td><p>DC Jack</p></td>
+</tr>
+<tr class="row-even"><td><p>Power</p></td>
+<td><p>24V/0.75A DC input jack</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="build-targets">
+<span id="sec-am335x-icev2-targets"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">2.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<section id="machines">
+<span id="sec-am335x-icev2-machines"></span><h3><span class="section-number">2.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
+<span id="table-am335x-icev2-machines"></span><table class="docutils align-default" id="id21">
+<caption><span class="caption-number">Table 2.13 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AM3359 ICEv2 EVM</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-icev2-sd.yml</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">am335x-icev2-sd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
+<td><p>microSD card</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Target board.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-am335x-icev2-images"><span class="std std-numref">Section 2.2.2</span></a>,
+you can find list of supported recipes for the target images, which you can build in addition
+to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
+(see <a class="reference internal" href="#sec-am335x-icev2-build"><span class="std std-numref">Section 2.3</span></a>).</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd><p>External storage device for which an installation image is generated. When booting from
+the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
+</dd>
+</dl>
+</section>
+<section id="images">
+<span id="sec-am335x-icev2-images"></span><h3><span class="section-number">2.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
+<span id="table-am335x-icev2-images"></span><table class="colwidths-given docutils align-default" id="id22">
+<caption><span class="caption-number">Table 2.14 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
+Image</p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<th class="head"><p>Supported by Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Standard TanoWrt image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Standard TanoWrt image
+and <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">firmware upgrade</span></a>
+image. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code> will also be built
+as dependency.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
+<dd><p>Image recipe name. This name can be used as argument
+for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-am335x-icev2-build"><span class="std std-numref">Section 2.3</span></a> section).</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="build">
+<span id="sec-am335x-icev2-build"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">2.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<p>Please read the common information on how to perform a TanoWrt
+images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>See section <a class="reference internal" href="#sec-am335x-icev2-machines"><span class="std std-numref">Section 2.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-am335x-icev2-images"><span class="std std-numref">Section 2.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-am335x-icev2-artifacts"><span class="std std-numref">Section 2.5</span></a> for detailed information
+about the produced build artifacts.</p></li>
+</ul>
+</div>
+<section id="examples">
+<h3><span class="section-number">2.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<section id="build-default-images-for-am3359-icev2-evm-board">
+<h4><span class="section-number">2.3.1.1 </span>Build Default Images for AM3359 ICEv2 EVM Board<a class="headerlink" href="#build-default-images-for-am3359-icev2-evm-board" title="Permalink to this heading"></a></h4>
+<p class="rubric">For microSD Card</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-icev2-sd.yml
+</pre></div>
+</div>
+<p>Default images will be produced to boot and run from the microSD
+card on the AM3359 ICEv2 EVM target board.</p>
+</section>
+</section>
+</section>
+<section id="partitioning-layouts">
+<span id="sec-am335x-icev2-partitioning"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">2.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<section id="microsd-card">
+<h3><span class="section-number">2.4.1 </span>microSD Card<a class="headerlink" href="#microsd-card" title="Permalink to this heading"></a></h3>
+<p>The partitioning and data layout of the microSD card image for the AM3359 ICEv2 EVM board
+are shown in the figure below.</p>
+<figure class="align-center" id="id23">
+<span id="fig-am335x-icev2-layout-sd"></span><a class="reference internal image-reference" href="../../../../_images/am335x-icev2-layout-sd.svg"><img alt="../../../../_images/am335x-icev2-layout-sd.svg" src="../../../../_images/am335x-icev2-layout-sd.svg" width="1000" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.24 </span><span class="caption-text">AM3359 ICEv2 EVM Partitions Layout for microSD Card</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="produced-build-artifacts">
+<span id="sec-am335x-icev2-artifacts"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">2.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
+Refer to table <a class="reference internal" href="#table-am335x-icev2-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
+<span id="table-am335x-icev2-artifacts"></span><table class="colwidths-given docutils align-default" id="id24">
+<caption><span class="caption-number">Table 2.15 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id24" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Artifact</p></th>
+<th class="head"><p>Target(s)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Bootloader (SPL)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">MLO-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>MLO binary blob for microSD card images.</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Bootloader (U-Boot)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">startup-&lt;MACHINE&gt;.img</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot startup script.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-initial-env-&lt;MACHINE&gt;-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot initial environment image for microSD card image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">u-boot-&lt;MACHINE&gt;.bin-sdcard-defconfig</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>U-Boot binary image for booting from microSD card.</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p class="centered">
+<strong>Linux Kernel and DTB</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.bin</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Flattened Image Tree (FIT) image with Linux kernel
+and Device Tree Blobs (DTB).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">fitImage-&lt;MACHINE&gt;.ext4</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>FIT image packed into an ext4 file system image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">am335x-icev2.dtb</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Target Device Tree Blob (DTB) for CPSW
+<a class="reference internal" href="#sec-am335x-icev2-ethernet-mode"><span class="std std-ref">ethernet ports mode</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">am335x-icev2-prueth.dtb</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Target Device Tree Blob (DTB) for PRU-ICSS
+<a class="reference internal" href="#sec-am335x-icev2-ethernet-mode"><span class="std std-ref">ethernet ports mode</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p class="centered">
+<strong>Images</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>SD card image including all required partitions for booting
+and running the system. This image is ready to be written
+to the SD card using the <strong class="command">dd</strong> utility or similar
+(see <a class="reference internal" href="#sec-am335x-icev2-flash"><span class="std std-ref">Writing Image to microSD Card</span></a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Root filesystem image (squashfs with LZO compression).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p><a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware upgrade</span></a> image.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifact file names are replaced by
+the actual value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen
+<a class="reference internal" href="#sec-am335x-icev2-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;</span></code> is replaced
+by the actual read-only root filesystem <a class="reference internal" href="#sec-am335x-icev2-images">image</a> name.</p>
+</div>
+<p>For example, below is the lists of artifacts produced by the <code class="docutils literal notranslate"><span class="pre">am335x-icev2-sd.yml</span></code>
+target build. There are two types of listings here —
+a complete listing, and a reduced listing without the symbolic links display.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<span class="go">total 154M</span>
+<span class="go">-rw-r--r-- 2  61K Jul 25 14:07 am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">-rw-r--r-- 2  62K Jul 25 14:07 am335x-icev2-prueth--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 14:07 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 14:07 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 14:07 fitImage-am335x-icev2-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 14:07 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 14:07 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 14:04 MLO-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 14:04 MLO-am335x-icev2-sd-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.8M Jul 25 14:07 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.tgz</span>
+<span class="go">-rw-r--r-- 2 2.5K Jul 25 14:04 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 14:04 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  91K Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2 932M Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.sdcard.img</span>
+<span class="go">-rw-r--r-- 2  28M Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 357K Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.testdata.json</span>
+<span class="go">-rw-r--r-- 2 5.5K Jul 25 14:09 tanowrt-image-full.env</span>
+<span class="go">-rw-r--r-- 2 3.1K Jul 25 14:09 tanowrt-image-full-sdimage-ti-swu-a-b.wks</span>
+<span class="go">-rw-r--r-- 2  35M Jul 25 14:09 tanowrt-image-full-swu-am335x-icev2-sd-20220725110331.swu</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 14:04 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 14:04 u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls -gGh
+<span class="go">total 154M</span>
+<span class="go">-rw-r--r-- 2  61K Jul 25 14:07 am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 14:07 am335x-icev2-am335x-icev2-sd.dtb -&gt; am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 14:07 am335x-icev2.dtb -&gt; am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">-rw-r--r-- 2  62K Jul 25 14:07 am335x-icev2-prueth--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">lrwxrwxrwx 2   98 Jul 25 14:07 am335x-icev2-prueth-am335x-icev2-sd.dtb -&gt; am335x-icev2-prueth--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">lrwxrwxrwx 2   98 Jul 25 14:07 am335x-icev2-prueth.dtb -&gt; am335x-icev2-prueth--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:07 fitImage -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">-rw-r--r-- 2 4.5M Jul 25 14:07 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 14:07 fitImage-5.4.106+gitAUTOINC+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd.ext4</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:07 fitImage-am335x-icev2-sd.bin -&gt; fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">-rw-r--r-- 2 6.4M Jul 25 14:07 fitImage-am335x-icev2-sd.ext4</span>
+<span class="go">-rw-r--r-- 2 2.4K Jul 25 14:07 fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.its</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 14:07 fitImage-its-am335x-icev2-sd -&gt; fitImage-its--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.its</span>
+<span class="go">-rw-r--r-- 2 4.4M Jul 25 14:07 fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">lrwxrwxrwx 2   97 Jul 25 14:07 fitImage-linux.bin-am335x-icev2-sd -&gt; fitImage-linux.bin--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.bin</span>
+<span class="go">lrwxrwxrwx 2  116 Jul 25 14:04 MLO -&gt; MLO-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2  116 Jul 25 14:04 MLO-am335x-icev2-sd -&gt; MLO-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  42K Jul 25 14:04 MLO-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 384K Jul 25 14:04 MLO-am335x-icev2-sd-sdcard-defconfig-x3</span>
+<span class="go">lrwxrwxrwx 2  116 Jul 25 14:04 MLO-sdcard-defconfig -&gt; MLO-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   39 Jul 25 14:04 MLO-sdcard-defconfig-x3 -&gt; MLO-am335x-icev2-sd-sdcard-defconfig-x3</span>
+<span class="go">-rw-r--r-- 2 4.8M Jul 25 14:07 modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.tgz</span>
+<span class="go">lrwxrwxrwx 2   86 Jul 25 14:07 modules-am335x-icev2-sd.tgz -&gt; modules--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.tgz</span>
+<span class="go">lrwxrwxrwx 2   11 Jul 25 14:04 startup-am335x-icev2-sd.img -&gt; startup.img</span>
+<span class="go">lrwxrwxrwx 2   19 Jul 25 14:04 startup-am335x-icev2-sd.img.version -&gt; startup.img.version</span>
+<span class="go">-rw-r--r-- 2 2.5K Jul 25 14:04 startup.img</span>
+<span class="go">-rw-r--r-- 2   16 Jul 25 14:04 startup.img.version</span>
+<span class="go">-rw-r--r-- 2  91K Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.manifest</span>
+<span class="go">-rw-r--r-- 2 932M Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.sdcard.img</span>
+<span class="go">-rw-r--r-- 2  28M Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.squashfs-lzo</span>
+<span class="go">-rw-r--r-- 2   24 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 357K Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd-20220725110331.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   65 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd.manifest -&gt; tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.manifest</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd.sdcard.img -&gt; tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.sdcard.img</span>
+<span class="go">lrwxrwxrwx 2   69 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd.squashfs-lzo -&gt; tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.squashfs-lzo</span>
+<span class="go">lrwxrwxrwx 2   63 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd.testdata.json -&gt; tanowrt-image-full-am335x-icev2-sd-20220725110331.testdata.json</span>
+<span class="go">lrwxrwxrwx 2   64 Jul 25 14:09 tanowrt-image-full-am335x-icev2-sd.version -&gt; tanowrt-image-full-am335x-icev2-sd-20220725110331.rootfs.version</span>
+<span class="go">-rw-r--r-- 2 5.5K Jul 25 14:09 tanowrt-image-full.env</span>
+<span class="go">-rw-r--r-- 2 3.1K Jul 25 14:09 tanowrt-image-full-sdimage-ti-swu-a-b.wks</span>
+<span class="go">-rw-r--r-- 2  35M Jul 25 14:09 tanowrt-image-full-swu-am335x-icev2-sd-20220725110331.swu</span>
+<span class="go">lrwxrwxrwx 2   57 Jul 25 14:09 tanowrt-image-full-swu-am335x-icev2-sd.swu -&gt; tanowrt-image-full-swu-am335x-icev2-sd-20220725110331.swu</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 14:04 u-boot-am335x-icev2-sd.img -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 14:04 u-boot-am335x-icev2-sd.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 14:04 u-boot.img -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   67 Jul 25 14:04 u-boot.img-sdcard-defconfig -&gt; u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig -&gt; u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2  411 Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">-rw-r--r-- 2 128K Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   95 Jul 25 14:04 u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">lrwxrwxrwx 2   91 Jul 25 14:04 u-boot-initial-env-sdcard-defconfig -&gt; u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2</span>
+<span class="go">lrwxrwxrwx 2   95 Jul 25 14:04 u-boot-initial-env-sdcard-defconfig.bin -&gt; u-boot-initial-env-am335x-icev2-sd-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.bin</span>
+<span class="go">-rw-r--r-- 2 675K Jul 25 14:04 u-boot-sdcard-defconfig-2020.01+gitAUTOINC+6b5b982e98-r36.tano2.img</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:04 u-boot-spl.bin -&gt; u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:04 u-boot-spl.bin-am335x-icev2-sd -&gt; u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">-rwxr-xr-x 2  41K Jul 25 14:04 u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:04 u-boot-spl.bin-am335x-icev2-sd-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+<span class="go">lrwxrwxrwx 2   87 Jul 25 14:04 u-boot-spl.bin-sdcard-defconfig -&gt; u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="writing-image-to-microsd-card">
+<span id="sec-am335x-icev2-flash"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">2.6 </span>Writing Image to microSD Card</a><a class="headerlink" href="#writing-image-to-microsd-card" title="Permalink to this heading"></a></h2>
+<p>No special information about writing images to microSD card
+for AM3359 ICEv2 EVM board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
+<p class="rubric">Examples</p>
+<p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">am335x-icev2-sd.yml</span></code> target to the microSD
+card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-icev2-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+</pre></div>
+</div>
+</section>
+<section id="booting-and-running">
+<span id="sec-am335x-icev2-booting"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">2.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<section id="choosing-boot-mode">
+<span id="sec-am335x-icev2-boot-mode"></span><h3><span class="section-number">2.7.1 </span>Choosing Boot Mode<a class="headerlink" href="#choosing-boot-mode" title="Permalink to this heading"></a></h3>
+<p>Short pin 2 and 3 on J5 (sysboot) for choosing MMC/SD boot mode.</p>
+</section>
+<section id="choosing-ethernet-mode">
+<span id="sec-am335x-icev2-ethernet-mode"></span><h3><span class="section-number">2.7.2 </span>Choosing Ethernet Mode<a class="headerlink" href="#choosing-ethernet-mode" title="Permalink to this heading"></a></h3>
+<p>Jumpers J18 and J19 must be set to control the Ethernet ports using CPSW
+(gigabit switch) or PRU-ICSS mode. For PRU-ICSS mode, short pins 2 and 3.
+For CPSW mode, short pins 1 and 2.</p>
+</section>
+<section id="booting-from-microsd-card">
+<h3><span class="section-number">2.7.3 </span>Booting from microSD Card<a class="headerlink" href="#booting-from-microsd-card" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Choose proper <a class="reference internal" href="#sec-am335x-icev2-boot-mode"><span class="std std-ref">boot mode</span></a> and
+<a class="reference internal" href="#sec-am335x-icev2-ethernet-mode"><span class="std std-ref">Ethernet mode</span></a>.</p></li>
+<li><p>Insert the microSD card into the slot on the AM3359 ICEv2 EVM board (power is off).</p></li>
+<li><p>Power on board.</p></li>
+<li><p>TanoWrt will be booting from microSD card.</p></li>
+<li><p>Log in to system using default <a class="reference internal" href="../../../../overview.html#sec-access-creds"><span class="std std-ref">credentials</span></a>.</p></li>
+</ol>
+<p>TI AM3359 ICEv2 EVM board has SPI NOR flash. By default this storage contains
+a demonstration bootloader. Booting from an microSD card is only possible when
+there is no bootloader in the SPI NOR flash. If you have an bootloader in the SPI NOR
+flash you must erase SPI NOR flash contents. Follow instructions in
+section <a class="reference internal" href="extra/erasing-nor.html#sec-am335x-icev2-erasing-nor"><span class="std std-ref">Erasing SPI NOR Flash Contents</span></a> to erase SPI NOR flash contents.</p>
+</section>
+</section>
+<section id="serial-console">
+<span id="sec-am335x-icev2-serial"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">2.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<p>The debug serial console on the AM3359 ICEv2 EVM board is accessible
+via the Micro USB connector on board.
+A Micro USB-AB connector (J13) is connected to the upstream port of the
+USB to UART converter IC (FT2232L). This is used for USB to JTAG and USB to UART
+conversion applications. This USB port can also be used for XDS100V2 JTAG emulation.</p>
+<p>The default serial console settings for AM3359 ICEv2 EVM for U-Boot and kernel
+are described in the table below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Baudrate</p></td>
+<td><p>115200</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data bits</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>Stop bits</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parity</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Flow control</p></td>
+<td><p>none</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="default-network-configuration">
+<span id="sec-am335x-icev2-network-config"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">2.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<p>By default Ethernet 1 and 2 ports (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> and <code class="docutils literal notranslate"><span class="pre">eth1</span></code> interfaces) are joined into
+a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface) with enabled <a class="reference internal" href="../../../../glossary.html#term-RSTP"><span class="xref std std-term">RSTP</span></a> protocol.
+Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured with static IP address 192.168.0.1/24 with enabled
+<a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server.</p>
+<p>Ethernet ports 1 and 2 (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> and <code class="docutils literal notranslate"><span class="pre">eth1</span></code>) have <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> enabled by default.</p>
+</section>
+<section id="web-user-interface">
+<span id="sec-am335x-icev2-webui"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">2.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<p>The WebUI can be accessed via Ethernet ports through HTTP(s) protocol.
+You must see something like this in browser after you logged in:</p>
+<figure class="align-center" id="id25">
+<span id="fig-am335x-icev2-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id26">
+<span id="fig-am335x-icev2-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/am335x-icev2-luci-status.png"><img alt="../../../../_images/am335x-icev2-luci-status.png" src="../../../../_images/am335x-icev2-luci-status.png" style="width: 900px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id26" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="firmware-upgrade">
+<span id="sec-am335x-icev2-upgrade"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">2.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<p>No special information about firmware upgrade.
+Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-am335x-icev2-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+</div>
+</section>
+<section id="additional-information">
+<h2><a class="toc-backref" href="#id38"><span class="section-number">2.12 </span>Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
+<p>Here are sections with various additional information about the
+AM3359 ICEv2 EVM board and the operation of TanoWrt on it.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extra/erasing-nor.html">2.12.1 Erasing SPI NOR Flash Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra/ppp-over-uart4.html">2.12.2 Configuring PPP Connection over UART4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra/ti-uio.html">2.12.3 Enabling TI UIO</a></li>
+</ul>
+</div>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#id39"><span class="section-number">2.13 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.ti.com/tool/TMDSICE3359">https://www.ti.com/tool/TMDSICE3359</a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

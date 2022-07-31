@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/layers/meta-swi-common.yml
+
+repos:
+  meta-swi:
+    layers:
+      meta-swi-mdm9x28:

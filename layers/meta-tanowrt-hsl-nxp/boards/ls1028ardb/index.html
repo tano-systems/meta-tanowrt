@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
@@ -21,13 +22,14 @@
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
         <script src="../../../../_static/tabs.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)" href="../../../meta-tanowrt-hsl-rockchip/index.html" />
-    <link rel="prev" title="NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)" href="../../index.html" /> 
+    <link rel="next" title="Quectel Hardware Support Layer (meta-tanowrt-hsl-quectel)" href="../../../meta-tanowrt-hsl-quectel/index.html" />
+    <link rel="prev" title="NXP (Freescale) Hardware Support Layer (meta-tanowrt-hsl-nxp)" href="../../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,29 +53,59 @@
               <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">meta-tanowrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">meta-tanowrt-hsl-nxp</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">NXP (Freescale)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1 NXP LS1028A RDB</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">1.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#photos">1.1.1 Photos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#specification">1.1.2 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">1.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">1.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">1.2.2 Images</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="#boot-sequence-selection">1.3 Boot Sequence Selection</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build">1.4 Build</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">1.5 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build">1.4 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">1.4.1 Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">1.5 Partitioning Layouts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#sd-card">1.5.1 SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#emmc">1.5.2 eMMC</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">1.6 Produced Build Artifacts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.7 Writing Images</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.8 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">1.7 Writing Images</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-sd-card">1.7.1 Writing Image to SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-emmc-flash">1.7.2 Writing Image to eMMC Flash</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">1.8 Booting and Running</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-sd-card">1.8.1 Booting from SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-internal-emmc-flash">1.8.2 Booting from Internal eMMC Flash</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="#serial-console">1.9 Serial Console</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">1.10 Default Network Configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#web-user-interface">1.11 Web User Interface</a></li>
@@ -88,7 +120,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">meta-tanowrt-hsl-rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul>
@@ -113,7 +151,7 @@
       <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
     </li>
     
-      <li><a href="../../index.html">NXP/Freescale Hardware Support Layer (meta-tanowrt-hsl-nxp)</a> &raquo;</li>
+      <li><a href="../../index.html">NXP (Freescale) Hardware Support Layer (meta-tanowrt-hsl-nxp)</a> &raquo;</li>
     
     <li><span class="section-number">1 </span>NXP LS1028A RDB</li>
 
@@ -131,54 +169,51 @@
 <p class="rubric">Contents</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#board-overview" id="id29">Board Overview</a></p></li>
-<li><p><a class="reference internal" href="#build-targets" id="id30">Build Targets</a></p></li>
-<li><p><a class="reference internal" href="#boot-sequence-selection" id="id31">Boot Sequence Selection</a></p></li>
-<li><p><a class="reference internal" href="#build" id="id32">Build</a></p></li>
-<li><p><a class="reference internal" href="#partitioning-layouts" id="id33">Partitioning Layouts</a></p></li>
-<li><p><a class="reference internal" href="#produced-build-artifacts" id="id34">Produced Build Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#writing-images" id="id35">Writing Images</a></p></li>
-<li><p><a class="reference internal" href="#booting-and-running" id="id36">Booting and Running</a></p></li>
-<li><p><a class="reference internal" href="#serial-console" id="id37">Serial Console</a></p></li>
-<li><p><a class="reference internal" href="#default-network-configuration" id="id38">Default Network Configuration</a></p></li>
-<li><p><a class="reference internal" href="#web-user-interface" id="id39">Web User Interface</a></p></li>
-<li><p><a class="reference internal" href="#firmware-upgrade" id="id40">Firmware Upgrade</a></p></li>
-<li><p><a class="reference internal" href="#references" id="id41">References</a></p></li>
+<li><p><a class="reference internal" href="#board-overview" id="id28">Board Overview</a></p></li>
+<li><p><a class="reference internal" href="#build-targets" id="id29">Build Targets</a></p></li>
+<li><p><a class="reference internal" href="#boot-sequence-selection" id="id30">Boot Sequence Selection</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id31">Build</a></p></li>
+<li><p><a class="reference internal" href="#partitioning-layouts" id="id32">Partitioning Layouts</a></p></li>
+<li><p><a class="reference internal" href="#produced-build-artifacts" id="id33">Produced Build Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#writing-images" id="id34">Writing Images</a></p></li>
+<li><p><a class="reference internal" href="#booting-and-running" id="id35">Booting and Running</a></p></li>
+<li><p><a class="reference internal" href="#serial-console" id="id36">Serial Console</a></p></li>
+<li><p><a class="reference internal" href="#default-network-configuration" id="id37">Default Network Configuration</a></p></li>
+<li><p><a class="reference internal" href="#web-user-interface" id="id38">Web User Interface</a></p></li>
+<li><p><a class="reference internal" href="#firmware-upgrade" id="id39">Firmware Upgrade</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id40">References</a></p></li>
 </ul>
 </div>
 <section id="board-overview">
-<span id="sec-ls1028ardb-board"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-board"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
 <p>The LS1028A reference design board (RDB) is a computing, evaluation,
 and development platform that supports industrial IoT applications,
 human machine interface solutions, and industrial networking.</p>
-<section id="interfaces-and-connectors">
-<h3><span class="section-number">1.1.1 </span>Interfaces and Connectors<a class="headerlink" href="#interfaces-and-connectors" title="Permalink to this heading"></a></h3>
-<figure class="align-default" id="id16">
+<figure class="align-center" id="id15">
 <span id="fig-ls1028ardb-front"></span><a class="with-border reference internal image-reference" href="../../../../_images/ls1028ardb-front.jpg"><img alt="../../../../_images/ls1028ardb-front.jpg" class="with-border" src="../../../../_images/ls1028ardb-front.jpg" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.6 </span><span class="caption-text">NXP LS1028A RDB Front View</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.20 </span><span class="caption-text">NXP LS1028A RDB Front View</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id17">
+<figure class="align-center" id="id16">
 <span id="fig-ls1028ardb-back"></span><a class="with-border reference internal image-reference" href="../../../../_images/ls1028ardb-back.jpg"><img alt="../../../../_images/ls1028ardb-back.jpg" class="with-border" src="../../../../_images/ls1028ardb-back.jpg" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.7 </span><span class="caption-text">NXP LS1028A RDB Back View</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.21 </span><span class="caption-text">NXP LS1028A RDB Back View</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-</section>
 <section id="photos">
-<h3><span class="section-number">1.1.2 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
-<figure class="align-default" id="id18">
+<h3><span class="section-number">1.1.1 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
+<figure class="align-default" id="id17">
 <span id="fig-ls1028ardb-pcb"></span><a class="with-border reference internal image-reference" href="../../../../_images/ls1028ardb-pcb.jpg"><img alt="../../../../_images/ls1028ardb-pcb.jpg" class="with-border" src="../../../../_images/ls1028ardb-pcb.jpg" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.8 </span><span class="caption-text">NXP LS1028A RDB PCB</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.22 </span><span class="caption-text">NXP LS1028A RDB PCB</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="specification">
-<h3><span class="section-number">1.1.3 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
-<table class="docutils align-default" id="id19">
-<caption><span class="caption-number">Table 1.5 </span><span class="caption-text">NXP LS1028A RDB Specification</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
+<h3><span class="section-number">1.1.2 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 1.12 </span><span class="caption-text">NXP LS1028A RDB Specification</span><a class="headerlink" href="#id18" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 85%" />
@@ -193,8 +228,8 @@ human machine interface solutions, and industrial networking.</p>
 <td><div class="line-block">
 <div class="line">Layerscape LS1028A</div>
 <div class="line">Dual-core processor based on Cortex-A72 64 bits</div>
-<div class="line">frequency up to 1.5 GHz
-ECC on internal L1, L2 caches for high-reliability applications</div>
+<div class="line">frequency up to 1.5 GHz</div>
+<div class="line">ECC on internal L1, L2 caches for high-reliability applications</div>
 </div>
 </td>
 </tr>
@@ -256,11 +291,11 @@ Interconnect</p></td>
 </section>
 </section>
 <section id="build-targets">
-<span id="sec-ls1028ardb-targets"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-targets"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
 <section id="machines">
 <span id="sec-ls1028ardb-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
-<span id="table-ls1028ardb-machines"></span><table class="docutils align-default" id="id20">
-<caption><span class="caption-number">Table 1.6 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<span id="table-ls1028ardb-machines"></span><table class="docutils align-default" id="id19">
+<caption><span class="caption-number">Table 1.13 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 11%" />
 <col style="width: 19%" />
@@ -270,12 +305,12 @@ Interconnect</p></td>
 <col style="width: 16%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Board <a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
-<th class="head"><p>Target YAML <a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
-<th class="head"><p>Machine <a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
-<th class="head"><p>Target Recipe(s) <a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
-<th class="head"><p>Running Media <a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
-<th class="head"><p>Installation Media <a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
 </tr>
 </thead>
 <tbody>
@@ -321,21 +356,25 @@ the Installation Media, the TanoWrt system is installed on the Running Media sto
 </section>
 <section id="images">
 <span id="sec-ls1028ardb-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
-<span id="table-ls1028ardb-images"></span><table class="colwidths-given docutils align-default" id="id21">
-<caption><span class="caption-number">Table 1.7 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<span id="table-ls1028ardb-images"></span><table class="colwidths-given docutils align-default" id="id20">
+<caption><span class="caption-number">Table 1.14 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 50%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 55%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Recipe <a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
+Image</p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
 <th class="head"><p>Supported by Target(s)</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<tr class="row-even"><td rowspan="3"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Standard TanoWrt image.</p></td>
 </tr>
@@ -348,13 +387,15 @@ image. When building this image,
 as dependency.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu-factory</span></code></p></td>
-<td><p>Only <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
-<td><p>Factory installation image for standard TanoWrt image.
-When building this image, <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code> and
-<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code> will also be built
+<td><p><code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
+<td><p>Factory installation image for standard TanoWrt  .
+image. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-full</span></code>
+and <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-swu</span></code> will also be built
 as dependencies.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
+<tr class="row-odd"><td rowspan="3"><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p>Standard TanoWrt image with Qt5 support.</p></td>
 </tr>
@@ -367,11 +408,12 @@ image. When building this image,
 as dependency.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5-swu-factory</span></code></p></td>
-<td><p>Only <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
-<td><p>Factory installation image for standard TanoWrt image
-with Qt5 support. When building this image,
-<code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code> and <code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5-swu</span></code>
-will also be built as dependencies.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
+<td><p>Factory installation image for standard TanoWrt
+image with Qt5 support. When building this image,
+<code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5</span></code>
+and <code class="docutils literal notranslate"><span class="pre">tanowrt-image-qt5-swu</span></code> will also be built
+as dependencies.</p></td>
 </tr>
 </tbody>
 </table>
@@ -384,14 +426,14 @@ for <code class="docutils literal notranslate"><span class="pre">--target</span>
 </section>
 </section>
 <section id="boot-sequence-selection">
-<span id="sec-ls1028ardb-boot-sequence-selection"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.3 </span>Boot Sequence Selection</a><a class="headerlink" href="#boot-sequence-selection" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-boot-sequence-selection"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.3 </span>Boot Sequence Selection</a><a class="headerlink" href="#boot-sequence-selection" title="Permalink to this heading"></a></h2>
 <p>DIP switches SW2[1:4] on the LS1028A RDB board are used to select the boot source.
 The DIP switches settings for all supported boot sources are shown in the
 figure and table below.</p>
-<figure class="align-default" id="id22">
+<figure class="align-center" id="id21">
 <span id="fig-ls1028ardb-boot-source-selcetion"></span><a class="reference internal image-reference" href="../../../../_images/ls1028ardb-dip-switches.svg"><img alt="../../../../_images/ls1028ardb-dip-switches.svg" src="../../../../_images/ls1028ardb-dip-switches.svg" width="600" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.9 </span><span class="caption-text">NXP LS1028A RDB Boot Source Selection</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.23 </span><span class="caption-text">NXP LS1028A RDB Boot Source Selection</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>Also you can switch the boot source in runtime from the U-Boot command
@@ -403,7 +445,7 @@ line using the command <strong class="command">qixis_reset</strong>:</p>
 </ul>
 </section>
 <section id="build">
-<span id="sec-ls1028ardb-build"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.4 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-build"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.4 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>Please read the common information on how to perform a TanoWrt
 images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
 <div class="admonition seealso">
@@ -450,15 +492,15 @@ and run from the eMMC flash memory.</p>
 </section>
 </section>
 <section id="partitioning-layouts">
-<span id="sec-ls1028ardb-partitioning"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">1.5 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-partitioning"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.5 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
 <section id="sd-card">
 <h3><span class="section-number">1.5.1 </span>SD Card<a class="headerlink" href="#sd-card" title="Permalink to this heading"></a></h3>
 <p>The partitioning and data layout of the SD card image for the LS1028A RDB board
 are shown in the figure below.</p>
-<figure class="align-default" id="id23">
+<figure class="align-center" id="id22">
 <span id="fig-ls1028ardb-layout-sd"></span><a class="reference internal image-reference" href="../../../../_images/ls1028ardb-layout-sd.svg"><img alt="../../../../_images/ls1028ardb-layout-sd.svg" src="../../../../_images/ls1028ardb-layout-sd.svg" width="1000" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.10 </span><span class="caption-text">NXP LS1028A RDB Partitions Layout for SD Card</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.24 </span><span class="caption-text">NXP LS1028A RDB Partitions Layout for SD Card</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -466,24 +508,20 @@ are shown in the figure below.</p>
 <h3><span class="section-number">1.5.2 </span>eMMC<a class="headerlink" href="#emmc" title="Permalink to this heading"></a></h3>
 <p>The partitioning and data layout of the eMMC image for the LS1028A RDB board
 are shown in the figure below.</p>
-<figure class="align-default" id="id24">
+<figure class="align-center" id="id23">
 <span id="fig-ls1028ardb-layout-emmc"></span><a class="reference internal image-reference" href="../../../../_images/ls1028ardb-layout-emmc.svg"><img alt="../../../../_images/ls1028ardb-layout-emmc.svg" src="../../../../_images/ls1028ardb-layout-emmc.svg" width="1000" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.11 </span><span class="caption-text">NXP LS1028A RDB Partitions Layout for eMMC</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.25 </span><span class="caption-text">NXP LS1028A RDB Partitions Layout for eMMC</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 </section>
 <section id="produced-build-artifacts">
-<span id="sec-ls1028ardb-artifacts"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.6 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
-<div class="admonition-todo admonition" id="id15">
-<p class="admonition-title">Todo</p>
-<p>Update</p>
-</div>
+<span id="sec-ls1028ardb-artifacts"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">1.6 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
 <p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
 Refer to table <a class="reference internal" href="#table-ls1028ardb-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
-<span id="table-ls1028ardb-artifacts"></span><table class="colwidths-given docutils align-default" id="id25">
-<caption><span class="caption-number">Table 1.8 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id25" title="Permalink to this table"></a></caption>
+<span id="table-ls1028ardb-artifacts"></span><table class="colwidths-given docutils align-default" id="id24">
+<caption><span class="caption-number">Table 1.15 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id24" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 15%" />
@@ -571,27 +609,30 @@ initramfs image.</p></td>
 <tr class="row-even"><td colspan="3"><p class="centered">
 <strong>Images</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.yml</span></code></p></td>
 <td><p>SD card image including all required partitions for booting
 and running the system. This image is ready to be written
 to the SD card using the <strong class="command">dd</strong> utility or similar
 (see <a class="reference internal" href="#sec-ls1028ardb-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
 <td><p>SD card factory installation image. This image is ready
 to be written to the SD card using the <strong class="command">dd</strong> utility
 or similar (see <a class="reference internal" href="#sec-ls1028ardb-flash"><span class="std std-ref">Writing Images</span></a>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.cpio.gz</span></code>
-<code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.cpio.gz</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code></p></td>
 <td><p>Root filesystem initramfs image for factory installtion
 image. This image is included in
 <code class="file docutils literal notranslate"><span class="pre">fitImage-tanowrt-image-initramfs-swu-factory-&lt;MACHINE&gt;.ext4</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-&lt;MACHINE&gt;.squashfs-lzo</span></code></p></td>
+<td><p><em>All</em></p></td>
+<td><p>Root filesystem image (squashfs with LZO compression).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu</span></code></p></td>
 <td><p><em>All</em></p></td>
 <td><p><a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware upgrade</span></a> image.</p></td>
 </tr>
@@ -601,8 +642,8 @@ image. This image is included in
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> in the artifacts path and artifact file names are replaced by
 the actual value of the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for the chosen
-<a class="reference internal" href="#sec-ls1028ardb-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;</span></code> is replaced
-by the actual <a class="reference internal" href="#sec-ls1028ardb-images">image recipe</a> name.</p>
+<a class="reference internal" href="#sec-ls1028ardb-targets">target</a>. <code class="docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;</span></code> is replaced
+by the actual read-only root filesystem <a class="reference internal" href="#sec-ls1028ardb-images">image</a> name.</p>
 </div>
 <p>For example, below is the lists of artifacts produced by the <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code>
 and <code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.yml</span></code> target builds. There are two types of listings here —
@@ -844,11 +885,22 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 </div></div>
 </section>
 <section id="writing-images">
-<span id="sec-ls1028ardb-flash"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.7 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-flash"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.7 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
 <section id="writing-image-to-sd-card">
 <span id="sec-ls1028ardb-flash-sd"></span><h3><span class="section-number">1.7.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
 <p>No special information about writing images to microSD card
-for NXP LS1028A RDB board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing images to SD Card or USB Flash Drive</span></a> section.</p>
+for NXP LS1028A RDB board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
+<p class="rubric">Examples</p>
+<p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code> target to the SD
+card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-ls1028ardb-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+</pre></div>
+</div>
+<p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.yml</span></code> target to the SD
+card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-ls1028ardb-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+</pre></div>
+</div>
 </section>
 <section id="writing-image-to-emmc-flash">
 <span id="sec-ls1028ardb-flash-emmc"></span><h3><span class="section-number">1.7.2 </span>Writing Image to eMMC Flash<a class="headerlink" href="#writing-image-to-emmc-flash" title="Permalink to this heading"></a></h3>
@@ -856,11 +908,11 @@ for NXP LS1028A RDB board. See common instructions in <a class="reference intern
 the special image of the initial factory installation. If you choose a build target
 (see <a class="reference internal" href="#sec-ls1028ardb-targets"><span class="std std-ref">Build Targets</span></a> for details) that assumes using the
 factory installation image for the initial flashing of the
-device, a factory installation image (<code class="file docutils literal notranslate"><span class="pre">&lt;image-recipe&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>)
+device, a factory installation image (<code class="file docutils literal notranslate"><span class="pre">&lt;rootfs-image&gt;-swu-factory-&lt;MACHINE&gt;.sdcard.img</span></code>)
 will be automatically generated during the build process
 (see <a class="reference internal" href="#sec-ls1028ardb-build"><span class="std std-ref">Build</span></a>).
 To write the factory installation image to a SD card, follow the instructions
-from <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing images to SD Card or USB Flash Drive</span></a> section.</p>
+from <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
 <p>When you boot device from the prepaired SD card with factory installation image the installation
 of TanoWrt to the internal eMMC flash memory will be done automatically. The detailed
 installation log is available on the <a class="reference internal" href="#sec-ls1028ardb-serial"><span class="std std-ref">debug UART</span></a>.
@@ -874,7 +926,7 @@ flash memory will be permanently lost.</p>
 </section>
 </section>
 <section id="booting-and-running">
-<span id="sec-ls1028ardb-booting"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">1.8 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-booting"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.8 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <section id="booting-from-sd-card">
 <h3><span class="section-number">1.8.1 </span>Booting from SD Card<a class="headerlink" href="#booting-from-sd-card" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
@@ -898,7 +950,7 @@ flash memory will be permanently lost.</p>
 </section>
 </section>
 <section id="serial-console">
-<span id="sec-ls1028ardb-serial"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">1.9 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-serial"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">1.9 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
 <p>Connect one end of the DB9F-to-USB Type A cable to the UART1 DB9 connector
 available on chassis front panel (see <a class="reference internal" href="#fig-ls1028ardb-front"><span class="std std-ref">NXP LS1028A RDB Front View</span></a> figure) and the
 other end of the cable to the USB port of the host machine. This connection
@@ -936,11 +988,11 @@ are described in the table below.</p>
 </table>
 </section>
 <section id="default-network-configuration">
-<span id="sec-ls1028ardb-network-config"></span><h2><a class="toc-backref" href="#id38"><span class="section-number">1.10 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
-<figure class="align-default" id="id26">
+<span id="sec-ls1028ardb-network-config"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">1.10 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<figure class="align-center" id="id25">
 <span id="fig-ls1028ardb-network"></span><a class="with-border reference internal image-reference" href="../../../../_images/ls1028ardb-network.jpg"><img alt="../../../../_images/ls1028ardb-network.jpg" class="with-border" src="../../../../_images/ls1028ardb-network.jpg" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.12 </span><span class="caption-text">NXP LS1028A RDB Default Network Configuration</span><a class="headerlink" href="#id26" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.26 </span><span class="caption-text">NXP LS1028A RDB Default Network Configuration</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>By default, network ports SWP0, SWP1, SWP2 and SWP3 are joined
@@ -971,29 +1023,33 @@ on the WAN interface (<code class="docutils literal notranslate"><span class="pr
 and MAC0 (<code class="docutils literal notranslate"><span class="pre">eno0</span></code>) have enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> by default.</p>
 </section>
 <section id="web-user-interface">
-<span id="sec-ls1028ardb-webui"></span><h2><a class="toc-backref" href="#id39"><span class="section-number">1.11 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
-<p>The WebUI can be accessed via Ethernet port or USB network connection through HTTP(s) protocol.
-You must see something like this in browser after you logged in:</p>
-<figure class="align-default" id="id27">
+<span id="sec-ls1028ardb-webui"></span><h2><a class="toc-backref" href="#id38"><span class="section-number">1.11 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<p>The WebUI can be accessed via any Ethernet port bridged to LAN network
+through HTTP(s) protocol. You must see something like this in browser:</p>
+<figure class="align-center" id="id26">
 <span id="fig-ls1028ardb-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.13 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.27 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id26" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id28">
-<span id="fig-ls1028ardb-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/luci-status.png"><img alt="../../../../_images/luci-status.png" src="../../../../_images/luci-status.png" style="width: 900px;" /></a>
+<figure class="align-center" id="id27">
+<span id="fig-ls1028ardb-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/ls1028ardb-luci-status.png"><img alt="../../../../_images/ls1028ardb-luci-status.png" src="../../../../_images/ls1028ardb-luci-status.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.14 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1.28 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="firmware-upgrade">
-<span id="sec-ls1028ardb-upgrade"></span><h2><a class="toc-backref" href="#id40"><span class="section-number">1.12 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<span id="sec-ls1028ardb-upgrade"></span><h2><a class="toc-backref" href="#id39"><span class="section-number">1.12 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
 <p>No special information about firmware upgrade.
-See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-ls1028ardb-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See common instructions in <a class="reference internal" href="../../../../firmware-upgrade.html#sec-firmware-upgrade"><span class="std std-ref">Firmware Upgrade</span></a> section.</p>
+</div>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id41"><span class="section-number">1.13 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id40"><span class="section-number">1.13 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.nxp.com/design/qoriq-developer-resources/ls1028a-development-board:LS1028ARDB">https://www.nxp.com/design/qoriq-developer-resources/ls1028a-development-board:LS1028ARDB</a></p></li>
 </ol>
@@ -1007,7 +1063,7 @@ See common instructions in <a class="reference internal" href="../../../../firmw
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
     </p>
   </div>
 </footer>

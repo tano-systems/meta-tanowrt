@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
@@ -20,6 +21,7 @@
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -48,20 +50,28 @@
               <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">TanoWrt Core Layers</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">meta-tanowrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">meta-tanowrt-hsl-baikal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">meta-tanowrt-hsl-nxp</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">meta-tanowrt-hsl-rockchip</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../index.html#requirements-and-dependencies">Requirements and Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Rockchip</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">1 Boardcon EM3566 SBC</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="index.html#board-overview">1.1 Board Overview</a></li>
@@ -74,7 +84,12 @@
 <li class="toctree-l4"><a class="reference internal" href="index.html#default-network-configuration">1.8 Default Network Configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="index.html#web-user-interface">1.9 Web User Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="index.html#firmware-upgrade">1.10 Firmware Upgrade</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">1.11 Additional Information</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">1.11 Additional Information</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="bootlog-u-boot.html">1.11.1 Boardcon EM3566 U-Boot Boot Log</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">1.11.2 Boardcon EM3566 Linux Boot Log (dmesg)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="factory-installation-to-emmc.html">1.11.3 Boardcon EM3566 Factory Installation to eMMC Log</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="index.html#references">1.12 References</a></li>
 </ul>
 </li>
@@ -87,6 +102,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul>
@@ -844,7 +864,7 @@
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 24.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
     </p>
   </div>
 </footer>

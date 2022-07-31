@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+
+repos:
+  meta-atmel:
+    url: https://github.com/linux4sam/meta-atmel
+    refspec: 4cf59bc866e9a0934bda0cf47c547945f449c800

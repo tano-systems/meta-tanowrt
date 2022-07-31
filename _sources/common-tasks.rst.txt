@@ -11,7 +11,7 @@ Common Tasks
 
 .. _sec-writing-sd-or-usb:
 
-Writing images to SD Card or USB Flash Drive
+Writing Images to SD Card or USB Flash Drive
 ============================================
 
 For many :ref:`supported boards <sec-supported-targets>` are implemented build
