@@ -1,5 +1,5 @@
 
-<img src="../common/images/logos/tano-gray.svg" width="200">
+<img src="docs/common/images/logos/tano-gray.svg" width="200">
 
 # TanoWrt Embedded Linux Distribution
 
