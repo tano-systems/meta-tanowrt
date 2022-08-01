@@ -219,6 +219,14 @@ Run the built image in QEMU:
    $ kas shell -c "DISPLAY=:0 runqemu intel-x86_64-corei7" kas/targets/intel-x86_64-corei7.yml
 
 
+Additional Information
+======================
+
+.. toctree::
+   :maxdepth: 1
+
+   extra/build-docker.rst
+
 References
 ==========
 
