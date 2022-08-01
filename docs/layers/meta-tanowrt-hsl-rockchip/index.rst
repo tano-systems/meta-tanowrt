@@ -58,18 +58,26 @@ All supported devices are listed in the table below.
 Partitioning Layouts
 ====================
 
-Rockchip hardware support layer has a default partitions layout for A/B systems and for the factory installation image.
-These layouts are described in the tables below.
+The Rockchip hardware support layer provides default disk partition layout
+for A/B systems and for the factory installation image. These layouts are
+defined in WKS files
+:tanowrt_github_blob:`sdimage-rockchip-swu-a-b.wks.in </meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-a-b.wks.in>`
+and
+:tanowrt_github_blob:`sdimage-rockchip-swu-factory.wks.in </meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-factory.wks.in>`
+respectively.
 
-Partitions layout for the A/B systems is defined in the :tanowrt_github_blob:`sdimage-rockchip-swu-a-b.wks.in </meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-a-b.wks.in>` WKS file.
-Partitions layout for the factory installation image is defined in the :tanowrt_github_blob:`sdimage-rockchip-swu-factory.wks.in </meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-factory.wks.in>` WKS file.
+Data layout at the beginning of the disk (from 0 to 8 MiB) is the same
+for both layouts and is described in :numref:`table-hsl-rockchip-partitions-beginning`.
 
-.. table:: Default Partitions Layout for A/B Systems
+.. _table-hsl-rockchip-partitions-beginning:
+
+.. table:: Default Partitions Layout (beginning)
    :widths: 10, 8, 7, 7, 8, 8, 7, 15, 30
 
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | Partition          | Name            | Offset      | Start    | Size         | Number      | GPT    | UUID                                     | Description               |
-   |                    |                 |             | Sector   |              | of Sectors  | Number |                                          |                           |
+   +--------------------+-----------------+------------------------+----------------------------+--------+------------------------------------------+---------------------------+
+   | Partition          | Name            | Offset                 | Size                       | GPT    | UUID                                     | Description               |
+   |                    |                 +-------------+----------+--------------+-------------+ Number |                                          |                           |
+   |                    |                 | Bytes       | Sectors  | Bytes        | Sectors     |        |                                          |                           |
    +====================+=================+=============+==========+==============+=============+========+==========================================+===========================+
    | MBR                | --              |           0 |        0 |          512 |           1 | --     | --                                       | Master Boot Record (MBR)  |
    +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
@@ -88,6 +96,22 @@ Partitions layout for the factory installation image is defined in the :tanowrt_
    | Environment 2      |                 |             |          |              |             |        |                                          | (redundand)               |
    +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
    | **Free space**     | --              | **4194304** | **8192** |    **4 MiB** |    **8192** | --     | --                                       | **Free space**            |
+   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
+   | Continuation of the disk (see :numref:`table-hsl-rockchip-partitions-ab` and :numref:`table-hsl-rockchip-partitions-factory`)                                              |
+   +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+The continuation of the disk with partitioning for A/B systems is summarized in :numref:`table-hsl-rockchip-partitions-ab`.
+
+.. _table-hsl-rockchip-partitions-ab:
+.. table:: Continuation of the Partitions Layout for A/B Systems
+   :widths: 10, 8, 7, 7, 8, 8, 7, 15, 30
+
+   +--------------------+-----------------+------------------------+----------------------------+--------+------------------------------------------+---------------------------+
+   | Partition          | Name            | Offset                 | Size                       | GPT    | UUID                                     | Description               |
+   |                    |                 +-------------+----------+--------------+-------------+ Number |                                          |                           |
+   |                    |                 | Bytes       | Sectors  | Bytes        | Sectors     |        |                                          |                           |
+   +====================+=================+=============+==========+==============+=============+========+==========================================+===========================+
+   | Beginning of the disk (see :numref:`table-hsl-rockchip-partitions-beginning`)                                                                                              |
    +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
    | U-boot             | ``boot``        |     8388608 |    16384 |        8 MiB |       16384 |      1 | :term:`TANOWRT_PARTUUID_BOOT`            | A-TF, U-boot bootloader,  |
    |                    |                 |             |          |              |             |        |                                          | Device Tree Blob          |
@@ -113,30 +137,19 @@ Partitions layout for the factory installation image is defined in the :tanowrt_
 
 .. [#] Partition is automatically resized to fit all available disk space at first boot.
 
-.. table:: Partitions Layout for Factory Installation Image
+:numref:`table-hsl-rockchip-partitions-factory` shows the continuation
+of the disk with partitioning for the factory installation image.
+
+.. _table-hsl-rockchip-partitions-factory:
+.. table:: Continuation of the Partitions Layout for Factory Installation Image
    :widths: 10, 8, 7, 7, 8, 8, 7, 15, 30
 
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | Partition          | Name            | Offset      | Start    | Size         | Number      | GPT    | UUID                                     | Description               |
-   |                    |                 |             | Sector   |              | of Sectors  | Number |                                          |                           |
+   +--------------------+-----------------+------------------------+----------------------------+--------+------------------------------------------+---------------------------+
+   | Partition          | Name            | Offset                 | Size                       | GPT    | UUID                                     | Description               |
+   |                    |                 +-------------+----------+--------------+-------------+ Number |                                          |                           |
+   |                    |                 | Bytes       | Sectors  | Bytes        | Sectors     |        |                                          |                           |
    +====================+=================+=============+==========+==============+=============+========+==========================================+===========================+
-   | MBR                | --              |           0 |        0 |          512 |           1 | --     | --                                       | Master Boot Record (MBR)  |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | Primary GPT        | --              |         512 |        1 |     31.5 KiB |          63 | --     | --                                       | Primary GPT record        |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | IDBlock            | --              |       32768 |       64 |      992 KiB |        1984 | --     | --                                       | Rockchip IDBlock binary   |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | **Free space**     | --              | **1048576** | **2048** | **2944 KiB** |    **5888** | --     | --                                       | **Free space**            |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | Startup            | --              |     4063232 |     7936 |       64 KiB |         128 | --     | --                                       | U-boot startup script     |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | U-boot             | --              |     4128768 |     8064 |       32 KiB |          64 | --     | --                                       | U-boot environment        |
-   | Environment 1      |                 |             |          |              |             |        |                                          |                           |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | U-boot             | --              |     4161536 |     8128 |       32 KiB |          64 | --     | --                                       | U-boot environment        |
-   | Environment 2      |                 |             |          |              |             |        |                                          | (redundand)               |
-   +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
-   | **Free space**     | --              | **4194304** | **8192** |    **4 MiB** |    **8192** | --     | --                                       | **Free space**            |
+   | Beginning of the disk (see :numref:`table-hsl-rockchip-partitions-beginning`)                                                                                              |
    +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
    | U-boot             | ``boot``        |     8388608 |    16384 |        8 MiB |       16384 |      1 | :term:`TANOWRT_PARTUUID_BOOT`            | A-TF, U-boot bootloader,  |
    |                    |                 |             |          |              |             |        |                                          | Device Tree Blob          |
