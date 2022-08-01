@@ -96,14 +96,6 @@ Broadcom SoC
 .. include:: /layers/meta-tanowrt-hsl-brcm/.layer-boards-table.rst.inc
 
 
-Elvees SoC
-----------------------
-
-**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-elvees`
-
-.. include:: /layers/meta-tanowrt-hsl-elvees/.layer-boards-table.rst.inc
-
-
 Marvell SoC
 -----------
 

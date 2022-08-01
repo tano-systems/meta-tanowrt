@@ -48,7 +48,6 @@ and focused on running in embedded systems, including real-time systems.
    Microchip (Atmel)   <layers/meta-tanowrt-hsl-atmel/index>
    Baikal Electronics  <layers/meta-tanowrt-hsl-baikal/index>
    Broadcom            <layers/meta-tanowrt-hsl-brcm/index>
-   Elvees              <layers/meta-tanowrt-hsl-elvees/index>
    Intel               <layers/meta-tanowrt-hsl-intel/index>
    Marvell             <layers/meta-tanowrt-hsl-marvell/index>
    MediaTek            <layers/meta-tanowrt-hsl-mtk/index>
@@ -195,18 +194,6 @@ and focused on running in embedded systems, including real-time systems.
       ^^^
       .. image:: common/images/logos/broadcom.svg
          :width: 170px
-
-
-   .. grid-item-card::
-      :link: layers/meta-tanowrt-hsl-elvees/index
-      :link-type: doc
-      :class-item: grid-item-center grid-under-development
-      :text-align: center
-
-      Elvees
-      ^^^
-      .. image:: common/images/logos/elvees.png
-         :width: 240px
 
 
    .. grid-item-card::
