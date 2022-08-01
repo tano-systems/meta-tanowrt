@@ -32,7 +32,6 @@ and achieve precise voice control of the devices.
 .. _fig-boardcon-em3568:
 .. figure:: images/boardcon-em3568.jpg
    :width: 1000
-   :align: center
    :class: with-border
 
    Boardcon EM3568 Single Board Computer
@@ -240,6 +239,14 @@ intended to run from the microSD card. The installer image
 will install the default image to the internal eMMC flash
 memory and further the Boardcon EM3568 board will boot
 and run from the eMMC flash memory.
+
+
+.. _sec-boardcon-em3568-partitioning:
+
+Partitioning Layouts
+====================
+
+Images for Boardcon EM3568 board using default partitions layouts described :ref:`here <sec-hsl-rockchip-partitioning>`.
 
 
 .. _sec-boardcon-em3568-artifacts:
@@ -741,14 +748,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-boardcon-em3568-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-boardcon-em3568-luci-status:
 .. figure:: images/boardcon-em3568-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

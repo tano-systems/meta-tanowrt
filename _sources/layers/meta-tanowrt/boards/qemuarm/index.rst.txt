@@ -277,14 +277,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-qemuarm-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-qemuarm-luci-status:
 .. figure:: images/qemuarm64-screen-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

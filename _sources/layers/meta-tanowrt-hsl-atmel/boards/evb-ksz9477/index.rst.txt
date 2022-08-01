@@ -31,7 +31,6 @@ The board provides 2 Gbit (256 MiB) DDR2 SDRAM and 2 Gbit (256 MiB) of NAND flas
 
 .. _fig-evb-ksz9477:
 .. figure:: images/evb-ksz9477.jpg
-   :align: center
    :width: 1000
    :class: with-border
 
@@ -209,7 +208,6 @@ are shown in the figure below.
 
 .. _fig-evb-ksz9477-layout-sd:
 .. figure:: images/evb-ksz9477-layout-sd.svg
-   :align: center
    :width: 1000
 
    EVB-KSZ9477 Partitions Layout for SD Card
@@ -222,7 +220,6 @@ are shown in the figure below.
 
 .. _fig-evb-ksz9477-layout-nand:
 .. figure:: images/evb-ksz9477-layout-nand.svg
-   :align: center
    :width: 1000
 
    EVB-KSZ9477 Partitions Layout for NAND
@@ -675,7 +672,6 @@ Default Network Configuration
 
 .. _fig-evb-ksz9477-network:
 .. figure:: images/evb-ksz9477-network.jpg
-   :align: center
 
    EVB-KSZ9477 Default Network Configuration
 
@@ -715,14 +711,12 @@ You must see something like this in browser:
 
 .. _fig-evb-ksz9477-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-evb-ksz9477-luci-status:
 .. figure:: images/evb-ksz9477-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

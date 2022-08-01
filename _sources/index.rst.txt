@@ -61,7 +61,7 @@ and focused on running in embedded systems, including real-time systems.
    Texas Instruments   <layers/meta-tanowrt-hsl-ti/index>
    Xilinx              <layers/meta-tanowrt-hsl-xilinx/index>
 
-.. grid:: 1 2 2 3
+.. grid:: 1 2 3 4
    :gutter: 2
 
 

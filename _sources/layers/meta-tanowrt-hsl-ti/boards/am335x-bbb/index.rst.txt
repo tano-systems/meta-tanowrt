@@ -23,7 +23,6 @@ and hobbyists.
 .. _fig-am335x-bbb:
 .. figure:: images/am335x-bbb.jpg
    :width: 800
-   :align: center
    :class: with-border
 
    BeagleBone Black Top and Bottom Views
@@ -221,7 +220,6 @@ are shown in the figure below.
 
 .. _fig-am335x-bbb-layout-sd:
 .. figure:: images/am335x-bbb-layout-sd.svg
-   :align: center
    :width: 1000
 
    BeagleBone Black Partitions Layout for microSD Card
@@ -234,7 +232,6 @@ are shown in the figure below.
 
 .. _fig-am335x-bbb-layout-emmc:
 .. figure:: images/am335x-bbb-layout-emmc.svg
-   :align: center
    :width: 1000
 
    BeagleBone Black Partitions Layout for eMMC
@@ -734,14 +731,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-am335x-bbb-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-am335x-bbb-luci-status:
 .. figure:: images/am335x-bbb-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

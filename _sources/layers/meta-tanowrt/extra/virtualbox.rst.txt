@@ -74,14 +74,12 @@ Running Virtual Machine
 In the Oracle VM VirtualBox Manager select virtual machine and start the VM (click on the :guilabel:`Start` button):
 
 .. figure:: images/virtualbox-run.png
-   :align: center
    :class: with-shadow
    :width: 800
 
 When system is boots up, you may log in with :ref:`default credentials <sec-access-creds>`:
 
 .. figure:: images/virtualbox-run-login.png
-   :align: center
    :class: with-shadow
    :width: 800
 

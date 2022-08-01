@@ -26,7 +26,6 @@ on board storage version with 1/2/4/8 GiB NAND flash.
 
 .. _fig-rock-pi-s:
 .. figure:: images/rock-pi-s.jpg
-   :align: center
    :width: 1000
    :class: with-border
 
@@ -227,6 +226,14 @@ intended to run from the microSD card. The installer image
 will install the default image to the internal SD NAND flash
 memory and further the ROCK Pi S board will boot
 and run from the SD NAND flash memory.
+
+
+.. _sec-rock-pi-s-partitioning:
+
+Partitioning Layouts
+====================
+
+Images for ROCK Pi S board using default partitions layouts described :ref:`here <sec-hsl-rockchip-partitioning>`.
 
 
 .. _sec-rock-pi-s-artifacts:
@@ -614,14 +621,12 @@ You must see something like this in browser after you logged in:
 
 .. _fig-rock-pi-s-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-rock-pi-s-luci-status:
 .. figure:: images/rock-pi-s-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

@@ -24,7 +24,6 @@ human machine interface solutions, and industrial networking.
 .. _fig-ls1028ardb-front:
 .. figure:: images/ls1028ardb-front.jpg
    :width: 1000
-   :align: center
    :class: with-border
 
    NXP LS1028A RDB Front View
@@ -32,7 +31,6 @@ human machine interface solutions, and industrial networking.
 .. _fig-ls1028ardb-back:
 .. figure:: images/ls1028ardb-back.jpg
    :width: 1000
-   :align: center
    :class: with-border
 
    NXP LS1028A RDB Back View
@@ -178,7 +176,6 @@ figure and table below.
 
 .. _fig-ls1028ardb-boot-source-selcetion:
 .. figure:: images/ls1028ardb-dip-switches.svg
-   :align: center
    :width: 600
 
    NXP LS1028A RDB Boot Source Selection
@@ -262,7 +259,6 @@ are shown in the figure below.
 
 .. _fig-ls1028ardb-layout-sd:
 .. figure:: images/ls1028ardb-layout-sd.svg
-   :align: center
    :width: 1000
 
    NXP LS1028A RDB Partitions Layout for SD Card
@@ -275,7 +271,6 @@ are shown in the figure below.
 
 .. _fig-ls1028ardb-layout-emmc:
 .. figure:: images/ls1028ardb-layout-emmc.svg
-   :align: center
    :width: 1000
 
    NXP LS1028A RDB Partitions Layout for eMMC
@@ -733,7 +728,6 @@ Default Network Configuration
 .. _fig-ls1028ardb-network:
 .. figure:: images/ls1028ardb-network.jpg
    :width: 1000
-   :align: center
    :class: with-border
 
    NXP LS1028A RDB Default Network Configuration
@@ -784,14 +778,12 @@ through HTTP(s) protocol. You must see something like this in browser:
 
 .. _fig-ls1028ardb-luci-login:
 .. figure:: /common/images/luci/page-login.png
-   :align: center
    :width: 900
 
    LuCI WebUI Login Page
 
 .. _fig-ls1028ardb-luci-status:
 .. figure:: images/ls1028ardb-luci-status.png
-   :align: center
    :width: 900
 
    LuCI WebUI Overview Page

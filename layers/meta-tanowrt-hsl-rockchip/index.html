@@ -78,6 +78,7 @@
 <li class="toctree-l3"><a class="reference internal" href="boards/rock-pi-s/index.html">3 Radxa ROCK Pi S</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#partitioning-layouts">Partitioning Layouts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#maintainers">Maintainers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
@@ -133,15 +134,16 @@ layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span c
 <p class="rubric">Contents</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#dependencies" id="id4">Dependencies</a></p></li>
-<li><p><a class="reference internal" href="#supported-boards" id="id5">Supported Boards</a></p></li>
-<li><p><a class="reference internal" href="#license" id="id6">License</a></p></li>
-<li><p><a class="reference internal" href="#maintainers" id="id7">Maintainers</a></p></li>
-<li><p><a class="reference internal" href="#references" id="id8">References</a></p></li>
+<li><p><a class="reference internal" href="#dependencies" id="id8">Dependencies</a></p></li>
+<li><p><a class="reference internal" href="#supported-boards" id="id9">Supported Boards</a></p></li>
+<li><p><a class="reference internal" href="#partitioning-layouts" id="id10">Partitioning Layouts</a></p></li>
+<li><p><a class="reference internal" href="#license" id="id11">License</a></p></li>
+<li><p><a class="reference internal" href="#maintainers" id="id12">Maintainers</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id13">References</a></p></li>
 </ul>
 </div>
 <section id="dependencies">
-<h2><a class="toc-backref" href="#id4">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
 <p>Dependencies of the <a class="reference internal" href="#meta-tanowrt-hsl-rockchip"><span class="std std-ref">meta-tanowrt-hsl-rockchip</span></a> layer are described in the table below.</p>
 <table class="colwidths-given docutils align-default" style="width: 100%">
 <colgroup>
@@ -176,11 +178,11 @@ layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span c
 </table>
 </section>
 <section id="supported-boards">
-<h2><a class="toc-backref" href="#id5">Supported Boards</a><a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">Supported Boards</a><a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
 <p>TanoWrt has demonstration support for some devices and development boards based on Rockchip SoC’s.
 All supported devices are listed in the table below.</p>
-<table class="colwidths-given docutils align-default" id="id3" style="width: 100%">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<table class="colwidths-given docutils align-default" id="id5" style="width: 100%">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id5" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 30%" />
@@ -258,18 +260,383 @@ All supported devices are listed in the table below.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
+<section id="partitioning-layouts">
+<span id="sec-hsl-rockchip-partitioning"></span><h2><a class="toc-backref" href="#id10">Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<p>Rockchip hardware support layer has a default partitions layout for A/B systems and for the factory installation image.
+These layouts are described in the tables below.</p>
+<p>Partitions layout for the A/B systems is defined in the <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-a-b.wks.in">sdimage-rockchip-swu-a-b.wks.in</a> WKS file.
+Partitions layout for the factory installation image is defined in the <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/meta-tanowrt-hsl-rockchip/wic/sdimage-rockchip-swu-factory.wks.in">sdimage-rockchip-swu-factory.wks.in</a> WKS file.</p>
+<table class="colwidths-given docutils align-default" id="id6">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">Default Partitions Layout for A/B Systems</span><a class="headerlink" href="#id6" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 15%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Partition</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Offset</p></th>
+<th class="head"><p>Start
+Sector</p></th>
+<th class="head"><p>Size</p></th>
+<th class="head"><p>Number
+of Sectors</p></th>
+<th class="head"><p>GPT
+Number</p></th>
+<th class="head"><p>UUID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MBR</p></td>
+<td><p>–</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Master Boot Record (MBR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Primary GPT</p></td>
+<td><p>–</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>31.5 KiB</p></td>
+<td><p>63</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Primary GPT record</p></td>
+</tr>
+<tr class="row-even"><td><p>IDBlock</p></td>
+<td><p>–</p></td>
+<td><p>32768</p></td>
+<td><p>64</p></td>
+<td><p>992 KiB</p></td>
+<td><p>1984</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Rockchip IDBlock binary</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Free space</strong></p></td>
+<td><p>–</p></td>
+<td><p><strong>1048576</strong></p></td>
+<td><p><strong>2048</strong></p></td>
+<td><p><strong>2944 KiB</strong></p></td>
+<td><p><strong>5888</strong></p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p><strong>Free space</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Startup</p></td>
+<td><p>–</p></td>
+<td><p>4063232</p></td>
+<td><p>7936</p></td>
+<td><p>64 KiB</p></td>
+<td><p>128</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot startup script</p></td>
+</tr>
+<tr class="row-odd"><td><p>U-boot
+Environment 1</p></td>
+<td><p>–</p></td>
+<td><p>4128768</p></td>
+<td><p>8064</p></td>
+<td><p>32 KiB</p></td>
+<td><p>64</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot environment</p></td>
+</tr>
+<tr class="row-even"><td><p>U-boot
+Environment 2</p></td>
+<td><p>–</p></td>
+<td><p>4161536</p></td>
+<td><p>8128</p></td>
+<td><p>32 KiB</p></td>
+<td><p>64</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot environment
+(redundand)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Free space</strong></p></td>
+<td><p>–</p></td>
+<td><p><strong>4194304</strong></p></td>
+<td><p><strong>8192</strong></p></td>
+<td><p><strong>4 MiB</strong></p></td>
+<td><p><strong>8192</strong></p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p><strong>Free space</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>U-boot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boot</span></code></p></td>
+<td><p>8388608</p></td>
+<td><p>16384</p></td>
+<td><p>8 MiB</p></td>
+<td><p>16384</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_BOOT"><span class="xref std std-term">TANOWRT_PARTUUID_BOOT</span></a></p></td>
+<td><p>A-TF, U-boot bootloader,
+Device Tree Blob</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kernel A</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kernel_a</span></code></p></td>
+<td><p>16777216</p></td>
+<td><p>32768</p></td>
+<td><p>64 MiB</p></td>
+<td><p>131072</p></td>
+<td><p>2</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_KERNELDEV_A"><span class="xref std std-term">TANOWRT_PARTUUID_KERNELDEV_A</span></a></p></td>
+<td><p>Linux kernel with DTB
+for system A.</p></td>
+</tr>
+<tr class="row-even"><td><p>Root filesystem A</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rootfs_a</span></code></p></td>
+<td><p>83886080</p></td>
+<td><p>163840</p></td>
+<td><p>384 MiB</p></td>
+<td><p>786432</p></td>
+<td><p>3</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_ROOTDEV_A"><span class="xref std std-term">TANOWRT_PARTUUID_ROOTDEV_A</span></a></p></td>
+<td><p>Read-only root filesystem
+for system A.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kernel B</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kernel_b</span></code></p></td>
+<td><p>486539264</p></td>
+<td><p>950272</p></td>
+<td><p>64 MiB</p></td>
+<td><p>131072</p></td>
+<td><p>4</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_KERNELDEV_B"><span class="xref std std-term">TANOWRT_PARTUUID_KERNELDEV_B</span></a></p></td>
+<td><p>Linux kernel with DTB
+for system B.</p></td>
+</tr>
+<tr class="row-even"><td><p>Root filesystem B</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rootfs_b</span></code></p></td>
+<td><p>553648128</p></td>
+<td><p>1081344</p></td>
+<td><p>384 MiB</p></td>
+<td><p>786432</p></td>
+<td><p>5</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_ROOTDEV_B"><span class="xref std std-term">TANOWRT_PARTUUID_ROOTDEV_B</span></a></p></td>
+<td><p>Read-only root filesystem
+for system B.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Overlay filesystem</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rootfs_data</span></code></p></td>
+<td><p>956301312</p></td>
+<td><p>1867776</p></td>
+<td><p>all
+available
+space<a class="footnote-reference brackets" href="#id4" id="id3">2</a></p></td>
+<td><p>all
+available
+space</p></td>
+<td><p>6</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_OVERLAY"><span class="xref std std-term">TANOWRT_PARTUUID_OVERLAY</span></a></p></td>
+<td><p>Overlay filesystem (user
+data)</p></td>
+</tr>
+<tr class="row-even"><td><p>Secondary GPT</p></td>
+<td><p>–</p></td>
+<td><p>at end</p></td>
+<td><p>at end</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Secondary GPT record</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Partition is automatically resized to fit all available disk space at first boot.</p>
+</dd>
+</dl>
+<table class="colwidths-given docutils align-default" id="id7">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Partitions Layout for Factory Installation Image</span><a class="headerlink" href="#id7" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 15%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Partition</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Offset</p></th>
+<th class="head"><p>Start
+Sector</p></th>
+<th class="head"><p>Size</p></th>
+<th class="head"><p>Number
+of Sectors</p></th>
+<th class="head"><p>GPT
+Number</p></th>
+<th class="head"><p>UUID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MBR</p></td>
+<td><p>–</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Master Boot Record (MBR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Primary GPT</p></td>
+<td><p>–</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>31.5 KiB</p></td>
+<td><p>63</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Primary GPT record</p></td>
+</tr>
+<tr class="row-even"><td><p>IDBlock</p></td>
+<td><p>–</p></td>
+<td><p>32768</p></td>
+<td><p>64</p></td>
+<td><p>992 KiB</p></td>
+<td><p>1984</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Rockchip IDBlock binary</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Free space</strong></p></td>
+<td><p>–</p></td>
+<td><p><strong>1048576</strong></p></td>
+<td><p><strong>2048</strong></p></td>
+<td><p><strong>2944 KiB</strong></p></td>
+<td><p><strong>5888</strong></p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p><strong>Free space</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Startup</p></td>
+<td><p>–</p></td>
+<td><p>4063232</p></td>
+<td><p>7936</p></td>
+<td><p>64 KiB</p></td>
+<td><p>128</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot startup script</p></td>
+</tr>
+<tr class="row-odd"><td><p>U-boot
+Environment 1</p></td>
+<td><p>–</p></td>
+<td><p>4128768</p></td>
+<td><p>8064</p></td>
+<td><p>32 KiB</p></td>
+<td><p>64</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot environment</p></td>
+</tr>
+<tr class="row-even"><td><p>U-boot
+Environment 2</p></td>
+<td><p>–</p></td>
+<td><p>4161536</p></td>
+<td><p>8128</p></td>
+<td><p>32 KiB</p></td>
+<td><p>64</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>U-boot environment
+(redundand)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Free space</strong></p></td>
+<td><p>–</p></td>
+<td><p><strong>4194304</strong></p></td>
+<td><p><strong>8192</strong></p></td>
+<td><p><strong>4 MiB</strong></p></td>
+<td><p><strong>8192</strong></p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p><strong>Free space</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>U-boot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boot</span></code></p></td>
+<td><p>8388608</p></td>
+<td><p>16384</p></td>
+<td><p>8 MiB</p></td>
+<td><p>16384</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference internal" href="../meta-tanowrt/variables.html#term-TANOWRT_PARTUUID_BOOT"><span class="xref std std-term">TANOWRT_PARTUUID_BOOT</span></a></p></td>
+<td><p>A-TF, U-boot bootloader,
+Device Tree Blob</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linux Kernel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code></p></td>
+<td><p>16777216</p></td>
+<td><p>32768</p></td>
+<td><p>dynamic</p></td>
+<td><p>dynamic</p></td>
+<td><p>2</p></td>
+<td><p>–</p></td>
+<td><p>Linux kernel with DTB
+and factory installation
+initramfs.</p></td>
+</tr>
+<tr class="row-even"><td><p>Installation
+Partition</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">install</span></code></p></td>
+<td><p>dynamic</p></td>
+<td><p>dynamic</p></td>
+<td><p>dynamic</p></td>
+<td><p>dynamic</p></td>
+<td><p>3</p></td>
+<td><p>–</p></td>
+<td><p>Partition with
+installation images.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secondary GPT</p></td>
+<td><p>–</p></td>
+<td><p>at end</p></td>
+<td><p>at end</p></td>
+<td><p>512</p></td>
+<td><p>1</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>Secondary GPT record</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="license">
-<h2><a class="toc-backref" href="#id6">License</a><a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11">License</a><a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
 <p>All metadata is MIT licensed unless otherwise stated.
 Source code included in tree for individual recipes is under the
 LICENSE stated in each recipe (<code class="file docutils literal notranslate"><span class="pre">.bb</span></code> file) unless otherwise stated.</p>
 </section>
 <section id="maintainers">
-<h2><a class="toc-backref" href="#id7">Maintainers</a><a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12">Maintainers</a><a class="headerlink" href="#maintainers" title="Permalink to this heading"></a></h2>
 <p>Anton Kikin &lt;<a class="reference external" href="mailto:a&#46;kikin&#37;&#52;&#48;tano-systems&#46;com">a<span>&#46;</span>kikin<span>&#64;</span>tano-systems<span>&#46;</span>com</a>&gt;</p>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id8">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="http://www.rock-chips.com/a/en/index.html">Fuzhou Rockchip Electronics Official Site</a></p></li>
 </ol>
@@ -283,7 +650,7 @@ LICENSE stated in each recipe (<code class="file docutils literal notranslate"><
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 31.07.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.08.2022
     </p>
   </div>
 </footer>

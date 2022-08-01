@@ -110,6 +110,7 @@ Additional Information
 
    extra/virtualbox.rst
    extra/services.rst
+   variables.rst
 
 License
 ============

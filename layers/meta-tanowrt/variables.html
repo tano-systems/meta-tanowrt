@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TanoWrt Variables Glossary &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Microchip (Atmel) Hardware Support Layer (meta-tanowrt-hsl-atmel)" href="../meta-tanowrt-hsl-atmel/index.html" />
+    <link rel="prev" title="TanoWrt Services Summary Table" href="extra/services.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#supported-virtual-machines">Supported Virtual Machines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#additional-information">Additional Information</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="extra/virtualbox.html">Running TanoWrt Image Inside Oracle VirtualBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extra/services.html">TanoWrt Services Summary Table</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">TanoWrt Variables Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#maintainers">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-elvees/index.html">Elvees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="index.html">TanoWrt Core Layer (meta-tanowrt)</a> &raquo;</li>
+    
+    <li>TanoWrt Variables Glossary</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/layers/meta-tanowrt/variables.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tanowrt-variables-glossary">
+<h1>TanoWrt Variables Glossary<a class="headerlink" href="#tanowrt-variables-glossary" title="Permalink to this heading"></a></h1>
+<p>This section lists specific variables used in the <a class="reference internal" href="index.html#meta-tanowrt"><span class="std std-ref">TanoWrt core layer</span></a>
+and gives an overview of their function and contents.</p>
+<p>A B C
+D E F
+G H I J
+K L M
+N O P Q
+R S <a class="reference internal" href="#term-TANOWRT_PARTUUID_BOOT"><span class="xref std std-term">T</span></a>
+U V W X Y Z</p>
+<dl class="glossary">
+<dt id="term-TANOWRT_PARTUUID_BOOT"><a class="reference internal" href="#term-TANOWRT_PARTUUID_BOOT"><span class="xref std std-term">TANOWRT_PARTUUID_BOOT</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_BOOT" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the boot partition, specific to each supported board.
+It is usually specified in the machine configuration file. For example,
+<a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/meta-tanowrt/conf/machine/include/qemuall.inc#L27-L32">qemuall.inc</a>
+has the following UUID definitions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">TANOWRT_PARTUUID_BOOT</span>        <span class="o">=</span> <span class="s2">&quot;bbefcb9e-ac94-43fc-8be2-0023a70c0722&quot;</span>
+<span class="nv">TANOWRT_PARTUUID_OVERLAY</span>     <span class="o">=</span> <span class="s2">&quot;4473a134-2531-4ab1-a5f9-dfa54376eb78&quot;</span>
+<span class="nv">TANOWRT_PARTUUID_ROOTDEV_A</span>   <span class="o">=</span> <span class="s2">&quot;d4997f99-3f39-4952-9433-602b66222be5&quot;</span>
+<span class="nv">TANOWRT_PARTUUID_ROOTDEV_B</span>   <span class="o">=</span> <span class="s2">&quot;fd4aab45-0ed8-48dc-8b07-6514336e2ac1&quot;</span>
+<span class="nv">TANOWRT_PARTUUID_KERNELDEV_A</span> <span class="o">=</span> <span class="s2">&quot;a1a55b33-b1c9-4226-b2f6-0d7d901f040f&quot;</span>
+<span class="nv">TANOWRT_PARTUUID_KERNELDEV_B</span> <span class="o">=</span> <span class="s2">&quot;d35fdb7b-4042-4f75-a4af-8983f9584b47&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-TANOWRT_PARTUUID_KERNELDEV_A"><a class="reference internal" href="#term-TANOWRT_PARTUUID_KERNELDEV_A"><span class="xref std std-term">TANOWRT_PARTUUID_KERNELDEV_A</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_KERNELDEV_A" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the linux kernel partition for system A,
+specific to each supported board. It is usually specified in the machine configuration file.</p>
+</dd>
+<dt id="term-TANOWRT_PARTUUID_KERNELDEV_B"><a class="reference internal" href="#term-TANOWRT_PARTUUID_KERNELDEV_B"><span class="xref std std-term">TANOWRT_PARTUUID_KERNELDEV_B</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_KERNELDEV_B" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the linux kernel partition for system B,
+specific to each supported board. It is usually specified in the machine configuration file.</p>
+</dd>
+<dt id="term-TANOWRT_PARTUUID_OVERLAY"><a class="reference internal" href="#term-TANOWRT_PARTUUID_OVERLAY"><span class="xref std std-term">TANOWRT_PARTUUID_OVERLAY</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_OVERLAY" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the overlay partition (user data),
+specific to each supported board. It is usually specified in the machine configuration file.</p>
+</dd>
+<dt id="term-TANOWRT_PARTUUID_ROOTDEV_A"><a class="reference internal" href="#term-TANOWRT_PARTUUID_ROOTDEV_A"><span class="xref std std-term">TANOWRT_PARTUUID_ROOTDEV_A</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_ROOTDEV_A" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the read-only root filesystem for system A,
+specific to each supported board. It is usually specified in the machine configuration file.</p>
+</dd>
+<dt id="term-TANOWRT_PARTUUID_ROOTDEV_B"><a class="reference internal" href="#term-TANOWRT_PARTUUID_ROOTDEV_B"><span class="xref std std-term">TANOWRT_PARTUUID_ROOTDEV_B</span></a><a class="headerlink" href="#term-TANOWRT_PARTUUID_ROOTDEV_B" title="Permalink to this term"></a></dt><dd><p>This variable contains the UUID for the read-only root filesystem for system B,
+specific to each supported board. It is usually specified in the machine configuration file.</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.08.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
