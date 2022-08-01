@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Dockerized Build Environment &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Firmware Upgrade" href="../firmware-upgrade.html" />
+    <link rel="prev" title="Building TanoWrt" href="../build.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../build.html">Building TanoWrt</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../build.html#preparing-build-environment">Preparing Build Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build.html#build">Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build.html#local-configuration">Local Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build.html#examples">Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../build.html#additional-information">Additional Information</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Dockerized Build Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-the-downloads-directory">Specifying the Downloads Directory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-the-shared-state-cache-directory">Specifying the Shared State Cache Directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../build.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../build.html">Building TanoWrt</a> &raquo;</li>
+    
+    <li>Using Dockerized Build Environment</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/extra/build-docker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-dockerized-build-environment">
+<h1>Using Dockerized Build Environment<a class="headerlink" href="#using-dockerized-build-environment" title="Permalink to this heading"></a></h1>
+<p>Clone TanoWrt repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:/ $ </span><span class="nb">cd</span> ~
+<span class="gp">user@host:~ $ </span>git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
+<span class="gp">user@host:~ $ </span><span class="nb">cd</span> ~/tanowrt
+</pre></div>
+</div>
+<p>Build docker image:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span><span class="nb">cd</span> .ci
+<span class="gp">user@host:~/tanowrt/.ci $ </span>docker build -t ubuntu:tanowrt-build <span class="se">\</span>
+                                       --build-arg <span class="nv">host_uid</span><span class="o">=</span><span class="k">$(</span>id -u<span class="k">)</span> <span class="se">\</span>
+                                       --build-arg <span class="nv">host_gid</span><span class="o">=</span><span class="k">$(</span>id -g<span class="k">)</span> <span class="se">\</span>
+                                       -f Dockerfile .
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>By default, a user <code class="docutils literal notranslate"><span class="pre">build</span></code> is created in the built docker image. You can change the
+user name by adding the following parameter to the docker build command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">build</span><span class="o">-</span><span class="n">arg</span> <span class="n">username</span><span class="o">=&lt;</span><span class="n">username</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Run created docker image and mount cloned TanoWrt repository to it:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt ubuntu:tanowrt-build /bin/bash
+<span class="gp">build@abbc5ae583ff:~$</span>
+</pre></div>
+</div>
+<p>Now TanoWrt repository at <code class="file docutils literal notranslate"><span class="pre">~/tanowrt</span></code> on host is mounted to the <code class="file docutils literal notranslate"><span class="pre">/tanowrt</span></code>
+directory in docker. Now you can use kas utility to building TanoWrt and all other
+available build commands described in the <a class="reference internal" href="../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a> section.</p>
+<p>For example, build TanoWrt default images for the <code class="docutils literal notranslate"><span class="pre">qemux86-64-screen</span></code> machine:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">cd</span> /tanowrt
+<span class="gp">build@abbc5ae583ff:/tanowrt$ </span>kas build kas/targets/qemux86-64-screen.yml
+</pre></div>
+</div>
+<p>The built images are available both in the
+<code class="file docutils literal notranslate"><span class="pre">/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen</span></code>
+directory in the docker and in
+<code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen</span></code>
+in the host system.</p>
+<section id="specifying-the-downloads-directory">
+<h2>Specifying the Downloads Directory<a class="headerlink" href="#specifying-the-downloads-directory" title="Permalink to this heading"></a></h2>
+<p>If you have a separate directory for storing downloads by the build process
+you can use it in the docker by adding following parameter to <strong class="command">docker run</strong> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">v</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">downloads</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">host</span><span class="o">&gt;</span><span class="p">:</span><span class="o">/</span><span class="n">tanowrt</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">downloads</span>
+</pre></div>
+</div>
+<p>For example, if you have a <code class="file docutils literal notranslate"><span class="pre">/opt/my-downloads</span></code> directory for storing downloads
+on the host, your <strong class="command">docker run</strong> command should be like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt <span class="se">\</span>
+<span class="hll">                                          -v /opt/my-downloads:/tanowrt/build/downloads <span class="se">\</span>
+</span>                                           ubuntu:tanowrt-build /bin/bash
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The downloads directory can be mounted in another location than
+<code class="file docutils literal notranslate"><span class="pre">/tanowrt/build/downloads</span></code>, but in this case, you must explicitly
+specify the path to this directory in the
+<a class="reference internal" href="../build.html#sec-build-local-conf"><span class="std std-ref">local configuration</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">DL_DIR</span></code> variable.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span> <span class="s1">&#39;DL_DIR = &quot;&lt;path-to-downloads-dir&gt;&quot;&#39;</span> &gt;&gt; /tanowrt/local.conf
+</pre></div>
+</div>
+</div>
+</section>
+<section id="specifying-the-shared-state-cache-directory">
+<h2>Specifying the Shared State Cache Directory<a class="headerlink" href="#specifying-the-shared-state-cache-directory" title="Permalink to this heading"></a></h2>
+<p>If you have a separate directory for storing shared state cache by the build process
+you can use it in the docker by adding following parameter to <strong class="command">docker run</strong> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">v</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">sstate</span><span class="o">-</span><span class="n">cache</span><span class="o">&gt;</span><span class="p">:</span><span class="o">/</span><span class="n">tanowrt</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">sstate</span><span class="o">-</span><span class="n">cache</span>
+</pre></div>
+</div>
+<p>For example, if you have a <code class="file docutils literal notranslate"><span class="pre">/opt/sstate-cache</span></code> directory for storing shared
+state cache on the host, your <strong class="command">docker run</strong> command should be like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt <span class="se">\</span>
+<span class="hll">                                          -v /opt/sstate-cache:/tanowrt/build/sstate-cache <span class="se">\</span>
+</span>                                           ubuntu:tanowrt-build /bin/bash
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The shared state cache directory can be mounted in another location than
+<code class="file docutils literal notranslate"><span class="pre">/tanowrt/build/sstate-cache</span></code>, but in this case, you must explicitly
+specify the path to this directory in the
+<a class="reference internal" href="../build.html#sec-build-local-conf"><span class="std std-ref">local configuration</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">SSTATE_DIR</span></code> variable:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span> <span class="s1">&#39;SSTATE_DIR = &quot;&lt;path-to-sstate-cache-dir&gt;&quot;&#39;</span> &gt;&gt; /tanowrt/local.conf
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.08.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -138,16 +138,16 @@ The build configuration :file:`build/conf/local.conf` is generated
 automatically by the kas utility depending on the chosen build target.
 
 To define your own local build configuration, it must be stored in
-the :file:`.local.conf` file located at the root of the ``meta-tanowrt``
+the :file:`local.conf` file located at the root of the ``meta-tanowrt``
 repository (cloned to :file:`~/tanowrt` in this example).
 
-When building, the :file:`.local.conf` file is included after the
+When building, the :file:`local.conf` file is included after the
 :file:`build/conf/local.conf` file, allowing any directives declared
 in :file:`build/conf/local.conf` to be overridden if necessary.
 
-In :file:`.local.conf` file you can specify any standard
+In :file:`local.conf` file you can specify any standard
 configuration variables. In other words, you can do everything
-in the :file:`.local.conf' file that you do in the standard
+in the :file:`local.conf' file that you do in the standard
 :file:`build/conf/local.conf`. For example, you can specify
 an external directory for storing downloaded content, as well
 as configure build parallelism settings:
@@ -218,6 +218,14 @@ Run the built image in QEMU:
 
    $ kas shell -c "DISPLAY=:0 runqemu intel-x86_64-corei7" kas/targets/intel-x86_64-corei7.yml
 
+
+Additional Information
+======================
+
+.. toctree::
+   :maxdepth: 1
+
+   extra/build-docker.rst
 
 References
 ==========

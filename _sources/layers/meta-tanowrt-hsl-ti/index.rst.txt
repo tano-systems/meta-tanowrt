@@ -74,7 +74,7 @@ All supported devices are listed in the table below.
 Configuration
 =============
 
-Optionally you can customize some build options in :file:`.local.conf`
+Optionally you can customize some build options in :file:`local.conf`
 configuration file (see :ref:`sec-build-local-conf` section).
 
 Kernel Version
@@ -87,7 +87,7 @@ Each of the supported machines can be built with one of the following kernels:
 - 4.19.94-rt39 (RT kernel from `TI Processor SDK Linux 06.03.00.106 <http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/index.html>`_).
 
 To choose the kernel version, you need to set variables
-``TANOWRT_HSL_TI_SDK_KERNEL``, ``TI_STAGING_KERNEL_VERSION`` and ``TANOWRT_WIREGUARD_IN_KERNEL`` in the :file:`.local.conf`
+``TANOWRT_HSL_TI_SDK_KERNEL``, ``TI_STAGING_KERNEL_VERSION`` and ``TANOWRT_WIREGUARD_IN_KERNEL`` in the :file:`local.conf`
 (see :ref:`sec-build-local-conf` section) file to determine which kernel should be used for the build.
 
 The table below shows the values of the variables for choosing the required kernel version.
@@ -110,7 +110,7 @@ Default kernel version used for each target are described in the table in :ref:`
 TI UIO Support
 --------------
 
-By default TI UIO support is disabled. To enable TI UIO support to build add this to your :file:`.local.conf`:
+By default TI UIO support is disabled. To enable TI UIO support to build add this to your :file:`local.conf`:
 
 .. code-block:: bash
 
@@ -119,7 +119,7 @@ By default TI UIO support is disabled. To enable TI UIO support to build add thi
 
 .. note:: Currently this feature is supported only for kernel from TI Processor SDK (4.19).
           So you must also set ``TANOWRT_HSL_TI_SDK_KERNEL``
-          to ``1`` in the :file:`.local.conf` file.
+          to ``1`` in the :file:`local.conf` file.
 
 License
 ============
