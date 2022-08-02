@@ -164,6 +164,53 @@ of the disk with partitioning for the factory installation image.
    | Secondary GPT      | --              |      at end |   at end |         512  |           1 | --     | --                                       | Secondary GPT record      |
    +--------------------+-----------------+-------------+----------+--------------+-------------+--------+------------------------------------------+---------------------------+
 
+Configuration
+=============
+
+Optionally you can customize some build options in :file:`local.conf`
+configuration file (see :ref:`sec-build-local-conf` section).
+
+Kernel Version
+--------------
+
+The hardware support layer for Rockchip SoC's contains recipes for several
+versions of the Linux kernel. Available versions of the Linux kernel are
+listed in the table below.
+
+.. _table-hsl-rockchip-linux-kernels:
+.. table:: Available Linux Kernel Versions
+
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
+   | Kernel Version | Kernel Type      | Recipe                        | Preferred Provider Package | Preferred Version     | Notes           |
+   |                |                  |                               | Value\ [#]_                | Value\ [#]_           |                 |
+   +================+==================+===============================+============================+=======================+=================+
+   | 4.19.219       | Standard         | |linux-tano-rockchip_4.19|    | ``linux-tano-rockchip``    | ``4.19%``             | Used by default |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
+   | 4.19.209-rt87  | PREEMPT_RT patch | |linux-tano-rockchip-rt_4.19| | ``linux-tano-rockchip-rt`` | ``4.19%``             |                 |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
+
+.. [#] This value should be used for variable ``PREFERRED_PROVIDER_virtual/kernel``.
+.. [#] This value should be used for variable ``PREFERRED_VERSION_<kernel-package>``, where
+       ``<kernel-package>`` must be replaced with the value of the ``PREFERRED_PROVIDER_virtual/kernel`` variable.
+
+.. |linux-tano-rockchip_4.19| replace:: :tanowrt_github_blob:`linux-tano-rockchip_4.19.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip_4.19.bb>`
+.. |linux-tano-rockchip-rt_4.19| replace:: :tanowrt_github_blob:`linux-tano-rockchip-rt_4.19.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip-rt_4.19.bb>`
+
+To choose the kernel version, you need to set variable ``PREFERRED_PROVIDER_virtual/kernel``
+in the :ref:`local configuration <sec-build-local-conf>` file :file:`local.conf` to required
+Linux kernel package recipe and set variable ``PREFERRED_VERSION_<kernel-package>`` to required
+kernel version. The values of these variables for the available kernel versions are shown
+in :numref:`table-hsl-rockchip-linux-kernels`.
+
+For example, to choose the Linux kernel version 4.19.209-rt87, the variables
+in the :file:`local.conf` must be set as follows:
+
+.. code-block:: bash
+
+   PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rockchip-rt"
+   PREFERRED_VERSION_linux-tano-rockchip-rt = "4.19%"
+
+
 License
 ============
 
