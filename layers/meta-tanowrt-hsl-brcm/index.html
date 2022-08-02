@@ -25,7 +25,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Intel Hardware Support Layer (meta-tanowrt-hsl-intel)" href="../meta-tanowrt-hsl-intel/index.html" />
+    <link rel="next" title="1 Raspberry Pi 3 Model B/B+" href="boards/rpi3/index.html" />
     <link rel="prev" title="1 MBM 1.0/2.0 (TF307)" href="../meta-tanowrt-hsl-baikal/boards/mbm/index.html" /> 
 </head>
 
@@ -64,6 +64,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-atmel/index.html">Microchip (Atmel)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Broadcom</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-boards">Supported Boards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="boards/rpi3/index.html">1 Raspberry Pi 3 Model B/B+</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#maintainers">Maintainers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
@@ -75,7 +80,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
@@ -119,15 +123,92 @@
 <span id="meta-tanowrt-hsl-brcm"></span><h1>Broadcom Hardware Support Layer (meta-tanowrt-hsl-brcm)<a class="headerlink" href="#broadcom-hardware-support-layer-meta-tanowrt-hsl-brcm" title="Permalink to this heading"></a></h1>
 <p>meta-tanowrt-hsl-brcm — <a class="reference external" href="https://github.com/tano-systems/meta-tanowrt">TanoWrt</a> hardware support
 layer (<a class="reference internal" href="../../glossary.html#term-HSL"><span class="xref std std-term">HSL</span></a>) for the Broadcom SoC based boards.</p>
+<div class="flex docutils container">
 <figure class="align-default">
 <a class="reference internal image-reference" href="../../_images/broadcom.svg"><img alt="../../_images/broadcom.svg" src="../../_images/broadcom.svg" width="250" /></a>
 </figure>
-<div class="admonition-under-development admonition">
-<p class="admonition-title">Under Development</p>
-<p>Broadcom hardware support layer (meta-tanowrt-hsl-brcm)
-is under development. Partial support for Broadcom SoC’s
-are implemented in a <a class="reference internal" href="../meta-tanowrt-hsl-rpi/index.html#meta-tanowrt-hsl-rpi"><span class="std std-ref">Raspberry Pi boards Hardware Support Layer</span></a>.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../../_images/raspberry-pi.png"><img alt="../../_images/raspberry-pi.png" src="../../_images/raspberry-pi.png" style="height: 100px;" /></a>
+</figure>
 </div>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
+<p>Dependencies of the <a class="reference internal" href="#meta-tanowrt-hsl-brcm"><span class="std std-ref">meta-tanowrt-hsl-brcm</span></a> layer are described in the table below.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>URI</p></th>
+<th class="head"><p>Subfolder</p></th>
+<th class="head"><p>Branch</p></th>
+<th class="head"><p>Configuration YML-file</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../meta-tanowrt/index.html#meta-tanowrt"><span class="std std-ref">meta-tanowrt</span></a></p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt.git">https://github.com/tano-systems/meta-tanowrt.git</a></p></td>
+<td><p>meta-tanowrt</p></td>
+<td><p>hardknott</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/14ff4f332b153da0a8ad62d18bee7389/meta-tanowrt.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-tanowrt.yml</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>meta-raspberrypi</p></td>
+<td><p><a class="reference external" href="https://git.yoctoproject.org/meta-raspberrypi">https://git.yoctoproject.org/meta-raspberrypi</a></p></td>
+<td><p>–</p></td>
+<td><p>hardknott</p></td>
+<td><p><a class="reference download internal" download="" href="../../_downloads/6f78fe4c82c138e1bad9e25118c7e862/meta-raspberrypi.yml"><code class="xref download docutils literal notranslate"><span class="pre">kas/layers/meta-raspberrypi.yml</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="supported-boards">
+<span id="sec-hsl-brcm-supported-boards"></span><h2>Supported Boards<a class="headerlink" href="#supported-boards" title="Permalink to this heading"></a></h2>
+<p>TanoWrt has demonstration support for some devices and development boards based on Broadcom SoC’s.
+All supported devices are listed in the table below.</p>
+<table class="colwidths-given docutils align-default" id="id1" style="width: 100%">
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">Supported Broadcom SoC Boards</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Kernel Version</p></th>
+<th class="head"><p>Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="boards/rpi3/index.html#machine-rpi3"><span class="std std-ref">Raspberry Pi 3 Model B/B+</span></a></p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Broadcom BCM2837/BCM2837B0</div>
+<div class="line"><strong>Cores:</strong> 4 x ARM Cortex-A53 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.2 GHz</div>
+</div>
+</td>
+<td><p><em>TODO</em></p></td>
+<td><p>5.10.31
+(non-RT)</p></td>
+<td><p>microSD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rpi3-sd.yml">rpi3-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
 <p>All metadata is MIT licensed unless otherwise stated.
@@ -142,6 +223,7 @@ LICENSE stated in each recipe (<code class="file docutils literal notranslate"><
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.broadcom.com/">Broadcom Inc. Official Site</a></p></li>
+<li><p><a class="reference external" href="https://www.raspberrypi.com">Raspberry Pi</a></p></li>
 </ol>
 </section>
 </section>
@@ -153,7 +235,7 @@ LICENSE stated in each recipe (<code class="file docutils literal notranslate"><
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.08.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 02.08.2022
     </p>
   </div>
 </footer>

@@ -9,14 +9,51 @@ Broadcom Hardware Support Layer (meta-tanowrt-hsl-brcm)
 meta-tanowrt-hsl-brcm |mdash| `TanoWrt <https://github.com/tano-systems/meta-tanowrt>`_ hardware support
 layer (:term:`HSL`) for the Broadcom SoC based boards.
 
-.. figure:: /common/images/logos/broadcom.svg
-   :width: 250
+.. container:: flex
 
-.. admonition:: Under Development
+   .. figure:: /common/images/logos/broadcom.svg
+      :width: 250
 
-                Broadcom hardware support layer (meta-tanowrt-hsl-brcm)
-                is under development. Partial support for Broadcom SoC's
-                are implemented in a :ref:`Raspberry Pi boards Hardware Support Layer <meta-tanowrt-hsl-rpi>`.
+   .. figure:: /common/images/logos/raspberry-pi.png
+      :height: 100
+
+Dependencies
+============
+
+Dependencies of the :ref:`meta-tanowrt-hsl-brcm <meta-tanowrt-hsl-brcm>` layer are described in the table below.
+
+.. list-table::
+   :header-rows: 1
+   :width: 100%
+   :widths: 15, 40, 15, 15, 15
+
+   * - Layer
+     - URI
+     - Subfolder
+     - Branch
+     - Configuration YML-file
+   * - :ref:`meta-tanowrt <meta-tanowrt>`
+     - https://github.com/tano-systems/meta-tanowrt.git
+     - meta-tanowrt
+     - hardknott
+     - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
+   * - meta-raspberrypi
+     - https://git.yoctoproject.org/meta-raspberrypi
+     - --
+     - hardknott
+     - :download:`kas/layers/meta-raspberrypi.yml <../../../kas/layers/meta-raspberrypi.yml>`
+
+
+.. _sec-hsl-brcm-supported-boards:
+
+Supported Boards
+================
+
+TanoWrt has demonstration support for some devices and development boards based on Broadcom SoC's.
+All supported devices are listed in the table below.
+
+.. include:: .layer-boards.rst.inc
+
 
 License
 ============
@@ -34,3 +71,4 @@ References
 ==========
 
 1. `Broadcom Inc. Official Site <https://www.broadcom.com/>`__
+2. `Raspberry Pi <https://www.raspberrypi.com>`__

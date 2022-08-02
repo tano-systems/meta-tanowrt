@@ -66,7 +66,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#nxp-freescale-soc">NXP (Freescale) SoC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#quectel-lte-modules">Quectel LTE Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fuzhou-rockchip-electronics-soc">Fuzhou Rockchip Electronics.SoC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#raspberry-pi-boards">Raspberry Pi Boards</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sierra-wireless-lte-modules">Sierra Wireless LTE Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stmicroelectronics-soc">STMicroelectronics SoC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#texas-instruments-soc">Texas Instruments SoC</a></li>
@@ -96,7 +95,6 @@
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-rpi/index.html">Raspberry Pi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layers/meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
@@ -399,11 +397,42 @@ only from USB flash drive.</p>
 <section id="broadcom-soc">
 <h3>Broadcom SoC<a class="headerlink" href="#broadcom-soc" title="Permalink to this heading"></a></h3>
 <p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-brcm/index.html#meta-tanowrt-hsl-brcm"><span class="std std-ref">Broadcom Hardware Support Layer (meta-tanowrt-hsl-brcm)</span></a></p>
-<div class="admonition-under-development admonition">
-<p class="admonition-title">Under Development</p>
-<p>Broadcom hardware support layer (meta-tanowrt-hsl-brcm)
-is under development.</p>
+<table class="colwidths-given docutils align-default" id="id15" style="width: 100%">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Supported Broadcom SoC Boards</span><a class="headerlink" href="#id15" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Board</p></th>
+<th class="head"><p>SoC</p></th>
+<th class="head"><p>RAM</p></th>
+<th class="head"><p>Kernel Version</p></th>
+<th class="head"><p>Storage(s)</p></th>
+<th class="head"><p>Target YAML
+(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="layers/meta-tanowrt-hsl-brcm/boards/rpi3/index.html#machine-rpi3"><span class="std std-ref">Raspberry Pi 3 Model B/B+</span></a></p></td>
+<td><div class="line-block">
+<div class="line"><strong>Model:</strong> Broadcom BCM2837/BCM2837B0</div>
+<div class="line"><strong>Cores:</strong> 4 x ARM Cortex-A53 64 bits</div>
+<div class="line"><strong>Frequency:</strong> up to 1.2 GHz</div>
 </div>
+</td>
+<td><p><em>TODO</em></p></td>
+<td><p>5.10.31
+(non-RT)</p></td>
+<td><p>microSD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rpi3-sd.yml">rpi3-sd.yml</a></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="marvell-soc">
 <h3>Marvell SoC<a class="headerlink" href="#marvell-soc" title="Permalink to this heading"></a></h3>
@@ -426,8 +455,8 @@ is under development.</p>
 <section id="nxp-freescale-soc">
 <h3>NXP (Freescale) SoC<a class="headerlink" href="#nxp-freescale-soc" title="Permalink to this heading"></a></h3>
 <p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-nxp/index.html#meta-tanowrt-hsl-nxp"><span class="std std-ref">NXP (Freescale) Hardware Support Layer (meta-tanowrt-hsl-nxp)</span></a></p>
-<table class="colwidths-given docutils align-default" id="id15" style="width: 100%">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">Supported Freescale/NXP SoC’s Based Boards</span><a class="headerlink" href="#id15" title="Permalink to this table"></a></caption>
+<table class="colwidths-given docutils align-default" id="id16" style="width: 100%">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Supported Freescale/NXP SoC’s Based Boards</span><a class="headerlink" href="#id16" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 30%" />
@@ -478,8 +507,8 @@ is under development.</p>
 <section id="fuzhou-rockchip-electronics-soc">
 <h3>Fuzhou Rockchip Electronics.SoC<a class="headerlink" href="#fuzhou-rockchip-electronics-soc" title="Permalink to this heading"></a></h3>
 <p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/index.html#meta-tanowrt-hsl-rockchip"><span class="std std-ref">Rockchip SoC’s Hardware Support Layer (meta-tanowrt-hsl-rockchip)</span></a></p>
-<table class="colwidths-given docutils align-default" id="id16" style="width: 100%">
-<caption><span class="caption-number">Table 6 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id16" title="Permalink to this table"></a></caption>
+<table class="colwidths-given docutils align-default" id="id17" style="width: 100%">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Supported Rockchip SoC’s Based Boards</span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 30%" />
@@ -492,7 +521,7 @@ is under development.</p>
 <tr class="row-odd"><th class="head"><p>Board</p></th>
 <th class="head"><p>SoC</p></th>
 <th class="head"><p>RAM</p></th>
-<th class="head"><p>Kernel Version</p></th>
+<th class="head"><p>Kernel Version(s)</p></th>
 <th class="head"><p>Supported Storage(s)</p></th>
 <th class="head"><p>Target YAML
 (at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
@@ -507,8 +536,11 @@ is under development.</p>
 </div>
 </td>
 <td rowspan="2"><p>2 GiB LPDDR4</p></td>
-<td rowspan="2"><p>4.19.219
-(non-RT)</p></td>
+<td rowspan="6"><div class="line-block">
+<div class="line">4.19.219 (non-RT)</div>
+<div class="line">4.19.209-rt87 (RT)</div>
+</div>
+</td>
 <td><p>microSD card</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3566-sd.yml">boardcon-em3566-sd.yml</a></p></td>
 </tr>
@@ -523,8 +555,6 @@ is under development.</p>
 </div>
 </td>
 <td rowspan="2"><p>2 GiB LPDDR4</p></td>
-<td rowspan="2"><p>4.19.219
-(non-RT)</p></td>
 <td><p>microSD card</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/boardcon-em3568-sd.yml">boardcon-em3568-sd.yml</a></p></td>
 </tr>
@@ -539,8 +569,6 @@ is under development.</p>
 </div>
 </td>
 <td rowspan="2"><p>up to 512 MiB DDR3</p></td>
-<td rowspan="2"><p>4.19.219
-(non-RT)</p></td>
 <td><p>microSD card</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rock-pi-s-sd.yml">rock-pi-s-sd.yml</a></p></td>
 </tr>
@@ -554,46 +582,6 @@ is under development.</p>
 <dd><p>Actual eMMC flash size is approximately 7.28 GiB</p>
 </dd>
 </dl>
-</section>
-<section id="raspberry-pi-boards">
-<h3>Raspberry Pi Boards<a class="headerlink" href="#raspberry-pi-boards" title="Permalink to this heading"></a></h3>
-<p><strong>Hardware Support Layer:</strong> <a class="reference internal" href="layers/meta-tanowrt-hsl-rpi/index.html#meta-tanowrt-hsl-rpi"><span class="std std-ref">Raspberry Pi Boards Hardware Support Layer (meta-tanowrt-hsl-rpi)</span></a></p>
-<table class="colwidths-given docutils align-default" id="id17" style="width: 100%">
-<caption><span class="caption-number">Table 7 </span><span class="caption-text">Supported Raspberry Pi Boards</span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 30%" />
-<col style="width: 10%" />
-<col style="width: 10%" />
-<col style="width: 10%" />
-<col style="width: 20%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Board</p></th>
-<th class="head"><p>SoC</p></th>
-<th class="head"><p>RAM</p></th>
-<th class="head"><p>Kernel Version</p></th>
-<th class="head"><p>Storage(s)</p></th>
-<th class="head"><p>Target YAML
-(at <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code>)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="layers/meta-tanowrt-hsl-rpi/boards/rpi3/index.html#machine-rpi3"><span class="std std-ref">Raspberry Pi 3 Model B/B+</span></a></p></td>
-<td><div class="line-block">
-<div class="line"><strong>Model:</strong> Broadcom BCM2837/BCM2837B0</div>
-<div class="line"><strong>Cores:</strong> 4 x ARM Cortex-A53 64 bits</div>
-<div class="line"><strong>Frequency:</strong> up to 1.2 GHz</div>
-</div>
-</td>
-<td><p><em>TODO</em></p></td>
-<td><p>5.10.31
-(non-RT)</p></td>
-<td><p>microSD card</p></td>
-<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/rpi3-sd.yml">rpi3-sd.yml</a></p></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="sierra-wireless-lte-modules">
 <h3>Sierra Wireless LTE Modules<a class="headerlink" href="#sierra-wireless-lte-modules" title="Permalink to this heading"></a></h3>
@@ -751,7 +739,7 @@ CLI (Command Line Interface), SSH (Secure SHell) and WebUI (Web User Interface):
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.08.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 02.08.2022
     </p>
   </div>
 </footer>

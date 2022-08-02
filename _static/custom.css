@@ -447,13 +447,13 @@ kbd
 /* ================== */
 
 .rst-content div.admonition {
-	border-radius: 4px;
+/*	border-radius: 4px;*/
 /*	margin-bottom: 24px;*/
 }
 
 .rst-content .admonition-title {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
+/*	border-top-left-radius: 4px;*/
+/*	border-top-right-radius: 4px;*/
 	padding: 8px 12px;
 }
 
@@ -478,6 +478,7 @@ kbd
 .rst-content .warning, .wy-alert {
 	background: #e7f2fa;
 	box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+	border-left: 6px solid #58a0cf;
 }
 
 /* note, seealso */
@@ -506,6 +507,7 @@ kbd
 .rst-content .wy-alert-info.important, .rst-content .wy-alert-info.tip,
 .rst-content .wy-alert-info.warning, .wy-alert.wy-alert-info {
 	background: #f2f5f7;
+	border-left: 6px solid #91aaba;
 }
 
 /* attention, caution, warning */
@@ -532,6 +534,7 @@ kbd
 .rst-content .wy-alert-warning.hint, .rst-content .wy-alert-warning.important, .rst-content .wy-alert-warning.note,
 .rst-content .wy-alert-warning.seealso, .rst-content .wy-alert-warning.tip, .wy-alert.wy-alert-warning {
 	background: #fffee5;
+	border-left: 6px solid #74703f;
 }
 
 /* hint, important, tip    */
@@ -559,6 +562,7 @@ kbd
 .rst-content .wy-alert-success.seealso, .rst-content .wy-alert-success.warning, .wy-alert.wy-alert-success {
 	background: #ffffff;/*#f4faf8;*/
 	box-shadow: 0 2px 5px 1px hsl(138deg 28% 26% / 20%);/* !important;*/
+	border-left: 6px solid #6ead81;
 }
 
 /* danger, error */
@@ -587,6 +591,7 @@ kbd
 .rst-content .wy-alert-danger.note, .rst-content .wy-alert-danger.seealso, .rst-content .wy-alert-danger.tip,
 .rst-content .wy-alert-danger.warning, .wy-alert.wy-alert-danger {
 	background: #fdf3f2;
+	border-left: 6px solid #e75f52;
 }
 
 /* sphinx-tabs */
