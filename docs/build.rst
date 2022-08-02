@@ -226,6 +226,7 @@ Additional Information
    :maxdepth: 1
 
    extra/build-docker.rst
+   extra/build-optimization.rst
 
 References
 ==========
