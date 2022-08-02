@@ -136,14 +136,6 @@ Fuzhou Rockchip Electronics.SoC
 .. include:: /layers/meta-tanowrt-hsl-rockchip/.layer-boards-table.rst.inc
 
 
-Raspberry Pi Boards
--------------------
-
-**Hardware Support Layer:** :ref:`meta-tanowrt-hsl-rpi`
-
-.. include:: /layers/meta-tanowrt-hsl-rpi/.layer-boards-table.rst.inc
-
-
 Sierra Wireless LTE Modules
 ---------------------------
 

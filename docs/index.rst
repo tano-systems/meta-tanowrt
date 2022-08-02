@@ -54,7 +54,6 @@ and focused on running in embedded systems, including real-time systems.
    NXP (Freescale)     <layers/meta-tanowrt-hsl-nxp/index>
    Quectel             <layers/meta-tanowrt-hsl-quectel/index>
    Rockchip            <layers/meta-tanowrt-hsl-rockchip/index>
-   Raspberry Pi        <layers/meta-tanowrt-hsl-rpi/index>
    Sierra Wireless     <layers/meta-tanowrt-hsl-swi/index>
    STMicroelectronics  <layers/meta-tanowrt-hsl-stm/index>
    Texas Instruments   <layers/meta-tanowrt-hsl-ti/index>
@@ -101,6 +100,18 @@ and focused on running in embedded systems, including real-time systems.
 
 
    .. grid-item-card::
+      :link: layers/meta-tanowrt-hsl-brcm/index
+      :link-type: doc
+      :class-item: grid-item-center
+      :text-align: center
+
+      Broadcom Inc.
+      ^^^
+      .. image:: common/images/logos/broadcom.svg
+         :width: 170px
+
+
+   .. grid-item-card::
       :link: layers/meta-tanowrt-hsl-intel/index
       :link-type: doc
       :class-item: grid-item-center
@@ -137,6 +148,18 @@ and focused on running in embedded systems, including real-time systems.
 
 
    .. grid-item-card::
+      :link: layers/meta-tanowrt-hsl-brcm/index
+      :link-type: doc
+      :class-item: grid-item-center
+      :text-align: center
+
+      Raspberry Pi
+      ^^^
+      .. image:: common/images/logos/raspberry-pi.png
+         :width: 240px
+
+
+   .. grid-item-card::
       :link: layers/meta-tanowrt-hsl-rockchip/index
       :link-type: doc
       :class-item: grid-item-center
@@ -146,18 +169,6 @@ and focused on running in embedded systems, including real-time systems.
       ^^^
       .. image:: common/images/logos/rockchip.png
          :width: 230px
-
-
-   .. grid-item-card::
-      :link: layers/meta-tanowrt-hsl-rpi/index
-      :link-type: doc
-      :class-item: grid-item-center
-      :text-align: center
-
-      Raspberry Pi
-      ^^^
-      .. image:: common/images/logos/raspberry-pi.png
-         :width: 240px
 
 
    .. grid-item-card::
@@ -182,18 +193,6 @@ and focused on running in embedded systems, including real-time systems.
       ^^^
       .. image:: common/images/logos/ti.svg
          :width: 200px
-
-
-   .. grid-item-card::
-      :link: layers/meta-tanowrt-hsl-brcm/index
-      :link-type: doc
-      :class-item: grid-item-center grid-under-development
-      :text-align: center
-
-      Broadcom Inc.
-      ^^^
-      .. image:: common/images/logos/broadcom.svg
-         :width: 170px
 
 
    .. grid-item-card::
