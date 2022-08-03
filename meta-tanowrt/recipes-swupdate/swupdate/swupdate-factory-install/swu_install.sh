@@ -6,7 +6,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # SWUPDATE factory installation script
-# Version 1.1.0
+# Version 1.2.0
 #
 # shellcheck shell=bash
 # shellcheck disable=SC3043
@@ -658,6 +658,19 @@ blkdev_validate() {
 		swu_log_error "Specified invalid block device '${1}'"
 		return 1
 	fi
+}
+
+#
+# $1 - block device full path
+# $2 - var for storing block device size in bytes
+#
+get_blkdev_size() {
+	local _size
+
+	_size=$(cat /sys/class/block/${1#/dev/}/size)
+	_size=$(($_size * 512))
+
+	export -- "${2}"="${_size}"
 }
 
 #
@@ -1564,9 +1577,13 @@ do_blkdev_parts() {
 
 			local device
 			local label
+			local blkdev_size
+			local expression
+			local create_partitions
 
 			json_get_var device "device" ""
 			json_get_var label "label" ""
+			json_get_var expression "expression" ""
 
 			blkdev_validate "${device}" || return $?
 
@@ -1584,24 +1601,42 @@ do_blkdev_parts() {
 			swu_log_param "Device" "${device}"
 			swu_log_param "Label" "${label}"
 
-			if json_is_a "partitions" array; then
-				bin_execute \
-					"${BIN_PARTED} -s ${device} --script mklabel ${label}" || return $?
-				swu_install_progress
+			get_blkdev_size "${device}" blkdev_size || return $?
 
-				swu_json_select "partitions"
-					bin_execute "${BIN_PARTPROBE}" || return $?
-					do_blkdev_parts_do_partitions "${device}" || return $?
-					bin_execute "${BIN_PARTED} -s ${device} --script print" || return $?
-					bin_execute "${BIN_PARTPROBE}" || return $?
-					swu_install_progress
-				swu_json_select ..
+			swu_log_param "Block device size" "${blkdev_size}"
+
+			if [ -n "${expression}" ]; then
+				if ! eval [ ${expression} ]; then
+					swu_log_info "Expression '${expression}' is false, skipping partitions creation";
+					create_partitions="0"
+				else
+					swu_log_info "Expression '${expression}' is true, creating partitions";
+					create_partitions="1"
+				fi
 			else
-				swu_log_error "No partitions specified"
-				return 1
+				create_partitions="1"
 			fi
 
-			swu_log_success "Created partitions on block device ${device}"
+			if [ "${create_partitions}" = "1" ]; then
+				if json_is_a "partitions" array; then
+					bin_execute \
+						"${BIN_PARTED} -s ${device} --script mklabel ${label}" || return $?
+					swu_install_progress
+
+					swu_json_select "partitions"
+						bin_execute "${BIN_PARTPROBE}" || return $?
+						do_blkdev_parts_do_partitions "${device}" || return $?
+						bin_execute "${BIN_PARTED} -s ${device} --script print" || return $?
+						bin_execute "${BIN_PARTPROBE}" || return $?
+						swu_install_progress
+					swu_json_select ..
+				else
+					swu_log_error "No partitions specified"
+					return 1
+				fi
+
+				swu_log_success "Created partitions on block device ${device}"
+			fi
 		swu_json_select ..
 	done
 }
