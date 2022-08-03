@@ -50,11 +50,25 @@ Photos
 .. container:: flex
 
    .. _fig-am374x-idk-angled:
-   .. figure:: images/am574x-idk-angled.png
+   .. figure:: images/am574x-idk-angled.jpg
       :width: 300
       :class: with-border
 
       AM574x IDK EVM Angled View
+
+   .. _fig-am374x-idk-top:
+   .. figure:: images/am574x-idk-top.jpg
+      :width: 300
+      :class: with-border
+
+      AM574x IDK EVM Top View
+
+   .. _fig-am374x-idk-bottom:
+   .. figure:: images/am574x-idk-bottom.jpg
+      :width: 300
+      :class: with-border
+
+      AM574x IDK EVM Bottom View
 
 
 Specification
