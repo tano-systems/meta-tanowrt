@@ -41,12 +41,28 @@ a similar design and only minor differences.
 Photos
 ------
 
-.. _fig-mbm10-top:
-.. figure:: images/tf307-mb-s-c-top.webp
-    :width: 400
-    :class: with-border
+.. container:: flex
 
-    MBM 1.0 (TF307-MB-S-C) Board Top View
+   .. _fig-mbm10-top:
+   .. figure:: images/tf307-mb-s-c-top.webp
+       :width: 400
+       :class: with-border
+
+       MBM 1.0 (TF307-MB-S-C) Board Top View
+
+   .. _fig-mbm20-angled-1:
+   .. figure:: images/tf307-mb-s-d-angled-1.jpg
+       :width: 400
+       :class: with-border
+
+       MBM 2.0 (TF307-MB-S-D) Angled View
+
+   .. _fig-mbm20-angled-2:
+   .. figure:: images/tf307-mb-s-d-angled-2.jpg
+       :width: 400
+       :class: with-border
+
+       MBM 2.0 (TF307-MB-S-D) Another Angled View
 
 
 Specification
