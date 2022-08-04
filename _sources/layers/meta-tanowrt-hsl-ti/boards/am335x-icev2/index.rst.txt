@@ -39,21 +39,21 @@ Photos
 .. container:: flex
 
    .. _fig-am335x-icev2-angled:
-   .. figure:: images/am335x-icev2-angled.png
+   .. figure:: images/am335x-icev2-angled.jpg
       :width: 300
       :class: with-border
 
       AM3359 ICEv2 EVM Angled View
 
    .. _fig-am335x-icev2-top:
-   .. figure:: images/am335x-icev2-top.png
+   .. figure:: images/am335x-icev2-top.jpg
       :width: 300
       :class: with-border
 
       AM3359 ICEv2 EVM Top View
 
    .. _fig-am335x-icev2-bottom:
-   .. figure:: images/am335x-icev2-bottom.png
+   .. figure:: images/am335x-icev2-bottom.jpg
       :width: 300
       :class: with-border
 
