@@ -5,6 +5,8 @@
 # short-description: Create image for SWU factory
 # installation SD card for AT91 SoC based devices.
 #
+
+# AT91 does not support GPT partition table
 bootloader --ptable msdos
 
 # Not in the partition table data

@@ -35,8 +35,8 @@ part --ondisk=mmcblk0 --source=rawcopy --align=640 --sourceparams "file=${WKS_IM
 
 # MSDOS partitions
 part /boot     --ondisk=mmcblk0 --source=bootimg-partition --label=boot --fstype=vfat --active --align=1024 --fixed-size 8192k
-part /kernel_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
-part /system_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
-part /kernel_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=64M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
-part /system_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=384M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /kernel_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=${WKS_PART_SIZE_MIB_KERNEL}M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_a --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=${WKS_PART_SIZE_MIB_ROOTFS}M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
+part /kernel_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=${WKS_PART_SIZE_MIB_KERNEL}M  --sourceparams "file=${WKS_IMAGE_KERNEL_BINARY}"
+part /system_b --ondisk=mmcblk0 --source=rawcopy --align=1024 --size=${WKS_PART_SIZE_MIB_ROOTFS}M --sourceparams "file=${IMGDEPLOYDIR}/${WKS_IMAGE_ROOTFS_BINARY}"
 part /overlay  --ondisk=mmcblk0 --size=32M --use-uuid --fstype=ext4 --label=rootfs_data --align=1024
