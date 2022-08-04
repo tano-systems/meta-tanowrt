@@ -1,0 +1,22 @@
+#!/bin/sh
+# Copyright (C) 2022 Tano Systems LLC. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
+case "$1" in
+	preupdate)
+		# Remount /boot with read/write permissions
+		mount /boot -o remount,rw
+		# Disable read-only on boot eMMC partition
+		echo 0 > /sys/class/block/mmcblk0boot0/force_ro
+		;;
+
+	postupdate-success|postupdate-failed)
+		# Remount /boot with read-only permissions
+		mount /boot -o remount,ro
+		# Enable read-only on boot eMMC partition
+		echo 1 > /sys/class/block/mmcblk0boot0/force_ro
+		;;
+
+	*)
+		;;
+esac

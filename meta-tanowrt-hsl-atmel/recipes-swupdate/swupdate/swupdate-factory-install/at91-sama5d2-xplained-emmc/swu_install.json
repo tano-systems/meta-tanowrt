@@ -1,0 +1,129 @@
+{
+	"global": {
+		"last_action": "poweroff",
+		"last_action_delay": 5
+	},
+	"verify": {
+		"blkdev_required": [
+			"/dev/mmcblk0",
+			"/dev/mmcblk0boot0",
+			"/dev/mmcblk0boot1",
+			"/dev/mmcblk1",
+			"/dev/mtdblock0"
+		]
+	},
+	"preinstall": {
+		"mounts": [
+			{
+				"device": "/dev/mmcblk1p1",
+				"target": "/mnt",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"preexecute": [
+			{ "command": "echo 0 > /sys/class/block/mmcblk0boot0/force_ro" },
+			{ "command": "echo 0 > /sys/class/block/mmcblk0boot1/force_ro" }
+		],
+		"blkdev_erase": [
+			{ "device": "/dev/mmcblk0", "bs": 512, "count": 8192 },
+			{ "device": "/dev/mmcblk0boot0", "bs": 512, "count": 2048 },
+			{ "device": "/dev/mmcblk0boot1", "bs": 512, "count": 2048}
+		],
+		"blkdev_parts": [
+			{
+				"device": "/dev/mmcblk0",
+				"label": "msdos",
+				"expression": "$blkdev_size -ge 3221225472",
+				"partitions": [
+					{ "type": "primary",  "fstype": "fat16", "start": "1MiB",    "end": "9MiB", "boot": "1" },
+					{ "type": "primary",  "fstype": "ext4",  "start": "9MiB",    "end": "137MiB"  },
+					{ "type": "primary",  "fstype": "",      "start": "137MiB",  "end": "1161MiB" },
+					{ "type": "extended", "fstype": "",      "start": "1161MiB", "end": "100%"    },
+					{ "type": "logical",  "fstype": "ext4",  "start": "1162MiB", "end": "1290MiB" },
+					{ "type": "logical",  "fstype": "",      "start": "1291MiB", "end": "2315MiB" },
+					{ "type": "logical",  "fstype": "ext4",  "start": "2316MiB", "end": "100%"    }
+				]
+			},
+			{
+				"device": "/dev/mmcblk0",
+				"label": "msdos",
+				"expression": "$blkdev_size -ge 419430400 -a $blkdev_size -lt 3221225472",
+				"partitions": [
+					{ "type": "primary",  "fstype": "fat16", "start": "1MiB",   "end": "9MiB", "boot": "1" },
+					{ "type": "primary",  "fstype": "ext4",  "start": "9MiB",   "end": "25MiB"  },
+					{ "type": "primary",  "fstype": "",      "start": "25MiB",  "end": "185MiB" },
+					{ "type": "extended", "fstype": "",      "start": "185MiB", "end": "100%"   },
+					{ "type": "logical",  "fstype": "ext4",  "start": "186MiB", "end": "202MiB" },
+					{ "type": "logical",  "fstype": "",      "start": "203MiB", "end": "363MiB" },
+					{ "type": "logical",  "fstype": "ext4",  "start": "364MiB", "end": "100%"   }
+				]
+			}
+		],
+		"blkdev_mkfs": [
+			{
+				"device": "/dev/mmcblk0p1",
+				"fstype": "fat",
+				"label": "boot"
+			},
+			{
+				"device": "/dev/mmcblk0p7",
+				"fstype": "ext4",
+				"label": "rootfs_data"
+			}
+		],
+		"blkdev_write": [
+			{
+				"device": "/dev/mmcblk0",
+				"images": [
+					{
+						"offset": 524288,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}, {
+						"offset": 655360,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}
+				]
+			}
+		],
+		"postexecute": [
+			{ "command": "echo 1 > /sys/class/block/mmcblk0boot0/force_ro" },
+			{ "command": "echo 1 > /sys/class/block/mmcblk0boot1/force_ro" }
+		]
+	},
+	"install": {
+		"mounts": [
+			{
+				"device": "/dev/mmcblk0p1",
+				"target": "/boot",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"images": [
+			{
+				"type": "swupdate",
+				"image_source": "local",
+				"image_url": "/mnt/swu_install.swu",
+				"extra": "--no-bootloader-env",
+				"dry_run": true,
+				"selections": [
+					"${SWU_SYSTEM_A_SELECTION}",
+					"${SWU_SYSTEM_B_SELECTION}"
+				]
+			}
+		],
+		"postexecute": [
+			{ "command": "umount /boot" }
+		]
+	},
+	"postinstall": {
+		"postexecute": [
+			{ "command": "fw_setenv swu_active 0" },
+			{ "command": "fw_setenv swu_upgrade_available 0" },
+			{ "command": "fw_setenv swu_bootcount 0" }
+		]
+	}
+}

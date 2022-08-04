@@ -1,0 +1,48 @@
+From eec83c257d711db11e5162d9629018b6210be6ba Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 6 Aug 2022 02:13:53 +0300
+Subject: [PATCH] at91: Add CONFIG_SYS_MMC_ENV_DEV to Kconfig
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ env/Kconfig                         | 8 ++++++++
+ include/configs/at91-sama5_common.h | 2 ++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/env/Kconfig b/env/Kconfig
+index ed12609f6a..c04bfeb604 100644
+--- a/env/Kconfig
++++ b/env/Kconfig
+@@ -194,6 +194,14 @@ config ENV_IS_IN_MMC
+ 	  This value is also in units of bytes, but must also be aligned to
+ 	  an MMC sector boundary.
+ 
++config SYS_MMC_ENV_DEV
++	int "MMC device number for environment"
++	default 2
++	depends on ENV_IS_IN_MMC
++	help
++	  MMC device number for storing environment.
++	  If not defined, use CONFIG_SF_DEFAULT_BUS.
++
+ config ENV_IS_IN_NAND
+ 	bool "Environment in a NAND device"
+ 	depends on !CHAIN_OF_TRUST
+diff --git a/include/configs/at91-sama5_common.h b/include/configs/at91-sama5_common.h
+index 257e15b091..46e212dc4c 100644
+--- a/include/configs/at91-sama5_common.h
++++ b/include/configs/at91-sama5_common.h
+@@ -35,8 +35,10 @@
+ #ifdef CONFIG_SD_BOOT
+ 
+ #ifdef CONFIG_ENV_IS_IN_MMC
++#ifndef CONFIG_SYS_MMC_ENV_DEV
+ #define CONFIG_SYS_MMC_ENV_DEV		0
+ #endif
++#endif
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND	"if test ! -n ${dtb_name}; then "	\
+-- 
+2.17.1
+

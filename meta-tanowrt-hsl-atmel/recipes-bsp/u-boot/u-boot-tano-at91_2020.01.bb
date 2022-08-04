@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2021-2022 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Based on original u-boot-at91_2020.01.bb recipe from meta-atmel layer
@@ -18,7 +18,7 @@ PR = "tano0.${INCPR}"
 
 DEPENDS += "bison-native flex-native"
 
-COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563"
+COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained"
 
 UBRANCH = "u-boot-2020.01-at91"
 UBRANCH_sama7g5 = "sama7g5_early"

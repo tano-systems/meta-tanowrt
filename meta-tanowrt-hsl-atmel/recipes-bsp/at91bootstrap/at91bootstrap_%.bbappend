@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2021-2022 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -15,7 +15,7 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563"
+COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained"
 
 DEPENDS += "python3-native"
 

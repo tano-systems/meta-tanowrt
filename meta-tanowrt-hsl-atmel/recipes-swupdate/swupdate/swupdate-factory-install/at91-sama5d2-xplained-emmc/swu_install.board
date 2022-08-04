@@ -1,0 +1,40 @@
+#
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2022 Tano Systems LLC. All Rights Reserved
+#
+# BOARD SPECIFIC CONFIGURATION AND HOOKS
+#
+
+SWU_INSTALL_HEARTBEAT_DELAY=1
+
+led_control() {
+	echo "$1" > /sys/class/leds/red/brightness
+	echo "$2" > /sys/class/leds/green/brightness
+	echo "$3" > /sys/class/leds/blue/brightness
+}
+
+swu_install_hook_preinit_started() {
+	echo none > /sys/class/leds/red/trigger
+	echo none > /sys/class/leds/green/trigger
+	echo none > /sys/class/leds/blue/trigger
+
+	# Blue
+	led_control 0 0 255
+}
+
+swu_install_hook_heartbeat() {
+	# White
+	led_control 255 255 255
+	sleep 0.25
+	led_control 0 0 0
+}
+
+swu_install_hook_failure() {
+	# Red
+	led_control 255 0 0
+}
+
+swu_install_hook_done() {
+	# Green
+	led_control 0 255 0
+}

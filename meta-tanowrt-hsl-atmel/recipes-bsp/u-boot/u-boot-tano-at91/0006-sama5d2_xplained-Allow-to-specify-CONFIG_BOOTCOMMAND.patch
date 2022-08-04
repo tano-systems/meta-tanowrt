@@ -1,0 +1,56 @@
+From 0feb84c4d28528c4328bc5b3a0b3f03a87f98da9 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 6 Aug 2022 02:00:43 +0300
+Subject: [PATCH] sama5d2_xplained: Allow to specify CONFIG_BOOTCOMMAND in
+ defconfig
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ include/configs/sama5d2_xplained.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/include/configs/sama5d2_xplained.h b/include/configs/sama5d2_xplained.h
+index 487339594e..c4d0aeaf67 100644
+--- a/include/configs/sama5d2_xplained.h
++++ b/include/configs/sama5d2_xplained.h
+@@ -29,31 +29,32 @@
+ #ifdef CONFIG_SD_BOOT
+ 
+ /* bootstrap + u-boot + env in sd card */
+-#undef CONFIG_BOOTCOMMAND
+-
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND	"fatload mmc " CONFIG_ENV_FAT_DEVICE_AND_PART " 0x21000000 at91-sama5d2_xplained.dtb; " \
+ 				"fatload mmc " CONFIG_ENV_FAT_DEVICE_AND_PART " 0x22000000 zImage; " \
+ 				"bootz 0x22000000 - 0x21000000"
++#endif
+ 
+ #elif CONFIG_SPI_BOOT
+ 
+ /* bootstrap + u-boot + env in sd card, but kernel + dtb in eMMC */
+-#undef CONFIG_BOOTCOMMAND
+-
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND	"ext4load mmc 0:1 0x21000000 /boot/at91-sama5d2_xplained.dtb; " \
+ 				"ext4load mmc 0:1 0x22000000 /boot/zImage; " \
+ 				"bootz 0x22000000 - 0x21000000"
++#endif
+ 
+ #endif
+ 
+ #ifdef CONFIG_QSPI_BOOT
+ #undef CONFIG_ENV_SPI_BUS
+-#undef CONFIG_BOOTCOMMAND
+ #define CONFIG_ENV_SPI_BUS	1
++#ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND	"sf probe 1:0; "			\
+ 				"sf read 0x21000000 0x180000 0x80000; "	\
+ 				"sf read 0x22000000 0x200000 0x600000; "\
+ 				"bootz 0x22000000 - 0x21000000"
++#endif
+ 
+ #endif
+ 
+-- 
+2.17.1
+

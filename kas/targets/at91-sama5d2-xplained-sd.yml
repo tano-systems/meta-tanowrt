@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/tanowrt-hsl-atmel.yml
+
+machine: at91-sama5d2-xplained-sd
+target: tanowrt-image-full-swu

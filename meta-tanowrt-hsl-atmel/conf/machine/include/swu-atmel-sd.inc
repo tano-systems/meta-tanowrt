@@ -24,7 +24,7 @@ SWU_IMAGE_ARTIFACT_uboot[sw-desc-path] = "/boot/u-boot.bin"
 SWU_IMAGE_ARTIFACT_uboot[sw-desc-device] = "/dev/null"
 SWU_IMAGE_ARTIFACT_uboot[sw-desc-offset] = "0"
 
-SWU_IMAGE_ARTIFACT_startup[sw-desc-type] = "rawfile"
+SWU_IMAGE_ARTIFACT_startup[sw-desc-type] = "raw"
 SWU_IMAGE_ARTIFACT_startup[sw-desc-device] = "${SWU_IMAGE_DEV}"
 SWU_IMAGE_ARTIFACT_startup[sw-desc-offset] = "262144"
 

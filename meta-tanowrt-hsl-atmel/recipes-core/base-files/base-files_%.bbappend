@@ -1,13 +1,15 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 #
 
 PR_append_evb-ksz-sd = ".atmel0"
+PR_append_at91-sama5d2-xplained-sd = ".atmel0"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"
 
 PREINIT_FILES = ""
 PREINIT_FILES_evb-ksz-sd = "file://preinit/79_mount_boot"
+PREINIT_FILES_at91-sama5d2-xplained-sd = "file://preinit/79_mount_boot"
 
 SRC_URI_append = "\
 	${PREINIT_FILES} \

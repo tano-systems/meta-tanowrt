@@ -1,11 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 #
 
 require swu-atmel-sd.inc
-
-MACHINE_FEATURES += "swupdate-factory"
 
 #
 # Bootloader
