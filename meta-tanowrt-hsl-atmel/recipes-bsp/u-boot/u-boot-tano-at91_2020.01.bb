@@ -18,7 +18,7 @@ PR = "tano0.${INCPR}"
 
 DEPENDS += "bison-native flex-native"
 
-COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained"
+COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91-sama5d3-xplained"
 
 UBRANCH = "u-boot-2020.01-at91"
 UBRANCH_sama7g5 = "sama7g5_early"

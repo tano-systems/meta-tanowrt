@@ -7,7 +7,8 @@
 PR_append_evb-ksz-sd = ".atmel0"
 PR_append_evb-ksz-nand = ".atmel0"
 PR_append_at91-sama5d2-xplained = ".atmel0"
+PR_append_at91-sama5d3-xplained = ".atmel0"
 
-COMPATIBLE_MACHINE_append = "|evb-ksz|at91-sama5d2-xplained"
+COMPATIBLE_MACHINE_append = "|evb-ksz|at91-sama5d2-xplained|at91-sama5d3-xplained"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"

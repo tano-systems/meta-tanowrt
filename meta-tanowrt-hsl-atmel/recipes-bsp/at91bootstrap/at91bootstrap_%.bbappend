@@ -15,7 +15,7 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained"
+COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91-sama5d3-xplained"
 
 DEPENDS += "python3-native"
 

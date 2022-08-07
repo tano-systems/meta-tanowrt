@@ -1,0 +1,90 @@
+{
+	"global": {
+		"last_action": "poweroff",
+		"last_action_delay": 5
+	},
+	"verify": {
+		"mtd_required": [
+			"at91bootstrap",
+			"uboot",
+			"startup",
+			"ubootenv",
+			"system_a",
+			"system_b",
+			"rootfs_data"
+		]
+	},
+	"preinstall": {
+		"mounts": [
+			{
+				"device": "/dev/mmcblk0p1",
+				"target": "/mnt",
+				"create_target": true,
+				"fstype": "vfat"
+			}
+		],
+		"mtd_erase": [
+			"at91bootstrap",
+			"uboot",
+			"startup",
+			"ubootenv"
+		],
+		"blkdev_write": [
+			{
+				"device": "/dev/mtdblock3",
+				"images": [
+					{
+						"offset": 0,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}, {
+						"offset": 131072,
+						"image_source": "local",
+						"image_url": "/mnt/u-boot-initial-env.bin"
+					}
+				]
+			}
+		],
+		"mtd_ubiformat": [
+			{ "mtd": "system_a" },
+			{ "mtd": "system_b" },
+			{ "mtd": "rootfs_data" }
+		],
+		"mtd_ubimkvol": [
+			{
+				"mtd": "rootfs_data",
+				"attach": true,
+				"detach": true,
+				"volumes": [
+					{
+						"name": "rootfs_data",
+						"type": "dynamic",
+						"size": "max"
+					}
+				]
+			}
+		]
+	},
+	"install": {
+		"images": [
+			{
+				"type": "swupdate",
+				"image_source": "local",
+				"image_url": "/mnt/swu_install.swu",
+				"extra": "--no-bootloader-env",
+				"dry_run": true,
+				"selections": [
+					"${SWU_SYSTEM_A_SELECTION}",
+					"${SWU_SYSTEM_B_SELECTION}"
+				]
+			}
+		]
+	},
+	"postinstall": {
+		"postexecute": [
+			{ "command": "fw_setenv swu_active 0" },
+			{ "command": "fw_setenv swu_upgrade_available 0" },
+			{ "command": "fw_setenv swu_bootcount 0" }
+		]
+	}
+}

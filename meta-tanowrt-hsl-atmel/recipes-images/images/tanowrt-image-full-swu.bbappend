@@ -4,6 +4,6 @@
 #
 PR_append = ".atmel0"
 
-COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained"
+COMPATIBLE_MACHINE = "evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91-sama5d3-xplained"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
