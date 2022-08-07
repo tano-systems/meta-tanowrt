@@ -1,0 +1,961 @@
+RomBOOT
+
+
+AT91Bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1 (2022-08-07 22:54:47)
+
+SD/MMC: Image: Read file u-boot.bin to 0x26f00000
+SD: Card Capacity: High or Extended
+SD: Specification Version 3.0X
+SD/MMC: Done to load image
+<debug_uart>
+
+U-Boot 2020.01-gitAUTOINC+af59b26c22-tano0.2 (Aug 09 2022 - 23:37:39 +0000)
+
+CPU: SAMA5D36
+Crystal frequency:       12 MHz
+CPU clock        :      528 MHz
+Master clock     :      132 MHz
+DRAM:  256 MiB
+NAND:  256 MiB
+MMC:   Atmel mci: 0, Atmel mci: 1
+Loading Environment from MMC... OK
+In:    serial@ffffee00
+Out:   serial@ffffee00
+Err:   serial@ffffee00
+Net:
+Warning: ethernet@f0028000 MAC addresses don't match:
+Address in ROM is          00:10:a1:98:97:02
+Address in environment is  00:10:a1:98:97:01
+eth0: ethernet@f0028000, eth1: ethernet@f802c000
+Hit any key to stop autoboot:  0
+switch to partitions #0, OK
+mmc0 is current device
+
+MMC read: dev # 0, block # 512, count 256 ... 256 blocks read: OK
+## Executing script at 21000000
+Board name: sama5d3_xplained
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc0 is current device
+11523272 bytes read in 778 ms (14.1 MiB/s)
+Force console to be enabled
+Booting kernel 0x24000000#conf-at91-sama5d3_xplained.dtb...
+## Loading kernel from FIT Image at 24000000 ...
+   Using 'conf-at91-sama5d3_xplained.dtb' configuration
+   Trying 'kernel-1' kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0x24000118
+     Data Size:    4567560 Bytes = 4.4 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x22000000
+     Entry Point:  0x22000000
+     Hash algo:    sha256
+     Hash value:   ee89b790ef96b8d52a38f4d389c2147d6f9e7f9703a497a3001810c8e0ebea70
+   Verifying Hash Integrity ... sha256+ OK
+## Loading ramdisk from FIT Image at 24000000 ...
+   Using 'conf-at91-sama5d3_xplained.dtb' configuration
+   Trying 'ramdisk-1' ramdisk subimage
+     Description:  tanowrt-image-initramfs-swu-factory
+     Type:         RAMDisk Image
+     Compression:  uncompressed
+     Data Start:   0x24467838
+     Data Size:    6903512 Bytes = 6.6 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x25000000
+     Entry Point:  0x25000000
+     Hash algo:    sha256
+     Hash value:   6297585435f0c473c1fc1038b1e9be541d612518d325b8d8516f00d61fdcb473
+   Verifying Hash Integrity ... sha256+ OK
+   Loading ramdisk from 0x24467838 to 0x25000000
+## Loading fdt from FIT Image at 24000000 ...
+   Using 'conf-at91-sama5d3_xplained.dtb' configuration
+   Trying 'fdt-at91-sama5d3_xplained.dtb' fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x2445b438
+     Data Size:    49941 Bytes = 48.8 KiB
+     Architecture: ARM
+     Load Address: 0x23e00000
+     Hash algo:    sha256
+     Hash value:   e3f2fc684562136c01081975e579280f1c9d0fa41d579ebb57add47dad0f1f3f
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x2445b438 to 0x23e00000
+   Booting using the fdt blob at 0x23e00000
+   Loading Kernel Image
+   Loading Ramdisk to 2f4aa000, end 2fb3f6d8 ... OK
+   Loading Device Tree to 2f49a000, end 2f4a9314 ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 (oe-user@oe-host) (gcc version 10.3.0 (GCC)) #1 Tue Aug 9 23:24:05 UTC 2022
+[    0.000000] CPU: ARMv7 Processor [410fc051] revision 1 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: SAMA5D3 Xplained
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] cma: Reserved 16 MiB at 0x2e400000
+[    0.000000] CPU: All CPU(s) started in SVC mode.
+[    0.000000] random: get_random_bytes called from 0xc0a008e8 with crng_init=0
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 64960
+[    0.000000] Kernel command line: console=ttyS0,115200n8  root=/dev/ram rootfstype=squashfs rootwait=1 earlyprintk panic=15
+[    0.000000] Dentry cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Inode-cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Memory: 225568K/262144K available (7168K kernel code, 272K rwdata, 1296K rodata, 1024K init, 169K bss, 20192K reserved, 16384K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xd0800000 - 0xff800000   ( 752 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xd0000000   ( 256 MB)
+[    0.000000]     modules : 0xbf000000 - 0xc0000000   (  16 MB)
+[    0.000000]       .text : 0x(ptrval) - 0x(ptrval)   (8160 kB)
+[    0.000000]       .init : 0x(ptrval) - 0x(ptrval)   (1024 kB)
+[    0.000000]       .data : 0x(ptrval) - 0x(ptrval)   ( 273 kB)
+[    0.000000]        .bss : 0x(ptrval) - 0x(ptrval)   ( 170 kB)
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] clocksource: timer@f0010000: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 115833966437 ns
+[    0.000019] sched_clock: 32 bits at 16MHz, resolution 60ns, wraps every 130150523873ns
+[    0.000045] Switching to timer-based delay loop, resolution 60ns
+[    0.000640] clocksource: pit: mask: 0xfffffff max_cycles: 0xfffffff, max_idle_ns: 14479245754 ns
+[    0.001236] Console: colour dummy device 80x30
+[    0.001310] Calibrating delay loop (skipped), value calculated using timer frequency.. 33.00 BogoMIPS (lpj=165000)
+[    0.001343] pid_max: default: 32768 minimum: 301
+[    0.001674] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.001711] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.003074] CPU: Testing write buffer coherency: ok
+[    0.004517] Setting up static identity map for 0x20100000 - 0x20100060
+[    0.006409] devtmpfs: initialized
+[    0.024552] VFP support v0.3: implementor 41 architecture 2 part 30 variant 5 rev 1
+[    0.024980] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.025021] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.027015] pinctrl core: initialized pinctrl subsystem
+[    0.028958] NET: Registered protocol family 16
+[    0.031478] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.033880] cpuidle: using governor menu
+[    0.056960] AT91: PM: standby: standby, suspend: ulp0
+[    0.058252] gpio-at91 fffff200.gpio: at address (ptrval)
+[    0.059439] gpio-at91 fffff400.gpio: at address (ptrval)
+[    0.060835] gpio-at91 fffff600.gpio: at address (ptrval)
+[    0.062210] gpio-at91 fffff800.gpio: at address (ptrval)
+[    0.063647] gpio-at91 fffffa00.gpio: at address (ptrval)
+[    0.065492] pinctrl-at91 ahb:apb:pinctrl@fffff200: initialized AT91 pinctrl driver
+[    0.066242] atmel_tcb: probe of f0010000.timer failed with error -16
+[    0.082743] at_hdmac ffffe600.dma-controller: Atmel AHB DMA Controller ( cpy set slave ), 8 channels
+[    0.084537] at_hdmac ffffe800.dma-controller: Atmel AHB DMA Controller ( cpy set slave ), 8 channels
+[    0.087169] AT91: Detected SoC family: sama5d3
+[    0.087195] AT91: Detected SoC: sama5d36, revision 2
+[    0.088888] SCSI subsystem initialized
+[    0.089442] usbcore: registered new interface driver usbfs
+[    0.089580] usbcore: registered new interface driver hub
+[    0.089727] usbcore: registered new device driver usb
+[    0.091435] at91_i2c f0014000.i2c: using dma0chan0 (tx) and dma0chan1 (rx) for DMA transfers
+[    0.091873] at91_i2c f0014000.i2c: AT91 i2c bus driver (hw version: 0x402).
+[    0.093189] at91_i2c f0018000.i2c: using dma0chan2 (tx) and dma0chan3 (rx) for DMA transfers
+[    0.093621] at91_i2c f0018000.i2c: AT91 i2c bus driver (hw version: 0x402).
+[    0.094242] at91_i2c f801c000.i2c: can't get DMA channel, continue without DMA support
+[    0.094625] at91_i2c f801c000.i2c: AT91 i2c bus driver (hw version: 0x402).
+[    0.095415] media: Linux media interface: v0.10
+[    0.095522] videodev: Linux video capture interface: v2.00
+[    0.095623] pps_core: LinuxPPS API ver. 1 registered
+[    0.095640] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.095692] PTP clock support registered
+[    0.096267] Advanced Linux Sound Architecture Driver Initialized.
+[    0.097309] Bluetooth: Core ver 2.22
+[    0.097442] NET: Registered protocol family 31
+[    0.097463] Bluetooth: HCI device and connection manager initialized
+[    0.097492] Bluetooth: HCI socket layer initialized
+[    0.097528] Bluetooth: L2CAP socket layer initialized
+[    0.097601] Bluetooth: SCO socket layer initialized
+[    0.098726] clocksource: Switched to clocksource timer@f0010000
+[    0.124542] NET: Registered protocol family 2
+[    0.125603] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes)
+[    0.125725] TCP established hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.125785] TCP bind hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.125837] TCP: Hash tables configured (established 2048 bind 2048)
+[    0.126071] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.126122] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.126508] NET: Registered protocol family 1
+[    0.127621] RPC: Registered named UNIX socket transport module.
+[    0.127651] RPC: Registered udp transport module.
+[    0.127665] RPC: Registered tcp transport module.
+[    0.127677] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.128145] Trying to unpack rootfs image as initramfs...
+[    1.346715] Freeing initrd memory: 6744K
+[    1.348374] Initialise system trusted keyrings
+[    1.348937] workingset: timestamp_bits=14 max_order=16 bucket_order=2
+[    1.349788] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    1.364142] Key type asymmetric registered
+[    1.364175] Asymmetric key parser 'x509' registered
+[    1.364221] io scheduler noop registered (default)
+[    1.364238] io scheduler mq-deadline registered
+[    1.364254] io scheduler kyber registered
+[    1.381834] brd: module loaded
+[    1.399794] loop: module loaded
+[    1.401137] atmel_usart_serial.0.auto: ttyS1 at MMIO 0xf001c000 (irq = 23, base_baud = 4125000) is a ATMEL_SERIAL
+[    1.403020] atmel_usart_serial.1.auto: ttyS2 at MMIO 0xf0020000 (irq = 24, base_baud = 4125000) is a ATMEL_SERIAL
+[    1.404849] atmel_usart_serial.2.auto: ttyS5 at MMIO 0xf0024000 (irq = 25, base_baud = 4125000) is a ATMEL_SERIAL
+[    1.406692] atmel_usart_serial.3.auto: ttyS0 at MMIO 0xffffee00 (irq = 38, base_baud = 8250000) is a ATMEL_SERIAL
+[    2.071561] console [ttyS0] enabled
+[    2.080679] atmel_spi f0004000.spi: Using dma0chan4 (tx) and dma0chan5 (rx) for DMA transfers
+[    2.090119] atmel_spi f0004000.spi: Atmel SPI Controller version 0x213 at 0xf0004000 (irq 20)
+[    2.100217] atmel_spi f8008000.spi: Using dma1chan0 (tx) and dma1chan1 (rx) for DMA transfers
+[    2.109577] atmel_spi f8008000.spi: Atmel SPI Controller version 0x213 at 0xf8008000 (irq 28)
+[    2.119425] libphy: Fixed MDIO Bus: probed
+[    2.124325] CAN device driver interface
+[    2.129776] at91_can f000c000.can: device registered (reg_base=(ptrval), irq=45)
+[    2.139435] libphy: MACB_mii_bus: probed
+[    2.250958] Micrel KSZ9031 Gigabit PHY f0028000.ethernet-ffffffff:07: attached PHY driver [Micrel KSZ9031 Gigabit PHY] (mii_bus:phy_addr=f0028000.ethernet-ffffffff:07, irq=POLL)
+[    2.266910] macb f0028000.ethernet eth0: Cadence GEM rev 0x00020119 at 0xf0028000 irq 46 (00:10:a1:98:97:01)
+[    2.278143] libphy: MACB_mii_bus: probed
+[    2.358831] random: fast init done
+[    2.390170] Micrel KSZ8081 or KSZ8091 f802c000.ethernet-ffffffff:01: attached PHY driver [Micrel KSZ8081 or KSZ8091] (mii_bus:phy_addr=f802c000.ethernet-ffffffff:01, irq=POLL)
+[    2.405943] macb f802c000.ethernet eth1: Cadence MACB rev 0x0001010c at 0xf802c000 irq 47 (00:10:a1:98:97:02)
+[    2.416297] PPP generic driver version 2.4.2
+[    2.421059] PPP MPPE Compression module registered
+[    2.425814] NET: Registered protocol family 24
+[    2.430386] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    2.436878] ehci-atmel: EHCI Atmel driver
+[    2.445167] atmel-ehci 700000.ehci: EHCI Host Controller
+[    2.450596] atmel-ehci 700000.ehci: new USB bus registered, assigned bus number 1
+[    2.458855] atmel-ehci 700000.ehci: irq 50, io mem 0x00700000
+[    2.488822] atmel-ehci 700000.ehci: USB 2.0 started, EHCI 1.00
+[    2.495055] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    2.503372] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    2.510614] usb usb1: Product: EHCI Host Controller
+[    2.515455] usb usb1: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ehci_hcd
+[    2.525296] usb usb1: SerialNumber: 700000.ehci
+[    2.531117] hub 1-0:1.0: USB hub found
+[    2.534925] hub 1-0:1.0: 3 ports detected
+[    2.540409] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    2.546609] ohci-atmel: OHCI Atmel driver
+[    2.551961] at91_ohci 600000.ohci: USB Host Controller
+[    2.557135] at91_ohci 600000.ohci: new USB bus registered, assigned bus number 2
+[    2.565036] at91_ohci 600000.ohci: irq 50, io mem 0x00600000
+[    2.643243] usb usb2: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    2.651575] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    2.658825] usb usb2: Product: USB Host Controller
+[    2.663574] usb usb2: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ohci_hcd
+[    2.673390] usb usb2: SerialNumber: at91
+[    2.679369] hub 2-0:1.0: USB hub found
+[    2.683181] hub 2-0:1.0: 3 ports detected
+[    2.688912] usbcore: registered new interface driver cdc_acm
+[    2.694542] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.702839] usbcore: registered new interface driver usb-storage
+[    2.709135] usbcore: registered new interface driver usbserial_generic
+[    2.715697] usbserial: USB Serial support registered for generic
+[    2.721833] usbcore: registered new interface driver ftdi_sio
+[    2.727609] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    2.736513] at91_rtc fffffeb0.rtc: registered as rtc0
+[    2.741652] at91_rtc fffffeb0.rtc: AT91 Real Time Clock driver.
+[    2.747763] i2c /dev entries driver
+[    2.754148] at91-reset fffffe00.rstc: Starting after user reset
+[    2.761676] Bluetooth: HCI UART driver ver 2.3
+[    2.766083] Bluetooth: HCI UART protocol H4 registered
+[    2.771421] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[    2.777807] usbcore: registered new interface driver btusb
+[    2.783888] sdhci: Secure Digital Host Controller Interface driver
+[    2.790114] sdhci: Copyright(c) Pierre Ossman
+[    2.795319] atmel_mci f0000000.mmc: version: 0x505
+[    2.801305] atmel_mci f0000000.mmc: using dma0chan6 for DMA transfers
+[    2.808021] atmel_mci f0000000.mmc: Linked as a consumer to regulator.1
+[    2.840480] atmel_mci f0000000.mmc: Atmel MCI controller at 0xf0000000 irq 19, 1 slots
+[    2.849289] atmel_mci f8000000.mmc: version: 0x505
+[    2.854864] atmel_mci f8000000.mmc: using dma1chan2 for DMA transfers
+[    2.885258] atmel_mci f8000000.mmc: Atmel MCI controller at 0xf8000000 irq 27, 1 slots
+[    2.893555] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.900818] ledtrig-cpu: registered to indicate activity on CPUs
+[    2.907180] atmel_aes f8038000.aes: version: 0x135
+[    2.916842] atmel_aes f8038000.aes: Atmel AES - Using dma1chan3, dma1chan4 for DMA transfers
+[    2.926064] atmel_sha f8034000.sha: version: 0x410
+[    2.931574] atmel_sha f8034000.sha: using dma1chan5 for DMA transfers
+[    2.938129] mmc0: host does not support reading read-only switch, assuming write-enable
+[    2.947908] atmel_sha f8034000.sha: Atmel SHA1/SHA256/SHA224/SHA384/SHA512
+[    2.955570] atmel_tdes f803c000.tdes: version: 0x701
+[    2.961000] mmc0: new high speed SDHC card at address b368
+[    2.968502] mmcblk0: mmc0:b368 SDC   15.0 GiB
+[    2.975062] atmel_tdes f803c000.tdes: using dma1chan6, dma1chan7 for DMA transfers
+[    2.984185]  mmcblk0: p1
+[    2.992108] atmel_tdes f803c000.tdes: Atmel DES/TDES
+[    2.997725] usbcore: registered new interface driver usbhid
+[    3.003362] usbhid: USB HID core driver
+[    3.011743] nand: device found, Manufacturer ID: 0x2c, Chip ID: 0xda
+[    3.018072] nand: Micron MT29F2G08ABAEAWP
+[    3.022192] nand: 256 MiB, SLC, erase size: 128 KiB, page size: 2048, OOB size: 64
+[    3.030767] Bad block table found at page 131008, version 0x01
+[    3.037086] Bad block table found at page 130944, version 0x01
+[    3.043403] 7 fixed-partitions partitions found on MTD device atmel_nand
+[    3.050142] Creating 7 MTD partitions on "atmel_nand":
+[    3.055257] 0x000000000000-0x000000040000 : "at91bootstrap"
+[    3.062938] 0x000000040000-0x000000180000 : "uboot"
+[    3.069910] 0x000000180000-0x0000001c0000 : "startup"
+[    3.076885] 0x0000001c0000-0x000000200000 : "ubootenv"
+[    3.084061] 0x000000200000-0x000006a00000 : "system_a"
+[    3.093382] 0x000006a00000-0x00000d200000 : "system_b"
+[    3.102699] 0x00000d200000-0x000010000000 : "rootfs_data"
+[    3.112180] iio iio:device0: Resolution used: 12 bits
+[    3.117223] iio iio:device0: ADC Touch screen is disabled.
+[    3.128329] u32 classifier
+[    3.131080]     Actions configured
+[    3.135048] NET: Registered protocol family 10
+[    3.141767] Segment Routing with IPv6
+[    3.145529] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    3.152774] NET: Registered protocol family 17
+[    3.157367] Bridge firewalling registered
+[    3.161415] can: controller area network core (rev 20170425 abi 9)
+[    3.167766] NET: Registered protocol family 29
+[    3.172293] can: raw protocol (rev 20170425)
+[    3.176525] can: broadcast manager protocol (rev 20170425 t)
+[    3.182264] can: netlink gateway (rev 20170425) max_hops=1
+[    3.188214] Bluetooth: RFCOMM TTY layer initialized
+[    3.193162] Bluetooth: RFCOMM socket layer initialized
+[    3.198307] Bluetooth: RFCOMM ver 1.11
+[    3.202131] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    3.207408] Bluetooth: BNEP filters: protocol multicast
+[    3.212717] Bluetooth: BNEP socket layer initialized
+[    3.217639] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    3.223627] Bluetooth: HIDP socket layer initialized
+[    3.228604] l2tp_core: L2TP core driver, V2.0
+[    3.232994] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    3.237744] l2tp_netlink: L2TP netlink interface
+[    3.244246] Loading compiled-in X.509 certificates
+[    3.258900] input: gpio_keys as /devices/platform/gpio_keys/input/input0
+[    3.266429] at91_rtc fffffeb0.rtc: setting system clock to 2022-08-10 00:01:28 UTC (1660089688)
+[    3.276038] ALSA device list:
+[    3.279034]   No soundcards found.
+[    3.285636] Freeing unused kernel memory: 1024K
+[    3.290426] Run /init as init process
+[    4.258638] init: Console is alive
+[    4.271914] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    4.279172] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    4.289438] init: - preinit -
+[    4.710045] random: jshn: uninitialized urandom read (4 bytes read)
+[    4.750436] random: jshn: uninitialized urandom read (4 bytes read)
+Press the [x] key to cancel automatic installation
+Press the [r] key to install without last action (reboot/power off)
+
+┌────────────────────────┐
+│                        │
+│  Global configuration  │
+│                        │
+└────────────────────────┘
+* Last action: poweroff
+* Last action delay: 5 seconds
+
+┌────────────────┐
+│                │
+│  Verification  │
+│                │
+└────────────────┘
+
+Checking required MTD devices...
+════════════════════════════════════════════════════════════════════════════════
+MTD device at91bootstrap found (/dev/mtd0)
+MTD device uboot found (/dev/mtd1)
+MTD device startup found (/dev/mtd2)
+MTD device ubootenv found (/dev/mtd3)
+MTD device system_a found (/dev/mtd4)
+MTD device system_b found (/dev/mtd5)
+MTD device rootfs_data found (/dev/mtd6)
+
+┌────────────────────┐
+│                    │
+│  Pre-installation  │
+│                    │
+└────────────────────┘
+
+Mounting filesystems...
+════════════════════════════════════════════════════════════════════════════════
+
+Mount 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0p1
+* Target: /mnt
+* Filsystem: vfat
+* Create target: yes
+Executing command '/bin/mount -t vfat /dev/mmcblk0p1 /mnt'...
+Executed '/bin/mount -t vfat /dev/mmcblk0p1 /mnt' with exit code 0
+Mounted
+
+Erasing MTD partitions...
+════════════════════════════════════════════════════════════════════════════════
+
+MTD device at91bootstrap
+────────────────────────────────────────────────────────────
+Executing command '/usr/sbin/flash_erase /dev/mtd0 0 0'...
+Erasing 128 Kibyte @ 20000 -- 100 % complete
+Executed '/usr/sbin/flash_erase /dev/mtd0 0 0' with exit code 0
+Erased /dev/mtd0 (at91bootstrap)
+
+MTD device uboot
+────────────────────────────────────────────────────────────
+Executing command '/usr/sbin/flash_erase /dev/mtd1 0 0'...
+Erasing 128 Kibyte @ 120000 -- 100 % complete
+Executed '/usr/sbin/flash_erase /dev/mtd1 0 0' with exit code 0
+Erased /dev/mtd1 (uboot)
+
+MTD device startup
+────────────────────────────────────────────────────────────
+Executing command '/usr/sbin/flash_erase /dev/mtd2 0 0'...
+Erasing 128 Kibyte @ 20000 -- 100 % complete
+Executed '/usr/sbin/flash_erase /dev/mtd2 0 0' with exit code 0
+Erased /dev/mtd2 (startup)
+
+MTD device ubootenv
+────────────────────────────────────────────────────────────
+Executing command '/usr/sbin/flash_erase /dev/mtd3 0 0'...
+Erasing 128 Kibyte @ 20000 -- 100 % complete
+Executed '/usr/sbin/flash_erase /dev/mtd3 0 0' with exit code 0
+Erased /dev/mtd3 (ubootenv)
+
+Formatting MTD devices for UBI...
+════════════════════════════════════════════════════════════════════════════════
+
+UBI partition 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mtd4 (system_a)
+Executing command '/usr/sbin/ubiformat /dev/mtd4 --yes'...
+ubiformat: mtd4 (nand), size 109051904 bytes (104.0 MiB), 832 eraseblocks of 131072 bytes (128.0 KiB), min. I/O size 2048 bytes
+libscan: scanning eraseblock 831 -- 100 % complete
+ubiformat: 832 eraseblocks are supposedly empty
+ubiformat: formatting eraseblock 831 -- 100 % complete
+Executed '/usr/sbin/ubiformat /dev/mtd4 --yes' with exit code 0
+Formatted /dev/mtd4 (system_a)
+
+UBI partition 2
+────────────────────────────────────────────────────────────
+* Device: /dev/mtd5 (system_b)
+Executing command '/usr/sbin/ubiformat /dev/mtd5 --yes'...
+ubiformat: mtd5 (nand), size 109051904 bytes (104.0 MiB), 832 eraseblocks of 131072 bytes (128.0 KiB), min. I/O size 2048 bytes
+libscan: scanning eraseblock 831 -- 100 % complete
+ubiformat: 832 eraseblocks are supposedly empty
+ubiformat: formatting eraseblock 831 -- 100 % complete
+Executed '/usr/sbin/ubiformat /dev/mtd5 --yes' with exit code 0
+Formatted /dev/mtd5 (system_b)
+
+UBI partition 3
+────────────────────────────────────────────────────────────
+* Device: /dev/mtd6 (rootfs_data)
+Executing command '/usr/sbin/ubiformat /dev/mtd6 --yes'...
+ubiformat: mtd6 (nand), size 48234496 bytes (46.0 MiB), 368 eraseblocks of 131072 bytes (128.0 KiB), min. I/O size 2048 bytes
+libscan: scanning eraseblock 367 -- 100 % complete
+ubiformat: 364 eraseblocks are supposedly empty
+ubiformat: 4 bad eraseblocks found, numbers: 364, 365, 366, 367
+ubiformat: formatting eraseblock 367 -- 100 % complete
+Executed '/usr/sbin/ubiformat /dev/mtd6 --yes' with exit code 0
+Formatted /dev/mtd6 (rootfs_data)
+
+Creating UBI volumes...
+════════════════════════════════════════════════════════════════════════════════
+
+MTD device 1
+────────────────────────────────────────────────────────────
+* MTD device: /dev/mtd6 (rootfs_data):
+Attaching UBI partition /dev/mtd6 (rootfs_data)...
+Executing command '/usr/sbin/ubiattach --dev-path=/dev/mtd6'...
+UBI device number 0, total 364 LEBs (46219264 bytes, 44.0 MiB), available 322 LEBs (40886272 bytes, 38.9 MiB), LEB size 126976 bytes (124.0 KiB)
+Executed '/usr/sbin/ubiattach --dev-path=/dev/mtd6' with exit code 0
+Creating UBI volume 1...
+* UBI device: ubi0
+* Name: rootfs_data
+* Type: dynamic
+* Size: (maximum available size)
+Executing command '/usr/sbin/ubimkvol /dev/ubi0 --name=rootfs_data --type=dynamic --maxavsize'...
+Set volume size to 40886272
+Volume ID 0, size 322 LEBs (40886272 bytes, 38.9 MiB), LEB size 126976 bytes (124.0 KiB), dynamic, name "rootfs_data", alignment 1
+Executed '/usr/sbin/ubimkvol /dev/ubi0 --name=rootfs_data --type=dynamic --maxavsize' with exit code 0
+Detaching UBI partition /dev/mtd6 (rootfs_data)...
+Executing command '/usr/sbin/ubidetach --mtdn=6'...
+Executed '/usr/sbin/ubidetach --mtdn=6' with exit code 0
+UBI volume created
+
+Writing images to block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mtdblock3
+Image 1:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+Executing command '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mtdblock3'...
+256+0 records in
+256+0 records out
+Executed '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mtdblock3' with exit code 0
+Image 2:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+* Offset: 131072 bytes
+Executing command '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mtdblock3 bs=131072 seek=1'...
+1+0 records in
+1+0 records out
+Executed '/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mtdblock3 bs=131072 seek=1' with exit code 0
+Writed images to block device /dev/mtdblock3
+
+┌────────────────┐
+│                │
+│  Installation  │
+│                │
+└────────────────┘
+
+┌─────────────────────┐
+│                     │
+│  Installing images  │
+│                     │
+└─────────────────────┘
+
+Installing image 1...
+════════════════════════════════════════════════════════════════════════════════
+* Type: swupdate
+* Image source: local
+* Image URL: /mnt/swu_install.swu
+* Extra arguments: --no-bootloader-env
+* Dry run: 1
+* Install: 1
+* Selections: ${SWU_SYSTEM_A_SELECTION} ${SWU_SYSTEM_B_SELECTION}
+* Selections (expanded): tanowrt,system-a tanowrt,system-b
+
+[dry] run for selection 'tanowrt,system-a'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d3-xplained-nand Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubivol
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubipartition
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubiswap
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4598
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-10-00:04:17-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D3 Xplained (NAND)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 1
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-08-10-00:04:17-UTC: tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo in volume : rootfs for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for fitImage-at91-sama5d3-xplained-nand.bin:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 0
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d3-xplained-nand.bin in volume : kernel for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d3-xplained-nand.img in device : /dev/mtdblock2 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d3-xplained-nand.bin-nand in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-nand-pmecc in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d3-xplained-nand Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo, 23994368 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-nand-pmecc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 15484
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d3-xplained-nand.bin-nand
+[TRACE] : SWUPDATE running :  [extract_files] :         size 742928
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d3-xplained-nand.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2237
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d3-xplained-nand.bin
+[TRACE] : SWUPDATE running :  [extract_files] :         size 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d3-xplained-nand.bin, 4619496 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d3-xplained-nand.bin dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-nand-pmecc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d3-xplained-nand.bin-nand dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d3-xplained-nand.img dummy
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-a' [dry] run success
+
+[dry] run for selection 'tanowrt,system-b'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d3-xplained-nand Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubivol
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubipartition
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubiswap
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4598
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-10-00:04:17-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D3 Xplained (NAND)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 1
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-08-10-00:04:17-UTC: tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo in volume : rootfs for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for fitImage-at91-sama5d3-xplained-nand.bin:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 0
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d3-xplained-nand.bin in volume : kernel for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d3-xplained-nand.img in device : /dev/mtdblock2 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d3-xplained-nand.bin-nand in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-nand-pmecc in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d3-xplained-nand Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo, 23994368 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-nand-pmecc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 15484
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d3-xplained-nand.bin-nand
+[TRACE] : SWUPDATE running :  [extract_files] :         size 742928
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d3-xplained-nand.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2237
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d3-xplained-nand.bin
+[TRACE] : SWUPDATE running :  [extract_files] :         size 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d3-xplained-nand.bin, 4619496 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d3-xplained-nand.bin dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-nand-pmecc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d3-xplained-nand.bin-nand dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d3-xplained-nand.img dummy
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-b' [dry] run success
+
+[install] run for selection 'tanowrt,system-a'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d3-xplained-nand Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubivol
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubipartition
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubiswap
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4598
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-10-00:04:17-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D3 Xplained (NAND)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 1
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-08-10-00:04:17-UTC: tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo in volume : rootfs for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for fitImage-at91-sama5d3-xplained-nand.bin:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 0
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d3-xplained-nand.bin in volume : kernel for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d3-xplained-nand.img in device : /dev/mtdblock2 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d3-xplained-nand.bin-nand in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-nand-pmecc in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d3-xplained-nand Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo, 23994368 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo ubivol
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[TRACE] : SWUPDATE running :  [resize_volume] : Created dynamic UBI volume rootfs (id = 1) of 23994368 bytes (old size 23998464)
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[INFO ] : SWUPDATE running :  Installing image tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo into volume /dev/ubi0_1(rootfs)
+[TRACE] : SWUPDATE running :  [update_volume] : Updating UBI : tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-nand-pmecc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 15484
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d3-xplained-nand.bin-nand
+[TRACE] : SWUPDATE running :  [extract_files] :         size 742928
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d3-xplained-nand.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2237
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d3-xplained-nand.bin
+[TRACE] : SWUPDATE running :  [extract_files] :         size 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d3-xplained-nand.bin, 4619496 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d3-xplained-nand.bin ubivol
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[TRACE] : SWUPDATE running :  [resize_volume] : Created dynamic UBI volume kernel (id = 0) of 4619496 bytes (old size 4698112)
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd4] resolved to [/dev/mtd4]
+[INFO ] : SWUPDATE running :  Installing image fitImage-at91-sama5d3-xplained-nand.bin into volume /dev/ubi0_0(kernel)
+[TRACE] : SWUPDATE running :  [update_volume] : Updating UBI : fitImage-at91-sama5d3-xplained-nand.bin 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-nand-pmecc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d3-xplained-nand.bin-nand raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d3-xplained-nand.img raw
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-a' [install] run success
+
+[install] run for selection 'tanowrt,system-b'
+────────────────────────────────────────────────────────────
+Executing command 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env'...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d3-xplained-nand Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubivol
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubipartition
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     ubiswap
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [scan_ubi_volumes] : mtd4:        Volume found :  kernel
+[TRACE] : SWUPDATE running :  [scan_ubi_volumes] : mtd4:        Volume found :  rootfs
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4598
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-10-00:04:17-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D3 Xplained (NAND)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 1
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-08-10-00:04:17-UTC: tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo in volume : rootfs for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [add_properties] : Found properties for fitImage-at91-sama5d3-xplained-nand.bin:
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property volume-id: 0
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property always-remove: true
+[TRACE] : SWUPDATE running :  [add_properties_cb] :             Property auto-resize: true
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d3-xplained-nand.bin in volume : kernel for handler ubivol (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d3-xplained-nand.img in device : /dev/mtdblock2 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d3-xplained-nand.bin-nand in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-nand-pmecc in device : / for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d3-xplained-nand Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo, 23994368 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo ubivol
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[TRACE] : SWUPDATE running :  [resize_volume] : Created dynamic UBI volume rootfs (id = 1) of 23994368 bytes (old size 23998464)
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[INFO ] : SWUPDATE running :  Installing image tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo into volume /dev/ubi1_1(rootfs)
+[TRACE] : SWUPDATE running :  [update_volume] : Updating UBI : tanowrt-image-full-at91-sama5d3-xplained-nand.squashfs-lzo 23994368
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-nand-pmecc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 15484
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d3-xplained-nand.bin-nand
+[TRACE] : SWUPDATE running :  [extract_files] :         size 742928
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d3-xplained-nand.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2237
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d3-xplained-nand.bin
+[TRACE] : SWUPDATE running :  [extract_files] :         size 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d3-xplained-nand.bin, 4619496 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d3-xplained-nand.bin ubivol
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[TRACE] : SWUPDATE running :  [resize_volume] : Created dynamic UBI volume kernel (id = 0) of 4619496 bytes (old size 4698112)
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[TRACE] : SWUPDATE running :  [get_mtd_from_device] : mtd name [mtd5] resolved to [/dev/mtd5]
+[INFO ] : SWUPDATE running :  Installing image fitImage-at91-sama5d3-xplained-nand.bin into volume /dev/ubi1_0(kernel)
+[TRACE] : SWUPDATE running :  [update_volume] : Updating UBI : fitImage-at91-sama5d3-xplained-nand.bin 4619496
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-nand-pmecc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d3-xplained-nand.bin-nand raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d3-xplained-nand.img raw
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed 'SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env' with exit code 0
+Selection 'tanowrt,system-b' [install] run success
+
+┌─────────────────────┐
+│                     │
+│  Post-installation  │
+│                     │
+└─────────────────────┘
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_active 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_active 0'...
+Executed 'fw_setenv swu_active 0' with exit code 0
+
+Command 2
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_upgrade_available 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_upgrade_available 0'...
+Executed 'fw_setenv swu_upgrade_available 0' with exit code 0
+
+Command 3
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_bootcount 0
+* Required exit code : 0
+Executing command 'fw_setenv swu_bootcount 0'...
+Executed 'fw_setenv swu_bootcount 0' with exit code 0
+
+┌────────────────────────────────────────────────┐
+│                                                │
+│  SUCCESS: Installation successfully completed  │
+│                                                │
+└────────────────────────────────────────────────┘
+
+Powering off in 5 seconds...
+Powering off in 4 seconds...
+Powering off in 3 seconds...
+Powering off in 2 seconds...
+Powering off in 1 seconds...
+Powering off now...
+[   67.677959] reboot: Power down

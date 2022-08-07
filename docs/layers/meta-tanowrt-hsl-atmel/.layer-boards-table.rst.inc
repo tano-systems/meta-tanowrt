@@ -9,12 +9,16 @@
    | :ref:`machine-at91-sama5d2-xplained`              || **Model:** |ATSAMA5D27-M|     | 512 MiB DDR3L      | 4.19.78        | 4 GB eMMC          | |at91-sama5d2-xplained-emmc.yml| |
    |                                                   || **Cores:** |ATSAMA5D27-C|     |                    | (non-RT)       +--------------------+----------------------------------+
    |                                                   || **Frequency:** |ATSAMA5D27-F| |                    |                | SD card            | |at91-sama5d2-xplained-sd.yml|   |
-   +---------------------------------------------------+--------------------------------+--------------------+----------------+--------------------+----------------------------------+
-   | :ref:`machine-evb-ksz9477`                        || **Model:** |ATSAMA5D36-M|     | 256 MiB DDR2       | 4.19.78        | 256 MB NAND        | |evb-ksz9477-nand.yml|           |
-   |                                                   || **Cores:** |ATSAMA5D36-C|     |                    | (non-RT)       +--------------------+----------------------------------+
-   |                                                   || **Frequency:** |ATSAMA5D36-F| |                    |                | SD card            | |evb-ksz9477-sd.yml|             |
-   +---------------------------------------------------+                                |                    |                +--------------------+----------------------------------+
-   | :ref:`machine-evb-ksz9563`                        |                                |                    |                | 256 MB NAND        | |evb-ksz9563-nand.yml|           |
+   +---------------------------------------------------+--------------------------------+--------------------+                +--------------------+----------------------------------+
+   | :ref:`machine-at91-sama5d3-xplained`              || **Model:** |ATSAMA5D36-M|     | 256 MiB DDR2       |                | 256 MB NAND        | |at91-sama5d3-xplained-nand.yml| |
+   |                                                   || **Cores:** |ATSAMA5D36-C|     |                    |                +--------------------+----------------------------------+
+   |                                                   || **Frequency:** |ATSAMA5D36-F| |                    |                | SD card            | |at91-sama5d3-xplained-sd.yml|   |
+   +---------------------------------------------------+                                +--------------------+                +--------------------+----------------------------------+
+   | :ref:`machine-evb-ksz9477`                        |                                | 256 MiB DDR2       |                | 256 MB NAND        | |evb-ksz9477-nand.yml|           |
+   |                                                   |                                |                    |                +--------------------+----------------------------------+
+   |                                                   |                                |                    |                | SD card            | |evb-ksz9477-sd.yml|             |
+   +---------------------------------------------------+                                +--------------------+                +--------------------+----------------------------------+
+   | :ref:`machine-evb-ksz9563`                        |                                | 256 MiB DDR2       |                | 256 MB NAND        | |evb-ksz9563-nand.yml|           |
    |                                                   |                                |                    |                +--------------------+----------------------------------+
    |                                                   |                                |                    |                | SD card            | |evb-ksz9563-sd.yml|             |
    +---------------------------------------------------+--------------------------------+--------------------+----------------+--------------------+----------------------------------+
@@ -25,6 +29,8 @@
 
 .. |at91-sama5d2-xplained-emmc.yml|  replace:: :tanowrt_github_blob:`at91-sama5d2-xplained-emmc.yml </kas/targets/at91-sama5d2-xplained-emmc.yml>`
 .. |at91-sama5d2-xplained-sd.yml|  replace:: :tanowrt_github_blob:`at91-sama5d2-xplained-sd.yml </kas/targets/at91-sama5d2-xplained-sd.yml>`
+.. |at91-sama5d3-xplained-nand.yml|  replace:: :tanowrt_github_blob:`at91-sama5d3-xplained-nand.yml </kas/targets/at91-sama5d3-xplained-nand.yml>`
+.. |at91-sama5d3-xplained-sd.yml|  replace:: :tanowrt_github_blob:`at91-sama5d3-xplained-sd.yml </kas/targets/at91-sama5d3-xplained-sd.yml>`
 
 .. |ATSAMA5D36-M| replace:: Microchip (Atmel) ATSAMA5D36
 .. |ATSAMA5D36-C| replace:: 1 x ARM Cortex-A5 processor-based MPU
