@@ -6,9 +6,9 @@
    | Board                       | SoC                         | RAM        | Kernel Version | Storage(s)         | Target YAML                      |
    |                             |                             |            |                |                    | (at :file:`kas/targets`)         |
    +=============================+=============================+============+================+====================+==================================+
-   | :ref:`machine-rpi3`         || **Model:** |BCM2837-M|     | *TODO*     | 5.10.31        | microSD card       | |rpi3-sd.yml|                    |
-   |                             || **Cores:** |BCM2837-C|     |            | (non-RT)       |                    |                                  |
-   |                             || **Frequency:** |BCM2837-F| |            |                |                    |                                  |
+   | :ref:`machine-rpi3`         || **Model:** |BCM2837-M|     | 1 GiB      | 5.10.31        | microSD card       | |rpi3-sd.yml|                    |
+   |                             || **Cores:** |BCM2837-C|     | LPDDR2     | (non-RT)       |                    |                                  |
+   |                             || **Frequency:** |BCM2837-F| | SDRAM      |                |                    |                                  |
    +-----------------------------+-----------------------------+------------+----------------+--------------------+----------------------------------+
 
 .. |BCM2837-M| replace:: Broadcom BCM2837/BCM2837B0
