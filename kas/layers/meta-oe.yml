@@ -9,6 +9,6 @@ header:
 repos:
   meta-openembedded:
     url: http://git.openembedded.org/meta-openembedded
-    refspec: 23598caeafce0af0dde8d1339cf5edff021f6823
+    refspec: 786d3aa313e31a718acc9611ba3adb60573ec458
     layers:
       meta-oe:
