@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2 EVB-KSZ9563 on SAMA5D3 EDS &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+  <title>4 Microchip EVB-KSZ9563 on SAMA5D3 EDS &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Baikal Electronics SoC’s Hardware Support Layer (meta-tanowrt-hsl-baikal)" href="../../../meta-tanowrt-hsl-baikal/index.html" />
-    <link rel="prev" title="1 EVB-KSZ9477" href="../evb-ksz9477/index.html" /> 
+    <link rel="prev" title="3 Microchip EVB-KSZ9477" href="../evb-ksz9477/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -67,49 +67,51 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Microchip (Atmel)</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9477/index.html">1 EVB-KSZ9477</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">2 EVB-KSZ9563 on SAMA5D3 EDS</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#board-overview">2.1 Board Overview</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#block-diagram">2.1.1 Block Diagram</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#photos">2.1.2 Photos</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#specification">2.1.3 Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../at91-sama5d2-xplained/index.html">1 Atmel SAMA5D2 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../at91-sama5d3-xplained/index.html">2 Atmel SAMA5D3 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9477/index.html">3 Microchip EVB-KSZ9477</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4 Microchip EVB-KSZ9563 on SAMA5D3 EDS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#board-overview">4.1 Board Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#block-diagram">4.1.1 Block Diagram</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#photos">4.1.2 Photos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#specification">4.1.3 Specification</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#build-targets">2.2 Build Targets</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#machines">2.2.1 Machines</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#images">2.2.2 Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-targets">4.2 Build Targets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#machines">4.2.1 Machines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#images">4.2.2 Images</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#build">2.3 Build</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#examples">2.3.1 Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build">4.3 Build</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#examples">4.3.1 Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">2.4 Partitioning Layouts</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#sd-card">2.4.1 SD Card</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#nand">2.4.2 NAND</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#partitioning-layouts">4.4 Partitioning Layouts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#sd-card">4.4.1 SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#nand">4.4.2 NAND</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">2.5 Produced Build Artifacts</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-evb-ksz9563-sd-yml-target">2.5.1 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> Target</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-evb-ksz9563-nand-yml-target">2.5.2 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> Target</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#produced-build-artifacts">4.5 Produced Build Artifacts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-evb-ksz9563-sd-yml-target">4.5.1 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> Target</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#build-artifacts-listings-for-evb-ksz9563-nand-yml-target">4.5.2 Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> Target</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#writing-images">2.6 Writing Images</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-sd-card">2.6.1 Writing Image to SD Card</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-nand-flash">2.6.2 Writing Image to NAND Flash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-images">4.6 Writing Images</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-sd-card">4.6.1 Writing Image to SD Card</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#writing-image-to-nand-flash">4.6.2 Writing Image to NAND Flash</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">2.7 Booting and Running</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#configuring-boot-mode">2.7.1 Configuring Boot Mode</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#hardware-configuration">2.7.2 Hardware Configuration</a></li>
-<li class="toctree-l5"><a class="reference internal" href="#booting-from-sd-card">2.7.3 Booting from SD Card</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booting-and-running">4.7 Booting and Running</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#configuring-boot-mode">4.7.1 Configuring Boot Mode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#hardware-configuration">4.7.2 Hardware Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#booting-from-sd-card">4.7.3 Booting from SD Card</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#serial-console">2.8 Serial Console</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">2.9 Default Network Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">2.10 Web User Interface</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">2.11 Firmware Upgrade</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#references">2.12 References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-console">4.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-network-configuration">4.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-user-interface">4.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-upgrade">4.11 Firmware Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">4.12 References</a></li>
 </ul>
 </li>
 </ul>
@@ -157,7 +159,7 @@
     
       <li><a href="../../index.html">Microchip (Atmel) Hardware Support Layer (meta-tanowrt-hsl-atmel)</a> &raquo;</li>
     
-    <li><span class="section-number">2 </span>EVB-KSZ9563 on SAMA5D3 EDS</li>
+    <li><span class="section-number">4 </span>Microchip EVB-KSZ9563 on SAMA5D3 EDS</li>
 
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/layers/meta-tanowrt-hsl-atmel/boards/evb-ksz9563/index.rst.txt" rel="nofollow"> View page source</a>
@@ -168,8 +170,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="evb-ksz9563-on-sama5d3-eds">
-<span id="machine-evb-ksz9563"></span><h1><span class="section-number">2 </span>EVB-KSZ9563 on SAMA5D3 EDS<a class="headerlink" href="#evb-ksz9563-on-sama5d3-eds" title="Permalink to this heading"></a></h1>
+  <section id="microchip-evb-ksz9563-on-sama5d3-eds">
+<span id="machine-evb-ksz9563"></span><h1><span class="section-number">4 </span>Microchip EVB-KSZ9563 on SAMA5D3 EDS<a class="headerlink" href="#microchip-evb-ksz9563-on-sama5d3-eds" title="Permalink to this heading"></a></h1>
 <p>KSZ9563 Plug-in Evaluation Board (EVB-KSZ9563) on SAMA5D3 Ethernet Development System (DM320114)</p>
 <p class="rubric">Contents</p>
 <div class="contents local topic" id="contents">
@@ -189,7 +191,7 @@
 </ul>
 </div>
 <section id="board-overview">
-<span id="sec-evb-ksz9563-board"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">2.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-board"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">4.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
 <p>The EVB-KSZ9563 Evaluation Board is a plug-in card that interfaces directly with a mating
 Microchip host processor or controller board, such as the SAMA5D3 Ethernet Development
 System Board. It features the KSZ9563, a highly integrated networking device that incorporates
@@ -209,53 +211,53 @@ no Ethernet capabilities when no daughter board is connected.</p>
 <figure class="align-default" id="id15">
 <span id="fig-evb-ksz9563"></span><a class="with-border reference internal image-reference" href="../../../../_images/evb-ksz9563.jpg"><img alt="../../../../_images/evb-ksz9563.jpg" class="with-border" src="../../../../_images/evb-ksz9563.jpg" style="width: 1000px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.3 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Interfaces and Connectors</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Interfaces and Connectors</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <section id="block-diagram">
-<h3><span class="section-number">2.1.1 </span>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.1.1 </span>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this heading"></a></h3>
 <div class="flex docutils container">
 <figure class="align-default" id="id16">
 <span id="fig-evb-ksz9563-block-diagram"></span><a class="with-border reference internal image-reference" href="../../../../_images/evb-ksz9563-block-diagram.png"><img alt="../../../../_images/evb-ksz9563-block-diagram.png" class="with-border" src="../../../../_images/evb-ksz9563-block-diagram.png" style="width: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.4 </span><span class="caption-text">EVB-KSZ9563 Block Diagram</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">EVB-KSZ9563 Block Diagram</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="id17">
 <span id="fig-sama5d3-eds-block-diagram"></span><a class="with-border reference internal image-reference" href="../../../../_images/sama5d3-eds-block-diagram.png"><img alt="../../../../_images/sama5d3-eds-block-diagram.png" class="with-border" src="../../../../_images/sama5d3-eds-block-diagram.png" style="width: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.5 </span><span class="caption-text">SAMA5D3 EDS Block Diagram</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.3 </span><span class="caption-text">SAMA5D3 EDS Block Diagram</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="photos">
-<h3><span class="section-number">2.1.2 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.1.2 </span>Photos<a class="headerlink" href="#photos" title="Permalink to this heading"></a></h3>
 <div class="flex docutils container">
 <figure class="align-default" id="id18">
 <span id="fig-evb-ksz9563-top"></span><a class="with-border reference internal image-reference" href="../../../../_images/evb-ksz9563-top.jpg"><img alt="../../../../_images/evb-ksz9563-top.jpg" class="with-border" src="../../../../_images/evb-ksz9563-top.jpg" style="width: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.6 </span><span class="caption-text">EVB-KSZ9563 Top View</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.4 </span><span class="caption-text">EVB-KSZ9563 Top View</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="id19">
 <span id="fig-evb-ksz9563-bottom"></span><a class="with-border reference internal image-reference" href="../../../../_images/evb-ksz9563-bottom.jpg"><img alt="../../../../_images/evb-ksz9563-bottom.jpg" class="with-border" src="../../../../_images/evb-ksz9563-bottom.jpg" style="width: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">EVB-KSZ9563 Bottom View</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.5 </span><span class="caption-text">EVB-KSZ9563 Bottom View</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="id20">
 <span id="fig-sama5d3-eds-angled"></span><a class="with-border reference internal image-reference" href="../../../../_images/sama5d3-eds-angled.jpg"><img alt="../../../../_images/sama5d3-eds-angled.jpg" class="with-border" src="../../../../_images/sama5d3-eds-angled.jpg" style="width: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">SAMA5D3 EDS Angled View</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.6 </span><span class="caption-text">SAMA5D3 EDS Angled View</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="specification">
-<h3><span class="section-number">2.1.3 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.1.3 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default" id="id21">
-<caption><span class="caption-number">Table 2.4 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Specification</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 4.1 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Specification</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 85%" />
@@ -344,11 +346,11 @@ Interface</p></td>
 </section>
 </section>
 <section id="build-targets">
-<span id="sec-evb-ksz9563-targets"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">2.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-targets"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">4.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
 <section id="machines">
-<span id="sec-evb-ksz9563-machines"></span><h3><span class="section-number">2.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
+<span id="sec-evb-ksz9563-machines"></span><h3><span class="section-number">4.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
 <span id="table-evb-ksz9563-machines"></span><table class="docutils align-default" id="id22">
-<caption><span class="caption-number">Table 2.5 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 4.2 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 11%" />
 <col style="width: 19%" />
@@ -394,10 +396,10 @@ SAMA5D3 EDS</p></td>
 <dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
 </dd>
 <dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-evb-ksz9563-images"><span class="std std-numref">Section 2.2.2</span></a>,
+<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-evb-ksz9563-images"><span class="std std-numref">Section 4.2.2</span></a>,
 you can find list of supported recipes for the target images, which you can build in addition
 to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
-(see <a class="reference internal" href="#sec-evb-ksz9563-build"><span class="std std-numref">Section 2.3</span></a>).</p>
+(see <a class="reference internal" href="#sec-evb-ksz9563-build"><span class="std std-numref">Section 4.3</span></a>).</p>
 </dd>
 <dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
 <dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
@@ -409,9 +411,9 @@ the Installation Media, the TanoWrt system is installed on the Running Media sto
 </dl>
 </section>
 <section id="images">
-<span id="sec-evb-ksz9563-images"></span><h3><span class="section-number">2.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
+<span id="sec-evb-ksz9563-images"></span><h3><span class="section-number">4.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
 <span id="table-evb-ksz9563-images"></span><table class="colwidths-given docutils align-default" id="id23">
-<caption><span class="caption-number">Table 2.6 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id23" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 4.3 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id23" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 15%" />
@@ -453,28 +455,28 @@ as dependencies.</p></td>
 <dl class="footnote brackets">
 <dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
 <dd><p>Image recipe name. This name can be used as argument
-for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-evb-ksz9563-build"><span class="std std-numref">Section 2.3</span></a> section).</p>
+for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-evb-ksz9563-build"><span class="std std-numref">Section 4.3</span></a> section).</p>
 </dd>
 </dl>
 </section>
 </section>
 <section id="build">
-<span id="sec-evb-ksz9563-build"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">2.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-build"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">4.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>Please read the common information on how to perform a TanoWrt
 images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-machines"><span class="std std-numref">Section 2.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
-<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-images"><span class="std std-numref">Section 2.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
-<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-artifacts"><span class="std std-numref">Section 2.5</span></a> for detailed information
+<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-machines"><span class="std std-numref">Section 4.2.1</span></a> to select the required target YAML file (<code class="docutils literal notranslate"><span class="pre">&lt;target-yml&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-images"><span class="std std-numref">Section 4.2.2</span></a> to select the required root filesystem image recipe (<code class="docutils literal notranslate"><span class="pre">&lt;target-recipe&gt;</span></code>).</p></li>
+<li><p>See section <a class="reference internal" href="#sec-evb-ksz9563-artifacts"><span class="std std-numref">Section 4.5</span></a> for detailed information
 about the produced build artifacts.</p></li>
 </ul>
 </div>
 <section id="examples">
-<h3><span class="section-number">2.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <section id="build-default-images-for-evb-ksz9563-on-sama5d3-eds-board">
-<h4><span class="section-number">2.3.1.1 </span>Build Default Images for EVB-KSZ9563 on SAMA5D3 EDS Board<a class="headerlink" href="#build-default-images-for-evb-ksz9563-on-sama5d3-eds-board" title="Permalink to this heading"></a></h4>
+<h4><span class="section-number">4.3.1.1 </span>Build Default Images for EVB-KSZ9563 on SAMA5D3 EDS Board<a class="headerlink" href="#build-default-images-for-evb-ksz9563-on-sama5d3-eds-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/evb-ksz9563-sd.yml
 </pre></div>
@@ -494,36 +496,36 @@ and run from the NAND flash memory.</p>
 </section>
 </section>
 <section id="partitioning-layouts">
-<span id="sec-evb-ksz9563-partitioning"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">2.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-partitioning"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">4.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
 <section id="sd-card">
-<h3><span class="section-number">2.4.1 </span>SD Card<a class="headerlink" href="#sd-card" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.4.1 </span>SD Card<a class="headerlink" href="#sd-card" title="Permalink to this heading"></a></h3>
 <p>The partitioning and data layout of the SD card image for the EVB-KSZ9563 on SAMA5D3 EDS board
 are shown in the figure below.</p>
 <figure class="align-default" id="id24">
 <span id="fig-evb-ksz9563-layout-sd"></span><a class="reference internal image-reference" href="../../../../_images/evb-ksz9563-layout-sd.svg"><img alt="../../../../_images/evb-ksz9563-layout-sd.svg" src="../../../../_images/evb-ksz9563-layout-sd.svg" width="1000" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for SD Card</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.7 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for SD Card</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="nand">
-<h3><span class="section-number">2.4.2 </span>NAND<a class="headerlink" href="#nand" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.4.2 </span>NAND<a class="headerlink" href="#nand" title="Permalink to this heading"></a></h3>
 <p>The partitioning and data layout of the NAND image for the EVB-KSZ9563 on SAMA5D3 EDS board
 are shown in the figure below.</p>
 <figure class="align-default" id="id25">
 <span id="fig-evb-ksz9563-layout-nand"></span><a class="reference internal image-reference" href="../../../../_images/evb-ksz9563-layout-nand.svg"><img alt="../../../../_images/evb-ksz9563-layout-nand.svg" src="../../../../_images/evb-ksz9563-layout-nand.svg" width="1000" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for NAND</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.8 </span><span class="caption-text">EVB-KSZ9563 on SAMA5D3 EDS Partitions Layout for NAND</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 </section>
 <section id="produced-build-artifacts">
-<span id="sec-evb-ksz9563-artifacts"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">2.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-artifacts"></span><h2><a class="toc-backref" href="#id33"><span class="section-number">4.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
 <p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
 Refer to table <a class="reference internal" href="#table-evb-ksz9563-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
 <span id="table-evb-ksz9563-artifacts"></span><table class="colwidths-given docutils align-default" id="id26">
-<caption><span class="caption-number">Table 2.7 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id26" title="Permalink to this table"></a></caption>
+<caption><span class="caption-number">Table 4.4 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id26" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 15%" />
@@ -638,7 +640,7 @@ the actual read-only root filesystem <a class="reference internal" href="#sec-ev
 and <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> target builds. There are two types of listings here —
 a complete listing, and a reduced listing without the symbolic links display.</p>
 <section id="build-artifacts-listings-for-evb-ksz9563-sd-yml-target">
-<h3><span class="section-number">2.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-sd-yml-target" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-sd-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
 <span class="go">total 135M</span>
@@ -725,7 +727,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 </div></div>
 </section>
 <section id="build-artifacts-listings-for-evb-ksz9563-nand-yml-target">
-<h3><span class="section-number">2.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-nand-yml-target" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-nand-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-nand]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
 <span class="go">total 123M</span>
@@ -845,9 +847,9 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 </section>
 </section>
 <section id="writing-images">
-<span id="sec-evb-ksz9563-flash"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">2.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-flash"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">4.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
 <section id="writing-image-to-sd-card">
-<span id="sec-evb-ksz9563-flash-sd"></span><h3><span class="section-number">2.6.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
+<span id="sec-evb-ksz9563-flash-sd"></span><h3><span class="section-number">4.6.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
 <p>No special information about writing images to SD card
 for EVB-KSZ9563 on SAMA5D3 EDS board. See common instructions in <a class="reference internal" href="../../../../common-tasks.html#sec-writing-sd-or-usb"><span class="std std-ref">Writing Images to SD Card or USB Flash Drive</span></a> section.</p>
 <p class="rubric">Examples</p>
@@ -863,7 +865,7 @@ card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcb
 </div>
 </section>
 <section id="writing-image-to-nand-flash">
-<span id="sec-evb-ksz9563-flash-emmc"></span><h3><span class="section-number">2.6.2 </span>Writing Image to NAND Flash<a class="headerlink" href="#writing-image-to-nand-flash" title="Permalink to this heading"></a></h3>
+<span id="sec-evb-ksz9563-flash-emmc"></span><h3><span class="section-number">4.6.2 </span>Writing Image to NAND Flash<a class="headerlink" href="#writing-image-to-nand-flash" title="Permalink to this heading"></a></h3>
 <p>For the initial flashing of the internal NAND memory it is recommended to use
 the special image of the initial factory installation. If you choose a build target
 (see <a class="reference internal" href="#sec-evb-ksz9563-targets"><span class="std std-ref">Build Targets</span></a> for details) that assumes using the
@@ -887,20 +889,20 @@ flash memory will be permanently lost.</p>
 </section>
 </section>
 <section id="booting-and-running">
-<span id="sec-evb-ksz9563-booting"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">2.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-booting"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">4.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <section id="configuring-boot-mode">
-<h3><span class="section-number">2.7.1 </span>Configuring Boot Mode<a class="headerlink" href="#configuring-boot-mode" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.7.1 </span>Configuring Boot Mode<a class="headerlink" href="#configuring-boot-mode" title="Permalink to this heading"></a></h3>
 <p>The SAMA5D3 Ethernet Development System board does not have any switches or jumpers for
 selecting the boot source. By default, booting is performed from the SD card. If booting
 from an SD card fails, NAND flash memory is used for booting.</p>
 </section>
 <section id="hardware-configuration">
-<h3><span class="section-number">2.7.2 </span>Hardware Configuration<a class="headerlink" href="#hardware-configuration" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.7.2 </span>Hardware Configuration<a class="headerlink" href="#hardware-configuration" title="Permalink to this heading"></a></h3>
 <p>Ensure that the J20 (NAND Enable) jumper on SAMA5D3 EDS board is shorted (this is needed
 for installing and running the TanoWrt from the internal NAND flash memory).</p>
 </section>
 <section id="booting-from-sd-card">
-<h3><span class="section-number">2.7.3 </span>Booting from SD Card<a class="headerlink" href="#booting-from-sd-card" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.7.3 </span>Booting from SD Card<a class="headerlink" href="#booting-from-sd-card" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Insert the SD card into the slot on the SAMA5D3 EDS board (power is off).</p></li>
 <li><p>Power on board.</p></li>
@@ -910,7 +912,7 @@ for installing and running the TanoWrt from the internal NAND flash memory).</p>
 </section>
 </section>
 <section id="serial-console">
-<span id="sec-evb-ksz9563-serial"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">2.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-serial"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">4.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
 <p>Serial console on SAMA5D3 EDS board are available through 6-pin
 serial communication header J10.
 Connect the USB to TTL serial cable as described below.
@@ -947,7 +949,7 @@ connect only TX, RX and GND wires.</p>
 </tr>
 </tbody>
 </table>
-<p>See <a class="reference internal" href="#fig-evb-ksz9563"><span class="std std-numref">Fig. 2.3</span></a> for example
+<p>See <a class="reference internal" href="#fig-evb-ksz9563"><span class="std std-numref">Fig. 4.1</span></a> for example
 connection USB to TTL converter with SAMA5D3 EDS board.</p>
 <p>The default serial console settings for SAMA5D3 EDS for U-Boot and kernel
 are described in the table below.</p>
@@ -981,7 +983,7 @@ are described in the table below.</p>
 </table>
 </section>
 <section id="default-network-configuration">
-<span id="sec-evb-ksz9563-network-config"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">2.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-network-config"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">4.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
 <p>By default, network ports 1 and 2 are joined into a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface)
 with the <a class="reference internal" href="../../../../glossary.html#term-RSTP"><span class="xref std std-term">RSTP</span></a> protocol enabled. Bridge <code class="docutils literal notranslate"><span class="pre">br-lan</span></code> is in the LAN firewall zone.
 By default, the <code class="docutils literal notranslate"><span class="pre">br-lan</span></code> bridge is configured with static IP address
@@ -993,25 +995,25 @@ enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"
 <p>Ethernet ports 1 and 2 have enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> for Rx and Tx state by default.</p>
 </section>
 <section id="web-user-interface">
-<span id="sec-evb-ksz9563-webui"></span><h2><a class="toc-backref" href="#id38"><span class="section-number">2.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-webui"></span><h2><a class="toc-backref" href="#id38"><span class="section-number">4.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
 <p>The WebUI can be accessed via any Ethernet port bridged to LAN network
 (1 or 2) or via USB RNDIS connection through HTTP(s) protocol.
 You must see something like this in browser:</p>
 <figure class="align-default" id="id27">
 <span id="fig-evb-ksz9563-luci-login"></span><a class="reference internal image-reference" href="../../../../_images/page-login.png"><img alt="../../../../_images/page-login.png" src="../../../../_images/page-login.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.9 </span><span class="caption-text">LuCI WebUI Login Page</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="id28">
 <span id="fig-evb-ksz9563-luci-status"></span><a class="reference internal image-reference" href="../../../../_images/evb-ksz9563-luci-status.png"><img alt="../../../../_images/evb-ksz9563-luci-status.png" src="../../../../_images/evb-ksz9563-luci-status.png" style="width: 900px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4.10 </span><span class="caption-text">LuCI WebUI Overview Page</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="firmware-upgrade">
-<span id="sec-evb-ksz9563-upgrade"></span><h2><a class="toc-backref" href="#id39"><span class="section-number">2.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<span id="sec-evb-ksz9563-upgrade"></span><h2><a class="toc-backref" href="#id39"><span class="section-number">4.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
 <p>No special information about firmware upgrade.
 Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-evb-ksz9563-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
 <div class="admonition seealso">
@@ -1020,7 +1022,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
 </div>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id40"><span class="section-number">2.12 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id40"><span class="section-number">4.12 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.microchip.com/developmenttools/ProductDetails/PartNO/EVB-KSZ9563">KSZ9563 Plug-in Evaluation Board (EVB-KSZ9563)</a></p></li>
 <li><p><a class="reference external" href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320114">SAMA5D3 Ethernet Development System (DM320114)</a></p></li>
@@ -1035,7 +1037,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 04.08.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 10.08.2022
     </p>
   </div>
 </footer>

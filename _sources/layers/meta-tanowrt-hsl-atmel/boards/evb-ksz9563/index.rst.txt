@@ -2,9 +2,9 @@
 
 .. _machine-evb-ksz9563:
 
-**************************
-EVB-KSZ9563 on SAMA5D3 EDS
-**************************
+************************************
+Microchip EVB-KSZ9563 on SAMA5D3 EDS
+************************************
 
 KSZ9563 Plug-in Evaluation Board (EVB-KSZ9563) on SAMA5D3 Ethernet Development System (DM320114)
 

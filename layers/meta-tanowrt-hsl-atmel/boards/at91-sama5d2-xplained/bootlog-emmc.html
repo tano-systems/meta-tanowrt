@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.12.2 SAMA5D2 Xplained Boot from internal eMMC Log &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="1.12.3 SAMA5D2 Xplained Boot from SD Card Log" href="bootlog-sd.html" />
+    <link rel="prev" title="1.12.1 SAMA5D2 Xplained Factory Installation to eMMC Log" href="factory-installation-to-emmc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Microchip (Atmel)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">1 Atmel SAMA5D2 Xplained</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html#board-overview">1.1 Board Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build-targets">1.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build">1.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#partitioning-layouts">1.4 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#produced-build-artifacts">1.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#writing-images">1.6 Writing Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#booting-and-running">1.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#serial-console">1.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#default-network-configuration">1.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#web-user-interface">1.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#firmware-upgrade">1.11 Firmware Upgrade</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">1.12 Additional Information</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="factory-installation-to-emmc.html">1.12.1 SAMA5D2 Xplained Factory Installation to eMMC Log</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">1.12.2 SAMA5D2 Xplained Boot from internal eMMC Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bootlog-sd.html">1.12.3 SAMA5D2 Xplained Boot from SD Card Log</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#references">1.13 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../at91-sama5d3-xplained/index.html">2 Atmel SAMA5D3 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9477/index.html">3 Microchip EVB-KSZ9477</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9563/index.html">4 Microchip EVB-KSZ9563 on SAMA5D3 EDS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Microchip (Atmel) Hardware Support Layer (meta-tanowrt-hsl-atmel)</a> &raquo;</li>
+    
+      <li><a href="index.html"><span class="section-number">1 </span>Atmel SAMA5D2 Xplained</a> &raquo;</li>
+    
+    <li><span class="section-number">1.12.2 </span>SAMA5D2 Xplained Boot from internal eMMC Log</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-atmel/boards/at91-sama5d2-xplained/bootlog-emmc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sama5d2-xplained-boot-from-internal-emmc-log">
+<h1><span class="section-number">1.12.2 </span>SAMA5D2 Xplained Boot from internal eMMC Log<a class="headerlink" href="#sama5d2-xplained-boot-from-internal-emmc-log" title="Permalink to this heading"></a></h1>
+<p>TanoWrt boot log from internal eMMC flash.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RomBOOT
+
+
+AT91Bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1 (2022-08-06 00:11:07)
+
+EEPROM: Loading AT24xx information ...
+EEPROM: BoardName | [Revid] | VendorName
+
+EEPROM: Using default information
+
+EEPROM: Board sn: 0xd300000 revision: 0x248000
+
+SD/MMC: Image: Read file u-boot.bin to 0x26f00000
+MMC: ADMA supported
+MMC: Specification Version 4.0 or higher
+MMC: v5.0/5.01 detected
+MMC: highspeed supported
+MMC: Dual Data Rate supported
+MMC: detecting buswidth...
+MMC: 8-bit bus width detected
+SD/MMC: Done to load image
+&lt;debug_uart&gt;
+
+U-Boot 2020.01-gitAUTOINC+af59b26c22-tano0.2 (Aug 06 2022 - 02:08:09 +0000)
+
+CPU: SAMA5D27-CU
+Crystal frequency:       12 MHz
+CPU clock        :      498 MHz
+Master clock     :      166 MHz
+DRAM:  512 MiB
+MMC:   sdio-host@a0000000: 0, sdio-host@b0000000: 1
+Loading Environment from MMC... OK
+In:    serial@f8020000
+Out:   serial@f8020000
+Err:   serial@f8020000
+Net:
+Warning: ethernet@f8008000 MAC addresses don&#39;t match:
+Address in ROM is          00:10:a1:98:97:02
+Address in environment is  fc:c2:3d:02:f4:39
+eth0: ethernet@f8008000
+Hit any key to stop autoboot:  0
+switch to partitions #0, OK
+mmc0(part 0) is current device
+
+MMC read: dev # 0, block # 512, count 256 ... 256 blocks read: OK
+## Executing script at 21000000
+Board name: sama5d2_xplained
+Active system A
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc0(part 0) is current device
+4614332 bytes read in 274 ms (16.1 MiB/s)
+Booting kernel 0x24000000#conf-at91-sama5d2_xplained.dtb...
+## Loading kernel from FIT Image at 24000000 ...
+   Using &#39;conf-at91-sama5d2_xplained.dtb&#39; configuration
+   Trying &#39;kernel-1&#39; kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0x24000118
+     Data Size:    4567560 Bytes = 4.4 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x22000000
+     Entry Point:  0x22000000
+     Hash algo:    sha256
+     Hash value:   250ea354a19a928c5d40456071b49ca3c972373a34f04987ba277c8c63a09ba1
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at 24000000 ...
+   Using &#39;conf-at91-sama5d2_xplained.dtb&#39; configuration
+   Trying &#39;fdt-at91-sama5d2_xplained.dtb&#39; fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x2445b438
+     Data Size:    44779 Bytes = 43.7 KiB
+     Architecture: ARM
+     Load Address: 0x23e00000
+     Hash algo:    sha256
+     Hash value:   7afaaebdd0b2fe3b98ef4b716d5b279dfcfd9a928c4bc0874bd95c67fd05ce0c
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x2445b438 to 0x23e00000
+   Booting using the fdt blob at 0x23e00000
+   Loading Kernel Image
+   Loading Device Tree to 3fb6e000, end 3fb7beea ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 (oe-user@oe-host) (gcc version 10.3.0 (GCC)) #1 Fri Aug 5 23:46:16 UTC 2022
+[    0.000000] CPU: ARMv7 Processor [410fc051] revision 1 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Atmel SAMA5D2 Xplained
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] cma: Reserved 16 MiB at 0x3e800000
+[    0.000000] CPU: All CPU(s) started in SVC mode.
+[    0.000000] random: get_random_bytes called from 0xc0a008e8 with crng_init=0
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 129920
+[    0.000000] Kernel command line: console=ttyS0,115200n8  root=/dev/mmcblk0p3 ro rootfstype=squashfs rootwait rootfs_partition=3 rootfs_volume=3 earlyprintk panic=15
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 491972K/524288K available (7168K kernel code, 272K rwdata, 1296K rodata, 1024K init, 169K bss, 15932K reserved, 16384K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xe0800000 - 0xff800000   ( 496 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[    0.000000]     modules : 0xbf000000 - 0xc0000000   (  16 MB)
+[    0.000000]       .text : 0x(ptrval) - 0x(ptrval)   (8160 kB)
+[    0.000000]       .init : 0x(ptrval) - 0x(ptrval)   (1024 kB)
+[    0.000000]       .data : 0x(ptrval) - 0x(ptrval)   ( 273 kB)
+[    0.000000]        .bss : 0x(ptrval) - 0x(ptrval)   ( 170 kB)
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] L2C-310 ID prefetch enabled, offset 2 lines
+[    0.000000] L2C-310 dynamic clock gating enabled, standby mode enabled
+[    0.000000] L2C-310 cache controller enabled, 8 ways, 128 kB
+[    0.000000] L2C-310: CACHE_ID 0x410000c9, AUX_CTRL 0x36020000
+[    0.000000] clocksource: timer@f800c000: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 184217874325 ns
+[    0.000019] sched_clock: 32 bits at 10MHz, resolution 96ns, wraps every 206986376143ns
+[    0.000046] Switching to timer-based delay loop, resolution 96ns
+[    0.000361] clocksource: pit: mask: 0x7ffffff max_cycles: 0x7ffffff, max_idle_ns: 11513617062 ns
+[    0.000985] Console: colour dummy device 80x30
+[    0.001065] Calibrating delay loop (skipped), value calculated using timer frequency.. 20.75 BogoMIPS (lpj=103750)
+[    0.001097] pid_max: default: 32768 minimum: 301
+[    0.001424] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.001460] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.002830] CPU: Testing write buffer coherency: ok
+[    0.004193] Setting up static identity map for 0x20100000 - 0x20100060
+[    0.006187] devtmpfs: initialized
+[    0.023286] VFP support v0.3: implementor 41 architecture 2 part 30 variant 5 rev 1
+[    0.023738] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.023776] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.025439] pinctrl core: initialized pinctrl subsystem
+[    0.027517] NET: Registered protocol family 16
+[    0.030497] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.032546] cpuidle: using governor menu
+[    0.053093] AT91: PM: standby: standby, suspend: ulp0
+[    0.054262] atmel_tcb: probe of f800c000.timer failed with error -16
+[    0.072123] at_xdmac f0010000.dma-controller: 16 channels, mapped at 0x(ptrval)
+[    0.075017] at_xdmac f0004000.dma-controller: 16 channels, mapped at 0x(ptrval)
+[    0.076698] AT91: Detected SoC family: sama5d2
+[    0.076723] AT91: Detected SoC: sama5d27, revision 1
+[    0.077782] SCSI subsystem initialized
+[    0.078337] usbcore: registered new interface driver usbfs
+[    0.078457] usbcore: registered new interface driver hub
+[    0.078612] usbcore: registered new device driver usb
+[    0.079767] media: Linux media interface: v0.10
+[    0.079869] videodev: Linux video capture interface: v2.00
+[    0.079958] pps_core: LinuxPPS API ver. 1 registered
+[    0.079972] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti &lt;giometti@linux.it&gt;
+[    0.080019] PTP clock support registered
+[    0.080672] Advanced Linux Sound Architecture Driver Initialized.
+[    0.081734] Bluetooth: Core ver 2.22
+[    0.081870] NET: Registered protocol family 31
+[    0.081887] Bluetooth: HCI device and connection manager initialized
+[    0.081915] Bluetooth: HCI socket layer initialized
+[    0.081934] Bluetooth: L2CAP socket layer initialized
+[    0.082031] Bluetooth: SCO socket layer initialized
+[    0.083233] clocksource: Switched to clocksource timer@f800c000
+[    0.104738] NET: Registered protocol family 2
+[    0.105861] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes)
+[    0.105983] TCP established hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.106081] TCP bind hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.106168] TCP: Hash tables configured (established 4096 bind 4096)
+[    0.106432] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.106480] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.106879] NET: Registered protocol family 1
+[    0.108062] RPC: Registered named UNIX socket transport module.
+[    0.108091] RPC: Registered udp transport module.
+[    0.108104] RPC: Registered tcp transport module.
+[    0.108116] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.110233] Initialise system trusted keyrings
+[    0.110757] workingset: timestamp_bits=14 max_order=17 bucket_order=3
+[    0.111511] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.124005] Key type asymmetric registered
+[    0.124036] Asymmetric key parser &#39;x509&#39; registered
+[    0.124090] io scheduler noop registered (default)
+[    0.124107] io scheduler mq-deadline registered
+[    0.124121] io scheduler kyber registered
+[    0.134890] pinctrl-at91-pio4 fc038000.pinctrl: atmel pinctrl initialized
+[    0.151571] brd: module loaded
+[    0.171130] loop: module loaded
+[    0.172571] atmel_usart_serial.0.auto: ttyS0 at MMIO 0xf8020000 (irq = 36, base_baud = 5187500) is a ATMEL_SERIAL
+[    0.744616] console [ttyS0] enabled
+[    0.749995] atmel_usart_serial.1.auto: ttyS1 at MMIO 0xfc008000 (irq = 41, base_baud = 5187500) is a ATMEL_SERIAL
+[    0.763003] at91_i2c fc018600.i2c: can&#39;t get DMA channel, continue without DMA support
+[    0.770961] at91_i2c fc018600.i2c: Using FIFO (16 data)
+[    0.776547] at91_i2c fc018600.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    0.786661] atmel_spi f8000000.spi: DMA TX channel not available, SPI unable to use DMA
+[    0.794714] atmel_spi f8000000.spi: Atmel SPI Controller using PIO only
+[    0.801358] atmel_spi f8000000.spi: Using FIFO (16 data)
+[    0.808246] m25p80 spi0.0: at25df321a (4096 Kbytes)
+[    0.815227] atmel_spi f8000000.spi: Atmel SPI Controller version 0x311 at 0xf8000000 (irq 29)
+[    0.825037] libphy: Fixed MDIO Bus: probed
+[    0.829820] CAN device driver interface
+[    0.835927] m_can f8054000.can: m_can device registered (irq=39, version=31)
+[    0.848635] m_can fc050000.can: m_can device registered (irq=51, version=31)
+[    0.857696] libphy: MACB_mii_bus: probed
+[    0.965599] Micrel KSZ8081 or KSZ8091 f8008000.ethernet-ffffffff:01: attached PHY driver [Micrel KSZ8081 or KSZ8091] (mii_bus:phy_addr=f8008000.ethernet-ffffffff:01, irq=126)
+[    0.981208] macb f8008000.ethernet eth0: Cadence GEM rev 0x00020203 at 0xf8008000 irq 30 (fc:c2:3d:02:f4:39)
+[    0.991742] PPP generic driver version 2.4.2
+[    0.996524] PPP MPPE Compression module registered
+[    1.001253] NET: Registered protocol family 24
+[    1.005814] ehci_hcd: USB 2.0 &#39;Enhanced&#39; Host Controller (EHCI) Driver
+[    1.012268] ehci-atmel: EHCI Atmel driver
+[    1.020455] atmel-ehci 500000.ehci: EHCI Host Controller
+[    1.025853] atmel-ehci 500000.ehci: new USB bus registered, assigned bus number 1
+[    1.034009] atmel-ehci 500000.ehci: irq 20, io mem 0x00500000
+[    1.063317] atmel-ehci 500000.ehci: USB 2.0 started, EHCI 1.00
+[    1.069524] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    1.077794] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.084979] usb usb1: Product: EHCI Host Controller
+[    1.089799] usb usb1: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ehci_hcd
+[    1.099578] usb usb1: SerialNumber: 500000.ehci
+[    1.105442] hub 1-0:1.0: USB hub found
+[    1.109219] hub 1-0:1.0: 3 ports detected
+[    1.114709] ohci_hcd: USB 1.1 &#39;Open&#39; Host Controller (OHCI) Driver
+[    1.120876] ohci-atmel: OHCI Atmel driver
+[    1.126187] at91_ohci 400000.ohci: USB Host Controller
+[    1.131338] at91_ohci 400000.ohci: new USB bus registered, assigned bus number 2
+[    1.139377] at91_ohci 400000.ohci: irq 20, io mem 0x00400000
+[    1.217716] usb usb2: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    1.225999] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.233147] usb usb2: Product: USB Host Controller
+[    1.237965] usb usb2: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ohci_hcd
+[    1.247666] usb usb2: SerialNumber: at91
+[    1.253440] hub 2-0:1.0: USB hub found
+[    1.257231] hub 2-0:1.0: 3 ports detected
+[    1.262941] usbcore: registered new interface driver cdc_acm
+[    1.268631] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.276805] usbcore: registered new interface driver usb-storage
+[    1.282964] usbcore: registered new interface driver usbserial_generic
+[    1.289565] usbserial: USB Serial support registered for generic
+[    1.295628] usbcore: registered new interface driver ftdi_sio
+[    1.301361] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    1.310417] at91_rtc f80480b0.rtc: registered as rtc0
+[    1.315547] at91_rtc f80480b0.rtc: AT91 Real Time Clock driver.
+[    1.321649] i2c /dev entries driver
+[    1.326941] at91-reset f8048000.rstc: Starting after wakeup
+[    1.333031] AT91: Wake-Up source: WKUP pin
+[    1.339054] sama5d4_wdt f8048040.watchdog: initialized (timeout = 16 sec, nowayout = 0)
+[    1.347650] Bluetooth: HCI UART driver ver 2.3
+[    1.352033] Bluetooth: HCI UART protocol H4 registered
+[    1.357330] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[    1.363750] usbcore: registered new interface driver btusb
+[    1.369758] sdhci: Secure Digital Host Controller Interface driver
+[    1.375948] sdhci: Copyright(c) Pierre Ossman
+[    1.380476] sdhci-pltfm: SDHCI platform and OF driver helper
+[    1.386949] sdhci-at91 a0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    1.432908] mmc0: SDHCI controller on a0000000.sdio-host [a0000000.sdio-host] using ADMA
+[    1.441905] sdhci-at91 b0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    1.455140] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.461502] atmel_aes f002c000.aes: version: 0x500
+[    1.471221] atmel_aes f002c000.aes: Atmel AES - Using dma0chan0, dma0chan1 for DMA transfers
+[    1.480493] atmel_sha f0028000.sha: version: 0x510
+[    1.485446] atmel_sha f0028000.sha: using dma0chan2 for DMA transfers
+[    1.496570] atmel_sha f0028000.sha: Atmel SHA1/SHA256/SHA224/SHA384/SHA512
+[    1.504408] atmel_tdes fc044000.tdes: version: 0x703
+[    1.509537] atmel_tdes fc044000.tdes: using dma0chan3, dma0chan4 for DMA transfers
+[    1.525430] atmel_tdes fc044000.tdes: Atmel DES/TDES
+[    1.531047] usbcore: registered new interface driver usbhid
+[    1.536656] usbhid: USB HID core driver
+[    1.547664] atmel-classd fc048000.classd: ASoC: Failed to create component debugfs directory
+[    1.556192] atmel-classd fc048000.classd: PWM modulation type is Differential, non-overlapping is enabled
+[    1.566823] atmel-classd fc048000.classd: atmel-classd-hifi &lt;-&gt; fc048000.classd mapping ok
+[    1.577913] atmel-pdmic f8018000.pdmic: ASoC: Failed to create component debugfs directory
+[    1.587370] atmel-pdmic f8018000.pdmic: atmel-pdmic-hifi &lt;-&gt; f8018000.pdmic mapping ok
+[    1.598597] u32 classifier
+[    1.601244]     Actions configured
+[    1.605330] NET: Registered protocol family 10
+[    1.611907] Segment Routing with IPv6
+[    1.615758] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.622996] NET: Registered protocol family 17
+[    1.627668] Bridge firewalling registered
+[    1.631615] can: controller area network core (rev 20170425 abi 9)
+[    1.638047] NET: Registered protocol family 29
+[    1.642530] can: raw protocol (rev 20170425)
+[    1.646788] can: broadcast manager protocol (rev 20170425 t)
+[    1.652385] can: netlink gateway (rev 20170425) max_hops=1
+[    1.658515] Bluetooth: RFCOMM TTY layer initialized
+[    1.663462] Bluetooth: RFCOMM socket layer initialized
+[    1.668575] Bluetooth: RFCOMM ver 1.11
+[    1.672275] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    1.677601] Bluetooth: BNEP filters: protocol multicast
+[    1.682768] Bluetooth: BNEP socket layer initialized
+[    1.687735] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    1.693634] Bluetooth: HIDP socket layer initialized
+[    1.698604] l2tp_core: L2TP core driver, V2.0
+[    1.702904] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    1.707700] l2tp_netlink: L2TP netlink interface
+[    1.714546] Loading compiled-in X.509 certificates
+[    1.734864] at91_i2c f8028000.i2c: can&#39;t get DMA channel, continue without DMA support
+[    1.742812] at91_i2c f8028000.i2c: Using FIFO (16 data)
+[    1.749851] DCDC_REG1: supplied by regulator-dummy
+[    1.756596] mmc0: new DDR MMC card at address 0001
+[    1.764359] mmcblk0: mmc0:0001 Q2J54A 3.59 GiB
+[    1.770798] mmcblk0boot0: mmc0:0001 Q2J54A partition 1 16.0 MiB
+[    1.778731] mmcblk0boot1: mmc0:0001 Q2J54A partition 2 16.0 MiB
+[    1.785271] mmcblk0rpmb: mmc0:0001 Q2J54A partition 3 512 KiB, chardev (247:0)
+[    1.794026] DCDC_REG2: supplied by regulator-dummy
+[    1.802468] random: fast init done
+[    1.805994]  mmcblk0: p1 p2 p3 p4 &lt; p5 p6 p7 &gt;
+[    1.812086] DCDC_REG3: supplied by regulator-dummy
+[    1.824972] LDO_REG1: supplied by regulator-dummy
+[    1.833110] LDO_REG2: supplied by regulator-dummy
+[    1.841270] LDO_REG3: supplied by regulator-dummy
+[    1.846995] VDD_LED: Bringing 2500000uV into 3300000-3300000uV
+[    1.857203] LDO_REG4: supplied by regulator-dummy
+[    1.866494] act8945a-charger act8945a-charger: DMA mask not set
+[    1.872922] act8945a-charger act8945a-charger: have been suspended
+[    1.881888] at91_i2c f8028000.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    1.889577] at91_i2c fc028000.i2c: can&#39;t get DMA channel, continue without DMA support
+[    1.897529] at91_i2c fc028000.i2c: Using FIFO (16 data)
+[    1.904863] at24 2-0054: 256 byte 24c02 EEPROM, writable, 16 bytes/write
+[    1.911613] at91_i2c fc028000.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    1.919658] sdhci-at91 b0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    1.931860] sdhci-at91 b0000000.sdio-host: Linked as a consumer to regulator.3
+[    1.978493] mmc1: SDHCI controller on b0000000.sdio-host [b0000000.sdio-host] using ADMA
+[    1.988392] at91-sama5d2_adc fc030000.adc: Linked as a consumer to regulator.5
+[    1.999667] at91-sama5d2_adc fc030000.adc: setting up trigger as external_rising
+[    2.007113] at91-sama5d2_adc fc030000.adc: version: 800
+[    2.014257] input: gpio_keys as /devices/platform/gpio_keys/input/input0
+[    2.021835] at91_rtc f80480b0.rtc: setting system clock to 2022-08-06 14:46:03 UTC (1659797163)
+[    2.031422] ALSA device list:
+[    2.034423]   #0: CLASSD
+[    2.036879]   #1: PDMIC @ sama5d2_xplained
+[    2.041493] atmel_usart_serial atmel_usart_serial.0.auto: using dma0chan7 for rx DMA transfers
+[    2.050225] atmel_usart_serial atmel_usart_serial.0.auto: using dma0chan8 for tx DMA transfers
+[    2.065252] VFS: Mounted root (squashfs filesystem) readonly on device 179:3.
+[    2.075137] devtmpfs: mounted
+[    2.081089] Freeing unused kernel memory: 1024K
+[    2.085840] Run /sbin/init as init process
+[    2.217487] init: Console is alive
+[    2.221298] init: - watchdog -
+[    2.763914] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    2.784095] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    2.802120] init: - preinit -
+[    3.313085] random: jshn: uninitialized urandom read (4 bytes read)
+[    3.349575] random: jshn: uninitialized urandom read (4 bytes read)
+Press the [f] key and hit [enter] to enter failsafe mode
+Press the [1], [2], [3] or [4] key and hit [enter] to select the debug level
+[    6.736330] SWUPDATE: AT91Bootstrap version 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1
+[    6.866878] SWUPDATE: U-Boot version 2020.01-gitAUTOINC+af59b26c22-tano0.2
+[    6.947051] SWUPDATE: U-Boot startup version 1.0.0-tano1.atmel1
+[    6.970362] SWUPDATE: Kernel version 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0
+[    6.990876] SWUPDATE: Read-only filesystem version 2022-08-06-11-41-38-UTC
+[    7.133867] mount_root: /dev/mmcblk0p1: p1, rw, start 1048576, size 8388608
+[    7.145099] mount_root: /dev/mmcblk0p2: p2, rw, start 9437184, size 134217728
+[    7.152610] mount_root: /dev/mmcblk0p3: p3, rw, start 143654912, size 1073741824 [rootfs]
+[    7.162254] mount_root: /dev/mmcblk0p4: p4, rw, start 1217396736, size 1024
+[    7.173737] mount_root: /dev/mmcblk0p5: p5, rw, start 1218445312, size 134217728
+[    7.182992] mount_root: /dev/mmcblk0p6: p6, rw, start 1353711616, size 1073741824
+[    7.194850] mount_root: /dev/mmcblk0p7: p7, rw, start 2428502016, size 1421869056 [overlay]
+[    7.203614] mount_root: root filesystem on the /dev/mmcblk0p3 partition of /dev/mmcblk0 (rw) device
+[    7.229238] mount_root: founded suitable overlay partition /dev/mmcblk0p7
+[    7.237201] mount_root: loading kmods from internal overlay
+[    7.362130] kmodloader: loading kernel modules from //etc/modules-boot.d/*
+[    7.372503] kmodloader: done loading kernel modules from //etc/modules-boot.d/*
+[    7.604838] EXT4-fs (mmcblk0p7): mounted filesystem with ordered data mode. Opts: (null)
+[    7.613322] block: attempting to load /tmp/ext4_cfg/upper/etc/config/fstab
+[    7.621743] block: unable to load configuration (fstab: Entry not found)
+[    7.628668] block: attempting to load /tmp/ext4_cfg/etc/config/fstab
+[    7.635281] block: unable to load configuration (fstab: Entry not found)
+[    7.642053] block: attempting to load /etc/config/fstab
+[    7.652000] block: extroot: not configured
+[    7.673339] EXT4-fs (mmcblk0p7): mounted filesystem with ordered data mode. Opts: (null)
+[    7.843761] block: attempting to load /tmp/ext4_cfg/upper/etc/config/fstab
+[    7.850802] block: unable to load configuration (fstab: Entry not found)
+[    7.857697] block: attempting to load /tmp/ext4_cfg/etc/config/fstab
+[    7.864312] block: unable to load configuration (fstab: Entry not found)
+[    7.871083] block: attempting to load /etc/config/fstab
+[    7.877005] block: extroot: not configured
+[    7.883888] mount_root: overlay filesystem has not been fully initialized yet
+[    7.896652] mount_root: switching to ext4 overlay
+[    8.049558] Root filesystem mounted
+[    9.490594] urandom-seed: Seed file not found (/etc/urandom.seed)
+[    9.539455] procd: - watchdog -
+[    9.554821] procd: - ubus -
+[    9.590726] random: ubusd: uninitialized urandom read (4 bytes read)
+[    9.612026] random: ubusd: uninitialized urandom read (4 bytes read)
+[    9.620061] random: ubusd: uninitialized urandom read (4 bytes read)
+[    9.634402] procd: - init -
+Please press Enter to activate this console.
+[   13.230658] kmodloader: loading kernel modules from /etc/modules.d/*
+[   13.262481] tun: Universal TUN/TAP device driver, 1.6
+[   13.368998] atmel_usba_udc 300000.gadget: MMIO registers at [mem 0xfc02c000-0xfc02c3ff] mapped at (ptrval)
+[   13.378776] atmel_usba_udc 300000.gadget: FIFO at [mem 0x00300000-0x003fffff] mapped at (ptrval)
+[   13.416958] usbcore: registered new interface driver cdc_wdm
+[   13.461436] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[   13.658501] cfg80211: Loaded X.509 cert &#39;sforshee: 00b28ddf47aef9cea7&#39;
+[   13.665731] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[   13.674376] cfg80211: failed to load regulatory.db
+[   13.681333] cryptodev: loading out-of-tree module taints kernel.
+[   13.705853] cryptodev: driver 1.12 loaded.
+[   13.711202] gre: GRE over IPv4 demultiplexor driver
+[   13.820179] PPTP driver version 0.8.5
+[   13.860928] xt_time: kernel timezone is +0300
+[   13.876672] usbcore: registered new interface driver cdc_ncm
+[   13.934615] usbcore: registered new interface driver qmi_wwan
+[   13.964123] usbcore: registered new interface driver cdc_mbim
+[   13.999416] kmodloader: done loading kernel modules from /etc/modules.d/*
+[   15.622355] random: crng init done
+[   15.625860] random: 5 urandom warning(s) missed due to ratelimiting
+[   25.652083] udevd[1363]: starting version 3.2.10
+[   25.835150] udevd[1363]: starting eudev-3.2.10
+[   61.745181] br-lan: port 1(eth0) entered blocking state
+[   61.750347] br-lan: port 1(eth0) entered disabled state
+[   61.756227] device eth0 entered promiscuous mode
+[   61.839100] IPv6: ADDRCONF(NETDEV_UP): br-lan: link is not ready
+[   64.138251] macb f8008000.ethernet eth0: link up (100/Full)
+[   64.163523] br-lan: port 1(eth0) entered blocking state
+[   64.168701] br-lan: port 1(eth0) entered forwarding state
+[   64.223481] IPv6: ADDRCONF(NETDEV_CHANGE): br-lan: link becomes ready
+[   80.867566] using random self ethernet address
+[   80.871951] using random host ethernet address
+[   80.878053] usb0: HOST MAC 7a:73:53:d6:4b:cc
+[   80.882417] usb0: MAC 4a:99:76:de:bc:fc
+[   80.886366] using random self ethernet address
+[   80.890745] using random host ethernet address
+[   80.895348] g_ether gadget: Ethernet Gadget, version: Memorial Day 2008
+[   80.901892] g_ether gadget: g_ether ready
+[   80.910180] IPv6: ADDRCONF(NETDEV_UP): usb0: link is not ready
+[   81.072540] g_ether gadget: high-speed config #2: RNDIS
+[   81.078175] IPv6: ADDRCONF(NETDEV_CHANGE): usb0: link becomes ready
+
+
+tanowrt login: root
+Password:
+ _______            __          __   _
+|__   __|           \ \        / /  | |    Embedded Linux Distribution
+   | | __ _ _ __   __\ \  /\  / / __| |_   by Tano Systems
+   | |/ _` | &#39;_ \ / _ \ \/  \/ / &#39;__| __|
+   | | (_| | | | | (_) \  /\  /| |  | |_   (c) 2018-2022 Tano Systems LLC
+   |_|\__,_|_| |_|\___/ \/  \/ |_|   \__|  https://tano-systems.com
+
+   Board:    Atmel SAMA5D2 Xplained (eMMC)
+   Release:  2021.06
+   Revision: 30a423b9eff7b27de6bcb57fe449233fbdb9d95a
+             2022-08-06 11:41:38 UTC
+
+[root@tanowrt ~]#
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 10.08.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

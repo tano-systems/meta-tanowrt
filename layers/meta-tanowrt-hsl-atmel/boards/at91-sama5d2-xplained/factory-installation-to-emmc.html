@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.12.1 SAMA5D2 Xplained Factory Installation to eMMC Log &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="1.12.2 SAMA5D2 Xplained Boot from internal eMMC Log" href="bootlog-emmc.html" />
+    <link rel="prev" title="1 Atmel SAMA5D2 Xplained" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">TanoWrt</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../build.html">Building TanoWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-upgrade.html">Firmware Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../common-tasks.html">Common Tasks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core and Common Layers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt/index.html">Core Layer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Support Layers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Microchip (Atmel)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#supported-boards">Supported Boards</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">1 Atmel SAMA5D2 Xplained</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html#board-overview">1.1 Board Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build-targets">1.2 Build Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#build">1.3 Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#partitioning-layouts">1.4 Partitioning Layouts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#produced-build-artifacts">1.5 Produced Build Artifacts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#writing-images">1.6 Writing Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#booting-and-running">1.7 Booting and Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#serial-console">1.8 Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#default-network-configuration">1.9 Default Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#web-user-interface">1.10 Web User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#firmware-upgrade">1.11 Firmware Upgrade</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#additional-information">1.12 Additional Information</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">1.12.1 SAMA5D2 Xplained Factory Installation to eMMC Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bootlog-emmc.html">1.12.2 SAMA5D2 Xplained Boot from internal eMMC Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bootlog-sd.html">1.12.3 SAMA5D2 Xplained Boot from SD Card Log</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#references">1.13 References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../at91-sama5d3-xplained/index.html">2 Atmel SAMA5D3 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9477/index.html">3 Microchip EVB-KSZ9477</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../evb-ksz9563/index.html">4 Microchip EVB-KSZ9563 on SAMA5D3 EDS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#maintainers">Maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-baikal/index.html">Baikal Electronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-brcm/index.html">Broadcom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-intel/index.html">Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-marvell/index.html">Marvell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-mtk/index.html">MediaTek</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-nxp/index.html">NXP (Freescale)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-quectel/index.html">Quectel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-rockchip/index.html">Rockchip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-swi/index.html">Sierra Wireless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-stm/index.html">STMicroelectronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-ti/index.html">Texas Instruments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meta-tanowrt-hsl-xilinx/index.html">Xilinx</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TanoWrt Embedded Linux Distibution</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li>
+      <a href="../../../../index.html" class="icon icon-home"> TanoWrt</a> &raquo;
+    </li>
+    
+      <li><a href="../../index.html">Microchip (Atmel) Hardware Support Layer (meta-tanowrt-hsl-atmel)</a> &raquo;</li>
+    
+      <li><a href="index.html"><span class="section-number">1 </span>Atmel SAMA5D2 Xplained</a> &raquo;</li>
+    
+    <li><span class="section-number">1.12.1 </span>SAMA5D2 Xplained Factory Installation to eMMC Log</li>
+
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/layers/meta-tanowrt-hsl-atmel/boards/at91-sama5d2-xplained/factory-installation-to-emmc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sama5d2-xplained-factory-installation-to-emmc-log">
+<h1><span class="section-number">1.12.1 </span>SAMA5D2 Xplained Factory Installation to eMMC Log<a class="headerlink" href="#sama5d2-xplained-factory-installation-to-emmc-log" title="Permalink to this heading"></a></h1>
+<p>Here is the complete debug output for booting and running
+from the SD card the image for initial factory system
+installation to the internal eMMC flash memory.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RomBOOT
+Backup mode enabled
+
+
+AT91Bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1 (2022-08-06 00:11:04)
+
+EEPROM: Loading AT24xx information ...
+EEPROM: BoardName | [Revid] | VendorName
+
+EEPROM: Using default information
+
+EEPROM: Board sn: 0xd300000 revision: 0x248000
+
+SD/MMC: Image: Read file u-boot.bin to 0x26f00000
+MMC: ADMA supported
+SD: Card Capacity: High or Extended
+SD: Specification Version 3.0X
+SD/MMC: Done to load image
+&lt;debug_uart&gt;
+
+U-Boot 2020.01-gitAUTOINC+af59b26c22-tano0.2 (Aug 06 2022 - 02:07:49 +0000)
+
+CPU: SAMA5D27-CU
+Crystal frequency:       12 MHz
+CPU clock        :      498 MHz
+Master clock     :      166 MHz
+DRAM:  512 MiB
+MMC:   sdio-host@a0000000: 0, sdio-host@b0000000: 1
+Loading Environment from MMC... OK
+In:    serial@f8020000
+Out:   serial@f8020000
+Err:   serial@f8020000
+Net:
+Warning: ethernet@f8008000 MAC addresses don&#39;t match:
+Address in ROM is          00:10:a1:98:97:02
+Address in environment is  fc:c2:3d:02:f4:39
+eth0: ethernet@f8008000
+Hit any key to stop autoboot:  0
+switch to partitions #0, OK
+mmc1 is current device
+
+MMC read: dev # 1, block # 512, count 256 ... 256 blocks read: OK
+## Executing script at 21000000
+Board name: sama5d2_xplained
+Loading kernel fitImage...
+switch to partitions #0, OK
+mmc1 is current device
+12546860 bytes read in 784 ms (15.3 MiB/s)
+Force console to be enabled
+Booting kernel 0x24000000#conf-at91-sama5d2_xplained.dtb...
+## Loading kernel from FIT Image at 24000000 ...
+   Using &#39;conf-at91-sama5d2_xplained.dtb&#39; configuration
+   Trying &#39;kernel-1&#39; kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0x24000118
+     Data Size:    4567560 Bytes = 4.4 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x22000000
+     Entry Point:  0x22000000
+     Hash algo:    sha256
+     Hash value:   250ea354a19a928c5d40456071b49ca3c972373a34f04987ba277c8c63a09ba1
+   Verifying Hash Integrity ... sha256+ OK
+## Loading ramdisk from FIT Image at 24000000 ...
+   Using &#39;conf-at91-sama5d2_xplained.dtb&#39; configuration
+   Trying &#39;ramdisk-1&#39; ramdisk subimage
+     Description:  tanowrt-image-initramfs-swu-factory
+     Type:         RAMDisk Image
+     Compression:  uncompressed
+     Data Start:   0x2446640c
+     Data Size:    7932264 Bytes = 7.6 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x25000000
+     Entry Point:  0x25000000
+     Hash algo:    sha256
+     Hash value:   7991e05f44db36fd8632db883843b372b24dc921aa12e9340d206d31e8bd4e66
+   Verifying Hash Integrity ... sha256+ OK
+   Loading ramdisk from 0x2446640c to 0x25000000
+## Loading fdt from FIT Image at 24000000 ...
+   Using &#39;conf-at91-sama5d2_xplained.dtb&#39; configuration
+   Trying &#39;fdt-at91-sama5d2_xplained.dtb&#39; fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x2445b438
+     Data Size:    44779 Bytes = 43.7 KiB
+     Architecture: ARM
+     Load Address: 0x23e00000
+     Hash algo:    sha256
+     Hash value:   7afaaebdd0b2fe3b98ef4b716d5b279dfcfd9a928c4bc0874bd95c67fd05ce0c
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x2445b438 to 0x23e00000
+   Booting using the fdt blob at 0x23e00000
+   Loading Kernel Image
+   Loading Ramdisk to 3f3eb000, end 3fb7b968 ... OK
+   Loading Device Tree to 3f3dd000, end 3f3eaeea ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 (oe-user@oe-host) (gcc version 10.3.0 (GCC)) #1 Fri Aug 5 23:46:16 UTC 2022
+[    0.000000] CPU: ARMv7 Processor [410fc051] revision 1 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Atmel SAMA5D2 Xplained
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] cma: Reserved 16 MiB at 0x3e000000
+[    0.000000] CPU: All CPU(s) started in SVC mode.
+[    0.000000] random: get_random_bytes called from 0xc0a008e8 with crng_init=0
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 129920
+[    0.000000] Kernel command line: console=ttyS0,115200n8  root=/dev/ram rootfstype=squashfs rootwait=1 earlyprintk panic=15
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 484220K/524288K available (7168K kernel code, 272K rwdata, 1296K rodata, 1024K init, 169K bss, 23684K reserved, 16384K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xe0800000 - 0xff800000   ( 496 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[    0.000000]     modules : 0xbf000000 - 0xc0000000   (  16 MB)
+[    0.000000]       .text : 0x(ptrval) - 0x(ptrval)   (8160 kB)
+[    0.000000]       .init : 0x(ptrval) - 0x(ptrval)   (1024 kB)
+[    0.000000]       .data : 0x(ptrval) - 0x(ptrval)   ( 273 kB)
+[    0.000000]        .bss : 0x(ptrval) - 0x(ptrval)   ( 170 kB)
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] L2C-310 ID prefetch enabled, offset 2 lines
+[    0.000000] L2C-310 dynamic clock gating enabled, standby mode enabled
+[    0.000000] L2C-310 cache controller enabled, 8 ways, 128 kB
+[    0.000000] L2C-310: CACHE_ID 0x410000c9, AUX_CTRL 0x36020000
+[    0.000000] clocksource: timer@f800c000: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 184217874325 ns
+[    0.000018] sched_clock: 32 bits at 10MHz, resolution 96ns, wraps every 206986376143ns
+[    0.000044] Switching to timer-based delay loop, resolution 96ns
+[    0.000367] clocksource: pit: mask: 0x7ffffff max_cycles: 0x7ffffff, max_idle_ns: 11513617062 ns
+[    0.000994] Console: colour dummy device 80x30
+[    0.001073] Calibrating delay loop (skipped), value calculated using timer frequency.. 20.75 BogoMIPS (lpj=103750)
+[    0.001105] pid_max: default: 32768 minimum: 301
+[    0.001439] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.001474] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.002844] CPU: Testing write buffer coherency: ok
+[    0.004205] Setting up static identity map for 0x20100000 - 0x20100060
+[    0.006199] devtmpfs: initialized
+[    0.023233] VFP support v0.3: implementor 41 architecture 2 part 30 variant 5 rev 1
+[    0.023693] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.023730] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.025382] pinctrl core: initialized pinctrl subsystem
+[    0.027460] NET: Registered protocol family 16
+[    0.030427] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.032498] cpuidle: using governor menu
+[    0.053008] AT91: PM: standby: standby, suspend: ulp0
+[    0.054184] atmel_tcb: probe of f800c000.timer failed with error -16
+[    0.072231] at_xdmac f0010000.dma-controller: 16 channels, mapped at 0x(ptrval)
+[    0.075117] at_xdmac f0004000.dma-controller: 16 channels, mapped at 0x(ptrval)
+[    0.076778] AT91: Detected SoC family: sama5d2
+[    0.076803] AT91: Detected SoC: sama5d27, revision 1
+[    0.077872] SCSI subsystem initialized
+[    0.078412] usbcore: registered new interface driver usbfs
+[    0.078532] usbcore: registered new interface driver hub
+[    0.078692] usbcore: registered new device driver usb
+[    0.079843] media: Linux media interface: v0.10
+[    0.079944] videodev: Linux video capture interface: v2.00
+[    0.080032] pps_core: LinuxPPS API ver. 1 registered
+[    0.080046] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti &lt;giometti@linux.it&gt;
+[    0.080199] PTP clock support registered
+[    0.080757] Advanced Linux Sound Architecture Driver Initialized.
+[    0.081811] Bluetooth: Core ver 2.22
+[    0.081951] NET: Registered protocol family 31
+[    0.081969] Bluetooth: HCI device and connection manager initialized
+[    0.082001] Bluetooth: HCI socket layer initialized
+[    0.082020] Bluetooth: L2CAP socket layer initialized
+[    0.082119] Bluetooth: SCO socket layer initialized
+[    0.083307] clocksource: Switched to clocksource timer@f800c000
+[    0.104627] NET: Registered protocol family 2
+[    0.105744] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes)
+[    0.105868] TCP established hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.105963] TCP bind hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.106048] TCP: Hash tables configured (established 4096 bind 4096)
+[    0.106313] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.106361] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.106762] NET: Registered protocol family 1
+[    0.107944] RPC: Registered named UNIX socket transport module.
+[    0.107975] RPC: Registered udp transport module.
+[    0.107987] RPC: Registered tcp transport module.
+[    0.107998] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.108523] Trying to unpack rootfs image as initramfs...
+[    1.406666] Freeing initrd memory: 7748K
+[    1.408572] Initialise system trusted keyrings
+[    1.409185] workingset: timestamp_bits=14 max_order=17 bucket_order=3
+[    1.409954] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    1.422465] Key type asymmetric registered
+[    1.422495] Asymmetric key parser &#39;x509&#39; registered
+[    1.422547] io scheduler noop registered (default)
+[    1.422564] io scheduler mq-deadline registered
+[    1.422578] io scheduler kyber registered
+[    1.433449] pinctrl-at91-pio4 fc038000.pinctrl: atmel pinctrl initialized
+[    1.450222] brd: module loaded
+[    1.469719] loop: module loaded
+[    1.471191] atmel_usart_serial.0.auto: ttyS0 at MMIO 0xf8020000 (irq = 36, base_baud = 5187500) is a ATMEL_SERIAL
+[    2.048874] console [ttyS0] enabled
+[    2.054364] atmel_usart_serial.1.auto: ttyS1 at MMIO 0xfc008000 (irq = 41, base_baud = 5187500) is a ATMEL_SERIAL
+[    2.067390] at91_i2c fc018600.i2c: can&#39;t get DMA channel, continue without DMA support
+[    2.075352] at91_i2c fc018600.i2c: Using FIFO (16 data)
+[    2.080879] at91_i2c fc018600.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    2.091043] atmel_spi f8000000.spi: DMA TX channel not available, SPI unable to use DMA
+[    2.099092] atmel_spi f8000000.spi: Atmel SPI Controller using PIO only
+[    2.105777] atmel_spi f8000000.spi: Using FIFO (16 data)
+[    2.112587] m25p80 spi0.0: at25df321a (4096 Kbytes)
+[    2.119552] atmel_spi f8000000.spi: Atmel SPI Controller version 0x311 at 0xf8000000 (irq 29)
+[    2.129392] libphy: Fixed MDIO Bus: probed
+[    2.134282] CAN device driver interface
+[    2.140252] m_can f8054000.can: m_can device registered (irq=39, version=31)
+[    2.153010] m_can fc050000.can: m_can device registered (irq=51, version=31)
+[    2.162063] libphy: MACB_mii_bus: probed
+[    2.275701] Micrel KSZ8081 or KSZ8091 f8008000.ethernet-ffffffff:01: attached PHY driver [Micrel KSZ8081 or KSZ8091] (mii_bus:phy_addr=f8008000.ethernet-ffffffff:01, irq=126)
+[    2.291315] macb f8008000.ethernet eth0: Cadence GEM rev 0x00020203 at 0xf8008000 irq 30 (fc:c2:3d:02:f4:39)
+[    2.301852] PPP generic driver version 2.4.2
+[    2.306681] PPP MPPE Compression module registered
+[    2.311403] NET: Registered protocol family 24
+[    2.315969] ehci_hcd: USB 2.0 &#39;Enhanced&#39; Host Controller (EHCI) Driver
+[    2.322427] ehci-atmel: EHCI Atmel driver
+[    2.330643] atmel-ehci 500000.ehci: EHCI Host Controller
+[    2.336035] atmel-ehci 500000.ehci: new USB bus registered, assigned bus number 1
+[    2.344317] atmel-ehci 500000.ehci: irq 20, io mem 0x00500000
+[    2.373416] atmel-ehci 500000.ehci: USB 2.0 started, EHCI 1.00
+[    2.379606] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 4.19
+[    2.387866] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    2.395050] usb usb1: Product: EHCI Host Controller
+[    2.399871] usb usb1: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ehci_hcd
+[    2.409647] usb usb1: SerialNumber: 500000.ehci
+[    2.415473] hub 1-0:1.0: USB hub found
+[    2.419274] hub 1-0:1.0: 3 ports detected
+[    2.424719] ohci_hcd: USB 1.1 &#39;Open&#39; Host Controller (OHCI) Driver
+[    2.430892] ohci-atmel: OHCI Atmel driver
+[    2.436191] at91_ohci 400000.ohci: USB Host Controller
+[    2.441340] at91_ohci 400000.ohci: new USB bus registered, assigned bus number 2
+[    2.449205] at91_ohci 400000.ohci: irq 20, io mem 0x00400000
+[    2.454850] random: fast init done
+[    2.527793] usb usb2: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 4.19
+[    2.536064] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    2.543212] usb usb2: Product: USB Host Controller
+[    2.548027] usb usb2: Manufacturer: Linux 4.19.78-tano-at91-standard-g046113c438-tano0.2.20.20.0.0 ohci_hcd
+[    2.557730] usb usb2: SerialNumber: at91
+[    2.563783] hub 2-0:1.0: USB hub found
+[    2.567583] hub 2-0:1.0: 3 ports detected
+[    2.573277] usbcore: registered new interface driver cdc_acm
+[    2.578974] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.587204] usbcore: registered new interface driver usb-storage
+[    2.593441] usbcore: registered new interface driver usbserial_generic
+[    2.599962] usbserial: USB Serial support registered for generic
+[    2.606028] usbcore: registered new interface driver ftdi_sio
+[    2.611760] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    2.620737] at91_rtc f80480b0.rtc: registered as rtc0
+[    2.625861] at91_rtc f80480b0.rtc: AT91 Real Time Clock driver.
+[    2.631978] i2c /dev entries driver
+[    2.637246] at91-reset f8048000.rstc: Starting after user reset
+[    2.645638] sama5d4_wdt f8048040.watchdog: initialized (timeout = 16 sec, nowayout = 0)
+[    2.654236] Bluetooth: HCI UART driver ver 2.3
+[    2.658619] Bluetooth: HCI UART protocol H4 registered
+[    2.663930] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[    2.670279] usbcore: registered new interface driver btusb
+[    2.676397] sdhci: Secure Digital Host Controller Interface driver
+[    2.682503] sdhci: Copyright(c) Pierre Ossman
+[    2.687160] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.693630] sdhci-at91 a0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    2.739586] mmc0: SDHCI controller on a0000000.sdio-host [a0000000.sdio-host] using ADMA
+[    2.748590] sdhci-at91 b0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    2.761735] ledtrig-cpu: registered to indicate activity on CPUs
+[    2.768217] atmel_aes f002c000.aes: version: 0x500
+[    2.777830] atmel_aes f002c000.aes: Atmel AES - Using dma0chan0, dma0chan1 for DMA transfers
+[    2.787095] atmel_sha f0028000.sha: version: 0x510
+[    2.791943] atmel_sha f0028000.sha: using dma0chan2 for DMA transfers
+[    2.803030] atmel_sha f0028000.sha: Atmel SHA1/SHA256/SHA224/SHA384/SHA512
+[    2.810895] atmel_tdes fc044000.tdes: version: 0x703
+[    2.816124] atmel_tdes fc044000.tdes: using dma0chan3, dma0chan4 for DMA transfers
+[    2.831818] atmel_tdes fc044000.tdes: Atmel DES/TDES
+[    2.837488] usbcore: registered new interface driver usbhid
+[    2.842995] usbhid: USB HID core driver
+[    2.854087] atmel-classd fc048000.classd: ASoC: Failed to create component debugfs directory
+[    2.862498] atmel-classd fc048000.classd: PWM modulation type is Differential, non-overlapping is enabled
+[    2.873196] atmel-classd fc048000.classd: atmel-classd-hifi &lt;-&gt; fc048000.classd mapping ok
+[    2.884421] atmel-pdmic f8018000.pdmic: ASoC: Failed to create component debugfs directory
+[    2.893738] atmel-pdmic f8018000.pdmic: atmel-pdmic-hifi &lt;-&gt; f8018000.pdmic mapping ok
+[    2.905109] u32 classifier
+[    2.907759]     Actions configured
+[    2.911745] NET: Registered protocol family 10
+[    2.918341] Segment Routing with IPv6
+[    2.922083] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    2.929336] NET: Registered protocol family 17
+[    2.934016] Bridge firewalling registered
+[    2.937957] can: controller area network core (rev 20170425 abi 9)
+[    2.944391] NET: Registered protocol family 29
+[    2.948876] can: raw protocol (rev 20170425)
+[    2.953070] can: broadcast manager protocol (rev 20170425 t)
+[    2.958791] can: netlink gateway (rev 20170425) max_hops=1
+[    2.964863] Bluetooth: RFCOMM TTY layer initialized
+[    2.969709] Bluetooth: RFCOMM socket layer initialized
+[    2.974975] Bluetooth: RFCOMM ver 1.11
+[    2.978677] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    2.984000] Bluetooth: BNEP filters: protocol multicast
+[    2.989176] Bluetooth: BNEP socket layer initialized
+[    2.994139] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    3.000009] Bluetooth: HIDP socket layer initialized
+[    3.005035] l2tp_core: L2TP core driver, V2.0
+[    3.009336] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    3.014131] l2tp_netlink: L2TP netlink interface
+[    3.020781] Loading compiled-in X.509 certificates
+[    3.041652] at91_i2c f8028000.i2c: can&#39;t get DMA channel, continue without DMA support
+[    3.049679] at91_i2c f8028000.i2c: Using FIFO (16 data)
+[    3.056706] DCDC_REG1: supplied by regulator-dummy
+[    3.063449] mmc0: new DDR MMC card at address 0001
+[    3.071072] mmcblk0: mmc0:0001 Q2J54A 3.59 GiB
+[    3.077627] mmcblk0boot0: mmc0:0001 Q2J54A partition 1 16.0 MiB
+[    3.085584] mmcblk0boot1: mmc0:0001 Q2J54A partition 2 16.0 MiB
+[    3.092031] mmcblk0rpmb: mmc0:0001 Q2J54A partition 3 512 KiB, chardev (247:0)
+[    3.101154] DCDC_REG2: supplied by regulator-dummy
+[    3.109583]  mmcblk0: p1 p2 p3 p4 &lt; p5 p6 p7 &gt;
+[    3.114994] DCDC_REG3: supplied by regulator-dummy
+[    3.128497] LDO_REG1: supplied by regulator-dummy
+[    3.136649] LDO_REG2: supplied by regulator-dummy
+[    3.144745] LDO_REG3: supplied by regulator-dummy
+[    3.150392] VDD_LED: Bringing 2500000uV into 3300000-3300000uV
+[    3.160655] LDO_REG4: supplied by regulator-dummy
+[    3.170017] act8945a-charger act8945a-charger: DMA mask not set
+[    3.176502] act8945a-charger act8945a-charger: have been suspended
+[    3.185430] at91_i2c f8028000.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    3.193007] at91_i2c fc028000.i2c: can&#39;t get DMA channel, continue without DMA support
+[    3.200959] at91_i2c fc028000.i2c: Using FIFO (16 data)
+[    3.208241] at24 2-0054: 256 byte 24c02 EEPROM, writable, 16 bytes/write
+[    3.215090] at91_i2c fc028000.i2c: AT91 i2c bus driver (hw version: 0x704).
+[    3.223033] sdhci-at91 b0000000.sdio-host: update clk mul to 39 as gck rate is 480000000 Hz and clk base is 12000000 Hz
+[    3.235219] sdhci-at91 b0000000.sdio-host: Linked as a consumer to regulator.3
+[    3.281803] mmc1: SDHCI controller on b0000000.sdio-host [b0000000.sdio-host] using ADMA
+[    3.291794] at91-sama5d2_adc fc030000.adc: Linked as a consumer to regulator.5
+[    3.304299] at91-sama5d2_adc fc030000.adc: setting up trigger as external_rising
+[    3.311677] at91-sama5d2_adc fc030000.adc: version: 800
+[    3.320123] input: gpio_keys as /devices/platform/gpio_keys/input/input0
+[    3.328022] at91_rtc f80480b0.rtc: setting system clock to 2022-08-06 14:44:13 UTC (1659797053)
+[    3.337600] ALSA device list:
+[    3.340507]   #0: CLASSD
+[    3.343022]   #1: PDMIC @ sama5d2_xplained
+[    3.347868] atmel_usart_serial atmel_usart_serial.0.auto: using dma0chan7 for rx DMA transfers
+[    3.356593] atmel_usart_serial atmel_usart_serial.0.auto: using dma0chan8 for tx DMA transfers
+[    3.368261] Freeing unused kernel memory: 1024K
+[    3.372960] Run /init as init process
+[    3.420133] mmc1: new high speed SDHC card at address b368
+[    3.435521] mmcblk1: mmc1:b368 SDC   15.0 GiB
+[    3.455252]  mmcblk1: p1
+[    4.253946] init: Console is alive
+[    4.257745] init: - watchdog -
+[    4.271686] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    4.278979] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    4.289302] init: - preinit -
+[    4.661848] random: jshn: uninitialized urandom read (4 bytes read)
+[    4.699614] random: jshn: uninitialized urandom read (4 bytes read)
+Press the [x] key to cancel automatic installation
+Press the [r] key to install without last action (reboot/power off)
+
+┌────────────────────────┐
+│                        │
+│  Global configuration  │
+│                        │
+└────────────────────────┘
+* Last action: poweroff
+* Last action delay: 5 seconds
+
+┌────────────────┐
+│                │
+│  Verification  │
+│                │
+└────────────────┘
+
+Checking required block devices...
+════════════════════════════════════════════════════════════════════════════════
+Block device /dev/mmcblk0 found
+Block device /dev/mmcblk0boot0 found
+Block device /dev/mmcblk0boot1 found
+Block device /dev/mmcblk1 found
+Block device /dev/mtdblock0 found
+
+┌────────────────────┐
+│                    │
+│  Pre-installation  │
+│                    │
+└────────────────────┘
+
+Mounting filesystems...
+════════════════════════════════════════════════════════════════════════════════
+
+Mount 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk1p1
+* Target: /mnt
+* Filsystem: vfat
+* Create target: yes
+Executing command &#39;/bin/mount -t vfat /dev/mmcblk1p1 /mnt&#39;...
+Executed &#39;/bin/mount -t vfat /dev/mmcblk1p1 /mnt&#39; with exit code 0
+Mounted
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: echo 0 &gt; /sys/class/block/mmcblk0boot0/force_ro
+* Required exit code : 0
+Executing command &#39;echo 0 &gt; /sys/class/block/mmcblk0boot0/force_ro&#39;...
+Executed &#39;echo 0 &gt; /sys/class/block/mmcblk0boot0/force_ro&#39; with exit code 0
+
+Command 2
+────────────────────────────────────────────────────────────
+* Command: echo 0 &gt; /sys/class/block/mmcblk0boot1/force_ro
+* Required exit code : 0
+Executing command &#39;echo 0 &gt; /sys/class/block/mmcblk0boot1/force_ro&#39;...
+Executed &#39;echo 0 &gt; /sys/class/block/mmcblk0boot1/force_ro&#39; with exit code 0
+
+Erasing block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+* Block size: 512
+* Count: 8192
+Executing command &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=8192&#39;...
+8192+0 records in
+8192+0 records out
+Executed &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=8192&#39; with exit code 0
+Block device /dev/mmcblk0 erased
+
+Block device 2
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0boot0
+* Block size: 512
+* Count: 2048
+Executing command &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0boot0 bs=512 count=2048&#39;...
+2048+0 records in
+2048+0 records out
+Executed &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0boot0 bs=512 count=2048&#39; with exit code 0
+Block device /dev/mmcblk0boot0 erased
+
+Block device 3
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0boot1
+* Block size: 512
+* Count: 2048
+Executing command &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0boot1 bs=512 count=2048&#39;...
+2048+0 records in
+2048+0 records out
+Executed &#39;/bin/dd if=/dev/zero of=/dev/mmcblk0boot1 bs=512 count=2048&#39; with exit code 0
+Block device /dev/mmcblk0boot1 erased
+
+Creating partitions on block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+* Label: msdos
+* Block device size: 3850371072
+Expression &#39;$blkdev_size -ge 3221225472&#39; is true, creating partitions
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mklabel msdos&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mklabel msdos&#39; with exit code 0
+Executing command &#39;/usr/sbin/partprobe&#39;...
+Executed &#39;/usr/sbin/partprobe&#39; with exit code 0
+Partition 1:
+* Partition type: primary
+* Filesystem type: fat16
+* Start: 1MiB
+* End: 9MiB
+* Boot flag: 1
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary fat16 1MiB 9MiB&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary fat16 1MiB 9MiB&#39; with exit code 0
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script set 1 boot on&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script set 1 boot on&#39; with exit code 0
+Partition 2:
+* Partition type: primary
+* Filesystem type: ext4
+* Start: 9MiB
+* End: 137MiB
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 9MiB 137MiB&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary ext4 9MiB 137MiB&#39; with exit code 0
+Partition 3:
+* Partition type: primary
+* Start: 137MiB
+* End: 1161MiB
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 137MiB 1161MiB&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart primary 137MiB 1161MiB&#39; with exit code 0
+Partition 4:
+* Partition type: extended
+* Start: 1161MiB
+* End: 100%
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart extended 1161MiB 100%&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart extended 1161MiB 100%&#39; with exit code 0
+Partition 5:
+* Partition type: logical
+* Filesystem type: ext4
+* Start: 1162MiB
+* End: 1290MiB
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical ext4 1162MiB 1290MiB&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical ext4 1162MiB 1290MiB&#39; with exit code 0
+Partition 6:
+* Partition type: logical
+* Start: 1291MiB
+* End: 2315MiB
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical 1291MiB 2315MiB&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical 1291MiB 2315MiB&#39; with exit code 0
+Partition 7:
+* Partition type: logical
+* Filesystem type: ext4
+* Start: 2316MiB
+* End: 100%
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical ext4 2316MiB 100%&#39;...
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script mkpart logical ext4 2316MiB 100%&#39; with exit code 0
+Executing command &#39;/usr/sbin/parted -s /dev/mmcblk0 --script print&#39;...
+Model: MMC Q2J54A (sd/mmc)
+Disk /dev/mmcblk0: 3850MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type      File system  Flags
+ 1      1049kB  9437kB  8389kB  primary                boot, lba
+ 2      9437kB  144MB   134MB   primary   ext4
+ 3      144MB   1217MB  1074MB  primary
+ 4      1217MB  3850MB  2633MB  extended               lba
+ 5      1218MB  1353MB  134MB   logical   ext4
+ 6      1354MB  2427MB  1074MB  logical
+ 7      2429MB  3850MB  1422MB  logical   ext4
+
+Executed &#39;/usr/sbin/parted -s /dev/mmcblk0 --script print&#39; with exit code 0
+Executing command &#39;/usr/sbin/partprobe&#39;...
+Executed &#39;/usr/sbin/partprobe&#39; with exit code 0
+Created partitions on block device /dev/mmcblk0
+
+Block device 2
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+* Label: msdos
+* Block device size: 3850371072
+Expression &#39;$blkdev_size -ge 419430400 -a $blkdev_size -lt 3221225472&#39; is false, skipping partitions creation
+
+Creating filesystems on block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0p1
+* Filesystem type: fat
+* Label: boot
+Executing command &#39;/usr/sbin/mkfs.fat -n boot /dev/mmcblk0p1&#39;...
+mkfs.fat 4.2 (2021-01-31)
+mkfs.fat: Warning: lowercase labels might not work properly on some systems
+Executed &#39;/usr/sbin/mkfs.fat -n boot /dev/mmcblk0p1&#39; with exit code 0
+Created fat filesystem on /dev/mmcblk0p1
+
+Block device 2
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0p7
+* Filesystem type: ext4
+* Label: rootfs_data
+Executing command &#39;/sbin/mkfs.ext4 -F -L rootfs_data /dev/mmcblk0p7&#39;...
+mke2fs 1.46.1 (9-Feb-2021)
+/dev/mmcblk0p7 contains a ext4 file system labelled &#39;rootfs_data&#39;
+        created on Sat Aug  6 14:33:23 2022
+Discarding device blocks: done
+Creating filesystem with 347136 4k blocks and 86944 inodes
+Filesystem UUID: d6160c17-1b80-4907-868a-5a851c9c9767
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Executed &#39;/sbin/mkfs.ext4 -F -L rootfs_data /dev/mmcblk0p7&#39; with exit code 0
+Created ext4 filesystem on /dev/mmcblk0p7
+
+Writing images to block devices...
+════════════════════════════════════════════════════════════════════════════════
+
+Block device 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0
+Image 1:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+* Offset: 524288 bytes
+Executing command &#39;/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=524288 seek=1&#39;...
+0+1 records in
+0+1 records out
+Executed &#39;/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=524288 seek=1&#39; with exit code 0
+Image 2:
+* Image source: local
+* Image URL: /mnt/u-boot-initial-env.bin
+* Offset: 655360 bytes
+Executing command &#39;/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=655360 seek=1&#39;...
+0+1 records in
+0+1 records out
+Executed &#39;/bin/dd if=/mnt/u-boot-initial-env.bin of=/dev/mmcblk0 bs=655360 seek=1&#39; with exit code 0
+Writed images to block device /dev/mmcblk0
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: echo 1 &gt; /sys/class/block/mmcblk0boot0/force_ro
+* Required exit code : 0
+Executing command &#39;echo 1 &gt; /sys/class/block/mmcblk0boot0/force_ro&#39;...
+Executed &#39;echo 1 &gt; /sys/class/block/mmcblk0boot0/force_ro&#39; with exit code 0
+
+Command 2
+────────────────────────────────────────────────────────────
+* Command: echo 1 &gt; /sys/class/block/mmcblk0boot1/force_ro
+* Required exit code : 0
+Executing command &#39;echo 1 &gt; /sys/class/block/mmcblk0boot1/force_ro&#39;...
+Executed &#39;echo 1 &gt; /sys/class/block/mmcblk0boot1/force_ro&#39; with exit code 0
+
+┌────────────────┐
+│                │
+│  Installation  │
+│                │
+└────────────────┘
+
+Mounting filesystems...
+════════════════════════════════════════════════════════════════════════════════
+
+Mount 1
+────────────────────────────────────────────────────────────
+* Device: /dev/mmcblk0p1
+* Target: /boot
+* Filsystem: vfat
+* Create target: yes
+Executing command &#39;/bin/mkdir -p &quot;/boot&quot;&#39;...
+Executed &#39;/bin/mkdir -p &quot;/boot&quot;&#39; with exit code 0
+Target created
+Executing command &#39;/bin/mount -t vfat /dev/mmcblk0p1 /boot&#39;...
+Executed &#39;/bin/mount -t vfat /dev/mmcblk0p1 /boot&#39; with exit code 0
+Mounted
+
+┌─────────────────────┐
+│                     │
+│  Installing images  │
+│                     │
+└─────────────────────┘
+
+Installing image 1...
+════════════════════════════════════════════════════════════════════════════════
+* Type: swupdate
+* Image source: local
+* Image URL: /mnt/swu_install.swu
+* Extra arguments: --no-bootloader-env
+* Dry run: 1
+* Install: 1
+* Selections: ${SWU_SYSTEM_A_SELECTION} ${SWU_SYSTEM_B_SELECTION}
+* Selections (expanded): tanowrt,system-a tanowrt,system-b
+
+[dry] run for selection &#39;tanowrt,system-a&#39;
+────────────────────────────────────────────────────────────
+Executing command &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env&#39;...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d2-xplained-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4134
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-06-11:41:38-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D2 Xplained (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-08-06-11:41:38-UTC: tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo in device : /dev/mmcblk0p3 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d2-xplained-emmc.ext4 in device : /dev/mmcblk0p2 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d2-xplained-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d2-xplained-emmc.bin-emmc in device : /boot/u-boot.bin for handler rawfile
+[WARN ] : SWUPDATE running :  [check_field_string] : Configuration Key is empty!
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-emmc in device : /dev/mtdblock0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d2-xplained-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23875584
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo, 23875584 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23477
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d2-xplained-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 486607
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d2-xplained-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2051
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d2-xplained-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 6585344
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d2-xplained-emmc.ext4, 6585344 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d2-xplained-emmc.ext4 dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d2-xplained-emmc.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d2-xplained-emmc.img dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 262144 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env&#39; with exit code 0
+Selection &#39;tanowrt,system-a&#39; [dry] run success
+
+[dry] run for selection &#39;tanowrt,system-b&#39;
+────────────────────────────────────────────────────────────
+Executing command &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env&#39;...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d2-xplained-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4134
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-06-11:41:38-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D2 Xplained (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-08-06-11:41:38-UTC: tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo in device : /dev/mmcblk0p6 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d2-xplained-emmc.ext4 in device : /dev/mmcblk0p5 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d2-xplained-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d2-xplained-emmc.bin-emmc in device : /boot/u-boot.bin for handler rawfile
+[WARN ] : SWUPDATE running :  [check_field_string] : Configuration Key is empty!
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-emmc in device : /dev/mtdblock0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d2-xplained-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23875584
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo, 23875584 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23477
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d2-xplained-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 486607
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d2-xplained-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2051
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d2-xplained-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 6585344
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d2-xplained-emmc.ext4, 6585344 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d2-xplained-emmc.ext4 dummy
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d2-xplained-emmc.bin-emmc dummy
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d2-xplained-emmc.img dummy
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 262144 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu -n --no-bootloader-env&#39; with exit code 0
+Selection &#39;tanowrt,system-b&#39; [dry] run success
+
+[install] run for selection &#39;tanowrt,system-a&#39;
+────────────────────────────────────────────────────────────
+Executing command &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env&#39;...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d2-xplained-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-a
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4134
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-06-11:41:38-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D2 Xplained (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_a 2022-08-06-11:41:38-UTC: tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo in device : /dev/mmcblk0p3 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_a 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d2-xplained-emmc.ext4 in device : /dev/mmcblk0p2 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d2-xplained-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d2-xplained-emmc.bin-emmc in device : /boot/u-boot.bin for handler rawfile
+[WARN ] : SWUPDATE running :  [check_field_string] : Configuration Key is empty!
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-emmc in device : /dev/mtdblock0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 0
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d2-xplained-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23875584
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo, 23875584 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23477
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d2-xplained-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 486607
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d2-xplained-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2051
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d2-xplained-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 6585344
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d2-xplained-emmc.ext4, 6585344 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d2-xplained-emmc.ext4 raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-emmc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d2-xplained-emmc.bin-emmc rawfile
+[TRACE] : SWUPDATE running :  [install_raw_file] : Installing file u-boot-at91-sama5d2-xplained-emmc.bin-emmc on /boot/u-boot.bin
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d2-xplained-emmc.img raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 262144 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-a command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-a -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env&#39; with exit code 0
+Selection &#39;tanowrt,system-a&#39; [install] run success
+
+[install] run for selection &#39;tanowrt,system-b&#39;
+────────────────────────────────────────────────────────────
+Executing command &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env&#39;...
+[TRACE] : SWUPDATE running :  [main] : transaction_marker globally disabled
+[TRACE] : SWUPDATE running :  [main] : bootloader environment changes globally disabled
+Swupdate v2021.04.0-git49e958fe46c2-r0.tano0.6.atmel0
+
+Licensed under GPLv2. See source distribution for detailed copyright notices.
+
+[INFO ] : SWUPDATE running :  [main] : Running on at91-sama5d2-xplained-emmc Revision 1.0
+[INFO ] : SWUPDATE running :  [print_registered_handlers] : Registered handlers:
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     dummy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     archive
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     tar
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     uboot
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     bootloader
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     lua
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     raw
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawfile
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     rawcopy
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     shellscript
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     preinstall
+[INFO ] : SWUPDATE running :  [print_registered_handlers] :     postinstall
+[INFO ] : SWUPDATE running :  [main] : software set: tanowrt mode: system-b
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/swupdateprog
+[TRACE] : SWUPDATE running :  [network_initializer] : Main loop daemon
+[TRACE] : SWUPDATE running :  [listener_create] : creating socket at /tmp/sockinstctrl
+[TRACE] : SWUPDATE running :  [network_thread] : Incoming network request: processing...
+[INFO ] : SWUPDATE started :  Software Update started !
+[TRACE] : SWUPDATE running :  [network_initializer] : Software update started
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] : Found file
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   filename sw-description
+[TRACE] : SWUPDATE running :  [extract_file_to_tmp] :   size 4134
+[TRACE] : SWUPDATE running :  [get_common_fields] : Version 2022-08-06-11:41:38-UTC
+[TRACE] : SWUPDATE running :  [get_common_fields] : Description Firmware upgrade for Atmel SAMA5D2 Xplained (eMMC)
+[TRACE] : SWUPDATE running :  [parse_hw_compatibility] : Accepted Hw Revision : 1.0
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image rootfs_b 2022-08-06-11:41:38-UTC: tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo in device : /dev/mmcblk0p6 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image kernel_b 4.19.78+gitAUTOINC+046113c438-tano0.2.20.20.0.0: fitImage-at91-sama5d2-xplained-emmc.ext4 in device : /dev/mmcblk0p5 for handler raw (installed from stream)
+[TRACE] : SWUPDATE running :  [parser_follow_link] : Link found, following #./../../common/bootloader/images
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image startup 1.0.0-tano1.atmel1: startup-at91-sama5d2-xplained-emmc.img in device : /dev/mmcblk0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image uboot 2020.01-gitAUTOINC+af59b26c22-tano0.2: u-boot-at91-sama5d2-xplained-emmc.bin-emmc in device : /boot/u-boot.bin for handler rawfile
+[WARN ] : SWUPDATE running :  [check_field_string] : Configuration Key is empty!
+[TRACE] : SWUPDATE running :  [_parse_images] : Found Image at91bootstrap 3.10.1-rc1-gitAUTOINC+1d013b417b-r0.tano1: at91bootstrap.bin-emmc in device : /dev/mtdblock0 for handler raw
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_active = 1
+[TRACE] : SWUPDATE running :  [_parse_bootloader] : Bootloader var: swu_upgrade_available = 1
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware at91-sama5d2-xplained-emmc Revision: 1.0
+[TRACE] : SWUPDATE running :  [check_hw_compatibility] : Hardware compatibility verified
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh preupdate tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23875584
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo, 23875584 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream tanowrt-image-full-at91-sama5d2-xplained-emmc.squashfs-lzo raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename at91bootstrap.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 23477
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename u-boot-at91-sama5d2-xplained-emmc.bin-emmc
+[TRACE] : SWUPDATE running :  [extract_files] :         size 486607
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename startup-at91-sama5d2-xplained-emmc.img
+[TRACE] : SWUPDATE running :  [extract_files] :         size 2051
+[TRACE] : SWUPDATE running :  [extract_files] : Found file [required]
+[TRACE] : SWUPDATE running :  [extract_files] :         filename fitImage-at91-sama5d2-xplained-emmc.ext4
+[TRACE] : SWUPDATE running :  [extract_files] :         size 6585344
+[TRACE] : SWUPDATE running :  [extract_files] : Installing STREAM fitImage-at91-sama5d2-xplained-emmc.ext4, 6585344 bytes
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream fitImage-at91-sama5d2-xplained-emmc.ext4 raw
+[TRACE] : SWUPDATE running :  [extract_files] : END INSTALLING STREAMING
+[TRACE] : SWUPDATE running :  [extract_padding] : Expecting 388 padding bytes at end-of-file
+[TRACE] : SWUPDATE running :  [network_initializer] : Valid image found: copying to FLASH
+[INFO ] : SWUPDATE running :  Installation in progress
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream at91bootstrap.bin-emmc raw
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream u-boot-at91-sama5d2-xplained-emmc.bin-emmc rawfile
+[TRACE] : SWUPDATE running :  [install_raw_file] : Installing file u-boot-at91-sama5d2-xplained-emmc.bin-emmc on /boot/u-boot.bin
+[TRACE] : SWUPDATE running :  [install_single_image] : Found installer for stream startup-at91-sama5d2-xplained-emmc.img raw
+[TRACE] : SWUPDATE running :  [copyfile] : offset has been defined: 262144 bytes
+[INFO ] : SWUPDATE successful ! SWUPDATE successful !
+[TRACE] : SWUPDATE running :  [run_system_cmd] : /usr/lib/swupdate/swupdate_hook.sh postupdate-success tanowrt system-b command returned 0
+[TRACE] : SWUPDATE running :  [network_initializer] : Main thread sleep again !
+[INFO ] : No SWUPDATE running :  Waiting for requests...
+[INFO ] : SWUPDATE running :  [endupdate] : Swupdate was successful !
+
+Executed &#39;SWU_FACTORY_INSTALL=1 /usr/bin/swupdate -e tanowrt,system-b -v -M -f /etc/swupdate.conf -i /mnt/swu_install.swu --no-bootloader-env&#39; with exit code 0
+Selection &#39;tanowrt,system-b&#39; [install] run success
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: umount /boot
+* Required exit code : 0
+Executing command &#39;umount /boot&#39;...
+Executed &#39;umount /boot&#39; with exit code 0
+
+┌─────────────────────┐
+│                     │
+│  Post-installation  │
+│                     │
+└─────────────────────┘
+
+Executing custom commands...
+════════════════════════════════════════════════════════════════════════════════
+
+Command 1
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_active 0
+* Required exit code : 0
+Executing command &#39;fw_setenv swu_active 0&#39;...
+Executed &#39;fw_setenv swu_active 0&#39; with exit code 0
+
+Command 2
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_upgrade_available 0
+* Required exit code : 0
+Executing command &#39;fw_setenv swu_upgrade_available 0&#39;...
+Executed &#39;fw_setenv swu_upgrade_available 0&#39; with exit code 0
+
+Command 3
+────────────────────────────────────────────────────────────
+* Command: fw_setenv swu_bootcount 0
+* Required exit code : 0
+Executing command &#39;fw_setenv swu_bootcount 0&#39;...
+Executed &#39;fw_setenv swu_bootcount 0&#39; with exit code 0
+
+┌────────────────────────────────────────────────┐
+│                                                │
+│  SUCCESS: Installation successfully completed  │
+│                                                │
+└────────────────────────────────────────────────┘
+
+Powering off in 5 seconds...
+Powering off in 4 seconds...
+Powering off in 3 seconds...
+Powering off in 2 seconds...
+Powering off in 1 seconds...
+Powering off now...
+[   64.368061] reboot: Power down
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  <hr/>
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 10.08.2022
+    </p>
+  </div>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

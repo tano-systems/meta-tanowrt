@@ -25,7 +25,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1 EVB-KSZ9477" href="boards/evb-ksz9477/index.html" />
+    <link rel="next" title="1 Atmel SAMA5D2 Xplained" href="boards/at91-sama5d2-xplained/index.html" />
     <link rel="prev" title="TanoWrt Variables Glossary" href="../meta-tanowrt/variables.html" /> 
 </head>
 
@@ -64,8 +64,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Microchip (Atmel)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#supported-boards">Supported Boards</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="boards/evb-ksz9477/index.html">1 EVB-KSZ9477</a></li>
-<li class="toctree-l3"><a class="reference internal" href="boards/evb-ksz9563/index.html">2 EVB-KSZ9563 on SAMA5D3 EDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boards/at91-sama5d2-xplained/index.html">1 Atmel SAMA5D2 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boards/at91-sama5d3-xplained/index.html">2 Atmel SAMA5D3 Xplained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boards/evb-ksz9477/index.html">3 Microchip EVB-KSZ9477</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boards/evb-ksz9563/index.html">4 Microchip EVB-KSZ9563 on SAMA5D3 EDS</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
@@ -203,23 +205,46 @@ Storage(s)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/evb-ksz9477/index.html#machine-evb-ksz9477"><span class="std std-ref">EVB-KSZ9477</span></a></p></td>
-<td rowspan="4"><div class="line-block">
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/at91-sama5d2-xplained/index.html#machine-at91-sama5d2-xplained"><span class="std std-ref">Atmel SAMA5D2 Xplained</span></a></p></td>
+<td rowspan="2"><div class="line-block">
+<div class="line"><strong>Model:</strong> Microchip (Atmel) ATSAMA5D27</div>
+<div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A5 processor-based MPU with FPU</div>
+<div class="line"><strong>Frequency:</strong> up to 500 MHz</div>
+</div>
+</td>
+<td rowspan="2"><p>512 MiB DDR3L</p></td>
+<td rowspan="8"><p>4.19.78
+(non-RT)</p></td>
+<td><p>4 GB eMMC</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/at91-sama5d2-xplained-emmc.yml">at91-sama5d2-xplained-emmc.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/at91-sama5d2-xplained-sd.yml">at91-sama5d2-xplained-sd.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/at91-sama5d3-xplained/index.html#machine-at91-sama5d3-xplained"><span class="std std-ref">Atmel SAMA5D3 Xplained</span></a></p></td>
+<td rowspan="6"><div class="line-block">
 <div class="line"><strong>Model:</strong> Microchip (Atmel) ATSAMA5D36</div>
 <div class="line"><strong>Cores:</strong> 1 x ARM Cortex-A5 processor-based MPU</div>
 <div class="line"><strong>Frequency:</strong> up to 536 MHz</div>
 </div>
 </td>
-<td rowspan="4"><p>256 MiB DDR2</p></td>
-<td rowspan="4"><p>4.19.78
-(non-RT)</p></td>
+<td rowspan="2"><p>256 MiB DDR2</p></td>
+<td><p>256 MB NAND</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/at91-sama5d3-xplained-nand.yml">at91-sama5d3-xplained-nand.yml</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SD card</p></td>
+<td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/at91-sama5d3-xplained-sd.yml">at91-sama5d3-xplained-sd.yml</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/evb-ksz9477/index.html#machine-evb-ksz9477"><span class="std std-ref">Microchip EVB-KSZ9477</span></a></p></td>
+<td rowspan="2"><p>256 MiB DDR2</p></td>
 <td><p>256 MB NAND</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9477-nand.yml">evb-ksz9477-nand.yml</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>SD card</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9477-sd.yml">evb-ksz9477-sd.yml</a></p></td>
 </tr>
-<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/evb-ksz9563/index.html#machine-evb-ksz9563"><span class="std std-ref">EVB-KSZ9563 on SAMA5D3 EDS</span></a></p></td>
+<tr class="row-even"><td rowspan="2"><p><a class="reference internal" href="boards/evb-ksz9563/index.html#machine-evb-ksz9563"><span class="std std-ref">Microchip EVB-KSZ9563 on SAMA5D3 EDS</span></a></p></td>
+<td rowspan="2"><p>256 MiB DDR2</p></td>
 <td><p>256 MB NAND</p></td>
 <td><p><a class="reference external" href="https://github.com/tano-systems/meta-tanowrt/blob/master/kas/targets/evb-ksz9563-nand.yml">evb-ksz9563-nand.yml</a></p></td>
 </tr>
@@ -256,7 +281,7 @@ LICENSE stated in each recipe (<code class="file docutils literal notranslate"><
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 04.08.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 10.08.2022
     </p>
   </div>
 </footer>

@@ -2,9 +2,9 @@
 
 .. _machine-evb-ksz9477:
 
-***********
-EVB-KSZ9477
-***********
+*********************
+Microchip EVB-KSZ9477
+*********************
 
 KSZ9477 Managed Switch Evaluation Kit with SAMA5D36 MPU (EVB-KSZ9477).
 
