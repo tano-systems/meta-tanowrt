@@ -9,4 +9,4 @@ header:
 repos:
   meta-qt5:
     url: https://github.com/meta-qt5/meta-qt5.git
-    refspec: a00af3eae082b772469d9dd21b2371dd4d237684
+    refspec: 43f8f539d40070a70fe89136db89bf5bb1dfe7ed
