@@ -36,10 +36,19 @@ apply_timezone() {
 		ln -sf "/usr/share/zoneinfo/$zonename" /tmp/localtime
 
 	# apply timezone to kernel
+	RET="0"
 	if [ "$kept_in_localtime" = "0" ]; then
 		${HWCLOCK} -u --systz
+		RET="$?"
 	else
 		${HWCLOCK} -l --systz
+		RET="$?"
+	fi
+
+	if [ "${RET}" = "0" ]; then
+		$LOG daemon.info "applied time zone '$zonename'"
+	else
+		$LOG daemon.error "failed to apply time zone '$zonename' (${RET})"
 	fi
 }
 
