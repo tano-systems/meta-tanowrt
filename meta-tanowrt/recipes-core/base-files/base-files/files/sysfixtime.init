@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2013-2014 OpenWrt.org
-# Copyright (C) 2018-2021 Tano Systems LLC
+# Copyright (C) 2018-2022 Tano Systems LLC
 
 START=00
 STOP=90
@@ -29,7 +29,7 @@ apply_timezone() {
 	local zonename
 	local kept_in_localtime
 
-	config_get zonename "$config" 'zonename' ''
+	config_get zonename "$config" 'zonename' 'UTC'
 	config_get_bool kept_in_localtime 'rtc' 'hwclock_localtime' 1
 
 	[ -n "$zonename" ] && [ -f "/usr/share/zoneinfo/$zonename" ] && \
