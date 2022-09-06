@@ -1,0 +1,11 @@
+--- a/configure.ac	
++++ b/configure.ac	
+@@ -46,7 +46,7 @@
+ 
+ # Checks for library functions.
+ AC_FUNC_FORK
+-AC_FUNC_MALLOC
++#AC_FUNC_MALLOC
+ AC_TYPE_SIGNAL
+ AC_FUNC_STRFTIME
+ AC_CHECK_FUNCS([gettimeofday inet_ntoa memset socket \
