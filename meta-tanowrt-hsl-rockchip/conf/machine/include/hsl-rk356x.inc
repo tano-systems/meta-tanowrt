@@ -8,7 +8,9 @@ MACHINE_FEATURES_append = "\
 	pci \
 "
 
-require conf/machine/include/tune-cortexa55.inc
+# OpenEmbedded core layer on dunfell branch are not support Cortex-A55.
+# Use Cortex-A53 instead because it is a predecessor.
+require conf/machine/include/tune-cortexa53.inc
 require conf/machine/include/hsl-rockchip-arm64-common.inc
 
 PREFERRED_PROVIDER_virtual/egl ?= "rockchip-libmali"
