@@ -16,6 +16,8 @@ SRC_URI[sha256sum] = "4dc4ef0fbcc8abb7a2354691475a58ff3eb015f1bab3150750729f7f65
 
 PYPI_PACKAGE = "ubus"
 
+PR = "tano0"
+
 inherit pypi setuptools3
 
 DEPENDS += "${PYTHON_PN}-pip-native ${PYTHON_PN}-wheel-native libubus libubox"
