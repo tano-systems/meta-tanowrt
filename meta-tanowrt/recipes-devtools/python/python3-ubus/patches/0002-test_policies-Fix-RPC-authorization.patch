@@ -1,0 +1,31 @@
+From c5193d9aa8e3ac70b0e120e309e67a3d684ce194 Mon Sep 17 00:00:00 2001
+From: Mikhail Pankin <m.pankin@yadro.com>
+Date: Mon, 31 Oct 2022 19:23:00 +0300
+Subject: [PATCH] test_policies: Fix RPC authorization
+
+https://gitlab.nic.cz/turris/python-ubus/-/issues/3
+
+Signed-off-by: Mikhail Pankin <m.pankin@yadro.com>
+---
+ ubus_python.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/ubus_python.c b/ubus_python.c
+index 378f8e4..c9ffc23 100644
+--- a/ubus_python.c
++++ b/ubus_python.c
+@@ -811,6 +811,11 @@ bool test_policies(const struct blobmsg_policy *policies, int n_policies, struct
+ 		int type = blobmsg_type(cur);
+ 		int pol_idx;
+ 
++		// Skip comparision if RPC session ID is given
++		if (!strcmp("ubus_rpc_session", name)) {
++		        continue;
++		}
++
+ 		// Iterate through policies
+ 		for (pol_idx = 0; pol_idx < n_policies; pol_idx++) {
+ 
+-- 
+2.25.1
+

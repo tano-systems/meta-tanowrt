@@ -1,0 +1,135 @@
+From 6082ab779f32a78f128c52ba390299e0ddf23994 Mon Sep 17 00:00:00 2001
+From: Mikhail Pankin <m.pankin@yadro.com>
+Date: Tue, 4 Oct 2022 17:22:25 +0300
+Subject: [PATCH] ubus_loop: Add timeout callback
+
+---
+ ubus_python.c | 57 +++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 51 insertions(+), 6 deletions(-)
+
+diff --git a/ubus_python.c b/ubus_python.c
+index 1803718..378f8e4 100644
+--- a/ubus_python.c
++++ b/ubus_python.c
+@@ -14,6 +14,7 @@
+  */
+ 
+ 
++#define PY_SSIZE_T_CLEAN
+ #include <Python.h>
+ #include <dlfcn.h>
+ #include <libubox/blobmsg_json.h>
+@@ -64,8 +65,13 @@ typedef struct {
+ typedef struct {
+ 	struct ubus_event_handler handler;
+ 	PyObject *callback;
+-}ubus_Listener ;
++} ubus_Listener;
+ 
++typedef struct {
++	struct uloop_timeout handler;
++	PyObject *callback;
++	int timeout;
++} ubus_Timeout;
+ 
+ PyObject *prepare_bool(bool yes)
+ {
+@@ -88,6 +94,7 @@ ubus_Object **objects = NULL;
+ size_t objects_size = 0;
+ struct blob_buf python_buf;
+ struct ubus_context *ctx = NULL;
++ubus_Timeout *timeout_handler = NULL;
+ 
+ #define CONNECTED (ctx != NULL)
+ 
+@@ -352,6 +359,10 @@ void dispose_connection(bool deregister)
+ 		listerners_size = 0;
+ 		listeners = NULL;
+ 	}
++	// clear timer handler
++	if (timeout_handler) {
++		free(timeout_handler);
++	}
+ 	// clear objects
+ 	if (objects) {
+ 		for (int i = 0; i < objects_size; i++) {
+@@ -706,17 +717,31 @@ listen_error1:
+ }
+ 
+ static void ubus_python_timeout_handler(struct uloop_timeout *timeout) {
+-	uloop_end();
++	PyGILState_STATE state = PyGILState_Ensure();
++	ubus_Timeout *_timeout_handler = container_of(timeout, ubus_Timeout, handler);
++	if (_timeout_handler) {
++		PyObject *result = PyObject_CallNoArgs(_timeout_handler->callback);
++		if (!result) {
++			PyGILState_Release(state);
++			return;
++		}
++		Py_DECREF(result);
++		if (_timeout_handler->timeout > 0)
++			uloop_timeout_set(timeout, _timeout_handler->timeout);
++	} else uloop_end();
++	PyGILState_Release(state);
+ }
+ 
+ PyDoc_STRVAR(
+ 	connect_loop_doc,
+-	"loop(timeout=-1)\n"
++	"loop(timeout=-1, callback=NULL)\n"
+ 	"\n"
+ 	"Enters a loop and processes events.\n"
+ 	"\n"
+ 	":param timeout: loop timeout in ms (if lower than zero then it will run forever) \n"
+ 	":type timeout: int\n"
++	":param callback: function called by timeout\n"
++	":type callback: pointer\n"
+ );
+ 
+ static PyObject *ubus_python_loop(PyObject *module, PyObject *args, PyObject *kwargs)
+@@ -726,11 +751,26 @@ static PyObject *ubus_python_loop(PyObject *module, PyObject *args, PyObject *kw
+ 		return NULL;
+ 	}
+ 
++	PyObject *callback;
+ 	int timeout = -1;
+-	static char *kwlist[] = {"timeout", NULL};
+-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|i", kwlist, &timeout)){
++	static char *kwlist[] = {"timeout", "callback", NULL};
++	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|iO:set_callback", kwlist, &timeout, &callback)) {
++		PyErr_SetString(PyExc_TypeError, "can't parse arguments");
++		return NULL;
++	}
++
++	if (!PyCallable_Check(callback)) {
++		PyErr_SetString(PyExc_TypeError, "parameter must be callable");
++		return NULL;
++	}
++
++	timeout_handler = calloc(1, sizeof(ubus_Timeout));
++	if (!timeout_handler) {
++		PyErr_Format(PyExc_MemoryError, MSG_ALLOCATION_FAILS);
+ 		return NULL;
+ 	}
++	timeout_handler->callback = NULL;
++	timeout_handler->timeout = 0;
+ 
+ 	Py_BEGIN_ALLOW_THREADS
+ 	if (timeout == 0) {
+@@ -743,7 +783,12 @@ static PyObject *ubus_python_loop(PyObject *module, PyObject *args, PyObject *kw
+ 			// prepare for timeout
+ 			memset(&u_timeout, 0, sizeof(u_timeout));
+ 			u_timeout.cb = ubus_python_timeout_handler;
+-			uloop_timeout_set(&u_timeout, timeout);  // Timeout to seconds
++			Py_XINCREF(callback);
++			Py_XDECREF(timeout_handler->callback);
++			timeout_handler->callback = callback;
++			timeout_handler->timeout = timeout;
++			timeout_handler->handler = u_timeout;
++			uloop_timeout_set(&timeout_handler->handler, timeout); // Timeout to seconds
+ 		}
+ 		uloop_run();
+ 		if (timeout > 0) {
+-- 
+2.25.1
+
