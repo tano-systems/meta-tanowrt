@@ -15,6 +15,10 @@ do_sysinfo_x86() {
 		[ -n "$vendor" ] && break
 	done
 
+	if [ "$vendor" = "Default string" ]; then
+		vendor=""
+	fi
+
 	for file in product_name board_name; do
 		product="$(cat /sys/devices/virtual/dmi/id/$file 2>/dev/null)"
 		case "$vendor:$product" in
@@ -31,7 +35,11 @@ do_sysinfo_x86() {
 
 	mkdir -p /tmp/sysinfo
 
-	echo "$vendor $product" > /tmp/sysinfo/model
+	if [ -n "$vendor" ]; then
+		echo "$vendor $product" > /tmp/sysinfo/model
+	else
+		echo "$product" > /tmp/sysinfo/model
+	fi
 
 	sanitize_name_x86 /tmp/sysinfo/model > /tmp/sysinfo/board_name
 }
