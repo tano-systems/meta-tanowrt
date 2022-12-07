@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "15"
+INC_PR = "16"
 
 PACKAGECONFIG[ubus] = ",,libubus"
 PACKAGECONFIG[broken-rtc] = ",,"
@@ -40,6 +40,7 @@ SRC_URI += "\
 	file://dhcp-script.sh \
 	file://rfc6761.conf \
 	file://50-dnsmasq-migrate-resolv-conf-auto.sh \
+	file://50-dnsmasq-migrate-ipset.sh \
 "
 
 inherit tanowrt-services useradd
@@ -78,6 +79,7 @@ do_install:append() {
 
     install -d ${D}${sysconfdir}/uci-defaults
     install -m 0755 ${WORKDIR}/50-dnsmasq-migrate-resolv-conf-auto.sh ${D}${sysconfdir}/uci-defaults/
+    install -m 0755 ${WORKDIR}/50-dnsmasq-migrate-ipset.sh ${D}${sysconfdir}/uci-defaults/
 
     # dnsmasq installs in /usr/bin, openwrt looks for it in /usr/sbin
     ln -s ${bindir}/dnsmasq ${D}${sbindir}/dnsmasq
