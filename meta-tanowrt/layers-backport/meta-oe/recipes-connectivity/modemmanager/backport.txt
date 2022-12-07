@@ -1,5 +1,0 @@
-﻿Original recipe for modemmanager 1.16.6 backported from meta-openembedded layer:
-  repository: https://github.com/openembedded/meta-openembedded.git
-  subdirectory: meta-oe
-  branch: master
-  revision: 9aabe2b4ee0d496a2f23cdc59221316b3d79107a

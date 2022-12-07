@@ -1,4 +1,0 @@
-Recipe for curl 7.76.0 backported from openembedded-core layer:
-  repository: git://git.openembedded.org/openembedded-core
-  branch: master
-  revision: fc7875ce3c68a253f8b8e5d8855c1814731b5a45
