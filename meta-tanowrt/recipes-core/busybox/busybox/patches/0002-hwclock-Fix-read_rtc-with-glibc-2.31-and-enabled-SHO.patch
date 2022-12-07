@@ -17,13 +17,13 @@ diff --git a/util-linux/hwclock.c b/util-linux/hwclock.c
 index 2efb6ca..2ce4e57 100644
 --- a/util-linux/hwclock.c
 +++ b/util-linux/hwclock.c
-@@ -80,7 +80,8 @@ static time_t read_rtc(const char **pp_rtcname, struct timeval *sys_tv, int utc)
+@@ -79,7 +79,8 @@ static time_t read_rtc(const char **pp_rtcname, struct timeval *sys_tv, int utc)
  		int before = tm_time.tm_sec;
  		while (1) {
  			rtc_read_tm(&tm_time, fd);
--			gettimeofday(sys_tv, NULL);
+-			xgettimeofday(sys_tv);
 +			if (sys_tv)
-+				gettimeofday(sys_tv, NULL);
++				xgettimeofday(sys_tv);
  			if (before != (int)tm_time.tm_sec)
  				break;
  		}
