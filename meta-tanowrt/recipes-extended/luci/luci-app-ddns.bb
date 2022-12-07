@@ -17,7 +17,7 @@ inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 
 # +luci-mod-admin-full
-RDEPENDS_${PN} += "ddns-scripts luci-lib-ipkg luci-mod-admin-full"
+RDEPENDS:${PN} += "ddns-scripts luci-lib-ipkg luci-mod-admin-full"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=applications/luci-app-ddns;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

@@ -18,7 +18,7 @@ TOOLCHAIN = "gcc"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/procd.git;branch=master \
@@ -84,7 +84,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 do_unpack[vardeps] += "libdir"
 do_unpack[vardeps] += "base_libdir"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
@@ -116,7 +116,7 @@ do_configure_prepend () {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${base_sbindir}
 	install -m 0755 ${WORKDIR}/reload_config ${D}${base_sbindir}/
 
@@ -167,20 +167,20 @@ do_install_append() {
 	fi
 }
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	fstools \
 	base-files-scripts-openwrt \
 	${PN}-inittab \
 "
 
-RRECOMMENDS_${PN} += "\
+RRECOMMENDS:${PN} += "\
 	udev \
 "
 
-FILES_${PN} = "/"
+FILES:${PN} = "/"
 FILES_SOLIBSDEV = ""
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	/etc/uxc \
 "
 

@@ -26,6 +26,6 @@ EXTRA_OEMAKE = "M=${S}/extensions DESTDIR=${D} V=1 DEPMOD=/bin/true"
 MAKE_TARGETS = "all"
 MODULES_INSTALL_TARGET = "install"
 
-FILES_${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
+FILES:${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
 
-RDEPENDS_${PN} += "perl"
+RDEPENDS:${PN} += "perl"

@@ -6,14 +6,14 @@
 INC_PR = "7"
 
 # OpenWrt files
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://dropbear.config \
 	file://dropbear.init \
 	file://dropbear.failsafe \
 "
 
 # OpenWrt configuration
-EXTRA_OECONF_append += "\
+EXTRA_OECONF:append = "\
 	--disable-pam \
 	--enable-openpty \
 	--enable-syslog \
@@ -34,7 +34,7 @@ TANOWRT_SERVICE_SCRIPTS_dropbear += "dropbear"
 TANOWRT_SERVICE_STATE_dropbear-dropbear ?= "enabled"
 
 # OpenWrt patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://100-pubkey_path.patch \
 	file://110-change_user.patch \
 	file://130-ssh_ignore_x_args.patch \
@@ -47,13 +47,13 @@ SRC_URI_append = "\
 "
 
 # Tano patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://0001-Add-PasswordAuthentication-option-to-client-CLI.patch \
 "
 
-FILES_${PN} += "/root ${TANOWRT_PATH_PREINIT}"
+FILES:${PN} += "/root ${TANOWRT_PATH_PREINIT}"
 
-do_configure_append() {
+do_configure:append() {
 	: > ${B}/localoptions.h
 	
 	echo '#define DROPBEAR_CURVE25519 1' >> ${B}/localoptions.h
@@ -74,7 +74,7 @@ do_configure_append() {
 		${S}/sysoptions.h
 }
 
-do_install_append() {
+do_install:append() {
     install -Dm 0755 ${WORKDIR}/dropbear.init    ${D}${sysconfdir}/init.d/dropbear
     install -Dm 0644 ${WORKDIR}/dropbear.config  ${D}${sysconfdir}/config/dropbear
 
@@ -89,7 +89,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/dropbear.failsafe ${D}${TANOWRT_PATH_PREINIT}/99_10_failsafe_dropbear
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/dropbear \
 	${sysconfdir}/dropbear/dropbear_rsa_host_key \
 "

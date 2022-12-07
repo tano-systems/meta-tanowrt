@@ -10,7 +10,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${TANOWRT_BASE}/LICENSE;md5=aed2cf5a7c273a7c2dcdbd491a3a8416"
 
 PR = "tano0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "file://usb-gadget-network.init"
 
@@ -20,8 +20,8 @@ do_install() {
 	                ${D}${sysconfdir}/init.d/usb-gadget-network
 }
 
-ALLOW_EMPTY_${PN} = "1"
-FILES_${PN} = "${sysconfdir}/init.d/usb-gadget-network"
+ALLOW_EMPTY:${PN} = "1"
+FILES:${PN} = "${sysconfdir}/init.d/usb-gadget-network"
 
 inherit tanowrt-services
 

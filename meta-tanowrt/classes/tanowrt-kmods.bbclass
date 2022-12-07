@@ -5,7 +5,7 @@
 #           Copyright (C) 2020-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-ROOTFS_POSTUNINSTALL_COMMAND_append = ' rootfs_flatten_modules_hook; '
+ROOTFS_POSTUNINSTALL_COMMAND:append = ' rootfs_flatten_modules_hook; '
 
 inherit linux-kernel-base
 

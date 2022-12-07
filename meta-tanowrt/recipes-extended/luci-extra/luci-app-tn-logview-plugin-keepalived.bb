@@ -16,4 +16,4 @@ LIC_FILES_CHKSUM = "file://plugins/keepalived/LICENSE;md5=db0fccee3def547e17585a
 
 LUCI_PKG_SRC = "${S}/plugins/keepalived"
 
-RDEPENDS_${PN} += "luci-app-tn-logview"
+RDEPENDS:${PN} += "luci-app-tn-logview"

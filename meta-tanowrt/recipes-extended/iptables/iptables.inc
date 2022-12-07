@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MIT
 #
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${libdir}
 	install -m 0644 ${B}/extensions/libiptext*.so ${D}${libdir}
 }
 
-FILES_${PN} += "${libdir}/*.so"
+FILES:${PN} += "${libdir}/*.so"
 FILES_SOLIBSDEV = ""
-INSANE_SKIP_${PN} = "dev-so"
+INSANE_SKIP:${PN} = "dev-so"

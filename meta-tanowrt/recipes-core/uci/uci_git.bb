@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://uci.h;beginline=1;endline=13;md5=0ee862ed12171ee619c8
 SECTION = "base"
 DEPENDS = "libubox lua5.1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/uci.git;branch=master;name=uci \
@@ -21,7 +21,7 @@ SRC_URI = "\
 "
 
 PROVIDES += "libuci libuci-lua"
-RPROVIDES_${PN} += "libuci-lua libuci"
+RPROVIDES:${PN} += "libuci-lua libuci"
 
 # 24.04.2020
 # file: preserve original file mode after commit
@@ -37,7 +37,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/lua5.1"
 
-do_install_append() {
+do_install:append() {
     install -Dm 0755 ${WORKDIR}/uci.sh ${D}${nonarch_base_libdir}/config/uci.sh
 
     mkdir -p ${D}/sbin
@@ -46,6 +46,6 @@ do_install_append() {
     ln -s /usr/bin/uci ${D}/sbin/uci
 }
 
-FILES_${PN} += "${nonarch_base_libdir}"
+FILES:${PN} += "${nonarch_base_libdir}"
 
 BBCLASSEXTEND = "native nativesdk"

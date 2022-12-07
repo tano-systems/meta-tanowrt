@@ -14,7 +14,7 @@ inherit packagegroup
 
 do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	mstpd \
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'luci-app-tn-mstpd', '',d)} \
 "

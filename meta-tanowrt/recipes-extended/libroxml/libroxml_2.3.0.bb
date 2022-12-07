@@ -5,7 +5,7 @@
 #
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DESCRIPTION = "This library is minimum, easy-to-use, C implementation for xml file parsing."
 HOMEPAGE = "http://www.libroxml.net"

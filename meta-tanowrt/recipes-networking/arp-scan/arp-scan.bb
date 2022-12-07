@@ -27,8 +27,8 @@ inherit autotools
 
 PACKAGES += "${PN}-data"
 
-FILES_${PN} = "/usr/bin/"
+FILES:${PN} = "/usr/bin/"
 
-DESCRIPTION_${PN}-data = "This package contains an data files for ARP scanner utility"
-SUMMARY_${PN}-data = "The ARP scanner data files"
-FILES_${PN}-data = "/usr/share/arp-scan"
+DESCRIPTION:${PN}-data = "This package contains an data files for ARP scanner utility"
+SUMMARY:${PN}-data = "The ARP scanner data files"
+FILES:${PN}-data = "/usr/share/arp-scan"

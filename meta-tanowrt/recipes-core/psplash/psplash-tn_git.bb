@@ -25,11 +25,11 @@ PACKAGECONFIG[png] = "-DENABLE_PNG=ON,,libpng,"
 PACKAGECONFIG[jpeg] = "-DENABLE_JPEG=ON,,jpeg,"
 PACKAGECONFIG[alive-gif] = "-DENABLE_ALIVE_GIF=ON,,,"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RPROVIDES_${PN} = "psplash"
-RREPLACES_${PN} = "psplash"
-RCONFLICTS_${PN} = "psplash"
+RPROVIDES:${PN} = "psplash"
+RREPLACES:${PN} = "psplash"
+RCONFLICTS:${PN} = "psplash"
 
 PSPLASH_TN_GIT_URI      ?= "gitsm://github.com/tano-systems/psplash-tn"
 PSPLASH_TN_GIT_BRANCH   ?= "tano/master"
@@ -64,7 +64,7 @@ inherit cmake pkgconfig update-alternatives
 ALTERNATIVE_PRIORITY = "100"
 ALTERNATIVE_LINK_NAME[psplash] = "${bindir}/psplash"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/init.d/
 	install -m 0755 ${WORKDIR}/psplash.init ${D}${sysconfdir}/init.d/psplash
 
@@ -78,8 +78,8 @@ do_install_append() {
 
 ################################################################################
 
-FILES_${PN} += "${sysconfdir}/psplash-init.d ${datadir}/psplash"
+FILES:${PN} += "${sysconfdir}/psplash-init.d ${datadir}/psplash"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/psplash \
 "

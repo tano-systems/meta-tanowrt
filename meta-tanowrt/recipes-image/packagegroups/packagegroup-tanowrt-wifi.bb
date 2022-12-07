@@ -20,7 +20,7 @@ PACKAGES = "\
 
 do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	${PN}-firmware \
 	iwinfo \
 	rpcd-mod-iwinfo \
@@ -30,7 +30,7 @@ RDEPENDS_${PN} = "\
 	${@oe.utils.conditional('TANOWRT_LUCI_ENABLE', '1', 'luci-app-ledtrig-rssi', '', d)} \
 "
 
-RRECOMMENDS_${PN}-firmware = "\
+RRECOMMENDS:${PN}-firmware = "\
 	linux-firmware-rtl8192ce \
 	linux-firmware-rtl8192cu \
 	linux-firmware-rtl8192su \

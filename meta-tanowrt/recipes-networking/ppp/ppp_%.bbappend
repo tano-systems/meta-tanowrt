@@ -16,18 +16,18 @@
 # ppp-l2tp           ppp-mod-pppol2tp
 # ppp-tools          pppdump pppstats
 #
-PR_append = ".tano9"
+PR:append = ".tano9"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI_remove = "file://cifdefroute.patch"
-SRC_URI_remove = "file://makefile.patch"
-SRC_URI_remove = "file://makefile-remove-hard-usr-reference.patch"
-SRC_URI_remove = "file://copts.patch"
+SRC_URI:remove = "file://cifdefroute.patch"
+SRC_URI:remove = "file://makefile.patch"
+SRC_URI:remove = "file://makefile-remove-hard-usr-reference.patch"
+SRC_URI:remove = "file://copts.patch"
 
-EXTRA_OEMAKE_append = " PRECOMPILED_FILTER=1 STAGING_DIR=${STAGING_DIR_TARGET} OE_LIBDIR=${libdir} OE_BASE_LIBDIR=${base_libdir}"
+EXTRA_OEMAKE:append = " PRECOMPILED_FILTER=1 STAGING_DIR=${STAGING_DIR_TARGET} OE_LIBDIR=${libdir} OE_BASE_LIBDIR=${base_libdir}"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://010-use_target_for_configure.patch \
 	file://100-debian_ip-ip_option.patch \
 	file://101-debian_close_dev_ppp.patch \
@@ -63,11 +63,11 @@ SRC_URI_append = "\
 	file://511-pptp_cflags.patch \
 "
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://0001-pppd-do-not-hardcode-lib-directory.patch \
 "
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://options.pptp \
 	file://radius.conf \
 	file://servers \
@@ -83,7 +83,7 @@ SRC_URI_append = "\
 	file://chap-secrets \
 "
 
-do_install_append() {
+do_install:append() {
 	# Remove unused in OpenWrt files
 	rm -rf ${D}${bindir}
 
@@ -122,7 +122,7 @@ do_install_append() {
 
 PACKAGES += "${PN}-pptp"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir}/ppp/chap-secrets \
 	${sysconfdir}/ppp/filter \
 	${sysconfdir}/ppp/options \
@@ -135,15 +135,15 @@ FILES_${PN} = "\
 	/usr/include/* \
 "
 
-FILES_${PN}-pptp = "${libdir}/pppd/${PV}/pptp.so ${sysconfdir}/ppp/options.pptp"
-SUMMARY_${PN}-pptp = "Plugin for PPP for PPtP support"
+FILES:${PN}-pptp = "${libdir}/pppd/${PV}/pptp.so ${sysconfdir}/ppp/options.pptp"
+SUMMARY:${PN}-pptp = "Plugin for PPP for PPtP support"
 
-FILES_${PN}-radius += "\
+FILES:${PN}-radius += "\
 	${sysconfdir}/ppp/radius.conf \
 	${sysconfdir}/ppp/radius \
 "
 
-CONFFILES_${PN}-radius = "\
+CONFFILES:${PN}-radius = "\
 	${sysconfdir}/ppp/radius.conf \
 	${sysconfdir}/ppp/radius/* \
 "
@@ -162,21 +162,21 @@ inherit kmod/pppoe
 # ${PN}-l2tp
 inherit kmod/pppol2tp
 
-RDEPENDS_${PN}-pptp += "${PN} resolveip"
-RDEPENDS_${PN}-oa += "${PN} linux-atm"
-RDEPENDS_${PN}-oe += "${PN}"
-RDEPENDS_${PN}-radius += "${PN}"
-RDEPENDS_${PN}-winbind += "${PN}"
-RDEPENDS_${PN}-minconn += "${PN}"
-RDEPENDS_${PN}-password += "${PN}"
-RDEPENDS_${PN}-l2tp += "${PN}"
-RDEPENDS_${PN}-tools += "${PN}"
+RDEPENDS:${PN}-pptp += "${PN} resolveip"
+RDEPENDS:${PN}-oa += "${PN} linux-atm"
+RDEPENDS:${PN}-oe += "${PN}"
+RDEPENDS:${PN}-radius += "${PN}"
+RDEPENDS:${PN}-winbind += "${PN}"
+RDEPENDS:${PN}-minconn += "${PN}"
+RDEPENDS:${PN}-password += "${PN}"
+RDEPENDS:${PN}-l2tp += "${PN}"
+RDEPENDS:${PN}-tools += "${PN}"
 
-CONFFILES_${PN} = "\
+CONFFILES:${PN} = "\
 	${sysconfdir}/ppp/chap-secrets \
 	${sysconfdir}/ppp/filter \
 	${sysconfdir}/ppp/options \
 "
 
-RSUGGESTS_${PN} = "${PN}-tools ${PN}-oa ${PN}-oe ${PN}-radius ${PN}-winbind ${PN}-minconn ${PN}-password ${PN}-l2tp"
-RRECOMMENDS_${PN} = "${PN}-tools ${PN}-pptp ${PN}-oe"
+RSUGGESTS:${PN} = "${PN}-tools ${PN}-oa ${PN}-oe ${PN}-radius ${PN}-winbind ${PN}-minconn ${PN}-password ${PN}-l2tp"
+RRECOMMENDS:${PN} = "${PN}-tools ${PN}-pptp ${PN}-oe"

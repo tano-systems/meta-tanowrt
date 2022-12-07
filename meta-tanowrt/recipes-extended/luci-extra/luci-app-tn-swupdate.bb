@@ -13,7 +13,7 @@ PACKAGES = "${PN} cgi-swupdate cgi-swupdate-dbg"
 
 PACKAGE_ARCH = "${TUNE_PKGARCH}"
 
-RDEPENDS_${PN} += "cgi-swupdate"
+RDEPENDS:${PN} += "cgi-swupdate"
 
 SUMMARY = "SWUpdate LuCI support application"
 LICENSE = "MIT"
@@ -31,7 +31,7 @@ inherit cmake
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir} \
 	/www/luci-static \
 	/usr/share/rpcd \
@@ -44,10 +44,10 @@ python __anonymous() {
     d.delVarFlag('do_compile', 'noexec')
 }
 
-DESCRIPTION_cgi-swupdate = "CGI swupdate helper utility"
-SUMMARY_cgi-swupdate = "CGI swupdate helper"
-SECTION_cgi-swupdate = "net"
-RDEPENDS_cgi-swupdate += "swupdate"
+DESCRIPTION:cgi-swupdate = "CGI swupdate helper utility"
+SUMMARY:cgi-swupdate = "CGI swupdate helper"
+SECTION:cgi-swupdate = "net"
+RDEPENDS:cgi-swupdate += "swupdate"
 
 DEPENDS += "libubox libubus swupdate"
 OECMAKE_SOURCEPATH = "${S}/src"
@@ -56,23 +56,23 @@ EXTRA_OECMAKE += "\
 	-DCMAKE_INSTALL_SBINDIR:PATH=/usr/libexec \
 "
 
-FILES_cgi-swupdate += "\
+FILES:cgi-swupdate += "\
 	/usr/libexec/cgi-swupdate \
 	/www/cgi-bin/cgi-swupdate \
 "
 
-FILES_cgi-swupdate-dbg += "\
+FILES:cgi-swupdate-dbg += "\
 	/usr/libexec/.debug \
 "
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${OECMAKE_SOURCEPATH}/CMakeLists.txt" ] ; then
 		sed -i -e "s:RUNTIME DESTINATION sbin:RUNTIME DESTINATION \${CMAKE_INSTALL_SBINDIR}:g" \
 		       ${OECMAKE_SOURCEPATH}/CMakeLists.txt
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	# Create symlink to cgi-swupdate from /www/cgi-bin directory
 	install -dm 0755 ${D}/www/cgi-bin
 	ln -s ../../usr/libexec/cgi-swupdate ${D}/www/cgi-bin/cgi-swupdate

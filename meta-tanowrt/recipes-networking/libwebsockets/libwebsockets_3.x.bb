@@ -48,6 +48,6 @@ PACKAGECONFIG[unix-sock]      = "-DLWS_UNIX_SOCK=ON,-DLWS_UNIX_SOCK=OFF,"
 
 PACKAGES =+ "${PN}-testapps"
 
-FILES_${PN}-dev += "${libdir}/cmake"
-FILES_${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
+FILES:${PN}-dev += "${libdir}/cmake"
+FILES:${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
 

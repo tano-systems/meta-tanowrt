@@ -7,7 +7,7 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-DEPENDS_append = " uci-native "
+DEPENDS:append = " uci-native "
 
 UCI_ROOT ?= "${D}"
 UCI = "uci -c ${UCI_ROOT}${sysconfdir}/config"

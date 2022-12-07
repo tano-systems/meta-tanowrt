@@ -48,7 +48,7 @@ TANOWRT_SERVICE_PACKAGES = "dnsmasq"
 TANOWRT_SERVICE_SCRIPTS_dnsmasq += "dnsmasq"
 TANOWRT_SERVICE_STATE_dnsmasq-dnsmasq ?= "enabled"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
@@ -91,19 +91,19 @@ do_install_append() {
 
 USERADD_PACKAGES = "${PN}"
 
-USERADD_PARAM_${PN} = "--system -d /var/run/dnsmasq --no-create-home \
+USERADD_PARAM:${PN} = "--system -d /var/run/dnsmasq --no-create-home \
   --shell /bin/false --user-group dnsmasq"
 
-RDEPENDS_${PN} += "jsonpath"
+RDEPENDS:${PN} += "jsonpath"
 inherit kmod/ipt-ipset
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILES_${PN}_append = "\
+FILES:${PN}:append = "\
 	/usr/share \
 	${nonarch_libdir} \
 "
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/dhcp \
 	${sysconfdir}/dnsmasq.conf \
 	${sysconfdir}/dnsmasq.d/ \
@@ -118,7 +118,7 @@ TANOWRT_DHCPS_LAN_START ?= "100"
 TANOWRT_DHCPS_LAN_LIMIT ?= "150"
 TANOWRT_DHCPS_LAN_UCI_SECTION ?= "${TANOWRT_DHCPS_LAN_INTERFACE}"
 
-do_uci_config_append() {
+do_uci_config:append() {
 	if [ "${TANOWRT_DHCPS_CONFIGURE}" = "1" ]; then
 		if [ "${TANOWRT_DHCPS_LAN_ENABLE}" = "1" ]; then
 			${UCI} set dhcp.${TANOWRT_DHCPS_LAN_UCI_SECTION}.ignore="0"

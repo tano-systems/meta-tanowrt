@@ -19,11 +19,11 @@ PACKAGECONFIG[png] = "--with-png,--without-png,libpng"
 
 PACKAGES += "${PN}-tools"
 
-FILES_${PN} = "${libdir}/libqrencode.so*"
-RRECOMMENDS_${PN} += "${PN}-tools"
+FILES:${PN} = "${libdir}/libqrencode.so*"
+RRECOMMENDS:${PN} += "${PN}-tools"
 
-FILES_${PN}-tools = "${bindir}/"
-RDEPENDS_${PN}-tools += "${PN}"
+FILES:${PN}-tools = "${bindir}/"
+RDEPENDS:${PN}-tools += "${PN}"
 
 S = "${WORKDIR}/git"
 

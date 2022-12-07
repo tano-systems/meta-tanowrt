@@ -9,9 +9,9 @@ require linux-backports.inc
 PV = "5.8-1"
 PR = "tano3.${INC_PR}"
 
-FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/files:"
-FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/configs:"
-FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}_5.8/patches:"
+FILESEXTRAPATHS:prepend = "${THISDIR}/${PN}_5.8/files:"
+FILESEXTRAPATHS:prepend = "${THISDIR}/${PN}_5.8/configs:"
+FILESEXTRAPATHS:prepend = "${THISDIR}/${PN}_5.8/patches:"
 
 SRC_URI += "http://www.kernel.org/pub/linux/kernel/projects/backports/stable/v5.8/backports-${PV}.tar.gz"
 SRC_URI[md5sum] = "00e9f98162c48e362236995406d4fd20"

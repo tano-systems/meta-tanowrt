@@ -11,7 +11,7 @@
 PR = "tano0"
 PV = "1.6.3+git${SRCPV}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4a9b415801f3f426a95d1da1f527882d"
@@ -19,7 +19,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=4a9b415801f3f426a95d1da1f527882d"
 inherit cmake
 
 DEPENDS += "openssl json-c libwebsockets vim-xxd-native libcap libuv"
-RDEPENDS_${PN} += "openssl-bin"
+RDEPENDS:${PN} += "openssl-bin"
 
 GIT_PROTOCOL = "https"
 
@@ -43,7 +43,7 @@ TANOWRT_SERVICE_PACKAGES = "ttyd"
 TANOWRT_SERVICE_SCRIPTS_ttyd += "ttyd"
 TANOWRT_SERVICE_STATE_ttyd-ttyd ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	install -d -m 0755 ${D}${sysconfdir}/config
 	install -d -m 0755 ${D}${sysconfdir}/init.d
 	install -d -m 0755 ${D}${sysconfdir}/ttyd
@@ -54,7 +54,7 @@ do_install_append() {
 
 S = "${WORKDIR}/git"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/ttyd \
 	${sysconfdir}/ttyd/ttyd.crt \
 	${sysconfdir}/ttyd/ttyd.key \

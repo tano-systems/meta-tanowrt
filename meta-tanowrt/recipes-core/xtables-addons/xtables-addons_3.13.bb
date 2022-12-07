@@ -5,7 +5,7 @@
 
 PV = "3.13"
 PR = "tano0.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches-3.13:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches-3.13:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	https://inai.de/files/xtables-addons/${BPN}-${PV}.tar.xz \

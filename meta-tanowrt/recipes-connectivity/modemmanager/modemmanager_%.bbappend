@@ -4,10 +4,10 @@
 # This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano1"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano1"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RDEPENDS_${PN} += "dbus"
+RDEPENDS:${PN} += "dbus"
 
 # Files
 SRC_URI += "\
@@ -32,7 +32,7 @@ EXTRA_OECONF += "\
 # 	--without-udev \
 #
 
-do_install_append() {
+do_install:append() {
 	# Remove dirs
 	rm -rf ${D}${libdir}/girepository-1.0
 	rm -rf ${D}${datadir}/icons
@@ -57,7 +57,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/modemmanager.proto ${D}${nonarch_base_libdir}/netifd/proto/modemmanager.sh
 }
 
-FILES_${PN} += "${nonarch_base_libdir}/netifd"
+FILES:${PN} += "${nonarch_base_libdir}/netifd"
 
 inherit tanowrt-services
 

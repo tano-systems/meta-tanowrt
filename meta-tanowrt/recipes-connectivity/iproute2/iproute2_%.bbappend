@@ -3,8 +3,8 @@
 # Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano3"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano3"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
 SRC_URI += "\
@@ -30,7 +30,7 @@ SRC_URI += "\
 	file://300-selinux-configurable.patch \
 "
 
-do_install_append() {
+do_install:append() {
 	# These files provided by base-files package
 	rm -f ${D}${sysconfdir}/iproute2/ematch_map
 	rm -f ${D}${sysconfdir}/iproute2/rt_protos
@@ -46,5 +46,5 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 # ${PN}-tc
 inherit kmod/sched-core
 
-FILES_${PN}-tc += "${sysconfdir}/hotplug.d/iface"
+FILES:${PN}-tc += "${sysconfdir}/hotplug.d/iface"
 

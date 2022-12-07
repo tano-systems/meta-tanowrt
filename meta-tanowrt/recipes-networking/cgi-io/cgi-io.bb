@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = "\
 	file://multipart_parser.c;beginline=1;endline=4;md5=5300a1f2ef0420d64635f8e81858c30f \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/cgi-io.git;branch=master \
@@ -40,7 +40,7 @@ EXTRA_OECMAKE += "\
 	-DENABLE_APPEND_MODE=${@bb.utils.contains('PACKAGECONFIG', 'enable-append-mode', 'ON', 'OFF', d)} \
 "
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	/usr/libexec/ \
 	/www/cgi-bin/ \
 "

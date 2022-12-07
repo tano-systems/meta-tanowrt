@@ -12,7 +12,7 @@ PR = "tano8.${INC_PR}"
 DESCRIPTION = "Subpackages from base-files from OpenWrt core"
 HOMEPAGE = "http://wiki.openwrt.org/"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 REQUIRED_DISTRO_FEATURES = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
@@ -29,7 +29,7 @@ PACKAGES = "\
 "
 
 # sysupgrade
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-sysupgrade:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files-sysupgrade:"
 SRC_URI += "\
 	file://etc/sysupgrade.conf \
 	file://lib/upgrade/common.sh \
@@ -43,7 +43,7 @@ SRC_URI += "\
 	file://sbin/sysupgrade \
 "
 
-do_install_append () {
+do_install:append () {
 	install -dm 0755 ${D}${sysconfdir}/config
 
 	install -Dm 0644 ${SC}/lib/functions.sh ${D}/lib/functions.sh
@@ -67,7 +67,7 @@ do_install_append () {
 	install -m 0644 ${WORKDIR}/lib/upgrade/keep.d/base-files-essential ${D}/lib/upgrade/keep.d
 }
 
-FILES_${PN}-openwrt = "\
+FILES:${PN}-openwrt = "\
                       /lib/functions.sh \
                       /lib/functions/uci-defaults.sh \
                       /lib/functions/system.sh \
@@ -75,18 +75,18 @@ FILES_${PN}-openwrt = "\
                       ${sysconfdir}/config \
                       "
 
-FILES_${PN}-sysupgrade = "\
+FILES:${PN}-sysupgrade = "\
                          /etc/sysupgrade.conf \
                          /sbin/sysupgrade \
                          /lib/upgrade/ \
                          /sbin/firstboot \
                          "
 
-CONFFILES_${PN}-openwrt += "\
+CONFFILES:${PN}-openwrt += "\
                            ${sysconfdir}/config \
                            "
 
-CONFFILES_${PN}-sysupgrade += "\
+CONFFILES:${PN}-sysupgrade += "\
                               ${sysconfdir}/sysupgrade.conf \
                               "
 

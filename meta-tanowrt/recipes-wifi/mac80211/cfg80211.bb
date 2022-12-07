@@ -14,10 +14,10 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-RDEPENDS_${PN} += "iw wireless-regdb-static"
+RDEPENDS:${PN} += "iw wireless-regdb-static"
 inherit kmod/cfg80211
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "\
 	file://files/mac80211.hotplug \
@@ -27,7 +27,7 @@ SRC_URI = "\
 	file://LICENSE \
 "
 
-FILES_${PN} = "${sysconfdir}/hotplug.d/ieee80211 ${nonarch_base_libdir}/"
+FILES:${PN} = "${sysconfdir}/hotplug.d/ieee80211 ${nonarch_base_libdir}/"
 
 S = "${WORKDIR}"
 

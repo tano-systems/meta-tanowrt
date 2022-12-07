@@ -6,9 +6,9 @@
 # Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano88.${INC_PR}"
+PR:append = ".tano88.${INC_PR}"
 
-RDEPENDS_${PN} += "tano-version"
+RDEPENDS:${PN} += "tano-version"
 
 # Initial timezone
 OPENWRT_ZONENAME ?= "Europe/Moscow"
@@ -27,16 +27,16 @@ TANOWRT_ENABLE_OVERLAY_RESIZE ?= "0"
 SUMMARY = "Base files from openembedded and openwrt projects"
 HOMEPAGE = "http://wiki.openwrt.org/"
 
-RRECOMMENDS_${PN} += "tzdata"
-RRECOMMENDS_${PN} += "${@oe.utils.conditional('TANOWRT_ENABLE_OVERLAY_RESIZE', '1', \
+RRECOMMENDS:${PN} += "tzdata"
+RRECOMMENDS:${PN} += "${@oe.utils.conditional('TANOWRT_ENABLE_OVERLAY_RESIZE', '1', \
 	'gptfdisk parted e2fsprogs-resize2fs', '', d)}"
 
 require base-files.inc
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files-arch:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files-arch:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
     file://shells \
     file://sysctl.conf \
     file://issue \
@@ -54,8 +54,8 @@ SRC_URI_append = "\
 "
 
 # Only for x86 and x86-64 architectures
-FILESEXTRAPATHS_prepend_qemux86 := "${THISDIR}/${PN}/files-arch/x86:"
-FILESEXTRAPATHS_prepend_qemux86-64 := "${THISDIR}/${PN}/files-arch/x86:"
+FILESEXTRAPATHS:prepend:qemux86 := "${THISDIR}/${PN}/files-arch/x86:"
+FILESEXTRAPATHS:prepend:qemux86-64 := "${THISDIR}/${PN}/files-arch/x86:"
 
 ARCH_X86 = "i586 x86_64"
 X86_SRC_URI_FILES = "\
@@ -68,12 +68,12 @@ X86_SRC_URI_FILES = "\
 
 INSTALL_X86_PREINIT = "0"
 
-SRC_URI_append_qemuarm64 = "file://preinit/01_sysinfo"
-SRC_URI_append_qemux86 = "${X86_SRC_URI_FILES}"
-SRC_URI_append_qemux86-64 = "${X86_SRC_URI_FILES}"
+SRC_URI:append:qemuarm64 = "file://preinit/01_sysinfo"
+SRC_URI:append:qemux86 = "${X86_SRC_URI_FILES}"
+SRC_URI:append:qemux86-64 = "${X86_SRC_URI_FILES}"
 
-INSTALL_X86_PREINIT_qemux86 = "1"
-INSTALL_X86_PREINIT_qemux86-64 = "1"
+INSTALL_X86_PREINIT:qemux86 = "1"
+INSTALL_X86_PREINIT:qemux86-64 = "1"
 
 SG = "${WORKDIR}/openwrt"
 STMP = "${WORKDIR}/stmp"
@@ -113,7 +113,7 @@ OPENWRT_CONFIG_TARGET_PREINIT_SHOW_NETMSG ?= ""
 OPENWRT_CONFIG_TARGET_PREINIT_SUPPRESS_FAILSAFE_NETMSG ?= ""
 OPENWRT_CONFIG_TARGET_PREINIT_DISABLE_FAILSAFE ?= ""
 
-do_install_append () {
+do_install:append () {
 	rm -rf ${D}${localstatedir}/backups
 	rm -rf ${D}${localstatedir}/local
 
@@ -283,37 +283,37 @@ do_install_append () {
 	sed -i 's#:/root:#:${ROOT_HOME}:#' ${D}${sysconfdir}/passwd
 }
 
-do_install_append_qemuarm64() {
+do_install:append:qemuarm64() {
 	install -dm 0755 ${D}${TANOWRT_PATH_PREINIT}
 	install -m 0644 ${WORKDIR}/preinit/01_sysinfo ${D}${TANOWRT_PATH_PREINIT}/01_sysinfo
 }
 
-pkg_preinst_${PN} () {
+pkg_preinst:${PN} () {
     :
 }
 
-pkg_postinst_${PN}_append() {
+pkg_postinst:${PN}:append() {
 	rm -rf $D/var/lock
 	mkdir -p $D/var/lock
 }
 
-FILES_${PN} = "/"
+FILES:${PN} = "/"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	${PN}-scripts-openwrt \
 	${PN}-scripts-sysupgrade \
 	getrandom \
 	factory-reset \
 "
 
-RSUGGESTS_${PN} += "\
+RSUGGESTS:${PN} += "\
 	procd \
 	ubox \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/resolv.conf \
 	${sysconfdir}/nsswitch.conf \
 	${sysconfdir}/host.conf \

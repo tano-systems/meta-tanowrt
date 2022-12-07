@@ -4,7 +4,7 @@
 #
 # Move kernel files from /boot to /
 #
-ROOTFS_POSTPROCESS_COMMAND_prepend = "rootfs_mv_kernel_to_root; "
+ROOTFS_POSTPROCESS_COMMAND:prepend = "rootfs_mv_kernel_to_root; "
 
 rootfs_mv_kernel_to_root() {
 	if [ -d ${IMAGE_ROOTFS}/boot ]; then

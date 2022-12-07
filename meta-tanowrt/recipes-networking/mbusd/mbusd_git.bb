@@ -17,7 +17,7 @@ SECTION = "base"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c8064f1419006cd3e5026f78f15c7a28"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://github.com/3cky/mbusd;branch=master;protocol=https \
@@ -34,7 +34,7 @@ TANOWRT_SERVICE_PACKAGES = "mbusd"
 TANOWRT_SERVICE_SCRIPTS_mbusd += "mbusd"
 TANOWRT_SERVICE_STATE_mbusd-mbusd ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	# Install procd init script
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/mbusd.init ${D}${sysconfdir}/init.d/mbusd
@@ -47,7 +47,7 @@ do_install_append() {
 	rm -rf ${D}${sysconfdir}/mbusd
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir} \
 	${bindir} \
 "

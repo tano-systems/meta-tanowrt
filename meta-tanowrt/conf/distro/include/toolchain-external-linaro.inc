@@ -11,9 +11,9 @@ ELT_TARGET_SYS_ARMV5 ?= "arm-linux-gnueabi"
 ELT_TARGET_SYS_ARMV7 ?= "arm-linux-gnueabihf"
 ELT_TARGET_SYS_ARMV8 ?= "aarch64-linux-gnu"
 
-ELT_TARGET_SYS_arm = "${ELT_TARGET_SYS_ARMV5}"
-ELT_TARGET_SYS_armv7a = "${ELT_TARGET_SYS_ARMV7}"
-ELT_TARGET_SYS_aarch64 = "${ELT_TARGET_SYS_ARMV8}"
+ELT_TARGET_SYS:arm = "${ELT_TARGET_SYS_ARMV5}"
+ELT_TARGET_SYS:armv7a = "${ELT_TARGET_SYS_ARMV7}"
+ELT_TARGET_SYS:aarch64 = "${ELT_TARGET_SYS_ARMV8}"
 
 TARGET_VENDOR = ""
 
@@ -22,9 +22,9 @@ TOOLCHAIN_PATH_ARMV5 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-ti2018.00-armv5-x86_
 TOOLCHAIN_PATH_ARMV7 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-2017.11-x86_64_${ELT_TARGET_SYS_ARMV7}"
 TOOLCHAIN_PATH_ARMV8 ?= "${TOOLCHAIN_BASE}/gcc-linaro-7.2.1-2017.11-x86_64_${ELT_TARGET_SYS_ARMV8}"
 
-DEF_TOOLCHAIN_PATH_arm = "${TOOLCHAIN_PATH_ARMV5}"
-DEF_TOOLCHAIN_PATH_armv7a = "${TOOLCHAIN_PATH_ARMV7}"
-DEF_TOOLCHAIN_PATH_aarch64 = "${TOOLCHAIN_PATH_ARMV8}"
+DEF_TOOLCHAIN_PATH:arm = "${TOOLCHAIN_PATH_ARMV5}"
+DEF_TOOLCHAIN_PATH:armv7a = "${TOOLCHAIN_PATH_ARMV7}"
+DEF_TOOLCHAIN_PATH:aarch64 = "${TOOLCHAIN_PATH_ARMV8}"
 
 TOOLCHAIN_PATH ?= "${DEF_TOOLCHAIN_PATH}"
 
@@ -38,7 +38,7 @@ PREFERRED_PROVIDER_binutils-cross-canadian-${TRANSLATED_TARGET_ARCH} ?= "externa
 #PREFERRED_PROVIDER_gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} = "external-linaro-sdk-toolchain"
 
 # Special case for gdb to be built as part of canadian-cross-sdk, instead of packaged from external toolchain
-bindir_pn-gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} = "${exec_prefix}/bin"
+bindir:pn-gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} = "${exec_prefix}/bin"
 PREFERRED_PROVIDER_gdb-cross-canadian-${TRANSLATED_TARGET_ARCH} = "gdb-cross-canadian-${TRANSLATED_TARGET_ARCH}"
 
 # Set up runtime preferences
@@ -118,5 +118,5 @@ python external_linaro_toolchain_license_handler () {
 addhandler external_linaro_toolchain_license_handler
 
 # This dependencies fixes QA Issue warnings for Linaro Toolchain
-RDEPENDS_ldd += "bash"
-RDEPENDS_tzcode += "bash"
+RDEPENDS:ldd += "bash"
+RDEPENDS:tzcode += "bash"

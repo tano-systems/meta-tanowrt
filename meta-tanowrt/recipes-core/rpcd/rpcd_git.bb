@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde
 SECTION = "base"
 DEPENDS = "json-c libuci libubox libubus libucode libiwinfo virtual/crypt"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:${THISDIR}/${BPN}/files-tmp:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:${THISDIR}/${BPN}/files-tmp:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd;branch=master \
@@ -56,7 +56,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 # Reunpack sources if libdir is changed
 do_unpack[vardeps] += "libdir"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
@@ -69,7 +69,7 @@ do_configure_prepend () {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${includedir}/rpcd
     install -m 0644 ${S}/include/rpcd/* ${D}${includedir}/rpcd/
     install -Dm 0644 ${WORKDIR}/rpcd.config ${D}${sysconfdir}/config/rpcd
@@ -84,7 +84,7 @@ do_install_append() {
     ln -s /usr/sbin/rpcd ${D}/sbin/rpcd
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir} \
 	${base_sbindir} \
 	${includedir} \
@@ -92,22 +92,22 @@ FILES_${PN} = "\
 	${datadir} \
 "
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/rpcd \
 "
 
-RDEPENDS_${PN} += "libubox libubus"
+RDEPENDS:${PN} += "libubox libubus"
 
-DESCRIPTION_${PN}-mod-file = "Provides ubus calls for file and directory operations"
-FILES_${PN}-mod-file = "${libdir}/rpcd/file.so"
+DESCRIPTION:${PN}-mod-file = "Provides ubus calls for file and directory operations"
+FILES:${PN}-mod-file = "${libdir}/rpcd/file.so"
 
-DESCRIPTION_${PN}-mod-rpcsys = "Provides ubus calls for sysupgrade and password changing"
-FILES_${PN}-mod-rpcsys = "${libdir}/rpcd/rpcsys.so"
+DESCRIPTION:${PN}-mod-rpcsys = "Provides ubus calls for sysupgrade and password changing"
+FILES:${PN}-mod-rpcsys = "${libdir}/rpcd/rpcsys.so"
 
-DESCRIPTION_${PN}-mod-iwinfo = "Provides ubus calls for accessing iwinfo data"
-FILES_${PN}-mod-iwinfo = "${libdir}/rpcd/iwinfo.so"
-RDEPENDS_${PN}-mod-iwinfo += "iwinfo"
+DESCRIPTION:${PN}-mod-iwinfo = "Provides ubus calls for accessing iwinfo data"
+FILES:${PN}-mod-iwinfo = "${libdir}/rpcd/iwinfo.so"
+RDEPENDS:${PN}-mod-iwinfo += "iwinfo"
 
-DESCRIPTION_${PN}-mod-ucode = "Allows implementing plugins using ucode scripts"
-FILES_${PN}-mod-ucode = "${libdir}/rpcd/ucode.so"
-RDEPENDS_${PN}-mod-ucode = "libucode"
+DESCRIPTION:${PN}-mod-ucode = "Allows implementing plugins using ucode scripts"
+FILES:${PN}-mod-ucode = "${libdir}/rpcd/ucode.so"
+RDEPENDS:${PN}-mod-ucode = "libucode"

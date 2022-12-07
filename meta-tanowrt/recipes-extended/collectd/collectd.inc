@@ -12,7 +12,7 @@ LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1bd21f19f7f0c61a7be8ecacb0e28854"
 
 DEPENDS = "rrdtool libgcrypt libtool flex"
-RDEPENDS_${PN} += "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '', d)}"
+RDEPENDS:${PN} += "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', 'iwinfo', '', d)}"
 
 # Files (OpenWrt)
 SRC_URI += "\
@@ -284,7 +284,7 @@ EXTRA_OECONF = " \
     --disable-ted \
 "
 
-do_install_append() {
+do_install:append() {
     # Install configuration files
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/collectd/conf.d
@@ -325,12 +325,12 @@ do_install_append() {
     rm -rf "${D}${localstatedir}"
 }
 
-CONFFILES_${PN} += "\
+CONFFILES:${PN} += "\
 	${sysconfdir}/collectd.conf \
 	${sysconfdir}/config/collectd \
 "
 
-FILES_${PN} = "${sysconfdir}/ /usr/"
+FILES:${PN} = "${sysconfdir}/ /usr/"
 
 # threshold.so load.so are also provided by gegl
 # disk.so is also provided by libgphoto2-camlibs

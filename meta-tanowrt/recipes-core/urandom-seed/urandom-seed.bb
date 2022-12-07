@@ -9,9 +9,9 @@ PR = "tano0"
 
 S = "${WORKDIR}"
 
-RDEPENDS_${PN} += "getrandom"
+RDEPENDS:${PN} += "getrandom"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://rootfs/etc/init.d/urandom_seed \
@@ -29,7 +29,7 @@ TANOWRT_SERVICE_STATE_urandom-seed-urandom_seed ?= "enabled"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-FILES_${PN} += "${sysconfdir} ${nonarch_base_libdir} ${base_sbindir}"
+FILES:${PN} += "${sysconfdir} ${nonarch_base_libdir} ${base_sbindir}"
 
 do_install() {
 	install -d -m 0755 ${D}${sysconfdir}/init.d

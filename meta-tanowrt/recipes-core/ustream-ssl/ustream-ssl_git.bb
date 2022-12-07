@@ -28,7 +28,7 @@ EXTRA_OECMAKE += "\
 	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
 "
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
@@ -36,7 +36,7 @@ do_configure_prepend () {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${includedir}/libubox
 	install -m 0644 ${S}/*.h ${D}${includedir}/libubox
 
@@ -45,7 +45,7 @@ do_install_append() {
 	rmdir --ignore-fail-on-non-empty ${D}${libdir}
 }
 
-FILES_${PN} += "${base_libdir}/*"
+FILES:${PN} += "${base_libdir}/*"
 FILES_SOLIBSDEV = ""
 
-RDEPENDS_${PN} += "libcrypto libssl"
+RDEPENDS:${PN} += "libcrypto libssl"

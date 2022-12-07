@@ -20,6 +20,6 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-RPROVIDES_${PN} += "kernel-module-button-hotplug"
+RPROVIDES:${PN} += "kernel-module-button-hotplug"
 
 KERNEL_MODULE_AUTOLOAD += "button-hotplug"

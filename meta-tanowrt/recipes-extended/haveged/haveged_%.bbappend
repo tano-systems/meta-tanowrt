@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
 
@@ -22,7 +22,7 @@ SRC_URI += "\
 	file://haveged.init \
 "
 
-do_install_append() {
+do_install:append() {
 	rm -f ${D}${sysconfdir}/init.d/haveged
 
 	install -d ${D}${sysconfdir}/init.d

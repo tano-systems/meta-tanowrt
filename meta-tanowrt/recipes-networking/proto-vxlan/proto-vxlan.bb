@@ -17,11 +17,11 @@ SECTION = "net"
 
 inherit kmod/vxlan
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "file://vxlan.sh file://LICENSE"
 
-FILES_${PN} += "${nonarch_base_libdir}/netifd/proto/"
+FILES:${PN} += "${nonarch_base_libdir}/netifd/proto/"
 
 S = "${WORKDIR}"
 

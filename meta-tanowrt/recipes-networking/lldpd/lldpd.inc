@@ -14,8 +14,8 @@ DEPENDS = "libbsd libevent"
 inherit autotools pkgconfig bash-completion useradd
 
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "--system -g lldpd --shell /bin/false lldpd"
-GROUPADD_PARAM_${PN} = "--system lldpd"
+USERADD_PARAM:${PN} = "--system -g lldpd --shell /bin/false lldpd"
+GROUPADD_PARAM:${PN} = "--system lldpd"
 
 EXTRA_OECONF += "--without-embedded-libevent \
                  --disable-oldies \
@@ -40,14 +40,14 @@ PACKAGECONFIG[custom] = "--enable-custom,--disable-custom"
 
 PACKAGES =+ "${PN}-zsh-completion"
 
-FILES_${PN} += "${libdir}/sysusers.d"
-RDEPENDS_${PN} += "tano-version"
+FILES:${PN} += "${libdir}/sysusers.d"
+RDEPENDS:${PN} += "tano-version"
 
-FILES_${PN}-zsh-completion += "${datadir}/zsh/"
+FILES:${PN}-zsh-completion += "${datadir}/zsh/"
 # FIXME: zsh is broken in meta-oe so this cannot be enabled for now
-#RDEPENDS_${PN}-zsh-completion += "zsh"
+#RDEPENDS:${PN}-zsh-completion += "zsh"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
     file://lldpd.config \
     file://lldpd.init \
 "
@@ -58,7 +58,7 @@ TANOWRT_SERVICE_PACKAGES = "lldpd"
 TANOWRT_SERVICE_SCRIPTS_lldpd += "lldpd"
 TANOWRT_SERVICE_STATE_lldpd-lldpd ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	install -Dm 0755 ${WORKDIR}/lldpd.init    ${D}${sysconfdir}/init.d/lldpd
 	install -Dm 0644 ${WORKDIR}/lldpd.config  ${D}${sysconfdir}/config/lldpd
 	#
@@ -79,6 +79,6 @@ do_install_append() {
 	fi
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/lldpd \
 "

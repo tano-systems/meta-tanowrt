@@ -37,14 +37,14 @@ EXTRA_OECONF = "\
 "
 
 LEAD_SONAME = "liboping.so"
-FILES_${PN} = "${includedir} ${libdir}"
-FILES_${PN}-doc = "${mandir}"
+FILES:${PN} = "${includedir} ${libdir}"
+FILES:${PN}-doc = "${mandir}"
 
-SUMMARY_oping = "oping - Send ICMP ECHO_REQUEST to network hosts"
-FILES_oping += "${bindir}/oping"
-RDEPENDS_oping += "liboping"
+SUMMARY:oping = "oping - Send ICMP ECHO_REQUEST to network hosts"
+FILES:oping += "${bindir}/oping"
+RDEPENDS:oping += "liboping"
 
-SUMMARY_noping = "noping - Send ICMP ECHO_REQUEST to network hosts"
-FILES_noping += "${bindir}/noping"
-RDEPENDS_noping += "ncurses liboping"
+SUMMARY:noping = "noping - Send ICMP ECHO_REQUEST to network hosts"
+FILES:noping += "${bindir}/noping"
+RDEPENDS:noping += "ncurses liboping"
 

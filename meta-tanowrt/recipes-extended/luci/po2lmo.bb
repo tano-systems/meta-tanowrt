@@ -23,7 +23,7 @@ SRCREV  = "${LUCI_GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${base_bindir}/po2lmo"
 
 do_configure() {

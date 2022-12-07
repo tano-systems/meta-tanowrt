@@ -15,11 +15,11 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "file://bonding.sh file://LICENSE"
 
-FILES_${PN} += "${nonarch_base_libdir}/netifd/proto/"
+FILES:${PN} += "${nonarch_base_libdir}/netifd/proto/"
 
 S = "${WORKDIR}"
 

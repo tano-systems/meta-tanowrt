@@ -8,18 +8,18 @@
 # Note that VIRTUAL-RUNTIME_network_manager nor VIRTUAL-RUNTIME_syslog
 # are essential for booting a standalone system so not included here.
 
-PR_append = ".tano2"
+PR:append = ".tano2"
 
-RDEPENDS_${PN}_append = "\
+RDEPENDS:${PN}:append = "\
 	${VIRTUAL-RUNTIME_kmod_manager} \
 "
 
-RDEPENDS_${PN}_remove = "\
+RDEPENDS:${PN}:remove = "\
 	${VIRTUAL-RUNTIME_dev_manager} \
 	${EFI_PROVIDER} \
 "
 
-RRECOMMENDS_${PN}_append = "\
+RRECOMMENDS:${PN}:append = "\
 	kernel-modules \
 	${VIRTUAL-RUNTIME_dev_manager} \
 "

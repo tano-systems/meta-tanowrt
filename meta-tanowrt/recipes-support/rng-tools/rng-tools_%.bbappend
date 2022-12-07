@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2019-2020, 2022 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano3"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano3"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
 inherit uci-config
@@ -19,7 +19,7 @@ SRC_URI += "\
 	file://rngd.config \
 "
 
-do_install_append() {
+do_install:append() {
 	rm -f ${D}${sysconfdir}/init.d/rng-tools
 	rm -rf ${D}${sysconfdir}/default
 
@@ -34,14 +34,14 @@ do_install_append() {
 	fi
 }
 
-FILES_${PN} += "${bindir}"
-CONFFILES_${PN} = "${sysconfdir}/config/rngd"
+FILES:${PN} += "${bindir}"
+CONFFILES:${PN} = "${sysconfdir}/config/rngd"
 
 TANOWRT_SERVICE_PACKAGES = "rng-tools"
 TANOWRT_SERVICE_SCRIPTS_rng-tools += "rngd"
 TANOWRT_SERVICE_STATE_rng-tools-rngd ?= "enabled"
 
-do_uci_config_append() {
+do_uci_config:append() {
 	${UCI} set rngd.@rngd[0].in_device="${HWRNG_DEV}"
 	${UCI} set rngd.@rngd[0].enabled="${HWRNG_ENABLE}"
 	${UCI} commit rngd

@@ -21,19 +21,19 @@ SRC_URI += "\
 do_configure[noexec] = "1"
 do_compile[noexec]   = "1"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	/usr/bin/* \
 	/etc/easy-rsa/* \
 	/lib/upgrade/keep.d/* \
 "
 
-CONFFILES_${PN} = " \
+CONFFILES:${PN} = " \
 	${sysconfdir}/easy-rsa/vars \
 	${sysconfdir}/easy-rsa/openssl-1.0.cnf \
 	${sysconfdir}/easy-rsa/openssl-easyrsa.cnf \
 "
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}/usr/bin
 	install -m 0755 ${S}/easyrsa ${D}/usr/bin
 

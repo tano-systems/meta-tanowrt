@@ -10,7 +10,7 @@ SUMMARY = "grub.cfg for use in EFI systems"
 PR = "tano7"
 
 PROVIDES += "virtual/grub-bootconf"
-RPROVIDES_${PN} += "virtual/grub-bootconf"
+RPROVIDES:${PN} += "virtual/grub-bootconf"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit vars-expander
@@ -45,7 +45,7 @@ do_deploy() {
 
 addtask deploy after do_install
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${EFI_FILES_PATH}/grub.cfg \
 	${EFI_FILES_PATH}/grubenv \
 "

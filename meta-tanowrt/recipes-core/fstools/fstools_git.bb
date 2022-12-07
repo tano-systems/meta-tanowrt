@@ -22,7 +22,7 @@ DEPENDS += "util-linux ubus uci"
 inherit kmod/fs-autofs4
 
 # fsck.ext and fsck.vfat support
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	util-linux-fsck \
 	e2fsprogs \
 	e2fsprogs-mke2fs \
@@ -32,7 +32,7 @@ RDEPENDS_${PN} += "\
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/fstools.git;branch=master \
 	file://0001-block-Validate-libubi_open-return-value.patch \
@@ -91,7 +91,7 @@ PACKAGECONFIG[extroot] = "-DCMAKE_UBIFS_EXTROOT=ON,,libubox,"
 PACKAGECONFIG[ovl-rootdisk-part] = "-DCMAKE_OVL_ROOTDISK_PART=ON,,,"
 PACKAGECONFIG[ovl-f2fs] = "-DCMAKE_OVL_F2FS=ON,,,f2fs-tools"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
@@ -99,7 +99,7 @@ do_configure_prepend () {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}/sbin
 	ln -s /usr/sbin/mount_root ${D}/sbin/mount_root
 	ln -s /usr/sbin/jffs2reset ${D}/sbin/jffs2reset
@@ -127,6 +127,6 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/media-change.hotplug ${D}${sysconfdir}/hotplug.d/block/00-media-change
 }
 
-FILES_${PN} += "${libdir}/*"
+FILES:${PN} += "${libdir}/*"
 
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-unknown-warning-option', '', d)}"

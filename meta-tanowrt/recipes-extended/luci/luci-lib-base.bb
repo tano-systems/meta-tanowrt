@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 DEPENDS += "lua5.1"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	lua5.1 \
 	luci-lib-nixio \
 	luci-lib-ip \
@@ -26,7 +26,7 @@ inherit allarch
 inherit tanowrt-luci-lib
 inherit tanowrt-lua
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=libs/luci-lib-base;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"

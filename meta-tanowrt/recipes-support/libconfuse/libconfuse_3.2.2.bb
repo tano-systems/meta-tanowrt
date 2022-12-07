@@ -22,7 +22,7 @@ EXTRA_OECONF = "--enable-shared"
 
 BBCLASSEXTEND = "native"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	unset TARGET_CPPFLAGS TARGET_CFLAGS TARGET_CXXFLAGS TARGET_LDFLAGS
 	( cd ${S}
 	${S}/autogen.sh )

@@ -34,6 +34,6 @@ PACKAGECONFIG[testapps] = "-DLWS_WITHOUT_TESTAPPS=OFF,-DLWS_WITHOUT_TESTAPPS=ON,
 
 PACKAGES =+ "${PN}-testapps"
 
-FILES_${PN}-dev += "${libdir}/cmake"
-FILES_${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
+FILES:${PN}-dev += "${libdir}/cmake"
+FILES:${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
 

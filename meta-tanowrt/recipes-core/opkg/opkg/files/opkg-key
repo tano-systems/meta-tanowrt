@@ -31,7 +31,7 @@ opkg_key_add() {
 	cp "$key" "/etc/opkg/keys/$fingerprint"
 }
 
-opkg_key_remove() {
+opkg_key:remove() {
 	local key="$1"
 	[ -n "$key" ] || usage
 	[ -f "$key" ] || echo "Cannot open file $1"
@@ -46,7 +46,7 @@ case "$1" in
 		;;
 	remove)
 		shift
-		opkg_key_remove "$@"
+		opkg_key:remove "$@"
 		;;
 	verify)
 		shift

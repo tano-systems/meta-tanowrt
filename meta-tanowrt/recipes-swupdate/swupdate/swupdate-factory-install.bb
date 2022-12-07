@@ -11,7 +11,7 @@ SUMMARY = "SWUPDATE factory installation script"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:"
 
 SWU_INSTALL_EXTRA_RDEPENDS ?= ""
 SWU_INSTALL_EXTRA_RRECOMMENDS ?= ""
@@ -23,8 +23,8 @@ COMPATIBLE_MACHINE = "qemupc"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-RDEPENDS_${PN} += "swupdate ${SWU_INSTALL_EXTRA_RDEPENDS}"
-RRECOMMENDS_${PN} += "${SWU_INSTALL_EXTRA_RRECOMMENDS}"
+RDEPENDS:${PN} += "swupdate ${SWU_INSTALL_EXTRA_RDEPENDS}"
+RRECOMMENDS:${PN} += "${SWU_INSTALL_EXTRA_RRECOMMENDS}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -50,7 +50,7 @@ do_install() {
 	install -m 0644 ${WORKDIR}/swu_install.json ${D}${nonarch_libdir}/swupdate/install/
 }
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${TANOWRT_PATH_PREINIT} \
 	${nonarch_libdir}/swupdate/install \
 "

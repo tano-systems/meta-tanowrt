@@ -8,14 +8,14 @@
 
 INC_PR = "31"
 
-SRC_URI_remove = "\
+SRC_URI:remove = "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'procd', 'file://syslog.cfg', '', d)} \
 "
 
-RDEPENDS_${PN} += "jsonpath"
+RDEPENDS:${PN} += "jsonpath"
 
 # Configuration fragments
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://fragment-arp.cfg \
 	file://fragment-chpasswd.cfg \
 	file://fragment-chrt.cfg \
@@ -29,7 +29,7 @@ SRC_URI_append = "\
 "
 
 # Files
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://sysntpd \
 	file://ntpd-hotplug \
 	file://systohc.hotplug \
@@ -50,7 +50,7 @@ TANOWRT_SERVICE_SCRIPTS_busybox += "\
 TANOWRT_SERVICE_STATE_busybox-sysntpd ?= "enabled"
 TANOWRT_SERVICE_STATE_busybox-watchdog ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	if grep "CONFIG_UDHCPC=y" ${B}/.config; then
 		rm -f ${D}/usr/share/udhcpc/default.script
 	fi
@@ -78,15 +78,15 @@ do_install_append() {
 	fi
 }
 
-FILES_${PN} += "${datadir}/acl.d"
+FILES:${PN} += "${datadir}/acl.d"
 
-CONFFILES_${PN} += "${sysconfdir}/config/watchdog"
+CONFFILES:${PN} += "${sysconfdir}/config/watchdog"
 
 inherit useradd
 
 USERADD_PACKAGES = "${PN}"
 
-USERADD_PARAM_${PN} = "\
+USERADD_PARAM:${PN} = "\
 	--system \
 	--home-dir /var/run/ntp \
 	--no-create-home \
@@ -96,4 +96,4 @@ USERADD_PARAM_${PN} = "\
 	  ntp \
 "
 
-GROUPADD_PARAM_${PN} = "--system ntp; --system rtc"
+GROUPADD_PARAM:${PN} = "--system ntp; --system rtc"

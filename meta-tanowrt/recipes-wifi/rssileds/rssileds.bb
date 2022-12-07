@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = "\
 	file://rssileds.c;beginline=1;endline=25;md5=9d27f096c7c968199a2e9488c711bcb7 \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/src:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/src:"
 
 SRC_URI = "\
 	file://rssileds.c \

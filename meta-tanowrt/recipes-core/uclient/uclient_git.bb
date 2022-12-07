@@ -20,7 +20,7 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uclient.git;branch=master \
 # uclient-http: set eof mark when content-length is 0
 SRCREV = "6a6011df3429ffa5958d12b1327eeda4fd9daa47"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/git"
 
@@ -28,7 +28,7 @@ inherit cmake pkgconfig
 
 FILES_SOLIBSDEV = ""
 
-FILES_${PN} += "${libdir}/*"
+FILES:${PN} += "${libdir}/*"
 
 OECMAKE_C_FLAGS += "${@bb.utils.contains('TOOLCHAIN', 'clang', '-Wno-error=ignored-qualifiers', '-Wno-error=discarded-qualifiers', d)} "
 
@@ -36,7 +36,7 @@ EXTRA_OECMAKE += "\
 	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
 "
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \

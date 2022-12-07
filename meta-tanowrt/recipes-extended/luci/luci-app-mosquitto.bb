@@ -8,7 +8,7 @@
 #
 PR = "tano3"
 
-RDEPENDS_${PN} += "mosquitto luci-mod-admin-full luci-compat"
+RDEPENDS:${PN} += "mosquitto luci-mod-admin-full luci-compat"
 
 SUMMARY = "LuCI Support for Mosquitto"
 LICENSE = "Apache-2.0"

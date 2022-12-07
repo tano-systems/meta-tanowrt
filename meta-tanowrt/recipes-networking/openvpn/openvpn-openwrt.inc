@@ -74,9 +74,9 @@ EXTRA_OE_CONF += "\
 inherit kmod/tun
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILES_${PN} += "${nonarch_base_libdir}/upgrade/keep.d ${nonarch_base_libdir}/functions/openvpn.sh"
+FILES:${PN} += "${nonarch_base_libdir}/upgrade/keep.d ${nonarch_base_libdir}/functions/openvpn.sh"
 
-do_install_append() {
+do_install:append() {
 	# OpenWrt files
 
 	install -dm 0755 ${D}${sysconfdir}/openvpn
@@ -114,8 +114,8 @@ do_install_append() {
 	install -m 644 ${WORKDIR}/etc/openvpn.user ${D}${sysconfdir}/
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/openvpn \
 "
 
-PACKAGES_remove = "${PN}-sample"
+PACKAGES:remove = "${PN}-sample"

@@ -15,7 +15,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	iptables \
 	iproute2-tc \
 "
@@ -28,7 +28,7 @@ inherit kmod/ipt-conntrack-extra
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	file://qos.init \
@@ -48,7 +48,7 @@ TANOWRT_SERVICE_PACKAGES = "qos-scripts"
 TANOWRT_SERVICE_SCRIPTS_qos-scripts += "qos"
 TANOWRT_SERVICE_STATE_qos-scripts-qos ?= "enabled"
 
-FILES_${PN} += "${libdir}/"
+FILES:${PN} += "${libdir}/"
 
 S = "${WORKDIR}"
 
@@ -75,6 +75,6 @@ do_install() {
 	install -m 0755 ${WORKDIR}/tcrules.awk ${D}${libdir}/qos/tcrules.awk
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/qos \
 "

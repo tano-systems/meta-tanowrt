@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=2a8ffaa9ef41014f236
 SECTION = "base"
 DEPENDS = "libubox uci ubus iptables"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/firewall3.git;branch=master \
            file://firewall.config \
@@ -50,7 +50,7 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
 EXTRA_OECMAKE = "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', '-DDISABLE_IPV6=OFF', '-DDISABLE_IPV6=ON', d)}"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/config
     install -d ${D}${sysconfdir}/init.d
@@ -69,11 +69,11 @@ do_install_append() {
     ln -s ${sbindir}/firewall3 ${D}${base_sbindir}/fw3
 }
 
-FILES_${PN} += "${libdir}/* /usr/share/fw3/"
+FILES:${PN} += "${libdir}/* /usr/share/fw3/"
 
-RDEPENDS_${PN} += "ipset iptables"
+RDEPENDS:${PN} += "ipset iptables"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/firewall \
 	${sysconfdir}/firewall.user \
 "

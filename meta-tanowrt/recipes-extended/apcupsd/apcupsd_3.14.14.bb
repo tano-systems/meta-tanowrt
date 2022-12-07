@@ -6,7 +6,7 @@ SUMMARY = "Apcupsd a daemon for controlling APC UPSes"
 
 PR = "tano3"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DEPENDS += "dos2unix-native util-linux-native"
 
@@ -80,7 +80,7 @@ do_configure() {
     oe_runconf
 }
 
-do_install_append() {
+do_install:append() {
 	rm ${D}${datadir}/hal -rf
 
 	install -d ${D}${sysconfdir}/apcupsd

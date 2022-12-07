@@ -4,12 +4,12 @@
 #
 # nl80211 based CLI configuration utility for wireless devices
 #
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 # Compile always with gcc
 TOOLCHAIN = "gcc"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Patches
 SRC_URI += "\

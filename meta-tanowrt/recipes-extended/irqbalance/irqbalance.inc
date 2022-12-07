@@ -46,7 +46,7 @@ PACKAGECONFIG[static-glib2] = "--enable-static=glib2,,"
 PACKAGECONFIG[numa] = "--enable-numa,--disable-numa,numactl,"
 PACKAGECONFIG[libcap-ng] = "--with-libcap-ng,--without-libcap-ng,libcap-ng,"
 
-do_compile_append() {
+do_compile:append() {
 	sed -e 's/@@IRQBALANCE_CONFIG_ENABLED@@/${IRQBALANCE_CONFIG_ENABLED}/' \
 		"${WORKDIR}/irqbalance.config.in" > "${WORKDIR}/irqbalance.config"
 }

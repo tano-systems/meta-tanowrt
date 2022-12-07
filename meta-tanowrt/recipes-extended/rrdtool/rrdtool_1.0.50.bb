@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=44fee82a1d2ed0676cf35478283e0aa0"
 DEPENDS = "libpng zlib perl-native"
 
 PR = "tano2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://github.com/tano-systems/rrdtool-1.x.git;protocol=https;destsuffix=${BPN}-${PV};branch=master"
 SRCREV = "40ff39e03e1f22d07d6a026f7747a42fcfe40bb0"
@@ -38,7 +38,7 @@ EXTRA_OECONF = "\
 	shrext_cmds='.so' \
 "
 
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}/usr/bin/trytime
 	rm -rf ${D}/usr/contrib
 	rm -rf ${D}/usr/doc

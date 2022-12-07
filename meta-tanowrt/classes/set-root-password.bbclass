@@ -11,4 +11,4 @@ ROOT_PASSWORD_SETUP ?= "1"
 ROOT_PASSWORD ?= "root"
 
 # Setup root password
-EXTRA_USERS_PARAMS_append = ' ${@oe.utils.conditional("ROOT_PASSWORD_SETUP", "1", "usermod -P \"${ROOT_PASSWORD}\" root", "", d)};'
+EXTRA_USERS_PARAMS:append = ' ${@oe.utils.conditional("ROOT_PASSWORD_SETUP", "1", "usermod -P \"${ROOT_PASSWORD}\" root", "", d)};'

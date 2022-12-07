@@ -14,9 +14,9 @@ HOMEPAGE = "http://www.lua.org/"
 PR = "tano5"
 
 PROVIDES += "lua"
-RPROVIDES_${PN} = "lua"
-RREPLACES_${PN} = "lua"
-RCONFLICTS_${PN} = "lua"
+RPROVIDES:${PN} = "lua"
+RREPLACES:${PN} = "lua"
+RCONFLICTS:${PN} = "lua"
 
 V = "5.1"
 
@@ -27,7 +27,7 @@ SRC_URI = "\
 "
 
 # native
-SRC_URI_append_class-native = "\
+SRC_URI:append:class-native = "\
 	file://patches-host/001-include-version-number.patch \
 	file://patches-host/010-lua-5.1.3-lnum-full-260308.patch \
 	file://patches-host/011-lnum-use-double.patch \
@@ -38,7 +38,7 @@ SRC_URI_append_class-native = "\
 "
 
 # target
-SRC_URI_append_class-target = "\
+SRC_URI:append:class-target = "\
 	file://patches/001-include-version-number.patch \
 	file://patches/010-lua-5.1.3-lnum-full-260308.patch \
 	file://patches/011-lnum-use-double.patch \
@@ -62,7 +62,7 @@ EXTRA_OEMAKE = "'CC=${CC} -fPIC' 'MYCFLAGS=${CFLAGS} -DLUA_USE_LINUX -fPIC' MYLD
 
 do_unpack[vardeps] += "baselib"
 
-do_configure_prepend() {
+do_configure:prepend() {
     sed -i -e "s:/usr/local:${prefix}:g" \
            -e "s:#define LUA_CDIR	LUA_ROOT \"lib64/lua/5.1/\":#define LUA_CDIR	LUA_ROOT \"${baselib}/lua/5.1/\":g" \
            src/luaconf.h
@@ -94,12 +94,12 @@ do_install () {
     rmdir ${D}${datadir}/lua
 }
 
-do_install_append_class-native() {
+do_install:append:class-native() {
     ln -s lua${V} ${D}${bindir}/lua
     ln -s luac${V} ${D}${bindir}/luac
 }
 
-FILES_${PN} += "${libdir}/lua ${libdir}/lua/${V}"
+FILES:${PN} += "${libdir}/lua ${libdir}/lua/${V}"
 
 BBCLASSEXTEND = "native"
 
@@ -107,7 +107,7 @@ inherit update-alternatives
 
 ALTERNATIVE_PRIORITY = "100"
 
-ALTERNATIVE_${PN} = "lua luac"
+ALTERNATIVE:${PN} = "lua luac"
 
 ALTERNATIVE_TARGET[lua] = "${bindir}/lua${V}"
 ALTERNATIVE_TARGET[luac] = "${bindir}/luac${V}"

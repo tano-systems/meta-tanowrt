@@ -3,9 +3,9 @@
 # Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".7"
+PR:append = ".7"
 
-KERNEL_FEATURES_append = "\
+KERNEL_FEATURES:append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 	features/kernel-4.14+/fs/overlayfs-extra.scc \
 	features/kernel-4.1+/vdso.scc \
@@ -14,18 +14,18 @@ KERNEL_FEATURES_append = "\
 	${@bb.utils.contains("MACHINE_FEATURES", "psample", " features/kernel-4.11+/psample.scc", "" ,d)} \
 "
 
-KERNEL_FEATURES_append_qemuall = " features/drm-bochs/drm-bochs.scc "
+KERNEL_FEATURES:append:qemuall = " features/drm-bochs/drm-bochs.scc "
 
 #
 # Disable CONFIG_SERIAL_OF_PLATFORM for x86 machines
 # See https://lists.yoctoproject.org/g/linux-yocto/message/9207 and
 # https://lists.yoctoproject.org/g/linux-yocto/message/9183
 #
-KERNEL_FEATURES_append_qemux86 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
-KERNEL_FEATURES_append_qemux86-64 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
+KERNEL_FEATURES:append:qemux86 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
+KERNEL_FEATURES:append:qemux86-64 = " features/general/serial/disable-CONFIG_SERIAL_OF_PLATFORM.scc "
 
 # OpenWrt patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://600-netfilter_conntrack_flush.patch \
 	file://610-netfilter_match_bypass_default_checks.patch \
 	file://611-netfilter_match_bypass_default_table.patch \
@@ -44,7 +44,7 @@ SRC_URI_append = "\
 "
 
 # Tano patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://0001-squashfs-generate-fake-UUID.patch \
 	${@bb.utils.contains("MACHINE_FEATURES", "optoe", "file://0002-drivers-misc-eeprom-Add-optoe-driver.patch", "" ,d)} \
 "

@@ -3,16 +3,16 @@
 # Copyright (c) 2019-2020, 2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".15"
+PR:append = ".15"
 
-KERNEL_FEATURES_append = "\
+KERNEL_FEATURES:append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
 	features/kernel-4.14+/fs/overlayfs-extra.scc \
 	features/kernel-4.1+/vdso.scc \
 	${@bb.utils.contains("MACHINE_FEATURES", "psample", " features/kernel-4.11+/psample.scc", "" ,d)} \
 "
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://600-netfilter_conntrack_flush.patch \
 	file://610-netfilter_match_bypass_default_checks.patch \
 	file://611-netfilter_match_bypass_default_table.patch \

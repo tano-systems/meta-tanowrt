@@ -28,6 +28,6 @@ do_install() {
 	install -m 0755 schedtool ${D}${bindir}
 }
 
-FILES_{PN} = "${bindir}/schedtool" 
+FILES:{PN} = "${bindir}/schedtool" 
 
 PARALLEL_MAKE = ""

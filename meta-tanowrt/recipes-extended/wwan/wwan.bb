@@ -9,7 +9,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net/misc"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://wwan.sh \
@@ -29,7 +29,7 @@ do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 do_fetch[cleandirs] += "${WORKDIR}/data"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}/lib/netifd/proto
 	install -m 0755 ${WORKDIR}/wwan.sh ${D}/lib/netifd/proto/wwan.sh
 
@@ -55,4 +55,4 @@ do_install_append() {
 	done
 }
 
-FILES_${PN} += "${sysconfidir}/ /lib/"
+FILES:${PN} += "${sysconfidir}/ /lib/"

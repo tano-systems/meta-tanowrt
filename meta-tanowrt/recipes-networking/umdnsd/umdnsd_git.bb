@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=12;md5=ce0be9da20a926574bf
 SECTION = "base"
 DEPENDS = "json-c libubox ubus"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/mdnsd.git;branch=master \
@@ -37,9 +37,9 @@ TANOWRT_SERVICE_PACKAGES = "umdnsd"
 TANOWRT_SERVICE_SCRIPTS_umdnsd += "umdns"
 TANOWRT_SERVICE_STATE_umdnsd-umdns ?= "enabled"
 
-FILES_${PN}  += "${libdir}/*"
+FILES:${PN}  += "${libdir}/*"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/umdns.init ${D}${sysconfdir}/init.d/umdns
 

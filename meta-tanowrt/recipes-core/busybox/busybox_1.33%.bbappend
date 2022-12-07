@@ -5,16 +5,16 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano2.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
+PR:append = ".tano2.${INC_PR}"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Do not apply some conflicted OE patches
-SRC_URI_remove = "\
+SRC_URI:remove = "\
 	file://busybox-udhcpc-no_deconfig.patch \
 "
 
 # Patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://120-lto-jobserver.patch \
 	file://200-udhcpc_reduce_msgs.patch \
 	file://201-udhcpc_changed_ifindex.patch \
@@ -30,7 +30,7 @@ SRC_URI_append = "\
 "
 
 # Own patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://0002-hwclock-Fix-read_rtc-with-glibc-2.31-and-enabled-SHO.patch \
 "
 

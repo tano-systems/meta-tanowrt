@@ -13,9 +13,9 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS += "libubox libubus rpcd libnl"
-RDEPENDS_${PN} += "rpcd"
+RDEPENDS:${PN} += "rpcd"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit cmake
 inherit tanowrt-luci
@@ -30,7 +30,7 @@ SRC_URI += "file://0100-fix-libnl-include-directories.patch;pnum=4"
 
 do_unpack[vardeps] += "libdir"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	sed -i -e "s:/usr/lib/:${libdir}/:g" ${S}/luci.c
 }
 
@@ -39,9 +39,9 @@ do_install() {
 	install -m 0755 ${B}/luci.so ${D}${libdir}/rpcd/luci.so
 }
 
-FILES_${PN} += "${libdir}/rpcd"
+FILES:${PN} += "${libdir}/rpcd"
 
-pkg_postinst_${PN}_append() {
+pkg_postinst:${PN}:append() {
 #!/bin/sh
 IPKG_INSTROOT=$D
 if [ -z "${IPKG_INSTROOT}" ]; then

@@ -13,7 +13,7 @@ PR = "tano0"
 
 DEPENDS += "libmad libid3tag alsa-lib"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/${BPN}-${PV}"
 
@@ -44,7 +44,7 @@ EXTRA_OECONF += "\
 # | Makefile.am: error: required file './NEWS' not found
 # | Makefile.am: error: required file './AUTHORS' not found
 # | Makefile.am: error: required file './ChangeLog' not found
-do_configure_prepend(){
+do_configure:prepend(){
 	touch ${B}/NEWS
 	touch ${B}/AUTHORS
 	touch ${B}/ChangeLog

@@ -6,7 +6,7 @@
 #
 require recipes-image/images/tanowrt-image-base.bb
 
-PR_append = ".6"
+PR:append = ".6"
 SUMMARY = "TanoWrt full featured image"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

@@ -16,7 +16,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-shellinabox.git;protocol=ht
 SRCREV = "c1272c528a83c758cf4342f5819c47f16c4ee609"
 PV = "git${SRCPV}"
 
-RDEPENDS_${PN} += "shellinabox"
+RDEPENDS:${PN} += "shellinabox"
 
 inherit allarch
 inherit tanowrt-luci-app

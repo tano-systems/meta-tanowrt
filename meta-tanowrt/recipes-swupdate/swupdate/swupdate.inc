@@ -9,7 +9,7 @@ DEFAULT_PREFERENCE = "1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-RDEPENDS_${PN} += "factory-reset"
+RDEPENDS:${PN} += "factory-reset"
 
 require swupdate-generate-conf.inc
 require swupdate-ubus-deps.inc
@@ -126,7 +126,7 @@ do_install_modify_original() {
 	mv ${D}/www ${D}/www-swupdate
 }
 
-do_install_append() {
+do_install:append() {
 	# Modify and/or remove original recipe scripts
 	do_install_modify_original
 
@@ -207,16 +207,16 @@ do_install_append() {
 	       "${D}${SWU_SW_VERSIONS_FILE}"
 }
 
-FILES_${PN}-www_remove = "/www/*"
-FILES_${PN}-www = "/www-swupdate/*"
+FILES:${PN}-www:remove = "/www/*"
+FILES:${PN}-www = "/www-swupdate/*"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${SWU_CONF} \
 	${SWU_HW_REVISION} \
 	${nonarch_libdir}/swupdate \
 	${TANOWRT_PATH_PREINIT} \
 "
 
-CONFFILES_${PN} += "\
+CONFFILES:${PN} += "\
 	${sysconfdir}/swupdate.conf \
 "

@@ -13,7 +13,7 @@ SECTION = "base"
 DEPENDS = "libubox"
 PR = "tano9"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # 05.12.2021
 # Revert "dhcpv6: add a minimum valid lifetime for IA_PD updates"
@@ -31,14 +31,14 @@ inherit cmake pkgconfig
 
 SRCREV_openwrt = "${OPENWRT_SRCREV}"
 
-do_install_append() {
+do_install:append() {
 	install -Dm 0755 ${WORKDIR}/dhcpv6.sh ${D}${nonarch_base_libdir}/netifd/proto/dhcpv6.sh
 	install -Dm 0755 ${WORKDIR}/dhcpv6.script ${D}${nonarch_base_libdir}/netifd/dhcpv6.script
 }
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${nonarch_base_libdir}/netifd/proto/dhcpv6.sh \
 	${nonarch_base_libdir}/netifd/dhcpv6.script \
 "
 
-RRECOMMENDS_${PN} += "netifd"
+RRECOMMENDS:${PN} += "netifd"

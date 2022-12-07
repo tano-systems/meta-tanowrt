@@ -197,7 +197,7 @@ EXTRACT_DATA_REPLACE_SPACES = "-"
 
 EXTRACT_DATA_ARTIFACTS ?= ""
 
-python do_swuimage_prepend() {
+python do_swuimage:prepend() {
     do_prepare_swu_image_data(d)
     # Extract versions data
     do_extract_data(d)

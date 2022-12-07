@@ -15,7 +15,7 @@ do_compile[noexec] = "1"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "\
 	file://fw_env.config \
@@ -26,4 +26,4 @@ do_install() {
 	install -m 0644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/
 }
 
-FILES_${PN} += "${sysconfdir}/fw_env.config"
+FILES:${PN} += "${sysconfdir}/fw_env.config"

@@ -12,9 +12,9 @@ SECTION = "kernel/userland"
 PR = "${INC_PR}.6"
 
 PROVIDES += "wpa-supplicant wpad"
-RPROVIDES_${PN} += "wpa-supplicant wpad"
-RREPLACES_${PN}  += "wpa-supplicant"
-RCONFLICTS_${PN}  += "wpa-supplicant"
+RPROVIDES:${PN} += "wpa-supplicant wpad"
+RREPLACES:${PN}  += "wpa-supplicant"
+RCONFLICTS:${PN}  += "wpa-supplicant"
 inherit kmod/cfg80211
 
 do_compile() {
@@ -51,4 +51,4 @@ do_install() {
 	install -m 0644 ${WORKDIR}/wpad_acl.json ${D}${datadir}/acl.d/
 }
 
-FILES_${PN} += "${nonarch_base_libdir} ${datadir}/acl.d"
+FILES:${PN} += "${nonarch_base_libdir} ${datadir}/acl.d"

@@ -5,7 +5,7 @@
 #
 require recipes-image/images/tanowrt-image-full.bb
 
-PR_append = ".0"
+PR:append = ".0"
 SUMMARY = "TanoWrt Image intended for network routers"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

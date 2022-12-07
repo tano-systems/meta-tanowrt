@@ -11,7 +11,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://README;md5=58546e94cc441c9e77c2d59935ce5bed"
 DEPENDS = "lua5.1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-lua pkgconfig
 
@@ -24,7 +24,7 @@ SRC_URI += "file://Makefile.patch \
 
 S = "${WORKDIR}/LuaBitOp-${PV}"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${libdir}/lua/5.1
 	install -m 0755 ${S}/bit.so ${D}${libdir}/lua/5.1
 }

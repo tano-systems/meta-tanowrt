@@ -23,7 +23,7 @@ SRCREV  = "${LUCI_GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${bindir}/luci-bwc"
 
 do_unpack[vardeps] += "libdir"

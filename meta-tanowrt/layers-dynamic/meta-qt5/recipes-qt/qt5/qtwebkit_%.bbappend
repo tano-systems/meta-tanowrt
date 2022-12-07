@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-PR_append = ".tano0"
-EXTRA_OECMAKE_append = " -DCMAKE_BUILD_TYPE=Release "
+PR:append = ".tano0"
+EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=Release "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Disable OpenGL
-OECMAKE_CXX_FLAGS_append = " -DQT_NO_OPENGL "
+OECMAKE_CXX_FLAGS:append = " -DQT_NO_OPENGL "
 
 SRC_URI += "\
 	file://0001-Fix-QtTestBrowser-build-without-OpenGL.patch \
@@ -19,7 +19,7 @@ SRC_URI += "\
 PACKAGECONFIG = "fontconfig"
 
 # Disable/enable features
-EXTRA_OECMAKE_append = "\
+EXTRA_OECMAKE:append = "\
 	-DENABLE_OPENGL=OFF \
 	-DENABLE_WEBKIT2=OFF \
 	-DENABLE_INSPECTOR_UI=OFF \
@@ -33,11 +33,11 @@ EXTRA_OECMAKE_append = "\
 "
 
 # Fix include path
-EXTRA_OECMAKE_append = "\
+EXTRA_OECMAKE:append = "\
 	-DCMAKE_INSTALL_INCLUDEDIR:PATH=include \
 "
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${bindir}
 	install -m 0755 ${B}/bin/QtTestBrowser ${D}${bindir}/QtTestBrowser
 }

@@ -4,7 +4,7 @@
 #
 require recipes-image/images/tanowrt-image-full.bb
 
-PR_append = ".0"
+PR:append = ".0"
 
 TANOWRT_IMAGE_QT5_INSTALL_EXAMPLES ?= "1"
 

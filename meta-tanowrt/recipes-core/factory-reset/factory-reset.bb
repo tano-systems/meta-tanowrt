@@ -11,7 +11,7 @@ SUMMARY = "Factory reset script"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -26,7 +26,7 @@ do_install() {
 	install -m 0755 ${WORKDIR}/factory-reset.sh ${D}${base_sbindir}/factory-reset
 }
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${nonarch_base_libdir}/factory-reset.d \
 	${base_sbindir} \
 "

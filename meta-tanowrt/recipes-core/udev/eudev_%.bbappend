@@ -5,9 +5,9 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano13"
+PR:append = ".tano13"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://udev.init file://local.rules file://openwrt-hotplug.rules"
 SRC_URI += "file://rtc.rules"
@@ -16,10 +16,10 @@ SRC_URI += "file://reduce-tty-count.rules"
 inherit tanowrt-services
 inherit useradd
 
-RRECOMMENDS_${PN}_remove = "eudev-hwdb"
+RRECOMMENDS:${PN}:remove = "eudev-hwdb"
 
 USERADD_PACKAGES = "${PN}"
-GROUPADD_PARAM_${PN} = "\
+GROUPADD_PARAM:${PN} = "\
     -f -r tty; \
     -f -r dialout; \
     -f -r kmem; \
@@ -39,7 +39,7 @@ TANOWRT_SERVICE_STATE_eudev-udev ?= "enabled"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/udev.init ${D}${sysconfdir}/init.d/udev
 

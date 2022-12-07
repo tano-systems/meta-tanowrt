@@ -23,6 +23,6 @@ SRC_URI[sha256sum] = "a89dd1027dce713407b6d68e836c8fdead56406dcfc650da84da8e0b92
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "${libdir}/*.so"
+FILES:${PN} += "${libdir}/*.so"
 
 inherit autotools

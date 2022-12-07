@@ -4,19 +4,19 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano4"
+PR:append = ".tano4"
 SRCREV = "e663439e3d39a4cdbddb7e818245a99c485fa965"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
 
-RDEPENDS_${PN} += "libubootenv-config"
+RDEPENDS:${PN} += "libubootenv-config"
 
 SRC_URI += "\
 	file://0001-libuboot_read_config-Return-EBUSY-if-opening-the-env.patch \
 	file://0002-Retry-reading-configuration-on-busy-state.patch \
 "
 
-do_install_append() {
+do_install:append() {
 	#
 	# For compatibility with legacy applications
 	# searching fw_printenv/fw_setenv in /sbin

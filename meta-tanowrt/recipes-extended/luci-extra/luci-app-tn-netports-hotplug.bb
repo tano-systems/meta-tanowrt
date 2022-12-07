@@ -11,7 +11,7 @@ PR = "tano0"
 
 inherit allarch
 
-RDEPENDS_${PN} += "luci-app-tn-netports"
+RDEPENDS:${PN} += "luci-app-tn-netports"
 
 SUMMARY = "Hotplug scripts for the Network ports status LuCI application"
 LICENSE = "MIT"

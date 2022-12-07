@@ -83,7 +83,7 @@ LIBIEC61850_EXAMPLES_FILES="\
 	tls_server_example/server-key.pem \
 "
 
-do_install_append() {
+do_install:append() {
 	if [ "${@bb.utils.contains('PACKAGECONFIG', 'examples', '1', '0', d)}" = "1" ]; then
 		# Install available examples
 		install -d ${D}${LIBIEC61850_EXAMPLES_DIR}
@@ -102,8 +102,8 @@ do_install_append() {
 }
 
 PACKAGES += "${PN}-examples"
-FILES_${PN}-examples = "${LIBIEC61850_EXAMPLES_DIR}"
-DESCRIPTION_${PN} = "Open source library for IEC 61850 examples"
+FILES:${PN}-examples = "${LIBIEC61850_EXAMPLES_DIR}"
+DESCRIPTION:${PN} = "Open source library for IEC 61850 examples"
 
 LEAD_SONAME = "libiec61850.so"
 BBCLASSEXTEND = "native"

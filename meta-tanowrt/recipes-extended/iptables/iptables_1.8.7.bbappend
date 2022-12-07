@@ -4,9 +4,9 @@
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2021 Anton Kikin <a.kikin@tano-systems.com>
 #
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}_${PV}/patches:${THISDIR}/${PN}_${PV}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}_${PV}/patches:${THISDIR}/${PN}_${PV}/files:"
 
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 SRC_URI += "\
 	file://010-add-set-dscpmark-support.patch \

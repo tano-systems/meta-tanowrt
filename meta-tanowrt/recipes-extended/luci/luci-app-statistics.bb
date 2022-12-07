@@ -23,7 +23,7 @@ SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCO
 SRCREV = "${LUCI_GIT_SRCREV}"
 S = "${WORKDIR}/git"
 
-RDEPENDS_${PN} += "rrdtool collectd luci-base"
+RDEPENDS:${PN} += "rrdtool collectd luci-base"
 
 # Files
 SRC_URI += "\
@@ -34,11 +34,11 @@ TANOWRT_SERVICE_PACKAGES = "luci-app-statistics"
 TANOWRT_SERVICE_SCRIPTS_luci-app-statistics += "luci_statistics"
 TANOWRT_SERVICE_STATE_luci-app-statistics-luci_statistics ?= "enabled"
 
-CONFFILES_${PN} = "${sysconfdir}/config/luci_statistics"
+CONFFILES:${PN} = "${sysconfdir}/config/luci_statistics"
 
 COLLECTD_ENABLE_IWINFO ?= "${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '1', '0', d)}"
 
-do_install_append() {
+do_install:append() {
 	chmod +x ${D}/usr/bin/stat-genconfig
 
 	install -d ${D}${sysconfdir}/init.d

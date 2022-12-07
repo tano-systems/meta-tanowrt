@@ -8,7 +8,7 @@
 #
 PR = "tano0"
 
-RDEPENDS_${PN} += "apinger"
+RDEPENDS:${PN} += "apinger"
 
 inherit allarch
 inherit tanowrt-luci-app

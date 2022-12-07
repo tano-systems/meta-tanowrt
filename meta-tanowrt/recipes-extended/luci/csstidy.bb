@@ -19,7 +19,7 @@ SRCREV = "707feaec556c40c999514a598b1a1ea5b50826c6"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${bindir}/csstidy"
 
 do_install() {

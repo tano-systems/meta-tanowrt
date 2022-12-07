@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://ubusd.c;beginline=1;endline=12;md5=1b6a7aecd35bdd25de
 SECTION = "base"
 DEPENDS = "json-c libubox"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git;branch=master"
 
@@ -34,13 +34,13 @@ S = "${WORKDIR}/git"
 # libubus-lua = /usr/lib/lua/51./*.so
 #
 PROVIDES += "ubusd libubus libubus-lua"
-RPROVIDES_${PN} += "ubusd libubus libubus-lua"
+RPROVIDES:${PN} += "ubusd libubus libubus-lua"
 
 inherit cmake pkgconfig tanowrt-lua
 
 FILES_SOLIBSDEV = ""
 
-do_install_append () {
+do_install:append () {
     install -dm 0755 ${D}/sbin
     install -dm 0755 ${D}/bin
     ln -s /usr/sbin/ubusd ${D}/sbin/ubusd
@@ -50,7 +50,7 @@ do_install_append () {
 inherit useradd
 
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "\
+USERADD_PARAM:${PN} = "\
 	--system \
 	-d /var/run/ubus \
 	--no-create-home \
@@ -59,4 +59,4 @@ USERADD_PARAM_${PN} = "\
 	  ubus \
 "
 
-GROUPADD_PARAM_${PN} = "--system ubus"
+GROUPADD_PARAM:${PN} = "--system ubus"

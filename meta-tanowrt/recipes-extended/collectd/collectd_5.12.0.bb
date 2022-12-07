@@ -11,8 +11,8 @@ SRC_URI[sha256sum] = "5bae043042c19c31f77eb8464e56a01a5454e0b39fa07cf7ad0f1bfc9c
 PV = "5.12.0"
 PR = "tano0.${INC_PR}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches_${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches_${PV}:"
 
 # Patches (from OE)
 SRC_URI += "\

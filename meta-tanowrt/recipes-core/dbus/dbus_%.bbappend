@@ -4,10 +4,10 @@
 # This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI_append_class-target = "\
+SRC_URI:append:class-target = "\
 	file://dbus-launch \
 	file://dbus.init \
 "
@@ -40,7 +40,7 @@ EXTRA_OECONF += "\
 	--without-x \
 "
 
-do_install_append_class-target() {
+do_install:append:class-target() {
 	# OpenWrt: rm -rf /usr/bin/dbus-monitor -> utils
 	# OpenWrt: rm -rf /usr/bin/dbus-run-session -> utils
 	# OpenWrt: rm -rf /usr/bin/dbus-send -> utils
@@ -55,6 +55,6 @@ do_install_append_class-target() {
 
 inherit tanowrt-services
 
-TANOWRT_SERVICE_PACKAGES_class-target ?= "dbus"
-TANOWRT_SERVICE_SCRIPTS_dbus_class-target += "dbus"
-TANOWRT_SERVICE_STATE_dbus-dbus_class-target ?= "enabled"
+TANOWRT_SERVICE_PACKAGES:class-target ?= "dbus"
+TANOWRT_SERVICE_SCRIPTS_dbus:class-target += "dbus"
+TANOWRT_SERVICE_STATE_dbus-dbus:class-target ?= "enabled"

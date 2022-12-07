@@ -6,9 +6,9 @@ require lldpd.inc
 
 PV = "1.0.13+git${SRCPV}"
 PR = "tano0.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-EXTRA_AUTORECONF_append = " --exclude=gnu-configize"
+EXTRA_AUTORECONF:append = " --exclude=gnu-configize"
 
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/vincentbernat/lldpd.git;branch=master;protocol=https"

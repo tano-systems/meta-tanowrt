@@ -7,7 +7,7 @@
 
 inherit kernel-kmod
 
-RDEPENDS_${PN} += "kmod-sysctl-nf-conntrack"
+RDEPENDS:${PN} += "kmod-sysctl-nf-conntrack"
 
 #
 # kmod-nf-conntrack

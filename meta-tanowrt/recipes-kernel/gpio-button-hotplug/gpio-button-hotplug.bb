@@ -25,6 +25,6 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-RPROVIDES_${PN} += "kernel-module-gpio-button-hotplug"
+RPROVIDES:${PN} += "kernel-module-gpio-button-hotplug"
 
 KERNEL_MODULE_AUTOLOAD += "gpio-button-hotplug"

@@ -24,8 +24,8 @@ S = "${WORKDIR}/git"
 DEPENDS += "byacc-native bison-native rrdtool"
 
 # Files
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"
-SRC_URI_append = "\
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:"
+SRC_URI:append = "\
 	file://apinger-hotplug \
 	file://apinger.config \
 	file://apinger.init \
@@ -35,8 +35,8 @@ SRC_URI_append = "\
 	file://user.hotplug"
 
 # Patches
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
-SRC_URI_append = "\
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"
+SRC_URI:append = "\
 	file://002-run_as_user.patch \
 	file://003-no_docs.patch \
 	file://010-poll.patch \
@@ -51,7 +51,7 @@ inherit autotools
 
 PARALLEL_MAKE = ""
 
-do_configure_prepend() {
+do_configure:prepend() {
 	rm -f ${S}/autogen.sh
 }
 
@@ -76,7 +76,7 @@ do_install() {
 	install -m 0755 ${WORKDIR}/graphs.sh ${D}${libexecdir}/apinger/rpc
 }
 
-CONFFILES_${PN} += "\
+CONFFILES:${PN} += "\
 	${sysconfdir}/config/apinger \
 	${sysconfdir}/apinger.user \
 "

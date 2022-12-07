@@ -14,7 +14,7 @@ Drafts."
 
 SECTION = "net/misc"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 DEPENDS = "libtool openssl"
 
 SRC_URI = "\
@@ -42,16 +42,16 @@ EXTRA_OECONF += "\
 	--with-ssl=${STAGING_DIR_TARGET}/usr \
 "
 
-do_configure_append() {
+do_configure:append() {
 	ln -s ${HOST_SYS}-libtool ${B}/libtool
 }
 
 PACKAGES += "drill"
 
-SUMMARY_drill = "DNS(SEC) information tool"
-DESCRIPTION_drill = "\
+SUMMARY:drill = "DNS(SEC) information tool"
+DESCRIPTION:drill = "\
 drill is a tool to designed to get all sorts of information out of the DNS. It \
 is specificly designed to be used with DNSSEC."
 
-RDEPENDS_drill += "${PN}"
-ALLOW_EMPTY_drill = "1"
+RDEPENDS:drill += "${PN}"
+ALLOW_EMPTY:drill = "1"

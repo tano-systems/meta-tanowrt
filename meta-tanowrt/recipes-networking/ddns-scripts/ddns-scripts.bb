@@ -19,7 +19,7 @@ LIC_FILES_CHKSUM += "file://LICENSE.MPL-2.0;md5=815ca599c9df247a0c7f619bab123dad
 
 do_configure[noexec] = "1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}"
 B = "${WORKDIR}/build"
@@ -136,7 +136,7 @@ TANOWRT_SERVICE_SCRIPTS_ddns-scripts += "ddns"
 TANOWRT_SERVICE_STATE_ddns-scripts-ddns ?= "disabled"
 
 DEPENDS += "curl openssl"
-RDEPENDS_${PN} += "openssl-bin"
+RDEPENDS:${PN} += "openssl-bin"
 # bind-client
 
 PACKAGES += "\
@@ -188,7 +188,7 @@ do_install() {
 	echo "${PV}-${PR}" > ${D}${datadir}/ddns/version
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir}/config \
 	${sysconfdir}/ddns \
 	${sysconfdir}/hotplug.d \
@@ -200,11 +200,11 @@ FILES_${PN} = "\
 	${bindir} \
 "
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/ddns \
 "
 
-RRECOMMENDS_${PN} += "\
+RRECOMMENDS:${PN} += "\
 	${PN}-cloudflare \
 	${PN}-freedns \
 	${PN}-godaddy \
@@ -213,7 +213,7 @@ RRECOMMENDS_${PN} += "\
 	${PN}-route53 \
 "
 
-pkg_postinst_${PN}() {
+pkg_postinst:${PN}() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "${IPKG_INSTROOT}" ]; then
@@ -223,7 +223,7 @@ pkg_postinst_${PN}() {
 	exit 0
 }
 
-pkg_prerm_${PN}() {
+pkg_prerm:${PN}() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "${IPKG_INSTROOT}" ]; then
@@ -235,14 +235,14 @@ pkg_prerm_${PN}() {
 
 ####
 
-SUMMARY_${PN}-cloudflare = "Dynamic DNS Client scripts extension for CloudFlare.com API-v4"
-RDEPENDS_${PN}-cloudflare = "${PN} curl"
-FILES_${PN}-cloudflare = "\
+SUMMARY:${PN}-cloudflare = "Dynamic DNS Client scripts extension for CloudFlare.com API-v4"
+RDEPENDS:${PN}-cloudflare = "${PN} curl"
+FILES:${PN}-cloudflare = "\
 	${libdir}/ddns/update_cloudflare_com_v4.sh \
 	${datadir}/ddns/default/cloudflare.com-v4.json \
 "
 
-pkg_prerm_${PN}-cloudflare() {
+pkg_prerm:${PN}-cloudflare() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -253,14 +253,14 @@ pkg_prerm_${PN}-cloudflare() {
 
 ####
 
-SUMMARY_${PN}-freedns = "DDNS extension for FreeDNS.42.pl"
-RDEPENDS_${PN}-freedns = "${PN} curl"
-FILES_${PN}-freedns = "\
+SUMMARY:${PN}-freedns = "DDNS extension for FreeDNS.42.pl"
+RDEPENDS:${PN}-freedns = "${PN} curl"
+FILES:${PN}-freedns = "\
 	${libdir}/ddns/update_freedns_42_pl.sh \
 	${datadir}/ddns/default/freedns.42.pl.json \
 "
 
-pkg_prerm_${PN}-freedns() {
+pkg_prerm:${PN}-freedns() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -271,14 +271,14 @@ pkg_prerm_${PN}-freedns() {
 
 ####
 
-SUMMARY_${PN}-godaddy = "Dynamic DNS Client scripts extension for GoDaddy.com"
-RDEPENDS_${PN}-godaddy = "${PN} curl"
-FILES_${PN}-godaddy = "\
+SUMMARY:${PN}-godaddy = "Dynamic DNS Client scripts extension for GoDaddy.com"
+RDEPENDS:${PN}-godaddy = "${PN} curl"
+FILES:${PN}-godaddy = "\
 	${libdir}/ddns/update_godaddy_com_v1.sh \
 	${datadir}/ddns/default/godaddy.com-v1.json \
 "
 
-pkg_prerm_${PN}-godaddy() {
+pkg_prerm:${PN}-godaddy() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -289,14 +289,14 @@ pkg_prerm_${PN}-godaddy() {
 
 ####
 
-SUMMARY_${PN}-digitalocean = "Dynamic DNS Client scripts extention for digitalocean.com API v2"
-RDEPENDS_${PN}-digitalocean = "${PN} curl"
-FILES_${PN}-digitalocean = "\
+SUMMARY:${PN}-digitalocean = "Dynamic DNS Client scripts extention for digitalocean.com API v2"
+RDEPENDS:${PN}-digitalocean = "${PN} curl"
+FILES:${PN}-digitalocean = "\
 	${libdir}/ddns/update_digitalocean_com_v2.sh \
 	${datadir}/ddns/default/digitalocean.com-v2.json \
 "
 
-pkg_prerm_${PN}-digitalocean() {
+pkg_prerm:${PN}-digitalocean() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -307,14 +307,14 @@ pkg_prerm_${PN}-digitalocean() {
 
 ####
 
-SUMMARY_${PN}-noip = "Dynamic DNS Client scripts extension for No-IP.com"
-RDEPENDS_${PN}-noip = "${PN}"
-FILES_${PN}-noip = "\
+SUMMARY:${PN}-noip = "Dynamic DNS Client scripts extension for No-IP.com"
+RDEPENDS:${PN}-noip = "${PN}"
+FILES:${PN}-noip = "\
 	${libdir}/ddns/update_no-ip_com.sh \
 	${datadir}/ddns/default/no-ip.com.json \
 "
 
-pkg_prerm_${PN}-noip() {
+pkg_prerm:${PN}-noip() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -325,15 +325,15 @@ pkg_prerm_${PN}-noip() {
 
 ####
 
-SUMMARY_${PN}-nsupdate = "Dynamic DNS Client scripts extension for direct updates using Bind nsupdate"
-RDEPENDS_${PN}-nsupdate = "${PN}"
+SUMMARY:${PN}-nsupdate = "Dynamic DNS Client scripts extension for direct updates using Bind nsupdate"
+RDEPENDS:${PN}-nsupdate = "${PN}"
 # TODO: depends on bind-client"
-FILES_${PN}-nsupdate = "\
+FILES:${PN}-nsupdate = "\
 	${libdir}/ddns/update_nsupdate.sh \
 	${datadir}/ddns/default/bind-nsupdate.json \
 "
 
-pkg_prerm_${PN}-nsupdate() {
+pkg_prerm:${PN}-nsupdate() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -344,14 +344,14 @@ pkg_prerm_${PN}-nsupdate() {
 
 ####
 
-SUMMARY_${PN}-route53 = "Dynamic DNS Client scripts extension for Amazon AWS Route 53 API v1"
-RDEPENDS_${PN}-route53 = "${PN} curl openssl openssl-bin"
-FILES_${PN}-route53 = "\
+SUMMARY:${PN}-route53 = "Dynamic DNS Client scripts extension for Amazon AWS Route 53 API v1"
+RDEPENDS:${PN}-route53 = "${PN} curl openssl openssl-bin"
+FILES:${PN}-route53 = "\
 	${libdir}/ddns/update_route53_v1.sh \
 	${datadir}/ddns/default/route53-v1.json \
 "
 
-pkg_prerm_${PN}-route53() {
+pkg_prerm:${PN}-route53() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -362,15 +362,15 @@ pkg_prerm_${PN}-route53() {
 
 ####
 
-SUMMARY_${PN}-cnkuai = "Dynamic DNS Client scripts extension for CnKuai API"
-RDEPENDS_${PN}-cnkuai = "${PN} curl"
+SUMMARY:${PN}-cnkuai = "Dynamic DNS Client scripts extension for CnKuai API"
+RDEPENDS:${PN}-cnkuai = "${PN} curl"
 # TODO: depends on giflib-utils
-FILES_${PN}-cnkuai = "\
+FILES:${PN}-cnkuai = "\
 	${libdir}/ddns/update_cnkuai_cn.sh \
 	${datadir}/ddns/default/cnkuai.cn.json \
 "
 
-pkg_prerm_${PN}-cnkuai() {
+pkg_prerm:${PN}-cnkuai() {
 	#!/bin/sh
 	IPKG_INSTROOT=$D
 	if [ -z "$${IPKG_INSTROOT}" ]; then

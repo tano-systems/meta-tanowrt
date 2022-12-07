@@ -13,7 +13,7 @@ SECTION = "base"
 
 DEPENDS = "ubus libubox uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/ubox.git;branch=master \
@@ -41,11 +41,11 @@ TANOWRT_SERVICE_STATE_ubox-log ?= "enabled"
 
 inherit update-alternatives
 
-ALTERNATIVE_${PN} = "logread"
+ALTERNATIVE:${PN} = "logread"
 ALTERNATIVE_PRIORITY = "10"
 ALTERNATIVE_LINK_NAME[logread] = "${sbindir}/logread"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
@@ -53,7 +53,7 @@ do_configure_prepend () {
 	fi
 }
 
-do_install_append () {
+do_install:append () {
 	if [ "${@bb.utils.contains('VIRTUAL-RUNTIME_syslog', 'ubox', '1', '0', d)}" = "1" ]; then
 		install -Dm 0755 ${WORKDIR}/log.init ${D}${sysconfdir}/init.d/log
 		install -dm 0755 ${D}/${base_sbindir}
@@ -80,12 +80,12 @@ do_install_append () {
 	ln -s ${sbindir}/validate_data ${D}${base_sbindir}/validate_data
 }
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	ubus \
 	libubox \
 "
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${libdir} \
 	${sbindir} \
 	${base_sbindir} \
@@ -93,14 +93,14 @@ FILES_${PN} = "\
 "
 
 PACKAGES += "getrandom"
-SUMMARY_getrandom = "OpenWrt getrandom system helper"
-SECTION_getrandom = "base"
-FILES_getrandom = "${bindir}/getrandom"
+SUMMARY:getrandom = "OpenWrt getrandom system helper"
+SECTION:getrandom = "base"
+FILES:getrandom = "${bindir}/getrandom"
 
 inherit useradd
 
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "\
+USERADD_PARAM:${PN} = "\
 	--system \
 	-d /var/run/logd \
 	--no-create-home \
@@ -109,4 +109,4 @@ USERADD_PARAM_${PN} = "\
 	  logd \
 "
 
-GROUPADD_PARAM_${PN} = "--system logd"
+GROUPADD_PARAM:${PN} = "--system logd"

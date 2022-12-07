@@ -20,7 +20,7 @@ DEPENDS += "json-c libuci libubus libnl libblobmsg-json"
 
 PROVIDES += "libucode"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://github.com/jow-/ucode.git;protocol=https;branch=master"
 
@@ -34,7 +34,7 @@ S = "${WORKDIR}/git"
 
 inherit cmake
 
-do_configure_prepend () {
+do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:\${CMAKE_INSTALL_PREFIX}/lib:\${CMAKE_INSTALL_LIBDIR}:g" \
 		       -e "s:LIBRARY DESTINATION lib/ucode:LIBRARY DESTINATION \${CMAKE_INSTALL_LIBDIR}/ucode:g" \
@@ -79,62 +79,62 @@ PRIVATE_LIBS = "\
 	uci.so \
 "
 
-RDEPENDS_${PN} += "libucode"
-FILES_${PN} = "${bindir}/"
+RDEPENDS:${PN} += "libucode"
+FILES:${PN} = "${bindir}/"
 
-SUMMARY_libucode = "${PKG_TITLE} - runtime library"
-DESCRIPTION_libucode = "\
+SUMMARY:libucode = "${PKG_TITLE} - runtime library"
+DESCRIPTION:libucode = "\
 The libucode package provides the shared runtime library for the ucode interpreter."
-FILES_libucode += "${libdir}/*.so*"
-FILES_libucode-dev = "${includedir}/"
+FILES:libucode += "${libdir}/*.so*"
+FILES:libucode-dev = "${includedir}/"
 
-SUMMARY_${PN}-mod-fs = "${PKG_TITLE} (filesystem module)"
-DESCRIPTION_${PN}-mod-fs = "\
+SUMMARY:${PN}-mod-fs = "${PKG_TITLE} (filesystem module)"
+DESCRIPTION:${PN}-mod-fs = "\
 The filesystem plugin module allows interaction with the local file system."
-RDEPENDS_${PN}-mod-fs += "libucode"
-FILES_${PN}-mod-fs = "${libdir}/ucode/fs.so"
+RDEPENDS:${PN}-mod-fs += "libucode"
+FILES:${PN}-mod-fs = "${libdir}/ucode/fs.so"
 
-SUMMARY_${PN}-mod-math = "${PKG_TITLE} (math module)"
-DESCRIPTION_${PN}-mod-math = "\
+SUMMARY:${PN}-mod-math = "${PKG_TITLE} (math module)"
+DESCRIPTION:${PN}-mod-math = "\
 The math plugin provides access to various <math.h> procedures."
-RDEPENDS_${PN}-mod-math += "libucode"
-FILES_${PN}-mod-math = "${libdir}/ucode/math.so"
+RDEPENDS:${PN}-mod-math += "libucode"
+FILES:${PN}-mod-math = "${libdir}/ucode/math.so"
 
-SUMMARY_${PN}-mod-nl80211 = "${PKG_TITLE} (nl80211 module)"
-DESCRIPTION_${PN}-mod-nl80211 = "\
+SUMMARY:${PN}-mod-nl80211 = "${PKG_TITLE} (nl80211 module)"
+DESCRIPTION:${PN}-mod-nl80211 = "\
 The nl80211 plugin provides access to the Linux wireless 802.11 netlink API."
-RDEPENDS_${PN}-mod-nl80211 += "libucode"
-FILES_${PN}-mod-nl80211 = "${libdir}/ucode/nl80211.so"
+RDEPENDS:${PN}-mod-nl80211 += "libucode"
+FILES:${PN}-mod-nl80211 = "${libdir}/ucode/nl80211.so"
 
-SUMMARY_${PN}-mod-resolv = "${PKG_TITLE} (resolv module)"
-DESCRIPTION_${PN}-mod-resolv = "\
+SUMMARY:${PN}-mod-resolv = "${PKG_TITLE} (resolv module)"
+DESCRIPTION:${PN}-mod-resolv = "\
 The resolv plugin implements simple DNS resolving."
-RDEPENDS_${PN}-mod-resolv += "libucode"
-FILES_${PN}-mod-resolv = "${libdir}/ucode/resolv.so"
+RDEPENDS:${PN}-mod-resolv += "libucode"
+FILES:${PN}-mod-resolv = "${libdir}/ucode/resolv.so"
 
-SUMMARY_${PN}-mod-rtnl = "${PKG_TITLE} (rtnl module)"
-DESCRIPTION_${PN}-mod-rtnl = "\
+SUMMARY:${PN}-mod-rtnl = "${PKG_TITLE} (rtnl module)"
+DESCRIPTION:${PN}-mod-rtnl = "\
 The rtnl plugin provides access to the Linux routing netlink API."
-RDEPENDS_${PN}-mod-rtnl += "libucode"
-FILES_${PN}-mod-rtnl = "${libdir}/ucode/rtnl.so"
+RDEPENDS:${PN}-mod-rtnl += "libucode"
+FILES:${PN}-mod-rtnl = "${libdir}/ucode/rtnl.so"
 
-SUMMARY_${PN}-mod-struct = "${PKG_TITLE} (struct module)"
-DESCRIPTION_${PN}-mod-struct = "\
+SUMMARY:${PN}-mod-struct = "${PKG_TITLE} (struct module)"
+DESCRIPTION:${PN}-mod-struct = "\
 The struct plugin implemnts Python 3 compatible struct.pack/unpack functionality."
-RDEPENDS_${PN}-mod-struct += "libucode"
-FILES_${PN}-mod-struct = "${libdir}/ucode/struct.so"
+RDEPENDS:${PN}-mod-struct += "libucode"
+FILES:${PN}-mod-struct = "${libdir}/ucode/struct.so"
 
-SUMMARY_${PN}-mod-ubus = "${PKG_TITLE} (ubus module)"
-DESCRIPTION_${PN}-mod-ubus = "\
+SUMMARY:${PN}-mod-ubus = "${PKG_TITLE} (ubus module)"
+DESCRIPTION:${PN}-mod-ubus = "\
 The ubus module allows ucode template scripts to enumerate and invoke ubus \
 procedures."
-RDEPENDS_${PN}-mod-ubus += "libucode"
-FILES_${PN}-mod-ubus = "${libdir}/ucode/ubus.so"
+RDEPENDS:${PN}-mod-ubus += "libucode"
+FILES:${PN}-mod-ubus = "${libdir}/ucode/ubus.so"
 
-SUMMARY_${PN}-mod-uci = "${PKG_TITLE} (uci module)"
-DESCRIPTION_${PN}-mod-uci = "\
+SUMMARY:${PN}-mod-uci = "${PKG_TITLE} (uci module)"
+DESCRIPTION:${PN}-mod-uci = "\
 The uci module allows templates to read and modify uci configuration."
-RDEPENDS_${PN}-mod-uci += "libucode"
-FILES_${PN}-mod-uci = "${libdir}/ucode/uci.so"
+RDEPENDS:${PN}-mod-uci += "libucode"
+FILES:${PN}-mod-uci = "${libdir}/ucode/uci.so"
 
 BBCLASSEXTEND = "native"

@@ -24,7 +24,7 @@ DEPENDS = "libubox"
 LICENSE = "GPL-2.0 & BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://urngd.c;beginline=1;endline=38;md5=be8a7966f07b41d470e7d30065c98465"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	gitsm://${GIT_OPENWRT_ORG}/project/urngd.git;branch=master \
@@ -45,14 +45,14 @@ TANOWRT_SERVICE_PACKAGES = "urngd"
 TANOWRT_SERVICE_SCRIPTS_urngd += "urngd"
 TANOWRT_SERVICE_STATE_urngd-urngd ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/urngd.init ${D}${sysconfdir}/init.d/urngd
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${sysconfdir} \
 	${base_sbindir} \
 "
 
-RDEPENDS_${PN} += "libubox"
+RDEPENDS:${PN} += "libubox"

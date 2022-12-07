@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano2"
+PR:append = ".tano2"
 
-RDEPENDS_${PN}_remove = "tzdata-misc"
-RDEPENDS_${PN}_remove = "tzdata-right"
-RDEPENDS_${PN}_remove = "tzdata-posix"
+RDEPENDS:${PN}:remove = "tzdata-misc"
+RDEPENDS:${PN}:remove = "tzdata-right"
+RDEPENDS:${PN}:remove = "tzdata-posix"
 
-pkg_postinst_${PN}_append() {
+pkg_postinst:${PN}:append() {
 	if [ -L ${etc_lt} ] ; then
 		rm -f "${etc_lt}"
 	fi

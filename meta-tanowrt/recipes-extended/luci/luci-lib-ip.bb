@@ -31,7 +31,7 @@ LUCI_DO_INSTALL_ROOT ?= "0"
 LUCI_DO_INSTALL_LUASRC ?= "0"
 LUCI_DO_INSTALL_HTDOCS ?= "0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=libs/luci-lib-ip;destsuffix=git/"
 SRC_URI += "file://cmake.patch;pnum=3"

@@ -9,7 +9,7 @@ DEPENDS = "ppp virtual/kernel"
 
 PR = "tano1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -20,7 +20,7 @@ SRC_URI = "git://github.com/xelerance/xl2tpd.git;branch=master;protocol=https"
 SRCREV = "66fefc9c71cc7ceb3e64e85a1098dfdf1b7d0afe"
 
 DEPENDS += "libpcap"
-RDEPENDS_${PN} += "resolveip ppp-l2tp"
+RDEPENDS:${PN} += "resolveip ppp-l2tp"
 
 SRC_URI += "\
 	file://l2tp.sh \
@@ -59,9 +59,9 @@ do_install () {
     install -m 0755 ${WORKDIR}/l2tp.sh ${D}${nonarch_base_libdir}/netifd/proto/l2tp.sh
 }
 
-FILES_${PN} += "${nonarch_base_libdir}"
+FILES:${PN} += "${nonarch_base_libdir}"
 
-CONFFILES_${PN} += "\
+CONFFILES:${PN} += "\
 	${sysconfdir}/xl2tpd/xl2tpd.conf \
 	${sysconfdir}/xl2tpd/xl2tp-secrets \
 	${sysconfdir}/ppp/options.xl2tpd \

@@ -14,8 +14,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit kmod/wireguard
 
-RDEPENDS_${PN} += "wireguard-tools"
-RRECOMMENDS_${PN} += "qrencode"
+RDEPENDS:${PN} += "wireguard-tools"
+RRECOMMENDS:${PN} += "qrencode"
 
 inherit allarch
 inherit tanowrt-luci-proto

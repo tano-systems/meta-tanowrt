@@ -61,7 +61,7 @@ build_spl_multiple() {
 	done
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	if [ "${UBOOT_SPL_MULTIPLE}" = "1" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j

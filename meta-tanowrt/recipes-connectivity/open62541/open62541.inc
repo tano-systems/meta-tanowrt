@@ -67,7 +67,7 @@ PACKAGECONFIG ?= "pubsub \
                   sharedlibs"
 
 # Install examples and unit tests
-do_install_append() {
+do_install:append() {
 	chrpath -d ${D}${bindir}/ua_server_ctt.exe
 	chrpath -d ${D}${bindir}/ua_client
 
@@ -81,13 +81,13 @@ do_install_append() {
 }
 
 PACKAGES =+ "${PN}-examples"
-FILES_${PN}-dev += "${libdir}/cmake/*"
-FILES_${PN}-examples += "${datadir}/${BPN}/examples"
-RDEPENDS_${PN}-examples += "${PN}"
+FILES:${PN}-dev += "${libdir}/cmake/*"
+FILES:${PN}-examples += "${datadir}/${BPN}/examples"
+RDEPENDS:${PN}-examples += "${PN}"
 
 # Allow staticdev package to be empty incase sharedlibs is switched on
-ALLOW_EMPTY_${PN}-staticdev = "1"
+ALLOW_EMPTY:${PN}-staticdev = "1"
 
 BBCLASSEXTEND = "native nativesdk"
 
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP:${PN} += "already-stripped"

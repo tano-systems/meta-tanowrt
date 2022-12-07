@@ -11,7 +11,7 @@ inherit core-image
 
 SWU_FACTORY_WKS_OUTPUT_EXT ?= "sdcard.img"
 
-IMAGE_CMD_wic_append () {
+IMAGE_CMD:wic:append () {
 	if [ -n "${SWU_FACTORY_WKS_OUTPUT_EXT}" ]; then
 		mv "$out${IMAGE_NAME_SUFFIX}.wic" \
 		   "$out${IMAGE_NAME_SUFFIX}.${SWU_FACTORY_WKS_OUTPUT_EXT}"
@@ -29,7 +29,7 @@ IMAGE_ROOTFS_SIZE = "8192"
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
 IMAGE_NAME_SUFFIX = ""
 
-IMAGE_PREPROCESS_COMMAND_remove_libc-glibc = "prelink_setup; prelink_image;"
+IMAGE_PREPROCESS_COMMAND:remove:libc-glibc = "prelink_setup; prelink_image;"
 
 python __anonymous () {
     if not d.getVar('SWU_FACTORY_WKS_FILE', True):

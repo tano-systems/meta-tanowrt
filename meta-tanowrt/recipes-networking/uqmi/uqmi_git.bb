@@ -18,7 +18,7 @@ inherit kmod/usb-net
 inherit kmod/usb-net-qmi-wwan
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uqmi.git;branch=master"
 
@@ -36,11 +36,11 @@ inherit cmake pkgconfig
 
 B = "${S}"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${nonarch_base_libdir}/netifd/proto/qmi.sh \
 "
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
 	install -m 0755 ${WORKDIR}/qmi.sh ${D}${nonarch_base_libdir}/netifd/proto/qmi.sh
 }

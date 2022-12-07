@@ -327,7 +327,7 @@ do_kernel_mkimage_vfat() {
 	done
 }
 
-kernel_do_deploy_append() {
+kernel_do_deploy:append() {
 	for type in ${KERNEL_MKIMAGE_TYPES}; do
 		for imageType in ${KERNEL_IMAGETYPES}; do
 			for f in ${KERNEL_MKIMAGE_WORKDIR}-${type}/*.${type}; do
