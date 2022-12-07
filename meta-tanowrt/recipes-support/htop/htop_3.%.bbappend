@@ -1,13 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2022 Tano Systems LLC. All rights reserved.
 #
-PR:append = ".tano2"
+PR:append = ".tano0"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-
-PV = "3.0.6-dev+git${SRCPV}"
-
-SRCREV = "d9f2eacbc5b3fccf63b24944ce9a30d762baea3c"
 
 PACKAGECONFIG:remove = "delayacct sensors setuid"
 

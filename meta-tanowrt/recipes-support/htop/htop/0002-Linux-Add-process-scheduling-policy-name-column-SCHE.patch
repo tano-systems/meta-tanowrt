@@ -12,26 +12,26 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  4 files changed, 27 insertions(+)
 
 diff --git a/linux/LinuxProcess.c b/linux/LinuxProcess.c
-index 764f015..078abe8 100644
+index ba2dbd46..34fabbe4 100644
 --- a/linux/LinuxProcess.c
 +++ b/linux/LinuxProcess.c
-@@ -14,6 +14,7 @@ in the source distribution for its full text.
- #include <string.h>
+@@ -13,6 +13,7 @@ in the source distribution for its full text.
+ #include <stdlib.h>
  #include <syscall.h>
  #include <unistd.h>
 +#include <sched.h>
  
  #include "CRT.h"
  #include "Macros.h"
-@@ -59,6 +60,7 @@ const ProcessFieldData Process_fields[LAST_PROCESSFIELD] = {
+@@ -57,6 +58,7 @@ const ProcessFieldData Process_fields[LAST_PROCESSFIELD] = {
     [M_DRS] = { .name = "M_DRS", .title = " DATA ", .description = "Size of the data segment plus stack usage of the process", .flags = 0, .defaultSortDesc = true, },
     [M_LRS] = { .name = "M_LRS", .title = "  LIB ", .description = "The library size of the process (calculated from memory maps)", .flags = PROCESS_FLAG_LINUX_LRS_FIX, .defaultSortDesc = true, },
-    [M_DT] = { .name = "M_DT", .title = " DIRTY ", .description = "Size of the dirty pages of the process (unused since Linux 2.6; always 0)", .flags = 0, .defaultSortDesc = true, },
+    [ST_UID] = { .name = "ST_UID", .title = "UID", .description = "User ID of the process owner", .flags = 0, },
 +   [SCHED] = { .name = "SCHED", .title = "SCHED ", .description = "Scheduling polcy", .flags = 0, .defaultSortDesc = true, },
-    [ST_UID] = { .name = "ST_UID", .title = "  UID ", .description = "User ID of the process owner", .flags = 0, },
     [PERCENT_CPU] = { .name = "PERCENT_CPU", .title = "CPU% ", .description = "Percentage of the CPU time the process used in the last sampling", .flags = 0, .defaultSortDesc = true, },
     [PERCENT_NORM_CPU] = { .name = "PERCENT_NORM_CPU", .title = "NCPU%", .description = "Normalized percentage of the CPU time the process used in the last sampling (normalized by cpu count)", .flags = 0, .defaultSortDesc = true, },
-@@ -157,6 +159,11 @@ static int LinuxProcess_effectiveIOPriority(const LinuxProcess* this) {
+    [PERCENT_MEM] = { .name = "PERCENT_MEM", .title = "MEM% ", .description = "Percentage of the memory the process is using, based on resident memory size", .flags = 0, .defaultSortDesc = true, },
+@@ -142,6 +144,11 @@ static int LinuxProcess_effectiveIOPriority(const LinuxProcess* this) {
  #define SYS_ioprio_set __NR_ioprio_set
  #endif
  
@@ -43,10 +43,10 @@ index 764f015..078abe8 100644
  IOPriority LinuxProcess_updateIOPriority(LinuxProcess* this) {
     IOPriority ioprio = 0;
  // Other OSes masquerading as Linux (NetBSD?) don't have this syscall
-@@ -636,6 +643,17 @@ static void LinuxProcess_writeField(const Process* this, RichString* str, Proces
-    case M_PSS: Process_humanNumber(str, lp->m_pss, coloring); return;
-    case M_SWAP: Process_humanNumber(str, lp->m_swap, coloring); return;
-    case M_PSSWP: Process_humanNumber(str, lp->m_psswp, coloring); return;
+@@ -215,6 +222,17 @@ static void LinuxProcess_writeField(const Process* this, RichString* str, Proces
+    case M_PSS: Process_printKBytes(str, lp->m_pss, coloring); return;
+    case M_SWAP: Process_printKBytes(str, lp->m_swap, coloring); return;
+    case M_PSSWP: Process_printKBytes(str, lp->m_psswp, coloring); return;
 +   case SCHED:
 +      switch(lp->sched) {
 +          case SCHED_OTHER: xSnprintf(buffer, n, "OTHER "); break;
@@ -58,10 +58,10 @@ index 764f015..078abe8 100644
 +             xSnprintf(buffer, n, "%-3d   ", lp->sched); break;
 +      }
 +      break;
-    case UTIME: Process_printTime(str, lp->utime); return;
-    case STIME: Process_printTime(str, lp->stime); return;
-    case CUTIME: Process_printTime(str, lp->cutime); return;
-@@ -784,6 +802,8 @@ static int LinuxProcess_compareByKey(const Process* v1, const Process* v2, Proce
+    case UTIME: Process_printTime(str, lp->utime, coloring); return;
+    case STIME: Process_printTime(str, lp->stime, coloring); return;
+    case CUTIME: Process_printTime(str, lp->cutime, coloring); return;
+@@ -333,6 +351,8 @@ static int LinuxProcess_compareByKey(const Process* v1, const Process* v2, Proce
        return SPACESHIP_NUMBER(p1->m_swap, p2->m_swap);
     case M_PSSWP:
        return SPACESHIP_NUMBER(p1->m_psswp, p2->m_psswp);
@@ -71,19 +71,19 @@ index 764f015..078abe8 100644
        return SPACESHIP_NUMBER(p1->utime, p2->utime);
     case CUTIME:
 diff --git a/linux/LinuxProcess.h b/linux/LinuxProcess.h
-index 29ef2a9..06a22f7 100644
+index 3e5d3804..af1e0d46 100644
 --- a/linux/LinuxProcess.h
 +++ b/linux/LinuxProcess.h
-@@ -82,6 +82,8 @@ typedef struct LinuxProcess_ {
+@@ -48,6 +48,8 @@ typedef struct LinuxProcess_ {
+    long m_drs;
     long m_lrs;
-    long m_dt;
  
 +   int sched;
 +
-    /* Data read (in kilobytes) */
-    unsigned long long io_rchar;
+    /* Process flags */
+    unsigned long int flags;
  
-@@ -154,6 +156,8 @@ void Process_delete(Object* cast);
+@@ -124,6 +126,8 @@ void Process_delete(Object* cast);
  
  IOPriority LinuxProcess_updateIOPriority(LinuxProcess* this);
  
@@ -91,12 +91,12 @@ index 29ef2a9..06a22f7 100644
 +
  bool LinuxProcess_setIOPriority(Process* this, Arg ioprio);
  
- /* This function constructs the string that is displayed by
+ bool LinuxProcess_isAutogroupEnabled(void);
 diff --git a/linux/LinuxProcessList.c b/linux/LinuxProcessList.c
-index 7d1d6e1..cadd391 100644
+index 3bfe7db5..f9097612 100644
 --- a/linux/LinuxProcessList.c
 +++ b/linux/LinuxProcessList.c
-@@ -1376,6 +1376,8 @@ static bool LinuxProcessList_recurseProcTree(LinuxProcessList* this, openat_arg_
+@@ -1525,6 +1525,8 @@ static bool LinuxProcessList_recurseProcTree(LinuxProcessList* this, openat_arg_
           LinuxProcess_updateIOPriority(lp);
        }
  
@@ -104,19 +104,19 @@ index 7d1d6e1..cadd391 100644
 +
        /* period might be 0 after system sleep */
        float percent_cpu = (period < 1E-6) ? 0.0F : ((lp->utime + lp->stime - lasttimes) / period * 100.0);
-       proc->percent_cpu = CLAMP(percent_cpu, 0.0F, cpus * 100.0F);
+       proc->percent_cpu = CLAMP(percent_cpu, 0.0F, activeCPUs * 100.0F);
 diff --git a/linux/ProcessField.h b/linux/ProcessField.h
-index 6e2eff3..7e60956 100644
+index 17cafa96..378f0dc3 100644
 --- a/linux/ProcessField.h
 +++ b/linux/ProcessField.h
-@@ -20,6 +20,7 @@ in the source distribution for its full text.
+@@ -19,6 +19,7 @@ in the source distribution for its full text.
+    M_TRS = 42,                   \
     M_DRS = 43,                   \
     M_LRS = 44,                   \
-    M_DT = 45,                    \
 +   SCHED = 70,                   \
     CTID = 100,                   \
     VPID = 101,                   \
     VXID = 102,                   \
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 
