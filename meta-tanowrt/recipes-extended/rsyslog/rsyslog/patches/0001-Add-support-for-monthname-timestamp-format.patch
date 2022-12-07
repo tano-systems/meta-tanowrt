@@ -32,7 +32,7 @@ index 6468a0d..5556866 100644
  /* Table of days in a year, needed for getYearDay */
  static const char *daysInYear[366] = {
  	       "001", "002", "003", "004", "005", "006", "007", "008", "009",
-@@ -1851,6 +1855,8 @@ getTimeReported(smsg_t * const pM, enum tplFormatTypes eFmt)
+@@ -1874,6 +1878,8 @@ getTimeReported(smsg_t * const pM, enum tplFormatTypes eFmt)
  		return one_digit[getWeekdayNbr(&pM->tTIMESTAMP)];
  	case tplFmtMonth:
  		return two_digits[(int)pM->tTIMESTAMP.month];
@@ -54,7 +54,7 @@ index 7f5f56b..32ac31f 100644
  		} else if(!strcmp((char*)Buf, "date-day")) {
  			pTpe->data.field.eDateFormat = tplFmtDay;
  		} else if(!strcmp((char*)Buf, "date-hour")) {
-@@ -1679,6 +1681,8 @@ createPropertyTpe(struct template *pTpl, struct cnfobj *o)
+@@ -1683,6 +1685,8 @@ createPropertyTpe(struct template *pTpl, struct cnfobj *o)
  				datefmt = tplFmtYear;
  			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"month", sizeof("month")-1)) {
  				datefmt = tplFmtMonth;
@@ -63,7 +63,7 @@ index 7f5f56b..32ac31f 100644
  			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"day", sizeof("day")-1)) {
  				datefmt = tplFmtDay;
  			} else if(!es_strbufcmp(pvals[i].val.d.estr, (uchar*)"hour", sizeof("hour")-1)) {
-@@ -2314,6 +2318,9 @@ void tplPrintList(rsconf_t *conf)
+@@ -2318,6 +2322,9 @@ void tplPrintList(rsconf_t *conf)
  				case tplFmtMonth:
  					dbgprintf("[Format as month] ");
  					break;
@@ -77,12 +77,12 @@ diff --git a/template.h b/template.h
 index b387b16..ddb24b0 100644
 --- a/template.h
 +++ b/template.h
-@@ -65,7 +65,7 @@ enum tplFormatTypes { tplFmtDefault = 0, tplFmtMySQLDate = 1,
- 			tplFmtWDayName = 8, tplFmtYear = 9, tplFmtMonth = 10, tplFmtDay = 11,
+@@ -66,7 +66,7 @@ enum tplFormatTypes { tplFmtDefault = 0, tplFmtMySQLDate = 1,
  			tplFmtHour = 12, tplFmtMinute = 13, tplFmtSecond = 14,
  			tplFmtTZOffsHour = 15, tplFmtTZOffsMin = 16, tplFmtTZOffsDirection = 17,
--			tplFmtWDay = 18, tplFmtOrdinal = 19, tplFmtWeek = 20};
-+			tplFmtWDay = 18, tplFmtOrdinal = 19, tplFmtWeek = 20, tplFmtMonthName = 21};
+ 			tplFmtWDay = 18, tplFmtOrdinal = 19, tplFmtWeek = 20,
+-			tplFmtISOWeek = 21, tplFmtISOWeekYear = 22};
++			tplFmtISOWeek = 21, tplFmtISOWeekYear = 22, tplFmtMonthName = 23};
  enum tplFormatCaseConvTypes { tplCaseConvNo = 0, tplCaseConvUpper = 1, tplCaseConvLower = 2 };
  enum tplRegexType { TPL_REGEX_BRE = 0, /* posix BRE */
  		    TPL_REGEX_ERE = 1  /* posix ERE */
