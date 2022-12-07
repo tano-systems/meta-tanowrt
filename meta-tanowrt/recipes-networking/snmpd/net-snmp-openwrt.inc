@@ -3,7 +3,7 @@
 # This file Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "3"
+INC_PR = "4"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
