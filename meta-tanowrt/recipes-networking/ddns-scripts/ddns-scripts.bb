@@ -13,7 +13,7 @@ inherit allarch
 
 SUMMARY = "Dynamic DNS Client scripts (with IPv6 support)"
 SECTION = "net/misc"
-LICENSE = "GPL-2.0 & MPL-2.0"
+LICENSE = "GPL-2.0-only & MPL-2.0"
 LIC_FILES_CHKSUM += "file://LICENSE.GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 LIC_FILES_CHKSUM += "file://LICENSE.MPL-2.0;md5=815ca599c9df247a0c7f619bab123dad"
 

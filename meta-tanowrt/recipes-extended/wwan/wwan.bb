@@ -5,7 +5,7 @@
 PR = "tano5"
 
 DESCRIPTION = "Generic OpenWrt 3G/4G proto handler"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net/misc"
 

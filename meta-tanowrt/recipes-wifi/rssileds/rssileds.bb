@@ -10,7 +10,7 @@ DESCRIPTION = "A small process written in C to update the signal-strength indica
 SUMMARY = "RSSI real-time LED indicator"
 SECTION = "net"
 DEPENDS += "libiwinfo"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "\
 	file://rssileds.c;beginline=1;endline=25;md5=9d27f096c7c968199a2e9488c711bcb7 \
 "

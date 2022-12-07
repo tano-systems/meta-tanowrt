@@ -14,7 +14,7 @@ configurable by basic source changes. Also included is a 'client' command utilit
 sending information to psplash such as boot progress information."
 HOMEPAGE = "https://github.com/tano-systems/psplash-tn"
 SECTION = "base"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://psplash.h;beginline=1;endline=16;md5=8228f7969c37755b722da0419276f343"
 
 DEPENDS += "libuci libubox"

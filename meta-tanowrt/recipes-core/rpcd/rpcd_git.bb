@@ -8,7 +8,7 @@
 PR = "tano36"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
-LICENSE = "BSD"
+LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=da5faf55ed0618f0dde1c88e76a0fc74"
 SECTION = "base"
 DEPENDS = "json-c libuci libubox libubus libucode libiwinfo virtual/crypt"

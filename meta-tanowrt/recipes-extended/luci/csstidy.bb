@@ -10,7 +10,7 @@ PR = "tano1"
 
 DESCRIPTION = "CSSTidy parser and optimiser"
 HOMEPAGE = "https://github.com/openwrt/luci"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=f0c98afda62608f457e8327081b5d915"
 SECTION = "tools"
 

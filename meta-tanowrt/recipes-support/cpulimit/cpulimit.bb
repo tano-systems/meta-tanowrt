@@ -12,7 +12,7 @@ PR = "tano1"
 PV = "0.2+git${SRCPV}"
 S = "${WORKDIR}/git"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=86c1c0d961a437e529db93aa3bb32dc4"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"

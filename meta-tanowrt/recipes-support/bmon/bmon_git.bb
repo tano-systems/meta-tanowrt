@@ -7,7 +7,7 @@
 #
 HOMEPAGE = "https://github.com/tgraf/bmon"
 SUMMARY = "Bandwidth Monitor"
-LICENSE = "BSD & MIT"
+LICENSE = "BSD-3-Clause & MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.BSD;md5=5c262c13b60ebefe3060aed37d334ab6 \
                     file://LICENSE.MIT;md5=544799d0b492f119fa04641d1b8868ed"
 

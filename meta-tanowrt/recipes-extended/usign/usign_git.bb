@@ -8,7 +8,7 @@ PR = "tano2"
 
 DESCRIPTION = "OpenWrt tiny signify replacement"
 HOMEPAGE = "https://git.openwrt.org/?p=project/usign.git;a=summary"
-LICENSE = "BSD"
+LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=a51760fc5328fc7e0e27a5af562c6cfa"
 SECTION = "base"
 

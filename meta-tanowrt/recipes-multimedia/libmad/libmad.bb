@@ -5,7 +5,7 @@ as well as the de facto MPEG 2.5 format. All three audio layers - \
 Layer I, Layer II, and Layer III (i.e. MP3) - are fully implemented."
 HOMEPAGE = "http://www.underbit.com/products/mad/"
 SECTION = "libs"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 PV = "0.15.1b"

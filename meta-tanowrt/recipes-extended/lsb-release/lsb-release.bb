@@ -4,7 +4,7 @@
 #
 SUMMARY = "lsb_release script implementation for OpenWrt"
 SECTION = "console/utils"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://README;md5=12da544b1a3a5a1795a21160b49471cf"
 PV = "1.4"
 PR = "tano0"

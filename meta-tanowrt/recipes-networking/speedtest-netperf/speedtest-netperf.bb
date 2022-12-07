@@ -10,7 +10,7 @@ PV = "1.0.0"
 PR = "tano0"
 
 DESCRIPTION = "Script to measure the performance of your network and router"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 

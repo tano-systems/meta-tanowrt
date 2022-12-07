@@ -8,7 +8,7 @@
 PR = "tano8"
 DESCRIPTION = "libubox HTTP client library"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uclient.git;a=summary"
-LICENSE = "BSD"
+LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://uclient-backend.h;beginline=1;endline=17;md5=b96bb2c7c7edb5a7cff262e23626e382"
 SECTION = "base"
 DEPENDS = "libubox ustream-ssl"

@@ -9,7 +9,7 @@ PR = "tano10"
 # Compile always with gcc
 TOOLCHAIN = "gcc"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
                     file://debian/copyright;md5=332234a99007d25da40f41ee96aa388f"
 

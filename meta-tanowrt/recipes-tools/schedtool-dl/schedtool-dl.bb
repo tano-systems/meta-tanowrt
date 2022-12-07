@@ -5,7 +5,7 @@
 
 DESCRIPTION = "schedtool-dl (scheduler test tool) for deadline scheduler"
 SECTION = "devel"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=dc1f51f7ca94aebffb9b3663d82873ec"
 
 SRC_URI = "git://github.com/jlelli/schedtool-dl.git;protocol=https;branch=master \

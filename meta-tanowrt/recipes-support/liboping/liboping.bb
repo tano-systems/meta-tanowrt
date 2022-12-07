@@ -10,7 +10,7 @@
 SUMMARY = "Octo's ping library"
 DESCRIPTION = "liboping is a C library to generate ICMP echo requests, better known as 'ping packets'. It is intended for use in network monitoring applications or applications that would otherwise need to fork ping frequently."
 SECTION = "libs"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS = "ncurses"
 

@@ -5,7 +5,7 @@
 
 SUMMARY = "non-mainline-kernel netfilter extensions"
 DESCRIPTION = "Xtables-addons contains a set of possibly useful but not included in the mainline kernel nefilter extensions"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 DEPENDS = "virtual/kernel iptables bc-native"
 

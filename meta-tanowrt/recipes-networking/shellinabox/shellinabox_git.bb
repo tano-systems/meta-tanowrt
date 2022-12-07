@@ -22,7 +22,7 @@ HOMEPAGE = "https://github.com/shellinabox/shellinabox"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a193d25fdef283ddce530f6d67852fa5"
 
 inherit autotools-brokensep

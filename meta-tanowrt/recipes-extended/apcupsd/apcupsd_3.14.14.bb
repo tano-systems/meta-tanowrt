@@ -10,7 +10,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DEPENDS += "dos2unix-native util-linux-native"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 SRC_URI = "https://netcologne.dl.sourceforge.net/project/apcupsd/apcupsd%20-%20Stable/${PV}/apcupsd-${PV}.tar.gz"

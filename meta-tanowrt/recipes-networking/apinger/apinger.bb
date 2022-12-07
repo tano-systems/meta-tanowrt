@@ -11,7 +11,7 @@ PV = "0.4.1+git${SRCPV}"
 PR = "tano0"
 
 SUMMARY = "apinger tool"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://src/main.c;beginline=1;endline=18;md5=9ba91fa94d7e6cc5ffc7311a912dcefa"
 
 SRCREV = "78eb328721ba1a10571c19df95acddcb5f0c17c8"

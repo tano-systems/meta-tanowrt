@@ -5,7 +5,7 @@
 DESCRIPTION = "High performance data logging and graphing system for time series data."
 HOMEPAGE = "http://oss.oetiker.ch/rrdtool/"
 SECTION = "utils"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=44fee82a1d2ed0676cf35478283e0aa0"
 
 DEPENDS = "libpng zlib perl-native"

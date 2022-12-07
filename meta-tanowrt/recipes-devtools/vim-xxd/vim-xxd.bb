@@ -11,7 +11,7 @@ PR = "tano2"
 
 SUMMARY = "XXD utility"
 SECTION = "console/utils"
-LICENSE = "vim"
+LICENSE = "Vim"
 LIC_FILES_CHKSUM = "file://../runtime/doc/uganda.txt;md5=eea32ac1424bba14096736a494ae9045"
 
 SRC_URI = "git://github.com/vim/vim.git;branch=master;protocol=https"

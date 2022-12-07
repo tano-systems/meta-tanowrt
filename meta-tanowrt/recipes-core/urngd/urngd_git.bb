@@ -21,7 +21,7 @@ HOMEPAGE = "https://github.com/ynezz/openwrt-urngd"
 SECTION = "base"
 DEPENDS = "libubox"
 
-LICENSE = "GPL-2.0 & BSD-3-Clause"
+LICENSE = "GPL-2.0-only & BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://urngd.c;beginline=1;endline=38;md5=be8a7966f07b41d470e7d30065c98465"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"

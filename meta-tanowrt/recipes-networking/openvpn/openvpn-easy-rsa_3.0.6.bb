@@ -11,7 +11,7 @@ PR = "tano0.${INC_PR}"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING.md;md5=58146dc36278c2de5b89534d1ad8f06c"
 
 SRC_URI = "\

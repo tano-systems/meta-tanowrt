@@ -4,7 +4,7 @@
 #
 
 HOMEPAGE = "http://w1.fi/hostapd/"
-LICENSE = "GPLv2 | BSD"
+LICENSE = "GPL-2.0-only | BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
 INC_PR = "tano17"

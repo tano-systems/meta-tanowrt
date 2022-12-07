@@ -1,7 +1,7 @@
 SUMMARY = "Interactive process viewer"
 HOMEPAGE = "https://htop.dev"
 SECTION = "console/utils"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4099d367cd5e59b6d4fc1ee33accb891"
 
 DEPENDS = "ncurses"

@@ -5,7 +5,7 @@ and Layer III, the latter often colloquially known as MP3.). There is also \
 full support for ID3 tags."
 HOMEPAGE = "http://sourceforge.net/projects/mad/"
 SECTION = "sound"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 PV = "0.15.2b"

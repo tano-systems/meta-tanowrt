@@ -11,7 +11,7 @@
 DESCRIPTION = "Open source library for IEC 61850"
 HOMEPAGE = "http://libiec61850.com/libiec61850/"
 SECTION = "libs"
-LICENSE = "GPL-3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 MAINTAINER = "Anton Kikin <a.kikin@tano-systems.com>"
 
