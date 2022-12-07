@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR:append = ".tano3"
+PR:append = ".tano4"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
@@ -16,8 +16,8 @@ SRC_URI += "\
 	file://100-configure.patch \
 	file://110-darwin_fixes.patch \
 	file://115-add-config-xtlibdir.patch \
-	file://120-no_arpd.patch \
-	file://130-no_netem.patch \
+	file://120-no_arpd_ifstat_rtacct_lnstat.patch \
+	file://130-no_netem_tipc_dcb_man_vdpa.patch \
 	file://140-allow_pfifo_fast.patch \
 	file://140-keep_libmnl_optional.patch \
 	file://145-keep_libelf_optional.patch \
@@ -26,6 +26,7 @@ SRC_URI += "\
 	file://170-ip_tiny.patch \
 	file://175-reduce-dynamic-syms.patch \
 	file://180-drop_FAILED_POLICY.patch \
+	file://190-fix-nls-rpath-link.patch \
 	file://200-drop_libbsd_dependency.patch \
 	file://300-selinux-configurable.patch \
 "
