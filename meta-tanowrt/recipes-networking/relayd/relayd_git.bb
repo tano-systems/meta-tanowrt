@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=17;md5=86aad799085683e0a2e
 SECTION = "base"
 DEPENDS = "libubox"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/relayd.git \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/relayd.git;branch=master \
           "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"

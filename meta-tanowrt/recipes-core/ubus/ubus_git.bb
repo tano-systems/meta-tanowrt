@@ -15,7 +15,7 @@ DEPENDS = "json-c libubox"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/ubus.git;branch=master"
 
 SRC_URI += "file://0001-cli-fix-type-displaying-for-BLOBMSG_TYPE_DOUBLE-argu.patch"
 SRC_URI += "file://0002-cli-fix-type-displaying-for-BLOBMSG_TYPE_INT64.patch"

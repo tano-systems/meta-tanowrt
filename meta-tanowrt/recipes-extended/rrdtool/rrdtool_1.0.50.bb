@@ -13,7 +13,7 @@ DEPENDS = "libpng zlib perl-native"
 PR = "tano2"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://github.com/tano-systems/rrdtool-1.x.git;protocol=https;destsuffix=${BPN}-${PV}"
+SRC_URI = "git://github.com/tano-systems/rrdtool-1.x.git;protocol=https;destsuffix=${BPN}-${PV};branch=master"
 SRCREV = "40ff39e03e1f22d07d6a026f7747a42fcfe40bb0"
 S = "${WORKDIR}/${BPN}-${PV}"
 

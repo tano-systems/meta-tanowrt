@@ -19,7 +19,7 @@ LIC_FILES_CHKSUM = "\
 	file://COPYING;md5=1ebbd3e34237af26da5dc08a4e440464 \
 "
 
-SRC_URI = "git://github.com/royhills/arp-scan.git"
+SRC_URI = "git://github.com/royhills/arp-scan.git;branch=master;protocol=https"
 SRCREV = "7aaa3a67a885dfa507ce27bc700b12697f32b6c4"
 S = "${WORKDIR}/git"
 

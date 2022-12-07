@@ -11,7 +11,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 EXTRA_AUTORECONF_append = " --exclude=gnu-configize"
 
 S = "${WORKDIR}/git"
-SRC_URI = "git://github.com/vincentbernat/lldpd.git"
+SRC_URI = "git://github.com/vincentbernat/lldpd.git;branch=master;protocol=https"
 SRCREV = "e0e375cec9f6ec3dc47b9f41eedab2fb9d415c2e"
 
 SRC_URI += "\

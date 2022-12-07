@@ -17,7 +17,7 @@ RDEPENDS_${PN} = "lua5.1"
 PV = "1.0.0"
 PR = "tano1"
 
-SRC_URI = "git://github.com/jirutka/luasrcdiet.git"
+SRC_URI = "git://github.com/jirutka/luasrcdiet.git;branch=master;protocol=https"
 SRCREV = "f138fc9359821d9201cd6b57cfa2fcbed5b9af97"
 
 S = "${WORKDIR}/git"

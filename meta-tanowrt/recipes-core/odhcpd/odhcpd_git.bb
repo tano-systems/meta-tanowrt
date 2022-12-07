@@ -17,7 +17,7 @@ DEPENDS = "libubox ubus libnl uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-    git://${GIT_OPENWRT_ORG}/project/odhcpd.git;name=odhcpd \
+    git://${GIT_OPENWRT_ORG}/project/odhcpd.git;name=odhcpd;branch=master \
     file://0100-OE-build-fails-due-to-libnl-tiny-dependency-in-CMakeLists.patch \
     file://odhcpd.defaults \
     file://odhcpd.init \

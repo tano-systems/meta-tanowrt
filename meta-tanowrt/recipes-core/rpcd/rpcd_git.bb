@@ -16,7 +16,7 @@ DEPENDS = "json-c libuci libubox libubus libucode libiwinfo virtual/crypt"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:${THISDIR}/${BPN}/files-tmp:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd \
+	git://${GIT_OPENWRT_ORG}/project/rpcd.git;name=rpcd;branch=master \
 	file://rpcd.init \
 	file://rpcd.config \
 	file://50-migrate-rpcd-ubus-sock.sh \

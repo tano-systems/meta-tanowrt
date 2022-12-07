@@ -10,7 +10,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "console/network"
 
-SRC_URI = "git://github.com/linux-rdma/qperf.git"
+SRC_URI = "git://github.com/linux-rdma/qperf.git;branch=master;protocol=https"
 SRCREV = "118a571efb3ef5305fdacccf596ad5eeefd99d92"
 
 PR = "tano0"

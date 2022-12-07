@@ -31,7 +31,7 @@ PACKAGECONFIG[backend-nl80211] = ",,libnl,"
 PACKAGECONFIG[backend-wl] = ",,,"
 PACKAGECONFIG[backend-madwifi] = ",,,"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/iwinfo.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/iwinfo.git;branch=master"
 
 # Patches
 SRC_URI += "\

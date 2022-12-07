@@ -18,7 +18,7 @@ LIC_FILES_CHKSUM = "\
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/cgi-io.git \
+	git://${GIT_OPENWRT_ORG}/project/cgi-io.git;branch=master \
 	file://0001-Import-changes-from-meta-tanowrt-layer.patch \
 "
 

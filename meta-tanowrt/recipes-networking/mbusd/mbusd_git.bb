@@ -20,7 +20,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=c8064f1419006cd3e5026f78f15c7a28"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://github.com/3cky/mbusd \
+	git://github.com/3cky/mbusd;branch=master;protocol=https \
 	file://mbusd.init \
 	file://mbusd.config \
 "

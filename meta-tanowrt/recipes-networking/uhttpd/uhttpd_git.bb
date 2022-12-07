@@ -16,7 +16,7 @@ DEPENDS = "libubox libucode ubus json-c ustream-ssl virtual/crypt"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/uhttpd.git \
+	git://${GIT_OPENWRT_ORG}/project/uhttpd.git;branch=master \
 	file://uhttpd.config \
 	file://uhttpd.init \
 	file://ubus.default \

@@ -16,7 +16,7 @@ DEPENDS = "ubus libubox uci"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/ubox.git \
+	git://${GIT_OPENWRT_ORG}/project/ubox.git;branch=master \
 	file://log.init \
 "
 

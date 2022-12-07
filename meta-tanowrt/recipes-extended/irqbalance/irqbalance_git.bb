@@ -13,7 +13,7 @@ PR = "tano1.${INC_PR}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://github.com/Irqbalance/irqbalance"
+SRC_URI = "git://github.com/Irqbalance/irqbalance;branch=master;protocol=https"
 
 SRC_URI += "\
 	file://100-remove-libncursesw-dependency.patch \

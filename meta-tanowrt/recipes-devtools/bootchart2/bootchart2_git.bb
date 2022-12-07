@@ -27,7 +27,7 @@ RCONFLICTS_${PN} = "bootchart"
 SRCREV = "42509aa0c9c20baa631062496b281f67b31abbd0"
 PV = "0.14.8+git${SRCPV}"
 
-SRC_URI = "git://github.com/xrmx/bootchart"
+SRC_URI = "git://github.com/xrmx/bootchart;branch=master;protocol=https"
 
 # Patches
 SRC_URI += "\

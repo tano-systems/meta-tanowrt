@@ -15,7 +15,7 @@ LICENSE = "WTFPL"
 LIC_FILES_CHKSUM = "file://COPYING;md5=df8b20e1bbf83b9469c9e86895dc5e72"
 SECTION = "console/utils"
 
-SRC_URI = "git://github.com/tano-systems/pwm-tool;branch=master"
+SRC_URI = "git://github.com/tano-systems/pwm-tool;branch=master;protocol=https"
 SRCREV = "0cc46a05f4db32a31e075ecccd862fe2d91087df"
 S = "${WORKDIR}/git"
 

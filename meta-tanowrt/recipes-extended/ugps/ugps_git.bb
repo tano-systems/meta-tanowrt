@@ -16,7 +16,7 @@ DEPENDS = "libubox ubus"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/ugps.git \
+	git://${GIT_OPENWRT_ORG}/project/ugps.git;branch=master \
 	file://gps.config \
 	file://ugps.init \
 "

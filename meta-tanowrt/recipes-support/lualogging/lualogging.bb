@@ -18,7 +18,7 @@ inherit tanowrt-lua
 
 RDEPENDS_${PN} += "lua5.1"
 
-SRC_URI = "git://github.com/Neopallium/lualogging.git"
+SRC_URI = "git://github.com/Neopallium/lualogging.git;branch=master;protocol=https"
 SRCREV = "c85130120406b9641e96ab05f782dde819fbd102"
 
 SRC_URI += "file://0001-Add-support-for-notice-level-messages.patch"

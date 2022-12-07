@@ -23,7 +23,7 @@ RDEPENDS_${PN} += "openssl-bin"
 
 GIT_PROTOCOL = "https"
 
-SRC_URI = "git://github.com/tsl0922/ttyd.git;branch=main;protocol=${GIT_PROTOCOL}"
+SRC_URI = "git://github.com/tsl0922/ttyd.git;branch=main;protocol=${GIT_PROTOCOL};protocol=https"
 SRCREV = "6f42dc636c483e79832b76708dc5151fc83778a6"
 
 # Files

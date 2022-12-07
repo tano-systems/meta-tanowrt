@@ -21,7 +21,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://github.com/jow-/nlbwmon.git \
+	git://github.com/jow-/nlbwmon.git;branch=master;protocol=https \
 "
 
 # 2020-04-11.1

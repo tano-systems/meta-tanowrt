@@ -22,7 +22,7 @@ SWUPDATE_GIT_BRANCH   ?= "tano/master"
 SWUPDATE_GIT_PROTOCOL ?= "https"
 SWUPDATE_GIT_SRCREV   ?= "49e958fe46c224b47334a91266e018e64b1b5e47"
 
-SRC_URI_remove = "git://github.com/sbabic/swupdate.git;protocol=https"
+SRC_URI_remove = "git://github.com/sbabic/swupdate.git;protocol=https;branch=master"
 SRC_URI_append = " ${SWUPDATE_GIT_URI};branch=${SWUPDATE_GIT_BRANCH};protocol=${SWUPDATE_GIT_PROTOCOL} "
 SRCREV = "${SWUPDATE_GIT_SRCREV}"
 PV = "2021.04+git${SRCPV}"

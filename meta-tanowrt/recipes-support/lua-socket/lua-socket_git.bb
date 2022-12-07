@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=ab6706baf6d39a6b0fa2613a3b0831e7"
 
 DEPENDS += "lua5.1-native lua5.1"
 
-SRC_URI = "git://github.com/diegonehab/luasocket.git \
+SRC_URI = "git://github.com/diegonehab/luasocket.git;branch=master;protocol=https \
            file://0001-allow-overrides-for-DESTDIR-CC_linux-LD_linux-LDFLAG.patch \
           "
 

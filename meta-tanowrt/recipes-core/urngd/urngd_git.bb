@@ -27,7 +27,7 @@ LIC_FILES_CHKSUM = "file://urngd.c;beginline=1;endline=38;md5=be8a7966f07b41d470
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	gitsm://${GIT_OPENWRT_ORG}/project/urngd.git \
+	gitsm://${GIT_OPENWRT_ORG}/project/urngd.git;branch=master \
 	file://urngd.init \
 "
 

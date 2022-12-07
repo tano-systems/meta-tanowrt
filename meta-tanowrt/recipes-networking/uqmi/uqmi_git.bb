@@ -20,7 +20,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uqmi.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/uqmi.git;branch=master"
 
 # 25.01.2022
 # uqmi: add support for get operating mode

@@ -16,7 +16,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-SRC_URI = "git://github.com/xelerance/xl2tpd.git"
+SRC_URI = "git://github.com/xelerance/xl2tpd.git;branch=master;protocol=https"
 SRCREV = "66fefc9c71cc7ceb3e64e85a1098dfdf1b7d0afe"
 
 DEPENDS += "libpcap"

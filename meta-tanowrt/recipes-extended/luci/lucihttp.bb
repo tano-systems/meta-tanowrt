@@ -15,7 +15,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 inherit cmake tanowrt-lua pkgconfig
 
 SRC_URI = "\
-	git://github.com/jow-/lucihttp.git;protocol=https \
+	git://github.com/jow-/lucihttp.git;protocol=https;branch=master \
 "
 
 SRCREV = "6e68a1065f3ed1889e5fa053b206bd3aa108bd5f"

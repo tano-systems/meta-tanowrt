@@ -15,7 +15,7 @@ SECTION = "libs"
 DEPENDS = ""
 
 SRCREV = "1bc90ac506b50a06ee613b139405ff47ecc83c0a"
-SRC_URI = "git://github.com/blunderer/libroxml.git \
+SRC_URI = "git://github.com/blunderer/libroxml.git;branch=master;protocol=https \
            file://0001-remove-inline-from-read-close-buf-and-file-functions.patch \
          "
 

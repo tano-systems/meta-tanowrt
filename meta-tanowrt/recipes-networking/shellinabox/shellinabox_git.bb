@@ -31,7 +31,7 @@ inherit pkgconfig
 DEPENDS += "zlib"
 
 GIT_PROTOCOL = "https"
-SRC_URI = "git://github.com/shellinabox/shellinabox.git;protocol=${GIT_PROTOCOL}"
+SRC_URI = "git://github.com/shellinabox/shellinabox.git;protocol=${GIT_PROTOCOL};branch=master"
 SRCREV = "4f0ecc31ac6f985e0dd3f5a52cbfc0e9251f6361"
 
 # Files

@@ -14,7 +14,7 @@ LICENSE = "LGPL-2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=f0c98afda62608f457e8327081b5d915"
 SECTION = "tools"
 
-SRC_URI = "git://github.com/jow-/csstidy-cpp.git"
+SRC_URI = "git://github.com/jow-/csstidy-cpp.git;branch=master;protocol=https"
 SRCREV = "707feaec556c40c999514a598b1a1ea5b50826c6"
 
 S = "${WORKDIR}/git"
