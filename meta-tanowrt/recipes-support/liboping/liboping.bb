@@ -3,7 +3,7 @@
 #
 # Octo's ping library
 #
-# This file Copyright (C) 2018-2019 Tano Systems
+# This file Copyright (C) 2018-2019, 2022 Tano Systems LLC
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
@@ -16,19 +16,20 @@ DEPENDS = "ncurses"
 
 PACKAGES += "oping noping"
 
-PV = "1.9.0"
-PR = "tano2"
+PV = "1.10.0"
+PR = "tano0"
 
-SRC_URI = "https://noping.cc/files/${BPN}-${PV}.tar.gz \
-           file://0001-Fix-building-for-GCC-8.2.patch \
-           "
+SRC_URI = "https://noping.cc/files/${BPN}-${PV}.tar.gz"
+SRC_URI[sha256sum] = "c206b05743d0730814be3115b48abd0b00016677525153c78730da307aba0846"
 
-SRC_URI[md5sum] = "28d085b95d1ca1acd541fc2606d5e02d"
-SRC_URI[sha256sum] = "86b44f684a3151bd4b5b75336876635ecb0f6cfe54a2fb29a6da06432f2dbb00"
+# Patches
+SRC_URI += "\
+	file://0001-Fix-building-for-GCC-11.patch \
+"
 
 S = "${WORKDIR}/${BPN}-${PV}"
 
-inherit autotools
+inherit pkgconfig autotools
 
 EXTRA_OECONF = "\
 	--without-perl-bindings \
@@ -47,4 +48,3 @@ RDEPENDS:oping += "liboping"
 SUMMARY:noping = "noping - Send ICMP ECHO_REQUEST to network hosts"
 FILES:noping += "${bindir}/noping"
 RDEPENDS:noping += "ncurses liboping"
-
