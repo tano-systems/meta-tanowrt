@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2019 Tano Systems
+# This file Copyright (C) 2019, 2022 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano2"
+PR = "tano3"
 PV = "0.4.1+git${SRCPV}"
 
 SUMMARY = "Open-source Modbus TCP to Modbus RTU (RS-232/485) gateway"
@@ -29,7 +29,7 @@ SRCREV = "88916fe82daeadeff59de03b9f1647603f67be42"
 
 S = "${WORKDIR}/git"
 
-inherit cmake tanowrt-services
+inherit pkgconfig cmake tanowrt-services
 TANOWRT_SERVICE_PACKAGES = "mbusd"
 TANOWRT_SERVICE_SCRIPTS_mbusd += "mbusd"
 TANOWRT_SERVICE_STATE_mbusd-mbusd ?= "enabled"
