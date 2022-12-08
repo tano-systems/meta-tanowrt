@@ -1,10 +1,10 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (c) 2019 Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019, 2022 Tano Systems. All Rights Reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR:append = ".tano2"
+PR:append = ".tano0"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -34,7 +34,7 @@ do_install:append() {
 }
 
 FILES:${PN} = "\
-	${base_libdir} \
+	${libdir} \
 	${bindir} \
 	${sbindir} \
 "
