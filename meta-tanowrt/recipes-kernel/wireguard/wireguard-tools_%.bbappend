@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020, 2022 Tano Systems LLC. All rights reserved.
 #
-PR:append = ".tano6"
+PR:append = ".tano7"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
@@ -18,6 +18,9 @@ do_install:append () {
 
 	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
 	install -m 0755 ${WORKDIR}/wireguard.sh ${D}${nonarch_base_libdir}/netifd/proto/
+
+	# TanoWrt is not use wg-quick
+	rm -f ${D}${bindir}/wg-quick
 }
 
 FILES:${PN} += " \
