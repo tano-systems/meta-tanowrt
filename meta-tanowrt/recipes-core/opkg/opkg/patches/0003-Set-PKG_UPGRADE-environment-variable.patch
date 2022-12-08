@@ -1,6 +1,6 @@
-From d1bd9279ed7ae8d6ba5162d6c4ce6d358022d381 Mon Sep 17 00:00:00 2001
+From 4e452cad2cde4667cacb7e4db8c604ef2b0be0a6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Thu, 3 Feb 2022 03:32:40 +0300
+Date: Thu, 8 Dec 2022 22:26:29 +0300
 Subject: [PATCH] Set PKG_UPGRADE environment variable
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>

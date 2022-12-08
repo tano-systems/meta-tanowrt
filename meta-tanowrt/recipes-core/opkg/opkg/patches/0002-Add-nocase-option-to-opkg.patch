@@ -1,18 +1,18 @@
-From 5c7d8b5b33c8108b1a85f05a48be9e9964999295 Mon Sep 17 00:00:00 2001
+From 93ee167ba56a66b283e70768586beb4f6601b69b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
-Date: Fri, 12 Jul 2019 03:47:30 +0300
-Subject: [PATCH 2/2] Add 'nocase' option to opkg
+Date: Thu, 8 Dec 2022 22:24:36 +0300
+Subject: [PATCH] Add 'nocase' option to opkg
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- libopkg/opkg_cmd.c  | 18 +++++++++---------
+ libopkg/opkg_cmd.c  | 20 ++++++++++----------
  libopkg/opkg_conf.c |  1 +
  libopkg/opkg_conf.h |  1 +
  src/opkg.c          | 12 +++++++++++-
- 4 files changed, 22 insertions(+), 10 deletions(-)
+ 4 files changed, 23 insertions(+), 11 deletions(-)
 
 diff --git a/libopkg/opkg_cmd.c b/libopkg/opkg_cmd.c
-index ba47557..86e62ad 100644
+index 6184571..ebd4822 100644
 --- a/libopkg/opkg_cmd.c
 +++ b/libopkg/opkg_cmd.c
 @@ -369,7 +369,7 @@ static int opkg_configure_packages(char *pkg_name)
@@ -35,6 +35,15 @@ index ba47557..86e62ad 100644
              continue;
          print_pkg(pkg);
      }
+@@ -569,7 +569,7 @@ static int opkg_verify_cmd(int argc, char **argv)
+ 
+         pkg = available->pkgs[i];
+         /* if we have package name or pattern and pkg does not match, then skip it */
+-        if (pkg_name && fnmatch(pkg_name, pkg->name, 0))
++        if (pkg_name && fnmatch(pkg_name, pkg->name, opkg_config->nocase))
+             continue;
+ 
+         sprintf_alloc(&md5sums_file, "%s/%s.md5sums", pkg->dest->info_dir,
 @@ -636,7 +636,7 @@ static int opkg_list_installed_cmd(int argc, char **argv)
      for (i = 0; i < available->len; i++) {
          pkg = available->pkgs[i];
@@ -80,17 +89,17 @@ index ba47557..86e62ad 100644
                          opkg_msg(NOTICE, "    %s", pkg->name);
                          if (strcmp(target, apkg->name) != 0)
                              opkg_msg(NOTICE, "\tprovides %s\n", apkg->name);
-@@ -1163,7 +1163,7 @@ static int opkg_search_cmd(int argc, char **argv)
+@@ -1164,7 +1164,7 @@ static int opkg_search_cmd(int argc, char **argv)
          for (iter = file_list_first(installed_files); iter;
                  iter = file_list_next(installed_files, iter)) {
              installed_file = (file_info_t *)iter->data;
--            if (fnmatch(argv[0], installed_file->path, 0) == 0)
-+            if (fnmatch(argv[0], installed_file->path, opkg_config->nocase) == 0)
+-            if (fnmatch(argv[0], installed_file->path, 0) == 0) {
++            if (fnmatch(argv[0], installed_file->path, opkg_config->nocase) == 0) {
+                 found_match = 1;
                  print_pkg(pkg);
-         }
- 
+             }
 diff --git a/libopkg/opkg_conf.c b/libopkg/opkg_conf.c
-index b49f5fb..5e349ab 100644
+index 37fcd2c..bc89b30 100644
 --- a/libopkg/opkg_conf.c
 +++ b/libopkg/opkg_conf.c
 @@ -75,6 +75,7 @@ static opkg_option_t options[] = {
@@ -102,7 +111,7 @@ index b49f5fb..5e349ab 100644
      {"offline_root", OPKG_OPT_TYPE_STRING, &_conf.offline_root},
      {"overlay_root", OPKG_OPT_TYPE_STRING, &_conf.overlay_root},
 diff --git a/libopkg/opkg_conf.h b/libopkg/opkg_conf.h
-index e0f9f0f..a864d91 100644
+index 78a34d5..1c6117d 100644
 --- a/libopkg/opkg_conf.h
 +++ b/libopkg/opkg_conf.h
 @@ -107,6 +107,7 @@ typedef struct opkg_conf {
@@ -114,7 +123,7 @@ index e0f9f0f..a864d91 100644
      char *offline_root;
      char *overlay_root;
 diff --git a/src/opkg.c b/src/opkg.c
-index 7510fe8..d351407 100644
+index 7510fe8..9966e6f 100644
 --- a/src/opkg.c
 +++ b/src/opkg.c
 @@ -27,6 +27,7 @@
@@ -165,7 +174,7 @@ index 7510fe8..d351407 100644
              opkg_config->nodeps = 1;
              break;
 +        case ARGS_OPT_NOCASE:
-+            opkg_config->nocase = 1;
++            opkg_config->nocase = FNM_CASEFOLD;
 +            break;
          case ARGS_OPT_ADD_ARCH:
          case ARGS_OPT_ADD_DEST:
@@ -179,5 +188,5 @@ index 7510fe8..d351407 100644
      printf("\t--force-removal-of-dependent-packages\n");
      printf("\t                                Remove package and all dependencies\n");
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 

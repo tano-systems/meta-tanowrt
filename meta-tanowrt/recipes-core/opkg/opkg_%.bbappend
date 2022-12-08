@@ -4,7 +4,7 @@
 # Copyright (C) 2018-2019, 2021-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR:append = ".tano6"
+PR:append = ".tano0"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 OPKGLIBDIR = "${libdir}"
