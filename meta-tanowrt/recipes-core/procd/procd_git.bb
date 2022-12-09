@@ -84,6 +84,9 @@ SRCREV_openwrt = "${OPENWRT_SRCREV}"
 do_unpack[vardeps] += "libdir"
 do_unpack[vardeps] += "base_libdir"
 
+CXXFLAGS += "${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS}"
+CFLAGS += "${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS}"
+
 do_configure:prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
 		sed -i -e "s:ARCHIVE DESTINATION lib:ARCHIVE DESTINATION \${CMAKE_INSTALL_LIBDIR}:g" \
