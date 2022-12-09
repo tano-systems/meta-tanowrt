@@ -46,32 +46,32 @@ Dependencies of the :ref:`meta-tanowrt <meta-tanowrt>` layer are described in th
    * - openembedded-core
      - https://git.openembedded.org/openembedded-core
      - meta
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/openembedded-core.yml <../../../kas/layers/openembedded-core.yml>`
    * - meta-openembedded
      - https://git.openembedded.org/meta-openembedded
      - meta-oe
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-oe.yml <../../../kas/layers/meta-oe.yml>`
    * - meta-python
      - https://git.openembedded.org/meta-openembedded
      - meta-python
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-python.yml <../../../kas/layers/meta-python.yml>`
    * - meta-networking
      - https://git.openembedded.org/meta-openembedded
      - meta-networking
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-networking.yml <../../../kas/layers/meta-networking.yml>`
    * - meta-filesystems
      - https://git.openembedded.org/meta-openembedded
      - meta-filesystems
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-filesystems.yml <../../../kas/layers/meta-filesystems.yml>`
    * - meta-swupdate
      - https://github.com/sbabic/meta-swupdate.git
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-swupdate.yml <../../../kas/layers/meta-swupdate.yml>`
 
 .. rubric:: Optional Dependencies
@@ -91,7 +91,7 @@ These dependencies are optional, depending on the built image or target machine.
    * - meta-qt5
      - https://github.com/meta-qt5/meta-qt5.git
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-qt5.yml <../../../kas/layers/meta-qt5.yml>`
 
 Supported Virtual Machines
