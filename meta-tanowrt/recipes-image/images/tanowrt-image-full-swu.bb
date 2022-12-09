@@ -4,7 +4,7 @@
 #
 SUMMARY = "TanoWrt full featured SWU image"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-PR = "tano0"
+PR = "tano1"
 
 COMPATIBLE_MACHINE = "qemupc"
 

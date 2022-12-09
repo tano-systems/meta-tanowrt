@@ -180,10 +180,11 @@ def swupdate_expand_bitbake_variables(d, s):
 
             write_lines.append(line)
 
+    swupdate_exec_functions(d, s, write_lines)
+
     with open(os.path.join(s, "sw-description"), 'w+') as f:
         for line in write_lines:
             f.write(line)
-
 
 #
 # Extract actual versions from deployed artifacts
