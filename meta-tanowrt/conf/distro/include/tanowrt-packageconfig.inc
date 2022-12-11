@@ -15,7 +15,7 @@ PACKAGECONFIG:pn-libwebsockets = "\
 PACKAGECONFIG:remove:pn-xerces-c = "icu"
 
 # Prefer OpenSSL over GnuTLS for curl due to TSU exemptions
-PACKAGECONFIG:pn-curl = "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'ipv6', '', d)} ssl zlib"
+PACKAGECONFIG:pn-curl = "${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'ipv6', '', d)} openssl zlib"
 
 PACKAGECONFIG:pn-nano = "tiny"
 
