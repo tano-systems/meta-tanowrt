@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2022 Tano Systems LLC. All rights reserved.
 #
 
 #
@@ -8,11 +8,11 @@
 #
 KERNEL_IMAGETYPE = "bzImage"
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-yocto"
-PREFERRED_VERSION_linux-tano-yocto = "5.10%"
+PREFERRED_VERSION_linux-tano-yocto = "5.15%"
 PREFERRED_VERSION_xtables-addons = "3.13%"
 
-LINUXLIBCVERSION = "5.10%"
-SDKLINUXLIBCVERSION = "5.10%"
+LINUXLIBCVERSION = "5.15%"
+SDKLINUXLIBCVERSION = "5.15%"
 
 # Set to "1" for kernels 5.6+
 TANOWRT_WIREGUARD_IN_KERNEL = "1"
