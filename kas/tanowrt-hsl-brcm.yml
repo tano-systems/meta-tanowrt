@@ -5,6 +5,6 @@ header:
   version: 11
   includes:
     - kas/tanowrt-core.yml
-    - kas/layers/meta-tanowrt-hsl-rpi.yml
+    - kas/layers/meta-tanowrt-hsl-brcm.yml
 
 target: tanowrt-image-full

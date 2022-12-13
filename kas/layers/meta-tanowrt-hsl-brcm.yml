@@ -10,4 +10,4 @@ header:
 repos:
   meta-tanowrt:
     layers:
-      meta-tanowrt-hsl-rpi:
+      meta-tanowrt-hsl-brcm:

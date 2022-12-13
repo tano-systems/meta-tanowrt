@@ -4,7 +4,7 @@
 header:
   version: 11
   includes:
-    - kas/tanowrt-hsl-rpi.yml
+    - kas/tanowrt-hsl-brcm.yml
 
 machine: rpi3-sd
 target: tanowrt-image-full
