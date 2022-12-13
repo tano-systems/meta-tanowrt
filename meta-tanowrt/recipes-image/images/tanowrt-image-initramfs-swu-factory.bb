@@ -50,7 +50,7 @@ SWU_FACTORY_INITRAMFS_DISABLE_SERVICES ?= "\
 SWU_FACTORY_INITRAMFS_DISABLE_SERVICES[doc] = \
 	"List of procd services that must be disabled in the final image"
 
-TANOWRT_IMAGE_INITRAMFS_KEEP_FEATURES += "\
+TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES += "\
 	splash \
 	${@oe.utils.conditional('SWU_FACTORY_INITRAMFS_SSH', '1', \
 		'ssh-server-dropbear ssh-server-openssh', '', d)} \

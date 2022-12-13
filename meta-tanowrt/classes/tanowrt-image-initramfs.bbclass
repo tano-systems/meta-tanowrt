@@ -20,11 +20,9 @@ inherit tanowrt-image
 # Disable runtime dependency on run-postinsts
 ROOTFS_BOOTSTRAP_INSTALL = ""
 
-TANOWRT_IMAGE_INITRAMFS_KEEP_FEATURES ?= ""
-
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE ?= "0"
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE_WAIT ?= "0"
-TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FREATURES ?= ""
+TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES ?= ""
 TANOWRT_IMAGE_INITRAMFS_BAD_RECOMMENDATIONS ?= "\
 	kernel-modules \
 	parted \
@@ -46,11 +44,11 @@ TANOWRT_IMAGE_INITRAMFS_INSTALL ?= "\
 
 #
 # Cleanup all image features except listed in
-# TANOWRT_IMAGE_INITRAMFS_KEEP_FEATURES
+# TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES
 #
 python __anonymous () {
     image_features = d.getVar('IMAGE_FEATURES', True)
-    keep = d.getVar('TANOWRT_IMAGE_INITRAMFS_KEEP_FEATURES', True)
+    keep = d.getVar('TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES', True)
 
     if not image_features:
         res = ''
