@@ -5,7 +5,7 @@
 MACHINEOVERRIDES =. "rpi3:raspberrypi3:"
 require conf/machine/raspberrypi3.conf
 
-PACKAGECONFIG_append_pn-fstools = " ovl-f2fs ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-f2fs ovl-rootdisk-part "
 
 IMAGE_CLASSES += "sdimage-rpi-helper"
 IMAGE_FSTYPES = "wic"
@@ -22,12 +22,12 @@ WIREGUARD_PATCH_RPI_4_19 = "0"
 TANOWRT_WIREGUARD_IN_KERNEL = "1"
 
 # Switch from linux-firmware-rpidistro to cypress-firmware
-MACHINE_EXTRA_RRECOMMENDS_remove = "\
+MACHINE_EXTRA_RRECOMMENDS:remove = "\
     linux-firmware-rpidistro-bcm43430 \
     linux-firmware-rpidistro-bcm43455 \
 "
 
-MACHINE_EXTRA_RRECOMMENDS_append = "\
+MACHINE_EXTRA_RRECOMMENDS:append = "\
     cypress-firmware-43430-sdio \
     cypress-firmware-43455-sdio \
     cypress-nvram-43430-sdio-rpi-3b \
@@ -67,8 +67,8 @@ RPI_KERNEL_DEVICETREE_OVERLAYS = " \
 "
 
 # Load vc4 module before psplash
-KERNEL_MODULE_AUTOLOAD_append = " vc4"
-KERNEL_MODULE_AUTOLOAD_EARLY_append = " vc4"
+KERNEL_MODULE_AUTOLOAD:append = " vc4"
+KERNEL_MODULE_AUTOLOAD_EARLY:append = " vc4"
 
 SERIAL_CONSOLES = ""
 KERNEL_SERIAL = ""
@@ -96,11 +96,11 @@ MACHINE_FEATURES += "crypto"
 MACHINE_FEATURES += "hwrng"
 MACHINE_FEATURES += "alsa"
 
-PACKAGECONFIG_append_pn-collectd = " cpufreq "
-PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+PACKAGECONFIG:append:pn-collectd = " cpufreq "
+PACKAGE_ARCH:pn-collectd = "${MACHINE_ARCH}"
 
 # No qemu support, yet
-MACHINE_FEATURES_remove = "qemu-usermode"
+MACHINE_FEATURES:remove = "qemu-usermode"
 
 MACHINE_EXTRA_RDEPENDS += "raspi-gpio"
 

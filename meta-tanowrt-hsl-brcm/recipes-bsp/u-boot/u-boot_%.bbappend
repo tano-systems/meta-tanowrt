@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".rpi0"
+PR:append = ".rpi0"
 
-do_install_append_rpi() {
+do_install:append:rpi() {
 	rm -f ${D}${sysconfdir}/fw_env.config
 }

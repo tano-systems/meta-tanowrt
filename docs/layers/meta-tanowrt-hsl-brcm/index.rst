@@ -35,12 +35,12 @@ Dependencies of the :ref:`meta-tanowrt-hsl-brcm <meta-tanowrt-hsl-brcm>` layer a
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-raspberrypi
      - https://git.yoctoproject.org/meta-raspberrypi
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-raspberrypi.yml <../../../kas/layers/meta-raspberrypi.yml>`
 
 
