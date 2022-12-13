@@ -18,7 +18,9 @@ ROOTFS_BOOTSTRAP_INSTALL = ""
 TANOWRT_IMAGE_INITRAMFS_GEN_LOCALES ?= "0"
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE ?= "0"
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE_WAIT ?= "0"
+TANOWRT_IMAGE_INITRAMFS_CLEAN_IMAGE_FEATURES ?= "1"
 TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES ?= ""
+
 TANOWRT_IMAGE_INITRAMFS_BAD_RECOMMENDATIONS ?= "\
 	kernel-modules \
 	parted \
@@ -38,25 +40,26 @@ TANOWRT_IMAGE_INITRAMFS_INSTALL ?= "\
 	fstools \
 "
 
-#
-# Cleanup all image features except listed in
-# TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES
-#
 python __anonymous () {
-    image_features = d.getVar('IMAGE_FEATURES', True)
-    keep = d.getVar('TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES', True)
+    if d.getVar('TANOWRT_IMAGE_INITRAMFS_CLEAN_IMAGE_FEATURES', True) == "1":
+        #
+        # Cleanup all image features except listed in
+        # TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES
+        #
+        image_features = d.getVar('IMAGE_FEATURES', True)
+        keep = d.getVar('TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES', True)
 
-    if not image_features:
-        res = ''
-    else:
-        val = set(image_features.split())
-        if isinstance(keep, str):
-            checkvalues = set(keep.split())
+        if not image_features:
+            res = ''
         else:
-            checkvalues = set(keep)
-        res = ' '.join(sorted(checkvalues & val))
+            val = set(image_features.split())
+            if isinstance(keep, str):
+                checkvalues = set(keep.split())
+            else:
+                checkvalues = set(keep)
+            res = ' '.join(sorted(checkvalues & val))
 
-    d.setVar('IMAGE_FEATURES', res);
+        d.setVar('IMAGE_FEATURES', res);
 
     if d.getVar('TANOWRT_IMAGE_INITRAMFS_GEN_LOCALES', True) != "1":
         # Do not generate locales
