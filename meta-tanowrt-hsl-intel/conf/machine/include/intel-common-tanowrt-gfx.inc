@@ -31,5 +31,5 @@ QB_OPT_APPEND:append = " -vga std "
 #
 # Enable SDL display in QEMU
 #
-PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
-PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"

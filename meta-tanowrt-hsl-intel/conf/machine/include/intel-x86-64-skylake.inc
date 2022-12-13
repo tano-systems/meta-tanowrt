@@ -3,6 +3,8 @@
 # Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 #
 
+X86_TUNE_DIR ?= "include/x86"
+
 require conf/machine/include/meta-intel.inc
 require conf/machine/${X86_TUNE_DIR}/x86-base.inc
 require conf/machine/include/tune-skylake.inc

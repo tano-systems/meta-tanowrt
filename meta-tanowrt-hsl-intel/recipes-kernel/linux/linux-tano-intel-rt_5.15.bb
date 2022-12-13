@@ -18,9 +18,10 @@ python () {
 
 LINUX_INTEL_BRANCH = "5.15/preempt-rt"
 
-KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git;protocol=https"
+KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git"
 KERNEL_SRC_BRANCH ?= "${LINUX_INTEL_BRANCH}"
 KERNEL_SRC_SRCREV ?= "f09e0e5e5d73c753dbdf2e9f0ac2d533a51e8dd8"
+KERNEL_SRC_PROTOCOL ?= "https"
 
 LINUX_VERSION ?= "5.15.2"
 LINUX_KERNEL_TYPE ?= "preempt-rt"

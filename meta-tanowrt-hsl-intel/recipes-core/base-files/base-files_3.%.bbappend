@@ -3,7 +3,7 @@
 # Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".intel1"
+PR:append = ".intel1"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files/:"
 
 INTEL_X86_PREINIT_FILES = "\

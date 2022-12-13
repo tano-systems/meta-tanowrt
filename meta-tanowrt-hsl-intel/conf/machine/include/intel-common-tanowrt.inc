@@ -34,7 +34,7 @@ MACHINE_EXTRA_RRECOMMENDS:remove = "linux-firmware"
 #
 # PACKAGECONFIG's
 #
-PACKAGECONFIG:append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 #
 # Kernel
