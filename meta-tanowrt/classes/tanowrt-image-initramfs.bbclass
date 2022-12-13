@@ -5,11 +5,6 @@
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-# Do not generate locales
-IMAGE_LINGUAS = ""
-GLIBC_GENERATE_LOCALES = ""
-ENABLE_BINARY_LOCALE_GENERATION = "0"
-
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
 ROOTFS_RM_BOOT_DIR_DISABLE = "0"
 
@@ -20,6 +15,7 @@ inherit tanowrt-image
 # Disable runtime dependency on run-postinsts
 ROOTFS_BOOTSTRAP_INSTALL = ""
 
+TANOWRT_IMAGE_INITRAMFS_GEN_LOCALES ?= "0"
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE ?= "0"
 TANOWRT_IMAGE_INITRAMFS_FAILSAFE_WAIT ?= "0"
 TANOWRT_IMAGE_INITRAMFS_KEEP_IMAGE_FEATURES ?= ""
@@ -61,6 +57,12 @@ python __anonymous () {
         res = ' '.join(sorted(checkvalues & val))
 
     d.setVar('IMAGE_FEATURES', res);
+
+    if d.getVar('TANOWRT_IMAGE_INITRAMFS_GEN_LOCALES', True) != "1":
+        # Do not generate locales
+        d.setVar('IMAGE_LINGUAS', '');
+        d.setVar('GLIBC_GENERATE_LOCALES', '');
+        d.setVar('ENABLE_BINARY_LOCALE_GENERATION', '0');
 }
 
 EXTRA_IMAGE_FEATURES = ""
