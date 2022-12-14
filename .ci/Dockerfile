@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     xz-utils debianutils iputils-ping locales openssh-client file tmux
 
 # Installing kas
-RUN pip3 install kas==2.6.3
+RUN pip3 install kas==3.1.0
 
 # Change dash to bash
 RUN rm /bin/sh && ln -s bash /bin/sh
