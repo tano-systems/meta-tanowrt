@@ -116,12 +116,6 @@ missing_lines() {
 	IFS="$oIFS"
 }
 
-do_mount_root_ram() {
-	mount_root ram
-	boot_run_hook preinit_mount_root
-	echo -e "Using root filesystem in RAM" > /dev/kmsg
-}
-
 do_mount_root() {
 	mount_root
 	boot_run_hook preinit_mount_root
@@ -150,9 +144,7 @@ do_mount_root() {
 	echo -e "${CLR_GREEN}Root filesystem mounted${CLR_RESET}" > /dev/kmsg
 }
 
-[ "$INITRAMFS" = "1" ] && {
-	boot_hook_add preinit_main do_mount_root_ram
-} || {
+[ "$INITRAMFS" = "1" ] || {
 	boot_hook_add preinit_main do_mount_root
 	boot_hook_add preinit_main do_rootfs_checks
 }
