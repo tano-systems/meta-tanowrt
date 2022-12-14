@@ -4,7 +4,7 @@
 # This file Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_ls1028ardb = ".baikal0"
+PR_append_mitx = ".baikal0"
 
 inherit uci-config
 
