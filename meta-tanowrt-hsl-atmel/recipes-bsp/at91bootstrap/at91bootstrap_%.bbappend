@@ -19,10 +19,8 @@ COMPATIBLE_MACHINE:append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91
 
 DEPENDS += "python3-native"
 
-PR:append = ".tano1"
+PR:append = ".tano2"
 AT91BOOTSTRAP_LOCALVERSION = "-git${SRCPV}-${PR}"
-
-SRC_URI += "file://0001-Makefile-Remove-nostartfiles-from-LDFLAGS.patch"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
@@ -135,7 +133,6 @@ do_compile() {
 }
 
 AT91BOOTSTRAP_PMECC_HEADER ?= "0"
-AT91BOOTSTRAP_PMECC_HEADER_BOARD ?= "sama5d3"
 
 do_deploy() {
 	install -d ${DEPLOYDIR}
@@ -156,10 +153,21 @@ do_deploy() {
 					if [ "${AT91BOOTSTRAP_PMECC_HEADER}" = "1" ]; then
 						# Generate binary with PMECC header
 						cd ${S}/scripts && python3 addpmecchead.py \
-							"${B}/${config}/${AT91BOOTSTRAP_BINARY}" \
-							"${DEPLOYDIR}/${AT91BOOTSTRAP_BINARY}-${type}-pmecc" \
-							"${AT91BOOTSTRAP_PMECC_HEADER_BOARD}"
+							"${B}/${config}/.config" "${DEPLOYDIR}/"
+
 						rm -f boot.bin-${type}-pmecc BOOT.BIN-${type}-pmecc
+						rm -f "${DEPLOYDIR}/${AT91BOOTSTRAP_BINARY}-${type}-pmecc"
+
+						if [ -f "${DEPLOYDIR}/pmecc.tmp" ]; then
+							cat "${DEPLOYDIR}/pmecc.tmp" \
+								"${B}/${config}/${AT91BOOTSTRAP_BINARY}" \
+								> "${DEPLOYDIR}/${AT91BOOTSTRAP_BINARY}-${type}-pmecc"
+							rm -f "${DEPLOYDIR}/pmecc.tmp"
+						else
+							cp -vf "${B}/${config}/${AT91BOOTSTRAP_BINARY}" \
+							       "${DEPLOYDIR}/${AT91BOOTSTRAP_BINARY}-${type}-pmecc"
+						fi
+
 						ln -sf ${AT91BOOTSTRAP_BINARY}-${type}-pmecc boot.bin-${type}-pmecc
 					fi
 				fi
@@ -168,7 +176,7 @@ do_deploy() {
 		done
 		unset i
 	else
-		install ${S}/binaries/${AT91BOOTSTRAP_BINARY} ${DEPLOYDIR}/${AT91BOOTSTRAP_IMAGE}
+		install ${S}/${AT91BOOTSTRAP_BIN_PATH}/${AT91BOOTSTRAP_BINARY} ${DEPLOYDIR}/${AT91BOOTSTRAP_IMAGE}
 
 		rm -f ${AT91BOOTSTRAP_BINARY} ${AT91BOOTSTRAP_SYMLINK}
 		ln -sf ${AT91BOOTSTRAP_IMAGE} ${AT91BOOTSTRAP_SYMLINK}
