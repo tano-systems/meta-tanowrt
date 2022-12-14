@@ -13,13 +13,13 @@
 # AT91BOOTSTRAP_BUILD_CONFIG[config2] = "config2_defconfig"
 #
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-COMPATIBLE_MACHINE_append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91-sama5d3-xplained"
+COMPATIBLE_MACHINE:append = "|evb-ksz9477|evb-ksz9563|at91-sama5d2-xplained|at91-sama5d3-xplained"
 
 DEPENDS += "python3-native"
 
-PR_append = ".tano1"
+PR:append = ".tano1"
 AT91BOOTSTRAP_LOCALVERSION = "-git${SRCPV}-${PR}"
 
 SRC_URI += "file://0001-Makefile-Remove-nostartfiles-from-LDFLAGS.patch"
@@ -81,13 +81,13 @@ do_configure() {
 	else
 		# Copy board defconfig to .config if .config does not exist. This
 		# allows recipes to manage the .config themselves in
-		# do_configure_prepend().
+		# do_configure:prepend().
 		if [ -f "${S}/board/${AT91BOOTSTRAP_MACHINE}/${AT91BOOTSTRAP_TARGET}" ] && [ ! -f "${B}/.config" ]; then
 			cp "${S}/board/${AT91BOOTSTRAP_MACHINE}/${AT91BOOTSTRAP_TARGET}" "${B}/.config"
 		fi
 
 		# Copy defconfig to .config if .config does not exist. This allows
-		# recipes to manage the .config themselves in do_configure_prepend()
+		# recipes to manage the .config themselves in do_configure:prepend()
 		# and to override default settings with a custom file.
 		if [ -f "${WORKDIR}/defconfig" ] && [ ! -f "${B}/.config" ]; then
 			cp "${WORKDIR}/defconfig" "${B}/.config"

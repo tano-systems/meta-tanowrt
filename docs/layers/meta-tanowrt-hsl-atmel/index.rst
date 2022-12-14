@@ -40,12 +40,12 @@ Dependencies of the :ref:`meta-tanowrt-hsl-atmel <meta-tanowrt-hsl-atmel>` layer
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-atmel
      - https://github.com/linux4sam/meta-atmel.git
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-atmel.yml <../../../kas/layers/meta-atmel.yml>`
 
 .. _sec-hsl-atmel-supported-boards:

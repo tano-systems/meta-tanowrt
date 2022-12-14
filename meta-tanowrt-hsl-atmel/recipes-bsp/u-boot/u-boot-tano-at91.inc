@@ -16,7 +16,7 @@ require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 UBOOT_LOCALVERSION = "-git${SRCPV}-${PR}"
 
 # Always write localversion to .scmversion
-do_compile_prepend() {
+do_compile:prepend() {
 	echo ${UBOOT_LOCALVERSION} > ${B}/.scmversion
 	echo ${UBOOT_LOCALVERSION} > ${S}/.scmversion
 }
@@ -29,11 +29,11 @@ SRC_URI += "\
 	file://0007-at91-Add-CONFIG_SYS_MMC_ENV_DEV-to-Kconfig.patch \
 "
 
-SRC_URI_append_evb-ksz9477 = "\
+SRC_URI:append:evb-ksz9477 = "\
 	file://0004-at91-sama5d3_xplained-Fix-macbX-nodes-to-match-EVB-K.patch \
 "
 
-SRC_URI_append_at91-sama5d2-xplained = "\
+SRC_URI:append:at91-sama5d2-xplained = "\
 	file://0006-sama5d2_xplained-Allow-to-specify-CONFIG_BOOTCOMMAND.patch \
 "
 

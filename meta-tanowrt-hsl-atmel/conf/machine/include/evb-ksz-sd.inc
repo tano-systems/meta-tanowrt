@@ -32,7 +32,7 @@ IMAGE_BOOT_FILES = "\
 	u-boot.bin-sdcard;u-boot.bin \
 "
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 TANOWRT_ENABLE_OVERLAY_RESIZE = "1"
 
@@ -56,4 +56,4 @@ do_image_wic[depends] += "${WIC_DO_IMAGE_DEPENDS}"
 #
 # OpenWrt specific
 #
-OPENWRT_VERSION_PRODUCT_append = " (SD)"
+OPENWRT_VERSION_PRODUCT:append = " (SD)"

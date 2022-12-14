@@ -31,7 +31,7 @@ KERNEL_MKIMAGE_TYPES = "ext4"
 #
 # OpenWrt specific
 #
-OPENWRT_VERSION_PRODUCT_append = " (eMMC)"
+OPENWRT_VERSION_PRODUCT:append = " (eMMC)"
 
 #
 # Initramfs (used for factory installation image)
@@ -40,7 +40,7 @@ INITRAMFS_IMAGE = "tanowrt-image-initramfs-swu-factory"
 INITRAMFS_IMAGE_NAME = "${INITRAMFS_IMAGE}-${MACHINE}"
 INITRAMFS_IMAGE_BUNDLE = "0"
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 # Factory image creation
 SWU_FACTORY_WKS_FILE ?= "sdimage-at91-swu-factory.wks.in"

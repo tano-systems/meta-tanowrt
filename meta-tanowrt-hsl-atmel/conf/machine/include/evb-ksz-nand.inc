@@ -22,7 +22,7 @@ AT91BOOTSTRAP_PMECC_HEADER_BOARD = "sama5d3"
 #
 # OpenWrt specific
 #
-OPENWRT_VERSION_PRODUCT_append = " (NAND)"
+OPENWRT_VERSION_PRODUCT:append = " (NAND)"
 
 #
 # Initramfs (used for factory installation image)
