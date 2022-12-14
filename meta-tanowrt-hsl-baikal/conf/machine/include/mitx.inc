@@ -35,7 +35,7 @@ SERIAL_CONSOLES ?= "115200;ttyS0"
 
 # Enable irqbalance
 IRQBALANCE_CONFIG_ENABLED = "1"
-MACHINE_EXTRA_RDEPENDS_append = " irqbalance "
+MACHINE_EXTRA_RDEPENDS:append = " irqbalance "
 
 # RTC hwclock parameters
 OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
@@ -77,7 +77,7 @@ MACHINE_FEATURES = "\
 	swupdate \
 "
 
-MACHINE_EXTRA_RRECOMMENDS_append = "\
+MACHINE_EXTRA_RRECOMMENDS:append = "\
 	nvme-cli \
 "
 
@@ -86,7 +86,7 @@ MACHINE_EXTRA_RRECOMMENDS_append = "\
 #
 ROOTFS_IMAGE_FSTYPE = "squashfs-lzo"
 IMAGE_FSTYPES = "wic ${ROOTFS_IMAGE_FSTYPE}"
-MACHINE_EXTRA_RDEPENDS_append = " usbutils-ids "
+MACHINE_EXTRA_RDEPENDS:append = " usbutils-ids "
 
 SPLASH = "psplash"
 IMAGE_FEATURES += "${@bb.utils.contains('MACHINE_FEATURES', 'screen', 'splash', '', d)}"
@@ -113,12 +113,12 @@ TANOWRT_ENABLE_OVERLAY_RESIZE = "1"
 # Remove /boot from root filesystem
 ROOTFS_RM_BOOT_DIR_DISABLE = "0"
 
-IMAGE_INSTALL_append = "\
+IMAGE_INSTALL:append = "\
 	grub-editenv \
 	efibootmgr \
 "
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 #
 # Initramfs (used for factory installation image)
@@ -178,7 +178,7 @@ PROCD_ENABLED_TTYS ?= "1"
 TANOWRT_DHCPS_CONFIGURE = "1"
 TANOWRT_DHCPS_LAN_ENABLE = "1"
 
-PACKAGECONFIG_append_pn-collectd = " cpufreq sensors "
-PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+PACKAGECONFIG:append:pn-collectd = " cpufreq sensors "
+PACKAGE_ARCH:pn-collectd = "${MACHINE_ARCH}"
 
 OPENWRT_VERSION_HWREV = "${SWU_REVISION}"
