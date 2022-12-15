@@ -36,7 +36,7 @@ ROOTFS_RM_BOOT_DIR_DISABLE = "0"
 ROOTFS_RM_BOOT_DIR_KEEP_DTB = "0"
 
 # Install device tree files
-IMAGE_INSTALL_append = " kernel-devicetree "
+IMAGE_INSTALL:append = " kernel-devicetree "
 
 #
 # Kernel
@@ -60,9 +60,9 @@ PREFERRED_VERSION_xtables-addons = "${@oe.utils.conditional('TANOWRT_HSL_TI_SDK_
 # Bootloader
 #
 PREFERRED_PROVIDER_virtual/bootloader = "u-boot-ti-staging"
-PREFERRED_PROVIDER_virtual/bootloader_beaglebone-black = "u-boot-ti-staging"
+PREFERRED_PROVIDER_virtual/bootloader:beaglebone-black = "u-boot-ti-staging"
 PREFERRED_PROVIDER_u-boot = "u-boot-ti-staging"
-PREFERRED_PROVIDER_u-boot_beaglebone-black = "u-boot-ti-staging"
+PREFERRED_PROVIDER_u-boot:beaglebone-black = "u-boot-ti-staging"
 PREFERRED_VERSION_u-boot-ti-staging = "2020.01%"
 
 UBOOT_ARCH = "arm"
@@ -77,5 +77,5 @@ EXTRA_IMAGEDEPENDS += "u-boot"
 #
 
 # No qemu support, yet
-MACHINE_FEATURES_remove = "qemu-usermode"
+MACHINE_FEATURES:remove = "qemu-usermode"
 QEMU_TARGETS = "arm"

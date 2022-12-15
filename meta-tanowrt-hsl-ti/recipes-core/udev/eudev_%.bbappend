@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-PR_append_ti33x = ".ti2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"
+PR:append:ti33x = ".ti2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:"
 
-RRECOMMENDS_${PN}_remove = "eudev-hwdb"
+RRECOMMENDS:${PN}:remove = "eudev-hwdb"
 
-do_install_append_ti33x() {
+do_install:append:ti33x() {
 	rm -f ${D}${sysconfdir}/udev/rules.d/firmware.rules
 }

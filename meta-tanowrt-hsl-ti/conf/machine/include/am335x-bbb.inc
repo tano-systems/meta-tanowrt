@@ -62,7 +62,7 @@ IMAGE_FSTYPES = "${ROOTFS_IMAGE_FSTYPE}"
 IMAGE_FEATURES += "splash"
 SPLASH = "psplash"
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 # These variables are used in sdimage-ti-swu-a-b.wks.in
 WKS_IMAGE_MLO_BINARY = "MLO"

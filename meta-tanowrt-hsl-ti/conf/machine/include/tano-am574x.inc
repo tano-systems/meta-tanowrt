@@ -3,12 +3,12 @@
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
 require conf/machine/include/ti-soc.inc
-SOC_FAMILY_append = ":omap-a15"
+SOC_FAMILY:append = ":omap-a15"
 
 DEFAULTTUNE ?= "armv7athf-neon"
-require conf/machine/include/tune-cortexa15.inc
+require conf/machine/include/arm/armv7a/tune-cortexa15.inc
 
-SOC_FAMILY_append = ":dra7xx"
+SOC_FAMILY:append = ":dra7xx"
 
 # RTC hwclock parameters
 OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
@@ -22,5 +22,5 @@ PREFERRED_PROVIDER_libgbm-dev = "libgbm-dev"
 
 PREFERRED_PROVIDER_virtual/libgl = "mesa-gl"
 
-MACHINE_FEATURES_append = " hwrng "
-MACHINE_FEATURES_append = " gpu "
+MACHINE_FEATURES:append = " hwrng "
+MACHINE_FEATURES:append = " gpu "

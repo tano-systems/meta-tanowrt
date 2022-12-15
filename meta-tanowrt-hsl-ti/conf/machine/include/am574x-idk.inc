@@ -20,8 +20,6 @@ MACHINE_FEATURES = "\
 MACHINE_EXTRA_RDEPENDS += "\
 	${@bb.utils.contains('MACHINE_FEATURES', 'mmip', 'ipumm-fw', '', d)} \
 	ffmpeg \
-	cmem \
-	cmem-mod \
 "
 
 # Enable tty1
@@ -87,12 +85,12 @@ ROOTFS_IMAGE_FSTYPE = "squashfs-lzo"
 
 IMAGE_FSTYPES = "${ROOTFS_IMAGE_FSTYPE}"
 
-PACKAGECONFIG_append_pn-fstools = " ovl-f2fs ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-f2fs ovl-rootdisk-part "
 
 IMAGE_FEATURES += "splash"
 SPLASH = "psplash"
 
-IMAGE_FEATURES_remove = "modem"
+IMAGE_FEATURES:remove = "modem"
 
 #
 # SWUPDATE

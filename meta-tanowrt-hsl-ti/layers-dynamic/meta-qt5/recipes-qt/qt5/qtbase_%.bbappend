@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 GLES_EXTRA_DEPS = "libdrm wayland"
 
 PACKAGECONFIG[gles2] = "-opengl es2 -eglfs,,virtual/libgles2 virtual/egl ${GLES_EXTRA_DEPS}"
 
-PR_append = ".ti0"
+PR:append = ".ti0"
 
 QT_CONFIG_FLAGS += "-qpa ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland', 'eglfs', d)}"
 
@@ -24,7 +24,7 @@ SRC_URI += "\
     file://0001-qtbase-plugins-platforms-eglfs_kms-fix-compiler-erro.patch \
 "
 
-python do_patch_append() {
+python do_patch:append() {
     import shutil
 
     work_dir = d.getVar("WORKDIR")
@@ -35,9 +35,9 @@ python do_patch_append() {
 }
 
 # Add symbolic link qt5/examples for backward compatibility
-do_install_append () {
+do_install:append () {
     install -d ${D}${datadir}/qt5
     ln -sf ../examples ${D}${datadir}/qt5/examples
 }
 
-FILES_${PN}-examples +=  "${datadir}/qt5/*"
+FILES:${PN}-examples +=  "${datadir}/qt5/*"

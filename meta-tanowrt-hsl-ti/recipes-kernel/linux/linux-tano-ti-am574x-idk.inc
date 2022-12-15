@@ -5,23 +5,15 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".6"
+PR:append = ".6"
 
 KCONFIG_MODE = "--alldefconfig"
 
-RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am574x-idk = " prueth-fw"
+RDEPENDS:${KERNEL_PACKAGE_NAME}-base:append:am574x-idk = " prueth-fw"
 
 # Config
-SRC_URI_append_am574x-idk = " file://defconfig"
+SRC_URI:append:am574x-idk = " file://defconfig"
 
-SRC_URI_append_am574x-idk = "\
+SRC_URI:append:am574x-idk = "\
 	file://0001-am57xx-idk-Change-SPI-NOR-flash-partitions-layout.patch \
 "
-
-# TI CMEM (meta-ti)
-require recipes-kernel/linux/cmem.inc
-RESERVE_CMEM = "1"
-FILESEXTRAPATHS_append = ":${COREBASE}/meta-ti/recipes-kernel/linux/files"
-CMEM_MACHINE_am574x-idk = "am571x am572x am572idk am5729-beagleboneai am574x"
-CMEM_DTSI_am574x-idk = "cmem-am574x.dtsi"
-CMEM_DEVICETREE_am574x-idk = "am574x-idk.dtb am574x-idk-lcd-osd101t2587.dtb"

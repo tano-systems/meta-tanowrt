@@ -10,4 +10,6 @@ header:
 repos:
   meta-ti:
     url: https://git.yoctoproject.org/meta-ti
-    refspec: d54da744941ff97f2502bad2d7c51c5387bde929
+    refspec: 2a5a0339d5bd28d6f6aedaf02a6aaa9b73a248e4 # kirkstone
+    layers:
+      meta-ti-bsp:
