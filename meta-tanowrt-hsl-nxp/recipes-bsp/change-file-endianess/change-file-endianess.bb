@@ -18,6 +18,6 @@ do_install () {
     install -m 755 ${WORKDIR}/byte_swap.tcl ${D}/${bindir}
 }
 
-RDEPENDS_${PN} += "tcl"
+RDEPENDS:${PN} += "tcl"
 
 BBCLASSEXTEND = "native nativesdk"
