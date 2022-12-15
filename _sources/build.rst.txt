@@ -48,10 +48,7 @@ To install kas into your python site-package repository, run:
 
 .. code-block:: console
 
-   $ pip3 install kas==2.6.3
-
-.. note:: Currently, to build TanoWrt requires kas version 2.6.3. With
-          kas version 3.0 or higher you may have problems with the build.
+   $ pip3 install kas==3.1.0
 
 See `official kas documentation <https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation>`_
 for more details about kas utility.
