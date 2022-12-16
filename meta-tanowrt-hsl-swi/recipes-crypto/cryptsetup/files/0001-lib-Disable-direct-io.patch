@@ -1,0 +1,30 @@
+From b7a4865ceedc6c7531267a1cf4a18620194005d9 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 17 Dec 2022 01:14:12 +0300
+Subject: [PATCH] lib: Disable direct-io
+
+When building an image in RAM (tmpfs) disk, the veritysetup
+command fails. This is because the O_DIRECT flag cannot be used
+with tmpfs.
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ lib/utils_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/utils_device.c b/lib/utils_device.c
+index 8bb8599..262f387 100644
+--- a/lib/utils_device.c
++++ b/lib/utils_device.c
+@@ -412,7 +412,7 @@ int device_alloc_no_check(struct device **device, const char *path)
+ 	dev->ro_dev_fd = -1;
+ 	dev->dev_fd = -1;
+ 	dev->dev_fd_excl = -1;
+-	dev->o_direct = 1;
++	dev->o_direct = 0;
+ 
+ 	*device = dev;
+ 	return 0;
+-- 
+2.34.1.windows.1
+
