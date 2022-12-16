@@ -55,9 +55,9 @@ SRC_URI += "\
 "
 
 # Use UART2 for debug on EM3568
-SRC_URI_remove_boardcon_em3568 = "file://1009-rk3568-Debug-to-UART4.patch"
+SRC_URI:remove:boardcon_em3568 = "file://1009-rk3568-Debug-to-UART4.patch"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	# Make sure we use /usr/bin/env ${PYTHON_PN} for scripts
 	for s in `grep -rIl python ${S}`; do
 		sed -i -e '1s|^#!.*python[23]*|#!/usr/bin/env ${PYTHON_PN}|' $s
@@ -265,7 +265,7 @@ rk_uboot_deploy() {
 	done
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	if [ -n "${UBOOT_CONFIG}" ]; then
 		unset i j
 		for config in ${UBOOT_MACHINE}; do
@@ -284,8 +284,8 @@ do_deploy_append() {
 	fi
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/files:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:"
 
 inherit u-boot-defconfig-copy
 inherit u-boot-envimage
@@ -293,7 +293,7 @@ inherit u-boot-envimage
 UBOOT_LOCALVERSION = "-git${SRCPV}-${PR}"
 
 # Always write localversion to .scmversion
-do_compile_prepend() {
+do_compile:prepend() {
 	echo ${UBOOT_LOCALVERSION} > ${B}/.scmversion
 	echo ${UBOOT_LOCALVERSION} > ${S}/.scmversion
 }

@@ -1,15 +1,15 @@
 # Copyright (c) 2022, Tano Systems LLC
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-MACHINE_EXTRA_RRECOMMENDS_append = " \
+MACHINE_EXTRA_RRECOMMENDS:append = " \
 	drm-cursor \
 "
 
-MACHINE_EXTRA_RDEPENDS_append = " \
+MACHINE_EXTRA_RDEPENDS:append = " \
 	i2c-tools \
 "
 
 # Enable multilib support
 require conf/multilib.conf
 MULTILIBS = "multilib:lib32"
-DEFAULTTUNE_virtclass-multilib-lib32 = "armv7vethf-neon"
+DEFAULTTUNE:virtclass-multilib-lib32 = "armv7vethf-neon"

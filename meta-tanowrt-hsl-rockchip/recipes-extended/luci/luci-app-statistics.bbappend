@@ -4,12 +4,12 @@
 # This file Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_boardcon-em356x = ".rk0"
-PR_append_rock-pi-s = ".rk0"
+PR:append:boardcon-em356x = ".rk0"
+PR:append:rock-pi-s = ".rk0"
 
 inherit uci-config
 
-do_uci_config_append_rockchip() {
+do_uci_config:append:rockchip() {
 ${UCI} batch <<-EOF
 	# Enable cpu
 	set luci_statistics.collectd_cpu.enable='1'
@@ -32,7 +32,7 @@ ${UCI} batch <<-EOF
 EOF
 }
 
-do_uci_config_append_boardcon-em356x() {
+do_uci_config:append:boardcon-em356x() {
 # Tweak default UCI configuration
 ${UCI} batch <<-EOF
 	# Enable interfaces
@@ -47,7 +47,7 @@ ${UCI} batch <<-EOF
 EOF
 }
 
-do_uci_config_append_rock-pi-s() {
+do_uci_config:append:rock-pi-s() {
 # Tweak default UCI configuration
 ${UCI} batch <<-EOF
 	# Enable interfaces

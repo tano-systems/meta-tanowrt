@@ -12,14 +12,14 @@ KERNEL_DEVICETREE = "rockchip/rk3308-rock-pi-s.dtb"
 
 RK_WIFIBT_FIRMWARES = ""
 
-MACHINE_EXTRA_RDEPENDS_append = " \
+MACHINE_EXTRA_RDEPENDS:append = " \
 	i2c-tools \
 "
 
 # Enable multilib support
 require conf/multilib.conf
 MULTILIBS = "multilib:lib32"
-DEFAULTTUNE_virtclass-multilib-lib32 = "armv7vethf-neon"
+DEFAULTTUNE:virtclass-multilib-lib32 = "armv7vethf-neon"
 
 RKBIN_DDR_UART_UPDATE = "1"
 RKBIN_DDR_UART_ID = "0"

@@ -5,14 +5,14 @@
 # Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".rk0"
+PR:append = ".rk0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 COMPATIBLE_MACHINE = "boardcon-em3566|boardcon-em3568|rock-pi-s"
 
 inherit vars-expander
-EXPAND_VARIABLES_append = "${TANOWRT_PARTUUID_VARS}"
+EXPAND_VARIABLES:append = "${TANOWRT_PARTUUID_VARS}"
 
-SRC_URI_remove = "file://defs.m4"
-SRC_URI_append = " file://defs.m4.in "
+SRC_URI:remove = "file://defs.m4"
+SRC_URI:append = " file://defs.m4.in "

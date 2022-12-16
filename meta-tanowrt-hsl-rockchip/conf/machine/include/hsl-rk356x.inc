@@ -4,11 +4,11 @@
 
 SOC_FAMILY ?= "rk3568"
 
-MACHINE_FEATURES_append = "\
+MACHINE_FEATURES:append = "\
 	pci \
 "
 
-require conf/machine/include/tune-cortexa55.inc
+require conf/machine/include/arm/armv8-2a/tune-cortexa55.inc
 require conf/machine/include/hsl-rockchip-arm64-common.inc
 
 PREFERRED_PROVIDER_virtual/egl ?= "rockchip-libmali"
@@ -17,9 +17,9 @@ PREFERRED_PROVIDER_virtual/libgles2 ?= "rockchip-libmali"
 PREFERRED_PROVIDER_virtual/libgles3 ?= "rockchip-libmali"
 PREFERRED_PROVIDER_virtual/libopencl ?= "rockchip-libmali"
 PREFERRED_PROVIDER_virtual/libgbm ?= "rockchip-libmali"
-PACKAGECONFIG_pn-wayland ?= "${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'no-egl', '', d)}"
+PACKAGECONFIG:pn-wayland ?= "${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'no-egl', '', d)}"
 
-DEPENDS_append_pn-mesa-gl += " rockchip-libmali"
+DEPENDS:append:pn-mesa-gl = " rockchip-libmali"
 
 PREFERRED_PROVIDER_virtual/libgl ?= "mesa-gl"
 PREFERRED_PROVIDER_virtual/mesa ?= "mesa-gl"

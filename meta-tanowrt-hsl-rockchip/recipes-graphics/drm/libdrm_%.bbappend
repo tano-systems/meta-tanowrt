@@ -1,7 +1,7 @@
 # Copyright (C) 2019, Fuzhou Rockchip Electronics Co., Ltd
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 EXTRA_OECONF += " \
 	--disable-intel \

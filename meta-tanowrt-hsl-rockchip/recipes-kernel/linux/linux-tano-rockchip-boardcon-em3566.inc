@@ -5,13 +5,13 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".9"
+PR:append = ".9"
 
 KCONFIG_MODE = "--alldefconfig"
 
 # Config
 KBUILD_DEFCONFIG = ""
-SRC_URI_append = " file://defconfig"
+SRC_URI:append = " file://defconfig"
 
 KERNEL_DEVICETREE_EXTRA = "\
 	${@d.getVar('KERNEL_DEVICETREE').replace('rockchip/', '').replace('.dtb', '.dts')} \
@@ -30,6 +30,6 @@ python () {
 }
 
 # Devicetree files
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://${@d.getVar('KERNEL_DEVICETREE').replace('rockchip/', '').replace('.dtb', '.dts')} \
 "
