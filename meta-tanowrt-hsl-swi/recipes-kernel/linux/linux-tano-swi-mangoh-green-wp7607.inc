@@ -5,10 +5,10 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".6"
+PR:append = ".6"
 
 # Config
-SRC_URI_append_mangoh-green-wp7607 = "\
+SRC_URI:append:mangoh-green-wp7607 = "\
 	file://defconfig \
 	file://0001-i2c-msm-v2-Hide-I2C_MSM_ERR_NACK-errors-for-0x3a-sla.patch \
 	file://0002-spidev-Add-spidev-to-compatible-list.patch \
@@ -19,7 +19,7 @@ SRC_URI_append_mangoh-green-wp7607 = "\
 # Devicetree
 DT_DIR = "dts"
 
-SRC_URI_append_mangoh-green-wp7607 = "\
+SRC_URI:append:mangoh-green-wp7607 = "\
 	file://${DT_DIR}/mdm9607-wp76xx-mangoh-green.dts \
 	file://${DT_DIR}/mdm9206-wp77xx-mangoh-green.dts \
 	file://${DT_DIR}/mdm9206.dtsi \
@@ -42,7 +42,7 @@ SRC_URI_append_mangoh-green-wp7607 = "\
 
 do_unpack[cleandirs] += "${WORKDIR}/${DT_DIR}"
 
-do_configure_append_mangoh-green-wp7607() {
+do_configure:append:mangoh-green-wp7607() {
 	install -d ${S}/arch/arm/boot/dts/qcom
 
 	for f in ${WORKDIR}/${DT_DIR}/*; do

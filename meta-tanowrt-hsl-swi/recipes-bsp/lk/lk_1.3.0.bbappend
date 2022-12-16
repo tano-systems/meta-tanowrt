@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-PR_append = ".1"
+PR:append = ".1"
 
 # Use STAGING_KERNEL_DIR for linux headers
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
@@ -21,7 +21,7 @@ SRC_URI += "\
 	file://0003-Fix-linker-errors-when-using-GCC-10.2.patch \
 "
 
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP:${PN} += "already-stripped"
 
 LK_TARGET = "mdm9607"
 
@@ -29,17 +29,17 @@ inherit android-signing
 LK_HASH_MODE = "android_signing"
 
 EXTRA_OEMAKE += "LINUX_KERNEL_DIR='${STAGING_KERNEL_DIR}'"
-EXTRA_OEMAKE_append = " SIGNED_KERNEL=1"
-CC_append += " -Wno-error=format-security"
+EXTRA_OEMAKE:append = " SIGNED_KERNEL=1"
+CC:append = " -Wno-error=format-security"
 
-do_configure_prepend() {
+do_configure:prepend() {
     if [ -d "${STAGING_KERNEL_DIR}/arch/arm/mach-msm/sierra" ]; then
         rm -f ${S}/app/aboot/sierra
         ln -sf ${STAGING_KERNEL_DIR}/arch/arm/mach-msm/sierra ${S}/app/aboot/sierra
     fi
 }
 
-do_install_prepend() {
+do_install:prepend() {
     if [ -f "${B}/../../appsboot.mbn" ] ; then
         install ${B}/../../appsboot.mbn ${B}/build-${LK_TARGET}/
     fi

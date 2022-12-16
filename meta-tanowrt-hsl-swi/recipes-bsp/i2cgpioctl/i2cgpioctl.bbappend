@@ -3,7 +3,7 @@
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".swi0"
+PR:append = ".swi0"
 
 copy_sources() {
     mv ${WORKDIR}/i2cgpioctl.c  ${S}

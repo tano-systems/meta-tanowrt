@@ -8,7 +8,7 @@ create_deploy_dir_image() {
     mkdir -p "${DEPLOY_DIR_IMAGE}"
 }
 
-ROOTFS_PREPROCESS_COMMAND_append = "create_deploy_dir_image"
+ROOTFS_PREPROCESS_COMMAND:append = "create_deploy_dir_image"
 
 IMAGE_ROOTFS_SIZE ?= "8192"
 
