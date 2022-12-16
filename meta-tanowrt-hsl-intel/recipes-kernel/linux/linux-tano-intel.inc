@@ -10,6 +10,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 require recipes-kernel/linux/linux-tano-yocto.inc
 
+PR:append = ".0"
+
 KERNEL_FEATURES_INTEL_COMMON ?= ""
 
 COMPATIBLE_MACHINE:intel-x86-common = "${MACHINE}"
@@ -30,3 +32,6 @@ COMPATIBLE_MACHINE ?= "(intel-corei7-64|intel-core2-32)"
 LINUX_VERSION_EXTENSION = "-tano-intel-${LINUX_KERNEL_TYPE}"
 
 SRC_URI:append = " file://defconfig file://enable_ixgbe.cfg"
+
+KERNEL_FEATURES:remove = "features/general/net/ppp.scc"
+SRC_URI:append = " file://ppp.cfg"
