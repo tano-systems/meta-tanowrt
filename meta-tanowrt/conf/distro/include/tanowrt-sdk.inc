@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2022 Tano Systems LLC. All rights reserved.
 #
 
 # SDK paths and names
@@ -9,5 +9,9 @@ SDK_VERSION = "${DISTRO_VERSION}"
 SDK_VENDOR = "-tano"
 SDK_NAME = "${SDK_NAME_PREFIX}-${SDKMACHINE}-${IMAGE_BASENAME}-${TUNE_PKGARCH}-${MACHINE}"
 SDK_INCLUDE_NATIVESDK = "1"
+
+SDKPATH_PREFIX_DEFAULT ?= "tanowrt"
+SDKPATH_PREFIX ?= "${SDKPATH_PREFIX_DEFAULT}"
 SDKPATH_REAL ?= "/usr/local/${SDK_NAME_PREFIX}-${SDK_VERSION}"
-SDKPATH ?= "${@"/tmp/"+"x"*96+"/"+"y"*96}"
+SDKPATH ?= "/opt/tanowrt/${SDKPATH_PREFIX}"
+SDKPATHINSTALL ?= "${SDKPATH}"
