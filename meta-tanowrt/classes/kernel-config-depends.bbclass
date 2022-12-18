@@ -48,7 +48,7 @@ def kernel_config_depends(d):
     kversion = kernel_get_version(d)
 
     kdep_var  = d.getVar('KERNEL_CONFIG_DEPENDS', True) or ""
-    kdep_opts = re.findall("\{(.*?)\}", kdep_var)
+    kdep_opts = re.findall(r"\{(.*?)\}", kdep_var)
 
     if not kdep_opts:
         bb.debug(1, 'No options defined in KERNEL_CONFIG_DEPENDS');
@@ -94,8 +94,8 @@ def kernel_config_depends(d):
                 bb.warn('Invalid parameter "%s" in KERNEL_CONFIG_DEPENDS' % value)
                 continue
 
-            v[0] = re.sub("[\"']", "", v[0]).strip()
-            v[1] = re.sub("[\"']", "", v[1]).strip()
+            v[0] = re.sub(r"[\"']", "", v[0]).strip()
+            v[1] = re.sub(r"[\"']", "", v[1]).strip()
 
             if v[0] == 'option':
                 koption = v[1]
