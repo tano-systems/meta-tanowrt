@@ -10,3 +10,8 @@ repos:
     refspec: 17ed0b981e8d21a8734474eef5ac9bde495961d5
     layers:
       common:
+
+    patches:
+      patch0:
+        repo: meta-tanowrt
+        path: kas/patches/meta-swi/0001-android-signing-Pass-build-directory-to-package_sign.patch
