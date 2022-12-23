@@ -6,7 +6,7 @@
 # Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano13"
+PR = "tano14"
 SUMMARY = "Base TanoWrt system requirements"
 DESCRIPTION = "The set of packages required for a more traditional full-featured TanoWrt system"
 LICENSE = "MIT"
@@ -76,6 +76,8 @@ RDEPENDS_${PN}-luci = "\
 	luci-theme-tano \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'luci-proto-ipv6', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'usbhost', 'luci-app-ledtrig-usbport', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'bonding', 'luci-proto-bonding', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'vxlan', 'luci-proto-vxlan', '',d)} \
 "
 
 # packagegroup-tanowrt-base-tools
@@ -124,6 +126,8 @@ RDEPENDS_${PN}-network = "\
 	drill \
 	iproute2 \
 	arp-scan \
+	${@bb.utils.contains('MACHINE_FEATURES', 'bonding', 'proto-bonding', '',d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'vxlan', 'proto-vxlan', '',d)} \
 "
 
 #
