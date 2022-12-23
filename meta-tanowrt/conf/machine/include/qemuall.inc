@@ -22,7 +22,7 @@ QEMU_X86_TARGETS = "i586 x86-64"
 # Enable tty1
 PROCD_ENABLED_TTYS ?= "1"
 
-MACHINE_FEATURES_append = " hwrng psample "
+MACHINE_FEATURES_append = " hwrng psample bonding vxlan"
 
 TANOWRT_PARTUUID_BOOT        = "bbefcb9e-ac94-43fc-8be2-0023a70c0722"
 TANOWRT_PARTUUID_OVERLAY     = "4473a134-2531-4ab1-a5f9-dfa54376eb78"
