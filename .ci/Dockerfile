@@ -11,7 +11,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Install basic OE requirements
 RUN apt-get update && apt-get install --no-install-recommends -y \
     gawk wget git-core diffstat unzip texinfo gcc-multilib \
-    build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
+    build-essential chrpath socat cpio \
+    python python-jinja2 python-setuptools \
+    python3 python3-pip python3-pexpect \
     xz-utils debianutils iputils-ping locales openssh-client file tmux \
     liblz4-tool zstd
 
