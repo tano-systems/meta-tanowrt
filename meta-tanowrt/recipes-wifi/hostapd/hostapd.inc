@@ -4,14 +4,14 @@
 #
 
 HOMEPAGE = "http://w1.fi/hostapd/"
-LICENSE = "GPLv2 | BSD"
+LICENSE = "GPL-2.0-only | BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://${B}/README;md5=e7d3dbb01f75f0b9799e192731d1e1ff"
 
 INC_PR = "tano17"
 
 inherit pkgconfig
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/hostapd:${THISDIR}/hostapd/patches:${THISDIR}/hostapd/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/hostapd:${THISDIR}/hostapd/patches:${THISDIR}/hostapd/files:"
 
 SRC_URI = "git://w1.fi/hostap.git;branch=main"
 
@@ -182,7 +182,7 @@ inherit useradd
 
 USERADD_PACKAGES = "${PN}"
 
-USERADD_PARAM_${PN} = "\
+USERADD_PARAM:${PN} = "\
 	--system \
 	--home-dir /var/run/network \
 	--no-create-home \
@@ -191,4 +191,4 @@ USERADD_PARAM_${PN} = "\
 	  network \
 "
 
-GROUPADD_PARAM_${PN} = "--system network"
+GROUPADD_PARAM:${PN} = "--system network"

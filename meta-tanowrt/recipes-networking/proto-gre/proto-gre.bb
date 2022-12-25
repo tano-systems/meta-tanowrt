@@ -10,15 +10,15 @@ PR = "tano1"
 inherit allarch
 
 DESCRIPTION = "Generic Routing Encapsulation config support"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "file://gre.sh file://LICENSE"
 
-FILES_${PN} += "${nonarch_base_libdir}/netifd/proto/"
+FILES:${PN} += "${nonarch_base_libdir}/netifd/proto/"
 
 S = "${WORKDIR}"
 
@@ -30,9 +30,9 @@ do_install() {
 	install -m 0755 ${WORKDIR}/gre.sh ${D}${nonarch_base_libdir}/netifd/proto/gre.sh
 }
 
-RDEPENDS_${PN} += "resolveip"
+RDEPENDS:${PN} += "resolveip"
 
-RRECOMMENDS_${PN} += "\
+RRECOMMENDS:${PN} += "\
 	kernel-module-gre \
 	${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'kernel-module-ip6-gre', '', d)} \
 "

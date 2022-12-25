@@ -14,5 +14,5 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 inherit tanowrt-image-swu
 
 # Use sw-description file from base tanowrt-image-full-swu.bb recipe
-FILESEXTRAPATHS_prepend := "${TANOWRT_BASE}/recipes-image/images/tanowrt-image-full-swu:"
+FILESEXTRAPATHS:prepend := "${TANOWRT_BASE}/recipes-image/images/tanowrt-image-full-swu:"
 SRC_URI = "file://sw-description"

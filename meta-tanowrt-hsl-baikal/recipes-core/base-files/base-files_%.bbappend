@@ -3,16 +3,16 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".baikal0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:"
+PR:append = ".baikal0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:"
 
 PREINIT_FILES = "file://preinit/79_mount_boot"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	${PREINIT_FILES} \
 "
 
-do_install_append() {
+do_install:append() {
 	if [ -n "{PREINIT_FILES}" ]; then
 		install -d ${D}${base_libdir}/preinit
 		for f in ${PREINIT_FILES}; do

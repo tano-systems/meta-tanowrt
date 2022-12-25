@@ -4,12 +4,12 @@
 # Copyright (C) 2018-2019, 2021-2022 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".tano6"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 OPKGLIBDIR = "${libdir}"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://opkg-key \
 	file://opkg.conf \
 	file://opkg-smime.conf \
@@ -24,7 +24,7 @@ SRC_URI += "\
 	file://0003-Set-PKG_UPGRADE-environment-variable.patch \
 "
 
-do_install_append () {
+do_install:append () {
 	install -dm 0755 ${D}/usr/lib/opkg
 	install -dm 0755 ${D}/bin
 	install -dm 0755 ${D}/usr/sbin
@@ -41,4 +41,4 @@ do_install_append () {
 	ln -s /usr/bin/opkg ${D}/bin/opkg
 }
 
-FILES_${PN} += "/bin /usr/lib"
+FILES:${PN} += "/bin /usr/lib"

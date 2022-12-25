@@ -1,6 +1,6 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2018-2020, 2022 Tano Systems LLC. All rights reserved.
 #
 
 #
@@ -8,7 +8,7 @@
 #
 
 # Hide bootchart2 recipe from oe layer
-BBMASK += "bootchart2_0.14.8.bb"
+BBMASK += "bootchart2_0.14.9.bb"
 
 # Hide hostpad and wpa-supplicant
 BBMASK += "recipes-connectivity/hostapd/"

@@ -4,12 +4,12 @@
 #
 SUMMARY = "lsb_release script implementation for OpenWrt"
 SECTION = "console/utils"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://README;md5=12da544b1a3a5a1795a21160b49471cf"
 PV = "1.4"
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	file://lsb_release \
@@ -26,6 +26,6 @@ do_install() {
 	install -m 0755 ${WORKDIR}/lsb_release ${D}${bindir}/lsb_release
 }
 
-FILES_${PN} = "${bindir}/lsb_release"
+FILES:${PN} = "${bindir}/lsb_release"
 
-RCONFLICTS_${PN} = "lsb"
+RCONFLICTS:${PN} = "lsb"

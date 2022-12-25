@@ -1,17 +1,17 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (c) 2019 Tano Systems. All Rights Reserved.
+# This file Copyright (c) 2019, 2022 Tano Systems. All Rights Reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano2"
+PR:append = ".tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 PACKAGES += "${PN}-procd"
 
-RRECOMMENDS_${PN} += "${PN}-procd"
-RDEPENDS_${PN}-procd += "${PN}"
+RRECOMMENDS:${PN} += "${PN}-procd"
+RDEPENDS:${PN}-procd += "${PN}"
 
 inherit tanowrt-services
 
@@ -24,7 +24,7 @@ SRC_URI += "\
 	file://cgroups.init \
 "
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/init.d
 	install -dm 0755 ${D}${sysconfdir}/config
 #	install -dm 0755 ${D}${sysconfdir}/config/cgroups.d
@@ -33,17 +33,17 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/cgroups.config ${D}${sysconfdir}/config/cgroups
 }
 
-FILES_${PN} = "\
-	${base_libdir} \
+FILES:${PN} = "\
+	${libdir} \
 	${bindir} \
 	${sbindir} \
 "
 
-FILES_${PN}-procd = "\
+FILES:${PN}-procd = "\
 	${sysconfdir}/init.d/cgroups \
 	${sysconfdir}/config/cgroups \
 "
 
-CONFFILES_${PN}-procd_append = "\
+CONFFILES:${PN}-procd:append = "\
 	${sysconfdir}/config/cgroups \
 "

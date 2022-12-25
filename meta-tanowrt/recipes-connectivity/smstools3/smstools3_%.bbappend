@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
 SRC_URI += "\
@@ -29,7 +29,7 @@ CFLAGS += "-D DISABLE_INET_SOCKET"
 CFLAGS += "-W -Wall"
 CFLAGS += "-D_FILE_OFFSET_BITS=64"
 
-do_install_append() {
+do_install:append() {
 	# Remove sysvinit script
 	rm -rf ${D}${sysconfdir}/init.d/${INITSCRIPT_NAME}
 

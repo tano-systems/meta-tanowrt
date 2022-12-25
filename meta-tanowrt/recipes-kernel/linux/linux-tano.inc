@@ -5,7 +5,7 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".2"
+PR:append = ".2"
 
 python __anonymous() {
     if not d.getVar("KERNEL_CACHE_DIR"):
@@ -28,7 +28,7 @@ KMACHINE ?= "${MACHINE}"
 KERNEL_SRC_PROTOCOL ?= "git"
 KERNEL_SRC_NOBRANCH ?= "0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}:"
 
 #
 # Kernel source SRC_URI
@@ -52,19 +52,19 @@ SRCREV_FORMAT = "machine"
 
 require recipes-kernel/linux/linux-yocto.inc
 
-KERNEL_FEATURES_remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/numa/numa.scc', '', d)}"
-KERNEL_FEATURES_append = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/general/numa/numa.scc', '', d)}"
+KERNEL_FEATURES:remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/numa/numa.scc', '', d)}"
+KERNEL_FEATURES:append = " ${@bb.utils.contains('MACHINE_FEATURES', 'numa', 'features/general/numa/numa.scc', '', d)}"
 
-KERNEL_FEATURES_remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'cfg/fs/vfat.scc', '', d)}"
-KERNEL_FEATURES_append = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'features/general/fs/vfat.scc', '', d)}"
+KERNEL_FEATURES:remove = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'cfg/fs/vfat.scc', '', d)}"
+KERNEL_FEATURES:append = " ${@bb.utils.contains('MACHINE_FEATURES', 'vfat', 'features/general/fs/vfat.scc', '', d)}"
 
 inherit kernel-tano
 
 LINUX_VERSION_FULL = "${@kernel_full_version("${LINUX_VERSION}")}"
 LINUX_VERSION_SHORT = "${@oe.utils.trim_version("${LINUX_VERSION}", 2)}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_SHORT}:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_FULL}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_SHORT}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-patches/generic-${LINUX_VERSION_FULL}:"
 
 KERNEL_CACHE_DIR = "kmeta-tano"
 

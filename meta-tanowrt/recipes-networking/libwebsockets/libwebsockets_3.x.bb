@@ -5,7 +5,7 @@
 PR = "tano0"
 SUMMARY = "Canonical libwebsockets.org websocket library"
 HOMEPAGE = "https://libwebsockets.org/"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4ce87f3facb6f911c142c8bef9bfb380"
 
 DEPENDS = "zlib libcap"
@@ -48,6 +48,6 @@ PACKAGECONFIG[unix-sock]      = "-DLWS_UNIX_SOCK=ON,-DLWS_UNIX_SOCK=OFF,"
 
 PACKAGES =+ "${PN}-testapps"
 
-FILES_${PN}-dev += "${libdir}/cmake"
-FILES_${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
+FILES:${PN}-dev += "${libdir}/cmake"
+FILES:${PN}-testapps += "${datadir}/libwebsockets-test-server/*"
 

@@ -8,9 +8,10 @@
 #
 LINUX_INTEL_BRANCH = "5.15/linux"
 
-KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git;protocol=https"
+KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git"
 KERNEL_SRC_BRANCH ?= "${LINUX_INTEL_BRANCH}"
 KERNEL_SRC_SRCREV ?= "d7d7ea689cc887081dd8bf8ef2f296b5cd9c593e"
+KERNEL_SRC_PROTOCOL ?= "https"
 
 LINUX_VERSION ?= "5.15.1"
 LINUX_KERNEL_TYPE ?= "standard"

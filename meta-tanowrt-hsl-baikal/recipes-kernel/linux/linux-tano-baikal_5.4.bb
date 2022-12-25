@@ -9,7 +9,7 @@
 #
 SECTION = "kernel"
 DESCRIPTION = "Linux kernel for Baikal-M platforms"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 LINUX_VERSION ?= "5.4.156"
@@ -35,7 +35,7 @@ SRC_URI += "\
 "
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano3"
+MACHINE_KERNEL_PR:append = "tano3"
 PR = "${MACHINE_KERNEL_PR}"
 
 KERNEL_IMAGETYPE ?= "Image"
@@ -44,6 +44,6 @@ require recipes-kernel/linux/linux-tano.inc
 require recipes-kernel/linux/linux-tano-baikal.inc
 
 # Look in the generic major.minor directory for files
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.4:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-5.4:"
 
 S = "${WORKDIR}/linux-${LINUX_VERSION}"

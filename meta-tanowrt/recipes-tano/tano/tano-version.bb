@@ -30,10 +30,10 @@ do_install() {
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
-INSANE_SKIP_${PN} += "build-deps"
+INSANE_SKIP:${PN} += "build-deps"
 
-RPROVIDES_${PN} = "os-release"
-RREPLACES_${PN} = "os-release"
-RCONFLICTS_${PN} = "os-release"
+RPROVIDES:${PN} = "os-release"
+RREPLACES:${PN} = "os-release"
+RCONFLICTS:${PN} = "os-release"
 
-FILES_${PN} += "${nonarch_libdir}"
+FILES:${PN} += "${nonarch_libdir}"

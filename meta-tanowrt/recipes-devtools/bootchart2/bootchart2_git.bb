@@ -9,25 +9,25 @@ SUMMARY = "Booting sequence and CPU,I/O usage monitor"
 DESCRIPTION = "Monitors where the system spends its time at start, creating a graph of all processes, disk utilization, and wait time."
 AUTHOR = "Wonhong Kwon <wonhong.kwon@lge.com>"
 HOMEPAGE = "https://github.com/xrmx/bootchart"
-LICENSE = "GPL-3.0"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=44ac4678311254db62edf8fd39cb8124"
 
 PR = "tano4"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit autotools-brokensep
 inherit systemd
 inherit python3native
 
-SYSTEMD_SERVICE_${PN} = "bootchart2.service bootchart2-done.service bootchart2-done.timer"
+SYSTEMD_SERVICE:${PN} = "bootchart2.service bootchart2-done.service bootchart2-done.timer"
 
-RDEPENDS_${PN} += " lsb-release "
-RCONFLICTS_${PN} = "bootchart"
+RDEPENDS:${PN} += " lsb-release "
+RCONFLICTS:${PN} = "bootchart"
 
 SRCREV = "42509aa0c9c20baa631062496b281f67b31abbd0"
 PV = "0.14.8+git${SRCPV}"
 
-SRC_URI = "git://github.com/xrmx/bootchart"
+SRC_URI = "git://github.com/xrmx/bootchart;branch=master;protocol=https"
 
 # Patches
 SRC_URI += "\
@@ -46,13 +46,13 @@ SRC_URI += "\
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	${sysconfdir} \
 	${base_libdir} \
 	${base_sbindir} \
 "
 
-FILES_${PN}-doc += "${datadir}"
+FILES:${PN}-doc += "${datadir}"
 
 do_install () {
     export PYTHON_DIR=python3.5
@@ -74,5 +74,5 @@ do_install () {
 
 PACKAGES += "${PN}-pybootchartgui"
 
-RDEPENDS_${PN}-pybootchartgui = "python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
-FILES_${PN}-pybootchartgui += "${PYTHON_SITEPACKAGES_DIR}/pybootchartgui ${bindir}/pybootchartgui"
+RDEPENDS:${PN}-pybootchartgui = "python3-pycairo python3-compression python3-image python3-textutils python3-shell python3-codecs python3-misc"
+FILES:${PN}-pybootchartgui += "${PYTHON_SITEPACKAGES_DIR}/pybootchartgui ${bindir}/pybootchartgui"

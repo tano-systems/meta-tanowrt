@@ -12,12 +12,12 @@ SECTION = "utils"
 LICENSE = "LuaSrcDiet"
 LIC_FILES_CHKSUM = "file://COPYRIGHT;md5=901db83aee840148cdccd058178e141a"
 DEPENDS = "lua5.1"
-RDEPENDS_${PN} = "lua5.1"
+RDEPENDS:${PN} = "lua5.1"
 
 PV = "1.0.0"
 PR = "tano1"
 
-SRC_URI = "git://github.com/jirutka/luasrcdiet.git"
+SRC_URI = "git://github.com/jirutka/luasrcdiet.git;branch=master;protocol=https"
 SRCREV = "f138fc9359821d9201cd6b57cfa2fcbed5b9af97"
 
 S = "${WORKDIR}/git"
@@ -25,10 +25,10 @@ S = "${WORKDIR}/git"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-FILES_${PN} += "/usr/lib"
-FILES_${PN} += "/bin"
+FILES:${PN} += "/usr/lib"
+FILES:${PN} += "/bin"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${base_bindir}
 	install -dm 0755 ${D}${libdir}/lua/5.1/luasrcdiet
 	install -dm 0755 ${D}${libdir}/lua/5.1/luasrcdiet/plugin

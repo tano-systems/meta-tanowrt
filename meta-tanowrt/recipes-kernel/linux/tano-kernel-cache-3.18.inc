@@ -3,13 +3,13 @@
 # Copyright (c) 2019-2021 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".7"
+PR:append = ".7"
 
-KERNEL_FEATURES_append = "\
+KERNEL_FEATURES:append = "\
 	features/kernel-3.18/nf_tables/nf_tables.scc \
 "
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://600-netfilter_conntrack_flush.patch \
 	file://610-netfilter_match_bypass_default_checks.patch \
 	file://611-netfilter_match_bypass_default_table.patch \

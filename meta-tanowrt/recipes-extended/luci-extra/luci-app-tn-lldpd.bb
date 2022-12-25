@@ -22,7 +22,7 @@ SRCREV = "${GIT_SRCREV}"
 
 LUCI_DO_MINIFY_CSS = "1"
 
-RDEPENDS_${PN} += "lldpd"
+RDEPENDS:${PN} += "lldpd"
 
 S = "${WORKDIR}/git"
 
@@ -32,7 +32,7 @@ inherit tanowrt-luci-i18n
 
 LUCI_APP_TN_LLDPD_HIDE_FOOTER ?= "1"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/uci-defaults
 
 	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_lldpd_footer

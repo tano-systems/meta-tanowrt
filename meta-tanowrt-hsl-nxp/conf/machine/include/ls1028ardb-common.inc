@@ -13,7 +13,7 @@ SERIAL_CONSOLES = "115200;ttyS0 115200;ttyS1 115200;ttyAMA0"
 SERIAL_CONSOLES_CHECK = ""
 
 SOC_DEFAULT_IMAGE_FSTYPES = "tar.gz ext4.gz"
-MACHINE_FEATURES_remove = "ext2"
+MACHINE_FEATURES:remove = "ext2"
 
 MACHINEOVERRIDES =. "ls1028ardb:fsl-lsch3:ls1028a:"
 
@@ -80,19 +80,19 @@ RCWEMMC ?= "R_SQPP_0x85bb/rcw_1500_gpu600"
 #
 EXTRA_IMAGEDEPENDS += "rcw dp-firmware-cadence ppa"
 USE_VT = "0"
-MACHINE_EXTRA_RRECOMMENDS_remove = "udev-extraconf"
+MACHINE_EXTRA_RRECOMMENDS:remove = "udev-extraconf"
 
 ROOTFS_IMAGE_FSTYPE = "squashfs-lzo"
 IMAGE_FSTYPES += "${ROOTFS_IMAGE_FSTYPE}"
-MACHINE_EXTRA_RDEPENDS_append = " usbutils-ids "
+MACHINE_EXTRA_RDEPENDS:append = " usbutils-ids "
 
 # Enable irqbalance
 IRQBALANCE_CONFIG_ENABLED = "1"
-MACHINE_EXTRA_RDEPENDS_append = " irqbalance "
+MACHINE_EXTRA_RDEPENDS:append = " irqbalance "
 
 # Add support for Intel Wi-Fi modules
-MACHINE_EXTRA_RRECOMMENDS_append = " linux-firmware-iwlwifi "
-MACHINE_EXTRA_RDEPENDS_append = " linux-backports "
+MACHINE_EXTRA_RRECOMMENDS:append = " linux-firmware-iwlwifi "
+MACHINE_EXTRA_RDEPENDS:append = " linux-backports "
 LINUX_BACKPORTS_CONFIGS = "iwlwifi"
 
 SPLASH = "psplash"
@@ -123,10 +123,10 @@ require ${TANOWRT_HSL_BASE}/conf/machine/include/ls1028ardb-swu.inc
 OPENWRT_VERSION_PRODUCT = "NXP LS1028A RDB"
 OPENWRT_VERSION_HWREV = "${SWU_REVISION}"
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
-PACKAGECONFIG_append_pn-collectd = " cpufreq sensors "
-PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+PACKAGECONFIG:append:pn-collectd = " cpufreq sensors "
+PACKAGE_ARCH:pn-collectd = "${MACHINE_ARCH}"
 
 OPENWRT_HWCLOCK_DEV       = "/dev/rtc0"
 OPENWRT_HWCLOCK_LOCALTIME = "0"

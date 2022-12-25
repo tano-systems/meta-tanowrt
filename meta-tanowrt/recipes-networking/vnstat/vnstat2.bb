@@ -9,9 +9,9 @@ PR = "tano0"
 
 DESCRIPTION = "Console-based network traffic monitor"
 SECTION = "net"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DEPENDS += "sqlite3 gd"
 
@@ -39,7 +39,7 @@ EXTRA_OECONF = " \
 	--disable-extra-paths \
 "
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/config
 	install -dm 0755 ${D}${sysconfdir}/init.d
 
@@ -47,7 +47,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/vnstat.init ${D}${sysconfdir}/init.d/vnstat
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/vnstat.conf \
 	${sysconfdir}/config/vnstat \
 "

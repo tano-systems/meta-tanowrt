@@ -15,9 +15,9 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/PD;md5=b3597d1
 SECTION = "base"
 DEPENDS = "libusb libubox"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/usbmode.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/usbmode.git;branch=master"
 
 # 18.12.2017
 # support PantechMode
@@ -50,7 +50,7 @@ TANOWRT_SERVICE_PACKAGES = "usbmode"
 TANOWRT_SERVICE_SCRIPTS_usbmode += "usbmode"
 TANOWRT_SERVICE_STATE_usbmode-usbmode ?= "enabled"
 
-do_configure_append() {
+do_configure:append() {
 	if [ -d "${WORKDIR}/data" ]; then
 		for filevar in ${WORKDIR}/data/*-*
 		do
@@ -64,7 +64,7 @@ do_configure_append() {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -d ${D}${sysconfdir}/hotplug.d/usb
 
@@ -76,4 +76,4 @@ do_install_append() {
 	     > ${D}${sysconfdir}/usb-mode.json
 }
 
-FILES_${PN} += "${libdir}/*"
+FILES:${PN} += "${libdir}/*"

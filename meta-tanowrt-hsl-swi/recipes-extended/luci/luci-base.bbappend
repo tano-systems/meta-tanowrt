@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".swi0"
+PR:append = ".swi0"
 
 inherit uci-config
 
-do_uci_config_append() {
+do_uci_config:append() {
 	# Prohibit unmounts of some SWI related mount points
 	${UCI} set luci.mounts=internal
 	${UCI} add_list luci.mounts.prohibit_umount='/firmware'

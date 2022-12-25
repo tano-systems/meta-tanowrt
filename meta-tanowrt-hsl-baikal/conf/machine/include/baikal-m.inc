@@ -5,9 +5,9 @@
 
 MACHINEOVERRIDES =. "baikal-m:"
 
-MACHINE_EXTRA_RRECOMMENDS_append = "\
+MACHINE_EXTRA_RRECOMMENDS:append = "\
 	baikal-scp \
 "
 
 require conf/machine/include/baikal-common.inc
-require conf/machine/include/tune-cortexa57.inc
+require conf/machine/include/arm/armv8a/tune-cortexa57.inc

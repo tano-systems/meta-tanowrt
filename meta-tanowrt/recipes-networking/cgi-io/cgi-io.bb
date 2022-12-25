@@ -9,16 +9,16 @@ DESCRIPTION = "This package contains an cgi utility that is useful for up/downlo
 SUMMARY = "CGI utility for handling up/downloading of files"
 SECTION = "net"
 DEPENDS = "libubox libubus"
-LICENSE = "GPLv2 & MIT"
+LICENSE = "GPL-2.0-only & MIT"
 LIC_FILES_CHKSUM = "\
 	file://main.c;beginline=1;endline=17;md5=5575bf2208fe08f4718ab46b4dc602d7 \
 	file://multipart_parser.c;beginline=1;endline=4;md5=5300a1f2ef0420d64635f8e81858c30f \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/cgi-io.git \
+	git://${GIT_OPENWRT_ORG}/project/cgi-io.git;branch=master \
 	file://0001-Import-changes-from-meta-tanowrt-layer.patch \
 "
 
@@ -40,7 +40,7 @@ EXTRA_OECMAKE += "\
 	-DENABLE_APPEND_MODE=${@bb.utils.contains('PACKAGECONFIG', 'enable-append-mode', 'ON', 'OFF', d)} \
 "
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	/usr/libexec/ \
 	/www/cgi-bin/ \
 "

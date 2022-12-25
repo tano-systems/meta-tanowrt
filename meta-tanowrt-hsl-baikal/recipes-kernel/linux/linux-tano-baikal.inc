@@ -8,19 +8,19 @@
 inherit kernel
 inherit siteinfo
 
-PR_append = ".0"
+PR:append = ".0"
 
 COMPATIBLE_MACHINE = "(baikal-m)"
 
-#DEPENDS_append = " libgcc"
-#KERNEL_CC_append = " ${TOOLCHAIN_OPTIONS}"
-#KERNEL_LD_append = " ${TOOLCHAIN_OPTIONS}"
+#DEPENDS:append = " libgcc"
+#KERNEL_CC:append = " ${TOOLCHAIN_OPTIONS}"
+#KERNEL_LD:append = " ${TOOLCHAIN_OPTIONS}"
 #KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 
 SCMVERSION ?= "n"
 LOCALVERSION = ""
 
-KERNEL_MACHINE_INCLUDE_mitx ?= "recipes-kernel/linux/linux-tano-baikal-mitx-${LINUX_VERSION_SHORT}.inc"
+KERNEL_MACHINE_INCLUDE:mitx ?= "recipes-kernel/linux/linux-tano-baikal-mitx-${LINUX_VERSION_SHORT}.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-baikal-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 

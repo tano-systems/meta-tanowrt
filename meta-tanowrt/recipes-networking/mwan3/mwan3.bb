@@ -11,20 +11,20 @@ PV = "2.10.6"
 PR = "tano1"
 
 DESCRIPTION = "Multiwan hotplug script with connection tracking support"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
 DEPENDS += "iptables ipset"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	rpcd \
 	jshn \
 	ipset \
 	iptables \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	file://etc/mwan3.user \
@@ -49,7 +49,7 @@ TANOWRT_SERVICE_PACKAGES = "mwan3"
 TANOWRT_SERVICE_SCRIPTS_mwan3 += "mwan3"
 TANOWRT_SERVICE_STATE_mwan3-mwan3 ?= "disabled"
 
-FILES_${PN} += "${libdir}/ ${base_libdir}/ ${nonarch_base_libdir}/"
+FILES:${PN} += "${libdir}/ ${base_libdir}/ ${nonarch_base_libdir}/"
 
 S = "${WORKDIR}/src"
 
@@ -93,7 +93,7 @@ do_install() {
 	install -m 0755 ${B}/libwrap_mwan3_sockopt.so.1.0 ${D}${base_libdir}/mwan3/
 }
 
-pkg_postinst_${PN}() {
+pkg_postinst:${PN}() {
 #!/bin/sh
 IPKG_INSTROOT=$D
 if [ -z "${IPKG_INSTROOT}" ]; then
@@ -101,7 +101,7 @@ if [ -z "${IPKG_INSTROOT}" ]; then
 fi
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
 #!/bin/sh
 IPKG_INSTROOT=$D
 if [ -z "${IPKG_INSTROOT}" ]; then
@@ -109,7 +109,7 @@ if [ -z "${IPKG_INSTROOT}" ]; then
 fi
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/mwan3 \
 	${sysconfdir}/mwan3.user \
 "

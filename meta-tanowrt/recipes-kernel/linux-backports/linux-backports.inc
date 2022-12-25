@@ -7,13 +7,13 @@
 DESCRIPTION = "Linux Backports"
 HOMEPAGE = "https://backports.wiki.kernel.org"
 SECTION = "kernel/modules"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 INC_PR = "0"
 
-FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}/files:"
-FILESEXTRAPATHS_prepend = "${THISDIR}/${PN}/configs:"
+FILESEXTRAPATHS:prepend = "${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend = "${THISDIR}/${PN}/configs:"
 
 DEPENDS = "virtual/kernel coreutils-native flex-native bison-native"
 
@@ -83,7 +83,7 @@ do_install() {
 	done
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/lib/modules/${KERNEL_VERSION}/backports/ \
 "
 

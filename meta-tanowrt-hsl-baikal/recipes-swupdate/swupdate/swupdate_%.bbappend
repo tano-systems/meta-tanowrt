@@ -4,8 +4,8 @@
 # Copyright (c) 2021-2022 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_mitx = ".baikal2"
+PR:append:mitx = ".baikal2"
 
-COMPATIBLE_MACHINE_append = "|mitx"
+COMPATIBLE_MACHINE:append = "|mitx"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:"

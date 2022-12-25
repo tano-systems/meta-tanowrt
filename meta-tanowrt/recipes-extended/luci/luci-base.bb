@@ -13,12 +13,12 @@ SUMMARY = "LuCI core libraries"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DEPENDS += "lemon-native"
 DEPENDS += "lua5.1"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	lua5.1 \
 	luci-lib-nixio \
 	luci-lib-ip \
@@ -49,7 +49,7 @@ TANOWRT_SERVICE_SCRIPTS_luci-base += "ucitrack"
 TANOWRT_SERVICE_STATE_luci-base-ucitrack ?= "enabled"
 
 # Remove the dependency on ourselves
-RDEPENDS_${PN}_remove = "luci-base"
+RDEPENDS:${PN}:remove = "luci-base"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=modules/luci-base;destsuffix=git/"
 SRCREV = "${LUCI_GIT_SRCREV}"
@@ -76,7 +76,7 @@ do_preconfigure() {
 
 do_preconfigure[vardeps] += "LUCI_DISTNAME LUCI_DISTVERSION LUCI_NAME LUCI_VERSION"
 
-do_install_append() {
+do_install:append() {
 	# Configure initial language
 	sed -i -e "s/\(option\s*lang\).*/\1 \'${LUCI_INITIAL_LANG}\'/" ${D}${sysconfdir}/config/luci
 
@@ -105,20 +105,20 @@ do_install[vardeps] += "LUCI_INITIAL_LANG LUCI_INITIAL_MEDIAURLBASE"
 
 addtask preconfigure before do_configure after do_patch
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/luci \
 	${sysconfdir}/config/ucitrack \
 "
 
 # This is needed for parser.so success build
-do_configure_prepend() {
+do_configure:prepend() {
 	oe_runmake -C ${S}/src/ clean
 	oe_runmake -C ${S}/src/ plural_formula.c
 }
 
 inherit uci-config
 
-do_uci_config_append() {
+do_uci_config:append() {
 	${UCI} set luci.main.libdir_arch="${libdir}"
 	${UCI} set luci.main.libdir_nonarch="${nonarch_libdir}"
 	${UCI} commit luci

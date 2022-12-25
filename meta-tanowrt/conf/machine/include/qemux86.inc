@@ -6,7 +6,7 @@
 #
 # PACKAGECONFIG's
 #
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
 
 #
 # Kernel
@@ -48,7 +48,7 @@ ROOTFS_RM_BOOT_DIR_DISABLE = "0"
 # Build ovmf firmware for uefi support in qemu.
 EXTRA_IMAGEDEPENDS += "ovmf"
 
-IMAGE_INSTALL_append = "\
+IMAGE_INSTALL:append = "\
 	grub-editenv \
 "
 

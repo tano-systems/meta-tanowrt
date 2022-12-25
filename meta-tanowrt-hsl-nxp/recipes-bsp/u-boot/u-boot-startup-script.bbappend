@@ -5,8 +5,8 @@
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_ls1028ardb = ".nxp3"
+PR:append:ls1028ardb = ".nxp3"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 COMPATIBLE_MACHINE = "ls1028ardb-sd|ls1028ardb-emmc"

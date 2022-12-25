@@ -11,7 +11,7 @@ DESCRIPTION = "This is a replacement for the following in-kernel drivers: \
 Instead of generating input events (like in-kernel drivers do) it generates \
 uevent-s and broadcasts them. This allows disabling input subsystem which is \
 an overkill for OpenWrt simple needs."
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://gpio-button-hotplug.c;beginline=1;endline=15;md5=708871d134fc952ce42b3a8d8e4e128e"
 
 PR = "tano1"
@@ -25,6 +25,6 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-RPROVIDES_${PN} += "kernel-module-gpio-button-hotplug"
+RPROVIDES:${PN} += "kernel-module-gpio-button-hotplug"
 
 KERNEL_MODULE_AUTOLOAD += "gpio-button-hotplug"

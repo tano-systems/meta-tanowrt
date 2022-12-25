@@ -21,12 +21,12 @@ SRC_URI[sha256sum] = "724607cdcd0dd85108e0ff239f2aebebc8d3da31d3427c9e0a4429c407
 
 S = "${WORKDIR}/modpoll"
 
-INSANE_SKIP_${PN}_append = "already-stripped"
+INSANE_SKIP:${PN}:append = "already-stripped"
 
-ARCH_DIR_x86-64 = "linux_x86-64"
+ARCH_DIR:x86-64 = "linux:x86-64"
 ARCH_DIR_i586 = "linux_i386"
 ARCH_DIR_i686 = "linux_i386"
-ARCH_DIR_arm = "linux_arm-eabihf"
+ARCH_DIR:arm = "linux:arm-eabihf"
 
 do_install () {
 	install -m 0755 -d ${D}${bindir}

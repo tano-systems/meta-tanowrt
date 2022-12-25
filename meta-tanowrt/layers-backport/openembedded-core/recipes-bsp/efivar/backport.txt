@@ -1,4 +1,0 @@
-Recipe for efivar 38 backported from openembedded-core layer:
-  repository: git://git.openembedded.org/openembedded-core
-  branch: master
-  revision: c577382c6d155b3a784d06e4c916783cde7165c8

@@ -4,11 +4,11 @@
 # This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append_ls1028ardb = ".nxp2"
+PR:append:ls1028ardb = ".nxp2"
 
 inherit uci-config
 
-do_uci_config_append_ls1028ardb() {
+do_uci_config:append:ls1028ardb() {
 # Tweak default UCI configuration
 ${UCI} batch <<-EOF
 	# Enable cpufreq

@@ -5,12 +5,12 @@
 # Binary initial environment image generation
 #
 
-DEPENDS_append = " u-boot-mkenvimage-native"
+DEPENDS:append = " u-boot-mkenvimage-native"
 
 UBOOT_ENV_SIZE      ?= "131072"
 UBOOT_ENV_REDUNDANT ?= "1"
 
-do_compile_append() {
+do_compile:append() {
 	if [ -n "${UBOOT_INITIAL_ENV}" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j
@@ -41,7 +41,7 @@ do_compile_append() {
 	fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	if [ -n "${UBOOT_INITIAL_ENV}" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j

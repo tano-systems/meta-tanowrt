@@ -8,11 +8,11 @@ PV = "1.5.2+git${SRCPV}"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
 HOMEPAGE = "http://etherlab.org/download/ethercat"
-LICENSE = "GPL-2.0 & LGPL-2.1"
+LICENSE = "GPL-2.0-only & LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 SECTION = "net"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "git://gitlab.com/etherlab.org/ethercat.git;protocol=https;branch=stable-1.5"
 
@@ -48,17 +48,17 @@ inherit autotools-brokensep pkgconfig module-base
 EXTRA_OECONF += "--with-linux-dir=${STAGING_KERNEL_BUILDDIR}"
 EXTRA_OECONF += "--with-module-dir=kernel/ethercat"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	# Fixes configure error
 	# | Makefile.am: error: required file './ChangeLog' not found"
 	touch ChangeLog
 }
 
-do_compile_append() {
+do_compile:append() {
 	oe_runmake modules
 }
 
-do_install_append() {
+do_install:append() {
 	oe_runmake MODLIB=${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION} modules_install
 
 	rm -rf ${D}${libdir}/systemd
@@ -74,8 +74,8 @@ do_install_append() {
 		find kernel -name '*.ko' -exec sh -c 'mod="{}"; ln -sf $mod ${D}/lib/modules/${KERNEL_VERSION}/$(basename "$mod")' \;
 }
 
-FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}"
-CONFFILES_${PN} += "${sysconfdir}/config/ethercat"
+FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}"
+CONFFILES:${PN} += "${sysconfdir}/config/ethercat"
 
 inherit tanowrt-services
 

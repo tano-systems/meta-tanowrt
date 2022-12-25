@@ -8,4 +8,4 @@
 #
 require luci-app-tn-logview.inc
 
-RDEPENDS_${PN} += "syslog-fc"
+RDEPENDS:${PN} += "syslog-fc"

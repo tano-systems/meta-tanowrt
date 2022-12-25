@@ -5,8 +5,8 @@
 # TanoWrt Mosquitto customization recipe
 #
 
-PR_append = ".tano0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "file://mosquitto.init \
             file://mosquitto.config \
@@ -14,7 +14,7 @@ SRC_URI += "file://mosquitto.init \
 
 PACKAGECONFIG ??= "ssl"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/config/
 	install -m 0644 ${WORKDIR}/mosquitto.config ${D}${sysconfdir}/config/mosquitto
 
@@ -22,5 +22,5 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/mosquitto.init ${D}${sysconfdir}/init.d/mosquitto
 }
 
-FILES_${PN} += "${sysconfdir}/config/mosquitto"
-CONFFILES_${PN} += "${sysconfdir}/config/mosquitto"
+FILES:${PN} += "${sysconfdir}/config/mosquitto"
+CONFFILES:${PN} += "${sysconfdir}/config/mosquitto"

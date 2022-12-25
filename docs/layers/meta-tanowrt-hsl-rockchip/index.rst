@@ -35,12 +35,12 @@ Dependencies of the :ref:`meta-tanowrt-hsl-rockchip <meta-tanowrt-hsl-rockchip>`
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-rockchip
      - https://github.com/JeffyCN/meta-rockchip.git
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-rockchip.yml <../../../kas/layers/meta-rockchip.yml>`
 
 

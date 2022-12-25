@@ -12,7 +12,7 @@
 SUMMARY = "Init scripts for Sierra Wireless devices"
 DESCRIPTION = "Initscripts provide the basic system startup initialization scripts for the Sierra Wireless systems."
 SECTION = "base"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 PR = "swi0"
 
@@ -96,4 +96,4 @@ do_install() {
 	install -m 0755 ${WORKDIR}/swi-restart_swi_apps -D ${D}${sbindir}/swi-restart_swi_apps
 }
 
-FILES_${PN} = "${sysconfdir} ${TANOWRT_PATH_PREINIT} ${sbindir}"
+FILES:${PN} = "${sysconfdir} ${TANOWRT_PATH_PREINIT} ${sbindir}"

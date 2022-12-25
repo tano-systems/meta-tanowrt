@@ -7,8 +7,8 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PV_append = "+ksz2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/microchip-ethernet:"
+PV:append = "+ksz2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/microchip-ethernet:"
 
 MICROCHIP_ETHERNET_ENABLE ?= "1"
 MICROCHIP_ETHERNET_CONFIGS ?= "ksz9477-spi"

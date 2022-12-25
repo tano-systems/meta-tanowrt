@@ -23,34 +23,34 @@ VIRTUAL-RUNTIME_network_manager = "netifd"
 # Start with default set of distro features
 DISTRO_FEATURES = "${DISTRO_FEATURES_DEFAULT} ${DISTRO_FEATURES_LIBC}"
 
-DISTRO_FEATURES_append = " swupdate "
+DISTRO_FEATURES:append = " swupdate "
 
 # Set procd as init manager
-DISTRO_FEATURES_append = " procd "
+DISTRO_FEATURES:append = " procd "
 
 # Enable cgroups support
-DISTRO_FEATURES_append = " cgroup "
+DISTRO_FEATURES:append = " cgroup "
 
 # Seccomp support
-DISTRO_FEATURES_append = " seccomp "
+DISTRO_FEATURES:append = " seccomp "
 
 # Enable wifi support
-DISTRO_FEATURES_append = " wifi "
+DISTRO_FEATURES:append = " wifi "
 
 # Enable watchdog support
-DISTRO_FEATURES_append = " watchdog "
+DISTRO_FEATURES:append = " watchdog "
 
 # Graphics
-DISTRO_FEATURES_append = " graphics screen splash opengl wayland "
+DISTRO_FEATURES:append = " graphics screen splash opengl wayland "
 
 # IPv6
-DISTRO_FEATURES_append = " ipv6"
+DISTRO_FEATURES:append = " ipv6"
 
 # Remove sysvinit and systemd from DISTRO_FEATURES
-DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " sysvinit systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED:append = " sysvinit systemd"
 
 # Clean DISTRO_FEATURES
-DISTRO_FEATURES_remove = "\
+DISTRO_FEATURES:remove = "\
     3g \
     nfc \
     pulseaudio \
@@ -66,10 +66,10 @@ DISTRO_FEATURES_remove = "\
 "
 
 # Licenses
-LICENSE_FLAGS_WHITELIST = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav commercial"
+LICENSE_FLAGS_ACCEPTED = "commercial_gst-ffmpeg commercial_gstreamer1.0-libav commercial"
 
 # Image
-IMAGE_FSTYPES_remove = "tar.xz.md5"
+IMAGE_FSTYPES:remove = "tar.xz.md5"
 
 # Root home path
 ROOT_HOME ??= "/root"
@@ -92,7 +92,7 @@ MAINTAINER = "TanoWrt Developers <https://github.com/tano-systems/meta-tanowrt>"
 DISTRO_EXTRA_RRECOMMENDS += "openssh-sftp-server"
 
 # Enable cryptodev/devcrypto engine in OpenSSL
-PACKAGECONFIG_append_pn-openssl = " cryptodev-linux"
+PACKAGECONFIG:append:pn-openssl = " cryptodev-linux"
 
 INHERIT += "do-populate-lic-deps"
 

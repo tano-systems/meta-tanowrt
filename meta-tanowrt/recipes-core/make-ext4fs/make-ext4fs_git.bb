@@ -13,7 +13,7 @@ SECTION = "tools"
 DEPENDS = "zlib"
 PR = "tano2"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/make_ext4fs.git \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/make_ext4fs.git;branch=master \
           "
 
 # 29.05.2017

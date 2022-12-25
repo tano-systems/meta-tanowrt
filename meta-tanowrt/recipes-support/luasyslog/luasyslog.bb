@@ -11,13 +11,13 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=39b203681ae87e7b0caaba09e7c05351"
 DEPENDS = "lua5.1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-lua
 
-RDEPENDS_${PN} += "lua5.1 lualogging"
+RDEPENDS:${PN} += "lua5.1 lualogging"
 
-SRC_URI = "git://github.com/tano-systems/luasyslog.git"
+SRC_URI = "git://github.com/tano-systems/luasyslog.git;branch=master;protocol=https"
 SRCREV = "4b95dd20b15cdc36b748055eedfe23dfed77deae"
 
 SRC_URI += "file://0001-Fix-Makefile.patch \

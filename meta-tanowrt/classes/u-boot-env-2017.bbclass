@@ -13,16 +13,16 @@ PACKAGE_BEFORE_PN += "${PN}-env"
 # this value.
 UBOOT_INITIAL_ENV ?= "${PN}-initial-env"
 
-RPROVIDES_${PN}-env += "u-boot-default-env"
-ALLOW_EMPTY_${PN}-env = "1"
-FILES_${PN}-env = " \
+RPROVIDES:${PN}-env += "u-boot-default-env"
+ALLOW_EMPTY:${PN}-env = "1"
+FILES:${PN}-env = " \
 	${@ '${sysconfdir}/${UBOOT_INITIAL_ENV}*' if d.getVar('UBOOT_INITIAL_ENV') else ''} \
 	${sysconfdir}/fw_env.config \
 "
 
-RDEPENDS_${PN} += "${PN}-env"
+RDEPENDS:${PN} += "${PN}-env"
 
-do_compile_append() {
+do_compile:append() {
 	if [ -n "${UBOOT_INITIAL_ENV}" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j
@@ -63,7 +63,7 @@ do_compile_append() {
 	fi
 }
 
-do_install_append() {
+do_install:append() {
 	if [ -n "${UBOOT_INITIAL_ENV}" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j
@@ -95,7 +95,7 @@ do_install_append() {
 	fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	if [ -n "${UBOOT_INITIAL_ENV}" ]; then
 		if [ -n "${UBOOT_CONFIG}" ]; then
 			unset i j

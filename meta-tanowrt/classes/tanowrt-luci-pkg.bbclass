@@ -12,11 +12,11 @@ inherit tanowrt-luci
 do_configure[noexec] = "1"
 do_compile[noexec]   = "1"
 
-RDEPENDS_${PN} += "luci-base"
+RDEPENDS:${PN} += "luci-base"
 
-FILES_${PN} += "${LUCI_INSTALL_LUASRC_PATH}"
-FILES_${PN} += "${LUCI_INSTALL_HTDOCS_PATH}"
-FILES_${PN} += "${LUCI_INSTALL_ROOT_PATH}"
+FILES:${PN} += "${LUCI_INSTALL_LUASRC_PATH}"
+FILES:${PN} += "${LUCI_INSTALL_HTDOCS_PATH}"
+FILES:${PN} += "${LUCI_INSTALL_ROOT_PATH}"
 
 LUCI_PKG_SRC ?= "${S}"
 
@@ -37,7 +37,7 @@ install_files() {
 	find * -type l -exec cp -d "{}" "${DIRDST}/{}" \;
 }
 
-do_install_append() {
+do_install:append() {
 	# Install luasrc
 	if [ "${LUCI_DO_INSTALL_LUASRC}" = "1" ]; then
 		if [ -d "${LUCI_PKG_SRC}/luasrc" ]; then

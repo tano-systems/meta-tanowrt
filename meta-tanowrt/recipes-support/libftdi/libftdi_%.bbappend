@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 EXTRA_OECMAKE += "-DEXAMPLES=on -DCMAKE_SKIP_RPATH=TRUE"
 
@@ -10,14 +10,14 @@ EXTRA_OECMAKE += "-DEXAMPLES=on -DCMAKE_SKIP_RPATH=TRUE"
 PACKAGES =+ "ftdi-eeprom"
 PACKAGECONFIG += "ftdi-eeprom"
 PACKAGECONFIG[ftdi-eeprom] = "-DFTDI_EEPROM=on,-DFTDI_EEPROM=off,libconfuse"
-FILES_ftdi-eeprom += "${bindir}/ftdi_eeprom"
-RDEPENDS_ftdi-eeprom += "libftdi"
+FILES:ftdi-eeprom += "${bindir}/ftdi_eeprom"
+RDEPENDS:ftdi-eeprom += "libftdi"
 
 # Examples
 PACKAGES =+ "ftdi-examples"
-RDEPENDS_ftdi-examples += "libftdi"
+RDEPENDS:ftdi-examples += "libftdi"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${bindir}
 	install -m 0755 ${B}/examples/baud_test ${D}${bindir}/
 	install -m 0755 ${B}/examples/bitbang ${D}${bindir}/
@@ -31,7 +31,7 @@ do_install_append() {
 	install -m 0755 ${B}/examples/stream_test ${D}${bindir}/
 }
 
-FILES_ftdi-examples += "\
+FILES:ftdi-examples += "\
 	${bindir}/baud_test \
 	${bindir}/bitbang \
 	${bindir}/bitbang_cbus \

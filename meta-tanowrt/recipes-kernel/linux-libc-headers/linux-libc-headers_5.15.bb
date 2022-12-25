@@ -6,7 +6,7 @@ require recipes-kernel/linux-libc-headers/linux-libc-headers.inc
 
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI:append:libc-musl = "\
     file://0001-libc-compat.h-fix-some-issues-arising-from-in6.h.patch \

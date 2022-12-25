@@ -22,7 +22,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-mstpd.git;branch=${GIT_BRAN
 
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "mstpd"
+RDEPENDS:${PN} += "mstpd"
 
 S = "${WORKDIR}/git"
 
@@ -32,7 +32,7 @@ inherit tanowrt-luci-i18n
 
 LUCI_APP_TN_MSTPD_HIDE_FOOTER ?= "1"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/uci-defaults
 
 	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_mstpd_footer

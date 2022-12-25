@@ -4,7 +4,7 @@
 
 require conf/machine/include/soc-family.inc
 
-MACHINE_EXTRA_RRECOMMENDS_append = " \
+MACHINE_EXTRA_RRECOMMENDS:append = " \
 	${RK_WIFIBT_FIRMWARES} \
 	kernel-modules \
 "
@@ -17,7 +17,7 @@ KBUILD_DEFCONFIG ?= ""
 MACHINEOVERRIDES .= ":rockchip"
 
 # Custom kernel might not support newest python
-PACKAGECONFIG_remove_pn-perf += " scripting"
+PACKAGECONFIG:remove:pn-perf = "scripting"
 
 PREFERRED_RPROVIDER_lib32-initd-functions = "lib32-initscripts"
 
@@ -39,7 +39,7 @@ MACHINE_FEATURES = "\
 	hwrng \
 "
 
-MACHINE_EXTRA_RDEPENDS_append = " \
+MACHINE_EXTRA_RDEPENDS:append = " \
 	udev-conf-rockchip \
 "
 
@@ -123,12 +123,12 @@ RK_IMAGE_LOADER ?= "loader.bin"
 RK_IDBLOCK_OFFSET ?= "32768"
 RK_STARTUP_OFFSET ?= "4063232"
 
-PACKAGECONFIG_append_pn-fstools = " ovl-rootdisk-part "
-PACKAGECONFIG_append_pn-collectd = " thermal "
-PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+PACKAGECONFIG:append:pn-fstools = " ovl-rootdisk-part "
+PACKAGECONFIG:append:pn-collectd = " thermal "
+PACKAGE_ARCH:pn-collectd = "${MACHINE_ARCH}"
 
-PACKAGE_ARCH_pn-netifd = "${MACHINE_ARCH}"
-PACKAGE_ARCH_pn-dnsmasq = "${MACHINE_ARCH}"
+PACKAGE_ARCH:pn-netifd = "${MACHINE_ARCH}"
+PACKAGE_ARCH:pn-dnsmasq = "${MACHINE_ARCH}"
 
 TANOWRT_NETIFD_CONFIGURE_INTERFACES = "lan usb0"
 TANOWRT_NETIFD_CONFIGURE_INTERFACE_lan = "proto=dhcp device=br-lan peerdns=1"

@@ -20,7 +20,7 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-vsftpd.git;branch=${GIT_BRA
 
 SRCREV = "${GIT_SRCREV}"
 
-RDEPENDS_${PN} += "vsftpd"
+RDEPENDS:${PN} += "vsftpd"
 
 S = "${WORKDIR}/git"
 

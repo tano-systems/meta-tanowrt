@@ -16,4 +16,4 @@ LIC_FILES_CHKSUM = "file://plugins/snmp/LICENSE;md5=35d2a22ecae06415d0af96aa3af5
 
 LUCI_PKG_SRC = "${S}/plugins/snmp"
 
-RDEPENDS_${PN} += "luci-app-tn-logview"
+RDEPENDS:${PN} += "luci-app-tn-logview"

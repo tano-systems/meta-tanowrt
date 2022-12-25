@@ -48,7 +48,7 @@ def kernel_config_depends(d):
     kversion = kernel_get_version(d)
 
     kdep_var  = d.getVar('KERNEL_CONFIG_DEPENDS', True) or ""
-    kdep_opts = re.findall("\{(.*?)\}", kdep_var)
+    kdep_opts = re.findall(r"\{(.*?)\}", kdep_var)
 
     if not kdep_opts:
         bb.debug(1, 'No options defined in KERNEL_CONFIG_DEPENDS');
@@ -94,8 +94,8 @@ def kernel_config_depends(d):
                 bb.warn('Invalid parameter "%s" in KERNEL_CONFIG_DEPENDS' % value)
                 continue
 
-            v[0] = re.sub("[\"']", "", v[0]).strip()
-            v[1] = re.sub("[\"']", "", v[1]).strip()
+            v[0] = re.sub(r"[\"']", "", v[0]).strip()
+            v[1] = re.sub(r"[\"']", "", v[1]).strip()
 
             if v[0] == 'option':
                 koption = v[1]
@@ -169,13 +169,13 @@ def kernel_config_depends(d):
             if len(m_rdepends) > 0:
                 bb.debug(1, '    Added runtime dependency on "%s" package(s)' \
                     % (", ".join(m_rdepends)))
-                d.prependVar('RDEPENDS_%s' % pkg, "%s " \
+                d.prependVar('RDEPENDS:%s' % pkg, "%s " \
                     % (" ".join(m_rdepends)))
 
             # autoload modules
             if len(m_autoload) > 0:
 
-                postinst = d.getVar('pkg_postinst_%s' % pkg, True) or ""
+                postinst = d.getVar('pkg_postinst:%s' % pkg, True) or ""
 
                 postinst += "#!/bin/sh\n"
                 postinst += "mkdir -p $D${sysconfdir}/modules.d\n"
@@ -192,12 +192,12 @@ def kernel_config_depends(d):
                     postinst += "ln -sf ../modules.d/%s $D${sysconfdir}/modules-boot.d/\n" % \
                         (m_autoload_script)
 
-                d.setVar('pkg_postinst_%s' % pkg, postinst)
+                d.setVar('pkg_postinst:%s' % pkg, postinst)
 
                 bb.debug(1, '    Added script "%s" for "%s" modules autoloading' % \
                     (m_autoload_script, "early" if m_autoload_early else "normal"))
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     kernel_config_depends(d)
 }
 

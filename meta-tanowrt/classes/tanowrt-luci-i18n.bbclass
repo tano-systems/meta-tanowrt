@@ -15,13 +15,13 @@ inherit tanowrt-luci
 do_package[vardeps] += "LUCI_LANGUAGES"
 
 LUCI_I18N_META_PACKAGE ?= "${PN}-i18n"
-FILES_${LUCI_I18N_META_PACKAGE} = ""
-ALLOW_EMPTY_${LUCI_I18N_META_PACKAGE} = "1"
+FILES:${LUCI_I18N_META_PACKAGE} = ""
+ALLOW_EMPTY:${LUCI_I18N_META_PACKAGE} = "1"
 
 PACKAGES =+ "${LUCI_I18N_META_PACKAGE}"
-RRECOMMENDS_${PN} += "${LUCI_I18N_META_PACKAGE}"
+RRECOMMENDS:${PN} += "${LUCI_I18N_META_PACKAGE}"
 
-PACKAGESPLITFUNCS_prepend = "split_i18n_packages "
+PACKAGESPLITFUNCS:prepend = "split_i18n_packages "
 
 # Language code titles
 LUCI_LANG_ca="Català (Catalan)"
@@ -103,8 +103,8 @@ def build_i18n_packages(d):
             description = "LuCI package '%s' translation (%s)" % (pkg, lang)
 
             d.prependVar('PACKAGES', '%s ' % i18n_pkg)
-            d.setVar('RDEPENDS_%s' % i18n_pkg, pkg)
-            d.setVar('DESCRIPTION_%s' % i18n_pkg, description)
+            d.setVar('RDEPENDS:%s' % i18n_pkg, pkg)
+            d.setVar('DESCRIPTION:%s' % i18n_pkg, description)
 
             bb.debug(1, '    > %s: building' % i18n_pkg)
 
@@ -125,7 +125,7 @@ def build_i18n_packages(d):
         bb.debug(1, '    > %s: writed /etc/uci-defaults' % i18n_pkg)
 
         # Add file to package
-        d.prependVar('FILES_%s' % i18n_pkg, "${sysconfdir}/uci-defaults/%s " % i18n_pkg)
+        d.prependVar('FILES:%s' % i18n_pkg, "${sysconfdir}/uci-defaults/%s " % i18n_pkg)
 
         # Source PO file
         po_full_file = os.path.join(luci['po_dir'], lang, po_file)
@@ -144,7 +144,7 @@ def build_i18n_packages(d):
         # Add generated LMO to package
         if os.path.exists(lmo_full_file):
             bb.debug(1, '    > %s: compiled LMO' % i18n_pkg)
-            d.prependVar('FILES_%s' % i18n_pkg, "%s " % os.path.join(lmo_root, lmo_file))
+            d.prependVar('FILES:%s' % i18n_pkg, "%s " % os.path.join(lmo_root, lmo_file))
         else:
             bb.debug(1, '    > %s: LMO is empty' % i18n_pkg)
 
@@ -205,5 +205,5 @@ python split_i18n_packages() {
     packages = build_i18n_packages(d)
     if packages:
         pkg = d.getVar('LUCI_I18N_META_PACKAGE', True)
-        d.appendVar('RRECOMMENDS_' + pkg, ' '+' '.join(packages))
+        d.appendVar('RRECOMMENDS:' + pkg, ' '+' '.join(packages))
 }

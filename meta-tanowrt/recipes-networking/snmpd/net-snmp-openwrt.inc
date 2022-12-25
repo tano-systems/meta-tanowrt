@@ -3,7 +3,7 @@
 # This file Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-INC_PR = "3"
+INC_PR = "4"
 
 EXTRA_OECONF += "--with-logfile=/var/log/snmpd.log"
 
@@ -56,7 +56,7 @@ SRC_URI += "\
 ##	--with-nl \
 ##
 
-do_install_append() {
+do_install:append() {
 	# Remove unneeded files installed by original OE recipe
 	rm -rf ${D}${sysconfdir}/snmp/*
 	rm -rf ${D}${systemd_unitdir}
@@ -74,28 +74,28 @@ do_install_append() {
 	ln -s /var/run/snmpd.conf ${D}${sysconfdir}/snmp/snmpd.conf
 }
 
-FILES_${PN}-server-snmpd = "${sbindir}/snmpd"
-FILES_${PN}-server-snmptrapd = "${sbindir}/snmptrapd"
+FILES:${PN}-server-snmpd = "${sbindir}/snmpd"
+FILES:${PN}-server-snmptrapd = "${sbindir}/snmptrapd"
 
-FILES_${PN}-server-snmpd += "\
+FILES:${PN}-server-snmpd += "\
 	${sysconfdir}/config/snmpd \
 	${sysconfdir}/snmp/snmpd.conf \
 	${sysconfdir}/init.d/snmpd"
 
-FILES_${PN}-server-snmptrapd += "\
+FILES:${PN}-server-snmptrapd += "\
 	${sysconfdir}/init.d/snmptrapd"
 
-CONFFILES_${PN}-server-snmpd = "\
+CONFFILES:${PN}-server-snmpd = "\
 	${sysconfdir}/config/snmpd \
 	${sysconfdir}/snmp/snmpd.conf"
 
 # Provide OpenWrt package names
-RPROVIDES_${PN}-server-snmpd     += "snmpd"
-RPROVIDES_${PN}-server-snmptrapd += "snmptrapd"
-RPROVIDES_${PN}-client           += "snmp-utils"
-RPROVIDES_${PN}-mibs             += "snmp-mibs"
-RPROVIDES_${PN}-libs             += "libnetsnmp"
+RPROVIDES:${PN}-server-snmpd     += "snmpd"
+RPROVIDES:${PN}-server-snmptrapd += "snmptrapd"
+RPROVIDES:${PN}-client           += "snmp-utils"
+RPROVIDES:${PN}-mibs             += "snmp-mibs"
+RPROVIDES:${PN}-libs             += "libnetsnmp"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/snmpd \
 "

@@ -41,12 +41,12 @@ Dependencies of the :ref:`meta-tanowrt-hsl-nxp <meta-tanowrt-hsl-nxp>` layer are
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-freescale
      - https://git.yoctoproject.org/meta-freescale
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-freescale.yml <../../../kas/layers/meta-freescale.yml>`
 
 

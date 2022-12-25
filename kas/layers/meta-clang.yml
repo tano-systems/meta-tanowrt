@@ -7,4 +7,4 @@ header:
 repos:
   meta-clang:
     url: https://github.com/kraj/meta-clang
-    refspec: 7ef47d048267cf755c496a3962b34314f6f1f1e1
+    refspec: 013b5eeb580bc13b156aaf77d0c1175f75b89671

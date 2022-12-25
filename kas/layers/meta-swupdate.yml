@@ -9,4 +9,4 @@ header:
 repos:
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate.git
-    refspec: 2c2c57d3aaae42999b6ef6dcdf67fe52b12735c3
+    refspec: 41aff567ad088332af5da010a22e67f30a821cf0

@@ -30,4 +30,4 @@ do_install() {
 	install -m 0755 ${S}/mem_util/Release/mem_util ${D}/${bindir}
 }
 
-INSANE_SKIP_${PN} = "ldflags"
+INSANE_SKIP:${PN} = "ldflags"

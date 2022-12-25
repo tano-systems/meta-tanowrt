@@ -7,12 +7,12 @@
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-REQUIRED_DISTRO_FEATURES_class-target = "procd"
+REQUIRED_DISTRO_FEATURES:class-target = "procd"
 CONFLICT_DISTRO_FEATURES = "sysvinit systemd"
 
 inherit features_check
 
-RDEPENDS_${PN}_append_class-target = " procd "
+RDEPENDS:${PN}:append:class-target = " procd "
 
 python __anonymous() {
     # Check for deprecated OPENWRT_* variables
@@ -79,7 +79,7 @@ def update_owrt_after_parse(d):
         if not d.getVar('TANOWRT_SERVICE_SCRIPTS_%s' % pkg, True):
             bb.fatal("%s inherits tanowrt-services but doesn't set TANOWRT_SERVICE_SCRIPTS for package '%s'" % (d.getVar('FILE', True), pkg))
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     import subprocess
     import string
     import os
@@ -134,7 +134,7 @@ python populate_packages_prepend() {
                     bb.warn("TanoWrt: [%s] Invalid init script '%s'" % (pkg, script))
                     continue
 
-                postinst  = d.getVar('pkg_postinst_%s' % pkg, True) or ""
+                postinst  = d.getVar('pkg_postinst:%s' % pkg, True) or ""
 
                 postinst += "#!/bin/sh\n"
                 postinst += "if [ \"$PKG_UPGRADE\" != 1 ]; then\n"
@@ -144,5 +144,5 @@ python populate_packages_prepend() {
 
                 bb.debug(1, "TanoWrt: [%s] Service '%s' default state is '%s'" % (pkg, script, state))
 
-                d.setVar('pkg_postinst_%s' % pkg, postinst)
+                d.setVar('pkg_postinst:%s' % pkg, postinst)
 }

@@ -7,7 +7,7 @@ Server (IPVS) kernel module providing Layer4 loadbalancing \
 "
 HOMEPAGE = "http://www.keepalived.org/"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 SRC_URI = "http://www.keepalived.org/software/${BP}.tar.gz"
@@ -27,7 +27,7 @@ PACKAGECONFIG[systemd] = "--with-init=systemd --with-systemdsystemunitdir=${syst
 
 EXTRA_OEMAKE = "initdir=${sysconfdir}/init.d"
 
-do_install_append() {
+do_install:append() {
     if [ -f ${D}${sysconfdir}/init.d/${BPN} ]; then
         chmod 0755 ${D}${sysconfdir}/init.d/${BPN}
         sed -i 's#rc.d/##' ${D}${sysconfdir}/init.d/${BPN}
@@ -38,7 +38,7 @@ do_install_append() {
     fi
 }
 
-FILES_${PN} += "${datadir}/snmp/mibs/KEEPALIVED-MIB.txt"
+FILES:${PN} += "${datadir}/snmp/mibs/KEEPALIVED-MIB.txt"
 
-SYSTEMD_SERVICE_${PN} = "keepalived.service"
+SYSTEMD_SERVICE:${PN} = "keepalived.service"
 SYSTEMD_AUTO_ENABLE ?= "disable"

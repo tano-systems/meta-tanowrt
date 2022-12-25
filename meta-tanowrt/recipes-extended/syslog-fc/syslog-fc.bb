@@ -15,7 +15,7 @@ LICENSE = "WTFPL"
 LIC_FILES_CHKSUM = "file://COPYING;md5=df8b20e1bbf83b9469c9e86895dc5e72"
 SECTION = "base"
 
-SRC_URI = "git://github.com/namedun/syslog_fc;branch=master"
+SRC_URI = "git://github.com/namedun/syslog_fc;branch=master;protocol=https"
 SRCREV = "873ae0a6224e9b2829507966545be2e438f3a9d4"
 
 S = "${WORKDIR}/git"

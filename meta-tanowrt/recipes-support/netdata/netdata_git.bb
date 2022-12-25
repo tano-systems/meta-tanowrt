@@ -7,15 +7,15 @@
 #
 HOMEPAGE = "https://github.com/netdata/netdata/"
 SUMMARY = "Real-time performance monitoring"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fc9b848046ef54b5eaee6071947abd24"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DEPENDS += "zlib libmnl"
-RDEPENDS_${PN} = "bash zlib"
+RDEPENDS:${PN} = "bash zlib"
 
-SRC_URI = "git://github.com/netdata/netdata.git;protocol=https"
+SRC_URI = "git://github.com/netdata/netdata.git;protocol=https;branch=master"
 SRCREV = "fc8e3bbd451cff1b9dbfee8f213c6e0a5813b5f4"
 PV = "1.15.0+git${SRCPV}"
 PR = "tano3"
@@ -44,7 +44,7 @@ LDFLAGS += "-pthread"
 
 # User specific
 USERADD_PACKAGES = "${PN}"
-GROUPADD_PARAM_${PN} = "--system netdata"
+GROUPADD_PARAM:${PN} = "--system netdata"
 
 inherit tanowrt-services
 
@@ -52,7 +52,7 @@ TANOWRT_SERVICE_PACKAGES = "netdata"
 TANOWRT_SERVICE_SCRIPTS_netdata += "netdata"
 TANOWRT_SERVICE_STATE_netdata-netdata ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/netdata/custom-plugins.d
 
 	# Install config
@@ -90,8 +90,8 @@ do_install_append() {
 	rm -rf ${D}/var
 }
 
-FILES_${PN}-dbg += "${libexecdir}/netdata/plugins.d/.debug"
+FILES:${PN}-dbg += "${libexecdir}/netdata/plugins.d/.debug"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/netdata \
 "

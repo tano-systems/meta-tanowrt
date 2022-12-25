@@ -5,18 +5,18 @@
 PR = "tano0"
 
 DESCRIPTION = "Simple DNS resolver with configurable timeout"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "utils"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "file://resolveip.c file://LICENSE"
 
 S = "${WORKDIR}"
 
 CFLAGS += "-Wall"
-FILES_${PN} += "/usr/bin/"
+FILES:${PN} += "/usr/bin/"
 
 do_compile() {
 	${CC} ${CFLAGS} ${LDFLAGS} -o ${B}/resolveip ${S}/resolveip.c

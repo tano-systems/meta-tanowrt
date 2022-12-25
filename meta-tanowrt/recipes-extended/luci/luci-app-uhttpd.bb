@@ -12,7 +12,7 @@ SUMMARY = "LuCI uHTTPd Webserver Configuration"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-RDEPENDS_${PN} += "uhttpd luci-compat"
+RDEPENDS:${PN} += "uhttpd luci-compat"
 
 inherit allarch
 inherit tanowrt-luci-app

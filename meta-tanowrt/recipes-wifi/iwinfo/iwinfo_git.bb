@@ -7,14 +7,14 @@
 
 DESCRIPTION = "Library for accessing wireless device drivers"
 HOMEPAGE = "http://git.openwrt.org/?p=project/iwinfo.git;a=summary"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
 PR = "tano21"
 
 inherit kmod/cfg80211
-RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
+RPROVIDES:${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
 # 09.06.2021
@@ -31,7 +31,7 @@ PACKAGECONFIG[backend-nl80211] = ",,libnl,"
 PACKAGECONFIG[backend-wl] = ",,,"
 PACKAGECONFIG[backend-madwifi] = ",,,"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/iwinfo.git"
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/iwinfo.git;branch=master"
 
 # Patches
 SRC_URI += "\
@@ -44,7 +44,7 @@ SRC_URI += "\
 	file://0007-iwinfo-add-device-id-for-Broadcom-BCM4350.patch \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/git"
 
@@ -78,7 +78,7 @@ do_install() {
 	install -D -m 0644 ${S}/hardware.txt ${D}${datadir}/libiwinfo/hardware.txt
 }
 
-FILES_${PN} += "${datadir} ${libdir}"
+FILES:${PN} += "${datadir} ${libdir}"
 
 LEAD_SONAME = "libiwinfo.so"
 BBCLASSEXTEND = "native nativesdk"

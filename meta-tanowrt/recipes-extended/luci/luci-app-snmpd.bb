@@ -12,8 +12,8 @@ SUMMARY = "Net-SNMP LuCI interface"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-RDEPENDS_${PN} += "net-snmp-server-snmpd luci-compat"
-RCONFLICTS_${PN} = "luci-app-tn-snmpd"
+RDEPENDS:${PN} += "net-snmp-server-snmpd luci-compat"
+RCONFLICTS:${PN} = "luci-app-tn-snmpd"
 
 inherit allarch
 inherit tanowrt-luci-app

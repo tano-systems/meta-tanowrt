@@ -10,15 +10,15 @@ PV = "1.0.0"
 PR = "tano0"
 
 DESCRIPTION = "Script to measure the performance of your network and router"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=801f80980d171dd6425610833a22dbe6"
 SECTION = "net"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit allarch
 
-RDEPENDS_${PN} += "netperf"
+RDEPENDS:${PN} += "netperf"
 
 SRC_URI = "\
 	file://speedtest-netperf.sh \
@@ -35,4 +35,4 @@ do_install() {
 	install ${WORKDIR}/speedtest-netperf.sh ${D}${bindir}/speedtest-netperf.sh
 }
 
-FILES_${PN} += "${bindir}/"
+FILES:${PN} += "${bindir}/"

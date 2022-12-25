@@ -13,7 +13,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS += "libubox libubus rpcd"
-RDEPENDS_${PN} += "rpcd"
+RDEPENDS:${PN} += "rpcd"
 
 do_configure[depends] += "rpcd:do_populate_sysroot"
 
@@ -31,9 +31,9 @@ do_install() {
 	install -m 0755 ${B}/rrdns.so ${D}${libdir}/rpcd/rrdns.so
 }
 
-FILES_${PN} += "${libdir}/rpcd"
+FILES:${PN} += "${libdir}/rpcd"
 
-pkg_postinst_${PN}_append() {
+pkg_postinst:${PN}:append() {
 #!/bin/sh
 IPKG_INSTROOT=$D
 if [ -z "${IPKG_INSTROOT}" ]; then

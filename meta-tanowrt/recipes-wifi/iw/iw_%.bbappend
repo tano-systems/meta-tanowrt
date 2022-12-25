@@ -4,16 +4,17 @@
 #
 # nl80211 based CLI configuration utility for wireless devices
 #
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 # Compile always with gcc
 TOOLCHAIN = "gcc"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Patches
 SRC_URI += "\
 	file://001-nl80211_h_sync.patch \
+	file://010-Revert-iw-allow-specifying-CFLAGS-LIBS-externally.patch \
 	file://120-antenna_gain.patch \
 	file://130-survey-bss-rx-time.patch \
 	file://200-reduce_size.patch \

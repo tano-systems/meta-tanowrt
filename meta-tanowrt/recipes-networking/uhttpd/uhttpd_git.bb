@@ -8,15 +8,15 @@
 PR = "tano41"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
-LICENSE = "BSD"
+LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=18;md5=ba30601dd30339f7ff3d0ad681d45679"
 SECTION = "base"
 DEPENDS = "libubox libucode ubus json-c ustream-ssl virtual/crypt"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
-	git://${GIT_OPENWRT_ORG}/project/uhttpd.git \
+	git://${GIT_OPENWRT_ORG}/project/uhttpd.git;branch=master \
 	file://uhttpd.config \
 	file://uhttpd.init \
 	file://ubus.default \
@@ -36,7 +36,7 @@ SRC_URI += "\
 "
 
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
-RPROVIDES_${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
+RPROVIDES:${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
 # 19.02.2022
 # fix compiler uninitialized variable
@@ -57,7 +57,7 @@ EXTRA_OECMAKE = "-DTLS_SUPPORT=ON -DLUA_SUPPORT=ON -DUBUS_SUPPORT=ON -DUCODE_SUP
 
 do_unpack[vardeps] += "libdir base_libdir"
 
-do_install_append() {
+do_install:append() {
     install -d -m 0755 ${D}${sysconfdir}/config
     install -d -m 0755 ${D}${sysconfdir}/init.d
     install -d -m 0755 ${D}${sysconfdir}/uci-defaults
@@ -74,15 +74,15 @@ do_install_append() {
               ${D}${sysconfdir}/init.d/uhttpd
 }
 
-FILES_${PN}  += "${libdir}/* /www"
+FILES:${PN}  += "${libdir}/* /www"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
                   openssl \
                   openssl-bin \
                   base-files-scripts-openwrt \
                   "
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/uhttpd \
 	${sysconfdir}/uhttpd.crt \
 	${sysconfdir}/uhttpd.key \

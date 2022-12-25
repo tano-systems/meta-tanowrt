@@ -3,14 +3,14 @@
 # Copyright (c) 2018, 2020 Tano Systems LLC. All rights reserved.
 #
 DESCRIPTION = "3G/GPRS datacard management utility"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://gpl.txt;md5=393a5ca445f6965873eca0259a17f833"
 
 PR = "tano12"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RDEPENDS_${PN} += "ppp"
+RDEPENDS:${PN} += "ppp"
 
 SRC_URI = "\
 	https://sourceforge.net/projects/comgt/files/comgt/${PV}/comgt.${PV}.tgz \
@@ -38,7 +38,7 @@ SRC_URI[md5sum] = "db2452680c3d953631299e331daf49ef"
 SRC_URI[sha256sum] = "0cedb2a5aa608510da66a99aab74df3db363df495032e57e791a2ff55f1d7913"
 
 # Patches
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://001-compile-fix.patch \
 	file://003-termios.patch \
 	file://004-compile-fix.patch \
@@ -49,10 +49,10 @@ SRC_URI_append = "\
 
 S = "${WORKDIR}/comgt.${PV}"
 
-FILES_${PN}-bin = "${bindir}/*"
-FILES_${PN}-doc = "${mandir} ${docdir} ${infodir}"
+FILES:${PN}-bin = "${bindir}/*"
+FILES:${PN}-doc = "${mandir} ${docdir} ${infodir}"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/comgt ${D}${bindir}/comgt
 
@@ -95,7 +95,7 @@ do_install_append() {
     install -m 0644 ${B}/sigmon.1 ${D}${mandir}/man1/sigmon.1
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${bindir}/gcom \
 	${bindir}/comgt \
 	${sysconfdir}/chatscripts/3g.chat \
@@ -127,7 +127,7 @@ PACKAGES += "${PN}-directip ${PN}-ncm"
 ## comgt-directip
 ##
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}/gcom
     install -m 0644 ${WORKDIR}/directip.gcom ${D}${sysconfdir}/gcom/directip.gcom
     install -m 0644 ${WORKDIR}/directip-stop.gcom ${D}${sysconfdir}/gcom/directip-stop.gcom
@@ -135,13 +135,13 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/directip.sh ${D}/lib/netifd/proto/directip.sh
 }
 
-FILES_${PN}-directip = "\
+FILES:${PN}-directip = "\
 	${sysconfdir}/gcom/directip.gcom \
 	${sysconfdir}/gcom/directip-stop.gcom \
 	/lib/netifd/proto/directip.sh \
 "
 
-RDEPENDS_${PN}-directip += "${PN}"
+RDEPENDS:${PN}-directip += "${PN}"
 
 # ${PN}-directip
 inherit kmod/usb-serial
@@ -153,7 +153,7 @@ do_compile[depends] += "virtual/kernel:do_shared_workdir"
 ## comgt-ncm
 ##
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}/gcom
     install -m 0644 ${WORKDIR}/ncm.json ${D}${sysconfdir}/gcom/ncm.json
     install -m 0644 ${WORKDIR}/runcommand.gcom ${D}${sysconfdir}/gcom/runcommand.gcom
@@ -161,10 +161,10 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/ncm.sh ${D}/lib/netifd/proto/ncm.sh
 }
 
-FILES_${PN}-ncm = "\
+FILES:${PN}-ncm = "\
 	${sysconfdir}/gcom/ncm.json \
 	${sysconfdir}/gcom/runcommand.gcom \
 	/lib/netifd/proto/ncm.sh \
 "
 
-RDEPENDS_${PN}-ncm += "${PN} wwan"
+RDEPENDS:${PN}-ncm += "${PN} wwan"

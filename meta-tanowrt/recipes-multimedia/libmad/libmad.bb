@@ -5,13 +5,13 @@ as well as the de facto MPEG 2.5 format. All three audio layers - \
 Layer I, Layer II, and Layer III (i.e. MP3) - are fully implemented."
 HOMEPAGE = "http://www.underbit.com/products/mad/"
 SECTION = "libs"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 PV = "0.15.1b"
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 S = "${WORKDIR}/${BPN}-${PV}"
 
@@ -28,8 +28,8 @@ SRC_URI += "\
 "
 
 FPM = "intel"
-FPM_arm = "arm"
-FPM_mips = "mips"
+FPM:arm = "arm"
+FPM:mips = "mips"
 
 EXTRA_OECONF += "\
 	--enable-shared \
@@ -43,7 +43,7 @@ EXTRA_OECONF += "\
 # | Makefile.am: error: required file './NEWS' not found
 # | Makefile.am: error: required file './AUTHORS' not found
 # | Makefile.am: error: required file './ChangeLog' not found
-do_configure_prepend(){
+do_configure:prepend(){
 	touch ${B}/NEWS
 	touch ${B}/AUTHORS
 	touch ${B}/ChangeLog

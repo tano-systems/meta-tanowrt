@@ -18,10 +18,10 @@ inherit kmod/nf-conntrack-netlink
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
-	git://github.com/jow-/nlbwmon.git \
+	git://github.com/jow-/nlbwmon.git;branch=master;protocol=https \
 "
 
 # 2020-04-11.1
@@ -40,11 +40,11 @@ TANOWRT_SERVICE_SCRIPTS_nlbwmon += "nlbwmon"
 TANOWRT_SERVICE_STATE_nlbwmon-nlbwmon ?= "enabled"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
-EXTRA_OECMAKE_append = " -DLIBNL_LIBRARY_TINY=OFF"
+EXTRA_OECMAKE:append = " -DLIBNL_LIBRARY_TINY=OFF"
 
 S = "${WORKDIR}/git"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/config
 	install -m 0644 ${WORKDIR}/nlbwmon.config ${D}${sysconfdir}/config/nlbwmon
 
@@ -57,7 +57,7 @@ do_install_append() {
 	install -m 0644 ${S}/protocols.txt ${D}/usr/share/nlbwmon/protocols
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/nlbwmon \
 	/usr/share/nlbwmon/protocols \
 "

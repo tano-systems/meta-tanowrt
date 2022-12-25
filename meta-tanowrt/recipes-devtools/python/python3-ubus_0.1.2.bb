@@ -24,7 +24,7 @@ DEPENDS += "${PYTHON_PN}-pip-native ${PYTHON_PN}-wheel-native libubus libubox"
 
 BBCLASSEXTEND = "native nativesdk"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"
 
 SRC_URI += "\
 	file://0001-ubus_loop-Add-timeout-callback.patch \

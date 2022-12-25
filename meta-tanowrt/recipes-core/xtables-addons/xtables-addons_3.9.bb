@@ -5,7 +5,7 @@
 
 PV = "3.9"
 PR = "tano0.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches-3.9:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches-3.9:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	${SOURCEFORGE_MIRROR}/project/xtables-addons/Xtables-addons/${BPN}-${PV}.tar.xz \

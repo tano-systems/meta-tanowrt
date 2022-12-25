@@ -3,9 +3,9 @@
 # Copyright (c) 2019-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".20"
+PR:append = ".20"
 
-KERNEL_FEATURES_append = " \
+KERNEL_FEATURES:append = " \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-net/usb-net.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/general/usb-serial/usb-serial.scc", "" ,d)} \
 	${@bb.utils.contains("COMBINED_FEATURES", "cgroup", " features/general/cgroups/cgroups.scc", "" ,d)} \
@@ -45,4 +45,4 @@ KERNEL_FEATURES_append = " \
 	features/general/net/bridge_igmp_snooping.scc \
 "
 
-KERNEL_FEATURES_append_qemuall = " features/general/virtio/virtio.scc"
+KERNEL_FEATURES:append:qemuall = " features/general/virtio/virtio.scc"

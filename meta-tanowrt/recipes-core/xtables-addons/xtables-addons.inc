@@ -5,7 +5,7 @@
 
 SUMMARY = "non-mainline-kernel netfilter extensions"
 DESCRIPTION = "Xtables-addons contains a set of possibly useful but not included in the mainline kernel nefilter extensions"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 DEPENDS = "virtual/kernel iptables bc-native"
 
@@ -26,6 +26,6 @@ EXTRA_OEMAKE = "M=${S}/extensions DESTDIR=${D} V=1 DEPMOD=/bin/true"
 MAKE_TARGETS = "all"
 MODULES_INSTALL_TARGET = "install"
 
-FILES_${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
+FILES:${PN} += "${libexecdir}/xtables-addons ${sbindir}/iptaccount ${libdir}/libxt_ACCOUNT_cl.so.* ${libdir}/iptables"
 
-RDEPENDS_${PN} += "perl"
+RDEPENDS:${PN} += "perl"

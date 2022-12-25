@@ -47,9 +47,9 @@ QT_PROVIDER = "qt5"
 #PREFERRED_PROVIDER_libgbm-dev = "libgbm-dev"
 
 # Configure Qt5 flags (GLES is still required for qtdeclarative and qtwebkit)
-#PACKAGECONFIG_GL_pn-qtbase = "gles2 linuxfb"
-#PACKAGECONFIG_DISTRO_pn-qtbase = "icu accessibility"
-#PACKAGECONFIG_FONTS_pn-qtbase = "fontconfig"
+#PACKAGECONFIG_GL:pn-qtbase = "gles2 linuxfb"
+#PACKAGECONFIG_DISTRO:pn-qtbase = "icu accessibility"
+#PACKAGECONFIG_FONTS:pn-qtbase = "fontconfig"
 
 # Add gstreamer in package configuration to enable video
-#PACKAGECONFIG_append_pn-qtmultimedia  = " gstreamer"
+#PACKAGECONFIG:append:pn-qtmultimedia  = " gstreamer"

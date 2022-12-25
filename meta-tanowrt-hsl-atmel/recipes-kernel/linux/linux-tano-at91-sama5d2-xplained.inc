@@ -5,12 +5,12 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".0"
+PR:append = ".0"
 
 KCONFIG_MODE = "--alldefconfig"
 
 # Config
-SRC_URI_append = " file://defconfig"
+SRC_URI:append = " file://defconfig"
 
 # Using devicetree from kernel sources
 KERNEL_DEVICETREE_COPY = ""

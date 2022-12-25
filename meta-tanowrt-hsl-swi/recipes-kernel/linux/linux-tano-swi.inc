@@ -8,18 +8,18 @@
 # (https://github.com/legatoproject/meta-swi.git)
 #
 
-PR_append = ".0"
+PR:append = ".0"
 
 COMPATIBLE_MACHINE = "(swi-mdm9x28)"
 
-KERNEL_MACHINE_INCLUDE_mangoh-green-wp7607 ?= "recipes-kernel/linux/linux-tano-swi-mangoh-green-wp7607.inc"
+KERNEL_MACHINE_INCLUDE:mangoh-green-wp7607 ?= "recipes-kernel/linux/linux-tano-swi-mangoh-green-wp7607.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-swi-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 
 inherit android-signing
 inherit kernel-src-install
 
-do_install_append() {
+do_install:append() {
     kernel_src_install
 }
 
@@ -37,7 +37,7 @@ DEPENDS += "ima-support-tools-native gcc"
 # Use this to include the IMA kernel key into the trusted keyring
 IMA_INCLUDE_KERNEL_KEY ?= "true"
 
-do_kernel_metadata_prepend() {
+do_kernel_metadata:prepend() {
     rm -f ${B}/.config
     rm -f ${B}/.config.old
     cp ${WORKDIR}/defconfig ${B}/.config
@@ -45,7 +45,7 @@ do_kernel_metadata_prepend() {
 
 KCONFIG_MODE = "alldefconfig"
 
-do_compile_append() {
+do_compile:append() {
     oe_runmake dtbs ${KERNEL_EXTRA_ARGS}
 }
 
@@ -81,7 +81,7 @@ gen_master_dtb() {
     fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
     kernel_img=${DEPLOYDIR}/${KERNEL_IMAGETYPE}
     if [ "${INITRAMFS_IMAGE_BUNDLE}" -eq 1 ]; then
         kernel_img=${DEPLOYDIR}/${KERNEL_IMAGETYPE}-initramfs-${MACHINE}.bin

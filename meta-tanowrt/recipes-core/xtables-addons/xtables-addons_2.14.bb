@@ -5,7 +5,7 @@
 
 PV = "2.14"
 PR = "tano4.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches-2.14:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches-2.14:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
 	git://git.code.sf.net/p/xtables-addons/xtables-addons;branch=master \

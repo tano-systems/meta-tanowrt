@@ -1,22 +1,24 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
+# This file Copyright (c) 2020, 2022 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano1"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RDEPENDS_${PN} += "dbus"
+RDEPENDS:${PN} += "dbus"
 
 # Files
 SRC_URI += "\
 	file://25-modemmanager-net \
 	file://25-modemmanager-tty \
 	file://25-modemmanager-usb \
+	file://25-modemmanager-wwan \
 	file://modemmanager.common \
 	file://modemmanager.init \
 	file://modemmanager.proto \
+	file://usr/sbin/ModemManager-wrapper \
 "
 
 PACKAGECONFIG ??= "mbim qmi"
@@ -32,11 +34,14 @@ EXTRA_OECONF += "\
 # 	--without-udev \
 #
 
-do_install_append() {
+do_install:append() {
 	# Remove dirs
 	rm -rf ${D}${libdir}/girepository-1.0
 	rm -rf ${D}${datadir}/icons
 	rm -rf ${D}${datadir}/dbus-1/interfaces
+
+	install -d ${D}${sbindir}
+	install -m 0755 ${WORKDIR}/usr/sbin/ModemManager-wrapper ${D}${sbindir}/
 
 	install -d ${D}${datadir}/ModemManager
 	install -m 0644 ${WORKDIR}/modemmanager.common ${D}${datadir}/ModemManager
@@ -53,11 +58,17 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/hotplug.d/net
 	install -m 0644 ${WORKDIR}/25-modemmanager-net ${D}${sysconfdir}/hotplug.d/net/
 
+	install -d ${D}${sysconfdir}/hotplug.d/wwan
+	install -m 0644 ${WORKDIR}/25-modemmanager-wwan ${D}${sysconfdir}/hotplug.d/wwan/
+
 	install -d ${D}${nonarch_base_libdir}/netifd/proto
 	install -m 0755 ${WORKDIR}/modemmanager.proto ${D}${nonarch_base_libdir}/netifd/proto/modemmanager.sh
+
+	install -d ${D}${nonarch_libdir}/ModemManager/connection.d
+	install -m 0755 ${WORKDIR}/10-report-down ${D}${nonarch_libdir}/ModemManager/connection.d/
 }
 
-FILES_${PN} += "${nonarch_base_libdir}/netifd"
+FILES:${PN} += "${nonarch_base_libdir}/netifd ${nonarch_libdir}"
 
 inherit tanowrt-services
 

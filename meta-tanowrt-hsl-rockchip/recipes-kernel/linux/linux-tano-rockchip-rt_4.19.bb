@@ -10,7 +10,7 @@
 SECTION = "kernel"
 DESCRIPTION = "Linux kernel 4.19-rt for Rockchip SoC's"
 SUMMARY = "Linux kernel 4.19-rt for Rockchip SoC's"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 KERNEL_SRC_URI ?= "git://github.com/rockchip-linux/kernel.git"
@@ -24,29 +24,29 @@ LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano2"
+MACHINE_KERNEL_PR:append = "tano2"
 PR = "${MACHINE_KERNEL_PR}"
 
 require recipes-kernel/linux/linux-tano.inc
 require recipes-kernel/linux/linux-tano-rockchip.inc
 
 # Look in the generic major.minor directory for files
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-4.19/files:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-4.19/patches:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-4.19/devicetree:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-4.19/features:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-4.19/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-4.19/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-4.19/devicetree:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-4.19/features:"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/files:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/patches:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/devicetree:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/features:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/devicetree:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-tano-rockchip-rt-4.19/features:"
 
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://config-fixup.scc \
 	file://config-rt.scc \
 "
 
-KERNEL_FEATURES_append = "\
+KERNEL_FEATURES:append = "\
 	config-fixup.scc \
 	config-rt.scc \
 "
@@ -64,7 +64,7 @@ SRC_URI += "\
 "
 
 # Not required for 4.19.219
-SRC_URI_remove = "file://550-loop-better-discard-for-block-devices.patch"
+SRC_URI:remove = "file://550-loop-better-discard-for-block-devices.patch"
 
 # This 4.19 kernel has backported wireguard in-kernel support
-KERNEL_FEATURES_append = " features/kernel-5.6+/wireguard/wireguard.scc"
+KERNEL_FEATURES:append = " features/kernel-5.6+/wireguard/wireguard.scc"

@@ -21,12 +21,12 @@ SRC_URI[sha256sum] = "a8ba4b09055e92dc7307d43a2f885c0ded90b81ba843ead5e530fd1911
 
 S = "${WORKDIR}/diagslave"
 
-INSANE_SKIP_${PN}_append = "already-stripped"
+INSANE_SKIP:${PN}:append = "already-stripped"
 
-ARCH_DIR_x86-64 = "linux_x86-64"
+ARCH_DIR:x86-64 = "linux:x86-64"
 ARCH_DIR_i586 = "linux_i386"
 ARCH_DIR_i686 = "linux_i386"
-ARCH_DIR_arm = "linux_arm-eabihf"
+ARCH_DIR:arm = "linux:arm-eabihf"
 
 do_install () {
 	install -m 0755 -d ${D}${bindir}

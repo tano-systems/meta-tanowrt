@@ -9,13 +9,13 @@ PR = "tano10"
 # Compile always with gcc
 TOOLCHAIN = "gcc"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4325afd396febcb659c36b49533135d4 \
                     file://debian/copyright;md5=332234a99007d25da40f41ee96aa388f"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-RDEPENDS_${PN} += "bridge-utils"
+RDEPENDS:${PN} += "bridge-utils"
 
 SRC_URI = "\
 	git://github.com/mstpd/mstpd.git;protocol=https;branch=master \
@@ -41,7 +41,7 @@ inherit autotools
 
 EXTRA_OECONF = "--sbindir=/sbin"
 
-do_install_append() {
+do_install:append() {
 	# Remove unused in OpenWrt files
 	rm -rf ${D}${sysconfdir}/network
 	rm -rf ${D}${sysconfdir}/bridge-stp.conf
@@ -64,7 +64,7 @@ do_install_append() {
 		${D}/usr/libexec/mstpctl-utils/mstpd-config-migrate.sh
 }
 
-FILES_${PN} += "/lib/functions/"
+FILES:${PN} += "/lib/functions/"
 
 inherit tanowrt-services
 
@@ -72,6 +72,6 @@ TANOWRT_SERVICE_PACKAGES = "mstpd"
 TANOWRT_SERVICE_SCRIPTS_mstpd += "mstpd"
 TANOWRT_SERVICE_STATE_mstpd-mstpd ?= "enabled"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/mstpd \
 "

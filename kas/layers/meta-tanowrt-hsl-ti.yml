@@ -5,7 +5,8 @@ header:
   version: 11
   includes:
     - kas/layers/meta-tanowrt.yml
-    - kas/layers/meta-ti.yml
+    - kas/layers/meta-ti-bsp.yml
+    - kas/layers/meta-ti-extras.yml
 
 repos:
   meta-tanowrt:

@@ -9,9 +9,11 @@ PR = "tano1"
 DEPENDS += "bison-native flex-native"
 
 KERNEL_GIT_URI = "git://github.com/openil/linux.git;nobranch=1"
-KERNEL_GIT_PROTOCOL = "git"
+KERNEL_GIT_PROTOCOL = "https"
 SRC_URI = "${KERNEL_GIT_URI};protocol=${KERNEL_GIT_PROTOCOL}"
-SRCREV = "OpenIL-v1.6.2-linux-201911"
+
+# Tag: OpenIL-v1.6.2-linux-201911
+SRCREV = "4ce719c5fbefa6634ada78d3d4b96819cf11685e"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 

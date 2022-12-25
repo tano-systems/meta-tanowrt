@@ -16,7 +16,7 @@ inherit kernel-config
 
 # Wait for kernel shared work directory ready
 do_package[depends] += "virtual/kernel:do_shared_workdir"
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     result = kernel_version_compare('4.14', d)
     if result < 0:
         bb.fatal('Package %s requires kernel version >= 4.14' % d.getVar('PN', True))

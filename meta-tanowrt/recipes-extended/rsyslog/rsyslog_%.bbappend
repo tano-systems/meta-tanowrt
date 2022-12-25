@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano3"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://logread \
@@ -17,7 +17,7 @@ SRC_URI += "\
 	file://0001-Add-support-for-monthname-timestamp-format.patch \
 "
 
-RDEPENDS_${PN}_remove = "logrotate"
+RDEPENDS:${PN}:remove = "logrotate"
 
 PACKAGECONFIG ??= " \
 	rsyslogd \
@@ -33,12 +33,12 @@ PACKAGECONFIG ??= " \
 
 inherit update-alternatives
 
-ALTERNATIVE_${PN} = "logread"
+ALTERNATIVE:${PN} = "logread"
 
 ALTERNATIVE_PRIORITY = "50"
 ALTERNATIVE_LINK_NAME[logread] = "${sbindir}/logread"
 
-do_install_append() {
+do_install:append() {
 	# Remove sysvinit and install procd init script
 	rm -f ${D}${sysconfdir}/init.d/syslog
 	install -m 0755 ${WORKDIR}/rsyslog.init ${D}${sysconfdir}/init.d/rsyslog
@@ -57,7 +57,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/syslogrotate ${D}${libexecdir}/syslogrotate
 }
 
-FILES_${PN} += "${libexecdir}"
+FILES:${PN} += "${libexecdir}"
 
 inherit tanowrt-services
 

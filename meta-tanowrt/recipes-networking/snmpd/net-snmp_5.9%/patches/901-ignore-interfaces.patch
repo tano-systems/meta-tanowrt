@@ -45,7 +45,7 @@ index 01e771c..d41ce10 100644
      snmpd_register_config_handler("include_ifmib_iface_prefix",
                                    _parse_include_if_config,
                                    _free_include_if_config,
-@@ -828,6 +836,21 @@ int netsnmp_access_interface_max_reached(const char *name)
+@@ -812,6 +820,21 @@ int netsnmp_access_interface_max_reached(const char *name)
      return FALSE;
  }
  
@@ -67,7 +67,7 @@ index 01e771c..d41ce10 100644
  /*
   * include_ifmib_iface_prefix config token
   *
-@@ -971,6 +994,57 @@ _parse_ifmib_max_num_ifaces(const char *token, char *cptr)
+@@ -955,6 +978,57 @@ _parse_ifmib_max_num_ifaces(const char *token, char *cptr)
      ifmib_max_num_ifaces = temp_max;
  }
  
@@ -129,7 +129,7 @@ diff --git a/agent/mibgroup/if-mib/data_access/interface_linux.c b/agent/mibgrou
 index 3abb205..9a05c9a 100644
 --- a/agent/mibgroup/if-mib/data_access/interface_linux.c
 +++ b/agent/mibgroup/if-mib/data_access/interface_linux.c
-@@ -721,6 +721,9 @@ netsnmp_arch_interface_container_load(netsnmp_container* container,
+@@ -796,6 +796,9 @@ netsnmp_arch_interface_container_load(netsnmp_container* container,
           */
          *stats++ = 0; /* null terminate name */
  
@@ -137,7 +137,7 @@ index 3abb205..9a05c9a 100644
 +            continue;
 +
  	if (!netsnmp_access_interface_include(ifstart))
- 		continue;
+             continue;
  
 diff --git a/include/net-snmp/data_access/interface.h b/include/net-snmp/data_access/interface.h
 index 233d0d8..ebc5631 100644
@@ -153,7 +153,7 @@ index 233d0d8..ebc5631 100644
 +} netsnmp_ignore_if_list;
 +
  typedef struct _include_if_list {
- #if HAVE_PCRE_H
+ #if defined(HAVE_PCRE_H)
      pcre                    *regex_ptr;
 @@ -300,6 +305,7 @@ netsnmp_conf_if_list *
  netsnmp_access_interface_entry_overrides_get(const char * name);

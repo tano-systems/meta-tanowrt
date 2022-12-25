@@ -15,7 +15,7 @@ SUMMARY = "Modbus RTU to Modbus TCP gateway LuCI application"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=ae9f532425f745b67b03c5d2082fadb5"
 
-RDEPENDS_${PN} += "mbusd"
+RDEPENDS:${PN} += "mbusd"
 
 GIT_BRANCH    = "master"
 GIT_SRCREV    = "c5c5011bbdb309252634c2a1c8418d49d120a5d5"

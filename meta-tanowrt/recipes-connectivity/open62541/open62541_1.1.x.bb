@@ -10,7 +10,7 @@
 #
 require open62541.inc
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}_1.1.x:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}_1.1.x:"
 
 SRC_URI += "file://0002-examples-don-t-build-some-examples-when-BUILD_SHARED_LIBS-is-ON.patch"
 

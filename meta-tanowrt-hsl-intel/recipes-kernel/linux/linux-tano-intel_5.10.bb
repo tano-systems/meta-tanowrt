@@ -8,9 +8,10 @@
 #
 LINUX_INTEL_BRANCH = "5.10/yocto"
 
-KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git;protocol=https"
+KERNEL_SRC_URI ?= "git://github.com/intel/linux-intel-lts.git"
 KERNEL_SRC_BRANCH ?= "${LINUX_INTEL_BRANCH}"
 KERNEL_SRC_SRCREV ?= "4e8162d8163c74e46a9f0bafb860f42249702791"
+KERNEL_SRC_PROTOCOL ?= "https"
 
 LINUX_VERSION ?= "5.10.78"
 LINUX_KERNEL_TYPE ?= "standard"

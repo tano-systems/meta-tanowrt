@@ -59,64 +59,64 @@ do_install() {
 	install -m 0644 ${S}/firmware/*.clm_blob ${D}${FWPATH}/
 }
 
-SUMMARY_${PN}-43012-sdio = "CYW43012 FullMac SDIO firmware"
-FILES_${PN}-43012-sdio   = "${FWPATH}/brcmfmac43012-sdio.bin \
+SUMMARY:${PN}-43012-sdio = "CYW43012 FullMac SDIO firmware"
+FILES:${PN}-43012-sdio   = "${FWPATH}/brcmfmac43012-sdio.bin \
                             ${FWPATH}/brcmfmac43012-sdio.clm_blob"
 
-SUMMARY_${PN}-43340-sdio = "CYW43340 FullMac SDIO firmware"
-FILES_${PN}-43340-sdio   = "${FWPATH}/brcmfmac43340-sdio.bin \
+SUMMARY:${PN}-43340-sdio = "CYW43340 FullMac SDIO firmware"
+FILES:${PN}-43340-sdio   = "${FWPATH}/brcmfmac43340-sdio.bin \
                             ${FWPATH}/brcmfmac43340-sdio.clm_blob"
 
-SUMMARY_${PN}-43362-sdio = "CYW4343362 FullMac SDIO firmware"
-FILES_${PN}-43362-sdio   = "${FWPATH}/brcmfmac43362-sdio.bin"
+SUMMARY:${PN}-43362-sdio = "CYW4343362 FullMac SDIO firmware"
+FILES:${PN}-43362-sdio   = "${FWPATH}/brcmfmac43362-sdio.bin"
 
-SUMMARY_${PN}-4339-sdio  = "CYW4339 FullMac SDIO firmware"
-FILES_${PN}-4339-sdio    = "${FWPATH}/brcmfmac4339-sdio.bin"
+SUMMARY:${PN}-4339-sdio  = "CYW4339 FullMac SDIO firmware"
+FILES:${PN}-4339-sdio    = "${FWPATH}/brcmfmac4339-sdio.bin"
 
-SUMMARY_${PN}-43430-sdio = "CYW43430 FullMac SDIO firmware"
-FILES_${PN}-43430-sdio   = "${FWPATH}/brcmfmac43430-sdio.bin \
+SUMMARY:${PN}-43430-sdio = "CYW43430 FullMac SDIO firmware"
+FILES:${PN}-43430-sdio   = "${FWPATH}/brcmfmac43430-sdio.bin \
                             ${FWPATH}/brcmfmac43430-sdio.clm_blob"
 
-SUMMARY_${PN}-43455-sdio = "CYW43455 FullMac SDIO firmware"
-FILES_${PN}-43455-sdio   = "${FWPATH}/brcmfmac43455-sdio.bin \
+SUMMARY:${PN}-43455-sdio = "CYW43455 FullMac SDIO firmware"
+FILES:${PN}-43455-sdio   = "${FWPATH}/brcmfmac43455-sdio.bin \
                             ${FWPATH}/brcmfmac43455-sdio.clm_blob"
 
-SUMMARY_${PN}-4354-sdio  = "CYW4354 FullMac SDIO firmware"
-FILES_${PN}-4354-sdio    = "${FWPATH}/brcmfmac4354-sdio.bin \
+SUMMARY:${PN}-4354-sdio  = "CYW4354 FullMac SDIO firmware"
+FILES:${PN}-4354-sdio    = "${FWPATH}/brcmfmac4354-sdio.bin \
                             ${FWPATH}/brcmfmac4354-sdio.clm_blob"
 
-SUMMARY_${PN}-4356-pcie  = "CYW4356 FullMac PCIe firmware"
-FILES_${PN}-4356-pcie    = "${FWPATH}/brcmfmac4356-pcie.bin \
+SUMMARY:${PN}-4356-pcie  = "CYW4356 FullMac PCIe firmware"
+FILES:${PN}-4356-pcie    = "${FWPATH}/brcmfmac4356-pcie.bin \
                             ${FWPATH}/brcmfmac4356-pcie.clm_blob"
 
-SUMMARY_${PN}-4356-sdio  = "CYW4356 FullMac SDIO firmware"
-FILES_${PN}-4356-sdio    = "${FWPATH}/brcmfmac4356-sdio.bin \
+SUMMARY:${PN}-4356-sdio  = "CYW4356 FullMac SDIO firmware"
+FILES:${PN}-4356-sdio    = "${FWPATH}/brcmfmac4356-sdio.bin \
                             ${FWPATH}/brcmfmac4356-sdio.clm_blob"
 
-SUMMARY_${PN}-43570-pcie = "CYW43570 FullMac PCIe firmware"
-FILES_${PN}-43570-pcie   = "${FWPATH}/brcmfmac43570-pcie.bin \
+SUMMARY:${PN}-43570-pcie = "CYW43570 FullMac PCIe firmware"
+FILES:${PN}-43570-pcie   = "${FWPATH}/brcmfmac43570-pcie.bin \
                             ${FWPATH}/brcmfmac43570-pcie.clm_blob"
 
-SUMMARY_${PN}-4359-pcie  = "CYW4359 FullMac PCIe firmware"
-FILES_${PN}-4359-pcie    = "${FWPATH}/brcmfmac4359-pcie.bin \
+SUMMARY:${PN}-4359-pcie  = "CYW4359 FullMac PCIe firmware"
+FILES:${PN}-4359-pcie    = "${FWPATH}/brcmfmac4359-pcie.bin \
                             ${FWPATH}/brcmfmac4359-pcie.clm_blob"
 
-SUMMARY_${PN}-4359-sdio  = "CYW4359 FullMac SDIO firmware"
-FILES_${PN}-4359-sdio    = "${FWPATH}/brcmfmac4359-sdio.bin \
+SUMMARY:${PN}-4359-sdio  = "CYW4359 FullMac SDIO firmware"
+FILES:${PN}-4359-sdio    = "${FWPATH}/brcmfmac4359-sdio.bin \
                             ${FWPATH}/brcmfmac4359-sdio.clm_blob"
 
-SUMMARY_${PN}-4373-sdio  = "CYW4373 FullMac SDIO firmware"
-FILES_${PN}-4373-sdio    = "${FWPATH}/brcmfmac4373-sdio.bin \
+SUMMARY:${PN}-4373-sdio  = "CYW4373 FullMac SDIO firmware"
+FILES:${PN}-4373-sdio    = "${FWPATH}/brcmfmac4373-sdio.bin \
                             ${FWPATH}/brcmfmac4373-sdio.clm_blob"
 
-SUMMARY_${PN}-4373-usb   = "CYW4373 FullMac USB firmware"
-FILES_${PN}-4373-usb     = "${FWPATH}/brcmfmac4373-usb.bin \
+SUMMARY:${PN}-4373-usb   = "CYW4373 FullMac USB firmware"
+FILES:${PN}-4373-usb     = "${FWPATH}/brcmfmac4373-usb.bin \
                             ${FWPATH}/brcmfmac4373.clm_blob"
 
-SUMMARY_${PN}-54591-pcie = "CYW54591 FullMac PCIe firmware"
-FILES_${PN}-54591-pcie   = "${FWPATH}/brcmfmac54591-pcie.bin \
+SUMMARY:${PN}-54591-pcie = "CYW54591 FullMac PCIe firmware"
+FILES:${PN}-54591-pcie   = "${FWPATH}/brcmfmac54591-pcie.bin \
                             ${FWPATH}/brcmfmac54591-pcie.clm_blob"
 
-SUMMARY_${PN}-89459-pcie = "CYW89459 FullMac PCIe firmware"
-FILES_${PN}-89459-pcie   = "${FWPATH}/brcmfmac89459-pcie.bin \
+SUMMARY:${PN}-89459-pcie = "CYW89459 FullMac PCIe firmware"
+FILES:${PN}-89459-pcie   = "${FWPATH}/brcmfmac89459-pcie.bin \
                             ${FWPATH}/brcmfmac89459-pcie.clm_blob"

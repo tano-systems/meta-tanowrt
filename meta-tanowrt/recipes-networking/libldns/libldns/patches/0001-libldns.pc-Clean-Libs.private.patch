@@ -1,0 +1,24 @@
+From 61a88bd27addd6f35e1dc343ed129b50e66e44cc Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Thu, 8 Dec 2022 10:46:58 +0300
+Subject: [PATCH] libldns.pc: Clean Libs.private
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ packaging/libldns.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packaging/libldns.pc.in b/packaging/libldns.pc.in
+index 923b688..12189d6 100644
+--- a/packaging/libldns.pc.in
++++ b/packaging/libldns.pc.in
+@@ -9,5 +9,5 @@ URL: http://www.nlnetlabs.nl/projects/ldns
+ Version: @PACKAGE_VERSION@
+ Requires: 
+ Libs: -L${libdir} -lldns
+-Libs.private: @LDFLAGS@
++Libs.private: 
+ Cflags: -I${includedir} 
+-- 
+2.34.1.windows.1
+

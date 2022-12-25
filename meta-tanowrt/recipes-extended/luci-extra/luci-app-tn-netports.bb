@@ -13,7 +13,7 @@ inherit allarch
 inherit tanowrt-luci-app
 inherit tanowrt-luci-i18n
 
-RDEPENDS_${PN} += "luabitop"
+RDEPENDS:${PN} += "luabitop"
 
 SUMMARY = "Network ports status LuCI application"
 LICENSE = "MIT"
@@ -26,17 +26,17 @@ SRC_URI = "git://github.com/tano-systems/luci-app-tn-netports.git;branch=${GIT_B
 
 SRCREV = "${GIT_SRCREV}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 SRC_URI += "\
 	file://luci_netports.config \
 "
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/config
 	install -m 0644 ${WORKDIR}/luci_netports.config ${D}${sysconfdir}/config/luci_netports
 }
 
-CONFFILES_${PN} = "${sysconfdir}/config/luci_netports"
-RRECOMMENDS_${PN} += "luci-app-tn-netports-hotplug"
+CONFFILES:${PN} = "${sysconfdir}/config/luci_netports"
+RRECOMMENDS:${PN} += "luci-app-tn-netports-hotplug"
 
 S = "${WORKDIR}/git"

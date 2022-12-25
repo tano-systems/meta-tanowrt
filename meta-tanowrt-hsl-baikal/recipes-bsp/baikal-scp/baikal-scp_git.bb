@@ -33,7 +33,7 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 EXTRA_OEMAKE += "KERNEL_SRC=${STAGING_KERNEL_DIR}"
 
-do_compile_prepend() {
+do_compile:prepend() {
 	# Compile kernel part
 	cd ${S}/kernel
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
@@ -46,16 +46,16 @@ do_compile_prepend() {
 		   ${MAKE_TARGETS}
 }
 
-do_compile_append() {
+do_compile:append() {
 	# Compile userspace part
 	cd ${B} && cmake_runcmake_build --target ${OECMAKE_TARGET_COMPILE}
 }
 
-do_install_prepend() {
+do_install:prepend() {
 	cd ${S}/kernel
 }
 
-do_install_append() {
+do_install:append() {
 	# Install kernel module
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 	oe_runmake DEPMOD=echo MODLIB="${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}" \
@@ -88,18 +88,18 @@ PACKAGES += "${PN}-lib ${PN}-lib-dev"
 PACKAGE_BEFORE_PN = "${PN}-tool"
 
 FILES_SOLIBSDEV = ""
-FILES_${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/"
+FILES:${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/"
 
-RRECOMMENDS_${PN} += "${PN}-lib"
+RRECOMMENDS:${PN} += "${PN}-lib"
 
-SUMMARY_${PN}-lib = "Baikal-M (BE-M1000) SCP communication userspace library"
-FILES_${PN}-lib += "${libdir}/*.so"
-RDEPENDS_${PN}-lib += "${PN}"
-RRECOMMENDS_${PN}-lib += "${PN}-tool"
+SUMMARY:${PN}-lib = "Baikal-M (BE-M1000) SCP communication userspace library"
+FILES:${PN}-lib += "${libdir}/*.so"
+RDEPENDS:${PN}-lib += "${PN}"
+RRECOMMENDS:${PN}-lib += "${PN}-tool"
 
-SUMMARY_${PN}-lib-dev = "Baikal-M (BE-M1000) SCP communication userspace library dev headers"
-FILES_${PN}-lib-dev += "${includedir}/"
+SUMMARY:${PN}-lib-dev = "Baikal-M (BE-M1000) SCP communication userspace library dev headers"
+FILES:${PN}-lib-dev += "${includedir}/"
 
-SUMMARY_${PN}-tool = "Baikal-M (BE-M1000) SCP communication userspace utility"
-FILES_${PN}-tool += "${sbindir}/"
-RDEPENDS_${PN}-tool += "${PN}-lib"
+SUMMARY:${PN}-tool = "Baikal-M (BE-M1000) SCP communication userspace utility"
+FILES:${PN}-tool += "${sbindir}/"
+RDEPENDS:${PN}-tool += "${PN}-lib"

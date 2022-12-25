@@ -5,15 +5,15 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".1"
+PR:append = ".1"
 
 KCONFIG_MODE = "--alldefconfig"
 
 # Config
-SRC_URI_append_evb-ksz9563 = " file://defconfig"
+SRC_URI:append:evb-ksz9563 = " file://defconfig"
 
 # Devicetree files
-SRC_URI_append = "\
+SRC_URI:append = "\
 	file://at91-evb-ksz9563.dts \
 "
 

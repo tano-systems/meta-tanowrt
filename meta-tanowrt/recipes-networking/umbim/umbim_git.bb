@@ -9,7 +9,7 @@ PR = "tano9"
 
 DESCRIPTION = "OpenWrt MBIM modem utility"
 HOMEPAGE = "http://git.openwrt.org/?p=project/umbim.git;a=summary"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://mbim.h;beginline=1;endline=13;md5=8c7ce85ebfe23634010c75c30c3eb223"
 SECTION = "base"
 DEPENDS = "libubox"
@@ -18,9 +18,9 @@ inherit kmod/usb-net
 inherit kmod/usb-net-cdc-mbim
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/umbim.git \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/umbim.git;branch=master \
           "
 
 # 11.09.2019
@@ -37,11 +37,11 @@ S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${nonarch_base_libdir}/netifd/proto/mbim.sh \
 "
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${nonarch_base_libdir}/netifd/proto
 	install -m 0755 ${WORKDIR}/mbim.sh ${D}${nonarch_base_libdir}/netifd/proto/mbim.sh
 }

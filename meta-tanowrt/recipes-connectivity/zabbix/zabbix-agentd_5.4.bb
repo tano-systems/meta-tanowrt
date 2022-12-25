@@ -9,7 +9,7 @@ DESCRIPTION = "Zabbix agent"
 SUMMARY = "Open-source monitoring solution for your IT infrastructure"
 HOMEPAGE = "http://www.zabbix.com/"
 SECTION = "Applications/Internet"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=300e938ad303147fede2294ed78fe02e"
 DEPENDS  = "libevent libpcre virtual/libiconv zlib openssl"
 
@@ -92,20 +92,20 @@ do_install:append() {
 		${D}${sysconfdir}/logrotate.d/zabbix_agentd
 }
 
-pkg_postinst_ontarget_${PN}() {
+pkg_postinst_ontarget:${PN}() {
 if [ -x "/etc/init.d/rsyslog" ]; then
 	/etc/init.d/rsyslog running && /etc/init.d/rsyslog restart || true
 fi
 /etc/init.d/zabbix_agentd enabled && /etc/init.d/zabbix_agentd restart || true
 }
 
-pkg_prerm_${PN}() {
+pkg_prerm:${PN}() {
 [ "$PKG_UPGRADE" != 1 ] && /etc/init.d/zabbix_agentd disable || true
 /etc/init.d/zabbix_agentd stop
 }
 
 FILES:${PN} += "${libdir}"
 
-CONFFILES_${PN}:append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/zabbix_agentd \
 "

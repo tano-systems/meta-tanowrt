@@ -10,12 +10,12 @@ PR = "tano56"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://main.c;beginline=1;endline=13;md5=572cd47ba0e377b26331e67e9f3bc4b3"
 SECTION = "base"
 DEPENDS = "json-c libubox ubus libnl uci"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}/patches:${THISDIR}/${BPN}/files:"
 
 SRC_URI = "\
 	git://${GIT_OPENWRT_ORG}/project/netifd.git;name=netifd;branch=master \
@@ -60,12 +60,12 @@ TANOWRT_SERVICE_STATE_netifd-network ?= "enabled"
 
 OECMAKE_C_FLAGS += "-I${STAGING_INCDIR}/libnl3 -Wno-error=cpp"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	# replace hardcoded '/lib/' with '${base_libdir}/'
 	grep -rnl "/lib/" ${WORKDIR}/rootfs/ | xargs sed -i "s:/lib/:${nonarch_base_libdir}/:g"
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/config
 	install -m 0644 ${WORKDIR}/rootfs/etc/config/network ${D}${sysconfdir}/config/
 
@@ -115,7 +115,7 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/rootfs/etc/udhcpc.user ${D}${sysconfdir}/
 }
 
-ALTERNATIVE_${PN} = "ifup ifdown default.script"
+ALTERNATIVE:${PN} = "ifup ifdown default.script"
 
 ALTERNATIVE_PRIORITY = "40"
 ALTERNATIVE_PRIORITY_pkg[default.script] = "60"
@@ -123,7 +123,7 @@ ALTERNATIVE_LINK_NAME[ifup] = "${base_sbindir}/ifup"
 ALTERNATIVE_LINK_NAME[ifdown] = "${base_sbindir}/ifdown"
 ALTERNATIVE_LINK_NAME[default.script] = "/usr/share/udhcpc/default.script"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 	${datadir}/udhcpc/default.script* \
 	${nonarch_base_libdir}/netifd/dhcp.script \
 	${nonarch_base_libdir}/netifd/utils.sh \
@@ -136,14 +136,14 @@ FILES_${PN} += "\
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/network \
 	${sysconfdir}/udhcpc.user \
 	${sysconfdir}/udhcpc.user.d/ \
 	${@bb.utils.contains('COMBINED_FEATURES', 'wifi', '${sysconfdir}/config/wireless', '', d)} \
 "
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	bridge-utils \
 	base-files-scripts-openwrt \
 "

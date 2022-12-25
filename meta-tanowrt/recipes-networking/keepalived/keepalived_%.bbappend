@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-services
 
@@ -26,7 +26,7 @@ PACKAGES += "${PN}-mib"
 PACKAGECONFIG ??= "libnl snmp"
 PACKAGECONFIG[snmp] = "--enable-snmp --enable-snmp-vrrp --enable-snmp-rfcv2 --enable-snmp-rfcv3,--disable-snmp,net-snmp"
 
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}${sysconfdir}/sysconfig
 
 	install -d ${D}${datadir}/snmp/mibs
@@ -60,9 +60,9 @@ do_install_append() {
 		${D}${sysconfdir}/logrotate.d/keepalived
 }
 
-FILES_${PN}-mib = "${datadir}/snmp/mibs/"
+FILES:${PN}-mib = "${datadir}/snmp/mibs/"
 
-CONFFILES_${PN} += "\
+CONFFILES:${PN} += "\
 	${sysconfdir}/keepalived/keepalived.conf \
 	${sysconfdir}/config/keepalived \
 	${sysconfdir}/keepalived.user \
@@ -79,4 +79,4 @@ EXTRA_OECONF += "\
 	--with-run-dir='/var/run' \
 "
 
-FILES_${PN}_remove = "${datadir}/snmp/mibs/KEEPALIVED-MIB.txt"
+FILES:${PN}:remove = "${datadir}/snmp/mibs/KEEPALIVED-MIB.txt"

@@ -12,7 +12,7 @@ SUMMARY = "Very Secure FTP server"
 HOMEPAGE = "https://security.appspot.com/vsftpd.html"
 SECTION = "net"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = " \
 	file://COPYING;md5=a6067ad950b28336613aed9dd47b1271 \
 	file://COPYRIGHT;md5=04251b2eb0f298dae376d92454f6f72e \
@@ -31,7 +31,7 @@ SRC_URI = "\
 SRC_URI[md5sum] = "da119d084bd3f98664636ea05b5bb398"
 SRC_URI[sha256sum] = "9d4d2bf6e6e2884852ba4e69e157a2cecd68c5a7635d66a3a8cf8d898c955ef7"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 # Files
 SRC_URI += "\
@@ -57,14 +57,14 @@ inherit tanowrt-services
 inherit useradd
 
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "--system --home-dir /home/ftp --no-create-home -g ftp --shell /bin/false ftp "
-GROUPADD_PARAM_${PN} = "-r ftp"
+USERADD_PARAM:${PN} = "--system --home-dir /home/ftp --no-create-home -g ftp --shell /bin/false ftp "
+GROUPADD_PARAM:${PN} = "-r ftp"
 
 TANOWRT_SERVICE_PACKAGES = "vsftpd"
 TANOWRT_SERVICE_SCRIPTS_vsftpd += "vsftpd"
 TANOWRT_SERVICE_STATE_vsftpd-vsftpd ?= "enabled"
 
-LDFLAGS_append =" -lcrypt -lcap -luci"
+LDFLAGS:append =" -lcrypt -lcap -luci"
 EXTRA_OEMAKE = "-e MAKEFLAGS="
 
 do_compile() {
@@ -82,6 +82,6 @@ do_install() {
 	install -m 0755 ${WORKDIR}/vsftpd.init ${D}${sysconfdir}/init.d/vsftpd
 }
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/vsftpd \
 "

@@ -18,13 +18,13 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 DEPENDS = "lua5.1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit tanowrt-lua
 inherit luasrcdiet
 
-RDEPENDS_${PN} += "lua5.1"
-SRC_URI = "git://github.com/tano-systems/luadkjson.git"
+RDEPENDS:${PN} += "lua5.1"
+SRC_URI = "git://github.com/tano-systems/luadkjson.git;branch=master;protocol=https"
 SRCREV = "e72ba0c9f5d8b8746fc306f6189a819dbb5cd0be"
 
 S = "${WORKDIR}/git"
@@ -39,4 +39,4 @@ do_install() {
 	install -m 0644 ${S}/dkjson.lua ${D}${LUADIR}/dkjson.lua
 }
 
-FILES_${PN} = "${libdir}/lua/5.1/dkjson.lua"
+FILES:${PN} = "${libdir}/lua/5.1/dkjson.lua"

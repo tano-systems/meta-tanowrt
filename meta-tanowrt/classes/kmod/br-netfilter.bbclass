@@ -8,7 +8,7 @@
 inherit kernel-kmod
 inherit kmod/ipt-core
 
-RDEPENDS_${PN} += "kmod-sysctl-br-netfilter"
+RDEPENDS:${PN} += "kmod-sysctl-br-netfilter"
 
 #
 # kmod-br-netfilter
@@ -25,10 +25,10 @@ KERNEL_CONFIG_DEPENDS += "{\
 
 SRC_URI += "file://sysctl-nf-conntrack.conf"
 
-do_install_append() {
+do_install:append() {
 	install -dm 0755 ${D}${sysconfdir}/sysctl.d
 	install -m 0644 ${WORKDIR}/sysctl-br-netfilter.conf ${D}${sysconfdir}/sysctl.d/11-br-netfilter.conf
 	chown -R root:root ${D}${sysconfdir}
 }
 
-FILES_${PN} += "${sysconfdir}"
+FILES:${PN} += "${sysconfdir}"

@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=42fa47330d4051cd219f7d99d023de3a"
 
 PV = "3.2.2"
 
-SRC_URI = "git://github.com/martinh/libconfuse.git \
+SRC_URI = "git://github.com/martinh/libconfuse.git;branch=master;protocol=https \
           "
 
 SRCREV = "8dc469dcce4d19379caff2d2cbf68f38af034210"
@@ -22,7 +22,7 @@ EXTRA_OECONF = "--enable-shared"
 
 BBCLASSEXTEND = "native"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	unset TARGET_CPPFLAGS TARGET_CFLAGS TARGET_CXXFLAGS TARGET_LDFLAGS
 	( cd ${S}
 	${S}/autogen.sh )

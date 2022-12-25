@@ -35,12 +35,12 @@ Dependencies of the :ref:`meta-tanowrt-hsl-intel <meta-tanowrt-hsl-intel>` layer
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-intel
      - https://git.yoctoproject.org/meta-intel
      - --
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-intel.yml <../../../kas/layers/meta-intel.yml>`
 
 

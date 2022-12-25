@@ -7,6 +7,6 @@ header:
 repos:
   meta-swi-extras:
     url: ssh://git@git.tano-systems.com/tano/yocto/3rdparty/meta-swi-extras.git
-    refspec: 284d45d94d31625f566ae7ed4d420dfb4d55a145
+    refspec: 1b1e11dc39510b69f7874cae766dab577fbdb2ff
     layers:
       common:

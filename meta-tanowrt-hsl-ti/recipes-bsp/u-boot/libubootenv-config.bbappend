@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".ti0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+PR:append = ".ti0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

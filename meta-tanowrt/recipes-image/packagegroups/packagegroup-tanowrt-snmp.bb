@@ -14,7 +14,7 @@ inherit packagegroup
 
 do_package[vardeps] += "TANOWRT_LUCI_ENABLE"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	net-snmp-client \
 	net-snmp-mibs \
 	net-snmp-server-snmpd \

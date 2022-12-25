@@ -9,9 +9,9 @@ PR = "tano0"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
-SRC_URI_append_libc-musl = "\
+SRC_URI:append:libc-musl = "\
     file://0001-libc-compat.h-fix-some-issues-arising-from-in6.h.patch \
     file://0002-libc-compat.h-prevent-redefinition-of-struct-ethhdr.patch \
     file://0003-remove-inclusion-of-sysinfo.h-in-kernel.h.patch \
@@ -20,7 +20,7 @@ SRC_URI_append_libc-musl = "\
     file://0001-include-linux-stddef.h-in-swab.h-uapi-header.patch \
    "
 
-SRC_URI_append = "\
+SRC_URI:append = "\
     file://0001-net-Use-__kernel_clockid_t-in-uapi-net_stamp.h.patch \
     file://0001-scripts-Use-fixed-input-and-output-files-instead-of-.patch \
     file://0001-kbuild-install_headers.sh-Strip-_UAPI-from-if-define.patch \

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+
+header:
+  version: 11
+  includes:
+    - kas/layers/meta-ti-bsp.yml
+
+repos:
+  meta-ti:
+    layers:
+      meta-ti-extras:

@@ -16,7 +16,7 @@ SECURITY_FLAGS_PATCH = "file://0001-arm-fix-dprintf-format.patch"
 # safe defaults for recipes/systems that do not set up these variables
 LK_REPO_NAME ?= "git"
 
-FILESPATH_prepend = "${THISDIR}:"
+FILESPATH:prepend = "${THISDIR}:"
 
 SRC_URI = "${LK_REPO} ${SECURITY_FLAGS_PATCH}"
 
@@ -71,7 +71,7 @@ do_tag_lk() {
 addtask tag_lk before do_compile after do_configure
 
 do_compile[dirs] = "${S}"
-do_compile_prepend() {
+do_compile:prepend() {
     export NOECHO=""
     export LIBGCC="$(${CC} ${CFLAGS} -print-libgcc-file-name)"
 }
@@ -113,8 +113,8 @@ addtask deploy before do_package_stage after do_install
 
 PACKAGE_STRIP = "no"
 
-FILES_${PN} = "/boot"
-FILES_${PN}-dbg = "/boot/.debug"
+FILES:${PN} = "/boot"
+FILES:${PN}-dbg = "/boot/.debug"
 
 LK_HASH_MODE = "no_hash"
 

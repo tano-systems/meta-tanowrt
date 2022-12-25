@@ -4,22 +4,22 @@
 #
 DESCRIPTION = "Linux Kernel for Raspberry Pi"
 SECTION = "kernel"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 COMPATIBLE_MACHINE = "^rpi$"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/features:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/features:"
 SRC_URI += "file://gpio-sysfs.scc \
             file://gpio-gpiolib.scc \
            "
 
-KERNEL_FEATURES_append = " gpio-sysfs.scc "
-KERNEL_FEATURES_append = " gpio-gpiolib.scc "
+KERNEL_FEATURES:append = " gpio-sysfs.scc "
+KERNEL_FEATURES:append = " gpio-gpiolib.scc "
 
 PE = "1"
 PV = "${LINUX_VERSION}"
-PR_append = ".4"
+PR:append = ".4"
 
 inherit kernel siteinfo
 
@@ -41,15 +41,15 @@ KERNEL_SERIAL ?= "${@oe.utils.conditional("ENABLE_UART", "1", "console=serial0,1
 CMDLINE ?= "dwc_otg.lpm_enable=0 ${KERNEL_SERIAL} root=/dev/mmcblk0p2 rootfstype=squashfs rootwait"
 
 # Add the kernel debugger over console kernel command line option if enabled
-CMDLINE_append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
+CMDLINE:append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
 
 # Disable rpi logo on boot
-CMDLINE_append += ' ${@oe.utils.conditional("DISABLE_RPI_BOOT_LOGO", "1", "logo.nologo", "", d)}'
+CMDLINE:append = ' ${@oe.utils.conditional("DISABLE_RPI_BOOT_LOGO", "1", "logo.nologo", "", d)}'
 
 # You can define CMDLINE_DEBUG as "debug" in your local.conf or distro.conf
 # to enable kernel debugging.
 CMDLINE_DEBUG ?= ""
-CMDLINE_append = " ${CMDLINE_DEBUG}"
+CMDLINE:append = " ${CMDLINE_DEBUG}"
 
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 KERNEL_MODULE_AUTOLOAD += "${@oe.utils.conditional("ENABLE_I2C", "1", "i2c-dev i2c-bcm2708", "", d)}"
@@ -89,10 +89,10 @@ config_setup() {
     # populate ${B}.config from either ${S}.config (if it exists) for custom
     # developer changes, or otherwise from ${WORDIR}/defconfig.
     #
-    # - In linux-raspberrypi, we add do_configure_prepend, which tweaks
+    # - In linux-raspberrypi, we add do_configure:prepend, which tweaks
     # ${B}.config. Since this runs *before* the kernel.bbclass do_configure,
     # ${B}.config doesn't yet exist and we hit an error. Thus we need to move
-    # the logic from do_configure up to before our do_configure_prepend. Because
+    # the logic from do_configure up to before our do_configure:prepend. Because
     # we are copying only a portion of do_configure and not the whole thing,
     # there is no clean way to do it using OE functionality, so we just
     # copy-and-paste.
@@ -101,13 +101,13 @@ config_setup() {
     fi
 
     # Copy defconfig to .config if .config does not exist. This allows
-    # recipes to manage the .config themselves in do_configure_prepend().
+    # recipes to manage the .config themselves in do_configure:prepend().
     if [ -f "${WORKDIR}/defconfig" ] && [ ! -f "${B}/.config" ]; then
         cp "${WORKDIR}/defconfig" "${B}/.config"
     fi
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
     config_setup
 
     mv -f ${B}/.config ${B}/.config.patched
@@ -137,12 +137,12 @@ do_configure_prepend() {
     rm -f ${B}/.config.patched
 }
 
-do_compile_append_raspberrypi3-64() {
+do_compile:append:raspberrypi3-64() {
     cc_extra=$(get_cc_option)
     oe_runmake dtbs CC="${KERNEL_CC} $cc_extra " LD="${KERNEL_LD}" ${KERNEL_EXTRA_ARGS}
 }
 
-do_deploy_append() {
+do_deploy:append() {
     # Deploy cmdline.txt
     install -d ${DEPLOYDIR}/bcm2835-bootfiles
     PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"

@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2022, Tano Systems LLC. All rights reserved.
 #
-PR_append = ".swi2"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
+PR:append = ".swi2"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:"
 
 SRC_URI += "\
 	file://0001-Revert-system-linux-expose-hw-tc-offload-ethtool-fea.patch \

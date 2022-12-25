@@ -6,7 +6,7 @@
 #
 # SWUpdate
 #
-MACHINE_FEATURES_append = " swupdate"
+MACHINE_FEATURES:append = " swupdate"
 
 # WIC
 WKS_FILE = "sdimage-rockchip-swu-a-b.wks.in"

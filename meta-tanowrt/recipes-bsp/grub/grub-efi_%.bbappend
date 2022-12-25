@@ -3,8 +3,8 @@
 # Copyright (c) 2020-2022 Tano Systems LLC. All rights reserved.
 #
 
-PR_append = ".tano10"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:${THISDIR}/${PN}/patches:"
+PR:append = ".tano10"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:${THISDIR}/${PN}/patches:"
 
 # Patches for 2.04 (2.06~rc1) GNU version
 SRC_URI += "\
@@ -33,15 +33,15 @@ EFI_STARTUP_DEVICE ?= "fs0"
 GRUB_BUILDIN = "boot linux fat squash4 ext2 serial part_msdos part_gpt normal \
                 efi_gop iso9660 configfile search loadenv test echo probe"
 
-do_install_append_class-target() {
+do_install:append:class-target() {
 	# Install startup.nsh to /boot
 	install -d ${D}${EFI_PREFIX}
 	echo "${EFI_STARTUP_DEVICE}:${@d.getVar('EFIDIR', True).replace('/', '\\')}\\${EFI_BOOT_IMAGE}" \
 		> ${D}${EFI_PREFIX}/startup.nsh
 }
 
-FILES_${PN}_remove = "${libdir}/grub/${GRUB_TARGET}-efi"
-FILES_${PN} += "${EFI_PREFIX}/startup.nsh"
+FILES:${PN}:remove = "${libdir}/grub/${GRUB_TARGET}-efi"
+FILES:${PN} += "${EFI_PREFIX}/startup.nsh"
 
 PACKAGES += "${PN}-lib"
 FILES:${PN}-lib = "${libdir}/grub/${GRUB_TARGET}-efi"
@@ -55,12 +55,12 @@ do_preconfigure() {
 
 addtask preconfigure after do_patch before do_configure
 
-do_deploy_append() {
+do_deploy:append() {
 	# Deploy file with version info
 	echo "${PV}-${PR}" > ${DEPLOYDIR}/${GRUB_IMAGE_PREFIX}${GRUB_IMAGE}.version
 }
 
-do_deploy_append_class-target() {
+do_deploy:append:class-target() {
 	install -m 644 ${D}${EFI_PREFIX}/startup.nsh \
 		${DEPLOYDIR}/${GRUB_IMAGE_PREFIX}startup.nsh
 }

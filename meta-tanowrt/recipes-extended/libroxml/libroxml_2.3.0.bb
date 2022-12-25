@@ -5,11 +5,11 @@
 #
 PR = "tano0"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 DESCRIPTION = "This library is minimum, easy-to-use, C implementation for xml file parsing."
 HOMEPAGE = "http://www.libroxml.net"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://License.txt;md5=81cba52d2de829c8be3d167618e6b8b6"
 SECTION = "libs"
 DEPENDS = ""

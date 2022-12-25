@@ -13,7 +13,7 @@ SECTION = "base"
 DEPENDS = "json-c libubox"
 PR = "tano2"
 
-SRC_URI = "git://${GIT_OPENWRT_ORG}/project/jsonpath.git;name=jsonpath; \
+SRC_URI = "git://${GIT_OPENWRT_ORG}/project/jsonpath.git;name=jsonpath;branch=master \
           file://0001-sync-lemon-parser.patch \
           file://0002-Declare-ParseTrace.patch \
           file://0100-break-lemon-dependency-cycle.patch \
@@ -23,13 +23,13 @@ SRC_URI = "git://${GIT_OPENWRT_ORG}/project/jsonpath.git;name=jsonpath; \
 # implement POSIX regexp support
 SRCREV_jsonpath = "c7e938d6582a436dddc938539e72dd1320625c54"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 inherit cmake pkgconfig
 
 S = "${WORKDIR}/git"
 B = "${S}"
 
-do_install_append() {
+do_install:append() {
     ln -s ${bindir}/jsonpath ${D}${bindir}/jsonfilter
 }

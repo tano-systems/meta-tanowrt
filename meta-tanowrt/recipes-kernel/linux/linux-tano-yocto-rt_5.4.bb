@@ -15,19 +15,19 @@ LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR_append = "tano0"
+MACHINE_KERNEL_PR:append = "tano0"
 PR = "${MACHINE_KERNEL_PR}"
 
 require recipes-kernel/linux/linux-tano.inc
 require recipes-kernel/linux/linux-tano-yocto.inc
 
 # Look in the generic major.minor directory for files
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-5.4:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-5.4:"
 
 YOCTO_KERNEL_CACHE_BRANCH = "yocto-5.4"
 YOCTO_KERNEL_CACHE_SRCREV = "9e3ab4e615b651c1b63d4f0cce71da79a3e89763"
 
 SECTION = "kernel"
 DESCRIPTION = "Yocto Linux kernel"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"

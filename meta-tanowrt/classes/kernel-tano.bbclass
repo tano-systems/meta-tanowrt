@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/modules-boot.d
 	install -d ${D}${sysconfdir}/modules.d
 }
@@ -103,21 +103,21 @@ python split_kernel_module_packages () {
                 else:
                     f.write('%s\n' % basename)
             f.close()
-            postinst = d.getVar('pkg_postinst_%s' % pkg)
+            postinst = d.getVar('pkg_postinst:%s' % pkg)
             if not postinst:
-                bb.fatal("pkg_postinst_%s not defined" % pkg)
+                bb.fatal("pkg_postinst:%s not defined" % pkg)
             postinst += d.getVar('autoload_postinst_fragment') % (autoload or basename)
-            d.setVar('pkg_postinst_%s' % pkg, postinst)
+            d.setVar('pkg_postinst:%s' % pkg, postinst)
 
-        files = d.getVar('FILES_%s' % pkg)
+        files = d.getVar('FILES:%s' % pkg)
         files = "%s /etc/modules-boot.d/%s.conf /etc/modules.d/%s.conf /etc/modules-load.d/%s.conf /etc/modprobe.d/%s.conf" % (files, basename, basename, basename, basename)
-        d.setVar('FILES_%s' % pkg, files)
+        d.setVar('FILES:%s' % pkg, files)
 
         if "description" in vals:
-            old_desc = d.getVar('DESCRIPTION_' + pkg) or ""
-            d.setVar('DESCRIPTION_' + pkg, old_desc + "; " + vals["description"])
+            old_desc = d.getVar('DESCRIPTION:' + pkg) or ""
+            d.setVar('DESCRIPTION:' + pkg, old_desc + "; " + vals["description"])
 
-        rdepends = bb.utils.explode_dep_versions2(d.getVar('RDEPENDS_' + pkg) or "")
+        rdepends = bb.utils.explode_dep_versions2(d.getVar('RDEPENDS:' + pkg) or "")
         modinfo_deps = []
         if "depends" in vals and vals["depends"] != "":
             for dep in vals["depends"].split(","):
@@ -127,16 +127,16 @@ python split_kernel_module_packages () {
         for dep in modinfo_deps:
             if not dep in rdepends:
                 rdepends[dep] = []
-        d.setVar('RDEPENDS_' + pkg, bb.utils.join_deps(rdepends, commasep=False))
+        d.setVar('RDEPENDS:' + pkg, bb.utils.join_deps(rdepends, commasep=False))
 
         # Avoid automatic -dev recommendations for modules ending with -dev.
-        d.setVarFlag('RRECOMMENDS_' + pkg, 'nodeprrecs', 1)
+        d.setVarFlag('RRECOMMENDS:' + pkg, 'nodeprrecs', 1)
 
         # Provide virtual package without postfix
         providevirt = d.getVar('KERNEL_MODULE_PROVIDE_VIRTUAL')
         if providevirt == "1":
            postfix = format.split('%s')[1]
-           d.setVar('RPROVIDES_' + pkg, pkg.replace(postfix, ''))
+           d.setVar('RPROVIDES:' + pkg, pkg.replace(postfix, ''))
 
     kernel_package_name = d.getVar("KERNEL_PACKAGE_NAME") or "kernel"
     kernel_version = d.getVar("KERNEL_VERSION")
@@ -147,13 +147,13 @@ python split_kernel_module_packages () {
     module_pattern_suffix = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX')
     module_pattern = module_pattern_prefix + kernel_package_name + '-module-%s' + module_pattern_suffix
 
-    postinst = d.getVar('pkg_postinst_modules')
-    postrm = d.getVar('pkg_postrm_modules')
+    postinst = d.getVar('pkg_postinst:modules')
+    postrm = d.getVar('pkg_postrm:modules')
 
     modules = do_split_packages(d, root='${nonarch_base_libdir}/modules', file_regex=module_regex, output_pattern=module_pattern, description='%s kernel module', postinst=postinst, postrm=postrm, recursive=True, hook=frob_metadata, extra_depends='%s-%s' % (kernel_package_name, kernel_version))
     if modules:
         metapkg = d.getVar('KERNEL_MODULES_META_PACKAGE')
-        d.appendVar('RDEPENDS_' + metapkg, ' '+' '.join(modules))
+        d.appendVar('RDEPENDS:' + metapkg, ' '+' '.join(modules))
 
     # If modules-load.d, modules-boot.d and modprobe.d are empty at this point,
     # remove them to avoid warnings. removedirs only raises an OSError
@@ -173,12 +173,12 @@ def kernel_dtb2dts(var, d):
     return value.replace('.dtb', '.dts')
 
 KERNEL_DEVICETREE_COPY ?= ""
-KERNEL_DEVICETREE_COPY_DST_mipsarch ?= "${S}/arch/mips/boot/dts"
-KERNEL_DEVICETREE_COPY_DST_microblaze ?= "${S}/arch/microblaze/boot/dts"
-KERNEL_DEVICETREE_COPY_DST_aarch64 ?= "${S}/arch/arm64/boot/dts"
-KERNEL_DEVICETREE_COPY_DST_arm ?= "${S}/arch/arm/boot/dts"
+KERNEL_DEVICETREE_COPY_DST:mipsarch ?= "${S}/arch/mips/boot/dts"
+KERNEL_DEVICETREE_COPY_DST:microblaze ?= "${S}/arch/microblaze/boot/dts"
+KERNEL_DEVICETREE_COPY_DST:aarch64 ?= "${S}/arch/arm64/boot/dts"
+KERNEL_DEVICETREE_COPY_DST:arm ?= "${S}/arch/arm/boot/dts"
 
-do_configure_append() {
+do_configure:append() {
 	if [ ! -z "${KERNEL_DEVICETREE_COPY_DST}" ]; then
 		for f in ${KERNEL_DEVICETREE_COPY}; do
 			bbdebug 1 "${f} (copy ${f} to ${KERNEL_DEVICETREE_COPY_DST}/${f})"
@@ -207,7 +207,7 @@ def get_localversion(d):
 
 LINUX_LOCALVERSION ?= "${@get_localversion(d)}"
 
-do_configure_append() {
+do_configure:append() {
 	echo ${LINUX_LOCALVERSION} > ${B}/.scmversion
 	echo ${LINUX_LOCALVERSION} > ${S}/.scmversion
 }

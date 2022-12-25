@@ -180,10 +180,11 @@ def swupdate_expand_bitbake_variables(d, s):
 
             write_lines.append(line)
 
+    swupdate_exec_functions(d, s, write_lines)
+
     with open(os.path.join(s, "sw-description"), 'w+') as f:
         for line in write_lines:
             f.write(line)
-
 
 #
 # Extract actual versions from deployed artifacts
@@ -197,7 +198,7 @@ EXTRACT_DATA_REPLACE_SPACES = "-"
 
 EXTRACT_DATA_ARTIFACTS ?= ""
 
-python do_swuimage_prepend() {
+python do_swuimage:prepend() {
     do_prepare_swu_image_data(d)
     # Extract versions data
     do_extract_data(d)

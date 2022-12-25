@@ -16,6 +16,7 @@ DEPENDS += "nodejs-native"
 
 inherit tanowrt-luci-theme
 inherit tanowrt-luci-i18n
+inherit python3native
 
 LUCI_THEME_NAME = "tano"
 
@@ -30,6 +31,9 @@ SRCREV_FORMAT = "theme"
 
 SRC_URI += "file://package-lock.json"
 
+# Patches
+SRC_URI += "file://0001-Upgrade-packages-versions.patch"
+
 S = "${WORKDIR}/git"
 LUCI_PKG_SRC = "${S}/bundle/build"
 
@@ -37,7 +41,7 @@ export HOME = "${WORKDIR}"
 
 do_npm_configure() {
 	cd ${B}
-	cp ${WORKDIR}/package-lock.json ${B}/package-lock.json
+	cp -vf ${WORKDIR}/package-lock.json ${B}/package-lock.json
 	npm cache clean --force
 	npm install
 }

@@ -18,7 +18,7 @@ inherit allarch
 inherit tanowrt-luci-lib
 inherit tanowrt-lua
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "${LUCI_GIT_URI};branch=${LUCI_GIT_BRANCH};protocol=${LUCI_GIT_PROTOCOL};subpath=libs/luci-lib-iptparser;destsuffix=git/"
 SRC_URI += "file://cmake.patch;pnum=3"

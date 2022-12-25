@@ -30,7 +30,7 @@ PACKAGES = "\
 "
 
 # packagegroup-tanowrt-base
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	packagegroup-tanowrt-base-core \
 	packagegroup-tanowrt-base-network \
 	packagegroup-tanowrt-base-tools \
@@ -50,20 +50,20 @@ RDEPENDS_${PN} = "\
 "
 
 # packagegroup-tanowrt-base-alsa
-RDEPENDS_${PN}-alsa = "\
+RDEPENDS:${PN}-alsa = "\
 	alsa-utils-alsactl \
 	alsa-utils-alsamixer \
 	alsa-utils-aplay \
 	${VIRTUAL-RUNTIME_alsa-state} \
 "
 
-RRECOMMENDS_${PN}-alsa = "\
+RRECOMMENDS:${PN}-alsa = "\
 	kernel-module-snd-mixer-oss \
 	kernel-module-snd-pcm-oss \
 "
 
 # packagegroup-tanowrt-base-luci
-RDEPENDS_${PN}-luci = "\
+RDEPENDS:${PN}-luci = "\
 	lua5.1 \
 	uhttpd \
 	luci \
@@ -81,7 +81,7 @@ RDEPENDS_${PN}-luci = "\
 "
 
 # packagegroup-tanowrt-base-tools
-RDEPENDS_${PN}-tools = "\
+RDEPENDS:${PN}-tools = "\
 	nano \
 	cpulimit \
 	schedtool-dl \
@@ -90,7 +90,7 @@ RDEPENDS_${PN}-tools = "\
 "
 
 # packagegroup-tanowrt-base-core
-RDEPENDS_${PN}-core = "\
+RDEPENDS:${PN}-core = "\
 	packagegroup-core-boot \
 	tzdata-europe \
 	tzdata-asia \
@@ -110,7 +110,7 @@ RDEPENDS_${PN}-core = "\
 "
 
 # packagegroup-tanowrt-base-network
-RDEPENDS_${PN}-network = "\
+RDEPENDS:${PN}-network = "\
 	${VIRTUAL-RUNTIME_network_manager} \
 	dnsmasq \
 	firewall3 \
@@ -133,15 +133,15 @@ RDEPENDS_${PN}-network = "\
 #
 # packages added by machine
 #
-SUMMARY_packagegroup-tanowrt-base-machine = "${MACHINE} extras"
-SUMMARY_packagegroup-tanowrt-base-machine = "Extra packages required to fully support ${MACHINE} hardware"
-RDEPENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RDEPENDS}"
-RRECOMMENDS_packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RRECOMMENDS}"
+SUMMARY:packagegroup-tanowrt-base-machine = "${MACHINE} extras"
+SUMMARY:packagegroup-tanowrt-base-machine = "Extra packages required to fully support ${MACHINE} hardware"
+RDEPENDS:packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RDEPENDS}"
+RRECOMMENDS:packagegroup-tanowrt-base-machine = "${MACHINE_EXTRA_RRECOMMENDS}"
 
 #
 # packages added by distribution
 #
-SUMMARY_packagegroup-tanowrt-base-distro = "${DISTRO} extras"
-DEPENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_DEPENDS}"
-RDEPENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RDEPENDS}"
-RRECOMMENDS_packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RRECOMMENDS}"
+SUMMARY:packagegroup-tanowrt-base-distro = "${DISTRO} extras"
+DEPENDS:packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_DEPENDS}"
+RDEPENDS:packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RDEPENDS}"
+RRECOMMENDS:packagegroup-tanowrt-base-distro = "${DISTRO_EXTRA_RRECOMMENDS}"

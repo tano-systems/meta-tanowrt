@@ -5,7 +5,7 @@
 SOC_FAMILY ?= "rk3308"
 
 DEFAULTTUNE ?= "cortexa35-crypto"
-require conf/machine/include/tune-cortexa35.inc
+require conf/machine/include/arm/armv8a/tune-cortexa35.inc
 require conf/machine/include/hsl-rockchip-arm64-common.inc
 
 # 4.19

@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano0"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+PR:append = ".tano0"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI += "\
 	file://logrotate.conf \
 	file://logrotate.cron \
 "
 
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}/var
 	rm  -f ${D}${sysconfdir}/logrotate.d/wtmp
 	rm  -f ${D}${sysconfdir}/logrotate.d/btmp

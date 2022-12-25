@@ -14,7 +14,7 @@ inherit packagegroup
 
 inherit kmod/cgroups
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	libcgroup \
 	libcgroup-procd \
 "

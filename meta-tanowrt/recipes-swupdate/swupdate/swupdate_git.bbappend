@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
 #
-PR_append = ".tano0.${INCPR}"
+PR:append = ".tano0.${INCPR}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/files/default:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/files/default:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:"
 
 # Prefer this version
 DEFAULT_PREFERENCE = "1"
@@ -22,8 +22,8 @@ SWUPDATE_GIT_BRANCH   ?= "tano/master"
 SWUPDATE_GIT_PROTOCOL ?= "https"
 SWUPDATE_GIT_SRCREV   ?= "49e958fe46c224b47334a91266e018e64b1b5e47"
 
-SRC_URI_remove = "git://github.com/sbabic/swupdate.git;protocol=https"
-SRC_URI_append = " ${SWUPDATE_GIT_URI};branch=${SWUPDATE_GIT_BRANCH};protocol=${SWUPDATE_GIT_PROTOCOL} "
+SRC_URI:remove = "git://github.com/sbabic/swupdate.git;protocol=https;branch=master"
+SRC_URI:append = " ${SWUPDATE_GIT_URI};branch=${SWUPDATE_GIT_BRANCH};protocol=${SWUPDATE_GIT_PROTOCOL} "
 SRCREV = "${SWUPDATE_GIT_SRCREV}"
 PV = "2021.04+git${SRCPV}"
 

@@ -22,7 +22,7 @@ SRCREV  = "${LUCI_GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${base_bindir}/lemon"
 
 do_configure() {

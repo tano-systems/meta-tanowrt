@@ -13,7 +13,7 @@ python __anonymous () {
                 d.appendVar("SRC_URI", " file://%s " % config)
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
 	if [ "${UBOOT_DEFCONFIG_COPY}" = "1" ]; then
 		for config in ${UBOOT_MACHINE}; do
 			if [ -e "${WORKDIR}/${config}" ]; then

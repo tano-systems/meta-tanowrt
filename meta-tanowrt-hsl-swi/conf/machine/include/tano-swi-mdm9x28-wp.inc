@@ -20,8 +20,8 @@ EXTRA_IMAGEDEPENDS += "lk"
 UBI_USERAPP_PATH ?= "${IMGDEPLOYDIR}/${IMAGE_NAME}.userapp"
 UBI_USERAPP_SIZE ?= "124MiB"
 
-PACKAGECONFIG_append_pn-collectd = " cpufreq "
-PACKAGE_ARCH_pn-collectd = "${MACHINE_ARCH}"
+PACKAGECONFIG:append:pn-collectd = " cpufreq "
+PACKAGE_ARCH:pn-collectd = "${MACHINE_ARCH}"
 
 #
 # Kernel
@@ -32,7 +32,7 @@ SERIAL_CONSOLE = "115200 ttyS0"
 # QEMU options (runqemu)
 #
 # No qemu support, yet
-MACHINE_FEATURES_remove = "qemu-usermode"
+MACHINE_FEATURES:remove = "qemu-usermode"
 QEMU_TARGETS = "arm"
 
 ENABLE_IMA = "false"
@@ -56,8 +56,8 @@ KERNEL_BOOT_OPTIONS = "earlyprintk=serial,ttyHSL1,115200 loglevel=7 \
   console=ttyHSL1,115200 ima_ready=${ENABLE_IMA} \
 "
 
-MACHINE_FEATURES_append = " hwrng "
+MACHINE_FEATURES:append = " hwrng "
 
-PACKAGECONFIG_remove_pn-procd = "ujail"
+PACKAGECONFIG:remove:pn-procd = "ujail"
 
 PREFERRED_RPROVIDER_libdevmapper-native = "libdevmapper-native"

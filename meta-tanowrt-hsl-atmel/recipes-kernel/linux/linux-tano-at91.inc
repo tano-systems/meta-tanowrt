@@ -5,20 +5,20 @@
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR_append = ".0"
+PR:append = ".0"
 
 COMPATIBLE_MACHINE = "(sama5)"
 
 KERNEL_VERSION_SANITY_SKIP = "1"
 
-FILESEXTRAPATHS_prepend = "${TANOWRT_HSL_BASE}/recipes-kernel/linux/features:"
+FILESEXTRAPATHS:prepend = "${TANOWRT_HSL_BASE}/recipes-kernel/linux/features:"
 
 KERNEL_DEVICETREE_COPY = "${@kernel_dtb2dts('KERNEL_DEVICETREE', d)}"
 
-KERNEL_MACHINE_INCLUDE_evb-ksz9477 ?= "recipes-kernel/linux/linux-tano-at91-evb-ksz9477.inc"
-KERNEL_MACHINE_INCLUDE_evb-ksz9563 ?= "recipes-kernel/linux/linux-tano-at91-evb-ksz9563.inc"
-KERNEL_MACHINE_INCLUDE_at91-sama5d2-xplained ?= "recipes-kernel/linux/linux-tano-at91-sama5d2-xplained.inc"
-KERNEL_MACHINE_INCLUDE_at91-sama5d3-xplained ?= "recipes-kernel/linux/linux-tano-at91-sama5d3-xplained.inc"
+KERNEL_MACHINE_INCLUDE:evb-ksz9477 ?= "recipes-kernel/linux/linux-tano-at91-evb-ksz9477.inc"
+KERNEL_MACHINE_INCLUDE:evb-ksz9563 ?= "recipes-kernel/linux/linux-tano-at91-evb-ksz9563.inc"
+KERNEL_MACHINE_INCLUDE:at91-sama5d2-xplained ?= "recipes-kernel/linux/linux-tano-at91-sama5d2-xplained.inc"
+KERNEL_MACHINE_INCLUDE:at91-sama5d3-xplained ?= "recipes-kernel/linux/linux-tano-at91-sama5d3-xplained.inc"
 KERNEL_MACHINE_INCLUDE ?= "recipes-kernel/linux/linux-tano-at91-${MACHINE}.inc"
 include ${KERNEL_MACHINE_INCLUDE}
 

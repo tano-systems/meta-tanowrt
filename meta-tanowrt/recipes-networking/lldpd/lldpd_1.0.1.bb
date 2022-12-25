@@ -5,7 +5,7 @@
 require lldpd.inc
 
 PR = "tano6.${INC_PR}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
 SRC_URI = "\
     https://media.luffy.cx/files/lldpd/lldpd-1.0.1.tar.gz \

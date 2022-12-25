@@ -7,6 +7,6 @@ header:
 repos:
   openembedded-core:
     url: https://github.com/openembedded/openembedded-core.git
-    refspec: fbbb689c8df7f82644b8a9bc5bb6884bc6516660
+    refspec: c0f3da88a9646fc5e6d549b1a2327c0823c0e5a1
     layers:
       meta:

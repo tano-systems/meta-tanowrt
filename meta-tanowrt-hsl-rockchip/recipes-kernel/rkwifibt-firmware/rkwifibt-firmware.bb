@@ -70,82 +70,82 @@ PACKAGES =+ " \
 	${PN}-rtl8821cu-bt \
 "
 
-FILES_${PN}-ap6212a1-wifi = " \
+FILES:${PN}-ap6212a1-wifi = " \
 	${nonarch_base_libdir}/firmware/cypress/* \
 "
 
-FILES_${PN}-ap6212a1-bt = " \
+FILES:${PN}-ap6212a1-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/bcm43438a1.hcd \
 "
 
-FILES_${PN}-ap6236-wifi = " \
+FILES:${PN}-ap6236-wifi = " \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm43436b0.bin \
 	${nonarch_base_libdir}/firmware/brcm/nvram_ap6236.txt \
 "
 
-FILES_${PN}-ap6236-bt = " \
+FILES:${PN}-ap6236-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/BCM4343B0.hcd \
 "
 
-FILES_${PN}-ap6255-wifi = " \
+FILES:${PN}-ap6255-wifi = " \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm43455c0_ag.bin \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm43455c0_ag_p2p.bin \
 	${nonarch_base_libdir}/firmware/brcm/nvram_ap6255.txt \
 "
 
-FILES_${PN}-ap6255-bt = " \
+FILES:${PN}-ap6255-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/BCM4345C0.hcd \
 "
 
-FILES_${PN}-ap6256-wifi = " \
+FILES:${PN}-ap6256-wifi = " \
 	${nonarch_base_libdir}/firmware/brcm/brcmfmac43456-sdio* \
 "
 
-FILES_${PN}-ap6256-bt = " \
+FILES:${PN}-ap6256-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/BCM4345C5.hcd \
 "
 
-FILES_${PN}-ap6356-wifi = " \
+FILES:${PN}-ap6356-wifi = " \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm4356a2_ag.bin \
 	${nonarch_base_libdir}/firmware/brcm/nvram_ap6356.txt \
 "
 
-FILES_${PN}-ap6356-bt = " \
+FILES:${PN}-ap6356-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/BCM4356A2.hcd \
 "
 
-FILES_${PN}-ap6398s-wifi = " \
+FILES:${PN}-ap6398s-wifi = " \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm4359c0_ag.bin \
 	${nonarch_base_libdir}/firmware/brcm/fw_bcm4359c0_ag_p2p.bin \
 	${nonarch_base_libdir}/firmware/brcm/nvram_ap6398s.txt \
 "
 
-FILES_${PN}-ap6398s-bt = " \
+FILES:${PN}-ap6398s-bt = " \
 	${nonarch_base_libdir}/firmware/brcm/BCM4359C0.hcd \
 "
 
-FILES_${PN}-rtl8723ds-bt = " \
+FILES:${PN}-rtl8723ds-bt = " \
 	${nonarch_base_libdir}/firmware/rtlbt/rtl8723d_config \
 	${nonarch_base_libdir}/firmware/rtlbt/rtl8723d_fw \
 "
 
-FILES_${PN}-rtl8723du-bt = " \
+FILES:${PN}-rtl8723du-bt = " \
 	${nonarch_base_libdir}/firmware/rtl8723du_config \
 	${nonarch_base_libdir}/firmware/rtl8723du_fw \
 "
 
-FILES_${PN}-rtl8821cu-bt = " \
+FILES:${PN}-rtl8821cu-bt = " \
 	${nonarch_base_libdir}/firmware/rtl8821cu_config \
 	${nonarch_base_libdir}/firmware/rtl8821cu_fw \
 "
 
-FILES_${PN} = "*"
+FILES:${PN} = "*"
 
 # Make it depend on all of the split-out packages.
 python () {
     pn = d.getVar('PN')
     firmware_pkgs = oe.utils.packages_filter_out_system(d)
-    d.appendVar('RDEPENDS_' + pn, ' ' + ' '.join(firmware_pkgs))
+    d.appendVar('RDEPENDS:' + pn, ' ' + ' '.join(firmware_pkgs))
 }
 
-INSANE_SKIP_${PN} += "arch"
+INSANE_SKIP:${PN} += "arch"

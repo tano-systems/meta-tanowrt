@@ -20,8 +20,8 @@ XSERVER_QEMU_ALLX86 = "\
 	xserver-xorg-module-libint10 \
 "
 
-XSERVER_append_qemux86 = " ${XSERVER_QEMU_ALLX86}"
-XSERVER_append_qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
+XSERVER:append:qemux86 = " ${XSERVER_QEMU_ALLX86}"
+XSERVER:append:qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
 
 #
 # Kernel modules
@@ -30,20 +30,20 @@ XSERVER_append_qemux86-64 = " ${XSERVER_QEMU_ALLX86}"
 #
 # QEMU options (runqemu)
 #
-QB_OPT_APPEND_remove = "-nographic"
-QB_OPT_APPEND_append = "\
+QB_OPT_APPEND:remove = "-nographic"
+QB_OPT_APPEND:append = "\
 	-device usb-tablet \
 	-serial mon:stdio \
 	-serial null \
 "
 
-QB_OPT_APPEND_append_qemux86 = " -vga std "
-QB_OPT_APPEND_append_qemux86-64 = " -vga std "
-QB_OPT_APPEND_append_qemuarm = " -device VGA,edid=on "
-QB_OPT_APPEND_append_qemuarm64 = " -device VGA,edid=on "
+QB_OPT_APPEND:append:qemux86 = " -vga std "
+QB_OPT_APPEND:append:qemux86-64 = " -vga std "
+QB_OPT_APPEND:append:qemuarm = " -device VGA,edid=on "
+QB_OPT_APPEND:append:qemuarm64 = " -device VGA,edid=on "
 
 #
 # Enable SDL display in QEMU
 #
-PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
-PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"

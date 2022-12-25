@@ -20,9 +20,9 @@ a web based terminal emulator."
 
 HOMEPAGE = "https://github.com/shellinabox/shellinabox"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a193d25fdef283ddce530f6d67852fa5"
 
 inherit autotools-brokensep
@@ -31,7 +31,7 @@ inherit pkgconfig
 DEPENDS += "zlib"
 
 GIT_PROTOCOL = "https"
-SRC_URI = "git://github.com/shellinabox/shellinabox.git;protocol=${GIT_PROTOCOL}"
+SRC_URI = "git://github.com/shellinabox/shellinabox.git;protocol=${GIT_PROTOCOL};branch=master"
 SRCREV = "4f0ecc31ac6f985e0dd3f5a52cbfc0e9251f6361"
 
 # Files
@@ -50,7 +50,7 @@ SRC_URI += "\
 PACKAGECONFIG ??= "ssl"
 PACKAGECONFIG[ssl] = "--enable-ssl,--disable-ssl,openssl"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
 	${@bb.utils.contains('PACKAGECONFIG', 'ssl', 'openssl-bin', '', d)} \
 "
 
@@ -62,7 +62,7 @@ TANOWRT_SERVICE_PACKAGES = "shellinabox"
 TANOWRT_SERVICE_SCRIPTS_shellinabox += "shellinabox"
 TANOWRT_SERVICE_STATE_shellinabox-shellinabox ?= "enabled"
 
-do_install_append() {
+do_install:append() {
 	install -d -m 0755 ${D}${sysconfdir}/config
 	install -d -m 0755 ${D}${sysconfdir}/init.d
 	install -d -m 0755 ${D}${sysconfdir}/shellinabox
@@ -79,11 +79,11 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/shellinabox.keep ${D}${nonarch_base_libdir}/upgrade/keep.d/shellinabox
 }
 
-FILES_${PN} += "${nonarch_base_libdir}/upgrade/keep.d"
+FILES:${PN} += "${nonarch_base_libdir}/upgrade/keep.d"
 
 S = "${WORKDIR}/git"
 
-CONFFILES_${PN}_append = "\
+CONFFILES:${PN}:append = "\
 	${sysconfdir}/config/shellinabox \
 	${sysconfdir}/etc/shellinabox/ssl/certificate.pem \
 "

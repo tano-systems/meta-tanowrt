@@ -13,8 +13,8 @@ SUMMARY = "LuCI support for SNMP daemon"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1fd756df4d1f5f2e8c17e9d2d4eaa503"
 
-RDEPENDS_${PN} += "net-snmp-server-snmpd"
-RCONFLICTS_${PN} = "luci-app-snmpd"
+RDEPENDS:${PN} += "net-snmp-server-snmpd"
+RCONFLICTS:${PN} = "luci-app-snmpd"
 
 inherit allarch
 inherit tanowrt-luci-app
@@ -29,11 +29,11 @@ SRCREV = "${GIT_SRCREV}"
 
 S = "${WORKDIR}/git"
 
-RRECOMMENDS_${PN} += "luci-app-tn-logview-plugin-snmp"
+RRECOMMENDS:${PN} += "luci-app-tn-logview-plugin-snmp"
 
 LUCI_APP_TN_SNMPD_HIDE_FOOTER ?= "1"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/uci-defaults
 
 	UCIDEFFILE=${D}${sysconfdir}/uci-defaults/80_luci_app_tn_snmpd_footer

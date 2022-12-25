@@ -4,7 +4,7 @@
 # This file Copyright (c) 2020 Tano Systems LLC. All rights reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
-PR_append = ".tano0"
+PR:append = ".tano0"
 
 EXTRA_OECONF += "\
 	--disable-static \
@@ -22,11 +22,11 @@ EXTRA_OECONF += "\
 #	--without-udev-base-dir
 #
 
-FILES_${PN} = "${libdir} ${libexecdir}"
+FILES:${PN} = "${libdir} ${libexecdir}"
 
 PACKAGES += "${PN}-utils"
-FILES_${PN}-utils = "${bindir}/"
-SUMMARY_${PN}-utils = "Utilities to talk to QMI enabled modems"
-RDEPENDS_${PN}-utils = "${PN}"
+FILES:${PN}-utils = "${bindir}/"
+SUMMARY:${PN}-utils = "Utilities to talk to QMI enabled modems"
+RDEPENDS:${PN}-utils = "${PN}"
 PROVIDES += "qmi-utils"
-RPROVIDES_${PN}-utils += "qmi-utils"
+RPROVIDES:${PN}-utils += "qmi-utils"

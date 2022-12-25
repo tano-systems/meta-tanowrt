@@ -13,7 +13,7 @@ LICENSE = "Mellanox-sockperf"
 LIC_FILES_CHKSUM = "file://copying;md5=eacf3cc30a6506d311e96d2d44197d3e"
 SECTION = "console/network"
 
-SRC_URI = "git://github.com/Mellanox/sockperf;branch=sockperf_v2"
+SRC_URI = "git://github.com/Mellanox/sockperf;branch=sockperf_v2;protocol=https"
 SRCREV = "13ced4c1eb0dccf434aa0fde44994c0dbfbca1f9"
 
 PR = "tano1"
