@@ -10,12 +10,9 @@ header:
 repos:
   meta-rockchip:
     url: https://github.com/JeffyCN/meta-rockchip.git
-    refspec: 7dc5460f64070a2941b8d707eb13af99a36a4511
+    refspec: 3e2aa54dfd46f81879a7522138c4e986481a1295 # kirkstone
 
     patches:
       patch0:
         repo: meta-tanowrt
         path: kas/patches/meta-rockchip/0001-Drop-hacky-allarch.bbclass.patch
-      patch1:
-        repo: meta-tanowrt
-        path: kas/patches/meta-rockchip/0002-Drop-hacky-features_check.bbclass.patch

@@ -10,6 +10,6 @@ header:
 repos:
   meta-arm:
     url: https://git.yoctoproject.org/meta-arm
-    refspec: 9851e5714ab4b7145045d898c8f92849ddabe412
+    refspec: 3366ba9427d20e8ced44ba864b949d70639d5afd # kirkstone
     layers:
       meta-arm:

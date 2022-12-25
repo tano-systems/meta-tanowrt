@@ -40,22 +40,27 @@ Dependencies of the :ref:`meta-tanowrt-hsl-ti <meta-tanowrt-hsl-ti>` layer are d
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
-   * - meta-ti
+   * - meta-ti-bsp
      - https://git.yoctoproject.org/meta-ti
-     - --
-     - hardknott
-     - :download:`kas/layers/meta-ti.yml <../../../kas/layers/meta-ti.yml>`
+     - meta-ti-bsp
+     - kirkstone
+     - :download:`kas/layers/meta-ti-bsp.yml <../../../kas/layers/meta-ti-bsp.yml>`
+   * - meta-ti-extras
+     - https://git.yoctoproject.org/meta-ti
+     - meta-ti-extras
+     - kirkstone
+     - :download:`kas/layers/meta-ti-extras.yml <../../../kas/layers/meta-ti-extras.yml>`
    * - meta-arm
      - https://git.yoctoproject.org/meta-arm
      - meta-arm
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-arm.yml <../../../kas/layers/meta-arm.yml>`
    * - meta-arm-toolchain
      - https://git.yoctoproject.org/meta-arm
      - meta-arm-toolchain
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-arm-toolchain.yml <../../../kas/layers/meta-arm-toolchain.yml>`
 
 .. _sec-hsl-ti-supported-boards:

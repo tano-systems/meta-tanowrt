@@ -9,4 +9,4 @@ header:
 repos:
   meta-intel:
     url: http://git.yoctoproject.org/meta-intel
-    refspec: 64bc878144d7faa6a823ee103db125d8914ff7e3
+    refspec: f529e0594a784546926e89ce8e78385e00d0b0a9

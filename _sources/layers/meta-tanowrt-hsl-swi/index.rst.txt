@@ -35,22 +35,22 @@ Dependencies of the :ref:`meta-tanowrt-hsl-swi <meta-tanowrt-hsl-swi>` layer are
    * - :ref:`meta-tanowrt <meta-tanowrt>`
      - https://github.com/tano-systems/meta-tanowrt.git
      - meta-tanowrt
-     - hardknott
+     - kirkstone
      - :download:`kas/layers/meta-tanowrt.yml <../../../kas/layers/meta-tanowrt.yml>`
    * - meta-swi/common
      - https://github.com/legatoproject/meta-swi.git
      - common
-     - yocto-3.0-ref
+     - yocto-4.0-ref
      - :download:`kas/layers/meta-swi-common.yml <../../../kas/layers/meta-swi-common.yml>`
    * - meta-swi/meta-swi-mdm9x28
      - https://github.com/legatoproject/meta-swi.git
      - meta-swi-mdm9x28
-     - yocto-3.0-ref
+     - yocto-4.0-ref
      - :download:`kas/layers/meta-swi-mdm9x28.yml <../../../kas/layers/meta-swi-mdm9x28.yml>`
    * - meta-swi/meta-swi-mdm9xxx
      - https://github.com/legatoproject/meta-swi.git
      - meta-swi-mdm9xxx
-     - yocto-3.0-ref
+     - yocto-4.0-ref
      - :download:`kas/layers/meta-swi-mdm9xxx.yml <../../../kas/layers/meta-swi-mdm9xxx.yml>`
 
 
