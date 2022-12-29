@@ -3,7 +3,7 @@
 # Copyright (c) 2022 Tano Systems LLC. All rights reserved.
 #
 
-PR:append = ".0"
+PR:append = ".1"
 
 KERNEL_FEATURES:append = "\
 	${@bb.utils.contains("COMBINED_FEATURES", "usbhost", " features/kernel-4.14+/usb-leds/ledtrig_usbport.scc", "" ,d)} \
@@ -35,7 +35,6 @@ SRC_URI:append = "\
 	file://630-packet_socket_type.patch \
 	file://640-bridge-only-accept-EAP-locally.patch \
 	file://655-increase_skb_pad.patch \
-	file://681-NET-add-of_get_mac_address_mtd.patch \
 	file://910-kobject_uevent.patch \
 	file://911-kobject_add_broadcast_uevent.patch \
 "
