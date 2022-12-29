@@ -39,6 +39,8 @@ LUCI_PKG_SRC = "${S}/bundle/build"
 
 export HOME = "${WORKDIR}"
 
+do_npm_configure[network] = "1"
+
 do_npm_configure() {
 	cd ${B}
 	cp -vf ${WORKDIR}/package-lock.json ${B}/package-lock.json
