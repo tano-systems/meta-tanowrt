@@ -47,5 +47,5 @@ YOCTO_KERNEL_CACHE_SRCREV = "f475b1a9deddbde23f48d7d535abdd5fb133b837"
 
 SECTION = "kernel"
 DESCRIPTION = "Yocto Linux kernel"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
