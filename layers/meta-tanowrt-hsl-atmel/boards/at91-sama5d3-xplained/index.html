@@ -465,13 +465,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-sama5d3-xplained-board">
 <h4><span class="section-number">2.3.1.1 </span>Build Default Images for SAMA5D3 Xplained Board<a class="headerlink" href="#build-default-images-for-sama5d3-xplained-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/at91-sama5d3-xplained-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/at91-sama5d3-xplained-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the SD
 card on the SAMA5D3 Xplained target board.</p>
 <p class="rubric">For Internal NAND</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/at91-sama5d3-xplained-nand.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/at91-sama5d3-xplained-nand.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -629,7 +629,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-at91-sama5d3-xplained-sd-yml-target">
 <h3><span class="section-number">2.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">at91-sama5d3-xplained-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-at91-sama5d3-xplained-sd-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 134M</span>
 <span class="go">-rwxr-xr-x 2  20K Aug 10 03:16 at91bootstrap.bin-sdcard</span>
 <span class="go">-rw-r--r-- 2  49K Aug 10 03:17 at91-sama5d3_xplained--4.19.78+git0+046113c438-tano0.2.20.20.0.0-at91-sama5d3-xplained-sd-20220810001425.dtb</span>
@@ -655,7 +655,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 719K Aug 10 03:16 u-boot-sdcard-v2020.01-at91+gitAUTOINC+af59b26c22-tano0.2.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-sd]$ </span>ls<span class="w"> </span>-gGh
 
 <span class="go">total 134M</span>
 <span class="go">-rwxr-xr-x 2  20K Aug 10 03:16 at91bootstrap.bin-sdcard</span>
@@ -711,7 +711,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-at91-sama5d3-xplained-nand-yml-target">
 <h3><span class="section-number">2.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">at91-sama5d3-xplained-nand.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-at91-sama5d3-xplained-nand-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-nand]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-nand]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 123M</span>
 <span class="go">-rwxr-xr-x 2  15K Aug 10 03:20 at91bootstrap.bin-nand</span>
 <span class="go">-rw-r--r-- 2  16K Aug 10 03:20 at91bootstrap.bin-nand-pmecc</span>
@@ -749,7 +749,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 719K Aug 10 03:20 u-boot-sdcard-v2020.01-at91+gitAUTOINC+af59b26c22-tano0.2.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-nand]$ </span>ls -gGh
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/at91-sama5d3-xplained-nand]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 123M</span>
 <span class="go">-rwxr-xr-x 2  15K Aug 10 03:20 at91bootstrap.bin-nand</span>
 <span class="go">-rw-r--r-- 2  16K Aug 10 03:20 at91bootstrap.bin-nand-pmecc</span>
@@ -837,12 +837,12 @@ for SAMA5D3 Xplained. See common instructions in <a class="reference internal" h
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">at91-sama5d3-xplained-nand.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-at91-sama5d3-xplained-nand.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-at91-sama5d3-xplained-nand.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">at91-sama5d3-xplained-sd.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-at91-sama5d3-xplained-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-at91-sama5d3-xplained-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -881,7 +881,7 @@ flash will be permanently lost.</p>
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Linux CLI</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">U-Boot CLI</button><button aria-controls="panel-2-2-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-2" name="2-2" role="tab" tabindex="-1">USB Connection with PC</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><p class="rubric">Erasing Internal NAND Flash Using Linux Command Line</p>
 <p>If the device has a bootable Linux system, you can erase the internal NAND flash
 by the following command entered in the Linux terminal:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>flash_erase /dev/mtd0 <span class="m">0</span> <span class="m">0</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>flash_erase<span class="w"> </span>/dev/mtd0<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
 <span class="go">Erasing 128 Kibyte @ 20000 -- 100 % complete</span>
 </pre></div>
 </div>
@@ -894,7 +894,7 @@ reserved for the AT91Bootstrap bootloader (see <a class="reference internal" hre
 <p>Note that if the running Linux distribution is not TanoWrt, the device
 name of the required MTD device may be different.
 To identify the proper device name, refer to the contents of the <code class="file docutils literal notranslate"><span class="pre">/proc/mtd</span></code> file:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt /]# </span>cat /proc/mtd
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt /]# </span>cat<span class="w"> </span>/proc/mtd
 <span class="go">dev:    size   erasesize  name</span>
 <span class="hll"><span class="go">mtd0: 00040000 00020000 &quot;at91bootstrap&quot;</span>
 </span><span class="go">mtd1: 00140000 00020000 &quot;uboot&quot;</span>
@@ -1065,7 +1065,7 @@ are described in the table below.</p>
 <p>By default Ethernet port 1 (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface).
 Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured to obtain IP configuration via <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> client.
 To see obtained IP configuration use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus lan <span class="p">|</span> jsonfilter -e <span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus<span class="w"> </span>lan<span class="w"> </span><span class="p">|</span><span class="w"> </span>jsonfilter<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
 <span class="go">192.168.0.39</span>
 </pre></div>
 </div>
@@ -1077,7 +1077,7 @@ A firewall with blocking rules for incoming traffic is enabled on the WAN
 interface. Therefore, there is no access to the web configuration interface
 through this interface.</p>
 <p>To see obtained IP configuration for WAN network use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus wan <span class="p">|</span> jsonfilter -e <span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus<span class="w"> </span>wan<span class="w"> </span><span class="p">|</span><span class="w"> </span>jsonfilter<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
 <span class="go">10.10.0.168</span>
 </pre></div>
 </div>
@@ -1150,7 +1150,7 @@ SAMA5D3 Xplained and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

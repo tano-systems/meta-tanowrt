@@ -479,13 +479,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-evb-ksz9563-on-sama5d3-eds-board">
 <h4><span class="section-number">4.3.1.1 </span>Build Default Images for EVB-KSZ9563 on SAMA5D3 EDS Board<a class="headerlink" href="#build-default-images-for-evb-ksz9563-on-sama5d3-eds-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/evb-ksz9563-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/evb-ksz9563-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the SD
 card on the EVB-KSZ9563 on SAMA5D3 EDS target board.</p>
 <p class="rubric">For Internal NAND Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/evb-ksz9563-nand.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/evb-ksz9563-nand.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -643,7 +643,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-evb-ksz9563-sd-yml-target">
 <h3><span class="section-number">4.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-sd-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 135M</span>
 <span class="go">-rwxr-xr-x 2  20K Jul 27 17:54 at91bootstrap.bin-sdcard</span>
 <span class="go">-rw-r--r-- 2  50K Jul 27 17:55 at91-evb-ksz9563--4.19.78+git0+046113c438+ksz2-tano0.2.20.20.0.1-evb-ksz9563-sd-20220727145300.dtb</span>
@@ -671,7 +671,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 719K Jul 27 17:53 u-boot-sdcard-v2020.01-at91+gitAUTOINC+af59b26c22-tano0.0.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 135M</span>
 <span class="go">-rwxr-xr-x 2  20K Jul 27 17:54 at91bootstrap.bin-sdcard</span>
 <span class="go">-rw-r--r-- 2  50K Jul 27 17:55 at91-evb-ksz9563--4.19.78+git0+046113c438+ksz2-tano0.2.20.20.0.1-evb-ksz9563-sd-20220727145300.dtb</span>
@@ -730,7 +730,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-evb-ksz9563-nand-yml-target">
 <h3><span class="section-number">4.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-evb-ksz9563-nand-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-nand]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-nand]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 123M</span>
 <span class="go">-rwxr-xr-x 2  15K Jul 27 17:47 at91bootstrap.bin-nand</span>
 <span class="go">-rw-r--r-- 2  16K Jul 27 17:47 at91bootstrap.bin-nand-pmecc</span>
@@ -768,7 +768,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 719K Jul 27 17:47 u-boot-sdcard-v2020.01-at91+gitAUTOINC+af59b26c22-tano0.0.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-nand]$ </span>ls -gGh
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/evb-ksz9563-nand]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 123M</span>
 <span class="go">-rwxr-xr-x 2  15K Jul 27 17:47 at91bootstrap.bin-nand</span>
 <span class="go">-rw-r--r-- 2  16K Jul 27 17:47 at91bootstrap.bin-nand-pmecc</span>
@@ -856,12 +856,12 @@ for EVB-KSZ9563 on SAMA5D3 EDS board. See common instructions in <a class="refer
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-nand.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-evb-ksz9563-nand.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-evb-ksz9563-nand.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">evb-ksz9563-sd.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-evb-ksz9563-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-evb-ksz9563-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -1038,7 +1038,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

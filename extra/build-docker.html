@@ -131,17 +131,17 @@
   <section id="using-dockerized-build-environment">
 <h1>Using Dockerized Build Environment<a class="headerlink" href="#using-dockerized-build-environment" title="Permalink to this heading"></a></h1>
 <p>Clone TanoWrt repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:/ $ </span><span class="nb">cd</span> ~
-<span class="gp">user@host:~ $ </span>git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
-<span class="gp">user@host:~ $ </span><span class="nb">cd</span> ~/tanowrt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:/ $ </span><span class="nb">cd</span><span class="w"> </span>~
+<span class="gp">user@host:~ $ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
+<span class="gp">user@host:~ $ </span><span class="nb">cd</span><span class="w"> </span>~/tanowrt
 </pre></div>
 </div>
 <p>Build docker image:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span><span class="nb">cd</span> .ci
-<span class="gp">user@host:~/tanowrt/.ci $ </span>docker build -t ubuntu:tanowrt-build <span class="se">\</span>
-                                       --build-arg <span class="nv">host_uid</span><span class="o">=</span><span class="k">$(</span>id -u<span class="k">)</span> <span class="se">\</span>
-                                       --build-arg <span class="nv">host_gid</span><span class="o">=</span><span class="k">$(</span>id -g<span class="k">)</span> <span class="se">\</span>
-                                       -f Dockerfile .
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span><span class="nb">cd</span><span class="w"> </span>.ci
+<span class="gp">user@host:~/tanowrt/.ci $ </span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ubuntu:tanowrt-build<span class="w"> </span><span class="se">\</span>
+<span class="w">                                       </span>--build-arg<span class="w"> </span><span class="nv">host_uid</span><span class="o">=</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                       </span>--build-arg<span class="w"> </span><span class="nv">host_gid</span><span class="o">=</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                       </span>-f<span class="w"> </span>Dockerfile<span class="w"> </span>.
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -153,7 +153,7 @@ user name by adding the following parameter to the docker build command:</p>
 </div>
 </div>
 <p>Run created docker image and mount cloned TanoWrt repository to it:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt ubuntu:tanowrt-build /bin/bash
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>~/tanowrt:/tanowrt<span class="w"> </span>ubuntu:tanowrt-build<span class="w"> </span>/bin/bash
 <span class="gp">build@abbc5ae583ff:~$</span>
 </pre></div>
 </div>
@@ -161,8 +161,8 @@ user name by adding the following parameter to the docker build command:</p>
 directory in docker. Now you can use kas utility to building TanoWrt and all other
 available build commands described in the <a class="reference internal" href="../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a> section.</p>
 <p>For example, build TanoWrt default images for the <code class="docutils literal notranslate"><span class="pre">qemux86-64-screen</span></code> machine:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">cd</span> /tanowrt
-<span class="gp">build@abbc5ae583ff:/tanowrt$ </span>kas build kas/targets/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">cd</span><span class="w"> </span>/tanowrt
+<span class="gp">build@abbc5ae583ff:/tanowrt$ </span>kas<span class="w"> </span>build<span class="w"> </span>kas/targets/qemux86-64-screen.yml
 </pre></div>
 </div>
 <p>The built images are available both in the
@@ -179,9 +179,9 @@ you can use it in the docker by adding following parameter to <strong class="com
 </div>
 <p>For example, if you have a <code class="file docutils literal notranslate"><span class="pre">/opt/my-downloads</span></code> directory for storing downloads
 on the host, your <strong class="command">docker run</strong> command should be like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt <span class="se">\</span>
-<span class="hll">                                          -v /opt/my-downloads:/tanowrt/build/downloads <span class="se">\</span>
-</span>                                           ubuntu:tanowrt-build /bin/bash
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>~/tanowrt:/tanowrt<span class="w"> </span><span class="se">\</span>
+<span class="hll"><span class="w">                                          </span>-v<span class="w"> </span>/opt/my-downloads:/tanowrt/build/downloads<span class="w"> </span><span class="se">\</span>
+</span><span class="w">                                           </span>ubuntu:tanowrt-build<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <div class="admonition note">
@@ -191,7 +191,7 @@ on the host, your <strong class="command">docker run</strong> command should be 
 specify the path to this directory in the
 <a class="reference internal" href="../build.html#sec-build-local-conf"><span class="std std-ref">local configuration</span></a>
 in the <code class="docutils literal notranslate"><span class="pre">DL_DIR</span></code> variable.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span> <span class="s1">&#39;DL_DIR = &quot;&lt;path-to-downloads-dir&gt;&quot;&#39;</span> &gt;&gt; /tanowrt/local.conf
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;DL_DIR = &quot;&lt;path-to-downloads-dir&gt;&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/tanowrt/local.conf
 </pre></div>
 </div>
 </div>
@@ -205,9 +205,9 @@ you can use it in the docker by adding following parameter to <strong class="com
 </div>
 <p>For example, if you have a <code class="file docutils literal notranslate"><span class="pre">/opt/sstate-cache</span></code> directory for storing shared
 state cache on the host, your <strong class="command">docker run</strong> command should be like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker run --rm -it -v ~/tanowrt:/tanowrt <span class="se">\</span>
-<span class="hll">                                          -v /opt/sstate-cache:/tanowrt/build/sstate-cache <span class="se">\</span>
-</span>                                           ubuntu:tanowrt-build /bin/bash
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host:~/tanowrt $ </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>~/tanowrt:/tanowrt<span class="w"> </span><span class="se">\</span>
+<span class="hll"><span class="w">                                          </span>-v<span class="w"> </span>/opt/sstate-cache:/tanowrt/build/sstate-cache<span class="w"> </span><span class="se">\</span>
+</span><span class="w">                                           </span>ubuntu:tanowrt-build<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <div class="admonition note">
@@ -217,7 +217,7 @@ state cache on the host, your <strong class="command">docker run</strong> comman
 specify the path to this directory in the
 <a class="reference internal" href="../build.html#sec-build-local-conf"><span class="std std-ref">local configuration</span></a>
 in the <code class="docutils literal notranslate"><span class="pre">SSTATE_DIR</span></code> variable:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span> <span class="s1">&#39;SSTATE_DIR = &quot;&lt;path-to-sstate-cache-dir&gt;&quot;&#39;</span> &gt;&gt; /tanowrt/local.conf
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">build@abbc5ae583ff:~$ </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;SSTATE_DIR = &quot;&lt;path-to-sstate-cache-dir&gt;&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/tanowrt/local.conf
 </pre></div>
 </div>
 </div>
@@ -231,7 +231,7 @@ in the <code class="docutils literal notranslate"><span class="pre">SSTATE_DIR</
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

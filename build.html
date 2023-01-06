@@ -165,14 +165,14 @@ is Ubuntu 20.04 or higher.</p>
 <h3><a class="toc-backref" href="#id2">Install Required Packages</a><a class="headerlink" href="#install-required-packages" title="Permalink to this heading"></a></h3>
 <p>For a successful build, additional packages must be installed.
 To do this, run the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib <span class="se">\</span>
-       build-essential chrpath socat cpio python python3 python3-pip python3-pexpect <span class="se">\</span>
-       xz-utils debianutils iputils-ping file
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gawk<span class="w"> </span>wget<span class="w"> </span>git-core<span class="w"> </span>diffstat<span class="w"> </span>unzip<span class="w"> </span>texinfo<span class="w"> </span>gcc-multilib<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>build-essential<span class="w"> </span>chrpath<span class="w"> </span>socat<span class="w"> </span>cpio<span class="w"> </span>python<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>python3-pexpect<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>xz-utils<span class="w"> </span>debianutils<span class="w"> </span>iputils-ping<span class="w"> </span>file
 </pre></div>
 </div>
 <p>If you are using Ubuntu, you will need to configure the default system shell
 command interpreter for shell scripts to bash. You can do it with the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo dpkg-reconfigure dash
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo<span class="w"> </span>dpkg-reconfigure<span class="w"> </span>dash
 </pre></div>
 </div>
 <p>Select <em class="menuselection">No</em> when it asks you to install dash as <code class="file docutils literal notranslate"><span class="pre">/bin/sh</span></code>.</p>
@@ -182,7 +182,7 @@ command interpreter for shell scripts to bash. You can do it with the command:</
 <p>To build TanoWrt the kas utility is used. <a class="reference external" href="http://github.com/siemens/kas">kas</a> is
 a setup tool for BitBake based projects by Siemens.</p>
 <p>To install kas into your python site-package repository, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3 install <span class="nv">kas</span><span class="o">==</span><span class="m">3</span>.1.0
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span><span class="nv">kas</span><span class="o">==</span><span class="m">3</span>.1.0
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation">official kas documentation</a>
@@ -191,8 +191,8 @@ for more details about kas utility.</p>
 <section id="clone-tanowrt-repository">
 <h3><a class="toc-backref" href="#id4">Clone TanoWrt Repository</a><a class="headerlink" href="#clone-tanowrt-repository" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~
-<span class="gp">$ </span>git clone https://github.com/tano-systems/meta-tanowrt tanowrt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
+<span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
 </pre></div>
 </div>
 </section>
@@ -201,8 +201,8 @@ for more details about kas utility.</p>
 <p>When using the kas utility, it is required to have BitBake at the root
 of the meta-tanowrt layer. The BitBake submodule must be initialized
 and updated before building:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~/tanowrt
-<span class="gp">$ </span>git submodule update --init
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/tanowrt
+<span class="gp">$ </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init
 </pre></div>
 </div>
 </section>
@@ -210,7 +210,7 @@ and updated before building:</p>
 <section id="build">
 <h2><a class="toc-backref" href="#id6">Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>In general to build TanoWrt you need to use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build <span class="o">[</span>--target &lt;target-recipe&gt;<span class="o">]</span> &lt;target-yml&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span><span class="o">[</span>--target<span class="w"> </span>&lt;target-recipe&gt;<span class="o">]</span><span class="w"> </span>&lt;target-yml&gt;
 </pre></div>
 </div>
 <p>Where:</p>
@@ -243,8 +243,8 @@ for example by adding the following line to your <code class="docutils literal n
 </div>
 <p>For example, to build TanoWrt images for internal eMMC flash of the NXP LS1028A RDB board
 you need to run following commands from <code class="file docutils literal notranslate"><span class="pre">meta-tanowrt</span></code> root directory:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span><span class="nb">cd</span> ~/tanowrt
-<span class="gp"># </span>kas build kas/targets/ls1028ardb-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span><span class="nb">cd</span><span class="w"> </span>~/tanowrt
+<span class="gp"># </span>kas<span class="w"> </span>build<span class="w"> </span>kas/targets/ls1028ardb-emmc.yml
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="overview.html#sec-supported-targets"><span class="std std-ref">Demonstration Boards Support</span></a> to select the proper target YML file.</p>
@@ -265,9 +265,9 @@ in the <code class="file docutils literal notranslate"><span class="pre">local.c
 <span class="pre">:file:`build/conf/local.conf</span></code>. For example, you can specify
 an external directory for storing downloaded content, as well
 as configure build parallelism settings:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DL_DIR</span> <span class="o">=</span> <span class="s2">&quot;/home/build-user/downloads&quot;</span>
-<span class="nv">BB_NUMBER_THREADS</span> <span class="o">=</span> <span class="s2">&quot;8&quot;</span>
-<span class="nv">PARALLEL_MAKE</span> <span class="o">=</span> <span class="s2">&quot;-j 8&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DL_DIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/home/build-user/downloads&quot;</span>
+<span class="nv">BB_NUMBER_THREADS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;8&quot;</span>
+<span class="nv">PARALLEL_MAKE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;-j 8&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -283,38 +283,38 @@ the number of available processors.</p>
 <section id="qemu-x86-64">
 <h3><a class="toc-backref" href="#id9">QEMU (x86_64)</a><a class="headerlink" href="#qemu-x86-64" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~
-<span class="gp">$ </span>git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
-<span class="gp">$ </span><span class="nb">cd</span> ~/tanowrt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
+<span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/tanowrt
 </pre></div>
 </div>
 <p>Build TanoWrt image by running the <code class="docutils literal notranslate"><span class="pre">kas</span> <span class="pre">build</span></code> command with the path to the target YML-file as an argument:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build kas/targets/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>kas/targets/qemux86-64-screen.yml
 </pre></div>
 </div>
 <p>Run the built image in QEMU:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;DISPLAY=:0 runqemu qemux86-64-screen&quot;</span> kas/targets/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DISPLAY=:0 runqemu qemux86-64-screen&quot;</span><span class="w"> </span>kas/targets/qemux86-64-screen.yml
 </pre></div>
 </div>
 <p>or without graphics:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;runqemu qemux86-64-screen nographics&quot;</span> kas/targets/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;runqemu qemux86-64-screen nographics&quot;</span><span class="w"> </span>kas/targets/qemux86-64-screen.yml
 </pre></div>
 </div>
 </section>
 <section id="intel-core-i7-x86-64">
 <h3><a class="toc-backref" href="#id10">Intel Core i7 (x86_64)</a><a class="headerlink" href="#intel-core-i7-x86-64" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~
-<span class="gp">$ </span>git clone --recursive https://github.com/tano-systems/meta-tanowrt tanowrt
-<span class="gp">$ </span><span class="nb">cd</span> ~/tanowrt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
+<span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/tanowrt
 </pre></div>
 </div>
 <p>Build TanoWrt image by running the <code class="docutils literal notranslate"><span class="pre">kas</span> <span class="pre">build</span></code> command with the path to the target YML-file as an argument:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build kas/targets/intel-x86_64-corei7.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>kas/targets/intel-x86_64-corei7.yml
 </pre></div>
 </div>
 <p>Run the built image in QEMU:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;DISPLAY=:0 runqemu intel-x86_64-corei7&quot;</span> kas/targets/intel-x86_64-corei7.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DISPLAY=:0 runqemu intel-x86_64-corei7&quot;</span><span class="w"> </span>kas/targets/intel-x86_64-corei7.yml
 </pre></div>
 </div>
 </section>
@@ -343,7 +343,7 @@ the number of available processors.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

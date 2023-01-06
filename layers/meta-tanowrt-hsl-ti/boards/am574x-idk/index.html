@@ -495,13 +495,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-am574x-idk-evm-board">
 <h4><span class="section-number">3.3.1.1 </span>Build Default Images for AM574x IDK EVM Board<a class="headerlink" href="#build-default-images-for-am574x-idk-evm-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For microSD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am574x-idk-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/am574x-idk-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the microSD
 card on the AM574x IDK EVM target board.</p>
 <p class="rubric">For Internal eMMC Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am574x-idk-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/am574x-idk-emmc.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -662,7 +662,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-am574x-idk-sd-yml-target">
 <h3><span class="section-number">3.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am574x-idk-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am574x-idk-sd-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 214M</span>
 <span class="go">-rw-r--r-- 2  125K Jul 27 13:12 am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-sd-20220727100754.dtb</span>
 <span class="go">-rw-r--r-- 2   91K Jul 27 13:12 am572x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-sd-20220727100754.dtb</span>
@@ -696,7 +696,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rwxr-xr-x 2  103K Jul 27 13:09 u-boot-spl.bin-am574x-idk-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano3-sdcard-defconfig</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 214M</span>
 <span class="go">-rw-r--r-- 2  125K Jul 27 13:12 am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-sd-20220727100754.dtb</span>
 <span class="go">lrwxrwxrwx 2    91 Jul 27 13:12 am571x-idk-am574x-idk-sd.dtb -&gt; am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-sd-20220727100754.dtb</span>
@@ -779,7 +779,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-am574x-idk-emmc-yml-target">
 <h3><span class="section-number">3.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am574x-idk-emmc.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am574x-idk-emmc-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-emmc]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-emmc]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 229M</span>
 <span class="go">-rw-r--r-- 2  125K Jul 27 13:06 am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-emmc-20220727085953.dtb</span>
 <span class="go">-rw-r--r-- 2   91K Jul 27 13:06 am572x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-emmc-20220727085953.dtb</span>
@@ -830,7 +830,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rwxr-xr-x 2  103K Jul 27 12:33 u-boot-spl.bin-am574x-idk-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano3-sdcard-defconfig</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-emmc]$ </span>ls -gGh
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am574x-idk-emmc]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 229M</span>
 <span class="go">-rw-r--r-- 2  125K Jul 27 13:06 am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-emmc-20220727085953.dtb</span>
 <span class="go">lrwxrwxrwx 2    93 Jul 27 13:06 am571x-idk-am574x-idk-emmc.dtb -&gt; am571x-idk--4.19.94-rt39+git0+a242ccf3f1-tano3.2.20.20.8.6-am574x-idk-emmc-20220727085953.dtb</span>
@@ -956,12 +956,12 @@ for AM574x IDK EVM board. See common instructions in <a class="reference interna
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">am574x-idk-emmc.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-am574x-idk-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-am574x-idk-emmc.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">am574x-idk-sd.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-am574x-idk-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-am574x-idk-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -1135,7 +1135,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

@@ -461,13 +461,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-nxp-ls1028a-rdb-board">
 <h4><span class="section-number">1.4.1.1 </span>Build Default Images for NXP LS1028A RDB Board<a class="headerlink" href="#build-default-images-for-nxp-ls1028a-rdb-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/ls1028ardb-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/ls1028ardb-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the SD
 card on the NXP LS1028A RDB target board.</p>
 <p class="rubric">For Internal eMMC Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/ls1028ardb-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/ls1028ardb-emmc.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -479,7 +479,7 @@ and run from the eMMC flash memory.</p>
 <section id="build-image-with-qt5-support-for-nxp-ls1028a-rdb-board">
 <h4><span class="section-number">1.4.1.2 </span>Build Image with Qt5 Support for NXP LS1028A RDB Board<a class="headerlink" href="#build-image-with-qt5-support-for-nxp-ls1028a-rdb-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For Internal eMMC Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build --target tanowrt-image-qt5-swu-factory targets/kas/ls1028ardb-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>tanowrt-image-qt5-swu-factory<span class="w"> </span>targets/kas/ls1028ardb-emmc.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -649,7 +649,7 @@ and <code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.y
 a complete listing, and a reduced listing without the symbolic links display.</p>
 <p class="rubric">Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.yml</span></code> Target</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 1.1G</span>
 <span class="go">drwxr-xr-x 2   60 Jul 24 19:32 dp</span>
 <span class="go">-rw-r--r-- 2  14M Jul 24 19:32 fitImage--5.4.3-rt1-tano0.2.12.20.0.7-ls1028ardb-sd-20220724163125.bin</span>
@@ -682,7 +682,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 667K Jul 24 16:42 u-boot-sdcard-defconfig-2018.03-r0.nxp1.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 1.1G</span>
 <span class="go">drwxr-xr-x 2   60 Jul 24 19:32 dp</span>
 <span class="go">lrwxrwxrwx 2   70 Jul 24 19:32 fitImage -&gt; fitImage--5.4.3-rt1-tano0.2.12.20.0.7-ls1028ardb-sd-20220724163125.bin</span>
@@ -747,7 +747,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 </div></div>
 <p class="rubric">Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code> Target</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-emmc]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-emmc]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 1010M</span>
 <span class="go">drwxr-xr-x 2   60 Jul 24 16:56 dp</span>
 <span class="go">-rw-r--r-- 2  14M Jul 24 17:04 fitImage--5.4.3-rt1-tano0.2.12.20.0.7-ls1028ardb-emmc-20220724135405.bin</span>
@@ -793,7 +793,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 667K Jul 24 16:56 u-boot-sdcard-defconfig-2018.03-r0.nxp1.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-emmc]$ </span>ls -gGh
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/ls1028ardb-emmc]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 1010M</span>
 <span class="go">drwxr-xr-x 2   60 Jul 24 16:56 dp</span>
 <span class="go">lrwxrwxrwx 2   72 Jul 24 17:04 fitImage -&gt; fitImage--5.4.3-rt1-tano0.2.12.20.0.7-ls1028ardb-emmc-20220724135405.bin</span>
@@ -892,12 +892,12 @@ for NXP LS1028A RDB board. See common instructions in <a class="reference intern
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">ls1028ardb-emmc.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-ls1028ardb-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-ls1028ardb-emmc.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">ls1028ardb-sd.yml</span></code> target to the SD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-ls1028ardb-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-ls1028ardb-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -999,7 +999,7 @@ into a bridge (<code class="docutils literal notranslate"><span class="pre">br-l
 Bridge <code class="docutils literal notranslate"><span class="pre">br-lan</span></code> is in the LAN firewall zone. By default, the IP address
 on the <code class="docutils literal notranslate"><span class="pre">br-lan</span></code> bridge is configured using a <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> client.</p>
 <p>To see obtained IP configuration for LAN network use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus lan <span class="p">|</span> jsonfilter -e <span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus<span class="w"> </span>lan<span class="w"> </span><span class="p">|</span><span class="w"> </span>jsonfilter<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
 <span class="go">192.168.10.132</span>
 </pre></div>
 </div>
@@ -1012,7 +1012,7 @@ A firewall with blocking rules for incoming traffic is enabled on the <code clas
 interface. Therefore, there is no access to the web configuration interface
 through this interface.</p>
 <p>To see obtained IP configuration for WAN network use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus wan <span class="p">|</span> jsonfilter -e <span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus<span class="w"> </span>wan<span class="w"> </span><span class="p">|</span><span class="w"> </span>jsonfilter<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
 <span class="go">10.10.0.168</span>
 </pre></div>
 </div>
@@ -1062,7 +1062,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

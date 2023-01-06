@@ -338,19 +338,19 @@ about the produced build artifacts.</p></li>
 <h3><span class="section-number">1.2.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <section id="build-default-image-for-common-x86-64-virtual-machine">
 <h4><span class="section-number">1.2.1.1 </span>Build Default Image for Common x86-64 Virtual Machine<a class="headerlink" href="#build-default-image-for-common-x86-64-virtual-machine" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/qemux86-64.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/qemux86-64.yml
 </pre></div>
 </div>
 </section>
 <section id="build-default-image-for-common-x86-64-with-screen-support-virtual-machine">
 <h4><span class="section-number">1.2.1.2 </span>Build Default Image for Common x86-64 with Screen Support Virtual Machine<a class="headerlink" href="#build-default-image-for-common-x86-64-with-screen-support-virtual-machine" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/qemux86-64-screen.yml
 </pre></div>
 </div>
 </section>
 <section id="build-image-with-qt5-for-common-x86-64-with-screen-support-virtual-machine">
 <h4><span class="section-number">1.2.1.3 </span>Build Image with Qt5 for Common x86-64 with Screen Support Virtual Machine<a class="headerlink" href="#build-image-with-qt5-for-common-x86-64-with-screen-support-virtual-machine" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build --target tanowrt-image-full-qt5 targets/kas/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>tanowrt-image-full-qt5<span class="w"> </span>targets/kas/qemux86-64-screen.yml
 </pre></div>
 </div>
 </section>
@@ -470,7 +470,7 @@ value of the <code class="docutils literal notranslate"><span class="pre">MACHIN
 target build. There are two types of listings here —
 a complete listing, and a reduced listing without the symbolic links display.</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 413M</span>
 <span class="go">-rw-r--r-- 2 9.2M Jul 29 16:26 bzImage--5.10.70+git0+7dda2a9f69-tano0.2.7.20.0-qemux86-64-screen-20220729132401.bin</span>
 <span class="go">-rw-r--r-- 2  12M Jul 29 16:26 bzImage-5.10.70+gitAUTOINC+7dda2a9f69-tano0.2.7.20.0-qemux86-64-screen.ext4</span>
@@ -505,7 +505,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 278K Jul 29 16:26 tanowrt-image-initramfs-swu-factory-qemux86-64-screen-20220729132401.testdata.json</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/qemux86-64-screen]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 413M</span>
 <span class="go">lrwxrwxrwx 2   84 Jul 29 16:26 bzImage -&gt; bzImage--5.10.70+git0+7dda2a9f69-tano0.2.7.20.0-qemux86-64-screen-20220729132401.bin</span>
 <span class="go">-rw-r--r-- 2 9.2M Jul 29 16:26 bzImage--5.10.70+git0+7dda2a9f69-tano0.2.7.20.0-qemux86-64-screen-20220729132401.bin</span>
@@ -562,7 +562,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="booting-and-running">
 <span id="sec-qemux86-booting"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.4 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <p>To run the built virtual machine image in QEMU you should run the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;runqemu &lt;MACHINE&gt;&quot;</span> kas/targets/&lt;TARGET_YAML&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;runqemu &lt;MACHINE&gt;&quot;</span><span class="w"> </span>kas/targets/&lt;TARGET_YAML&gt;
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> is a target machine name for required target
@@ -570,7 +570,7 @@ and <code class="docutils literal notranslate"><span class="pre">&lt;TARGET_YAML
 You can find values for <code class="docutils literal notranslate"><span class="pre">&lt;MACHINE&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;TARGET_YAML&gt;</span></code> in the table <a class="reference internal" href="#table-qemux86-machines"><span class="std std-numref">Table 1.1</span></a>.
 For example, to start virtual machine for <code class="docutils literal notranslate"><span class="pre">qemux86-64.yml</span></code> target you need
 to run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;runqemu qemux86-64&quot;</span> kas/targets/qemux86-64.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;runqemu qemux86-64&quot;</span><span class="w"> </span>kas/targets/qemux86-64.yml
 </pre></div>
 </div>
 <p>When the virtual machine boots, you can log in using the default
@@ -578,7 +578,7 @@ to run the following command:</p>
 to <a class="reference internal" href="#sec-qemux86-webui"><span class="std std-ref">WebUI</span></a>.</p>
 <p>For running virtual machine with screen support you also need to set proper value
 to environment variable <code class="docutils literal notranslate"><span class="pre">DISPLAY</span></code>. For example, for <code class="docutils literal notranslate"><span class="pre">qemux86-64-screen.yml</span></code> target:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas shell -c <span class="s2">&quot;DISPLAY:=0 runqemu qemux86-64-screen&quot;</span> kas/targets/qemux86-64-screen.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DISPLAY:=0 runqemu qemux86-64-screen&quot;</span><span class="w"> </span>kas/targets/qemux86-64-screen.yml
 </pre></div>
 </div>
 <p>See the following figures, showing the boot up process of the <code class="docutils literal notranslate"><span class="pre">qemux86-64-screen</span></code>
@@ -628,7 +628,7 @@ x86 virtual machine in Oracle VirtualBox.</p>
 enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface has enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> by default.</p>
 <p>Default configuration <code class="file docutils literal notranslate"><span class="pre">/etc/config/network</span></code> for <code class="docutils literal notranslate"><span class="pre">qemux86-64-screen</span></code> machine:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>cat /etc/config/network
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>cat<span class="w"> </span>/etc/config/network
 
 <span class="go">config interface &#39;loopback&#39;</span>
 <span class="go">        option device &#39;lo&#39;</span>
@@ -690,7 +690,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

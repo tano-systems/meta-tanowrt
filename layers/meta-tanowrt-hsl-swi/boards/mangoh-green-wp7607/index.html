@@ -334,7 +334,7 @@ about the produced build artifacts.</p></li>
 <h3><span class="section-number">1.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <section id="build-default-image-for-mangoh-green-board-with-wp7607">
 <h4><span class="section-number">1.3.1.1 </span>Build Default Image for mangOH Green Board with WP7607<a class="headerlink" href="#build-default-image-for-mangoh-green-board-with-wp7607" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/mangoh-green-wp7607.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/mangoh-green-wp7607.yml
 </pre></div>
 </div>
 </section>
@@ -392,7 +392,7 @@ about the produced build artifacts.</p></li>
 </table>
 <p>All user data are stored in overlayfs in partition mtd16 (userapp). You can clean
 up this partition manually after system is boots up using the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>jffs2reset -r -y
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>jffs2reset<span class="w"> </span>-r<span class="w"> </span>-y
 </pre></div>
 </div>
 <p>or over web-interface LuCI (see <span class="guilabel">Restore</span> section in <em class="menuselection">System → Backup</em>).</p>
@@ -472,7 +472,7 @@ by the actual read-only root filesystem <a class="reference internal" href="#sec
 and <code class="docutils literal notranslate"><span class="pre">mangoh-green-wp7607-sd.yml</span></code> target builds. There are two types of listings here —
 a complete listing, and a reduced listing without the symbolic links display.</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 315M</span>
 <span class="go">-rwxr-xr-x 1 530K Jul 29 10:56 appsboot.mbn</span>
 <span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.2k</span>
@@ -507,7 +507,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rw-r--r-- 2 5.6M Jul 29 11:00 zImage--3.18.140+git0+4e1fa14c28-tn-3.2.7.20.0.6-mangoh-green-wp7607-20220729063515.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 315M</span>
 <span class="go">-rwxr-xr-x 1 530K Jul 29 10:56 appsboot.mbn</span>
 <span class="go">-rw-r--r-- 1   32 Jul 29 11:00 boot_hash.2k</span>
@@ -577,7 +577,7 @@ extra information about clearing overlayfs data.</p>
 <li><p>Connect mangOH Green board with your PC via micro USB cable (connector CN311).</p></li>
 <li><p>Power on mangOH Green board.</p></li>
 <li><p>Run the <a class="reference internal" href="../../index.html#sec-hsl-swi-install-swiflash"><span class="std std-ref">swiflash</span></a> utility on your PC as follows:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash -m wp76xx -i &lt;path-to-image&gt; -p &lt;port&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash<span class="w"> </span>-m<span class="w"> </span>wp76xx<span class="w"> </span>-i<span class="w"> </span>&lt;path-to-image&gt;<span class="w"> </span>-p<span class="w"> </span>&lt;port&gt;
 </pre></div>
 </div>
 <p>Where:</p>
@@ -596,9 +596,9 @@ or <code class="file docutils literal notranslate"><span class="pre">/dev/serial
 </dd></dl>
 
 <p>Example:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash -m wp76xx <span class="se">\</span>
-    -p /dev/serial/by-id/usb-Sierra_Wireless__Incorporated_Sierra_Wireless_WP7607_VN91720016071042 <span class="se">\</span>
-    -i ~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607/tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>swiflash<span class="w"> </span>-m<span class="w"> </span>wp76xx<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span>/dev/serial/by-id/usb-Sierra_Wireless__Incorporated_Sierra_Wireless_WP7607_VN91720016071042<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-i<span class="w"> </span>~/tanowrt/build/tanowrt-glibc/deploy/images/mangoh-green-wp7607/tanowrt-image-full-mangoh-green-wp7607.wp76xx.spk
 </pre></div>
 </div>
 </li>
@@ -748,7 +748,7 @@ mangOH Green with WP7607 and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

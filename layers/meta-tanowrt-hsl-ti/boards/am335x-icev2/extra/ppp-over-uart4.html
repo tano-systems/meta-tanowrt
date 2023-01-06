@@ -179,7 +179,7 @@ null-modem cable you need to use the following pins of the J3 connector:</p>
 </table>
 <p>To establish a connection on the PC side you need to run the pppd service with
 the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd nodetach <span class="nb">local</span> lock noauth nocrtscts passive &lt;IP-1&gt;:&lt;IP-2&gt; &lt;serial-device&gt; &lt;baudrate&gt; <span class="p">&amp;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd<span class="w"> </span>nodetach<span class="w"> </span><span class="nb">local</span><span class="w"> </span>lock<span class="w"> </span>noauth<span class="w"> </span>nocrtscts<span class="w"> </span>passive<span class="w"> </span>&lt;IP-1&gt;:&lt;IP-2&gt;<span class="w"> </span>&lt;serial-device&gt;<span class="w"> </span>&lt;baudrate&gt;<span class="w"> </span><span class="p">&amp;</span>
 </pre></div>
 </div>
 <p>Where:</p>
@@ -193,7 +193,7 @@ the following command:</p>
 <dt><code class="docutils literal notranslate"><span class="pre">&lt;baudrate&gt;</span></code></dt><dd><p>Serial port baud rate (115200 by default). If you need to change the baud rate, you should also
 do it on the AM3359 ICEv2 board in the configuration file <code class="file docutils literal notranslate"><span class="pre">/etc/config/network`</span></code>
 (section <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">interface</span> <span class="pre">'uart4'</span></code>, option <code class="docutils literal notranslate"><span class="pre">pppd_options</span></code>) and execute command</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ubus call network reload
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ubus<span class="w"> </span>call<span class="w"> </span>network<span class="w"> </span>reload
 </pre></div>
 </div>
 </dd>
@@ -203,12 +203,12 @@ do it on the AM3359 ICEv2 board in the configuration file <code class="file docu
 <p>For example, if host PC has a serial device named <code class="file docutils literal notranslate"><span class="pre">/dev/ttyS1</span></code>, the IP addresses
 of the PPP connection should be assigned to <code class="docutils literal notranslate"><span class="pre">172.16.0.100</span></code> (host PC) and <code class="docutils literal notranslate"><span class="pre">172.16.0.1</span></code>
 (ICEv2 board), then pppd should be started with the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd nodetach <span class="nb">local</span> lock noauth nocrtscts passive <span class="m">172</span>.16.0.100:172.16.0.1 /dev/ttyS1 <span class="m">115200</span> <span class="p">&amp;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>pppd<span class="w"> </span>nodetach<span class="w"> </span><span class="nb">local</span><span class="w"> </span>lock<span class="w"> </span>noauth<span class="w"> </span>nocrtscts<span class="w"> </span>passive<span class="w"> </span><span class="m">172</span>.16.0.100:172.16.0.1<span class="w"> </span>/dev/ttyS1<span class="w"> </span><span class="m">115200</span><span class="w"> </span><span class="p">&amp;</span>
 </pre></div>
 </div>
 <p>After executing this command on host PC you should see the <code class="docutils literal notranslate"><span class="pre">ppp0</span></code> interface with
 the assigned IP address <code class="docutils literal notranslate"><span class="pre">172.16.0.100</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ifconfig ppp0
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ifconfig<span class="w"> </span>ppp0
 <span class="go">ppp0: flags=4305&lt;UP,POINTOPOINT,RUNNING,NOART,MULTICAST&gt;  mtu 1500</span>
 <span class="go">          inet addr:172.16.0.100  netmask 255.255.255.255  destination 172.16.0.1</span>
 <span class="go">          ppp  txqueuelen 3  (Point-to-Point Protocol)</span>
@@ -220,7 +220,7 @@ the assigned IP address <code class="docutils literal notranslate"><span class="
 </div>
 <p>Now you can access AM3359 ICEv2 board from host PC using IP address <code class="docutils literal notranslate"><span class="pre">172.16.0.1</span></code>.
 For example, you can test it with the <strong class="command">ping</strong> command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ping <span class="m">172</span>.16.0.1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ping<span class="w"> </span><span class="m">172</span>.16.0.1
 <span class="go">PING 172.16.0.1 (172.16.0.1): 56 data bytes</span>
 <span class="go">64 bytes from 172.16.0.1: seq=0 ttl=64 time=21.212 ms</span>
 <span class="go">64 bytes from 172.16.0.1: seq=1 ttl=64 time=22.162 ms</span>
@@ -243,7 +243,7 @@ For example, you can test it with the <strong class="command">ping</strong> comm
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

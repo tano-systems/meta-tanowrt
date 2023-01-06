@@ -167,7 +167,7 @@
 own right since the build system has a tendency to wear disks heavily.</p></li>
 <li><p>Use the ext4 filesystem for the build disk.</p></li>
 <li><p>Turn off journaling for ext4:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tune2fs -O ^has_journal &lt;disk&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tune2fs<span class="w"> </span>-O<span class="w"> </span>^has_journal<span class="w"> </span>&lt;disk&gt;
 </pre></div>
 </div>
 </li>
@@ -191,7 +191,7 @@ Do not store anything of value on this HDD.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

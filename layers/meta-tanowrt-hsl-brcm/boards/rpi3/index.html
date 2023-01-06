@@ -404,7 +404,7 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-raspberry-pi-3-board">
 <h4><span class="section-number">1.3.1.1 </span>Build Default Images for Raspberry Pi 3 Board<a class="headerlink" href="#build-default-images-for-raspberry-pi-3-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/rpi3-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/rpi3-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the SD
@@ -484,7 +484,7 @@ There are two types of listings here — a complete listing, and a reduced
 listing without the symbolic links and <a class="reference internal" href="../../../../glossary.html#term-DTBO"><span class="xref std std-term">DTBO</span></a> files display.</p>
 <p class="rubric">Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">rpi3-sd.yml</span></code> Target</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/rpi3-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;dtbo</span>$<span class="s2">&quot;</span> <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/rpi3-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;dtbo</span>$<span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 89M</span>
 <span class="go">-rw-r--r-- 2  28K Jul 25 05:08 bcm2710-rpi-3-b-1-5.10.31-tano0.2.7.20.4-rpi3-sd-20220725014408.dtb</span>
 <span class="go">-rw-r--r-- 2  29K Jul 25 05:08 bcm2710-rpi-3-b-plus-1-5.10.31-tano0.2.7.20.4-rpi3-sd-20220725014408.dtb</span>
@@ -505,7 +505,7 @@ listing without the symbolic links and <a class="reference internal" href="../..
 <span class="go">-rw-r--r-- 2 6.4M Jul 25 05:08 uImage-1-5.10.31-tano0.2.7.20.4-rpi3-sd-20220725014408.bin</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/rpi3-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/rpi3-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 89M</span>
 <span class="go">-rw-r--r-- 2 1.6K Jul 25 05:08 at86rf233-1-5.10.31-tano0.2.7.20.4-rpi3-sd-20220725014408.dtbo</span>
 <span class="go">lrwxrwxrwx 2   62 Jul 25 05:08 at86rf233.dtbo -&gt; at86rf233-1-5.10.31-tano0.2.7.20.4-rpi3-sd-20220725014408.dtbo</span>
@@ -639,7 +639,7 @@ for Raspberry Pi 3 board. See common instructions in <a class="reference interna
 <p class="rubric">Examples</p>
 <p>Writing bootable image for the <code class="docutils literal notranslate"><span class="pre">rpi3-sd.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-rpi3-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-rpi3-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -692,7 +692,7 @@ enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

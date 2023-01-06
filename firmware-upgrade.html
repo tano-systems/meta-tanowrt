@@ -150,12 +150,12 @@ the running system via CLI (Command Line Interface) or WebUI (Web User Interface
 <p>Use the following commands to upgrade the firmware using the command line:</p>
 <ul>
 <li><p>Upgrade from a local file (e.g. on an USB flash drive):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>swupdate-client /mnt/sdb1/&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>swupdate-client<span class="w"> </span>/mnt/sdb1/&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu
 </pre></div>
 </div>
 </li>
 <li><p>Upgrade from a file hosted on a remote HTTP server:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>wget -O- http://remote.server.com/path/to/&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu <span class="p">|</span> swupdate-client
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>wget<span class="w"> </span>-O-<span class="w"> </span>http://remote.server.com/path/to/&lt;rootfs-image&gt;-swu-&lt;MACHINE&gt;.swu<span class="w"> </span><span class="p">|</span><span class="w"> </span>swupdate-client
 </pre></div>
 </div>
 </li>
@@ -189,7 +189,7 @@ Next, follow the instructions on the page.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

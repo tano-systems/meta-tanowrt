@@ -150,17 +150,17 @@ And images intended to write to USB flash drive have
 the extension <code class="file docutils literal notranslate"><span class="pre">.wic</span></code>.</p>
 <p>For example, writing bootable image for
 <a class="reference internal" href="layers/meta-tanowrt-hsl-rockchip/boards/boardcon-em3568/index.html#machine-boardcon-em3568"><span class="std std-ref">Boardcon EM3568</span></a> board to SD card:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo dd <span class="k">if</span><span class="o">=</span>~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3568-sd/tanowrt-image-full-boardcon-em3568-sd.sdcard.img <span class="se">\</span>
-          <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1 <span class="se">\</span>
-          <span class="nv">bs</span><span class="o">=</span>1k
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3568-sd/tanowrt-image-full-boardcon-em3568-sd.sdcard.img<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span><span class="nv">bs</span><span class="o">=</span>1k
 </pre></div>
 </div>
 <p>Where <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code> is the device name of the SD card.</p>
 <p>Another example, write bootable image for
 <a class="reference internal" href="layers/meta-tanowrt-hsl-baikal/boards/mbm/index.html#machine-mbm20"><span class="std std-ref">MBM 2.0</span></a> board to USB flash drive:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo dd <span class="k">if</span><span class="o">=</span>~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20.wic <span class="se">\</span>
-          <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="se">\</span>
-          <span class="nv">bs</span><span class="o">=</span>1k
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20/tanowrt-image-full-mbm20.wic<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span><span class="nv">of</span><span class="o">=</span>/dev/sdc<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span><span class="nv">bs</span><span class="o">=</span>1k
 </pre></div>
 </div>
 <p>Where <code class="file docutils literal notranslate"><span class="pre">/dev/sdc</span></code> is the device name of the USB flash drive.</p>
@@ -174,7 +174,7 @@ data to media (<strong class="command">sync</strong> command) or unmount it.</p>
 </pre></div>
 </div>
 <p>Unmounting drive (<code class="file docutils literal notranslate"><span class="pre">/mnt/mmcblk1</span></code> in this example):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo umount /mnt/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>umount<span class="w"> </span>/mnt/mmcblk1
 </pre></div>
 </div>
 <p>In the case of unmounting, it is not necessary to use the
@@ -208,7 +208,7 @@ we recommend to use <a class="reference external" href="https://www.osforensics.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

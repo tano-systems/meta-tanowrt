@@ -444,19 +444,19 @@ about the produced build artifacts.</p></li>
 <h3><span class="section-number">1.3.1 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <section id="build-default-images-for-mbm-1-0-board">
 <h4><span class="section-number">1.3.1.1 </span>Build Default Images for MBM 1.0 Board<a class="headerlink" href="#build-default-images-for-mbm-1-0-board" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/mbm10.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/mbm10.yml
 </pre></div>
 </div>
 </section>
 <section id="build-default-images-for-mbm-2-0-board">
 <h4><span class="section-number">1.3.1.2 </span>Build Default Images for MBM 2.0 Board<a class="headerlink" href="#build-default-images-for-mbm-2-0-board" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/mbm20.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/mbm20.yml
 </pre></div>
 </div>
 </section>
 <section id="build-tanowrt-image-full-qt5-image-for-mbm-2-0-board">
 <h4><span class="section-number">1.3.1.3 </span>Build <code class="docutils literal notranslate"><span class="pre">tanowrt-image-full-qt5</span></code> Image for MBM 2.0 Board<a class="headerlink" href="#build-tanowrt-image-full-qt5-image-for-mbm-2-0-board" title="Permalink to this heading"></a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build --target tanowrt-image-full-qt5 targets/kas/mbm20.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>tanowrt-image-full-qt5<span class="w"> </span>targets/kas/mbm20.yml
 </pre></div>
 </div>
 </section>
@@ -534,7 +534,7 @@ value of the <code class="docutils literal notranslate"><span class="pre">MACHIN
 </div>
 <p>For example, below is the complete list of artifacts produced by the
 <code class="docutils literal notranslate"><span class="pre">mbm20.yml</span></code> target build.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20]$ </span>ls -gGh
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/mbm20]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 300M</span>
 <span class="go">drwxr-xr-x 2   40 May 20 18:10 grub</span>
 <span class="go">-rwxr-xr-x 2 2.2K May 20 18:10 grub.cfg</span>
@@ -575,7 +575,7 @@ for described boards. See common instructions in <a class="reference internal" h
 <p class="rubric">Examples</p>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">mbm20.yml</span></code> target to the USB flash drive
 <code class="file docutils literal notranslate"><span class="pre">/dev/sdc</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-mbm20.wic <span class="nv">of</span><span class="o">=</span>/dev/sdc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-mbm20.wic<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/sdc
 </pre></div>
 </div>
 </section>
@@ -651,7 +651,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

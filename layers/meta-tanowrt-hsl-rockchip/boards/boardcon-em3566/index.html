@@ -481,13 +481,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-boardcon-em3566-board">
 <h4><span class="section-number">1.3.1.1 </span>Build Default Images for Boardcon EM3566 Board<a class="headerlink" href="#build-default-images-for-boardcon-em3566-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For microSD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/boardcon-em3566-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/boardcon-em3566-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the microSD
 card on the Boardcon EM3566 target board.</p>
 <p class="rubric">For Internal eMMC Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/boardcon-em3566-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/boardcon-em3566-emmc.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -609,7 +609,7 @@ by the actual read-only root filesystem <a class="reference internal" href="#sec
 </div>
 <p>For example, below is the complete list of artifacts produced by the
 <code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code> target build.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3566-sd]$ </span>ls -gGh
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/boardcon-em3566-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 311M</span>
 <span class="go">-rw-r--r-- 2 105K Jul 20 06:00 boardcon-em3566--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3566-sd-20220720025543.dtb</span>
 <span class="go">lrwxrwxrwx 2   97 Jul 20 06:00 boardcon-em3566-boardcon-em3566-sd.dtb -&gt; boardcon-em3566--4.19.219+git0+40b753b965-tano2.2.20.20.1.8-boardcon-em3566-sd-20220720025543.dtb</span>
@@ -668,12 +668,12 @@ for Boardcon EM3566 board. See common instructions in <a class="reference intern
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">boardcon-em3566-emmc.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-boardcon-em3566-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-boardcon-em3566-emmc.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable image for the <code class="docutils literal notranslate"><span class="pre">boardcon-em3566-sd.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-boardcon-em3566-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-boardcon-em3566-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -741,14 +741,14 @@ your PC and Boardcon EM3566. See <a class="reference internal" href="#sec-boardc
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Linux CLI</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">U-Boot CLI</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">USB Connection with PC</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p class="rubric">Erasing eMMC Using Linux Command Line</p>
 <p>If the device has a bootable Linux system, you can erase the eMMC
 by the following command entered in the Linux terminal:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0 <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span><span class="m">32768</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk0<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1k<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">32768</span>
 </pre></div>
 </div>
 <p>Note that if the Linux distribution flashed on the eMMC flash memory
 is not TanoWrt, the device name of the eMMC flash memory may be different.
 You can usually find out the real device name by analysing the
 system boot log by running the command dmesg. For example:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>dmesg <span class="p">|</span> grep mmcblk
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mmcblk
 <span class="go">[    2.861965] mmcblk1: mmc1:aaaa SL16G 14.8 GiB</span>
 <span class="go">[    2.871858]  mmcblk1: p1 p2 p3 p4 p5 p6</span>
 <span class="hll"><span class="go">[    2.890560] mmcblk0: mmc0:0001 8GTF4R 7.28 GiB</span>
@@ -926,7 +926,7 @@ described in table below.</p>
 <p>By default Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface).
 Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured to obtain IP configuration via <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> client.
 To see obtained IP configuration use the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus lan <span class="p">|</span> jsonfilter -e <span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@tanowrt ~]# </span>ifstatus<span class="w"> </span>lan<span class="w"> </span><span class="p">|</span><span class="w"> </span>jsonfilter<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;@[&quot;ipv4-address&quot;][0].address&#39;</span>
 <span class="go">192.168.0.39</span>
 </pre></div>
 </div>
@@ -989,7 +989,7 @@ Boardcon EM3566  board and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

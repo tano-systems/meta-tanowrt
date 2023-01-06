@@ -457,13 +457,13 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-beaglebone-black-board">
 <h4><span class="section-number">1.3.1.1 </span>Build Default Images for BeagleBone Black Board<a class="headerlink" href="#build-default-images-for-beaglebone-black-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For SD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-bbb-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/am335x-bbb-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the SD
 card on the BeagleBone Black target board.</p>
 <p class="rubric">For Internal eMMC Flash</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-bbb-emmc.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/am335x-bbb-emmc.yml
 </pre></div>
 </div>
 <p>An initial factory installation image will be generated,
@@ -627,7 +627,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-am335x-bbb-sd-yml-target">
 <h3><span class="section-number">1.5.1 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am335x-bbb-sd-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 164M</span>
 <span class="go">-rw-r--r-- 2  60K Jul 25 04:22 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
 <span class="go">-rw-r--r-- 2 4.5M Jul 25 04:22 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.bin</span>
@@ -654,7 +654,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rwxr-xr-x 2  41K Jul 25 04:19 u-boot-spl.bin-am335x-bbb-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 164M</span>
 <span class="go">-rw-r--r-- 2  60K Jul 25 04:22 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
 <span class="go">lrwxrwxrwx 2   92 Jul 25 04:22 am335x-boneblack-am335x-bbb-sd.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-sd-20220725011807.dtb</span>
@@ -717,7 +717,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <section id="build-artifacts-listings-for-am335x-bbb-emmc-yml-target">
 <h3><span class="section-number">1.5.2 </span>Build Artifacts Listings for <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code> Target<a class="headerlink" href="#build-artifacts-listings-for-am335x-bbb-emmc-yml-target" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 186M</span>
 <span class="go">-rw-r--r-- 2  60K Jul 25 04:13 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
 <span class="go">-rw-r--r-- 2 4.5M Jul 25 04:13 fitImage--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.bin</span>
@@ -760,7 +760,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rwxr-xr-x 2  41K Jul 25 04:13 u-boot-spl.bin-am335x-bbb-emmc-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls -gGh
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-bbb-emmc]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 186M</span>
 <span class="go">-rw-r--r-- 2  60K Jul 25 04:13 am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
 <span class="go">lrwxrwxrwx 2   94 Jul 25 04:13 am335x-boneblack-am335x-bbb-emmc.dtb -&gt; am335x-boneblack--5.4.106+git0+519667b0d8-tano0.2.12.20.8.2-am335x-bbb-emmc-20220725005407.dtb</span>
@@ -864,12 +864,12 @@ for BeagleBone Black board. See common instructions in <a class="reference inter
 <p class="rubric">Examples</p>
 <p>Writing factory installation image for the <code class="docutils literal notranslate"><span class="pre">am335x-bbb-emmc.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-am335x-bbb-emmc.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-swu-factory-am335x-bbb-emmc.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">am335x-bbb-sd.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-bbb-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-bbb-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -916,7 +916,7 @@ erase the eMMC flash boot area. For example, this can be done by using the U-Boo
 </pre></div>
 </div>
 <p>or with a command in the Linux terminal:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1 <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span><span class="m">512</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1k<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">512</span>
 </pre></div>
 </div>
 <div class="admonition caution">
@@ -1044,7 +1044,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>

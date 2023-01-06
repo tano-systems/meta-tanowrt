@@ -448,7 +448,7 @@ about the produced build artifacts.</p></li>
 <section id="build-default-images-for-am3359-icev2-evm-board">
 <h4><span class="section-number">2.3.1.1 </span>Build Default Images for AM3359 ICEv2 EVM Board<a class="headerlink" href="#build-default-images-for-am3359-icev2-evm-board" title="Permalink to this heading"></a></h4>
 <p class="rubric">For microSD Card</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas build targets/kas/am335x-icev2-sd.yml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span>targets/kas/am335x-icev2-sd.yml
 </pre></div>
 </div>
 <p>Default images will be produced to boot and run from the microSD
@@ -563,7 +563,7 @@ by the actual read-only root filesystem <a class="reference internal" href="#sec
 target build. There are two types of listings here —
 a complete listing, and a reduced listing without the symbolic links display.</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls -gGh <span class="p">|</span> grep -v -e <span class="s2">&quot;^l&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Reduced</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Complete</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls<span class="w"> </span>-gGh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;^l&quot;</span>
 <span class="go">total 154M</span>
 <span class="go">-rw-r--r-- 2  61K Jul 25 14:07 am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
 <span class="go">-rw-r--r-- 2  62K Jul 25 14:07 am335x-icev2-prueth--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
@@ -591,7 +591,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 <span class="go">-rwxr-xr-x 2  41K Jul 25 14:04 u-boot-spl.bin-am335x-icev2-sd-2020.01+gitAUTOINC+6b5b982e98-r36.tano2-sdcard-defconfig</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls -gGh
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[~/tanowrt/build/tanowrt-glibc/deploy/images/am335x-icev2-sd]$ </span>ls<span class="w"> </span>-gGh
 <span class="go">total 154M</span>
 <span class="go">-rw-r--r-- 2  61K Jul 25 14:07 am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
 <span class="go">lrwxrwxrwx 2   91 Jul 25 14:07 am335x-icev2-am335x-icev2-sd.dtb -&gt; am335x-icev2--5.4.106+git0+519667b0d8-tano0.2.12.20.8.12-am335x-icev2-sd-20220725110331.dtb</span>
@@ -661,7 +661,7 @@ for AM3359 ICEv2 EVM board. See common instructions in <a class="reference inter
 <p class="rubric">Examples</p>
 <p>Writing bootable card image for the <code class="docutils literal notranslate"><span class="pre">am335x-icev2-sd.yml</span></code> target to the microSD
 card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcblk1</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd <span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-icev2-sd.sdcard.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>tanowrt-image-full-am335x-icev2-sd.sdcard.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/mmcblk1
 </pre></div>
 </div>
 </section>
@@ -793,7 +793,7 @@ AM3359 ICEv2 EVM board and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 29.12.2022
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 06.01.2023
     </p>
   </div>
 </footer>
