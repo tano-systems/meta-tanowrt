@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR:append = ".tano88.${INC_PR}"
+PR:append = ".tano89.${INC_PR}"
 
 RDEPENDS:${PN} += "tano-version"
 
