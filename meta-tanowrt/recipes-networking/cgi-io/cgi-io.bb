@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2019-2020 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2019-2023 Tano Systems LLC. All rights reserved.
 #
 
-PR = "tano14"
+PR = "tano15"
 
 DESCRIPTION = "This package contains an cgi utility that is useful for up/downloading files"
 SUMMARY = "CGI utility for handling up/downloading of files"
@@ -22,9 +22,9 @@ SRC_URI = "\
 	file://0001-Import-changes-from-meta-tanowrt-layer.patch \
 "
 
-# 12.10.2020
-# tests: add cram based unit tests
-SRCREV = "ab4c3471b26179b6e1decfb6ca27c4a87df9a0a4"
+# 10.08.2022
+# main: fix two one-byte overreads in header_value()
+SRCREV = "901b0f0463c9d16a8cf5b9ed37118d8484bc9176"
 S = "${WORKDIR}/git"
 
 inherit cmake
