@@ -1,9 +1,9 @@
 # Copyright (C) 2015, MentorGraphics
 # Copyright (C) 2015, Fabio Berton <fabio.berton@ossystems.com.br>
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
-# Copyright (C) 2018-2022, Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano18"
+PR = "tano19"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPL-2.0-only"
@@ -25,9 +25,9 @@ SRC_URI += "\
 	file://0001-kmodloader-Add-support-for-modprobe.blacklist-in-ker.patch \
 "
 
-# 27.07.2021
-# logread: fix erroneous message "Logread connected to" with udp
-SRCREV = "205defb597295a4a8966db3e618cfe41a29bed99"
+# 19.01.2023
+# logd: add support for subscribing to the log object
+SRCREV = "cc34fb7b922f183e6ece5fa0fec31d4eb95c5823"
 
 S = "${WORKDIR}/git"
 
