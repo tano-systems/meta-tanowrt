@@ -1,4 +1,4 @@
-From 769bb53cec51c71363cca26e4cb17059e0c84d0f Mon Sep 17 00:00:00 2001
+From 56661827b0a287d2bb3bcc7e546c73bbc0c1e9cf Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 15 Jan 2021 17:31:35 +0300
 Subject: [PATCH] kmodloader: Add support for modprobe.blacklist in kernel
@@ -11,22 +11,14 @@ Some parts of code in patch are taken from BusyBox 1.32 sources.
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- kmodloader.c | 258 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 256 insertions(+), 2 deletions(-)
+ kmodloader.c | 257 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 255 insertions(+), 2 deletions(-)
 
 diff --git a/kmodloader.c b/kmodloader.c
-index 6f06ee3..762eefb 100644
+index b2e7a8b..cc76686 100644
 --- a/kmodloader.c
 +++ b/kmodloader.c
-@@ -44,6 +44,7 @@ enum {
- 	SCANNED,
- 	PROBE,
- 	LOADED,
-+	BLACKLISTED,
- };
- 
- struct module {
-@@ -451,6 +452,255 @@ static int scan_module_folder(const char *dir)
+@@ -476,6 +476,255 @@ static int scan_module_folder(const char *dir)
  	return rv;
  }
  
@@ -239,7 +231,7 @@ index 6f06ee3..762eefb 100644
 +
 +		blacklisted_modules = gather_options_str(
 +			blacklisted_modules, after_modulename + 1);
-+		
++
 +		if (!blacklisted_modules) {
 +			free(kcmdline_buf);
 +			ULOG_ERR("Failed to gather modprobe options from /proc/cmdline\n");
@@ -282,7 +274,7 @@ index 6f06ee3..762eefb 100644
  static int scan_module_folders(void)
  {
  	int rv = 0;
-@@ -610,7 +860,7 @@ static void load_moddeps(struct module *_m)
+@@ -640,7 +889,7 @@ static void load_moddeps(struct module *_m)
  
  		if (!m)
  			ULOG_ERR("failed to find dependency %s\n", dep);
@@ -291,7 +283,7 @@ index 6f06ee3..762eefb 100644
  			m->state = PROBE;
  			load_moddeps(m);
  		}
-@@ -895,6 +1145,8 @@ static int main_modprobe(int argc, char **argv)
+@@ -925,6 +1174,8 @@ static int main_modprobe(int argc, char **argv)
  	if (scan_loaded_modules())
  		return -1;
  
@@ -300,8 +292,8 @@ index 6f06ee3..762eefb 100644
  	do {
  		char *name;
  
-@@ -968,6 +1220,8 @@ static int main_loader(int argc, char **argv)
- 		return -1;
+@@ -1001,6 +1252,8 @@ static int main_loader(int argc, char **argv)
+ 		goto free_path;
  	}
  
 +	scan_module_blacklists();
@@ -309,15 +301,15 @@ index 6f06ee3..762eefb 100644
  	ULOG_INFO("loading kernel modules from %s\n", path);
  
  	if (glob(path, gl_flags, NULL, &gl) < 0)
-@@ -996,7 +1250,7 @@ static int main_loader(int argc, char **argv)
+@@ -1029,7 +1282,7 @@ static int main_loader(int argc, char **argv)
  				*opts++ = '\0';
  
  			m = find_module(get_module_name(mod));
--			if (!m || (m->state == LOADED))
+-			if (!m || m->state == LOADED || m->state == BLACKLISTED)
 +			if (!m || (m->state == LOADED) || (m->state == BLACKLISTED))
  				continue;
  
- 			if (opts)
+ 			if (opts) {
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
