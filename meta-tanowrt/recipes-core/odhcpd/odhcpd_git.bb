@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano27"
+PR = "tano28"
 
 SUMMARY = "OpenWrt DHCP/DHCPv6(-PD)/RA Server & Relay"
 HOMEPAGE = "http://git.openwrt.org/?p=project/odhcpd.git;a=summary"
@@ -24,9 +24,9 @@ SRC_URI = "\
     file://odhcpd-update \
 "
 
-# 11.08.2021
-# dhcpv4: fix uninitialized hostname in some ubus events
-SRCREV = "01b4e6046f10e21809c3f380f2d33bf3fe59698d"
+# 24.10.2022
+# dhcpv6-ia: make tmp lease file hidden
+SRCREV = "a92c0a73d018cd6453dcf253d9617f97311becab"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services
