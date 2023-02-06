@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano36"
+PR = "tano37"
 DESCRIPTION = "OpenWrt UBUS RPC server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/rpcd.git;a=summary"
 LICENSE = "BSD"
@@ -29,9 +29,9 @@ SRC_URI += "\
 	file://0003-exec-Handle-ustream_poll-return-value-in-rpc_exec_pr.patch \
 "
 
-# 07.02.2022
-# ucode: adjust to latest ucode api
-SRCREV_rpcd = "909f2a04763dbc745488384b24281eca180452d6"
+# 21.01.2023
+# iwinfo: add "band" and "mhz" to the scan output
+SRCREV_rpcd = "c0df2a7af7d6284f4a446de15d0dab17124d9448"
 
 S = "${WORKDIR}/git"
 
