@@ -1,4 +1,4 @@
-From c090772a8da4c0a42b8f25133a186b45ae6c746a Mon Sep 17 00:00:00 2001
+From 6057b6104bda63392af0183c3466fec35d256c2d Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 24 Feb 2021 17:13:46 +0300
 Subject: [PATCH 20/24] ujail: Fix loading ELF with multiple LOAD segments
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 43 insertions(+), 21 deletions(-)
 
 diff --git a/jail/elf.c b/jail/elf.c
-index 16a4e95..d44dd67 100644
+index dc6e7b7..8832dc1 100644
 --- a/jail/elf.c
 +++ b/jail/elf.c
 @@ -103,7 +103,7 @@ const char* find_lib(const char *file)
@@ -137,29 +137,29 @@ index 16a4e95..d44dd67 100644
  		break;
  	}
  
-@@ -234,29 +262,23 @@ static int elf64_scan_dynamic(const char *map, unsigned long dyn_offset, unsigne
+@@ -234,19 +262,13 @@ static int elf64_scan_dynamic(const char *map, unsigned long dyn_offset, unsigne
  int elf_load_deps(const char *path, const char *map)
  {
  	unsigned long dyn_offset, dyn_size;
 -	unsigned long load_offset, load_vaddr;
  	unsigned long interp_offset;
  
--	if (elf_find_section(map, PT_LOAD, &load_offset, NULL, &load_vaddr)) {
--		ERROR("failed to load the .load section from %s\n", path);
--		return -1;
--	}
--
--	if (elf_find_section(map, PT_DYNAMIC, &dyn_offset, &dyn_size, NULL)) {
-+	if (elf_find_section(map, PT_DYNAMIC, &dyn_offset, &dyn_size, NULL, NULL)) {
- 		ERROR("failed to load the .dynamic section from %s\n", path);
- 		return -1;
- 	}
- 
 -	if (elf_find_section(map, PT_INTERP, &interp_offset, NULL, NULL) == 0) {
 +	if (elf_find_section(map, PT_INTERP, &interp_offset, NULL, NULL, NULL) == 0) {
  		add_path_and_deps(map+interp_offset, 1, -1, 0);
  	}
  
+-	if (elf_find_section(map, PT_LOAD, &load_offset, NULL, &load_vaddr)) {
+-		DEBUG("failed to load the .load section from %s\n", path);
+-		return 0;
+-	}
+-
+-	if (elf_find_section(map, PT_DYNAMIC, &dyn_offset, &dyn_size, NULL)) {
++	if (elf_find_section(map, PT_DYNAMIC, &dyn_offset, &dyn_size, NULL, NULL)) {
+ 		DEBUG("failed to load the .dynamic section from %s\n", path);
+ 		return 0;
+ 	}
+@@ -254,9 +276,9 @@ int elf_load_deps(const char *path, const char *map)
  	int clazz = map[EI_CLASS];
  
  	if (clazz == ELFCLASS32)

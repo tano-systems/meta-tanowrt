@@ -1,22 +1,21 @@
-From 3e1a04eeb53afc6f4170757c820aa366f6cf9c71 Mon Sep 17 00:00:00 2001
+From 39bcee19f161766c5675806b2d0348b2e6257228 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 15 Dec 2020 06:04:40 +0300
 Subject: [PATCH 18/24] early: Mount CGv1 to /tmp/cgroup-v1
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- initd/early.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ initd/early.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/initd/early.c b/initd/early.c
-index c9b2e8c..1117640 100644
+index 34eba09..739ecb7 100644
 --- a/initd/early.c
 +++ b/initd/early.c
-@@ -78,6 +78,12 @@ early_mounts(void)
- 		mount("tmpfs", "/tmp/shm", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOATIME,
- 				"mode=01777");
- 	}
-+
+@@ -75,6 +75,11 @@ early_mounts(void)
+ 	mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOATIME, "mode=01777");
+ 	mkdir("/tmp/shm", 01777);
+ 
 +	if (!is_container()) {
 +		mkdir("/tmp/cgroup-v1", 0755);
 +		mount("cgroup", "/tmp/cgroup-v1", "cgroup", MS_NODEV | MS_NOEXEC | MS_NOSUID, 0);

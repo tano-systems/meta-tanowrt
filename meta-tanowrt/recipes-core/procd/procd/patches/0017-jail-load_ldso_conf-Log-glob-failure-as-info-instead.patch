@@ -1,4 +1,4 @@
-From 68998399e9e2681404a0cbb796a0bcac9603d522 Mon Sep 17 00:00:00 2001
+From 8a1a674461efddf14754d2c5c562e1ae885d199a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 20 Nov 2020 20:23:06 +0300
 Subject: [PATCH 17/24] jail: load_ldso_conf: Log glob failure as info instead
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/jail/elf.c b/jail/elf.c
-index d43fe68..16a4e95 100644
+index e609b2b..dc6e7b7 100644
 --- a/jail/elf.c
 +++ b/jail/elf.c
 @@ -294,7 +294,7 @@ static void load_ldso_conf(const char *conf)

@@ -1,4 +1,4 @@
-From a9773218f43b3a605a55fea1f0d01474234ab5b0 Mon Sep 17 00:00:00 2001
+From a927097102bad32fc0fc330a03bf0e34784ff58f Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Mar 2021 03:41:22 +0300
 Subject: [PATCH 21/24] jail: Early call to get_jail_user()
@@ -19,10 +19,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/jail/jail.c b/jail/jail.c
-index 8b7e003..a9f75f8 100644
+index 5cfda2f..4a0e17e 100644
 --- a/jail/jail.c
 +++ b/jail/jail.c
-@@ -1232,10 +1232,10 @@ static void post_jail_fs(void)
+@@ -1257,10 +1257,10 @@ static void post_jail_fs(void)
  	run_hooks(opts.hooks.startContainer, post_start_hook);
  }
  
@@ -35,7 +35,7 @@ index 8b7e003..a9f75f8 100644
  	/*
  	 * make sure setuid/setgid won't drop capabilities in case capabilities
  	 * have been specified explicitely.
-@@ -1252,8 +1252,7 @@ static void post_start_hook(void)
+@@ -1277,8 +1277,7 @@ static void post_start_hook(void)
  		free_and_exit(EXIT_FAILURE);
  
  	/* use either cmdline-supplied user/group or uid/gid from OCI spec */
@@ -45,7 +45,7 @@ index 8b7e003..a9f75f8 100644
  
  	if (opts.additional_gids &&
  	    (setgroups(opts.num_additional_gids, opts.additional_gids) < 0)) {
-@@ -2743,6 +2742,8 @@ int main(int argc, char **argv)
+@@ -2774,6 +2773,8 @@ int main(int argc, char **argv)
  		opts.envp[envc] = NULL;
  	}
  

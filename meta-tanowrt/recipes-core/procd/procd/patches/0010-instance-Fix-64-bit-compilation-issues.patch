@@ -1,4 +1,4 @@
-From 5190e457dd61fd8edda569247857d44c44b43614 Mon Sep 17 00:00:00 2001
+From 63b31f8611a3ea3b03c24451bd1bb63ffbe74f1b Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:14:48 +0300
 Subject: [PATCH 10/24] instance: Fix 64-bit compilation issues
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index 0fdf419..103ad8e 100644
+index 9020deb..eb8f299 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -27,6 +27,7 @@

@@ -1,4 +1,4 @@
-From d43dafd3706f442f91594bdacde33b238e72f2a2 Mon Sep 17 00:00:00 2001
+From 77c3324ac6c87a199e003abc5eed7c61c278ce29 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 11 Nov 2020 07:08:10 +0300
 Subject: [PATCH 14/24] build: Fix building in OE environment
@@ -11,10 +11,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  3 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c788ba8..46eaf7c 100644
+index ecb32bb..61fbc13 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -96,15 +96,15 @@ INSTALL(TARGETS askfirst
+@@ -91,15 +91,15 @@ INSTALL(TARGETS askfirst
  
  ADD_CUSTOM_COMMAND(
  	OUTPUT syscall-names.h
