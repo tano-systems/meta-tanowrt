@@ -1,4 +1,4 @@
-From 2f7d0dc17d3cf320adde551196bb32cc6669173f Mon Sep 17 00:00:00 2001
+From 547539746b131ecc9db49b4a5999ef012d170e04 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 24 Feb 2022 04:19:57 +0300
 Subject: [PATCH 5/5] Revert "iprule: add support for uidrange"
@@ -50,7 +50,7 @@ index 0956073..b9e16a5 100644
  		if (!system_resolve_iprule_action(blobmsg_data(cur), &rule->action)) {
  			DPRINTF("Failed to parse rule action: %s\n", (char *) blobmsg_data(cur));
 diff --git a/iprule.h b/iprule.h
-index 6d91d06..89b94b4 100644
+index 488aafc..6c69cdc 100644
 --- a/iprule.h
 +++ b/iprule.h
 @@ -63,9 +63,6 @@ enum iprule_flags {
@@ -73,10 +73,10 @@ index 6d91d06..89b94b4 100644
  	unsigned int gotoid;
  };
 diff --git a/system-linux.c b/system-linux.c
-index a699402..82c6a7a 100644
+index 7741980..f6b6cac 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -3003,15 +3003,6 @@ static int system_iprule(struct iprule *rule, int cmd)
+@@ -3074,15 +3074,6 @@ static int system_iprule(struct iprule *rule, int cmd)
  	if (rule->flags & IPRULE_SUP_PREFIXLEN)
  		nla_put_u32(msg, FRA_SUPPRESS_PREFIXLEN, rule->sup_prefixlen);
  
