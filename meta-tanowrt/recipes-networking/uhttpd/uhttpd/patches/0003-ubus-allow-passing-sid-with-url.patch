@@ -1,7 +1,7 @@
-From patchwork Tue Nov 10 08:02:09 2020
+From 6dfd6e25ba7c6f09087481a78aa0ea6139ee6d6e Mon Sep 17 00:00:00 2001
 From: Wojciech Jowsa <wojciech.jowsa@gmail.com>
-Subject: [PATCH] ubus: allow passing sid with url
 Date: Tue, 10 Nov 2020 09:02:09 +0100
+Subject: [PATCH 3/3] ubus: allow passing sid with url
 
 In order to use EventSource web content's interface
 to server-sent events when ubus authentication is enabled,
@@ -16,7 +16,7 @@ Signed-off-by: Wojciech Jowsa <wojciech.jowsa@gmail.com>
  2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/ubus.c b/ubus.c
-index 619135c..4c1f82f 100644
+index 99cc400..e3d5d74 100644
 --- a/ubus.c
 +++ b/ubus.c
 @@ -371,6 +371,10 @@ static void uh_ubus_handle_get_subscribe(struct client *cl, const char *path)
@@ -30,7 +30,7 @@ index 619135c..4c1f82f 100644
  	if (!conf.ubus_noauth && !uh_ubus_allowed(sid, path, ":subscribe")) {
  		uh_ubus_send_header(cl, 200, "OK", "application/json");
  		uh_ubus_posix_error(cl, EACCES);
-@@ -942,8 +946,10 @@ static void uh_ubus_handle_request(struct client *cl, char *url, struct path_inf
+@@ -947,8 +951,10 @@ static void uh_ubus_handle_request(struct client *cl, char *url, struct path_inf
  		return;
  	}
  	chr = strchr(du->url_path, '?');
@@ -54,3 +54,6 @@ index c755df6..7c829d0 100644
  	int post_len;
  
  	uint32_t obj;
+-- 
+2.34.1.windows.1
+

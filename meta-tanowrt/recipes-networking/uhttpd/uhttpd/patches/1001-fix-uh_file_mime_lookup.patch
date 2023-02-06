@@ -1,7 +1,7 @@
-From cefdd18d407735ba684ad665e50db489c26cc01b Mon Sep 17 00:00:00 2001
+From c8b1565a509ee435046248a6c57eb0cc5b909fd7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 7 Nov 2018 22:07:37 +0300
-Subject: [PATCH 1/6] fix uh_file_mime_lookup()
+Subject: [PATCH 1001/1006] fix uh_file_mime_lookup()
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 25 insertions(+), 12 deletions(-)
 
 diff --git a/file.c b/file.c
-index efb3549..e6282aa 100644
+index dd64cdc..82061af 100644
 --- a/file.c
 +++ b/file.c
-@@ -286,20 +286,33 @@ uh_path_lookup(struct client *cl, const char *url)
+@@ -287,20 +287,33 @@ uh_path_lookup(struct client *cl, const char *url)
  static const char * uh_file_mime_lookup(const char *path)
  {
  	const struct mimetype *m = &uh_mime_types[0];
@@ -56,7 +56,7 @@ index efb3549..e6282aa 100644
  		}
  
  		m++;
-@@ -634,7 +647,7 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
+@@ -635,7 +648,7 @@ static void uh_file_data(struct client *cl, struct path_info *pi, int fd)
  
  	if (mime_type) {
  		ustream_printf(cl->us, "Content-Type: %s\r\n",
@@ -66,7 +66,7 @@ index efb3549..e6282aa 100644
  
  	ustream_printf(cl->us, "Content-Length: %" PRIu64 "\r\n\r\n",
 diff --git a/mimetypes.h b/mimetypes.h
-index af3a8b1..e411325 100644
+index feb2768..aa4f0c2 100644
 --- a/mimetypes.h
 +++ b/mimetypes.h
 @@ -59,12 +59,12 @@ static const struct mimetype uh_mime_types[] = {
@@ -85,5 +85,5 @@ index af3a8b1..e411325 100644
  
  	{ "mp3",     "audio/mpeg" },
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
