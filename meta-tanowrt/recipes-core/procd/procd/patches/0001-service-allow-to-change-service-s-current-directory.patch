@@ -1,4 +1,4 @@
-From b2afff42c20967073747c6226e59770f7567e137 Mon Sep 17 00:00:00 2001
+From 8865eb2ab861b486e628c117cca2d1e2c2e97c5a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Feb 2019 22:38:50 +0300
 Subject: [PATCH 01/24] service: allow to change service's current directory
@@ -10,7 +10,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/service/instance.c b/service/instance.c
-index 8202d65..5dabf20 100644
+index bb4ded7..5a0fab4 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -69,6 +69,7 @@ enum {
@@ -72,7 +72,7 @@ index 8202d65..5dabf20 100644
  	in->require_jail = in_src->require_jail;
  	in->no_new_privs = in_src->no_new_privs;
  	in->immediately = in_src->immediately;
-@@ -1797,5 +1812,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1806,5 +1821,8 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  		blobmsg_close_table(b, r);
  	}
  

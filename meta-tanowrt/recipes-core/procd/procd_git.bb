@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano61"
+PR = "tano62"
 SUMMARY = "procd is the new OpenWrt process management daemon written in C"
 DESCRIPTION = "procd is VIRTUAL-RUNTIME-init_manager"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
@@ -67,9 +67,9 @@ PACKAGECONFIG[uxc] = ",,"
 PACKAGECONFIG[ujail] = "-DJAIL_SUPPORT=1,,"
 PACKAGECONFIG[seccomp] = "-DSECCOMP_SUPPORT=1 -DUTRACE_SUPPORT=1,,"
 
-# 18.02.2022
-# instance: exit in case asprintf() fails
-SRCREV = "ad652490d47916a27c01e3dd8f9eafcecbb4bc7f"
+# 16.01.2023
+# init: attempt to mount efivarfs
+SRCREV = "190f13a75e67e0bdb662188da79b8be31e0aae01"
 
 S = "${WORKDIR}/git"
 

@@ -1,4 +1,4 @@
-From bf7d0ee056ea8aae03fdf1ac65a0096e81263c15 Mon Sep 17 00:00:00 2001
+From c6f7ba68e410fedda700e757b5a80bedacc24818 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Mon, 14 Jun 2021 14:35:46 +0300
 Subject: [PATCH 24/24] Fix compilation with GCC 10
@@ -41,7 +41,7 @@ index cf04490..6f262fe 100644
  			free(vr);
  	}
 diff --git a/uxc.c b/uxc.c
-index 9d6eab5..97a5e75 100644
+index c2200e9..eefc972 100644
 --- a/uxc.c
 +++ b/uxc.c
 @@ -307,7 +307,10 @@ runtime_alloc(const char *container_name)
@@ -64,7 +64,7 @@ index 9d6eab5..97a5e75 100644
  	static struct blob_buf buf;
  	void *arr, *obj;
  
-@@ -1214,7 +1217,7 @@ static int uxc_boot(void)
+@@ -1217,7 +1220,7 @@ static int uxc_boot(void)
  	int rem, ret = 0;
  	char *name;
  	unsigned int id;

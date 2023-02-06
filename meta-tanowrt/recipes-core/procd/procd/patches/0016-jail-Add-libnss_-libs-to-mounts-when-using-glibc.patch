@@ -1,4 +1,4 @@
-From dbba717020d90922621b1fb41a0589f1ad93e842 Mon Sep 17 00:00:00 2001
+From 5b8fd4e0e5f80f62f866a5f02f9e85b9311e0cb6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 12 Nov 2020 05:00:34 +0300
 Subject: [PATCH 16/24] jail: Add libnss_* libs to mounts when using glibc
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 25 insertions(+)
 
 diff --git a/jail/jail.c b/jail/jail.c
-index bfa2587..8b7e003 100644
+index 09780ac..5cfda2f 100644
 --- a/jail/jail.c
 +++ b/jail/jail.c
 @@ -64,6 +64,10 @@
@@ -23,7 +23,7 @@ index bfa2587..8b7e003 100644
  #ifndef CLONE_NEWCGROUP
  #define CLONE_NEWCGROUP 0x02000000
  #endif
-@@ -2889,6 +2893,24 @@ errout:
+@@ -2920,6 +2924,24 @@ errout:
  	return ret;
  }
  
@@ -48,7 +48,7 @@ index bfa2587..8b7e003 100644
  static void post_main(struct uloop_timeout *t)
  {
  	if (apply_rlimits()) {
-@@ -2911,7 +2933,10 @@ static void post_main(struct uloop_timeout *t)
+@@ -2942,7 +2964,10 @@ static void post_main(struct uloop_timeout *t)
  
  #if defined(__GLIBC__)
  			if (!opts.extroot)

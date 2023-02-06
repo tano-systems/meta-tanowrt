@@ -1,4 +1,4 @@
-From a227f17daba2ae8d455007002dbefd2941486274 Mon Sep 17 00:00:00 2001
+From fe18dc16a0d9237781e6c697793c9a2b9e6fcbea Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 6 Mar 2020 03:13:10 +0300
 Subject: [PATCH 11/24] system: Add tm_gmtoff to system.info ubus call

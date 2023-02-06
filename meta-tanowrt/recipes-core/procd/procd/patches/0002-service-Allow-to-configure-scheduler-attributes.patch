@@ -1,4 +1,4 @@
-From a7762a927983974f5e4f4b3e001ffc63e0556010 Mon Sep 17 00:00:00 2001
+From 7486ad8698a819a0fddfd0bb184168ff62a0a8b4 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 19 Feb 2019 02:41:23 +0300
 Subject: [PATCH 02/24] service: Allow to configure scheduler attributes
@@ -12,7 +12,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  create mode 100644 service/instance_sched.h
 
 diff --git a/service/instance.c b/service/instance.c
-index 5dabf20..985b842 100644
+index 5a0fab4..bc7d422 100644
 --- a/service/instance.c
 +++ b/service/instance.c
 @@ -26,6 +26,8 @@
@@ -256,7 +256,7 @@ index 5dabf20..985b842 100644
  
  	in->_stdout.fd.fd = -2;
  	in->_stdout.stream.string_data = true;
-@@ -1812,6 +1958,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
+@@ -1821,6 +1967,31 @@ void instance_dump(struct blob_buf *b, struct service_instance *in, int verbose)
  		blobmsg_close_table(b, r);
  	}
  
