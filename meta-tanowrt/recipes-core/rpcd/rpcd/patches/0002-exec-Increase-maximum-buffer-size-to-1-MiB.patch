@@ -1,7 +1,7 @@
-From c5c7d0f1c468ce9f9776b5a62ddc4ef6aef7d96d Mon Sep 17 00:00:00 2001
+From 56d5fcc8ec6ea06f0438d9d4c7f51dcc172e4f59 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 1 Mar 2022 13:10:16 +0300
-Subject: [PATCH] exec: Increase maximum buffer size to 1 MiB
+Subject: [PATCH 2/3] exec: Increase maximum buffer size to 1 MiB
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -22,5 +22,5 @@ index 928f5ed..9afe224 100644
  
  #define ustream_for_each_read_buffer(stream, ptr, len) \
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
