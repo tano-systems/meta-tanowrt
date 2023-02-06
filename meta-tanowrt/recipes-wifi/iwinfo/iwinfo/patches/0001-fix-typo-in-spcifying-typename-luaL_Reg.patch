@@ -1,4 +1,4 @@
-From 0a8b3fd500a29b246f68b09daa494718e89260e4 Mon Sep 17 00:00:00 2001
+From 69f8b41cff37212df96feead44e7479b0fad05ed Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 21 Oct 2015 18:05:29 -0700
 Subject: [PATCH 1/7] fix typo in spcifying typename luaL_Reg
@@ -9,10 +9,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/iwinfo_lua.c b/iwinfo_lua.c
-index e49e454..ef3f410 100644
+index ecf257d..dc31f91 100644
 --- a/iwinfo_lua.c
 +++ b/iwinfo_lua.c
-@@ -799,7 +799,7 @@ LUA_WRAP_STRUCT_OP(wext,hardware_id)
+@@ -809,7 +809,7 @@ LUA_WRAP_STRUCT_OP(wext,hardware_id)
  
  #ifdef USE_WL
  /* Broadcom table */
@@ -21,7 +21,7 @@ index e49e454..ef3f410 100644
  	LUA_REG(wl,channel),
  	LUA_REG(wl,frequency),
  	LUA_REG(wl,frequency_offset),
-@@ -832,7 +832,7 @@ static const luaL_reg R_wl[] = {
+@@ -842,7 +842,7 @@ static const luaL_reg R_wl[] = {
  
  #ifdef USE_MADWIFI
  /* Madwifi table */
@@ -30,7 +30,7 @@ index e49e454..ef3f410 100644
  	LUA_REG(madwifi,channel),
  	LUA_REG(madwifi,frequency),
  	LUA_REG(madwifi,frequency_offset),
-@@ -865,7 +865,7 @@ static const luaL_reg R_madwifi[] = {
+@@ -875,7 +875,7 @@ static const luaL_reg R_madwifi[] = {
  
  #ifdef USE_NL80211
  /* NL80211 table */
@@ -39,17 +39,17 @@ index e49e454..ef3f410 100644
  	LUA_REG(nl80211,channel),
  	LUA_REG(nl80211,frequency),
  	LUA_REG(nl80211,frequency_offset),
-@@ -897,7 +897,7 @@ static const luaL_reg R_nl80211[] = {
- #endif
+@@ -908,7 +908,7 @@ static const luaL_reg R_nl80211[] = {
  
  /* Wext table */
+ #ifdef USE_WEXT
 -static const luaL_reg R_wext[] = {
 +static const luaL_Reg R_wext[] = {
  	LUA_REG(wext,channel),
  	LUA_REG(wext,frequency),
  	LUA_REG(wext,frequency_offset),
-@@ -928,7 +928,7 @@ static const luaL_reg R_wext[] = {
- };
+@@ -940,7 +940,7 @@ static const luaL_reg R_wext[] = {
+ #endif
  
  /* Common */
 -static const luaL_reg R_common[] = {
@@ -58,5 +58,5 @@ index e49e454..ef3f410 100644
  	{ "__gc", iwinfo_L__gc  },
  	{ NULL, NULL }
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 
