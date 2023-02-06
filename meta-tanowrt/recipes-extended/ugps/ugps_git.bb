@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
-PR = "tano9"
+PR = "tano10"
 
 DESCRIPTION = "OpenWrt GPS daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/ugps.git;a=summary"
@@ -21,9 +21,9 @@ SRC_URI = "\
 	file://ugps.init \
 "
 
-# 19.06.2021
-# add support for multi GNSS solutions
-SRCREV = "350b960b6f8b08409dcef719ef1e1e0c8911040f"
+# 27.01.2023
+# main.c: -S does not take any options
+SRCREV = "a8171a07193351a9125024d5c759c0ebd6a6895c"
 
 S = "${WORKDIR}/git"
 
