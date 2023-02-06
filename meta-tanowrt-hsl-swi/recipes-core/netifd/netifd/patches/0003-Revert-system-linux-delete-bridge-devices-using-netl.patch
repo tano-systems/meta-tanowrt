@@ -1,4 +1,4 @@
-From 2b664ef19571d23002e9033be1239eb01257a92e Mon Sep 17 00:00:00 2001
+From 6c645dafd0e3aa59f385f59e7000ef4a19677859 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 24 Feb 2022 04:14:39 +0300
 Subject: [PATCH 3/5] Revert "system-linux: delete bridge devices using
@@ -10,10 +10,10 @@ This reverts commit 88af2f1bc6ace86c37f4fa66f852cfec9b604254.
  1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/system-linux.c b/system-linux.c
-index 7400c86..5ce004f 100644
+index cc6f22e..1514c88 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -755,27 +755,9 @@ static int system_rtnl_call(struct nl_msg *msg)
+@@ -824,27 +824,9 @@ static int system_rtnl_call(struct nl_msg *msg)
  	return nl_wait_for_ack(sock_rtnl);
  }
  
@@ -42,7 +42,7 @@ index 7400c86..5ce004f 100644
  }
  
  static int system_bridge_if(const char *bridge, struct device *dev, int cmd, void *data)
-@@ -1437,6 +1419,24 @@ int system_link_netns_move(struct device *dev, int netns_fd, const char *target_
+@@ -1508,6 +1490,24 @@ int system_link_netns_move(struct device *dev, int netns_fd, const char *target_
  	return system_rtnl_call(msg);
  }
  

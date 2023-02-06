@@ -1,4 +1,4 @@
-From d4a41be78218376ce71ac0ed4a10f5e6d0887e86 Mon Sep 17 00:00:00 2001
+From 7549313d0931048cadf378402ef962a25bba8d97 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 24 Feb 2022 04:14:16 +0300
 Subject: [PATCH 1/5] Revert "system-linux: expose hw-tc-offload ethtool
@@ -10,10 +10,10 @@ This reverts commit fd4c9e17c8f22b866c1bf386c580074e3e678910.
  1 file changed, 116 deletions(-)
 
 diff --git a/system-linux.c b/system-linux.c
-index 905271e..cfef538 100644
+index 264bdc2..67467f8 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -2400,119 +2400,6 @@ system_add_devtype(struct blob_buf *b, const char *ifname)
+@@ -2471,119 +2471,6 @@ system_add_devtype(struct blob_buf *b, const char *ifname)
  	}
  }
  
@@ -133,7 +133,7 @@ index 905271e..cfef538 100644
  int
  system_if_dump_info(struct device *dev, struct blob_buf *b)
  {
-@@ -2548,9 +2435,6 @@ system_if_dump_info(struct device *dev, struct blob_buf *b)
+@@ -2619,9 +2506,6 @@ system_if_dump_info(struct device *dev, struct blob_buf *b)
  		blobmsg_add_u8(b, "autoneg", !!ecmd.autoneg);
  	}
  

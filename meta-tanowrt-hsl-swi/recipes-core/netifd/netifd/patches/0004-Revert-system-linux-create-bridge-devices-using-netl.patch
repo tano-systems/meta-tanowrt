@@ -1,4 +1,4 @@
-From 6ea566a95679e6ae09250158e9ce635a76c79f9f Mon Sep 17 00:00:00 2001
+From 35e9942a087e49cec534d9eb18de33f87229f467 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 24 Feb 2022 04:14:55 +0300
 Subject: [PATCH 4/5] Revert "system-linux: create bridge devices using
@@ -10,10 +10,10 @@ This reverts commit 85c3548069a751f0b854b5816db6ee7142aec07b.
  1 file changed, 157 insertions(+), 63 deletions(-)
 
 diff --git a/system-linux.c b/system-linux.c
-index 5ce004f..a699402 100644
+index 1514c88..7741980 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -490,9 +490,55 @@ static void system_bridge_set_isolated(struct device *dev, const char *val)
+@@ -559,9 +559,55 @@ static void system_bridge_set_isolated(struct device *dev, const char *val)
  	system_set_dev_sysfs("brport/isolated", dev->ifname, val);
  }
  
@@ -71,7 +71,7 @@ index 5ce004f..a699402 100644
  }
  
  void system_bridge_set_stp_state(struct device *dev, bool val)
-@@ -502,6 +548,31 @@ void system_bridge_set_stp_state(struct device *dev, bool val)
+@@ -571,6 +617,31 @@ void system_bridge_set_stp_state(struct device *dev, bool val)
  	system_set_dev_sysfs("bridge/stp_state", dev->ifname, valstr);
  }
  
@@ -103,7 +103,7 @@ index 5ce004f..a699402 100644
  static void system_bridge_set_learning(struct device *dev, const char *val)
  {
  	system_set_dev_sysfs("brport/learning", dev->ifname, val);
-@@ -512,6 +583,11 @@ static void system_bridge_set_unicast_flood(struct device *dev, const char *val)
+@@ -581,6 +652,11 @@ static void system_bridge_set_unicast_flood(struct device *dev, const char *val)
  	system_set_dev_sysfs("brport/unicast_flood", dev->ifname, val);
  }
  
@@ -115,7 +115,7 @@ index 5ce004f..a699402 100644
  static int system_get_disable_ipv6(struct device *dev, char *buf, const size_t buf_sz)
  {
  	return system_get_dev_sysctl("ipv6/conf", "disable_ipv6",
-@@ -849,7 +925,7 @@ retry:
+@@ -920,7 +996,7 @@ retry:
  
  	if (dev->settings.flags & DEV_OPT_MULTICAST_ROUTER) {
  		snprintf(buf, sizeof(buf), "%u", dev->settings.multicast_router);
@@ -124,7 +124,7 @@ index 5ce004f..a699402 100644
  	}
  
  	if (dev->settings.flags & DEV_OPT_MULTICAST_FAST_LEAVE &&
-@@ -1247,92 +1323,110 @@ sec_to_jiffies(int val)
+@@ -1318,92 +1394,110 @@ sec_to_jiffies(int val)
  	return (unsigned long) val * 100;
  }
  
