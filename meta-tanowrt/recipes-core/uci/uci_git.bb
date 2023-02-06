@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano15"
+PR = "tano16"
 SUMMARY = "Library and utility for the Unified Configuration Interface for OpenWrt"
 HOMEPAGE = "http://wiki.openwrt.org/doc/uci"
 LICENSE = "GPL-2.0"
@@ -23,9 +23,9 @@ SRC_URI = "\
 PROVIDES += "libuci libuci-lua"
 RPROVIDES_${PN} += "libuci-lua libuci"
 
-# 24.04.2020
-# file: preserve original file mode after commit
-SRCREV = "ec8d3233948603485e1b97384113fac9f1bab5d6"
+# 28.08.2022
+# delta: simplify uci_load_delta() by using a helper
+SRCREV = "f49a2fdc4fb4a3bc95c228ade38332685197210f"
 
 S = "${WORKDIR}/git"
 
