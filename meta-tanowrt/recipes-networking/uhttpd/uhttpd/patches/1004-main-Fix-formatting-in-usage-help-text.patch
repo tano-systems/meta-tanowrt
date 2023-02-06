@@ -1,7 +1,7 @@
-From a91ea214725eb8c72dde87d1941c93977e2c8a9b Mon Sep 17 00:00:00 2001
+From 68f9657c3d8d47cfe514b2bf0283e6c53ada0b98 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 10 Jan 2021 16:24:21 +0300
-Subject: [PATCH 4/6] main: Fix formatting in usage help text
+Subject: [PATCH 1004/1006] main: Fix formatting in usage help text
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/main.c b/main.c
-index 694278e..53f66b9 100644
+index 694278e..e36c01a 100644
 --- a/main.c
 +++ b/main.c
 @@ -163,8 +163,8 @@ static int usage(const char *name)
@@ -24,5 +24,5 @@ index 694278e..53f66b9 100644
  		"	-x string       URL prefix for CGI handler, default is '/cgi-bin'\n"
  		"	-y alias[=path]	URL alias handle\n"
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

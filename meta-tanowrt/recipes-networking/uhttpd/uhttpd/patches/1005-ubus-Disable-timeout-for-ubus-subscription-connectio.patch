@@ -1,7 +1,8 @@
-From e29399f403cec4d0c24dfa26745529e45fc0b083 Mon Sep 17 00:00:00 2001
+From c67e7306338a04ce49b9180404d110f329a976c7 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sun, 10 Jan 2021 16:23:21 +0300
-Subject: [PATCH 5/6] ubus: Disable timeout for ubus subscription connections
+Subject: [PATCH 1005/1006] ubus: Disable timeout for ubus subscription
+ connections
 
 Optionally, the timeout value for ubus object subscription connections
 can be set using the new '-v' command line parameter.
@@ -16,7 +17,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  5 files changed, 63 insertions(+), 4 deletions(-)
 
 diff --git a/client.c b/client.c
-index 2be8f22..62f1edf 100644
+index c037cc7..ff5ce36 100644
 --- a/client.c
 +++ b/client.c
 @@ -105,12 +105,31 @@ static void uh_set_client_timeout(struct client *cl, int timeout)
@@ -61,7 +62,7 @@ index 2be8f22..62f1edf 100644
  	ustream_consume(cl->us, newline + 2 - buf);
  	if (cl->state == CLIENT_STATE_DONE)
 diff --git a/main.c b/main.c
-index 53f66b9..c648ac1 100644
+index e36c01a..1ddb6fb 100644
 --- a/main.c
 +++ b/main.c
 @@ -165,6 +165,7 @@ static int usage(const char *name)
@@ -108,7 +109,7 @@ index 53f66b9..c648ac1 100644
  			                "ignoring -%c\n", ch);
  			break;
 diff --git a/ubus.c b/ubus.c
-index 38741e4..28ad48a 100644
+index 0990bc4..a4be51a 100644
 --- a/ubus.c
 +++ b/ubus.c
 @@ -354,6 +354,8 @@ static void uh_ubus_subscription_remove(struct client *cl)
@@ -185,7 +186,7 @@ index 7c829d0..817c163 100644
  extern int n_clients;
  extern struct config conf;
 diff --git a/utils.c b/utils.c
-index 142a410..fc6413a 100644
+index 6502d94..ff26b15 100644
 --- a/utils.c
 +++ b/utils.c
 @@ -42,7 +42,8 @@ void uh_chunk_write(struct client *cl, const void *data, int len)
@@ -209,5 +210,5 @@ index 142a410..fc6413a 100644
  		ustream_vprintf(cl->us, format, arg);
  		return;
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

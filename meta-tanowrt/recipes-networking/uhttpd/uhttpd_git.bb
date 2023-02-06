@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2016 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano41"
+PR = "tano42"
 DESCRIPTION = "Tiny HTTP server"
 HOMEPAGE = "http://git.openwrt.org/?p=project/uhttpd.git;a=summary"
 LICENSE = "ISC"
@@ -24,8 +24,8 @@ SRC_URI = "\
 
 # Patches
 SRC_URI += "\
-	file://0001-fix-wrong-binaries-found-due-to-inconsistent-path.patch \
-	file://0002-add-gz-support.patch \
+	file://0001-uhttpd-Fix-CGI-finds-wrong-binaries-due-to-inconsist.patch \
+	file://0002-Add-.gz-support.patch \
 	file://0003-ubus-allow-passing-sid-with-url.patch \
 	file://1001-fix-uh_file_mime_lookup.patch \
 	file://1002-Fix-building-for-GCC-8.2.patch \
@@ -38,9 +38,9 @@ SRC_URI += "\
 PROVIDES += "uhttpd-mod-ubus uhttpd-mod-lua"
 RPROVIDES:${PN} += "uhttpd-mod-ubus uhttpd-mod-lua"
 
-# 19.02.2022
-# fix compiler uninitialized variable
-SRCREV = "51283f9f1df5dedcba35f40367ef5d4ab1a55e0b"
+# 28.01.2023
+# mimetypes: add audio/video support for apple airplay
+SRCREV = "47561aa13574068403d48f13ea310f8511057b2b"
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig tanowrt-services tanowrt-lua

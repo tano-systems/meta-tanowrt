@@ -1,7 +1,7 @@
-From eedbf1c133665e63de35f0b6d166936a5c316a9a Mon Sep 17 00:00:00 2001
+From cbd7185365c9bab4199e78174ef92e94b6014a62 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 8 Jan 2021 15:45:47 +0300
-Subject: [PATCH 3/6] ubus: Unsubscribe on client request network timeout
+Subject: [PATCH 1003/1006] ubus: Unsubscribe on client request network timeout
 
 If the client has an active subscription and the client connection
 is closed after network_timeout, any notification sent by the ubus object
@@ -22,7 +22,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/ubus.c b/ubus.c
-index 4c1f82f..38741e4 100644
+index e3d5d74..0990bc4 100644
 --- a/ubus.c
 +++ b/ubus.c
 @@ -349,6 +349,15 @@ static int uh_ubus_subscription_notification_cb(struct ubus_context *ctx,
@@ -69,5 +69,5 @@ index 4c1f82f..38741e4 100644
  
  	if (conf.events_retry)
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
