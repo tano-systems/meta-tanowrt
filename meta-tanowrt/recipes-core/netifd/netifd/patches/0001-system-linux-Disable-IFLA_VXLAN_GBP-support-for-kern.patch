@@ -1,8 +1,8 @@
-From 65794e1052ef3ff52b22ab956f7d4052cc1e5c85 Mon Sep 17 00:00:00 2001
+From 3eff5f2a2e33b3d05d29d2a31390983dda9c8b65 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 24 Jun 2021 07:29:22 +0300
-Subject: [PATCH] system-linux: Disable IFLA_VXLAN_GBP support for kernels <
- 4.0.0
+Subject: [PATCH 1/2] system-linux: Disable IFLA_VXLAN_GBP support for kernels
+ < 4.0.0
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/system-linux.c b/system-linux.c
-index b9e440e..e994e2e 100644
+index 45a9efb..d73e818 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -3201,9 +3201,11 @@ static void system_vxlan_map_bool_attr(struct nl_msg *msg, struct blob_attr **tb
+@@ -3691,9 +3691,11 @@ static void system_vxlan_map_bool_attr(struct nl_msg *msg, struct blob_attr **tb
  		if (invert)
  			val = !val;
  
@@ -25,7 +25,7 @@ index b9e440e..e994e2e 100644
  			nla_put_u8(msg, attrtype, val);
  
  	}
-@@ -3354,7 +3356,9 @@ static int system_add_vxlan(const char *name, const unsigned int link, struct bl
+@@ -3844,7 +3846,9 @@ static int system_add_vxlan(const char *name, const unsigned int link, struct bl
  	system_vxlan_map_bool_attr(msg, tb_data, IFLA_VXLAN_PROXY , VXLAN_DATA_ATTR_PROXY, false);
  	system_vxlan_map_bool_attr(msg, tb_data, IFLA_VXLAN_L2MISS , VXLAN_DATA_ATTR_L2MISS, false);
  	system_vxlan_map_bool_attr(msg, tb_data, IFLA_VXLAN_L3MISS , VXLAN_DATA_ATTR_L3MISS, false);
@@ -36,5 +36,5 @@ index b9e440e..e994e2e 100644
  	if ((cur = tb_data[VXLAN_DATA_ATTR_AGEING])) {
  		uint32_t ageing = blobmsg_get_u32(cur);
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 

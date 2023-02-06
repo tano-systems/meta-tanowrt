@@ -1,8 +1,8 @@
-From 14b1f5c24044b8630bed168f2f4cc833260e3c57 Mon Sep 17 00:00:00 2001
+From 8cb33419b43911ce709358f320147f68c694c17a Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Sat, 22 Jan 2022 04:19:02 +0300
-Subject: [PATCH] system-linux: add ethtool_link_mode_bit_indices for kernels
- prior to 4.6.0
+Subject: [PATCH 2/2] system-linux: add ethtool_link_mode_bit_indices for
+ kernels prior to 4.6.0
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 49 insertions(+)
 
 diff --git a/system-linux.c b/system-linux.c
-index c0ba279..71419b7 100644
+index d73e818..264bdc2 100644
 --- a/system-linux.c
 +++ b/system-linux.c
-@@ -1578,6 +1578,55 @@ int system_vlandev_del(struct device *vlandev)
+@@ -1690,6 +1690,55 @@ int system_vlandev_del(struct device *vlandev)
  	return system_link_del(vlandev->ifname);
  }
  

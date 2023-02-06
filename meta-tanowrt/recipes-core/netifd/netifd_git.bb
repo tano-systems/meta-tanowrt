@@ -3,10 +3,10 @@
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
 # Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
-# Copyright (C) 2018-2022 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano56"
+PR = "tano57"
 
 DESCRIPTION = "OpenWrt Network interface configuration daemon"
 HOMEPAGE = "http://git.openwrt.org/?p=project/netifd.git;a=summary"
@@ -46,9 +46,9 @@ SRC_URI += "\
 	file://0002-system-linux-add-ethtool_link_mode_bit_indices-for-k.patch \
 "
 
-# 20.02.2022
-# cmake: fix usage of implicit library and include paths
-SRCREV_netifd = "136006b88826feff4f0a36ffab511d1366483cf2"
+# 30.12.2022
+# device: fix vlan device issues with disappearing lower devices
+SRCREV_netifd = "81c1fbcba2f27f687c2a471f341502d47679f401"
 
 S = "${WORKDIR}/git"
 
