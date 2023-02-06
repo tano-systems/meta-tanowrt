@@ -1,10 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (c) 2022 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2022-2023 Tano Systems LLC. All rights reserved.
 #
 
-PR = "tano1"
+PR = "tano2"
+PV = "0.0.20221018+git${SRCPV}"
 
 PKG_TITLE = "ucode - Tiny scripting and templating language"
 SUMMARY = "${PKG_TITLE}"
@@ -27,12 +28,12 @@ SRC_URI = "git://github.com/jow-/ucode.git;protocol=https;branch=master"
 # Patches
 SRC_URI += "file://0001-Use-libbl3-instead-of-libnl-tiny.patch"
 
-# 15.02.2022
-# tests: fix proto() testcase
-SRCREV = "1af23a9db98575eecfc97e01e8f581221d1a224b"
+# 01.02.2023
+# Merge pull request #140 from nbd168/rtnl
+SRCREV = "599a7fb59380a145c615fd1bad80a42ff8bdc360"
 S = "${WORKDIR}/git"
 
-inherit cmake
+inherit cmake pkgconfig
 
 do_configure_prepend () {
 	if [ -e "${S}/CMakeLists.txt" ] ; then
@@ -52,6 +53,7 @@ EXTRA_OECMAKE += "\
 	-DNL80211_SUPPORT=ON \
 	-DRESOLV_SUPPORT=ON \
 	-DSTRUCT_SUPPORT=ON \
+	-DULOOP_SUPPORT=ON \
 	-DCMAKE_INSTALL_LIBDIR:PATH=${libdir} \
 "
 
@@ -66,6 +68,7 @@ PACKAGES += "\
 	${PN}-mod-struct \
 	${PN}-mod-ubus \
 	${PN}-mod-uci \
+	${PN}-mod-uloop \
 "
 
 PRIVATE_LIBS = "\
@@ -136,5 +139,12 @@ DESCRIPTION_${PN}-mod-uci = "\
 The uci module allows templates to read and modify uci configuration."
 RDEPENDS_${PN}-mod-uci += "libucode"
 FILES_${PN}-mod-uci = "${libdir}/ucode/uci.so"
+
+SUMMARY:${PN}-mod-uloop = "${PKG_TITLE} (uloop module)"
+DESCRIPTION:${PN}-mod-uloop = "\
+The uloop module allows ucode scripts to interact with OpenWrt uloop event \
+loop implementation."
+RDEPENDS:${PN}-mod-uloop += "libucode"
+FILES:${PN}-mod-uloop = "${libdir}/ucode/uloop.so"
 
 BBCLASSEXTEND = "native"
