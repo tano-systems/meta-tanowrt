@@ -1,4 +1,4 @@
-From 507db6b213d5e41ce792c615657832fee5d695c5 Mon Sep 17 00:00:00 2001
+From 7f082d0ff5fa14793211aebf419e646ad3249101 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Thu, 7 Nov 2019 03:24:01 +0300
 Subject: [PATCH 2/3] cli: fix type displaying for BLOBMSG_TYPE_INT64
@@ -12,7 +12,7 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/cli.c b/cli.c
-index 217c184..fb31c3b 100644
+index 694f9cb..0103ad9 100644
 --- a/cli.c
 +++ b/cli.c
 @@ -42,6 +42,7 @@ static const char *format_type(void *priv, struct blob_attr *attr)
