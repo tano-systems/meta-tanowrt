@@ -1,4 +1,4 @@
-From bad92bc419d6f597a515ab0c5049893bcd444800 Mon Sep 17 00:00:00 2001
+From e959b43766c17caa17b6984513b10cceb405f1ac Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 22 Jul 2020 17:33:03 +0300
 Subject: [PATCH 5/7] iwinfo: add device id for Intel Dual Band Wireless AC
@@ -6,18 +6,21 @@ Subject: [PATCH 5/7] iwinfo: add device id for Intel Dual Band Wireless AC
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
- hardware.txt | 1 +
+ devices.txt | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hardware.txt b/hardware.txt
-index ea74929..a95fc41 100644
---- a/hardware.txt
-+++ b/hardware.txt
-@@ -197,3 +197,4 @@
- 0x14c3 0x7915 0x14c3 0x7915    0      0  "MediaTek" "MT7915E"
+diff --git a/devices.txt b/devices.txt
+index 82d8421..b3f3696 100644
+--- a/devices.txt
++++ b/devices.txt
+@@ -192,6 +192,7 @@
  0x14e4 0xaa52 0x14e4 0xaa52    0      0  "Broadcom" "BCM43602"
+ 0x02d0 0xa9a6 0x0000 0x0000    0      0  "Cypress"  "CYW43455"
  0x1ae9 0x0310 0x1ae9 0x0000    0      0  "Wilocity" "Wil6210"
 +0x8086 0x08b3 0x8086 0x8070    0      0  "Intel"    "Dual Band Wireless AC 3160"
+ 
+ # USB devices
+ # 0x0000 | 0x0000 | vendor id | product id | ...
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 

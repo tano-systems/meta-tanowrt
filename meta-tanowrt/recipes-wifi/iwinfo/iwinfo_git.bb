@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Copyright (C) 2015 Khem Raj <raj.khem@gmail.com>
-# Copyright (C) 2018-2021 Anton Kikin <a.kikin@tano-systems.com>
+# Copyright (C) 2018-2023 Anton Kikin <a.kikin@tano-systems.com>
 #
 
 DESCRIPTION = "Library for accessing wireless device drivers"
@@ -11,16 +11,16 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 SECTION = "base"
 DEPENDS += "ubus uci lua5.1"
-PR = "tano21"
+PR = "tano22"
 
 inherit kmod/cfg80211
 RPROVIDES_${PN} += "libiwinfo libiwinfo-lua"
 PROVIDES += "libiwinfo libiwinfo-lua"
 
-# 09.06.2021
-# iwinfo: nl80211: fix typo
-SRCREV = "c0414642fead263a4a6a686ad3cb7e965ec8a23a"
-IWINFO_ABI_VERSION = "20210106"
+# 23.01.2023
+# iwinfo: readd missing define for IWINFO_AUTH in header
+SRCREV = "1e4e709d6f26cc38411ca189bab04f857b444ef3"
+IWINFO_ABI_VERSION = "20230123"
 
 FILES_SOLIBSDEV = ""
 
@@ -75,7 +75,7 @@ do_install() {
 	install -D -m 0755 ${B}/iwinfo ${D}${bindir}/iwinfo
 	install -D -m 0644 ${S}/include/iwinfo.h ${D}${includedir}/iwinfo.h
 	install -D -m 0644 ${S}/include/iwinfo/utils.h ${D}${includedir}/iwinfo/utils.h
-	install -D -m 0644 ${S}/hardware.txt ${D}${datadir}/libiwinfo/hardware.txt
+	install -D -m 0644 ${S}/devices.txt ${D}${datadir}/libiwinfo/devices.txt
 }
 
 FILES_${PN} += "${datadir} ${libdir}"

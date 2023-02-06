@@ -1,4 +1,4 @@
-From f8bfd57fc5865d229ade3381068597fdea714574 Mon Sep 17 00:00:00 2001
+From 501289084a08e70a5aa7fc681ea69ffad32fa85a Mon Sep 17 00:00:00 2001
 From: Fabio Berton <fabio.berton@ossystems.com.br>
 Date: Wed, 6 Apr 2016 15:03:49 -0300
 Subject: [PATCH 3/7] Makefile: LDFLAGS set liblua5.1 for lua lib
@@ -9,11 +9,11 @@ Signed-off-by: Fabio Berton <fabio.berton@ossystems.com.br>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 0c329b0..3a7edb1 100644
+index 4c7dca9..5d4855d 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -9,7 +9,7 @@ IWINFO_LIB_LDFLAGS = $(LDFLAGS) -shared -Wl,-soname -Wl,$(IWINFO_LIB).$(IWINFO_S
- IWINFO_LIB_OBJ     = iwinfo_utils.o iwinfo_wext.o iwinfo_wext_scan.o iwinfo_lib.o
+ IWINFO_LIB_OBJ     = iwinfo_utils.o iwinfo_lib.o
  
  IWINFO_LUA         = iwinfo.so
 -IWINFO_LUA_LDFLAGS = $(LDFLAGS) -shared -L. -liwinfo -llua
@@ -22,5 +22,5 @@ index 0c329b0..3a7edb1 100644
  
  IWINFO_CLI         = iwinfo
 -- 
-2.16.2.windows.1
+2.34.1.windows.1
 
