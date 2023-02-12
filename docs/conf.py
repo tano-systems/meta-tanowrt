@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('sphinx'))
 # -- Project information -----------------------------------------------------
 
 project = u'TanoWrt Embedded Linux Distibution'
-copyright = u'2022, Tano Systems LLC'
+copyright = u'2023, Tano Systems LLC'
 author = u'Tano Systems LLC'
 
 # The short version
