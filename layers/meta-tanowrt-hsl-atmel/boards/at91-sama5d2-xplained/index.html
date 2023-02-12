@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1 Atmel SAMA5D2 Xplained &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
@@ -38,14 +38,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            TanoWrt Embedded Linux Distibution
           </a>
               <div class="version">
                 master
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -180,7 +184,7 @@
   <section id="atmel-sama5d2-xplained">
 <span id="machine-at91-sama5d2-xplained"></span><h1><span class="section-number">1 </span>Atmel SAMA5D2 Xplained<a class="headerlink" href="#atmel-sama5d2-xplained" title="Permalink to this heading"></a></h1>
 <p class="rubric">Contents</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#board-overview" id="id34">Board Overview</a></p></li>
 <li><p><a class="reference internal" href="#build-targets" id="id35">Build Targets</a></p></li>
@@ -196,9 +200,9 @@
 <li><p><a class="reference internal" href="#additional-information" id="id45">Additional Information</a></p></li>
 <li><p><a class="reference internal" href="#references" id="id46">References</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="board-overview">
-<span id="sec-at91-sama5d2-xplained-board"></span><h2><a class="toc-backref" href="#id34"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-board"></span><h2><a class="toc-backref" href="#id34" role="doc-backlink"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
 <p>The SAMA5D2 Xplained Ultra is a fast prototyping and evaluation
 platform for the SAMA5D2 series of microprocessors (MPUs) <a class="reference internal" href="#ds60001476h" id="id1"><span>[DS60001476H]</span></a>.
 The board includes eMMC and DDR3 memories as well as a rich set
@@ -250,10 +254,6 @@ allows you to easily get started with your development.</p>
 <h3><span class="section-number">1.1.3 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default" id="id26">
 <caption><span class="caption-number">Table 1.4 </span><span class="caption-text">at91-sama5d2-xplained Specification</span><a class="headerlink" href="#id26" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 86%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Model</p></th>
 <th class="head"><p>SAMA5D2 Xplained</p></th>
@@ -339,26 +339,18 @@ alpha-blending, rotation, scaling and color space conversion</div>
 </section>
 </section>
 <section id="build-targets">
-<span id="sec-at91-sama5d2-xplained-targets"></span><h2><a class="toc-backref" href="#id35"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-targets"></span><h2><a class="toc-backref" href="#id35" role="doc-backlink"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
 <section id="machines">
 <span id="sec-at91-sama5d2-xplained-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
 <span id="table-at91-sama5d2-xplained-machines"></span><table class="docutils align-default" id="id27">
 <caption><span class="caption-number">Table 1.5 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id27" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 21%" />
-<col style="width: 19%" />
-<col style="width: 21%" />
-<col style="width: 14%" />
-<col style="width: 15%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id10" id="id4">1</a></p></th>
-<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id11" id="id5">2</a></p></th>
-<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id12" id="id6">3</a></p></th>
-<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id13" id="id7">4</a></p></th>
-<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id14" id="id8">5</a></p></th>
-<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id15" id="id9">6</a></p></th>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id11" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id12" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id13" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id14" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id15" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></th>
 </tr>
 </thead>
 <tbody>
@@ -378,34 +370,40 @@ alpha-blending, rotation, scaling and color space conversion</div>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
-<dd><p>Target board.</p>
-</dd>
-<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
-<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
-</dd>
-<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">3</a></span></dt>
-<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
-</dd>
-<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
-<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-at91-sama5d2-xplained-images"><span class="std std-numref">Section 1.2.2</span></a>,
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">1</a><span class="fn-bracket">]</span></span>
+<p>Target board.</p>
+</aside>
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</aside>
+<aside class="footnote brackets" id="id13" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-at91-sama5d2-xplained-images"><span class="std std-numref">Section 1.2.2</span></a>,
 you can find list of supported recipes for the target images, which you can build in addition
 to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
 (see <a class="reference internal" href="#sec-at91-sama5d2-xplained-build"><span class="std std-numref">Section 1.3</span></a>).</p>
-</dd>
-<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id8">5</a></span></dt>
-<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
-</dd>
-<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id9">6</a></span></dt>
-<dd><p>External storage device for which an installation image is generated. When booting from
+</aside>
+<aside class="footnote brackets" id="id14" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
+<p>External or internal data storage where the TanoWrt operating system is running.</p>
+</aside>
+<aside class="footnote brackets" id="id15" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<p>External storage device for which an installation image is generated. When booting from
 the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 <section id="images">
 <span id="sec-at91-sama5d2-xplained-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
-<span id="table-at91-sama5d2-xplained-images"></span><table class="colwidths-given docutils align-default" id="id28">
+<span id="table-at91-sama5d2-xplained-images"></span><table class="docutils align-default" id="id28">
 <caption><span class="caption-number">Table 1.6 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id28" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
@@ -416,7 +414,7 @@ the Installation Media, the TanoWrt system is installed on the Running Media sto
 <thead>
 <tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
 Image</p></th>
-<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id17" id="id16">7</a></p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id17" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></th>
 <th class="head"><p>Supported by Target(s)</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
@@ -445,16 +443,17 @@ as dependencies.</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id16">7</a></span></dt>
-<dd><p>Image recipe name. This name can be used as argument
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id17" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">7</a><span class="fn-bracket">]</span></span>
+<p>Image recipe name. This name can be used as argument
 for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-at91-sama5d2-xplained-build"><span class="std std-numref">Section 1.3</span></a> section).</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 <section id="build">
-<span id="sec-at91-sama5d2-xplained-build"></span><h2><a class="toc-backref" href="#id36"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-build"></span><h2><a class="toc-backref" href="#id36" role="doc-backlink"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>Please read the common information on how to perform a TanoWrt
 images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
 <div class="admonition seealso">
@@ -489,7 +488,7 @@ and run from the eMMC flash memory.</p>
 </section>
 </section>
 <section id="partitioning-layouts">
-<span id="sec-at91-sama5d2-xplained-partitioning"></span><h2><a class="toc-backref" href="#id37"><span class="section-number">1.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-partitioning"></span><h2><a class="toc-backref" href="#id37" role="doc-backlink"><span class="section-number">1.4 </span>Partitioning Layouts</a><a class="headerlink" href="#partitioning-layouts" title="Permalink to this heading"></a></h2>
 <section id="sd-card">
 <h3><span class="section-number">1.4.1 </span>SD Card<a class="headerlink" href="#sd-card" title="Permalink to this heading"></a></h3>
 <p>The partitioning and data layout of the SD card image for the SAMA5D2 Xplained board
@@ -518,10 +517,10 @@ some SAMA5D2 chip revisions have a eMMC boot issues <a class="reference internal
 </section>
 </section>
 <section id="produced-build-artifacts">
-<span id="sec-at91-sama5d2-xplained-artifacts"></span><h2><a class="toc-backref" href="#id38"><span class="section-number">1.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-artifacts"></span><h2><a class="toc-backref" href="#id38" role="doc-backlink"><span class="section-number">1.5 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
 <p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
 Refer to table <a class="reference internal" href="#table-at91-sama5d2-xplained-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
-<span id="table-at91-sama5d2-xplained-artifacts"></span><table class="colwidths-given docutils align-default" id="id31">
+<span id="table-at91-sama5d2-xplained-artifacts"></span><table class="docutils align-default" id="id31">
 <caption><span class="caption-number">Table 1.7 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id31" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
@@ -843,7 +842,7 @@ a complete listing, and a reduced listing without the symbolic links display.</p
 </section>
 </section>
 <section id="writing-images">
-<span id="sec-at91-sama5d2-xplained-flash"></span><h2><a class="toc-backref" href="#id39"><span class="section-number">1.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-flash"></span><h2><a class="toc-backref" href="#id39" role="doc-backlink"><span class="section-number">1.6 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
 <section id="writing-image-to-sd-card">
 <span id="sec-at91-sama5d2-xplained-flash-sd"></span><h3><span class="section-number">1.6.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
 <p>No special information about writing images to SD card
@@ -925,15 +924,10 @@ connection with a PC and use special utilities.</p>
 </section>
 </section>
 <section id="booting-and-running">
-<span id="sec-at91-sama5d2-xplained-booting"></span><h2><a class="toc-backref" href="#id40"><span class="section-number">1.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-booting"></span><h2><a class="toc-backref" href="#id40" role="doc-backlink"><span class="section-number">1.7 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <p>The default boot sequence for SAMA5D2 devices <a class="reference internal" href="#ds00002791a" id="id20"><span>[DS00002791A]</span></a>
 is shown in the table below.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 28%" />
-<col style="width: 51%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Sequence</p></th>
 <th class="head"><p>Boot Device</p></th>
@@ -994,17 +988,13 @@ for details about writing TanoWrt image to eMMC flash memory).</p></li>
 </section>
 </section>
 <section id="serial-console">
-<span id="sec-at91-sama5d2-xplained-serial"></span><h2><a class="toc-backref" href="#id41"><span class="section-number">1.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-serial"></span><h2><a class="toc-backref" href="#id41" role="doc-backlink"><span class="section-number">1.8 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
 <p>Serial console on SAMA5D2 Xplained board are available through 6-pin
 serial communication header J1 Debug.
 Connect the USB to TTL serial cable as described below.
 Don’t connect the VCC wire of the USB to TTL converted,
 connect only TX, RX and GND wires.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 67%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>SAMA5D2 Xplained J1 6-pin Header</p></th>
 <th class="head"><p>Signal</p></th>
@@ -1027,10 +1017,6 @@ connection USB to TTL converter with SAMA5D2 Xplained board.</p>
 <p>The default serial console settings for SAMA5D2 Xplained for U-Boot and kernel
 are described in the table below.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 47%" />
-<col style="width: 53%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>Value</p></th>
@@ -1056,7 +1042,7 @@ are described in the table below.</p>
 </table>
 </section>
 <section id="default-network-configuration">
-<span id="sec-at91-sama5d2-xplained-network-config"></span><h2><a class="toc-backref" href="#id42"><span class="section-number">1.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-network-config"></span><h2><a class="toc-backref" href="#id42" role="doc-backlink"><span class="section-number">1.9 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
 <p>By default Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface).
 Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured to obtain IP configuration via <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> client.
 To see obtained IP configuration use the following command:</p>
@@ -1071,7 +1057,7 @@ USB network interface configured with static IP address 192.168.128.1 with enabl
 <p>Ethernet port <code class="docutils literal notranslate"><span class="pre">eth0</span></code> have enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> for Rx and Tx state by default.</p>
 </section>
 <section id="web-user-interface">
-<span id="sec-at91-sama5d2-xplained-webui"></span><h2><a class="toc-backref" href="#id43"><span class="section-number">1.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-webui"></span><h2><a class="toc-backref" href="#id43" role="doc-backlink"><span class="section-number">1.10 </span>Web User Interface</a><a class="headerlink" href="#web-user-interface" title="Permalink to this heading"></a></h2>
 <p>The WebUI can be accessed via any Ethernet port bridged to LAN network
 or via USB RNDIS connection through HTTP(s) protocol.
 You must see something like this in browser:</p>
@@ -1089,7 +1075,7 @@ You must see something like this in browser:</p>
 </figure>
 </section>
 <section id="firmware-upgrade">
-<span id="sec-at91-sama5d2-xplained-upgrade"></span><h2><a class="toc-backref" href="#id44"><span class="section-number">1.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<span id="sec-at91-sama5d2-xplained-upgrade"></span><h2><a class="toc-backref" href="#id44" role="doc-backlink"><span class="section-number">1.11 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
 <p>No special information about firmware upgrade.
 Use produced <code class="file docutils literal notranslate"><span class="pre">.swu</span></code> <a class="reference internal" href="#table-at91-sama5d2-xplained-artifacts"><span class="std std-ref">artifact</span></a> for upgrading running system.</p>
 <div class="admonition seealso">
@@ -1098,7 +1084,7 @@ Use produced <code class="file docutils literal notranslate"><span class="pre">.
 </div>
 </section>
 <section id="additional-information">
-<h2><a class="toc-backref" href="#id45"><span class="section-number">1.12 </span>Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id45" role="doc-backlink"><span class="section-number">1.12 </span>Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
 <p>Here are sections with various additional information about the
 SAMA5D2 Xplained and the operation of TanoWrt on it.</p>
 <div class="toctree-wrapper compound">
@@ -1110,21 +1096,26 @@ SAMA5D2 Xplained and the operation of TanoWrt on it.</p>
 </div>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id46"><span class="section-number">1.13 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
-<dl class="citation">
-<dt class="label" id="atsama5d2c-xult"><span class="brackets"><a class="fn-backref" href="#id2">ATSAMA5D2C-XULT</a></span></dt>
-<dd><p><a class="reference external" href="https://www.microchip.com/en-us/development-tool/atsama5d2c-xult">SAMA5D2 Xplained Ultra Evaluation Kit User Guide</a></p>
-</dd>
-<dt class="label" id="ds80000803a"><span class="brackets"><a class="fn-backref" href="#id18">DS80000803A</a></span></dt>
-<dd><p><a class="reference external" href="http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D2-Family-Silicon-Errata-and-Data-Sheet-Clarification-DS80000803A.pdf">SAMA5D2 Family Silicon Errata and Data Sheet Clarification</a></p>
-</dd>
-<dt class="label" id="ds60001476h"><span class="brackets">DS60001476H</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>)</span></dt>
-<dd><p><a class="reference external" href="https://ww1.microchip.com/downloads/aemDocuments/documents/MPU32/ProductDocuments/DataSheets/SAMA5D2-Series-Datasheet-DS60001476H.pdf">SAMA5D2 Series Datasheet</a></p>
-</dd>
-<dt class="label" id="ds00002791a"><span class="brackets"><a class="fn-backref" href="#id20">DS00002791A</a></span></dt>
-<dd><p><a class="reference external" href="https://ww1.microchip.com/downloads/en/Appnotes/AN2791-Booting-from-External-Non-Volatile-Memory-on-SAMA5D2-MPU-Application-Note-DS00002791A.pdf">Booting from External Non-Volatile Memory (NVM) on SAMA5D2 MPU</a></p>
-</dd>
-</dl>
+<h2><a class="toc-backref" href="#id46" role="doc-backlink"><span class="section-number">1.13 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<div role="list" class="citation-list">
+<div class="citation" id="atsama5d2c-xult" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">ATSAMA5D2C-XULT</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.microchip.com/en-us/development-tool/atsama5d2c-xult">SAMA5D2 Xplained Ultra Evaluation Kit User Guide</a></p>
+</div>
+<div class="citation" id="ds80000803a" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">DS80000803A</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D2-Family-Silicon-Errata-and-Data-Sheet-Clarification-DS80000803A.pdf">SAMA5D2 Family Silicon Errata and Data Sheet Clarification</a></p>
+</div>
+<div class="citation" id="ds60001476h" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>DS60001476H<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id3">2</a>)</span>
+<p><a class="reference external" href="https://ww1.microchip.com/downloads/aemDocuments/documents/MPU32/ProductDocuments/DataSheets/SAMA5D2-Series-Datasheet-DS60001476H.pdf">SAMA5D2 Series Datasheet</a></p>
+</div>
+<div class="citation" id="ds00002791a" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">DS00002791A</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://ww1.microchip.com/downloads/en/Appnotes/AN2791-Booting-from-External-Non-Volatile-Memory-on-SAMA5D2-MPU-Application-Note-DS00002791A.pdf">Booting from External Non-Volatile Memory (NVM) on SAMA5D2 MPU</a></p>
+</div>
+</div>
 </section>
 </section>
 
@@ -1135,7 +1126,7 @@ SAMA5D2 Xplained and the operation of TanoWrt on it.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.02.2023
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 12.02.2023
     </p>
   </div>
 </footer>

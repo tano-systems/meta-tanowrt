@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1 Raspberry Pi 3 Model B/B+ &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
@@ -38,14 +38,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            TanoWrt Embedded Linux Distibution
           </a>
               <div class="version">
                 master
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -157,7 +161,7 @@
   <section id="raspberry-pi-3-model-b-b">
 <span id="machine-rpi3"></span><h1><span class="section-number">1 </span>Raspberry Pi 3 Model B/B+<a class="headerlink" href="#raspberry-pi-3-model-b-b" title="Permalink to this heading"></a></h1>
 <p class="rubric">Contents</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#board-overview" id="id24">Board Overview</a></p></li>
 <li><p><a class="reference internal" href="#build-targets" id="id25">Build Targets</a></p></li>
@@ -170,9 +174,9 @@
 <li><p><a class="reference internal" href="#firmware-upgrade" id="id32">Firmware Upgrade</a></p></li>
 <li><p><a class="reference internal" href="#references" id="id33">References</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="board-overview">
-<span id="sec-rpi3-board"></span><h2><a class="toc-backref" href="#id24"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-board"></span><h2><a class="toc-backref" href="#id24" role="doc-backlink"><span class="section-number">1.1 </span>Board Overview</a><a class="headerlink" href="#board-overview" title="Permalink to this heading"></a></h2>
 <p>Single-board computer with wireless LAN and Bluetooth connectivity.
 1.4 GHz 64-bit quad-core processor, dual-band wireless LAN, Bluetooth 4.2/BLE, faster Ethernet,
 and Power-over-Ethernet support (with separate PoE HAT).</p>
@@ -215,10 +219,6 @@ and Power-over-Ethernet support (with separate PoE HAT).</p>
 <h3><span class="section-number">1.1.2 </span>Specification<a class="headerlink" href="#specification" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default" id="id20">
 <caption><span class="caption-number">Table 1.12 </span><span class="caption-text">Raspberry Pi 3 Specification</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 85%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Model</p></th>
 <th class="head"><p>Raspberry Pi 3</p></th>
@@ -294,26 +294,18 @@ and Power-over-Ethernet support (with separate PoE HAT).</p>
 </section>
 </section>
 <section id="build-targets">
-<span id="sec-rpi3-targets"></span><h2><a class="toc-backref" href="#id25"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-targets"></span><h2><a class="toc-backref" href="#id25" role="doc-backlink"><span class="section-number">1.2 </span>Build Targets</a><a class="headerlink" href="#build-targets" title="Permalink to this heading"></a></h2>
 <section id="machines">
 <span id="sec-rpi3-machines"></span><h3><span class="section-number">1.2.1 </span>Machines<a class="headerlink" href="#machines" title="Permalink to this heading"></a></h3>
 <span id="table-rpi3-machines"></span><table class="docutils align-default" id="id21">
 <caption><span class="caption-number">Table 1.13 </span><span class="caption-text">Supported Machines</span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 19%" />
-<col style="width: 16%" />
-<col style="width: 23%" />
-<col style="width: 15%" />
-<col style="width: 16%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1">1</a></p></th>
-<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2">2</a></p></th>
-<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3">3</a></p></th>
-<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4">4</a></p></th>
-<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5">5</a></p></th>
-<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6">6</a></p></th>
+<tr class="row-odd"><th class="head"><p>Board<a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Target YAML<a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Machine<a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Target Recipe(s)<a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Running Media<a class="footnote-reference brackets" href="#id11" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></th>
+<th class="head"><p>Installation Media<a class="footnote-reference brackets" href="#id12" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></th>
 </tr>
 </thead>
 <tbody>
@@ -327,34 +319,40 @@ Model B/B+</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Target board.</p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
-</dd>
-<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
-</dd>
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-rpi3-images"><span class="std std-numref">Section 1.2.2</span></a>,
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Target board.</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Target YAML-file located in the <code class="file docutils literal notranslate"><span class="pre">kas/targets</span></code> directory.</p>
+</aside>
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Target machine name stored in the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> BitBake variable for selected Target YAML.</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Recipes that will be built by default for the target. In <a class="reference internal" href="#sec-rpi3-images"><span class="std std-numref">Section 1.2.2</span></a>,
 you can find list of supported recipes for the target images, which you can build in addition
 to the default recipes using optional <code class="docutils literal notranslate"><span class="pre">--target</span></code> option in build command
 (see <a class="reference internal" href="#sec-rpi3-build"><span class="std std-numref">Section 1.3</span></a>).</p>
-</dd>
-<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
-<dd><p>External or internal data storage where the TanoWrt operating system is running.</p>
-</dd>
-<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
-<dd><p>External storage device for which an installation image is generated. When booting from
+</aside>
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>External or internal data storage where the TanoWrt operating system is running.</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>External storage device for which an installation image is generated. When booting from
 the Installation Media, the TanoWrt system is installed on the Running Media storage.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 <section id="images">
 <span id="sec-rpi3-images"></span><h3><span class="section-number">1.2.2 </span>Images<a class="headerlink" href="#images" title="Permalink to this heading"></a></h3>
-<span id="table-rpi3-images"></span><table class="colwidths-given docutils align-default" id="id22">
+<span id="table-rpi3-images"></span><table class="docutils align-default" id="id22">
 <caption><span class="caption-number">Table 1.14 </span><span class="caption-text">Supported Images</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
@@ -365,7 +363,7 @@ the Installation Media, the TanoWrt system is installed on the Running Media sto
 <thead>
 <tr class="row-odd"><th class="head"><p>Read-Only Root Filesystem
 Image</p></th>
-<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13">7</a></p></th>
+<th class="head"><p>Recipe<a class="footnote-reference brackets" href="#id14" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></th>
 <th class="head"><p>Supported by Target(s)</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
@@ -378,16 +376,17 @@ Image</p></th>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
-<dd><p>Image recipe name. This name can be used as argument
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id14" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">7</a><span class="fn-bracket">]</span></span>
+<p>Image recipe name. This name can be used as argument
 for <code class="docutils literal notranslate"><span class="pre">--target</span></code> build command option (see <a class="reference internal" href="#sec-rpi3-build"><span class="std std-numref">Section 1.3</span></a> section).</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 <section id="build">
-<span id="sec-rpi3-build"></span><h2><a class="toc-backref" href="#id26"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-build"></span><h2><a class="toc-backref" href="#id26" role="doc-backlink"><span class="section-number">1.3 </span>Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>Please read the common information on how to perform a TanoWrt
 images build and preparing the build environment in section “<a class="reference internal" href="../../../../build.html#sec-build"><span class="std std-ref">Building TanoWrt</span></a>”.</p>
 <div class="admonition seealso">
@@ -413,10 +412,10 @@ card on the Raspberry Pi 3 target board.</p>
 </section>
 </section>
 <section id="produced-build-artifacts">
-<span id="sec-rpi3-artifacts"></span><h2><a class="toc-backref" href="#id27"><span class="section-number">1.4 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-artifacts"></span><h2><a class="toc-backref" href="#id27" role="doc-backlink"><span class="section-number">1.4 </span>Produced Build Artifacts</a><a class="headerlink" href="#produced-build-artifacts" title="Permalink to this heading"></a></h2>
 <p>All produced build artifacts are stored in the <code class="file docutils literal notranslate"><span class="pre">~/tanowrt/build/tanowrt-glibc/deploy/images/&lt;MACHINE&gt;</span></code> directory.
 Refer to table <a class="reference internal" href="#table-rpi3-artifacts"><span class="std std-ref">Produced Build Artifacts</span></a> for a description of some common (not all) build artifacts.</p>
-<span id="table-rpi3-artifacts"></span><table class="colwidths-given docutils align-default" id="id23">
+<span id="table-rpi3-artifacts"></span><table class="docutils align-default" id="id23">
 <caption><span class="caption-number">Table 1.15 </span><span class="caption-text">Produced Build Artifacts</span><a class="headerlink" href="#id23" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 15%" />
@@ -631,7 +630,7 @@ listing without the symbolic links and <a class="reference internal" href="../..
 </div></div>
 </section>
 <section id="writing-images">
-<span id="sec-rpi3-flash"></span><h2><a class="toc-backref" href="#id28"><span class="section-number">1.5 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-flash"></span><h2><a class="toc-backref" href="#id28" role="doc-backlink"><span class="section-number">1.5 </span>Writing Images</a><a class="headerlink" href="#writing-images" title="Permalink to this heading"></a></h2>
 <section id="writing-image-to-sd-card">
 <span id="sec-rpi3-flash-sd"></span><h3><span class="section-number">1.5.1 </span>Writing Image to SD Card<a class="headerlink" href="#writing-image-to-sd-card" title="Permalink to this heading"></a></h3>
 <p>No special information about writing images to microSD card
@@ -645,7 +644,7 @@ card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcb
 </section>
 </section>
 <section id="booting-and-running">
-<span id="sec-rpi3-booting"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.6 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-booting"></span><h2><a class="toc-backref" href="#id29" role="doc-backlink"><span class="section-number">1.6 </span>Booting and Running</a><a class="headerlink" href="#booting-and-running" title="Permalink to this heading"></a></h2>
 <section id="booting-from-microsd-card">
 <h3><span class="section-number">1.6.1 </span>Booting from microSD Card<a class="headerlink" href="#booting-from-microsd-card" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
@@ -657,28 +656,28 @@ card <code class="file docutils literal notranslate"><span class="pre">/dev/mmcb
 </section>
 </section>
 <section id="serial-console">
-<span id="sec-rpi3-serial"></span><h2><a class="toc-backref" href="#id30"><span class="section-number">1.7 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-serial"></span><h2><a class="toc-backref" href="#id30" role="doc-backlink"><span class="section-number">1.7 </span>Serial Console</a><a class="headerlink" href="#serial-console" title="Permalink to this heading"></a></h2>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>There is no serial port on Raspberry Pi 3 boards</p>
 </div>
 </section>
 <section id="default-network-configuration">
-<span id="sec-rpi3-network-config"></span><h2><a class="toc-backref" href="#id31"><span class="section-number">1.8 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-network-config"></span><h2><a class="toc-backref" href="#id31" role="doc-backlink"><span class="section-number">1.8 </span>Default Network Configuration</a><a class="headerlink" href="#default-network-configuration" title="Permalink to this heading"></a></h2>
 <p>By default Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface) are joined into a bridge
 (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code> interface). Bridge (<code class="docutils literal notranslate"><span class="pre">br-lan</span></code>) configured with static IP address 192.168.0.1/24 with
 enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"><span class="xref std std-term">DHCP</span></a> server.</p>
 <p>The Ethernet port (<code class="docutils literal notranslate"><span class="pre">eth0</span></code>) has enabled <a class="reference internal" href="../../../../glossary.html#term-LLDP"><span class="xref std std-term">LLDP</span></a> by default.</p>
 </section>
 <section id="firmware-upgrade">
-<span id="sec-rpi3-upgrade"></span><h2><a class="toc-backref" href="#id32"><span class="section-number">1.9 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
+<span id="sec-rpi3-upgrade"></span><h2><a class="toc-backref" href="#id32" role="doc-backlink"><span class="section-number">1.9 </span>Firmware Upgrade</a><a class="headerlink" href="#firmware-upgrade" title="Permalink to this heading"></a></h2>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>Currently, the firmware upgrading for the Raspberry Pi 3 boards is not supported.</p>
 </div>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id33"><span class="section-number">1.10 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id33" role="doc-backlink"><span class="section-number">1.10 </span>References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.raspberrypi.com/products/raspberry-pi-3-model-b/">https://www.raspberrypi.com/products/raspberry-pi-3-model-b/</a></p></li>
 </ol>
@@ -692,7 +691,7 @@ enabled <a class="reference internal" href="../../../../glossary.html#term-DHCP"
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.02.2023
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 12.02.2023
     </p>
   </div>
 </footer>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building TanoWrt &mdash; TanoWrt Embedded Linux Distibution master documentation</title>
@@ -35,14 +35,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> TanoWrt Embedded Linux Distibution
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TanoWrt Embedded Linux Distibution
           </a>
               <div class="version">
                 master
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -135,7 +139,7 @@
   <section id="building-tanowrt">
 <span id="sec-build"></span><h1>Building TanoWrt<a class="headerlink" href="#building-tanowrt" title="Permalink to this heading"></a></h1>
 <p class="rubric">Contents</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#preparing-build-environment" id="id1">Preparing Build Environment</a></p>
 <ul>
@@ -156,13 +160,13 @@
 <li><p><a class="reference internal" href="#additional-information" id="id11">Additional Information</a></p></li>
 <li><p><a class="reference internal" href="#references" id="id12">References</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="preparing-build-environment">
-<h2><a class="toc-backref" href="#id1">Preparing Build Environment</a><a class="headerlink" href="#preparing-build-environment" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Preparing Build Environment</a><a class="headerlink" href="#preparing-build-environment" title="Permalink to this heading"></a></h2>
 <p>The recommended Linux distribution on host system
 is Ubuntu 20.04 or higher.</p>
 <section id="install-required-packages">
-<h3><a class="toc-backref" href="#id2">Install Required Packages</a><a class="headerlink" href="#install-required-packages" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Install Required Packages</a><a class="headerlink" href="#install-required-packages" title="Permalink to this heading"></a></h3>
 <p>For a successful build, additional packages must be installed.
 To do this, run the command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gawk<span class="w"> </span>wget<span class="w"> </span>git-core<span class="w"> </span>diffstat<span class="w"> </span>unzip<span class="w"> </span>texinfo<span class="w"> </span>gcc-multilib<span class="w"> </span><span class="se">\</span>
@@ -178,7 +182,7 @@ command interpreter for shell scripts to bash. You can do it with the command:</
 <p>Select <em class="menuselection">No</em> when it asks you to install dash as <code class="file docutils literal notranslate"><span class="pre">/bin/sh</span></code>.</p>
 </section>
 <section id="install-kas">
-<h3><a class="toc-backref" href="#id3">Install kas</a><a class="headerlink" href="#install-kas" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Install kas</a><a class="headerlink" href="#install-kas" title="Permalink to this heading"></a></h3>
 <p>To build TanoWrt the kas utility is used. <a class="reference external" href="http://github.com/siemens/kas">kas</a> is
 a setup tool for BitBake based projects by Siemens.</p>
 <p>To install kas into your python site-package repository, run:</p>
@@ -189,7 +193,7 @@ a setup tool for BitBake based projects by Siemens.</p>
 for more details about kas utility.</p>
 </section>
 <section id="clone-tanowrt-repository">
-<h3><a class="toc-backref" href="#id4">Clone TanoWrt Repository</a><a class="headerlink" href="#clone-tanowrt-repository" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Clone TanoWrt Repository</a><a class="headerlink" href="#clone-tanowrt-repository" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
 <span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
@@ -197,7 +201,7 @@ for more details about kas utility.</p>
 </div>
 </section>
 <section id="initialize-and-update-submodules">
-<h3><a class="toc-backref" href="#id5">Initialize and Update Submodules</a><a class="headerlink" href="#initialize-and-update-submodules" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Initialize and Update Submodules</a><a class="headerlink" href="#initialize-and-update-submodules" title="Permalink to this heading"></a></h3>
 <p>When using the kas utility, it is required to have BitBake at the root
 of the meta-tanowrt layer. The BitBake submodule must be initialized
 and updated before building:</p>
@@ -208,7 +212,7 @@ and updated before building:</p>
 </section>
 </section>
 <section id="build">
-<h2><a class="toc-backref" href="#id6">Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Build</a><a class="headerlink" href="#build" title="Permalink to this heading"></a></h2>
 <p>In general to build TanoWrt you need to use the following command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kas<span class="w"> </span>build<span class="w"> </span><span class="o">[</span>--target<span class="w"> </span>&lt;target-recipe&gt;<span class="o">]</span><span class="w"> </span>&lt;target-yml&gt;
 </pre></div>
@@ -250,7 +254,7 @@ you need to run following commands from <code class="file docutils literal notra
 <p>See <a class="reference internal" href="overview.html#sec-supported-targets"><span class="std std-ref">Demonstration Boards Support</span></a> to select the proper target YML file.</p>
 </section>
 <section id="local-configuration">
-<span id="sec-build-local-conf"></span><h2><a class="toc-backref" href="#id7">Local Configuration</a><a class="headerlink" href="#local-configuration" title="Permalink to this heading"></a></h2>
+<span id="sec-build-local-conf"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Local Configuration</a><a class="headerlink" href="#local-configuration" title="Permalink to this heading"></a></h2>
 <p>The build configuration <code class="file docutils literal notranslate"><span class="pre">build/conf/local.conf</span></code> is generated
 automatically by the kas utility depending on the chosen build target.</p>
 <p>To define your own local build configuration, it must be stored in
@@ -279,9 +283,9 @@ the number of available processors.</p>
 </div>
 </section>
 <section id="examples">
-<h2><a class="toc-backref" href="#id8">Examples</a><a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Examples</a><a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <section id="qemu-x86-64">
-<h3><a class="toc-backref" href="#id9">QEMU (x86_64)</a><a class="headerlink" href="#qemu-x86-64" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">QEMU (x86_64)</a><a class="headerlink" href="#qemu-x86-64" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
 <span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
@@ -302,7 +306,7 @@ the number of available processors.</p>
 </div>
 </section>
 <section id="intel-core-i7-x86-64">
-<h3><a class="toc-backref" href="#id10">Intel Core i7 (x86_64)</a><a class="headerlink" href="#intel-core-i7-x86-64" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Intel Core i7 (x86_64)</a><a class="headerlink" href="#intel-core-i7-x86-64" title="Permalink to this heading"></a></h3>
 <p>Clone TanoWrt core layer repository with submodules to your home directory (this document uses <code class="docutils literal notranslate"><span class="pre">~/tanowrt</span></code> for example):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
 <span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/tano-systems/meta-tanowrt<span class="w"> </span>tanowrt
@@ -320,7 +324,7 @@ the number of available processors.</p>
 </section>
 </section>
 <section id="additional-information">
-<h2><a class="toc-backref" href="#id11">Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="extra/build-docker.html">Using Dockerized Build Environment</a></li>
@@ -329,7 +333,7 @@ the number of available processors.</p>
 </div>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id12">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">References</a><a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://kas.readthedocs.io/en/latest/userguide.html#dependencies-installation">Official kas Documentation</a></p></li>
 </ol>
@@ -343,7 +347,7 @@ the number of available processors.</p>
   <hr/>
   <div role="contentinfo">
     <p>
-      &copy; Copyright 2022, Tano Systems LLC | Last updated on 01.02.2023
+      &copy; Copyright 2022, Tano Systems LLC | Last updated on 12.02.2023
     </p>
   </div>
 </footer>
