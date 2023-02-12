@@ -1,7 +1,7 @@
-From e4ae609668088610534ee6f49096ec372408b063 Mon Sep 17 00:00:00 2001
+From 15ae9a119a02498025c491d9eabcc106b10f63f6 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:28:44 +0300
-Subject: [PATCH 14/18] Add support for rootfs partition/volume selection
+Subject: [PATCH 14/17] Add support for rootfs partition/volume selection
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -73,10 +73,10 @@ index 3bb956a..a0d2014 100644
  TARGET_LINK_LIBRARIES(ubi ubi-utils ubox)
  INSTALL(TARGETS ubi RUNTIME DESTINATION sbin)
 diff --git a/block.c b/block.c
-index 527b68c..b4383e2 100644
+index 2033523..682107b 100644
 --- a/block.c
 +++ b/block.c
-@@ -46,7 +46,7 @@
+@@ -44,7 +44,7 @@
  #include <libubox/vlist.h>
  #include <libubus.h>
  
@@ -85,7 +85,7 @@ index 527b68c..b4383e2 100644
  #include "libfstools/fstype.h"
  #include "libfstools/volume.h"
  #include "probe.h"
-@@ -1408,7 +1408,7 @@ static int check_extroot(char *path)
+@@ -1484,7 +1484,7 @@ static int check_extroot(char *path)
  		libubi_t libubi;
  
  		libubi = libubi_open();
@@ -94,7 +94,7 @@ index 527b68c..b4383e2 100644
  		libubi_close(libubi);
  	}
  #endif
-@@ -1617,7 +1617,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1693,7 +1693,7 @@ static int main_extroot(int argc, char **argv)
  	memset(blkdev_path, 0, sizeof(blkdev_path));
  	libubi = libubi_open();
  	if (libubi) {
@@ -103,7 +103,7 @@ index 527b68c..b4383e2 100644
  		libubi_close(libubi);
  		if (blkdev_path[0]) {
  			char cfg[] = "/tmp/ubifs_cfg";
-@@ -1674,7 +1674,7 @@ static int main_extroot(int argc, char **argv)
+@@ -1750,7 +1750,7 @@ static int main_extroot(int argc, char **argv)
  		}
  	}
  
@@ -138,10 +138,10 @@ index 87788e3..f7d8192 100644
  	}
  
 diff --git a/libfstools/common.c b/libfstools/common.c
-index 229c31a..caf9193 100644
+index 0f54758..842925b 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -151,14 +151,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -193,14 +193,14 @@ do_format:
  		if (use_f2fs(v, offset, bdev)) {
  			ULOG_INFO("creating f2fs overlay filesystem (%s, offset %"PRIu64")...\n",
  				v->blk, offset);
@@ -172,7 +172,7 @@ index c3b6790..e3e0c0c 100644
  #define F2FS_MINSIZE		(100ULL * 1024ULL * 1024ULL)
  
 diff --git a/libfstools/overlay.c b/libfstools/overlay.c
-index d541a44..11dce9b 100644
+index 7fd6167..f5568ba 100644
 --- a/libfstools/overlay.c
 +++ b/libfstools/overlay.c
 @@ -27,7 +27,7 @@
@@ -550,5 +550,5 @@ index 54284b1..05742d6 100644
  	} else if (!strcmp(argv[1], "detach")) {
  		return main_detach(argv[2]);
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
