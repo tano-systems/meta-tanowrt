@@ -1,7 +1,7 @@
-From 85f646d869094efdd82156aca4447c43f9849c7c Mon Sep 17 00:00:00 2001
+From a6fd7e8e2b64ef48d70a47c4112359dee6f17b52 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 14 Aug 2019 23:03:57 +0300
-Subject: [PATCH 05/18] block: Add log message for unmounted device
+Subject: [PATCH 05/17] block: Add log message for unmounted device
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/block.c b/block.c
-index 2465def..421c539 100644
+index 9ad3030..4f5227d 100644
 --- a/block.c
 +++ b/block.c
-@@ -1032,7 +1032,7 @@ static int mount_device(struct probe_info *pr, int type)
+@@ -1108,7 +1108,7 @@ static int mount_device(struct probe_info *pr, int type)
  	mp = find_mount_point(pr->dev);
  	if (mp) {
  		if (m && m->type == TYPE_MOUNT && m->target && strcmp(m->target, mp)) {
@@ -21,7 +21,7 @@ index 2465def..421c539 100644
  			err = -1;
  		} else
  			err = 0;
-@@ -1114,6 +1114,8 @@ static int mount_device(struct probe_info *pr, int type)
+@@ -1190,6 +1190,8 @@ static int mount_device(struct probe_info *pr, int type)
  			free(_target);
  
  		return err;
@@ -30,7 +30,7 @@ index 2465def..421c539 100644
  	}
  
  	if (_target)
-@@ -1156,7 +1158,7 @@ static int umount_device(char *path, int type, bool all)
+@@ -1232,7 +1234,7 @@ static int umount_device(char *path, int type, bool all)
  		ULOG_ERR("unmounting %s (%s) failed (%d) - %m\n", path, mp,
  			 errno);
  	} else {
@@ -40,5 +40,5 @@ index 2465def..421c539 100644
  	}
  
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

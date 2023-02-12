@@ -1,7 +1,7 @@
-From 0c5db2f3ad48b8b1c787f2a38f7cae3af249758c Mon Sep 17 00:00:00 2001
+From 0f4a9a79efc8f62233c228fb6f69392515fc6f73 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Tue, 9 Feb 2021 02:42:25 +0300
-Subject: [PATCH 15/18] rootdisk: Increase maximum partitions number to 16
+Subject: [PATCH 15/17] rootdisk: Increase maximum partitions number to 16
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -80,5 +80,5 @@ index 4c8d58e..8be91ab 100644
  						if (rootdisk_info.partition[part - 1].partition != part)
  							continue;
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

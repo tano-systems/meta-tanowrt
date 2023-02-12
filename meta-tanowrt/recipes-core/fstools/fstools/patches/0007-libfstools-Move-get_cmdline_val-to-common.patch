@@ -1,20 +1,20 @@
-From 4c1a8407e63d5ec8ce23559b591a31a7f875c453 Mon Sep 17 00:00:00 2001
+From c9733d079e3f15e215332059612365af947246c0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Wed, 5 May 2021 02:24:01 +0300
-Subject: [PATCH 07/18] libfstools: Move get_cmdline_val to common
+Subject: [PATCH 07/17] libfstools: Move get_cmdline_val to common
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
  libfstools/common.c   | 40 ++++++++++++++++++++++++++++++++++++++++
  libfstools/common.h   |  2 ++
- libfstools/partname.c | 38 ++------------------------------------
- 3 files changed, 44 insertions(+), 36 deletions(-)
+ libfstools/partname.c | 40 +++-------------------------------------
+ 3 files changed, 45 insertions(+), 37 deletions(-)
 
 diff --git a/libfstools/common.c b/libfstools/common.c
-index 1b22d2c..a0a1274 100644
+index e5b7bc3..7efba61 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -134,3 +134,43 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -176,3 +176,43 @@ do_format:
  
  	return ret;
  }
@@ -69,7 +69,7 @@ index b5cc692..ec81951 100644
 +char* get_cmdline_val(const char* name, char* out, int len);
 +char* get_var_from_file(const char* filename, const char* name, char* out, int len);
 diff --git a/libfstools/partname.c b/libfstools/partname.c
-index f59c52e..ba10650 100644
+index 53ee600..ed81c05 100644
 --- a/libfstools/partname.c
 +++ b/libfstools/partname.c
 @@ -61,40 +61,6 @@ static int partname_volume_init(struct volume *v)
@@ -113,8 +113,8 @@ index f59c52e..ba10650 100644
  static char *rootdevname(char *devpath) {
  	int l;
  
-@@ -123,12 +89,12 @@ static struct volume *partname_volume_find(char *name)
- 	bool found = false;
+@@ -125,7 +91,7 @@ static struct volume *partname_volume_find(char *name)
+ 	bool has_root = false;
  	glob_t gl;
  
 -	if (get_var_from_file("/proc/cmdline", "fstools_ignore_partname", rootparam, sizeof(rootparam))) {
@@ -122,12 +122,21 @@ index f59c52e..ba10650 100644
  		if (!strcmp("1", rootparam))
  			return NULL;
  	}
+@@ -137,12 +103,12 @@ static struct volume *partname_volume_find(char *name)
+ 	 * partition should be done by providing fstools_partname_fallback_scan=1 and skip partname scan
+ 	 * in every other case.
+ 	 */
+-	if (get_var_from_file("/proc/cmdline", "fstools_partname_fallback_scan", rootparam, sizeof(rootparam))) {
++	if (get_cmdline_val("fstools_partname_fallback_scan", rootparam, sizeof(rootparam))) {
+ 		if (!strcmp("1", rootparam))
+ 			allow_fallback = true;
+ 	}
  
--	if (get_var_from_file("/proc/cmdline", "root", rootparam, sizeof(rootparam))) {
-+	if (get_cmdline_val("root", rootparam, sizeof(rootparam))) {
- 		rootdev = rootdevname(rootparam);
- 		/* find partition on same device as rootfs */
- 		snprintf(ueventgstr, sizeof(ueventgstr), "%s/%s/*/uevent", block_dir_name, rootdev);
+-	if (get_var_from_file("/proc/cmdline", "root", rootparam, sizeof(rootparam)))
++	if (get_cmdline_val("root", rootparam, sizeof(rootparam)))
+ 		has_root = true;
+ 
+ 	if (has_root && rootparam[0] == '/') {
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 

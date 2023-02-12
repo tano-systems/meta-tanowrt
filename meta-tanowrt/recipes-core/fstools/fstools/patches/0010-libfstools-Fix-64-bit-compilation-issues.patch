@@ -1,7 +1,7 @@
-From cbea12a07acab19af5aab9ec63f7f835a248d160 Mon Sep 17 00:00:00 2001
+From 1b474b768a098926deb4758f38d238725b2545c0 Mon Sep 17 00:00:00 2001
 From: Anton Kikin <a.kikin@tano-systems.com>
 Date: Fri, 27 Dec 2019 04:06:44 +0300
-Subject: [PATCH 10/18] libfstools: Fix 64-bit compilation issues
+Subject: [PATCH 10/17] libfstools: Fix 64-bit compilation issues
 
 Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
  2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/libfstools/common.c b/libfstools/common.c
-index bf2678a..229c31a 100644
+index 7d02125..0f54758 100644
 --- a/libfstools/common.c
 +++ b/libfstools/common.c
-@@ -149,14 +149,14 @@ int block_volume_format(struct volume *v, uint64_t offset, const char *bdev)
+@@ -191,14 +191,14 @@ do_format:
  		ULOG_INFO("overlay filesystem in %s has not been formatted yet\n", v->blk);
  #ifdef OVL_F2FS_ENABLE
  		if (use_f2fs(v, offset, bdev)) {
@@ -43,5 +43,5 @@ index 8b4904a..c3b6790 100644
  #include "libfstools.h"
  #include "volume.h"
 -- 
-2.28.0.windows.1
+2.34.1.windows.1
 
