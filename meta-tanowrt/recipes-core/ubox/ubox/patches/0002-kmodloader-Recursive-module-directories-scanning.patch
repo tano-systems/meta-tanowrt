@@ -1,0 +1,132 @@
+From 3bd1087810a9e08cd036734e02d0b9a87bf04847 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 14 Feb 2023 06:08:18 +0300
+Subject: [PATCH] kmodloader: Recursive module directories scanning
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ kmodloader.c | 98 ++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 87 insertions(+), 11 deletions(-)
+
+diff --git a/kmodloader.c b/kmodloader.c
+index cc76686..7a0a405 100644
+--- a/kmodloader.c
++++ b/kmodloader.c
+@@ -74,10 +74,94 @@ static char **module_folders = NULL;
+ 
+ static void free_module(struct module *m);
+ 
++#define MAX_RECURSION_DEPTH  10
++
++static int add_module_folder_recursive(const char *path, int *n, int depth)
++{
++	glob_t gl;
++	int i;
++	char *pattern;
++	size_t path_len;
++	size_t pattern_len;
++
++	if (depth >= MAX_RECURSION_DEPTH) {
++		ULOG_ERR("The maximum allowed recursion depth "
++			"has been reached (path is '%s').\n", path);
++		return 0;
++	}
++
++	path_len = strlen(path);
++	pattern_len = path_len + sizeof("*.ko") + 1;
++
++	pattern = malloc(pattern_len);
++	if (!pattern)
++		return -ENOMEM;
++
++	/* Search module folders */
++	strcpy(pattern, path);
++	pattern[path_len] = '*';
++	pattern[path_len + 1] = '\0';
++
++	if (glob(pattern, GLOB_NOESCAPE | GLOB_MARK | GLOB_NOSORT | GLOB_ONLYDIR, NULL, &gl) < 0) {
++		free(pattern);
++		return -1;
++	}
++
++	for (i = 0; i < gl.gl_pathc; i++) {
++		struct stat st;
++		int err = lstat(gl.gl_pathv[i], &st);
++
++		if (!err && !S_ISLNK(st.st_mode)) {
++			err = add_module_folder_recursive(gl.gl_pathv[i], n, depth + 1);
++			if (err) {
++				globfree(&gl);
++				free(pattern);
++				return -1;
++			}
++		}
++	}
++
++	globfree(&gl);
++
++	/* Search for modules in the current folder and add it
++	 * to the module_folders array if at least one module is found. */
++	pattern[path_len] = '\0';
++	strcat(pattern + path_len, "*.ko");
++
++	if (glob(pattern, GLOB_NOESCAPE | GLOB_MARK | GLOB_NOSORT, NULL, &gl) < 0) {
++		free(pattern);
++		return -1;
++	}
++
++	for (i = 0; i < gl.gl_pathc; i++) {
++		struct stat st;
++		int err = lstat(gl.gl_pathv[i], &st);
++
++		if (!err && S_ISREG(st.st_mode)) {
++			globfree(&gl);
++
++			module_folders = realloc(module_folders, sizeof(char *) * (*n + 2));
++			if (!module_folders) {
++				ULOG_ERR("out of memory\n");
++				free(pattern);
++				return -1;
++			}
++
++			pattern[path_len] = '\0';
++			module_folders[(*n)++] = pattern;
++			return 0;
++		}
++	}
++
++	globfree(&gl);
++	free(pattern);
++
++	return 0;
++}
++
+ static int init_module_folders(void)
+ {
+ 	int n = 0;
+-	struct stat st;
+ 	struct utsname ver;
+ 	char *s, *e, *p, path[330], ldpath[256];
+ 
+@@ -98,16 +182,8 @@ static int init_module_folders(void)
+ 		*p = 0;
+ 		snprintf(path, sizeof(path), "%s" DEF_MOD_PATH, s, ver.release);
+ 
+-		if (!stat(path, &st) && S_ISDIR(st.st_mode)) {
+-			module_folders = realloc(module_folders, sizeof(p) * (n + 2));
+-
+-			if (!module_folders) {
+-				ULOG_ERR("out of memory\n");
+-				return -1;
+-			}
+-
+-			module_folders[n++] = strdup(path);
+-		}
++		if (add_module_folder_recursive(path, &n, 0))
++			return -1;
+ 
+ 		s = p + 1;
+ 	}
+-- 
+2.34.1.windows.1
+
