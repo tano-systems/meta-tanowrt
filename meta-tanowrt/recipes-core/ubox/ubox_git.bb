@@ -3,7 +3,7 @@
 # Copyright (C) 2017, Theodore A. Roth <theodore_roth@trimble.com>
 # Copyright (C) 2018-2023, Anton Kikin <a.kikin@tano-systems.com>
 
-PR = "tano19"
+PR = "tano20"
 DESCRIPTION = "OpenWrt system helper toolbox"
 HOMEPAGE = "http://wiki.openwrt.org/doc/techref/ubox"
 LICENSE = "GPL-2.0-only"
@@ -23,6 +23,7 @@ SRC_URI = "\
 # Patches
 SRC_URI += "\
 	file://0001-kmodloader-Add-support-for-modprobe.blacklist-in-ker.patch \
+	file://0002-kmodloader-Recursive-module-directories-scanning.patch \
 "
 
 # 19.01.2023
