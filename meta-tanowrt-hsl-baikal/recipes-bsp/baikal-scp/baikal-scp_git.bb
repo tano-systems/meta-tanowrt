@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (c) 2021-2022 Tano Systems LLC. All Rights Reserved.
+# Copyright (c) 2021-2023 Tano Systems LLC. All Rights Reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 SUMMARY = "Baikal-M (BE-M1000) SCP communication driver"
@@ -16,7 +16,7 @@ BAIKAL_SCP_GIT_PROTOCOL ?= "https"
 BAIKAL_SCP_GIT_SRCREV   ?= "3db02d60abe55632d094dc0be09ba71aa23ef0af"
 
 PV = "1.1.0+git${SRCPV}"
-PR = "tano0"
+PR = "tano1"
 
 SRC_URI = "${BAIKAL_SCP_GIT_URI};branch=${BAIKAL_SCP_GIT_BRANCH};protocol=${BAIKAL_SCP_GIT_PROTOCOL}"
 SRCREV = "${BAIKAL_SCP_GIT_SRCREV}"
@@ -75,10 +75,6 @@ do_install:append() {
 		# clear them out to avoid confusion
 		sed -e 's:${B}/::g' -i ${D}${includedir}/${BPN}/Module.symvers
 	fi
-
-	# Flatten kernel modules structure
-	cd ${D}/lib/modules/${KERNEL_VERSION} && \
-		find extra -name '*.ko' -exec sh -c 'mod="{}"; ln -sf $mod ${D}/lib/modules/${KERNEL_VERSION}/$(basename "$mod")' \;
 
 	# Install userspace part
 	cd ${B} && DESTDIR='${D}' cmake_runcmake_build --target ${OECMAKE_TARGET_INSTALL}
