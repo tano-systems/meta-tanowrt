@@ -1,11 +1,11 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2020-2022 Tano Systems LLC. All Rights Reserved.
+# This file Copyright (C) 2020-2023 Tano Systems LLC. All Rights Reserved.
 # Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR:append = ".tano0.${INC_PR}"
+PR:append = ".tano1.${INC_PR}"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/files:${THISDIR}/${PN}/patches:${THISDIR}/${PN}/fragments:"
 
 # Do not apply some conflicted OE patches
@@ -31,6 +31,7 @@ SRC_URI:append = "\
 # Own patches
 SRC_URI:append = "\
 	file://0002-hwclock-Fix-read_rtc-with-glibc-2.31-and-enabled-SHO.patch \
+	file://0003-depmod-Fix-ignoring-.debug-directories.patch \
 "
 
 require busybox-openwrt.inc

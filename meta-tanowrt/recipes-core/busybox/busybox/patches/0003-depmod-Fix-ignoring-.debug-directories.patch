@@ -1,0 +1,26 @@
+From e2a09d0b7c78dd6a886dd9709fb79e63ca863aa8 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Tue, 14 Feb 2023 15:21:30 +0300
+Subject: [PATCH] depmod: Fix ignoring .debug directories
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ modutils/depmod.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modutils/depmod.c b/modutils/depmod.c
+index aa5a2de..153807a 100644
+--- a/modutils/depmod.c
++++ b/modutils/depmod.c
+@@ -43,7 +43,7 @@ static int FAST_FUNC parse_module(struct recursive_state *state,
+ 	/* Arbitrary. Was sb->st_size, but that breaks .gz etc */
+ 	size_t len = (64*1024*1024 - 4096);
+ 
+-	if (strstr(fname, ".debug") == NULL)
++	if (strstr(fname, ".debug") != NULL)
+ 		return TRUE;
+ 
+ 	if (strrstr(fname, ".ko") == NULL)
+-- 
+2.34.1.windows.1
+
