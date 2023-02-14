@@ -1,9 +1,9 @@
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2020-2021 Tano Systems LLC. All rights reserved.
+# Copyright (c) 2020-2021, 2023 Tano Systems LLC. All rights reserved.
 #
 
-PR = "tano4"
+PR = "tano5"
 PV = "1.5.2+git${SRCPV}"
 
 DESCRIPTION = "IgH EtherCAT Master for Linux"
@@ -69,9 +69,6 @@ do_install_append() {
 	install -m 0755 -D ${WORKDIR}/ethercatctl ${D}${sbindir}/ethercatctl
 	install -m 0644 -D ${WORKDIR}/ethercat.config ${D}${sysconfdir}/config/ethercat
 	install -m 0755 -D ${WORKDIR}/ethercat.init ${D}${sysconfdir}/init.d/ethercat
-
-	cd ${D}/lib/modules/${KERNEL_VERSION} && \
-		find kernel -name '*.ko' -exec sh -c 'mod="{}"; ln -sf $mod ${D}/lib/modules/${KERNEL_VERSION}/$(basename "$mod")' \;
 }
 
 FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}"
