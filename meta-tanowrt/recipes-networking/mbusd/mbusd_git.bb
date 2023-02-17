@@ -1,12 +1,12 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# This file Copyright (C) 2019, 2022 Tano Systems LLC
+# This file Copyright (C) 2019, 2022-2023 Tano Systems LLC
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 
-PR = "tano3"
-PV = "0.4.1+git${SRCPV}"
+PR = "tano0"
+PV = "0.5.1+git${SRCPV}"
 
 SUMMARY = "Open-source Modbus TCP to Modbus RTU (RS-232/485) gateway"
 DESCRIPTION = "mbusd is open-source Modbus TCP to Modbus RTU (RS-232/485) gateway. \
@@ -15,7 +15,7 @@ HOMEPAGE = "https://github.com/3cky/mbusd"
 SECTION = "base"
 
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=c8064f1419006cd3e5026f78f15c7a28"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=75746e54fd84b66abbbba18c1b21b63b"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/patches:${THISDIR}/${PN}/files:"
 
@@ -25,7 +25,7 @@ SRC_URI = "\
 	file://mbusd.config \
 "
 
-SRCREV = "88916fe82daeadeff59de03b9f1647603f67be42"
+SRCREV = "4e5c7e3781e3e7a99a617e41aa54a4ac5df5fd99"
 
 S = "${WORKDIR}/git"
 

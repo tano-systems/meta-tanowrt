@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 #
-# Copyright (c) 2019-2020 Tano Systems. All Rights Reserved.
+# Copyright (c) 2019-2020, 2023 Tano Systems. All Rights Reserved.
 # Author: Anton Kikin <a.kikin@tano-systems.com>
 #
 # Starts and stops mbusd
@@ -29,7 +29,8 @@ validate_mbusd_section()
 		'timeout:range(0, 1000):60' \
 		'retries:range(0, 15):3' \
 		'pause:range(1, 10000):100' \
-		'wait:range(1, 10000):500'
+		'wait:range(1, 10000):500' \
+		'reply_on_broadcast:bool:0'
 }
 
 mbusd_instance()
@@ -78,6 +79,11 @@ mbusd_instance()
 	procd_append_param command -R ${pause}
 	procd_append_param command -W ${wait}
 	procd_append_param command -T ${timeout}
+
+	if [ "${reply_on_broadcast}" = "1" ]; then
+		procd_append_param command -b
+	fi
+
 	procd_set_param pidfile /var/run/mbusd-${cfg}.pid
 	procd_set_param respawn
 	procd_set_param stderr 1
