@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2022 Tano Systems LLC. All rights reserved.
+# Copyright (C) 2022-2023 Tano Systems LLC. All rights reserved.
 # Authors: Anton Kikin <a.kikin@tano-systems.com>
 #
 # RT Linux kernel for Rockchip SoC's
@@ -14,17 +14,17 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 KERNEL_SRC_URI ?= "git://github.com/rockchip-linux/kernel.git"
-KERNEL_SRC_BRANCH ?= "develop-4.19-rt87"
+KERNEL_SRC_BRANCH ?= "develop-4.19-rt104"
 KERNEL_SRC_NOBRANCH ?= "0"
 KERNEL_SRC_PROTOCOL ?= "https"
-KERNEL_SRC_SRCREV ?= "9b4ca23f63bc3be618410fa5b3b6193d1265d522"
+KERNEL_SRC_SRCREV ?= "117703ed36fe701167f8cc8f0036fec7ea32d549"
 
-LINUX_VERSION ?= "4.19.209-rt87"
+LINUX_VERSION ?= "4.19.232-rt104"
 LINUX_KERNEL_TYPE ?= "preempt-rt"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 # Append to the MACHINE_KERNEL_PR so that a new SRCREV will cause a rebuild
-MACHINE_KERNEL_PR:append = "tano2"
+MACHINE_KERNEL_PR:append = "tano0"
 PR = "${MACHINE_KERNEL_PR}"
 
 require recipes-kernel/linux/linux-tano.inc
@@ -63,7 +63,7 @@ SRC_URI += "\
 	file://1006-rtl8723du-Add-driver.patch \
 "
 
-# Not required for 4.19.219
+# Not required for 4.19.232
 SRC_URI:remove = "file://550-loop-better-discard-for-block-devices.patch"
 
 # This 4.19 kernel has backported wireguard in-kernel support
