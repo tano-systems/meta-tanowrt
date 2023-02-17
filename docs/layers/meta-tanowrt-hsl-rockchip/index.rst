@@ -180,21 +180,28 @@ listed in the table below.
 .. _table-hsl-rockchip-linux-kernels:
 .. table:: Available Linux Kernel Versions
 
-   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
-   | Kernel Version | Kernel Type      | Recipe                        | Preferred Provider Package | Preferred Version     | Notes           |
-   |                |                  |                               | Value\ [#]_                | Value\ [#]_           |                 |
-   +================+==================+===============================+============================+=======================+=================+
-   | 4.19.219       | Standard         | |linux-tano-rockchip_4.19|    | ``linux-tano-rockchip``    | ``4.19%``             | Used by default |
-   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
-   | 4.19.209-rt87  | PREEMPT_RT patch | |linux-tano-rockchip-rt_4.19| | ``linux-tano-rockchip-rt`` | ``4.19%``             |                 |
-   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+-----------------+
+   | Kernel Version | Kernel Type      | Recipe                        | Preferred Provider Package | Preferred Version     | Headers Version | Notes           |
+   |                |                  |                               | Value\ [#]_                | Value\ [#]_           | (libc)\ [#]_    |                 |
+   +================+==================+===============================+============================+=======================+=================+=================+
+   | 4.19.232       | Standard         | |linux-tano-rockchip_4.19|    | ``linux-tano-rockchip``    | ``4.19%``             | ``4.19-custom`` |                 |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+-----------------+
+   | 4.19.232-rt104 | PREEMPT_RT patch | |linux-tano-rockchip-rt_4.19| | ``linux-tano-rockchip-rt`` | ``4.19%``             | ``4.19-custom`` |                 |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+-----------------+
+   | 5.10.110       | Standard         | |linux-tano-rockchip_5.10|    | ``linux-tano-rockchip``    | ``5.10%``             | ``5.10-custom`` | Used by default |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+-----------------+
+   | 5.10.110-rt53  | PREEMPT_RT patch | |linux-tano-rockchip-rt_5.10| | ``linux-tano-rockchip-rt`` | ``5.10%``             | ``5.10-custom`` |                 |
+   +----------------+------------------+-------------------------------+----------------------------+-----------------------+-----------------+-----------------+
 
 .. [#] This value should be used for variable ``PREFERRED_PROVIDER_virtual/kernel``.
 .. [#] This value should be used for variable ``PREFERRED_VERSION_<kernel-package>``, where
        ``<kernel-package>`` must be replaced with the value of the ``PREFERRED_PROVIDER_virtual/kernel`` variable.
+.. [#] This value should be user for variable ``LINUXLIBCVERSION``.
 
 .. |linux-tano-rockchip_4.19| replace:: :tanowrt_github_blob:`linux-tano-rockchip_4.19.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip_4.19.bb>`
 .. |linux-tano-rockchip-rt_4.19| replace:: :tanowrt_github_blob:`linux-tano-rockchip-rt_4.19.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip-rt_4.19.bb>`
+.. |linux-tano-rockchip_5.10| replace:: :tanowrt_github_blob:`linux-tano-rockchip_5.10.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip_5.10.bb>`
+.. |linux-tano-rockchip-rt_5.10| replace:: :tanowrt_github_blob:`linux-tano-rockchip-rt_5.10.bb </meta-tanowrt-hsl-rockchip/recipes-kernel/linux/linux-tano-rockchip-rt_5.10.bb>`
 
 To choose the kernel version, you need to set variable ``PREFERRED_PROVIDER_virtual/kernel``
 in the :ref:`local configuration <sec-build-local-conf>` file :file:`local.conf` to required
@@ -202,14 +209,14 @@ Linux kernel package recipe and set variable ``PREFERRED_VERSION_<kernel-package
 kernel version. The values of these variables for the available kernel versions are shown
 in :numref:`table-hsl-rockchip-linux-kernels`.
 
-For example, to choose the Linux kernel version 4.19.209-rt87, the variables
+For example, to choose the Linux kernel version 4.19.232-rt104, the variables
 in the :file:`local.conf` must be set as follows:
 
 .. code-block:: bash
 
    PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rockchip-rt"
    PREFERRED_VERSION_linux-tano-rockchip-rt = "4.19%"
-
+   LINUXLIBCVERSION = "4.19-custom"
 
 License
 ============
