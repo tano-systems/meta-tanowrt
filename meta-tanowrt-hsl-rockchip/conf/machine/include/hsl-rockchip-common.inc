@@ -1,5 +1,5 @@
 # Copyright (c) 2019, Fuzhou Rockchip Electronics Co., Ltd
-# Copyright (c) 2022, Tano Systems LLC
+# Copyright (c) 2022-2023, Tano Systems LLC
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 require conf/machine/include/soc-family.inc
@@ -71,8 +71,8 @@ UBOOT_MAKE_TARGET ?= "all"
 #
 PREFERRED_PROVIDER_virtual/kernel = "linux-tano-rockchip"
 
-PREFERRED_VERSION_linux-tano-rockchip = "4.19%"
-LINUXLIBCVERSION = "4.19-custom%"
+PREFERRED_VERSION_linux-tano-rockchip = "5.10%"
+LINUXLIBCVERSION = "5.10-custom%"
 
 KERNEL_IMAGETYPE = "fitImage"
 KERNEL_IMAGETYPES = "fitImage"
