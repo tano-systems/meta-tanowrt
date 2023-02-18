@@ -1,0 +1,92 @@
+From 1b4be5c260a267e53a28af74c0a1f8ee1c314ec6 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Sat, 18 Feb 2023 04:27:27 +0300
+Subject: [PATCH] Build overlays
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ Makefile                 | 3 ++-
+ scripts/Makefile.build   | 2 ++
+ scripts/Makefile.dtbinst | 3 +++
+ scripts/Makefile.lib     | 6 ++++++
+ 4 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 5ad3bc7f4e91..a46a8d1a1fc5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1442,7 +1442,7 @@ endif
+ 
+ ifneq ($(dtstree),)
+ 
+-%.dtb: include/config/kernel.release scripts_dtc
++%.dtb %.dtbo: include/config/kernel.release scripts_dtc
+ 	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+ 
+ PHONY += dtbs dtbs_install dtbs_check
+@@ -1928,6 +1928,7 @@ clean: $(clean-dirs)
+ 	@find $(if $(KBUILD_EXTMOD), $(KBUILD_EXTMOD), .) $(RCS_FIND_IGNORE) \
+ 		\( -name '*.[aios]' -o -name '*.ko' -o -name '.*.cmd' \
+ 		-o -name '*.ko.*' \
++		-o -name '*.dtbo' -o -name '*.dtbo.S' \
+ 		-o -name '*.dtb' -o -name '*.dtb.S' -o -name '*.dt.yaml' \
+ 		-o -name '*.dwo' -o -name '*.lst' \
+ 		-o -name '*.su' -o -name '*.mod' \
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index edd7f055e0b5..0cd4296d7371 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -461,10 +461,12 @@ intermediate_targets = $(foreach sfx, $(2), \
+ 					$(filter %$(strip $(1)), $(targets))))
+ # %.asn1.o <- %.asn1.[ch] <- %.asn1
+ # %.dtb.o <- %.dtb.S <- %.dtb <- %.dts
++# %.dtbo.o <- %.dtbo.S <- %.dtbo <- %.dtso
+ # %.lex.o <- %.lex.c <- %.l
+ # %.tab.o <- %.tab.[ch] <- %.y
+ targets += $(call intermediate_targets, .asn1.o, .asn1.c .asn1.h) \
+ 	   $(call intermediate_targets, .dtb.o, .dtb.S .dtb) \
++	   $(call intermediate_targets, .dtbo.o, .dtbo.S .dtbo) \
+ 	   $(call intermediate_targets, .lex.o, .lex.c) \
+ 	   $(call intermediate_targets, .tab.o, .tab.c .tab.h)
+ 
+diff --git a/scripts/Makefile.dtbinst b/scripts/Makefile.dtbinst
+index 50d580d77ae9..ba01f5ba2517 100644
+--- a/scripts/Makefile.dtbinst
++++ b/scripts/Makefile.dtbinst
+@@ -29,6 +29,9 @@ quiet_cmd_dtb_install = INSTALL $@
+ $(dst)/%.dtb: $(obj)/%.dtb
+ 	$(call cmd,dtb_install)
+ 
++$(dst)/%.dtbo: $(obj)/%.dtbo
++	$(call cmd,dtb_install)
++
+ PHONY += $(subdirs)
+ $(subdirs):
+ 	$(Q)$(MAKE) $(dtbinst)=$@ dst=$(patsubst $(obj)/%,$(dst)/%,$@)
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 9287cdaf7b8d..97c5b9343a56 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -368,6 +368,9 @@ cmd_dt_S_dtb=						\
+ $(obj)/%.dtb.S: $(obj)/%.dtb FORCE
+ 	$(call if_changed,dt_S_dtb)
+ 
++$(obj)/%.dtbo.S: $(obj)/%.dtbo FORCE
++	$(call if_changed,dt_S_dtb)
++
+ quiet_cmd_dtc = DTC     $@
+ cmd_dtc = $(HOSTCC) -E $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ; \
+ 	$(DTC) -O $(patsubst .%,%,$(suffix $@)) -o $@ -b 0 \
+@@ -378,6 +381,9 @@ cmd_dtc = $(HOSTCC) -E $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ;
+ $(obj)/%.dtb: $(src)/%.dts $(DTC) FORCE
+ 	$(call if_changed_dep,dtc)
+ 
++$(obj)/%.dtbo: $(src)/%.dtso $(DTC) FORCE
++	$(call if_changed_dep,dtc)
++
+ DT_CHECKER ?= dt-validate
+ DT_BINDING_DIR := Documentation/devicetree/bindings
+ # DT_TMP_SCHEMA may be overridden from Documentation/devicetree/bindings/Makefile
+-- 
+2.30.2
+

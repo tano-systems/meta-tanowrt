@@ -1,0 +1,387 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2022 Tano Systems LLC
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/display/media-bus-format.h>
+#include <dt-bindings/display/rockchip_vop.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+#include "rk3566.dtsi"
+#include "boardcon-em356x.dtsi"
+
+/ {
+	revision = "20220721.1";
+
+	model = "Boardcon EM3566 SBC Board";
+	compatible = "boardcon,em3566", "rockchip,rk3566";
+
+	chosen: chosen {
+		bootargs = "earlycon=uart8250,mmio32,0xfe680000 console=ttyFIQ0";
+	};
+
+	fiq-debugger {
+		rockchip,serial-id = <4>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&uart4m0_xfer>;
+		status = "okay";
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		rknpu_reserved: rknpu {
+			compatible = "shared-dma-pool";
+			inactive;
+			reusable;
+			size = <0x0 0x20000000>;
+			alignment = <0x0 0x1000>;
+			status = "disabled";
+		};
+	};
+
+	vcc5v0_host: vcc5v0-host-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc5v0_host";
+		regulator-boot-on;
+		regulator-always-on;
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		enable-active-high;
+		gpio = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc5v0_usb>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vcc5v0_host_en>;
+	};
+
+	vcc5v0_otg: vcc5v0-otg-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc5v0_otg";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		enable-active-high;
+		gpio = <&gpio0 RK_PA3 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc5v0_usb>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vcc5v0_otg_en>;
+	};
+
+	vdd_logic: vdd-logic {
+		compatible = "pwm-regulator";
+		pwms = <&pwm1 0 5000 1>;
+		regulator-name = "vdd_logic";
+		regulator-min-microvolt = <840000>;
+		regulator-max-microvolt = <1040000>;
+		regulator-init-microvolt = <900000>;
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-settling-time-up-us = <250>;
+		pwm-supply = <&vcc3v3_sys>;
+		status = "okay";
+	};
+
+	vdd_npu: vdd-npu {
+		compatible = "pwm-regulator";
+		pwms = <&pwm2 0 5000 1>;
+		regulator-name = "vdd_npu";
+		regulator-min-microvolt = <810000>;
+		regulator-max-microvolt = <1150000>;
+		regulator-init-microvolt = <900000>;
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-settling-time-up-us = <250>;
+		pwm-supply = <&vcc3v3_sys>;
+		status = "okay";
+	};
+
+	vcc_1v8: vcc_1v8 {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_1v8";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		vin-supply = <&vcc3v3_sys>;
+	};
+
+	vcc_3v3: vcc_3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_3v3";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		vin-supply = <&vcc3v3_sys>;
+	};
+};
+
+/* VDD Logic regulator */
+&pwm1 {
+	status = "okay";
+	pinctrl-names = "active";
+};
+
+/* VDD NPU Regulator */
+&pwm2 {
+	status = "okay";
+	pinctrl-names = "active";
+};
+
+&gmac1 {
+	phy-mode = "rgmii";
+	clock_in_out = "output";
+
+	snps,reset-gpio = <&gpio4 RK_PC2 GPIO_ACTIVE_LOW>;
+	snps,reset-active-low;
+	/* Reset time is 20ms, 100ms for rtl8211f */
+	snps,reset-delays-us = <0 20000 100000>;
+
+	assigned-clocks = <&cru SCLK_GMAC1_RX_TX>, <&cru SCLK_GMAC1>;
+	assigned-clock-parents = <&cru SCLK_GMAC1_RGMII_SPEED>, <&cru CLK_MAC1_2TOP>;
+	assigned-clock-rates = <0>, <125000000>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&gmac1m0_miim
+	             &gmac1m0_clkinout
+	             &gmac1m0_tx_bus2
+	             &gmac1m0_rx_bus2
+	             &gmac1m0_rgmii_clk
+	             &gmac1m0_rgmii_bus>;
+
+	tx_delay = <0x4f>;
+	rx_delay = <0x25>;
+
+	phy-handle = <&rtl8211_phy0>;
+	status = "okay";
+};
+
+&mdio1 {
+	rtl8211_phy0: phy@0 {
+		/* RTL8211 */
+		compatible = "ethernet-phy-ieee802.3-c22";
+		reg = <0x0>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&rtl8211phy_pins>;
+	};
+};
+
+/* eMMC */
+&sdhci {
+	bus-width = <8>;
+	supports-emmc;
+	non-removable;
+	max-frequency = <200000000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
+	status = "okay";
+};
+
+/* SD-Card
+ * Supports only 3.3V */
+&sdmmc0 {
+	max-frequency = <50000000>;
+	bus-width = <4>;
+	cap-mmc-highspeed;
+	cap-sd-highspeed;
+	supports-sd;
+	card-detect-delay = <300>;
+	vmmc-supply = <&vcc_3v3>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdmmc0_bus4 &sdmmc0_clk &sdmmc0_cmd &sdmmc0_det>;
+	status = "okay";
+};
+
+/* SDIO */
+&sdmmc1 {
+	max-frequency = <150000000>;
+	supports-sdio;
+	bus-width = <4>;
+	disable-wp;
+	cap-sd-highspeed;
+	cap-sdio-irq;
+	keep-power-in-suspend;
+	non-removable;
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdmmc1_bus4 &sdmmc1_cmd &sdmmc1_clk>;
+	sd-uhs-sdr104;
+	status = "okay";
+};
+
+&sdmmc2 {
+	status = "disabled";
+};
+
+/* J10 */
+&uart2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart2m0_xfer>;
+	status = "okay";
+};
+
+/* J11 (UART4) - Debug */
+
+/* J12 */
+&uart5 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart5m1_xfer>;
+	status = "okay";
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <400000>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_xfer>;
+
+	vdd_cpu: tcs4525@1c {
+		compatible = "tcs,tcs452x";
+		reg = <0x1c>;
+		vin-supply = <&vcc3v3_sys>;
+		regulator-compatible = "fan53555-reg";
+		regulator-name = "vdd_cpu";
+		regulator-min-microvolt = <712500>;
+		regulator-max-microvolt = <1390000>;
+		regulator-init-microvolt = <900000>;
+		regulator-ramp-delay = <2300>;
+		fcs,suspend-voltage-selector = <1>;
+		regulator-boot-on;
+		regulator-always-on;
+		regulator-state-mem {
+			regulator-off-in-suspend;
+		};
+	};
+};
+
+&i2c1 {
+	status = "okay";
+	clock-frequency = <400000>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_xfer>;
+
+	/* RTC H8563S (interrupt on GPIO0_D3) */
+	hym8563: hym8563@51 {
+		compatible = "haoyu,hym8563";
+		reg = <0x51>;
+
+		#clock-cells = <0>;
+
+		rtc-irq-gpio = <&gpio0 RK_PD3 IRQ_TYPE_EDGE_FALLING>;
+		clock-frequency = <32768>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&hym8563_pins>;
+	};
+};
+
+&pinctrl {
+	hym8563 {
+		hym8563_pins: hym8563-pins {
+			rockchip,pins = <0 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>; /* RTC_INT */
+		};
+	};
+
+	i2c0 {
+		i2c0_xfer: i2c0-xfer {
+			rockchip,pins =
+				/* i2c0_scl */ <0 RK_PB1 1 &pcfg_pull_up>,
+				/* i2c0_sda */ <0 RK_PB2 1 &pcfg_pull_up>;
+		};
+	};
+
+	i2c1 {
+		i2c1_xfer: i2c1-xfer {
+			rockchip,pins =
+				/* i2c1_scl */ <0 RK_PB3 1 &pcfg_pull_up>,
+				/* i2c1_sda */ <0 RK_PB4 1 &pcfg_pull_up>;
+		};
+	};
+
+	phy {
+		rtl8211phy_pins: rtl8211-phy {
+			rockchip,pins = <4 RK_PC2 RK_FUNC_GPIO &pcfg_pull_up>, /* PHY reset */
+			                <4 RK_PC3 RK_FUNC_GPIO &pcfg_pull_up>; /* PHY_INT */
+		};
+	};
+
+	usb {
+		vcc5v0_host_en: vcc5v0-host-en {
+			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_down>;
+		};
+
+		vcc5v0_otg_en: vcc5v0-otg-en {
+			rockchip,pins = <0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_down>;
+		};
+	};
+
+	sdio-pwrseq {
+		wifi_enable_h: wifi-enable-h {
+			rockchip,pins = <3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};
+
+/* OLD RK3566 */
+&gpu_opp_table {
+	/delete-node/ opp-800000000;
+};
+
+&hdmi_sound {
+	status = "disabled";
+};
+
+&rknpu {
+	memory-region = <&rknpu_reserved>;
+	rknpu-supply = <&vdd_fixed>;
+	status = "okay";
+};
+
+&u2phy1_host {
+	phy-supply = <&vcc5v0_host>;
+	status = "okay";
+};
+
+&u2phy1_otg {
+	phy-supply = <&vcc5v0_host>;
+	status = "okay";
+};
+
+&dmc {
+	auto-freq-en = <0>;
+	center-supply = <&vdd_fixed>;
+	status = "okay";
+
+	system-status-freq = <
+		/*system status         freq(KHz)*/
+		SYS_STATUS_NORMAL       780000
+		SYS_STATUS_REBOOT       1056000
+		SYS_STATUS_SUSPEND      324000
+		SYS_STATUS_VIDEO_4K     780000
+		SYS_STATUS_VIDEO_4K_10B 780000
+		SYS_STATUS_BOOST        1056000
+		SYS_STATUS_ISP          1056000
+		SYS_STATUS_PERFORMANCE  1056000
+		SYS_STATUS_DUALVIEW     1056000
+	>;
+};
+
+&dmc_opp_table {
+	opp-1056000000 {
+		opp-hz = /bits/ 64 <1056000000>;
+		opp-microvolt = <900000>;
+		opp-microvolt-L0 = <900000>;
+		opp-microvolt-L1 = <850000>;
+	};
+	/delete-node/ opp-1560000000;
+};
+
+&vop {
+	disable-win-move;
+};
