@@ -1,0 +1,482 @@
+From 161cfe2196d49f87067eb43ab16fd1f89f4af573 Mon Sep 17 00:00:00 2001
+From: Anton Kikin <a.kikin@tano-systems.com>
+Date: Wed, 22 Feb 2023 04:49:27 +0300
+Subject: [PATCH] Fix compilation warnings
+
+Signed-off-by: Anton Kikin <a.kikin@tano-systems.com>
+---
+ fru.c    | 56 ++++++++++++++++++++++------------------------
+ frugen.c | 68 +++++++++++++++++++++++++++++++-------------------------
+ 2 files changed, 65 insertions(+), 59 deletions(-)
+
+diff --git a/fru.c b/fru.c
+index db08a47..847ef20 100644
+--- a/fru.c
++++ b/fru.c
+@@ -85,13 +85,13 @@ uint8_t fru_get_typelen(int len,             /**< [in] Length of the data,
+ 		// Explicit text type
+                 if (len == LEN_BCDPLUS) {
+ 			DEBUG("BCDPLUS type\n");
+-			return FRU_TYPELEN(BCDPLUS, (strlen(data) + 1) / 2);
++			return FRU_TYPELEN(BCDPLUS, (strlen((char *)data) + 1) / 2);
+                 } else if (len == LEN_6BITASCII) {
+ 			DEBUG("6BIT ASCII type\n");
+-			return FRU_TYPELEN(ASCII_6BIT, FRU_6BIT_LENGTH(strlen(data)));
++			return FRU_TYPELEN(ASCII_6BIT, FRU_6BIT_LENGTH(strlen((char *)data)));
+                 } else if (len == LEN_TEXT) {
+ 			DEBUG("ASCII type\n");
+-			return FRU_TYPELEN(TEXT, strlen(data));
++			return FRU_TYPELEN(TEXT, strlen((char *)data));
+                 } else {
+ 			DEBUG("Nothing... Unknown text type\n");
+ 			return FRU_FIELD_TERMINATOR;
+@@ -99,7 +99,7 @@ uint8_t fru_get_typelen(int len,             /**< [in] Length of the data,
+ 	}
+ 
+ 	if (!len) {
+-		len = strlen(data);
++		len = strlen((char *)data);
+ 		if (!len) {
+ 			return FRU_FIELD_EMPTY;
+ 		}
+@@ -177,9 +177,9 @@ uint8_t fru_get_typelen(int len,             /**< [in] Length of the data,
+  */
+ static fru_field_t *fru_encode_6bit(const unsigned char *s /**< [in] Input string */)
+ {
+-	int len = strlen(s);
++	int len = strlen((char *)s);
+ 	int len6bit = FRU_6BIT_LENGTH(len);
+-	int i, i6;
++	int i, i6 = 0;
+ 	fru_field_t *out = NULL;
+ 	size_t outlen = sizeof(fru_field_t) + len6bit + 1; // 1 extra for null-byte
+ 
+@@ -192,7 +192,6 @@ static fru_field_t *fru_encode_6bit(const unsigned char *s /**< [in] Input strin
+ 	out->typelen = FRU_TYPELEN(ASCII_6BIT, len6bit);
+ 
+ 	for (i = 0, i6 = 0; i < len && i6 < len6bit; i++) {
+-		int base = i / 4; // Four original bytes get encoded into three 6-bit-packed ones
+ 		int byte = i % 4;
+ 		char c = (s[i] - ' ') & 0x3F; // Space is zero, maximum is 0x3F (6 significant bits)
+ 
+@@ -218,6 +217,7 @@ static fru_field_t *fru_encode_6bit(const unsigned char *s /**< [in] Input strin
+ 	return out;
+ }
+ 
++#ifdef __STANDALONE__
+ /**
+  * Allocate a buffer and decode a 6-bit ASCII string from it
+  */
+@@ -240,7 +240,7 @@ static unsigned char *fru_decode_6bit(const fru_field_t *field)
+ 	DEBUG("Allocated a destination buffer at %p\n", out);
+ 
+ 	for(i = 0, i6 = 0; i6 <= len6bit && i < len && s6[i6]; i++) {
+-		int base = i / 4;
++		//int base = i / 4;
+ 		int byte = i % 4;
+ 
+ 		DEBUG("%d:%d:%d = ", base, byte, i6);
+@@ -252,15 +252,18 @@ static unsigned char *fru_decode_6bit(const fru_field_t *field)
+ 				break;
+ 			case 1:
+ 				DEBUG("%02hhX %02hhX ", s6[i6], s6[i6 + 1]);
+-				out[i] = (s6[i6] >> 6) | (s6[++i6] << 2);
++				out[i] = (s6[i6] >> 6) | (s6[i6 + 1] << 2);
++				++i6;
+ 				break;
+ 			case 2:
+ 				DEBUG("%02hhX %02hhX ", s6[i6], s6[i6 + 1]);
+-				out[i] = (s6[i6] >> 4) | (s6[++i6] << 4);
++				out[i] = (s6[i6] >> 4) | (s6[i6 + 1] << 4);
++				++i6;
+ 				break;
+ 			case 3:
+ 				DEBUG("%02hhX ", s6[i6]);
+-				out[i] = s6[i6++] >> 2;
++				out[i] = s6[i6] >> 2;
++				i6++;
+ 				break;
+ 		}
+ 		out[i] &= 0x3F;
+@@ -270,10 +273,11 @@ static unsigned char *fru_decode_6bit(const fru_field_t *field)
+ 
+ 	// Strip trailing spaces that could emerge when decoding a
+ 	// string that was a byte shorter than a multiple of 4.
+-	cut_tail(out);
++	cut_tail((char *)out);
+ 
+ 	return out;
+ }
++#endif
+ 
+ /**
+  * Allocate a buffer and encode that data as per FRU specification
+@@ -327,6 +331,7 @@ fru_field_t * fru_encode_data(int len, const uint8_t *data)
+ 	return out;
+ }
+ 
++#ifdef __STANDALONE__
+ /**
+  * Allocate a buffer and decode the data from it.
+  *
+@@ -370,7 +375,7 @@ unsigned char * fru_decode_data(const fru_field_t *field)
+ 			out[2 * FRU_FIELDDATALEN(field->typelen)] = 0; // Terminate the string
+ 			// Strip trailing spaces that may have emerged when a string of odd
+ 			// length was BCD-encoded.
+-			cut_tail(out);
++			cut_tail((char *)out);
+ 		}
+ 		else {
+ 			memcpy(out, field->data, FRU_FIELDDATALEN(field->typelen));
+@@ -380,6 +385,7 @@ unsigned char * fru_decode_data(const fru_field_t *field)
+ 
+ 	return out;
+ }
++#endif
+ 
+ #if 0
+ struct timeval {
+@@ -409,7 +415,7 @@ uint8_t calc_checksum(void *blk, size_t blk_bytes)
+ 	uint8_t *data = (uint8_t *)blk;
+ 	uint8_t checksum = 0;
+ 
+-	for(int i = 0; i < blk_bytes; i++) {
++	for(int i = 0; i < (int)blk_bytes; i++) {
+ 		checksum += data[i];
+ 	}
+ 
+@@ -456,9 +462,7 @@ fru_info_area_t *fru_create_info_area(fru_area_type_t atype,    ///< [in] Area t
+                                       size_t nstrings,         ///< [in] Number of strings for mandatory fields
+                                       const typed_field_t strings[]) ///<[in] Array of typed strings for mandatory fields
+ {
+-	int i = 0;
+ 	int field_count;
+-	int typelen;
+ 	int padding_size;
+ 	fru_board_area_t header = { // Allocate the biggest possible header
+ 		.ver = FRU_VER_1,
+@@ -495,7 +499,7 @@ fru_info_area_t *fru_create_info_area(fru_area_type_t atype,    ///< [in] Area t
+ 		 * It's assumed here that UNIX time 0 (Jan 1st of 1970)
+ 		 * can never actually happen in a FRU file in 2018.
+ 		 */
+-		if (!memcmp(&tv_unspecified, tv, sizeof(tv))) {
++		if (!memcmp(&tv_unspecified, tv, sizeof(*tv))) {
+ 			printf("Using FRU_DATE_UNSPECIFIED\n");
+ 			fru_time = FRU_DATE_UNSPECIFIED;
+ 		} else {
+@@ -516,7 +520,7 @@ fru_info_area_t *fru_create_info_area(fru_area_type_t atype,    ///< [in] Area t
+ 
+ 	/* Find uninitialized mandatory fields, allocate and initialize them with provided strings */
+ 	for (field_count = 0, field = fields;
+-	     field && !field->rec && field_count < nstrings;
++	     field && !field->rec && field_count < (int)nstrings;
+ 	     field = field->next, field_count++)
+ 	{
+ 		int len = LEN_AUTO;
+@@ -610,8 +614,6 @@ err:
+  */
+ fru_chassis_area_t * fru_chassis_info(const fru_exploded_chassis_t *chassis) ///< [in] Exploded chassis info area
+ {
+-	int i;
+-
+ 	if(!chassis) {
+ 		errno = EFAULT;
+ 		return NULL;
+@@ -657,8 +659,6 @@ fru_chassis_area_t * fru_chassis_info(const fru_exploded_chassis_t *chassis) ///
+  */
+ fru_board_area_t * fru_board_info(const fru_exploded_board_t *board) ///< [in] Exploded board information area
+ {
+-	int i;
+-
+ 	if(!board) {
+ 		errno = EFAULT;
+ 		return NULL;
+@@ -702,8 +702,6 @@ fru_board_area_t * fru_board_info(const fru_exploded_board_t *board) ///< [in] E
+  */
+ fru_product_area_t * fru_product_info(const fru_exploded_product_t *product) ///< [in] Exploded product information area
+ {
+-	int i;
+-
+ 	if(!product) {
+ 		errno = EFAULT;
+ 		return NULL;
+@@ -769,8 +767,8 @@ int fru_mr_uuid2rec(fru_mr_rec_t **rec, const unsigned char *str)
+ 	if (!rec || *rec) return -EFAULT;
+ 	if (!str) return -EFAULT;
+ 
+-	len = strlen(str);
+-	if(UUID_STRLEN_DASHED != len && UUID_STRLEN_NONDASHED != len) {
++	len = strlen((char *)str);
++	if(UUID_STRLEN_DASHED != (int)len && UUID_STRLEN_NONDASHED != (int)len) {
+ 		return -EINVAL;
+ 	}
+ 
+@@ -937,12 +935,12 @@ fru_t * fru_create(fru_area_t area[FRU_MAX_AREAS], size_t *size)
+ 
+ 	// First calculate the total size of the FRU information storage file to be allocated.
+ 	for(i = 0; i < FRU_MAX_AREAS; i++) {
+-		uint8_t atype = area[i].atype;
++		fru_area_type_t atype = (fru_area_type_t)area[i].atype;
+ 		uint8_t blocks = area[i].blocks;
+ 		fru_info_area_t *data = area[i].data;
+ 
+ 		// Area type must be valid and match the index
+-		if (!FRU_IS_ATYPE_VALID(atype) || atype != (uint8_t)FRU_AREA_NOT_PRESENT && atype != i) {
++		if (!FRU_IS_ATYPE_VALID(atype) || (atype != (uint8_t)FRU_AREA_NOT_PRESENT && atype != i)) {
+ 			errno = EINVAL;
+ 			return NULL;
+ 		}
+@@ -951,7 +949,7 @@ fru_t * fru_create(fru_area_t area[FRU_MAX_AREAS], size_t *size)
+ 		uint8_t *offset = (uint8_t *)&fruhdr + area_offset_index;
+ 
+ 		if(!data ||                                // No data is provided or
+-		   !FRU_AREA_HAS_SIZE(atype) && !blocks || // no size is given for a non-sized area or
++		   (!FRU_AREA_HAS_SIZE(atype) && !blocks) || // no size is given for a non-sized area or
+ 		   !((fru_info_area_t *)data)->blocks     // the sized area contains a zero size
+ 		  ) {
+ 			// Mark the area as
+diff --git a/frugen.c b/frugen.c
+index 5e8b5dd..0337134 100644
+--- a/frugen.c
++++ b/frugen.c
+@@ -76,6 +76,10 @@ void hexdump(const void *data, size_t len)
+ /**
+  * Convert 2 bytes of hex string into a binary byte
+  */
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Woverride-init"
++#pragma GCC diagnostic ignored "-Wchar-subscripts"
++
+ static
+ long hex2byte(const char *hex) {
+ 	static const long hextable[256] = {
+@@ -98,6 +102,8 @@ long hex2byte(const char *hex) {
+ 	return ((hi << 4) | lo);
+ }
+ 
++#pragma GCC diagnostic pop
++
+ static
+ bool datestr_to_tv(const char *datestr, struct timeval *tv)
+ {
+@@ -135,7 +141,7 @@ bool datestr_to_tv(const char *datestr, struct timeval *tv)
+ static
+ uint8_t * fru_encode_binary_string(size_t *len, const char *hexstr)
+ {
+-	int i;
++	unsigned int i;
+ 	uint8_t *buf;
+ 
+ 	if (!len) {
+@@ -192,7 +198,7 @@ bool json_fill_fru_area_fields(json_object *jso, int count,
+ 				const char *type = json_object_get_string(typefield);
+ 				const char *val = json_object_get_string(valfield);
+ 				if (!strcmp("binary", type)) {
+-					fatal(1, "Binary format not yet implemented");
++					fatal("Binary format not yet implemented");
+ 				} else if (!strcmp("bcdplus", type)) {
+ 					fields[i]->type = FIELD_TYPE_BCDPLUS;
+ 				} else if (!strcmp("6bitascii", type)) {
+@@ -204,7 +210,7 @@ bool json_fill_fru_area_fields(json_object *jso, int count,
+ 					      type, fieldnames[i]);
+ 					continue;
+ 				}
+-				fru_loadfield(fields[i]->val, val);
++				fru_loadfield((char *)fields[i]->val, val);
+ 				debug(2, "Field %s '%s' (%s) loaded from JSON",
+ 				      fieldnames[i], val, type);
+ 				data_in_this_area = true;
+@@ -212,7 +218,7 @@ bool json_fill_fru_area_fields(json_object *jso, int count,
+ 				const char *s = json_object_get_string(jsfield);
+ 				debug(2, "Field %s '%s' loaded from JSON",
+ 				      fieldnames[i], s);
+-				fru_loadfield(fields[i]->val, s);
++				fru_loadfield((char *)fields[i]->val, s);
+ 				fields[i]->type = FIELD_TYPE_AUTO;
+ 				data_in_this_area = true;
+                         }
+@@ -274,13 +280,13 @@ bool json_fill_fru_area_custom(json_object *jso, fru_reclist_t **custom)
+ 		if (!strcmp("binary", type)) {
+ 			custptr->rec = fru_encode_custom_binary_field(data);
+ 		} else if (!strcmp("bcdplus", type)) {
+-			custptr->rec = fru_encode_data(LEN_BCDPLUS, data);
++			custptr->rec = fru_encode_data(LEN_BCDPLUS, (uint8_t *)data);
+ 		} else if (!strcmp("6bitascii", type)) {
+-			custptr->rec = fru_encode_data(LEN_6BITASCII, data);
++			custptr->rec = fru_encode_data(LEN_6BITASCII, (uint8_t *)data);
+ 		} else if (!strcmp("text", type)) {
+-			custptr->rec = fru_encode_data(LEN_TEXT, data);
++			custptr->rec = fru_encode_data(LEN_TEXT, (uint8_t *)data);
+ 		} else {
+-			custptr->rec = fru_encode_data(LEN_AUTO, data);
++			custptr->rec = fru_encode_data(LEN_AUTO, (uint8_t *)data);
+ 		}
+ 
+ 		if (!custptr->rec) {
+@@ -353,7 +359,7 @@ bool json_fill_fru_mr_reclist(json_object *jso, fru_mr_reclist_t **mr_reclist)
+ 			if (!strcmp(subtype, "uuid")) {
+ 				const unsigned char *uuid = NULL;
+ 				json_object_object_get_ex(item, "uuid", &ifield);
+-				if (!ifield || !(uuid = json_object_get_string(ifield))) {
++				if (!ifield || !(uuid = (unsigned char *)json_object_get_string(ifield))) {
+ 					fatal("A uuid management record must have a uuid field");
+ 				}
+ 
+@@ -405,9 +411,12 @@ int main(int argc, char *argv[])
+ 		{ .atype = FRU_MULTIRECORD }
+ 	};
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Woverride-init"
+ 	fru_exploded_chassis_t chassis = { 0, .type = SMBIOS_CHASSIS_UNKNOWN };
+ 	fru_exploded_board_t board = { 0, .lang = LANG_ENGLISH };
+ 	fru_exploded_product_t product = { 0, .lang = LANG_ENGLISH };
++#pragma GCC diagnostic pop
+ 
+ 	tzset();
+ 	gettimeofday(&board.tv, NULL);
+@@ -514,7 +523,7 @@ int main(int argc, char *argv[])
+ 
+ 	unsigned char optstring[ARRAY_SZ(options) * 2 + 1] = {0};
+ 
+-	for (i = 0; i < ARRAY_SZ(options); ++i) {
++	for (i = 0; i < (int)ARRAY_SZ(options); ++i) {
+ 		static int k = 0;
+ 		optstring[k++] = options[i].val;
+ 		if (options[i].has_arg)
+@@ -525,7 +534,7 @@ int main(int argc, char *argv[])
+ 		fru_reclist_t **custom = NULL;
+ 		bool is_mr_record = false; // The current option is an MR area record
+ 		lindex = -1;
+-		opt = getopt_long(argc, argv, optstring, options, &lindex);
++		opt = getopt_long(argc, argv, (char *)optstring, options, &lindex);
+ 		switch (opt) {
+ 			case 'b': // binary
+ 				debug(2, "Next custom field will be considered binary");
+@@ -546,7 +555,7 @@ int main(int argc, char *argv[])
+ 					   "Usage: frugen [options] <filename>\n"
+ 					   "\n"
+ 					   "Options:\n\n");
+-				for (i = 0; i < ARRAY_SZ(options); i++) {
++				for (i = 0; i < (int)ARRAY_SZ(options); i++) {
+ 					printf("\t-%c, --%s%s\n" /* "\t-%c%s\n" */,
+ 					       options[i].val,
+ 					       options[i].name,
+@@ -591,9 +600,8 @@ int main(int argc, char *argv[])
+ 								debug(2, "Internal use are w/o data, skipping");
+ 								continue;
+ 							}
+-							fru_field_t *field;
+ 							size_t datalen;
+-							char *encoded_data =
++							char *encoded_data = (char *)
+ 								fru_encode_binary_string(&datalen, data);
+ 							size_t blocklen = FRU_BLOCKS(datalen + sizeof(*internal));
+ 							internal = calloc(1, FRU_BYTES(blocklen));
+@@ -685,11 +693,11 @@ int main(int argc, char *argv[])
+ 				has_chassis = true;
+ 				break;
+ 			case 'a': // chassis-pn
+-				fru_loadfield(chassis.pn.val, optarg);
++				fru_loadfield((char *)chassis.pn.val, optarg);
+ 				has_chassis = true;
+ 				break;
+ 			case 'c': // chassis-serial
+-				fru_loadfield(chassis.serial.val, optarg);
++				fru_loadfield((char *)chassis.serial.val, optarg);
+ 				has_chassis = true;
+ 				break;
+ 			case 'C': // chassis-custom
+@@ -698,11 +706,11 @@ int main(int argc, char *argv[])
+ 				custom = &chassis.cust;
+ 				break;
+ 			case 'n': // board-pname
+-				fru_loadfield(board.pname.val, optarg);
++				fru_loadfield((char *)board.pname.val, optarg);
+ 				has_board = true;
+ 				break;
+ 			case 'm': // board-mfg
+-				fru_loadfield(board.mfg.val, optarg);
++				fru_loadfield((char *)board.mfg.val, optarg);
+ 				has_board = true;
+ 				break;
+ 			case 'd': // board-date
+@@ -715,15 +723,15 @@ int main(int argc, char *argv[])
+ 				no_curr_date = true;
+ 				break;
+ 			case 'p': // board-pn
+-				fru_loadfield(board.pn.val, optarg);
++				fru_loadfield((char *)board.pn.val, optarg);
+ 				has_board = true;
+ 				break;
+ 			case 's': // board-sn
+-				fru_loadfield(board.serial.val, optarg);
++				fru_loadfield((char *)board.serial.val, optarg);
+ 				has_board = true;
+ 				break;
+ 			case 'f': // board-file
+-				fru_loadfield(board.file.val, optarg);
++				fru_loadfield((char *)board.file.val, optarg);
+ 				has_board = true;
+ 				break;
+ 			case 'B': // board-custom
+@@ -732,31 +740,31 @@ int main(int argc, char *argv[])
+ 				custom = &board.cust;
+ 				break;
+ 			case 'N': // prod-name
+-				fru_loadfield(product.pname.val, optarg);
++				fru_loadfield((char *)product.pname.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'G': // prod-mfg
+-				fru_loadfield(product.mfg.val, optarg);
++				fru_loadfield((char *)product.mfg.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'M': // prod-modelpn
+-				fru_loadfield(product.pn.val, optarg);
++				fru_loadfield((char *)product.pn.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'V': // prod-version
+-				fru_loadfield(product.ver.val, optarg);
++				fru_loadfield((char *)product.ver.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'S': // prod-serial
+-				fru_loadfield(product.serial.val, optarg);
++				fru_loadfield((char *)product.serial.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'F': // prod-file
+-				fru_loadfield(product.file.val, optarg);
++				fru_loadfield((char *)product.file.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'A': // prod-atag
+-				fru_loadfield(product.atag.val, optarg);
++				fru_loadfield((char *)product.atag.val, optarg);
+ 				has_product = true;
+ 				break;
+ 			case 'P': // prod-custom
+@@ -784,7 +792,7 @@ int main(int argc, char *argv[])
+ 
+ 		    switch(opt) {
+ 				case 'U': // UUID
+-					errno = fru_mr_uuid2rec(&mr_reclist_tail->rec, optarg);
++					errno = fru_mr_uuid2rec(&mr_reclist_tail->rec, (uint8_t *)optarg);
+ 					if (errno) {
+ 						fatal("Failed to convert UUID: %m");
+ 					}
+@@ -807,7 +815,7 @@ int main(int argc, char *argv[])
+ 			}
+ 			else {
+ 				debug(3, "The custom field will be auto-typed");
+-				custptr->rec = fru_encode_data(LEN_AUTO, optarg);
++				custptr->rec = fru_encode_data(LEN_AUTO, (uint8_t *)optarg);
+ 			}
+ 			if (!custptr->rec) {
+ 				fatal("Failed to encode custom field. Memory allocation or field length problem.");
+-- 
+2.17.1
+
