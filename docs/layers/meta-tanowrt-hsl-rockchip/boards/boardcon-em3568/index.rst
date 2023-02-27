@@ -17,17 +17,15 @@ Boardcon EM3568 SBC
 Board Overview
 ==============
 
-Boardcon EM3568 single board computer (:term:`SBC`) features 2 GiB memory
-(up to 8 GiB), ﻿comes with MIPI/LVDS, HDMI and eDP video out, and offers
-Gigabit Ethernet port, as well as M.2 socket which enables expansion with
-a large hard drive and plus a miniPCIe, a Nano SIM card socket for
-4G cellular connectivity. Display and camera capabilities with graphics
-and video hardware acceleration make it suitable for machine vision
-applications. And built-in independent NPU, computing power of 0.8 TOPS
-for AI accelerator extend the reach of AI solutions. EM3568 supports
-microphone array input, with high dynamic noise reduction algorithm,
-it can accurately recognize human voices even in noisy environments,
-and achieve precise voice control of the devices.
+Boardcon EM3568 single board computer is based on Rockchip RK3568 and
+designed specifically for AIoT and industrial applications with 2 GiB RAM
+(up to 8 GiB), 8 GB storage (up to 128 GB), optional Wi-Fi and Bluetooth,
+Camera and 4G modules. The SBC features two Gigabit Ethernet port to meet
+the high-speed network requirements, as well as High-speed expansion
+interface such as SATA 3.0, USB 3.0 port. Multi-screen different
+display is also supported, and EM3568 integrates eDP/MIPI/LVDS/RGB
+interfaces. In addition, the SBC provides some general data interfaces
+such as UART (TTL), RS485 and CAN.
 
 .. _fig-boardcon-em3568:
 .. figure:: images/boardcon-em3568.jpg
